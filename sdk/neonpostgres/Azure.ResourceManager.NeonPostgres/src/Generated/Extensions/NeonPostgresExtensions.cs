@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.NeonPostgres.Mocking;
+using Azure.ResourceManager.NeonPostgres.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NeonPostgres
@@ -52,6 +53,120 @@ namespace Azure.ResourceManager.NeonPostgres
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ProjectResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProjectResource.CreateResourceIdentifier" /> to create a <see cref="ProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNeonPostgresArmClient.GetProjectResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ProjectResource"/> object. </returns>
+        public static ProjectResource GetProjectResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNeonPostgresArmClient(client).GetProjectResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BranchResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BranchResource.CreateResourceIdentifier" /> to create a <see cref="BranchResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNeonPostgresArmClient.GetBranchResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BranchResource"/> object. </returns>
+        public static BranchResource GetBranchResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNeonPostgresArmClient(client).GetBranchResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ComputeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ComputeResource.CreateResourceIdentifier" /> to create a <see cref="ComputeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNeonPostgresArmClient.GetComputeResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ComputeResource"/> object. </returns>
+        public static ComputeResource GetComputeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNeonPostgresArmClient(client).GetComputeResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NeonDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NeonDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="NeonDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNeonPostgresArmClient.GetNeonDatabaseResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NeonDatabaseResource"/> object. </returns>
+        public static NeonDatabaseResource GetNeonDatabaseResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNeonPostgresArmClient(client).GetNeonDatabaseResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NeonRoleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NeonRoleResource.CreateResourceIdentifier" /> to create a <see cref="NeonRoleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNeonPostgresArmClient.GetNeonRoleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NeonRoleResource"/> object. </returns>
+        public static NeonRoleResource GetNeonRoleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNeonPostgresArmClient(client).GetNeonRoleResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EndpointResource.CreateResourceIdentifier" /> to create an <see cref="EndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNeonPostgresArmClient.GetEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EndpointResource"/> object. </returns>
+        public static EndpointResource GetEndpointResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNeonPostgresArmClient(client).GetEndpointResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of NeonOrganizationResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
@@ -81,7 +196,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -119,7 +234,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -145,6 +260,78 @@ namespace Azure.ResourceManager.NeonPostgres
         }
 
         /// <summary>
+        /// Action to retrieve the PostgreSQL versions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/getPostgresVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Organizations_GetPostgresVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NeonOrganizationResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.GetPostgresVersionsOrganization(PgVersion,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="pgVersion"> Post Action to retrieve the PostgreSQL versions. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<PgVersionsResult>> GetPostgresVersionsOrganizationAsync(this ResourceGroupResource resourceGroupResource, PgVersion pgVersion = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).GetPostgresVersionsOrganizationAsync(pgVersion, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Action to retrieve the PostgreSQL versions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/getPostgresVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Organizations_GetPostgresVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NeonOrganizationResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.GetPostgresVersionsOrganization(PgVersion,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="pgVersion"> Post Action to retrieve the PostgreSQL versions. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<PgVersionsResult> GetPostgresVersionsOrganization(this ResourceGroupResource resourceGroupResource, PgVersion pgVersion = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).GetPostgresVersionsOrganization(pgVersion, cancellationToken);
+        }
+
+        /// <summary>
         /// List OrganizationResource resources by subscription ID
         /// <list type="bullet">
         /// <item>
@@ -157,7 +344,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -193,7 +380,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
