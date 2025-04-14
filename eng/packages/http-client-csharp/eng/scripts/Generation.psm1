@@ -30,7 +30,7 @@ function Get-TspCommand {
     )
     $command = "npx tsp compile $specFile"
     $command += " --trace @azure-typespec/http-client-csharp"
-    $command += " --emit @azure-typespec/http-client-csharp"
+    $command += " --emit $repoRoot/.."
     $configFile = Join-Path $generationDir "tspconfig.yaml"
     if (Test-Path $configFile) {
         $command += " --config=$configFile"
@@ -62,7 +62,8 @@ function Get-Mgmt-TspCommand {
     )
     $command = "npx tsp compile $specFile"
     $command += " --trace @azure-typespec/http-client-csharp-mgmt"
-    $command += " --emit @azure-typespec/http-client-csharp-mgmt"
+    $command += " --emit $repoRoot/../../http-client-csharp-mgmt"
+    
     $configFile = Join-Path $generationDir "tspconfig.yaml"
     if (Test-Path $configFile) {
         $command += " --config=$configFile"
