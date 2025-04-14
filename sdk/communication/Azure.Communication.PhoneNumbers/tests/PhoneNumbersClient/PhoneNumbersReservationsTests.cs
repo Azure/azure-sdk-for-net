@@ -501,7 +501,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         private PhoneNumbersReservation CopyReservation(PhoneNumbersReservation reservation)
         {
             var newReservation = PhoneNumbersModelFactory.PhoneNumbersReservation(id: reservation.Id, expiresAt: reservation.ExpiresAt, status: reservation.Status);
-            new PhoneNumbersReservation(reservation.Id, new Dictionary<string, AvailablePhoneNumber>());
+            new PhoneNumbersReservation(reservation.Id);
             foreach (var number in reservation.PhoneNumbers)
             {
                 newReservation.PhoneNumbers.Add(number.Key, number.Value);
