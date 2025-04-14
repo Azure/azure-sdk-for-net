@@ -62,6 +62,7 @@ extends:
            PublishDependsOnTest: ${{ parameters.PublishPublic }}
       ${{ else }}: # All automatic runs publish, but only CI of main goes public
         ShouldPublish: true
+        ShouldRegenerate: true
         PublishDependsOnTest: false
         PublishPublic: ${{ and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}
       RegenerationJobCount: 5
