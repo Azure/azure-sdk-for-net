@@ -15,7 +15,7 @@ This extension provides functionality for receiving Web PubSub for Socket.IO web
 Install the Web PubSub for Socket.IO extension with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO --prerelease
+dotnet add package Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
 ```
 
 ### Prerequisites
