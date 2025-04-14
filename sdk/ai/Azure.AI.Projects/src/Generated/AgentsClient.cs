@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -2973,7 +2972,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UploadFileAsync(Stream,AgentFilePurpose,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UploadFileAsync(UploadFileRequest,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -3012,7 +3011,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UploadFile(Stream,AgentFilePurpose,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UploadFile(UploadFileRequest,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -5562,7 +5561,7 @@ namespace Azure.AI.Projects
             uri.AppendPath("/content", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", "application/octet-stream");
             return message;
         }
 

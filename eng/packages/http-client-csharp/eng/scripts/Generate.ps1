@@ -8,7 +8,9 @@ param(
 
 Import-Module "$PSScriptRoot\Generation.psm1" -DisableNameChecking -Force;
 
+Write-Host "Script root: $PSScriptRoot" -ForegroundColor Cyan
 $packageRoot = Resolve-Path (Join-Path $PSScriptRoot '..' '..')
+Write-Host "Package root: $packageRoot" -ForegroundColor Cyan
 $solutionDir = Join-Path $packageRoot 'generator'
 
 if (-not $LaunchOnly) {
@@ -29,28 +31,6 @@ if (-not $LaunchOnly) {
 
         Write-Host "Building BasicTypeSpec" -ForegroundColor Cyan
         Invoke "dotnet build $packageRoot/generator/TestProjects/Local/Basic-TypeSpec/src/BasicTypeSpec.csproj"
-
-        # exit if the generation failed
-        if ($LASTEXITCODE -ne 0) {
-            exit $LASTEXITCODE
-        }
-    }
-
-    if ($null -eq $filter -or $filter -eq "Mgmt-TypeSpec") {
-        Write-Host "Generating MgmtTypeSpec" -ForegroundColor Cyan
-        $testProjectsLocalDir = Join-Path $packageRoot 'generator' 'TestProjects' 'Local'
-
-        $mgmtTypespecTestProject = Join-Path $testProjectsLocalDir "Mgmt-TypeSpec"
-
-        Invoke (Get-TspCommand "$mgmtTypespecTestProject/main.tsp" $mgmtTypespecTestProject -forceNewProject $ForceNewProject)
-
-        # exit if the generation failed
-        if ($LASTEXITCODE -ne 0) {
-            exit $LASTEXITCODE
-        }
-
-        Write-Host "Building MgmtTypeSpec" -ForegroundColor Cyan
-        Invoke "dotnet build $packageRoot/generator/TestProjects/Local/Mgmt-TypeSpec/src/MgmtTypeSpec.csproj"
 
         # exit if the generation failed
         if ($LASTEXITCODE -ne 0) {
@@ -195,23 +175,17 @@ if ($null -eq $filter) {
     Write-Host "Writing new launch settings" -ForegroundColor Cyan
     $mgcExe = "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.exe"
     $basicSpec = "TestProjects/Local/Basic-TypeSpec"
-    $mgmtSpec = "TestProjects/Local/Mgmt-TypeSpec"
 
     $launchSettings = @{}
     $launchSettings.Add("profiles", @{})
     $launchSettings["profiles"].Add("Basic-TypeSpec", @{})
-    $launchSettings["profiles"]["Basic-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$basicSpec -g AzureClientGenerator")
+    $launchSettings["profiles"]["Basic-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll `$(SolutionDir)/$basicSpec -g AzureClientGenerator")
     $launchSettings["profiles"]["Basic-TypeSpec"].Add("commandName", "Executable")
     $launchSettings["profiles"]["Basic-TypeSpec"].Add("executablePath", "dotnet")
 
-    $launchSettings["profiles"].Add("Mgmt-TypeSpec", @{})
-    $launchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$mgmtSpec -g AzureClientGenerator")
-    $launchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandName", "Executable")
-    $launchSettings["profiles"]["Mgmt-TypeSpec"].Add("executablePath", "dotnet")
-
     foreach ($kvp in $spectorLaunchProjects.GetEnumerator()) {
         $launchSettings["profiles"].Add($kvp.Key, @{})
-        $launchSettings["profiles"][$kvp.Key].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$($kvp.Value) -g AzureClientGenerator")
+        $launchSettings["profiles"][$kvp.Key].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll `$(SolutionDir)/$($kvp.Value) -g AzureClientGenerator")
         $launchSettings["profiles"][$kvp.Key].Add("commandName", "Executable")
         $launchSettings["profiles"][$kvp.Key].Add("executablePath", "dotnet")
     }

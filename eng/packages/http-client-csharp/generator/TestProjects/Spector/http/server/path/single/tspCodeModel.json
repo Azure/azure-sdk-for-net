@@ -1,70 +1,68 @@
 {
  "$id": "1",
- "Name": "Server.Path.Single",
- "ApiVersions": [],
- "Enums": [],
- "Models": [],
- "Clients": [
+ "name": "Server.Path.Single",
+ "apiVersions": [],
+ "enums": [],
+ "models": [],
+ "clients": [
   {
    "$id": "2",
-   "Name": "SingleClient",
-   "Namespace": "Server.Path.Single",
-   "Doc": "Illustrates server with a single path parameter @server",
-   "Operations": [
+   "kind": "client",
+   "name": "SingleClient",
+   "namespace": "Server.Path.Single",
+   "doc": "Illustrates server with a single path parameter @server",
+   "operations": [
     {
      "$id": "3",
-     "Name": "myOp",
-     "ResourceName": "Single",
-     "Accessibility": "public",
-     "Parameters": [],
-     "Responses": [
+     "name": "myOp",
+     "resourceName": "Single",
+     "accessibility": "public",
+     "parameters": [],
+     "responses": [
       {
        "$id": "4",
-       "StatusCodes": [
+       "statusCodes": [
         200
        ],
-       "Headers": [],
-       "IsErrorResponse": false
+       "headers": [],
+       "isErrorResponse": false
       }
      ],
-     "HttpMethod": "HEAD",
-     "Uri": "{endpoint}",
-     "Path": "/server/path/single/myOp",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Server.Path.Single.myOp",
-     "Decorators": []
+     "httpMethod": "HEAD",
+     "uri": "{endpoint}",
+     "path": "/server/path/single/myOp",
+     "bufferResponse": true,
+     "generateProtocolMethod": true,
+     "generateConvenienceMethod": true,
+     "crossLanguageDefinitionId": "Server.Path.Single.myOp",
+     "decorators": []
     }
    ],
-   "Protocol": {
-    "$id": "5"
-   },
-   "Parameters": [
+   "parameters": [
     {
-     "$id": "6",
-     "Name": "endpoint",
-     "NameInRequest": "endpoint",
-     "Doc": "Need to be set as 'http://localhost:3000' in client.",
-     "Type": {
-      "$id": "7",
+     "$id": "5",
+     "name": "endpoint",
+     "nameInRequest": "endpoint",
+     "doc": "Need to be set as 'http://localhost:3000' in client.",
+     "type": {
+      "$id": "6",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
      },
-     "Location": "Uri",
-     "IsApiVersion": false,
-     "IsResourceParameter": false,
-     "IsContentType": false,
-     "IsRequired": true,
-     "IsEndpoint": true,
-     "SkipUrlEncoding": false,
-     "Explode": false,
-     "Kind": "Client"
+     "location": "Uri",
+     "isApiVersion": false,
+     "isContentType": false,
+     "isRequired": true,
+     "isEndpoint": true,
+     "skipUrlEncoding": false,
+     "explode": false,
+     "kind": "Client"
     }
    ],
-   "Decorators": [],
-   "CrossLanguageDefinitionId": "Server.Path.Single"
+   "decorators": [],
+   "crossLanguageDefinitionId": "Server.Path.Single",
+   "apiVersions": []
   }
  ]
 }
