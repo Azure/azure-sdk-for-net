@@ -22,7 +22,10 @@ namespace Azure.Storage.DataMovement
     {
         private readonly IProcessor<TransferJobInternal> _jobsProcessor;
         private readonly IProcessor<JobPartInternal> _partsProcessor;
-        private readonly IProcessor<Func<Task>> _chunksProcessor;
+        /// <summary>
+        /// Processor for handling chunks of tasks to be executed concurrently.
+        /// </summary>
+        public IProcessor<Func<Task>> _chunksProcessor;
 
         private readonly JobBuilder _jobBuilder;
 
