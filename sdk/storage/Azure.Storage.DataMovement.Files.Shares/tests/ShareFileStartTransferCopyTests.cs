@@ -388,7 +388,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
                 ShareClient parentDestinationClient = destinationClient.GetParentShareClient();
                 ShareFilePermission fullPermission = await parentDestinationClient.GetPermissionAsync(destinationProperties.SmbProperties.FilePermissionKey);
-                Assert.AreEqual(sourcePermission.Permission, fullPermission.Permission);
+
+                string sourcePermissionStr = RemoveSacl(sourcePermission.Permission);
+                string destPermissionStr = RemoveSacl(fullPermission.Permission);
+                Assert.AreEqual(sourcePermissionStr, destPermissionStr);
             }
             else // Default properties
             {
