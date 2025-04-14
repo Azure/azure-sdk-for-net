@@ -189,7 +189,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             return InstrumentClient(new ShareFileClient(sasBuilder.ToUri(), GetOptions()));
         }
 
-        private async Task<ShareFileClient> CreateFileClientWithNfsAsync(
+        private async Task<ShareFileClient> CreateFileClientWithOptionsAsync(
             ShareClient container,
             long? objectLength = null,
             bool createResource = false,
@@ -726,7 +726,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             };
 
             // Create source file with properties
-            ShareFileClient sourceClient = await CreateFileClientWithNfsAsync(
+            ShareFileClient sourceClient = await CreateFileClientWithOptionsAsync(
                 container: source.Container,
                 objectLength: DataMovementTestConstants.KB,
                 createResource: true,
@@ -735,7 +735,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 new ShareFileStorageResourceOptions() { IsNfs = true });
 
             // Create destination file
-            ShareFileClient destinationClient = await CreateFileClientWithNfsAsync(
+            ShareFileClient destinationClient = await CreateFileClientWithOptionsAsync(
                 container: destination.Container,
                 createResource: false);
             StorageResourceItem destinationResource = new ShareFileStorageResource(destinationClient,
