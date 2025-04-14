@@ -273,9 +273,8 @@ namespace Azure.Data.Tables
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
             var endpointString = _endpoint.AbsoluteUri;
             string secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(_endpoint)?.AbsoluteUri;
-            var audienceScope = string.IsNullOrEmpty(options?.Audience?.ToString())
-                ? TableAudience.AzurePublicCloud.GetDefaultScope(_isCosmosEndpoint)
-                : options.Audience.Value.GetDefaultScope(_isCosmosEndpoint);
+            var audienceScope = (options?.Audience ?? TableAudience.AzurePublicCloud)
+                .GetDefaultScope(_isCosmosEndpoint);
             var pipelineOptions = new HttpPipelineOptions(options)
             {
                 PerRetryPolicies = { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, audienceScope, options.EnableTenantDiscovery) },
