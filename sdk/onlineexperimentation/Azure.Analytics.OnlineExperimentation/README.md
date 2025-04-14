@@ -22,8 +22,8 @@ You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) 
 
 The Azure Online Experimentation client library initialization requires two parameters:
 
-- The `endpoint` property value from the [`Microsoft.OnlineExperimentation/workspaces`](https://learn.microsoft.com/en-us/azure/templates/microsoft.onlineexperimentation/workspaces) resource.
-- A `TokenCredential` for authentication, the simplest approach is to use [`DefaultAzureCredential`](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential).
+- The `endpoint` property value from the [`Microsoft.OnlineExperimentation/workspaces`](https://learn.microsoft.com/azure/templates/microsoft.onlineexperimentation/workspaces) resource.
+- A `TokenCredential` for authentication, the simplest approach is to use [`DefaultAzureCredential`](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential).
 
 ```C# Snippet:OnlineExperimentation_InitializeClient
 var endpoint = new Uri(Environment.GetEnvironmentVariable("AZURE_ONLINEEXPERIMENTATION_ENDPOINT"));
@@ -64,9 +64,9 @@ All client instances are thread-safe. It's recommended to reuse client instances
 
 Explore common scenarios using the [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/onlineexperimentation/Azure.Analytics.OnlineExperimentation/samples):
 
-- [Creating Experiment Metrics](./samples/Sample1_CreateExperimentMetrics.md)
-- [Updating Experiment Metrics](./samples/Sample2_UpdateExperimentMetrics.md)
-- [Validating and Deleting Metrics](./samples/Sample3_ValidateAndDeleteMetrics.md)
+- [Creating Experiment Metrics](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/onlineexperimentation/Azure.Analytics.OnlineExperimentation/samples/Sample1_CreateExperimentMetrics.md)
+- [Updating Experiment Metrics](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/onlineexperimentation/Azure.Analytics.OnlineExperimentation/samples/Sample2_UpdateExperimentMetrics.md)
+- [Validating and Deleting Metrics](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/onlineexperimentation/Azure.Analytics.OnlineExperimentation/samples/Sample3_ValidateAndDeleteMetrics.md)
 
 ## Troubleshooting
 
@@ -90,7 +90,7 @@ var client = new OnlineExperimentationClient(endpoint, new DefaultAzureCredentia
 
 ## Next steps
 
-- Explore additional [samples](./samples) to learn more.
+- Explore additional [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/onlineexperimentation/Azure.Analytics.OnlineExperimentation/samples) to learn more.
 - Visit the [Azure SDK for .NET](https://github.com/Azure/azure-sdk-for-net) repository for more libraries.
 
 ## Contributing
