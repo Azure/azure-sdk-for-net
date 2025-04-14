@@ -14,8 +14,6 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
         [SyncOnly]
         public void BeginTestProfileRun()
         {
-            #region Snippet:Azure_Developer_LoadTesting_CreateTestRunClient
-
 #if SNIPPET
             // The data-plane endpoint is obtained from Control Plane APIs with "https://"
             // To obtain endpoint please follow: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/loadtestservice/Azure.Developer.LoadTesting#data-plane-endpoint
@@ -27,9 +25,8 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             TokenCredential credential = TestEnvironment.Credential;
 #endif
 
-            // creating LoadTesting Administration Client
+            // creating LoadTesting Run Client
             LoadTestRunClient loadTestRunClient = new LoadTestRunClient(endpointUrl, credential);
-            #endregion
 
             #region Snippet:Azure_Developer_LoadTesting_BeginTestProfileRun
             string testProfileRunId = "my-test-profile-run-id";

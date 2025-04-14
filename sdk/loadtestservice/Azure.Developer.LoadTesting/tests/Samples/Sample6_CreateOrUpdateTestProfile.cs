@@ -14,8 +14,6 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
         [SyncOnly]
         public void CreateOrUpdateTestProfile()
         {
-            #region Snippet:Azure_Developer_LoadTesting_CreateAdminClient
-
 #if SNIPPET
             // The data-plane endpoint is obtained from Control Plane APIs with "https://"
             // To obtain endpoint please follow: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/loadtestservice/Azure.Developer.LoadTesting#data-plane-endpoint
@@ -29,7 +27,6 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
 
             // creating LoadTesting Administration Client
             LoadTestAdministrationClient loadTestAdministrationClient = new LoadTestAdministrationClient(endpointUrl, credential);
-            #endregion
 
             #region Snippet:Azure_Developer_LoadTesting_CreateOrUpdateTestProfile
             string testProfileId = "my-test-profile-id";
