@@ -332,6 +332,8 @@ namespace Azure.Security.ConfidentialLedger.Tests
             //var bundleData= JsonSerializer.Deserialize<Bundle>(resp.Content.ToString());
             string programContent = File.ReadAllText(filePath).Trim();
             string responseModule = resp.Content.ToString().Trim();
+            string s = programContent + ":" + responseModule;
+            Assert.AreEqual(programContent,responseModule, s);
             string cleanedStr1 = new string(programContent.Where(c => !char.IsControl(c)).ToArray());
             string cleanedStr2 = new string(responseModule.Where(c => !char.IsControl(c)).ToArray());
 
@@ -430,7 +432,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task CustomRoleTest()
         {
-            string roleName = "TestRoleUser";
+            string roleName = "TestRoleUser1";
 
             // Add Custom Role
             var rolesParam = new RolesParam
