@@ -56,11 +56,10 @@ namespace Azure.Storage.DataMovement
             MaxConcurrency = DataMovementConstants.ConcurrencyTuner.ConcurrencyUpperLimit;
 
             // Passing no cancellation token. Leaving open possibility to pass token in the future
-            StartConcurrencyTuner();
             _concurrencyRecommendations.Process = ProcessConcurrencyRecommendationsAsync;
         }
 
-        private void StartConcurrencyTuner()
+        internal void StartConcurrencyTuner()
         {
             //_resourceMonitor.StartMonitoring(cancellationToken);
             Task.Run(() => Worker(CancellationToken.None));
@@ -90,9 +89,6 @@ namespace Azure.Storage.DataMovement
             while (!cancellationToken.IsCancellationRequested)
             {
                 // Creating a delay here so to give the recommendations time to get processed
-                if (ThroughputMonitor.Throughput == 0)
-                    continue;
-
                 await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
                 ConcurrencyTunerState rateChangeReason = ConcurrencyTunerState.ConcurrencyReasonSeeking;
 
