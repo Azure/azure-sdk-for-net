@@ -161,7 +161,7 @@ foreach ($directory in $directories) {
     }
 
     Write-Host "Generating $subPath" -ForegroundColor Cyan
-    Invoke (Get-TspCommand $specFile $generationDir $stubbed -forceNewProject $ForceNewProject)
+    Invoke (Get-TspCommand $specFile $generationDir $stubbed)
 
     # exit if the generation failed
     if ($LASTEXITCODE -ne 0) {
