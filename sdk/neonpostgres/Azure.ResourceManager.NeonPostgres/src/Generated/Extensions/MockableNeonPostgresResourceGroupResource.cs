@@ -133,9 +133,9 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
         /// </summary>
         /// <param name="pgVersion"> Post Action to retrieve the PostgreSQL versions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PgVersionsResult>> GetPostgresVersionsOrganizationAsync(PgVersion pgVersion = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PgVersionsResult>> GetOrganizationPostgresVersionsAsync(PgVersion pgVersion = null, CancellationToken cancellationToken = default)
         {
-            using var scope = NeonOrganizationOrganizationsClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.GetPostgresVersionsOrganization");
+            using var scope = NeonOrganizationOrganizationsClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.GetOrganizationPostgresVersions");
             scope.Start();
             try
             {
@@ -172,9 +172,9 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
         /// </summary>
         /// <param name="pgVersion"> Post Action to retrieve the PostgreSQL versions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PgVersionsResult> GetPostgresVersionsOrganization(PgVersion pgVersion = null, CancellationToken cancellationToken = default)
+        public virtual Response<PgVersionsResult> GetOrganizationPostgresVersions(PgVersion pgVersion = null, CancellationToken cancellationToken = default)
         {
-            using var scope = NeonOrganizationOrganizationsClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.GetPostgresVersionsOrganization");
+            using var scope = NeonOrganizationOrganizationsClientDiagnostics.CreateScope("MockableNeonPostgresResourceGroupResource.GetOrganizationPostgresVersions");
             scope.Start();
             try
             {
