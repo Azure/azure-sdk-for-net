@@ -65,7 +65,7 @@ internal static class StringExtensions
         return buffer.Slice(0, index).ToString();
     }
 
-    public static string ReplaceCharacters(this string input, Dictionary<char, string?> replacements, bool appendUnderscore = true)
+    public static string ReplaceCharacters(this string input, Dictionary<char, string?> replacements)
     {
         Stack<int> state = [];
         int length = input.Length;
@@ -128,10 +128,7 @@ internal static class StringExtensions
             }
         }
 
-        if (appendUnderscore)
-        {
-            buffer.Append("_");
-        }
+        buffer.Append('_');
 
         return buffer.ToString();
     }

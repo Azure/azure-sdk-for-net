@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    public partial class PoolResourceStateCount : IUtf8JsonSerializable, IJsonModel<PoolResourceStateCount>
+    public partial class PoolVirtualMachineStateCount : IUtf8JsonSerializable, IJsonModel<PoolVirtualMachineStateCount>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PoolResourceStateCount>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PoolVirtualMachineStateCount>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PoolResourceStateCount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PoolVirtualMachineStateCount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PoolResourceStateCount>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PoolVirtualMachineStateCount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PoolResourceStateCount)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PoolVirtualMachineStateCount)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("state"u8);
-            writer.WriteStringValue(State);
+            writer.WriteStringValue(State.ToString());
             writer.WritePropertyName("count"u8);
             writer.WriteNumberValue(Count);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.StandbyPool.Models
             }
         }
 
-        PoolResourceStateCount IJsonModel<PoolResourceStateCount>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PoolVirtualMachineStateCount IJsonModel<PoolVirtualMachineStateCount>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PoolResourceStateCount>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PoolVirtualMachineStateCount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PoolResourceStateCount)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PoolVirtualMachineStateCount)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePoolResourceStateCount(document.RootElement, options);
+            return DeserializePoolVirtualMachineStateCount(document.RootElement, options);
         }
 
-        internal static PoolResourceStateCount DeserializePoolResourceStateCount(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PoolVirtualMachineStateCount DeserializePoolVirtualMachineStateCount(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 return null;
             }
-            string state = default;
+            PoolVirtualMachineState state = default;
             long count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 if (property.NameEquals("state"u8))
                 {
-                    state = property.Value.GetString();
+                    state = new PoolVirtualMachineState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("count"u8))
@@ -97,38 +97,38 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PoolResourceStateCount(state, count, serializedAdditionalRawData);
+            return new PoolVirtualMachineStateCount(state, count, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PoolResourceStateCount>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PoolVirtualMachineStateCount>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PoolResourceStateCount>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PoolVirtualMachineStateCount>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PoolResourceStateCount)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PoolVirtualMachineStateCount)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PoolResourceStateCount IPersistableModel<PoolResourceStateCount>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PoolVirtualMachineStateCount IPersistableModel<PoolVirtualMachineStateCount>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PoolResourceStateCount>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PoolVirtualMachineStateCount>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePoolResourceStateCount(document.RootElement, options);
+                        return DeserializePoolVirtualMachineStateCount(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PoolResourceStateCount)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PoolVirtualMachineStateCount)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PoolResourceStateCount>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PoolVirtualMachineStateCount>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

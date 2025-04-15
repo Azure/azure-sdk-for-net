@@ -20,15 +20,23 @@ internal static class SymbolExtensions
         return false;
     }
 
-    public static ITypeSymbol? GetItemSymbol(this INamedTypeSymbol namedTypeSymbol, TypeSymbolKindCache cache)
+    public static ITypeSymbol? GetItemSymbol(this ITypeSymbol typeSymbol, TypeSymbolKindCache cache)
     {
-        switch (cache.Get(namedTypeSymbol))
+        switch (typeSymbol)
         {
-            case TypeBuilderKind.IList:
-            case TypeBuilderKind.ReadOnlyMemory:
-                return namedTypeSymbol.TypeArguments[0];
-            case TypeBuilderKind.IDictionary:
-                return namedTypeSymbol.TypeArguments[1];
+            case INamedTypeSymbol namedTypeSymbol:
+                switch (cache.Get(namedTypeSymbol))
+                {
+                    case TypeBuilderKind.IList:
+                    case TypeBuilderKind.ReadOnlyMemory:
+                        return namedTypeSymbol.TypeArguments[0];
+                    case TypeBuilderKind.IDictionary:
+                        return namedTypeSymbol.TypeArguments[1];
+                    default:
+                        return null;
+                }
+            case IArrayTypeSymbol arrayTypeSymbol:
+                return arrayTypeSymbol.ElementType;
             default:
                 return null;
         }
