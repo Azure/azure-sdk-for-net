@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Description>Contains building blocks for clients that call cloud services.</Description>
-    <Version>1.4.0-beta.2</Version>
+    <Version>1.4.0-beta.3</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.3.0</ApiCompatVersion>
     <Nullable>enable</Nullable>

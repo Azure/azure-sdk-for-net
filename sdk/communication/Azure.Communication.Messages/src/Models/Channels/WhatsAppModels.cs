@@ -26,6 +26,9 @@ namespace Azure.Communication.Messages.Models.Channels
     [CodeGenModel("WhatsAppMessageTemplateItem")]
     public partial class WhatsAppMessageTemplateItem { }
 
+    [CodeGenModel("WhatsAppContact")]
+    public partial class WhatsAppContact { }
+
     [CodeGenModel("WhatsAppButtonActionBindings")]
     public partial class WhatsAppButtonActionBindings { }
 
