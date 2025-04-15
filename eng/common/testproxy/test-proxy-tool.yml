@@ -84,6 +84,7 @@ steps:
       condition: and(succeeded(), eq(variables['Agent.OS'],'Windows_NT'), ${{ parameters.condition }})
       env:
         DOTNET_ROLL_FORWARD: 'Major'
+        LOGGING__LOGLEVEL__DEFAULT: 'Debug'
 
     # nohup does NOT continue beyond the current session if you use it within powershell
     - bash: |
@@ -98,6 +99,7 @@ steps:
       workingDirectory: "${{ parameters.rootFolder }}"
       env:
         DOTNET_ROLL_FORWARD: 'Major'
+        LOGGING__LOGLEVEL__DEFAULT: 'Debug'
 
     - pwsh: |
         for ($i = 0; $i -lt 10; $i++) {
