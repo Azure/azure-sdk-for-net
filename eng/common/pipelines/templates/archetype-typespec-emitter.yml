@@ -412,7 +412,7 @@ extends:
                 -AuthToken '$(azuresdk-github-pat)'
                 -PRTitle '$(PullRequestTitle)'
                 -PRBody '$(PullRequestBody)'
-                -OpenAsDraft $(OpenAsDraft)
+                -OpenAsDraft $($(OpenAsDraft))
                 -PRLabels '$(PRLabels)'
               workingDirectory: $(Build.SourcesDirectory)
 
