@@ -100,6 +100,7 @@ extends:
 
         - task: PowerShell@2
           displayName: 'Run initialize script'
+          name: initialize
           inputs:
             pwsh: true
             filePath: $(Build.SourcesDirectory)/eng/scripts/typespec/Initialize-WorkingDirectory.ps1
@@ -117,7 +118,6 @@ extends:
 
         - task: PowerShell@2
           displayName: 'Run build script'
-          name: ci_build
           inputs:
             pwsh: true
             filePath: $(Build.SourcesDirectory)/eng/scripts/typespec/Build-Emitter.ps1
@@ -206,7 +206,6 @@ extends:
 
     # Regenerate stage
     # Responsible for regenerating the SDK code using the emitter package and the generation matrix.
-    # Creates a pull request to the `main` branch with the regened changes and updated emitter-package and emitter-package-lock files.
     - ${{ if and(parameters.ShouldPublish, parameters.ShouldRegenerate) }}:
       - stage: Regenerate
         dependsOn:
@@ -327,7 +326,7 @@ extends:
           - Generate
           variables:
             generateJobResult: $[dependencies.Generate.result]
-            emitterVersion: $[stageDependencies.Build.Build.outputs['ci_build.emitterVersion']]
+            emitterVersion: $[stageDependencies.Build.Build.outputs['initialize.emitterVersion']]
           steps:
           - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
 
@@ -387,6 +386,16 @@ extends:
               } else {
                 Write-Error "Build.Repository.Name not in the expected {Owner}/{Name} format"
               }
+
+              $openAsDraft = -not ($reason -eq 'IndividualCI' -and $sourceBranch -eq 'refs/heads/main')
+              Write-Host "Setting OpenAsDraftBool = $openAsDraft"
+              Write-Host "##vso[task.setvariable variable=OpenAsDraft]$openAsDraft"
+              if ($openAsDraft) {
+                Write-Host "##vso[task.setvariable variable=PRLabels]Do Not Merge"
+              } else {
+                Write-Host "##vso[task.setvariable variable=PRLabels]"
+              }
+              
             displayName: Get PR title and body
 
           - task: PowerShell@2
@@ -403,8 +412,8 @@ extends:
                 -AuthToken '$(azuresdk-github-pat)'
                 -PRTitle '$(PullRequestTitle)'
                 -PRBody '$(PullRequestBody)'
-                -OpenAsDraft $true
-                -PRLabels 'Do Not Merge'
+                -OpenAsDraft $$(OpenAsDraft)
+                -PRLabels '$(PRLabels)'
               workingDirectory: $(Build.SourcesDirectory)
 
     # Test stage
