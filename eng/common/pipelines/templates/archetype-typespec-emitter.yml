@@ -150,10 +150,7 @@ extends:
             artifactPath: $(Build.ArtifactStagingDirectory)
 
     # Publish stage
-    # Responsible for publishing the packages in `build_artifacts/packages` and producing `emitter-package-lock.json`
-    # Produces the artifact `publish_artifacts` which contains the following:
-    #   emitter-package.json: Created using the package json from the build step.
-    #   emitter-package-lock.json: Created by calling `npm install` using `emitter-package.json`
+    # Responsible for publishing the packages in `build_artifacts/packages`
     - ${{ if parameters.ShouldPublish }}:
       - stage: Publish
         dependsOn:
@@ -207,36 +204,6 @@ extends:
                 ServiceEndpointUrl: https://api.esrp.microsoft.com
                 MainPublisher: ESRPRELPACMANTEST
 
-          - pwsh: |
-              npm install -g @azure-tools/typespec-client-generator-cli@latest
-            displayName: Install tsp-client
-
-          - pwsh: |
-              Write-Host "Overrides location: $(buildArtifactsPath)/packages/overrides.json"
-
-              if (Test-Path -Path '$(buildArtifactsPath)/packages/overrides.json') {
-                Write-Host "Using overrides.json to generate emitter-package.json"
-                tsp-client generate-config-files `
-                --package-json '$(buildArtifactsPath)/lock-files/package.json' `
-                --output-dir '$(Build.SourcesDirectory)' `
-                --emitter-package-json-path '${{ parameters.EmitterPackageJsonOutputPath }}' `
-                --overrides '$(buildArtifactsPath)/packages/overrides.json'
-              } else {
-                Write-Host "No overrides.json found. Running tsp-client without overrides."
-                
-                tsp-client generate-config-files `
-                --package-json '$(buildArtifactsPath)/lock-files/package.json' `
-                --output-dir '$(Build.SourcesDirectory)' `
-                --emitter-package-json-path '${{ parameters.EmitterPackageJsonOutputPath }}'
-              }
-            displayName: Generate emitter-package.json and emitter-package-lock files
-            workingDirectory: $(Build.SourcesDirectory)
-
-          - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
-            parameters:
-              artifactName: publish_artifacts
-              artifactPath: $(Build.ArtifactStagingDirectory)
-
     # Regenerate stage
     # Responsible for regenerating the SDK code using the emitter package and the generation matrix.
     - ${{ if and(parameters.ShouldPublish, parameters.ShouldRegenerate) }}:
@@ -246,7 +213,7 @@ extends:
         - Publish
         variables:
           pullRequestTargetBranch: 'main'
-          publishArtifactsPath: $(Pipeline.Workspace)/publish_artifacts
+          buildArtifactsPath: $(Pipeline.Workspace)/build_artifacts
           branchName: $[stageDependencies.Build.Build.outputs['set_branch_name.branchName']]
         pool: ${{ parameters.Pool }}
         jobs:
@@ -262,9 +229,27 @@ extends:
             displayName: Download pipeline artifacts
 
           - pwsh: |
-              Write-Host "Copying *emitter-package*.json to $(Build.SourcesDirectory)/eng"
-              Copy-Item $(publishArtifactsPath)/*emitter-package*.json $(Build.SourcesDirectory)/eng/ -Force
-            displayName: Copy emitter-package json files
+              npm install -g @azure-tools/typespec-client-generator-cli@latest
+            displayName: Install tsp-client
+
+          - pwsh: |
+              Write-Host "Overrides location: $(buildArtifactsPath)/packages/overrides.json"
+
+              if (Test-Path -Path '$(buildArtifactsPath)/packages/overrides.json') {
+                Write-Host "Using overrides.json to generate emitter-package.json"
+                tsp-client generate-config-files `
+                --package-json '$(buildArtifactsPath)/lock-files/package.json' `
+                --emitter-package-json-path '${{ parameters.EmitterPackageJsonOutputPath }}' `
+                --overrides '$(buildArtifactsPath)/packages/overrides.json'
+              } else {
+                Write-Host "No overrides.json found. Running tsp-client without overrides."
+                
+                tsp-client generate-config-files `
+                --package-json '$(buildArtifactsPath)/lock-files/package.json' `
+                --emitter-package-json-path '${{ parameters.EmitterPackageJsonOutputPath }}'
+              }
+            displayName: Generate emitter-package.json and emitter-package-lock files
+            workingDirectory: $(Build.SourcesDirectory)
 
           - ${{ parameters.InitializationSteps }}
 
