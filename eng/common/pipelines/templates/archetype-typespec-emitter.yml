@@ -206,6 +206,7 @@ extends:
 
     # Regenerate stage
     # Responsible for regenerating the SDK code using the emitter package and the generation matrix.
+    # Creates a pull request to the `main` branch with the regened changes and updated emitter-package and emitter-package-lock files.
     - ${{ if and(parameters.ShouldPublish, parameters.ShouldRegenerate) }}:
       - stage: Regenerate
         dependsOn:
