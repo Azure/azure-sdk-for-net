@@ -379,7 +379,7 @@ namespace Azure.Storage
                     }
                     else
                     {
-                        (bufferedContent, oneshotValidationOptions) = await BufferAndChecksumStreamInternal(
+                        (bufferedContent, oneshotValidationOptions) = await BufferAndOptionalChecksumStreamInternal(
                             content, length.Value, oneshotValidationOptions, async, cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -462,7 +462,7 @@ namespace Azure.Storage
         /// </list>
         /// </returns>
         private async Task<(Stream Stream, UploadTransferValidationOptions ValidationOptions)>
-            BufferAndChecksumStreamInternal(
+            BufferAndOptionalChecksumStreamInternal(
                 Stream source,
                 long? count,
                 UploadTransferValidationOptions validationOptions,
@@ -980,7 +980,7 @@ namespace Azure.Storage
         {
             // also calculate checksum here for the partition checksum
             (Stream slicedStream, UploadTransferValidationOptions validationOptions)
-                = await BufferAndChecksumStreamInternal(
+                = await BufferAndOptionalChecksumStreamInternal(
                     stream,
                     maxCount,
                     new UploadTransferValidationOptions { ChecksumAlgorithm = _validationAlgorithm },
