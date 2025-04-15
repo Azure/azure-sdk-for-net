@@ -202,16 +202,16 @@ namespace Azure.Communication.Identity.Samples
 
         [Test]
         [AsyncOnly]
-        public async Task CreateCommunicationUserWithCustomlIdAsync()
+        public async Task CreateCommunicationUserWithCustomIdAsync()
         {
             var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
             var client = new CommunicationIdentityClient(connectionString);
             client = CreateClient();
-            #region  Snippet:CreateCommunicationUserWithCustomAsync
+            #region  Snippet:CreateCommunicationUserWithCustomIdAsync
             Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(customId: "alice@contoso.com");
             CommunicationUserIdentifier user = userResponse.Value;
             Console.WriteLine($"User id: {user.Id}");
-            #endregion Snippet:CreateCommunicationUserWithCustomAsync
+            #endregion Snippet:CreateCommunicationUserWithCustomIdAsync
         }
 
         [Test]
@@ -246,20 +246,6 @@ namespace Azure.Communication.Identity.Samples
             Console.WriteLine($"Custom id: {userDetails.Value.CustomId}");
             Console.WriteLine($"Last token issued at: {userDetails.Value.LastTokenIssuedAt}");
             #endregion Snippet:GetUserDetailAsync
-        }
-
-        [Test]
-        [AsyncOnly]
-        public async Task CreateUserWithCustomId()
-        {
-            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
-            var client = new CommunicationIdentityClient(connectionString);
-            client = CreateClient();
-            #region Snippet:CreateCommunicationUserWithCustomIdAsync
-            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(customId: "alice@contoso.com");
-            CommunicationUserIdentifier user = userResponse.Value;
-            Console.WriteLine($"User id: {user.Id}");
-            #endregion Snippet:CreateCommunicationUserWithCustomIdAsync
         }
 
         [Test]

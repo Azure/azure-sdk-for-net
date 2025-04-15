@@ -105,8 +105,7 @@ You can create user and token in the same request. You can specify expiration ti
 
 ```C# Snippet:CreateCommunicationUserAndTokenWithCustomExpiration
 TimeSpan tokenExpiresIn = TimeSpan.FromHours(1);
-Response<CommunicationUserIdentifierAndToken> response = client.CreateUserAndToken(customId: "alice@contoso.com",
-scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn);
+Response<CommunicationUserIdentifierAndToken> response = client.CreateUserAndToken(customId: "alice@contoso.com", scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn);
 var (user, token) = response.Value;
 Console.WriteLine($"User id: {user.Id}");
 Console.WriteLine($"Token: {token.Token}");
