@@ -157,6 +157,8 @@ jobs:
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/test.binlog
 
+      - template: /eng/common/testproxy/test-proxy-tool.yml
+
       - script: >-
           dotnet test eng/service.proj
           --filter "(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))"
@@ -175,6 +177,40 @@ jobs:
           $(AdditionalTestArguments)
           $(DiagnosticArguments)
         displayName: "Build & Test ($(TestTargetFramework))"
+        env:
+          PROXY_DEBUG_MODE: true
+
+      - pwsh: |
+          $content = Get-Content -Raw $(Build.SourcesDirectory)/test-proxy.log
+          $errorcontent = Get-Content -Raw $(Build.SourcesDirectory)/test-proxy-error.log
+
+          if ($content) {
+            Write-Host "Dump test-proxy stdout log"
+            Write-Host $content
+          }
+
+          if ($errorcontent) {
+            Write-Host "Dump test-proxy stderr log"
+            Write-Host $errorcontent
+          }
+        displayName: Dump Proxy Logs
+
+
+      - pwsh: |
+          $result = Invoke-WebRequest -Uri "http://localhost:5000/Audit/Logs"
+
+          if ($LASTEXITCODE -ne 0){
+            Write-Host "Failed to retrieve logs from the test proxy."
+            exit 1
+          }
+          else {
+            $content = $result.Content
+            if ($content) {
+              Write-Host "Dump test-proxy audit log"
+              Write-Host $content
+            }
+          }
+        displayName: Dump Proxy Audit Logs
 
       - task: PublishTestResults@2
         condition: always()
