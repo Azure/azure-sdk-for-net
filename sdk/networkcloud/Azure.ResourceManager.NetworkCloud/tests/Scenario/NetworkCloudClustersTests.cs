@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             }
 
             // Delete
-            var deleteResult = await clusterResource.DeleteAsync(WaitUntil.Completed);
+            var deleteResult = await clusterResource.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
             Assert.IsTrue(deleteResult.HasCompleted);
         }
     }

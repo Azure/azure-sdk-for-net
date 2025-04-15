@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.AreEqual(updateResult.Data.Tags, patch.Tags);
 
             // Delete
-            var deleteResponse = await l3Network.DeleteAsync(WaitUntil.Completed);
+            var deleteResponse = await l3Network.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
             Assert.IsTrue(deleteResponse.HasCompleted);
         }
     }

@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.IsNotEmpty(listBySubscriptionResult);
 
             // Delete KubernetesCluster
-            var deleteResult = await kubernetesCluster.DeleteAsync(WaitUntil.Completed);
+            var deleteResult = await kubernetesCluster.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
             Assert.IsTrue(deleteResult.HasCompleted);
         }
     }

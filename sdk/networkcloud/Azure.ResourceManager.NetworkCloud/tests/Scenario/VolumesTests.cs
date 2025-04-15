@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.IsNotEmpty(listBySubscriptionResult);
 
             // Delete Volume
-            var deleteResult = await volume.DeleteAsync(WaitUntil.Completed);
+            var deleteResult = await volume.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
             Assert.IsTrue(deleteResult.HasCompleted);
         }
     }

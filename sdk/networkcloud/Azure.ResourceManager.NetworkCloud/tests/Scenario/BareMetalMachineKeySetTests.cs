@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
 
             // Delete
-            var deleteResult = await bareMetalMachineKeySet.DeleteAsync(WaitUntil.Completed);
+            var deleteResult = await bareMetalMachineKeySet.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
             Assert.IsTrue(deleteResult.HasCompleted);
         }
     }

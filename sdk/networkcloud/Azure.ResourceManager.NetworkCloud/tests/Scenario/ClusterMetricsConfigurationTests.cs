@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.IsNotEmpty(listByCluster);
 
             // Delete
-            var deleteResult = await clusterMetricsConfiguration.DeleteAsync(WaitUntil.Completed);
+            var deleteResult = await clusterMetricsConfiguration.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
             Assert.IsTrue(deleteResult.HasCompleted);
         }
     }

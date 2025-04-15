@@ -71,7 +71,7 @@ new StringKeyValuePair("featureOptionName","featureOptionValue")
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
 
             // Delete
-            ArmOperation<NetworkCloudOperationStatusResult> deleteResult = await feature.DeleteAsync(WaitUntil.Completed);
+            ArmOperation<NetworkCloudOperationStatusResult> deleteResult = await feature.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
             NetworkCloudOperationStatusResult result = deleteResult.Value;
             Assert.IsNotNull(result);
         }
