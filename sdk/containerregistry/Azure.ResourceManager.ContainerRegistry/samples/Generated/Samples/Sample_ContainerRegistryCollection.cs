@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             string registryName = "myRegistry";
             ContainerRegistryData data = new ContainerRegistryData(new AzureLocation("westus"), new ContainerRegistrySku(ContainerRegistrySkuName.Standard))
             {
-                RoleAssignmentMode = RoleAssignmentMode.AbacRepositoryPermissions,
+                RoleAssignmentMode = ContainerRegistryRoleAssignmentMode.AbacRepositoryPermissions,
                 Tags =
 {
 ["key"] = "value"

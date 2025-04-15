@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
 },
                 Sku = new ContainerRegistrySku(ContainerRegistrySkuName.Standard),
                 IsAdminUserEnabled = true,
-                RoleAssignmentMode = RoleAssignmentMode.AbacRepositoryPermissions,
+                RoleAssignmentMode = ContainerRegistryRoleAssignmentMode.AbacRepositoryPermissions,
             };
             ArmOperation<ContainerRegistryResource> lro = await containerRegistry.UpdateAsync(WaitUntil.Completed, patch);
             ContainerRegistryResource result = lro.Value;

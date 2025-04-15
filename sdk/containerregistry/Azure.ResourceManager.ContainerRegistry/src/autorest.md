@@ -264,6 +264,7 @@ rename-mapping:
   ImportSource.registryUri: RegistryAddress
   AzureADAuthenticationAsArmPolicyStatus: AadAuthenticationAsArmPolicyStatus
   PackageSourceType: ArchivePackageSourceType
+  RoleAssignmentMode: ContainerRegistryRoleAssignmentMode
 
 override-operation-name:
   Schedules_ScheduleRun: ScheduleRun

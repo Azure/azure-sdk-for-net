@@ -9,21 +9,17 @@
 - Added new class `SourceRegistryCredentials`.
 - Added new attribute `RoleAssignmentMode` in `ContainerRegistryData` and `ContainerRegistryPatch`.
 - Added new attribute `SourceRegistry` in `ContainerRegistryCredentials`.
-
-### Breaking Changes
-
-- Changed the signature of the following methods in `ContainerRegistryResource`
+- Added the following methods to `ContainerRegistryResource` with new signature:
     - `ScheduleRun`
     - `ScheduleRunAsync`
-- Changed the signature of the following methods in `ContainerRegistryRunResource`
+- Added the following methods to `ContainerRegistryRunResource` with new signature:
     - `Cancel`
     - `CancelAsync`
     - `Update`
     - `UpdateAsync`
-- Changed the signature of the following methods in `ContainerRegistryTaskResource`
+- Added the following methods to `ContainerRegistryTaskResource` with new signature:
     - `Update`
     - `UpdateAsync`
-- Removed the attribute `SourceRegistryLoginMode` from `ContainerRegistryCredentials`
 
 ## 1.3.0-beta.2 (2025-01-24)
 

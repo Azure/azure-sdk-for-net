@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="metadataSearch"> Determines whether registry artifacts are indexed for metadata search. </param>
         /// <param name="roleAssignmentMode"> Determines registry role assignment mode. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, ContainerRegistrySku sku, bool? isAdminUserEnabled, ContainerRegistryNetworkRuleSet networkRuleSet, ContainerRegistryPolicies policies, ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, ContainerRegistryPublicNetworkAccess? publicNetworkAccess, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, bool? isAnonymousPullEnabled, ContainerRegistryMetadataSearch? metadataSearch, RoleAssignmentMode? roleAssignmentMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerRegistryPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, ContainerRegistrySku sku, bool? isAdminUserEnabled, ContainerRegistryNetworkRuleSet networkRuleSet, ContainerRegistryPolicies policies, ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, ContainerRegistryPublicNetworkAccess? publicNetworkAccess, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, bool? isAnonymousPullEnabled, ContainerRegistryMetadataSearch? metadataSearch, ContainerRegistryRoleAssignmentMode? roleAssignmentMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identity = identity;
             Tags = tags;
@@ -123,6 +123,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public ContainerRegistryMetadataSearch? MetadataSearch { get; set; }
         /// <summary> Determines registry role assignment mode. </summary>
         [WirePath("properties.roleAssignmentMode")]
-        public RoleAssignmentMode? RoleAssignmentMode { get; set; }
+        public ContainerRegistryRoleAssignmentMode? RoleAssignmentMode { get; set; }
     }
 }
