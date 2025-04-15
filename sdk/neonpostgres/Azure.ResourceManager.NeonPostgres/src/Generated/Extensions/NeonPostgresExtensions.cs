@@ -281,18 +281,18 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.GetOrganizationPostgresVersions(PgVersion,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.GetPostgresVersionsOrganization(PgVersion,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="pgVersion"> Post Action to retrieve the PostgreSQL versions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<PgVersionsResult>> GetOrganizationPostgresVersionsAsync(this ResourceGroupResource resourceGroupResource, PgVersion pgVersion = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<PgVersionsResult>> GetPostgresVersionsOrganizationAsync(this ResourceGroupResource resourceGroupResource, PgVersion pgVersion = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).GetOrganizationPostgresVersionsAsync(pgVersion, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).GetPostgresVersionsOrganizationAsync(pgVersion, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -317,18 +317,18 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.GetOrganizationPostgresVersions(PgVersion,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNeonPostgresResourceGroupResource.GetPostgresVersionsOrganization(PgVersion,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="pgVersion"> Post Action to retrieve the PostgreSQL versions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<PgVersionsResult> GetOrganizationPostgresVersions(this ResourceGroupResource resourceGroupResource, PgVersion pgVersion = null, CancellationToken cancellationToken = default)
+        public static Response<PgVersionsResult> GetPostgresVersionsOrganization(this ResourceGroupResource resourceGroupResource, PgVersion pgVersion = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).GetOrganizationPostgresVersions(pgVersion, cancellationToken);
+            return GetMockableNeonPostgresResourceGroupResource(resourceGroupResource).GetPostgresVersionsOrganization(pgVersion, cancellationToken);
         }
 
         /// <summary>
