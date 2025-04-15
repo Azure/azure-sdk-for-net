@@ -598,14 +598,8 @@ namespace Azure.ResourceManager.HDInsight.Tests
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             Assert.IsNotNull(cluster);
         }
-
-        [RecordedTest]
-        public async Task TestCreateSparkClusterWithWASBMsi()
+        private HDInsightClusterCreateOrUpdateProperties BuildBaseClusterProperties()
         {
-            string clusterName = "yk58sparkmsi";
-            _storageAccountName = "yk1sparkhdistorage";
-            string msi = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/guoweidong-test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/guoweidong-test-mi";
-            string resourceId = $"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/yukundemo3/providers/Microsoft.Storage/storageAccounts/{_storageAccountName}";
             var properties = new HDInsightClusterCreateOrUpdateProperties()
             {
                 ClusterVersion = "5.0",
@@ -629,7 +623,6 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 Id = new ResourceIdentifier(Common_VNet_Id),
                 Subnet = Common_SubNet
             };
-
             var commonLinuxProfile = new HDInsightLinuxOSProfile()
             {
                 Username = Common_User,
@@ -661,8 +654,18 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 OSLinuxProfile = commonLinuxProfile,
                 VirtualNetworkProfile = commonVnetProfile
             });
-            var msiId = new ResourceIdentifier(msi);
+            return properties;
+        }
 
+        [RecordedTest]
+        public async Task TestCreateClusterWithWASBMsi()
+        {
+            string clusterName = "yk01wasbmsi";
+            _storageAccountName = "yk01stwasb";
+            string msi = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/guoweidong-test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/guoweidong-test-mi";
+            string resourceId = $"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/yukundemo5/providers/Microsoft.Storage/storageAccounts/{_storageAccountName}";
+            var properties = BuildBaseClusterProperties();
+            var msiId = new ResourceIdentifier(msi);
             var hdis =new HDInsightStorageAccountInfo() {
                 Name = $"{_storageAccountName}.blob.core.windows.net",
                 ResourceId = new ResourceIdentifier(resourceId),
@@ -685,66 +688,13 @@ namespace Azure.ResourceManager.HDInsight.Tests
         }
 
         [RecordedTest]
-        public async Task TestCreateSparkClusterWithADLSGen2Msi()
+        public async Task TestCreateClusterWithADLSGen2Msi()
         {
-            string clusterName = "yk63sparkgen2msi";
-            _storageAccountName = "yk4adlsgen2";
+            string clusterName = "yk02adls2msi";
+            _storageAccountName = "yk01storage";
             string msi = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/guoweidong-test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/guoweidong-test-mi";
-            string resourceId = $"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/yukundemo3/providers/Microsoft.Storage/storageAccounts/{_storageAccountName}";
-            var properties = new HDInsightClusterCreateOrUpdateProperties()
-            {
-                ClusterVersion = "5.0",
-                OSType = HDInsightOSType.Linux,
-                Tier = HDInsightTier.Standard,
-                ClusterDefinition = new HDInsightClusterDefinition()
-                {
-                    Kind = "Spark",
-                    Configurations = new BinaryData(@"{
-                ""gateway"": {
-                    ""restAuthCredential.isEnabled"": ""true"",
-                    ""restAuthCredential.username"": ""admin4468"",
-                    ""restAuthCredential.password"": ""Password1!9688""
-                }
-            }")
-                },
-                IsEncryptionInTransitEnabled = true
-            };
-            var commonVnetProfile = new HDInsightVirtualNetworkProfile()
-            {
-                Id = new ResourceIdentifier(Common_VNet_Id),
-                Subnet = Common_SubNet
-            };
-            var commonLinuxProfile = new HDInsightLinuxOSProfile()
-            {
-                Username = Common_User,
-                Password = Common_Password
-            };
-            properties.ComputeRoles.Add(
-                new HDInsightClusterRole() // Head Node
-                {
-                    Name = "headnode",
-                    TargetInstanceCount = 2,
-                    HardwareProfile = new HardwareProfile { VmSize = "Standard_D12_v2" },
-                    OSLinuxProfile = commonLinuxProfile,
-                    VirtualNetworkProfile = commonVnetProfile
-                }
-                );
-            properties.ComputeRoles.Add(new HDInsightClusterRole() // Worker Node
-            {
-                Name = "workernode",
-                TargetInstanceCount = 3,
-                HardwareProfile = new HardwareProfile { VmSize = "Standard_D4_v2" },
-                OSLinuxProfile = commonLinuxProfile,
-                VirtualNetworkProfile = commonVnetProfile
-            });
-            properties.ComputeRoles.Add(new HDInsightClusterRole() // Zookeeper Node
-            {
-                Name = "zookeepernode",
-                TargetInstanceCount = 3,
-                HardwareProfile = new HardwareProfile { VmSize = "Standard_A2_v2" },
-                OSLinuxProfile = commonLinuxProfile,
-                VirtualNetworkProfile = commonVnetProfile
-            });
+            string resourceId = $"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/yukundemo5/providers/Microsoft.Storage/storageAccounts/{_storageAccountName}";
+            var properties = BuildBaseClusterProperties();
             var msiId = new ResourceIdentifier(msi);
             var hdis =  new HDInsightStorageAccountInfo()
             {
@@ -771,9 +721,9 @@ namespace Azure.ResourceManager.HDInsight.Tests
         }
 
         [RecordedTest]
-        public async Task TestEntraUser()
+        public async Task TestUpdateClusterSettingWithEntraUser()
         {
-            string clusterName = "yk01Entra";
+            string clusterName = "yk07Entra";
             var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
             var content = new HDInsightClusterCreateOrUpdateContent()
             {
@@ -787,13 +737,9 @@ namespace Azure.ResourceManager.HDInsight.Tests
                     new EntraUserInfo {
                         ObjectId = "9cd85b81-c262-44da-bc33-96c3b8c182d3",
                         Upn = "v-yukunli@microsoft.com"
-                    },new EntraUserInfo {
-                        ObjectId = "9cd85b81-c262-44da-bc33-96c3b8c182d3",
-                        Upn = "v-yukunli@microsoft.com"
                     }
                 }
             };
-
             var operation = await cluster.Value.UpdateGatewaySettingsAsync(WaitUntil.Completed, updateContent);
             Assert.AreEqual(200, operation.GetRawResponse().Status);
             var updatedSettings = await cluster.Value.GetGatewaySettingsAsync();
