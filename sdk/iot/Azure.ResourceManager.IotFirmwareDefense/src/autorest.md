@@ -61,6 +61,7 @@ override-operation-name:
 rename-mapping:
   GenerateUploadUrlRequest: FirmwareUploadUrlRequest
   Workspace: FirmwareAnalysisWorkspace
+  WorkspaceProvisioningState: ProvisioningState
   BinaryHardeningResource: BinaryHardeningResult
   BinaryHardeningSummaryResource: BinaryHardeningSummary
   CveResource: CveResult

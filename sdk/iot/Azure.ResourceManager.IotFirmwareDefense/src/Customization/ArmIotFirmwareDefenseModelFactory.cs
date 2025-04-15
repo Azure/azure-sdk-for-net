@@ -160,8 +160,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             );
         }
 
-        /* TODO add more shims below to account for changed parameter names (see build errors)
-
         /// <summary> Initializes a new instance of <see cref="Models.CveResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -182,66 +180,33 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         {
             links ??= new List<CveLink>();
 
+            var cves = new List<CvssScore>();
+            var cvss2score = new CvssScore(2);
+            cvss2score.Score = float.Parse(cvssV2Score);
+            cves.Add(cvss2score);
+
+            var cvss3score = new CvssScore(3);
+            cvss3score.Score = float.Parse(cvssV3Score);
+            cves.Add(cvss3score);
+
+
             return new CveResult(
                 id,
                 name,
                 resourceType,
                 systemData,
                 cveId,
-                component,
+                component.ComponentId,
+                component.Name,
+                component.Version,
                 severity,
                 namePropertiesName,
-                cvssScore,
-                cvssVersion,
-                cvssV2Score,
-                cvssV3Score,
+                cvss3score.Score > 0 ? cvss3score.Score : cvss2score.Score,
+                cvss3score.Score > 0 ? 3: 2,
+                cves,
                 links?.ToList(),
                 description,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CveLink"/>. </summary>
-        /// <param name="href"> The destination of the reference link. </param>
-        /// <param name="label"> The label of the reference link. </param>
-        /// <returns> A new <see cref="Models.CveLink"/> instance for mocking. </returns>
-        public static CveLink CveLink(Uri href = null, string label = null)
-        {
-            return new CveLink(href, label, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IotFirmwareDefense.IotFirmwareData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="fileName"> File name for a firmware that user uploaded. </param>
-        /// <param name="vendor"> Firmware vendor. </param>
-        /// <param name="model"> Firmware model. </param>
-        /// <param name="version"> Firmware version. </param>
-        /// <param name="description"> User-specified description of the firmware. </param>
-        /// <param name="fileSize"> File size of the uploaded firmware image. </param>
-        /// <param name="status"> The status of firmware scan. </param>
-        /// <param name="statusMessages"> A list of errors or other messages generated during firmware analysis. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="IotFirmwareDefense.IotFirmwareData"/> instance for mocking. </returns>
-        public static IotFirmwareData IotFirmwareData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string fileName = null, string vendor = null, string model = null, string version = null, string description = null, long? fileSize = null, FirmwareAnalysisStatus? status = null, IEnumerable<FirmwareAnalysisStatusMessage> statusMessages = null, FirmwareProvisioningState? provisioningState = null)
-        {
-            statusMessages ??= new List<FirmwareAnalysisStatusMessage>();
-
-            return new IotFirmwareData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                fileName,
-                vendor,
-                model,
-                version,
-                description,
-                fileSize,
-                status,
-                statusMessages?.ToList(),
-                provisioningState,
+                provisioningState: null,
                 serializedAdditionalRawData: null);
         }
 
@@ -261,159 +226,34 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             statusMessages ??= new List<FirmwareAnalysisStatusMessage>();
 
             return new IotFirmwarePatch(
-                fileName,
-                vendor,
-                model,
-                version,
-                description,
-                fileSize,
-                status,
-                statusMessages?.ToList(),
-                provisioningState,
+                new FirmwareProperties(
+                     fileName,
+                     vendor,
+                     model,
+                     version,
+                     description,
+                     fileSize,
+                     status,
+                     statusMessages?.ToList(),
+                     provisioningState,
+                     null),
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FirmwareUriToken"/>. </summary>
-        /// <param name="uri"> SAS URL for creating or accessing a blob file. </param>
-        /// <returns> A new <see cref="Models.FirmwareUriToken"/> instance for mocking. </returns>
-        public static FirmwareUriToken FirmwareUriToken(Uri uri = null)
-        {
-            return new FirmwareUriToken(uri, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PasswordHashResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="passwordHashId"> ID for password hash. </param>
-        /// <param name="filePath"> File path of the password hash. </param>
-        /// <param name="salt"> Salt of the password hash. </param>
-        /// <param name="hash"> Hash of the password. </param>
-        /// <param name="context"> Context of password hash. </param>
-        /// <param name="username"> User name of password hash. </param>
-        /// <param name="algorithm"> Algorithm of the password hash. </param>
-        /// <returns> A new <see cref="Models.PasswordHashResult"/> instance for mocking. </returns>
-        public static PasswordHashResult PasswordHashResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string passwordHashId = null, string filePath = null, string salt = null, string hash = null, string context = null, string username = null, string algorithm = null)
-        {
-            return new PasswordHashResult(
-                id,
-                name,
-                resourceType,
-                systemData,
-                passwordHashId,
-                filePath,
-                salt,
-                hash,
-                context,
-                username,
-                algorithm,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SbomComponentResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="componentId"> ID for the component. </param>
-        /// <param name="componentName"> Name for the component. </param>
-        /// <param name="version"> Version for the component. </param>
-        /// <param name="license"> License for the component. </param>
-        /// <param name="filePaths"> File paths related to the component. </param>
-        /// <returns> A new <see cref="Models.SbomComponentResult"/> instance for mocking. </returns>
-        public static SbomComponentResult SbomComponentResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string componentId = null, string componentName = null, string version = null, string license = null, IEnumerable<string> filePaths = null)
-        {
-            filePaths ??= new List<string>();
-
-            return new SbomComponentResult(
-                id,
-                name,
-                resourceType,
-                systemData,
-                componentId,
-                componentName,
-                version,
-                license,
-                filePaths?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IotFirmwareDefense.FirmwareAnalysisSummaryData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Properties of an analysis summary.
-        /// Please note <see cref="FirmwareAnalysisSummaryProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.BinaryHardeningSummary"/>, <see cref="Models.CryptoCertificateSummary"/>, <see cref="Models.CryptoKeySummary"/>, <see cref="Models.CveSummary"/> and <see cref="Models.FirmwareSummary"/>.
-        /// </param>
-        /// <returns> A new <see cref="IotFirmwareDefense.FirmwareAnalysisSummaryData"/> instance for mocking. </returns>
-        public static FirmwareAnalysisSummaryData FirmwareAnalysisSummaryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FirmwareAnalysisSummaryProperties properties = null)
-        {
-            return new FirmwareAnalysisSummaryData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IotFirmwareDefense.FirmwareAnalysisWorkspaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="IotFirmwareDefense.FirmwareAnalysisWorkspaceData"/> instance for mocking. </returns>
-        public static FirmwareAnalysisWorkspaceData FirmwareAnalysisWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, FirmwareProvisioningState? provisioningState = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new FirmwareAnalysisWorkspaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.FirmwareAnalysisWorkspacePatch"/>. </summary>
+         /// <summary> Initializes a new instance of <see cref="Models.FirmwareAnalysisWorkspacePatch"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.FirmwareAnalysisWorkspacePatch"/> instance for mocking. </returns>
         public static FirmwareAnalysisWorkspacePatch FirmwareAnalysisWorkspacePatch(FirmwareProvisioningState? provisioningState = null)
         {
-            return new FirmwareAnalysisWorkspacePatch(provisioningState, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.FirmwareSummary"/>. </summary>
-        /// <param name="extractedSize"> Total extracted size of the firmware in bytes. </param>
-        /// <param name="fileSize"> Firmware file size in bytes. </param>
-        /// <param name="extractedFileCount"> Extracted file count. </param>
-        /// <param name="componentCount"> Components count. </param>
-        /// <param name="binaryCount"> Binary count. </param>
-        /// <param name="analysisTimeSeconds"> Time used for analysis. </param>
-        /// <param name="rootFileSystems"> The number of root file systems found. </param>
-        /// <returns> A new <see cref="Models.FirmwareSummary"/> instance for mocking. </returns>
-        public static FirmwareSummary FirmwareSummary(long? extractedSize = null, long? fileSize = null, long? extractedFileCount = null, long? componentCount = null, long? binaryCount = null, long? analysisTimeSeconds = null, long? rootFileSystems = null)
-        {
-            return new FirmwareSummary(
-                FirmwareAnalysisSummaryType.Firmware,
-                serializedAdditionalRawData: null,
-                extractedSize,
-                fileSize,
-                extractedFileCount,
-                componentCount,
-                binaryCount,
-                analysisTimeSeconds,
-                rootFileSystems);
+            return new FirmwareAnalysisWorkspacePatch(
+            new AzureResourceManagerCommonTypesSkuUpdate(
+                name: "A0",
+                tier: IotFirmwareDefenseSkuTier.Free,
+                size: string.Empty,
+                family: string.Empty,
+                0,
+                serializedAdditionalRawData: null),
+            null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CveSummary"/>. </summary>
@@ -426,7 +266,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public static CveSummary CveSummary(long? critical = null, long? high = null, long? medium = null, long? low = null, long? unknown = null)
         {
             return new CveSummary(
-                FirmwareAnalysisSummaryType.Cve,
+                FirmwareAnalysisSummaryType.CommonVulnerabilitiesAndExposures,
+                provisioningState: null,
                 serializedAdditionalRawData: null,
                 critical,
                 high,
@@ -434,7 +275,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 low,
                 unknown);
         }
-
         /// <summary> Initializes a new instance of <see cref="Models.BinaryHardeningSummary"/>. </summary>
         /// <param name="totalFiles"> Total number of binaries that were analyzed. </param>
         /// <param name="nxPercentage"> NX summary percentage. </param>
@@ -447,6 +287,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         {
             return new BinaryHardeningSummary(
                 FirmwareAnalysisSummaryType.BinaryHardening,
+                provisioningState: null,
                 serializedAdditionalRawData: null,
                 totalFiles,
                 nxPercentage,
@@ -469,6 +310,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         {
             return new CryptoCertificateSummary(
                 FirmwareAnalysisSummaryType.CryptoCertificate,
+                provisioningState: null,
                 serializedAdditionalRawData: null,
                 totalCertificates,
                 pairedKeys,
@@ -490,6 +332,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         {
             return new CryptoKeySummary(
                 FirmwareAnalysisSummaryType.CryptoKey,
+                provisioningState: null,
                 serializedAdditionalRawData: null,
                 totalKeys,
                 publicKeys,
@@ -497,6 +340,5 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 pairedKeys,
                 shortKeySize);
         }
-        */
     }
 }
