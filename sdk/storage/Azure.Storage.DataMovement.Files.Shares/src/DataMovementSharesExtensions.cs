@@ -471,7 +471,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
         }
 
-        internal static StorageResourceContainerProperties ToStorageResourceItemProperties(
+        internal static StorageResourceContainerProperties ToStorageResourceContainerProperties(
             this ShareDirectoryProperties fileProperties)
         {
             Dictionary<string, object> rawProperties = new();
@@ -519,7 +519,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             };
         }
 
-        internal static void AddToStorageResourceItemProperties(
+        internal static void AddToStorageResourceContainerProperties(
             this StorageResourceContainerProperties existingProperties,
             ShareDirectoryProperties fileProperties)
         {

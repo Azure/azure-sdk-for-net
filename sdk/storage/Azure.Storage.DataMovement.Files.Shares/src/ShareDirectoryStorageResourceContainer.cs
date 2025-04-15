@@ -145,11 +145,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 cancellationToken: cancellationToken).ConfigureAwait(false);
             if (ResourceProperties != default)
             {
-                ResourceProperties.AddToStorageResourceItemProperties(response.Value);
+                ResourceProperties.AddToStorageResourceContainerProperties(response.Value);
             }
             else
             {
-                ResourceProperties = response.Value.ToStorageResourceItemProperties();
+                ResourceProperties = response.Value.ToStorageResourceContainerProperties();
             }
             ResourceProperties.Uri = Uri;
             return ResourceProperties;
