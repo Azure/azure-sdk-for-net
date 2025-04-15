@@ -389,7 +389,7 @@ extends:
 
               $openAsDraft = -not ($reason -eq 'IndividualCI' -and $sourceBranch -eq 'refs/heads/main')
               Write-Host "Setting OpenAsDraftBool = $openAsDraft"
-              Write-Host "##vso[task.setvariable variable=OpenAsDraftBool]$openAsDraft"
+              Write-Host "##vso[task.setvariable variable=OpenAsDraft]$openAsDraft"
               if ($openAsDraft) {
                 Write-Host "##vso[task.setvariable variable=PRLabels]Do Not Merge"
               } else {
@@ -412,7 +412,7 @@ extends:
                 -AuthToken '$(azuresdk-github-pat)'
                 -PRTitle '$(PullRequestTitle)'
                 -PRBody '$(PullRequestBody)'
-                -OpenAsDraft '$(openAsDraft)'
+                -OpenAsDraft '$(OpenAsDraft)'
                 -PRLabels '$(PRLabels)'
               workingDirectory: $(Build.SourcesDirectory)
 
