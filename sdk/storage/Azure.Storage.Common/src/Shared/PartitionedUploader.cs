@@ -373,14 +373,14 @@ namespace Azure.Storage
                     Stream bufferedContent;
                     if (UseMasterCrc && _masterCrcSupplier != default)
                     {
-                        bufferedContent = await PooledMemoryStream.BufferStreamPartitionInternal(
-                            content, length.Value, length.Value, _arrayPool,
-                            maxArrayPoolRentalSize: default, async, cancellationToken).ConfigureAwait(false);
+                        bufferedContent = new PooledMemoryStream(_arrayPool, Constants.MB);
+                        await content.CopyToInternal(bufferedContent, async, cancellationToken).ConfigureAwait(false);
+                        bufferedContent.Position = 0;
                     }
                     else
                     {
-                        (bufferedContent, oneshotValidationOptions) = await BufferAndOptionalChecksumStreamInternal(
-                            content, length.Value, length.Value, oneshotValidationOptions, async, cancellationToken)
+                        (bufferedContent, oneshotValidationOptions) = await BufferAndChecksumStreamInternal(
+                            content, length.Value, oneshotValidationOptions, async, cancellationToken)
                             .ConfigureAwait(false);
                     }
                     bucket.Add(bufferedContent);
@@ -438,11 +438,8 @@ namespace Azure.Storage
         /// <param name="source">
         /// Stream to buffer.
         /// </param>
-        /// <param name="minCount">
-        /// Minimum count to buffer from the stream.
-        /// </param>
-        /// <param name="maxCount">
-        /// Maximum count to buffer from the stream.
+        /// <param name="count">
+        /// Exact count to buffer from the stream.
         /// </param>
         /// <param name="validationOptions">
         /// Validation options for the upload to determine if buffering is needed.
@@ -465,10 +462,9 @@ namespace Azure.Storage
         /// </list>
         /// </returns>
         private async Task<(Stream Stream, UploadTransferValidationOptions ValidationOptions)>
-            BufferAndOptionalChecksumStreamInternal(
+            BufferAndChecksumStreamInternal(
                 Stream source,
-                long minCount,
-                long maxCount,
+                long? count,
                 UploadTransferValidationOptions validationOptions,
                 bool async,
                 CancellationToken cancellationToken)
@@ -488,14 +484,16 @@ namespace Azure.Storage
                     .SetupChecksumCalculatingReadStream(source, validationOptions.ChecksumAlgorithm);
             }
 
-            PooledMemoryStream bufferedContent = await PooledMemoryStream.BufferStreamPartitionInternal(
-                source,
-                minCount,
-                maxCount,
-                _arrayPool,
-                maxArrayPoolRentalSize: default,
-                async,
-                cancellationToken).ConfigureAwait(false);
+            Stream bufferedContent = new PooledMemoryStream(_arrayPool, Constants.MB);
+            if (count.HasValue)
+            {
+                await source.CopyToExactInternal(bufferedContent, count.Value, async, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                await source.CopyToInternal(bufferedContent, async, cancellationToken).ConfigureAwait(false);
+            }
+            bufferedContent.Position = 0;
 
             if (usingChecksumStream)
             {
@@ -982,9 +980,8 @@ namespace Azure.Storage
         {
             // also calculate checksum here for the partition checksum
             (Stream slicedStream, UploadTransferValidationOptions validationOptions)
-                = await BufferAndOptionalChecksumStreamInternal(
+                = await BufferAndChecksumStreamInternal(
                     stream,
-                    minCount,
                     maxCount,
                     new UploadTransferValidationOptions { ChecksumAlgorithm = _validationAlgorithm },
                     async,
