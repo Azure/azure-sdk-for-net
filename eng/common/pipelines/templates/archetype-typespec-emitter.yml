@@ -100,6 +100,7 @@ extends:
 
         - task: PowerShell@2
           displayName: 'Run initialize script'
+          name: initialize
           inputs:
             pwsh: true
             filePath: $(Build.SourcesDirectory)/eng/scripts/typespec/Initialize-WorkingDirectory.ps1
@@ -117,7 +118,6 @@ extends:
 
         - task: PowerShell@2
           displayName: 'Run build script'
-          name: ci_build
           inputs:
             pwsh: true
             filePath: $(Build.SourcesDirectory)/eng/scripts/typespec/Build-Emitter.ps1
@@ -326,7 +326,7 @@ extends:
           - Generate
           variables:
             generateJobResult: $[dependencies.Generate.result]
-            emitterVersion: $[stageDependencies.Build.Build.outputs['ci_build.emitterVersion']]
+            emitterVersion: $[stageDependencies.Build.Build.outputs['initialize.emitterVersion']]
           steps:
           - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
 
