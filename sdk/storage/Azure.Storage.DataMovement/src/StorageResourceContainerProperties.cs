@@ -32,7 +32,7 @@ namespace Azure.Storage.DataMovement
         public DateTimeOffset? LastModifiedTime { get; set; }
 
         /// <summary>
-        /// Dictionary of the properties associated with this resource Container.
+        /// Dictionary of the properties associated with this resource container.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IDictionary<string, object> RawProperties { get; set; }
