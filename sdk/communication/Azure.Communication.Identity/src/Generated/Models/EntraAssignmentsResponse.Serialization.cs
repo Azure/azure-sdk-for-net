@@ -45,7 +45,7 @@ namespace Azure.Communication.Identity.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static EntraAssignmentsResponse FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeEntraAssignmentsResponse(document.RootElement);
         }
     }
