@@ -15,7 +15,7 @@ Stopwatch stopwatch = Stopwatch.StartNew();
 // Create empty files for transport
 //ConcurrencyTunerTest.EmptyFileCreator fileCreator = new();
 
-//fileCreator.Location("C:/Users/t-davidbrown/Documents/temp_for_testing").NumberOfFiles(1000).RangeOfFileSizeInMB(30, 50).Build();
+//fileCreator.Location("C:/Users/t-davidbrown/Documents/temp_for_testing").NumberOfFiles(200).RangeOfFileSizeInMB(30, 50).Build();
 
 // Authenticate
 TokenCredential credential = new DefaultAzureCredential();
@@ -28,7 +28,7 @@ BlobsStorageResourceProvider blobsStorageResourceProvider = new BlobsStorageReso
 
 // Fix for CS0029 and CA2012: Directly await the ValueTask returned by FromContainerAsync
 StorageResource destinationResource = await blobsStorageResourceProvider.FromContainerAsync(
-        new Uri("https://davidbrowntest.blob.core.windows.net/testcontainer"));
+        new Uri("https://davidbrowntest.blob.core.windows.net/testcontainer2"));
 
 
 
@@ -46,6 +46,7 @@ Task.Run(async () =>
         Console.WriteLine($"Total MBs transferred: {(throughputMonitor.TotalBytesTransferred) / 1024 / 1024}");
         Console.WriteLine($"Throughput in Mbps: {(throughputMonitor.Throughput) * 8 / 1024 / 1024}");
         Console.WriteLine($"Current Max Concurrency in Program.cs: {tm._chunksProcessor.MaxConcurrentProcessing}");
+        Console.WriteLine($"Average Throughput in Mbps: {(throughputMonitor.TotalBytesTransferred * 8 / 1024/1024) /stopwatch.Elapsed.TotalSeconds}");
     }
 });
 

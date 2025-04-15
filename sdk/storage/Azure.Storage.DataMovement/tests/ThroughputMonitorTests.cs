@@ -52,14 +52,15 @@ namespace Azure.Storage.DataMovement.Tests
                 await tm.QueueBytesTransferredAsync(i, cancellationToken);
             }
             // Wait 1 second for all tasks to complete
-            await Task.Delay(2000);
+            await Task.Delay(100);
 
             // Assert
             var stopwatchField = typeof(ThroughputMonitor).GetField("_stopwatch", BindingFlags.NonPublic | BindingFlags.Instance);
             var stopwatchInstance = (Stopwatch)stopwatchField.GetValue(tm);
             Assert.Greater(stopwatchInstance.Elapsed.TotalSeconds, 0.0, "Time elapsed not greater than 0");
             Assert.Greater(tm.TotalBytesTransferred, 0, "Bytes transferred not greater than 0");
-            Assert.Greater(tm.Throughput, 0.0m, "Throughput not greater than 0");
+            Assert.Greater(tm.AvgThroughput, 0.0m, "Average throughput is not greater than 0");
+            Assert.Greater(tm.Throughput, 0.0m, "Throughtput is not greater than 0");
         }
 
         [Test]
