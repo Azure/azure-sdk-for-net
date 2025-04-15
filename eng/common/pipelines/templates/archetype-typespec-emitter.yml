@@ -326,11 +326,13 @@ extends:
           - Generate
           variables:
             generateJobResult: $[dependencies.Generate.result]
+            emitterVersion: $[stageDependencies.Build.Build.outputs['ci_build.emitterVersion']]
           steps:
           - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
 
           - pwsh: |
               $generateJobResult = '$(generateJobResult)'
+              $emitterVersion = '$(emitterVersion)'
               $collectionUri = '$(System.CollectionUri)'
               $project = '$(System.TeamProject)'
               $definitionName = '$(Build.DefinitionName)'
@@ -358,9 +360,9 @@ extends:
                 $prTitle = "Scheduled code regeneration test"
               } else {
                 if ($preRelease) {
-                  $prTitle = "Update typespec emitter version to prerelease build $buildNumber"
+                  $prTitle = "Update typespec emitter version to prerelease $emitterVersion"
                 } else {
-                  $prTitle = "Update typespec emitter version to build $buildNumber"
+                  $prTitle = "Update typespec emitter version to $emitterVersion"
                 }
 
                 if ($generateJobResult -ne 'Succeeded') {
