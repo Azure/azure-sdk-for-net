@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// ID for the key result.
         /// Serialized Name: CryptoKeyResource.properties.cryptoKeyId
         /// </param>
-        /// <param name="keyType">
+        /// <param name="cryptoKeyType">
         /// Type of the key (public or private).
         /// Serialized Name: CryptoKeyResource.properties.keyType
         /// </param>
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// Key algorithm name.
         /// Serialized Name: CryptoKeyResource.properties.keyAlgorithm
         /// </param>
-        /// <param name="usage">
+        /// <param name="cryptoKeyUsage">
         /// Functions the key can fulfill.
         /// Serialized Name: CryptoKeyResource.properties.usage
         /// </param>
@@ -483,9 +483,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// Serialized Name: CryptoKeyResource.properties.provisioningState
         /// </param>
         /// <returns> A new <see cref="Models.CryptoKeyResult"/> instance for mocking. </returns>
-        public static CryptoKeyResult CryptoKeyResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string cryptoKeyId = null, CryptoKeyType? keyType = null, long? cryptoKeySize = null, string keyAlgorithm = null, IEnumerable<string> usage = null, IEnumerable<string> filePaths = null, CryptoPairedKey pairedKey = null, bool? isShortKeySize = null, FirmwareProvisioningState? provisioningState = null)
+        public static CryptoKeyResult CryptoKeyResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string cryptoKeyId = null, CryptoKeyType? cryptoKeyType = null, long? cryptoKeySize = null, string keyAlgorithm = null, IEnumerable<string> cryptoKeyUsage = null, IEnumerable<string> filePaths = null, CryptoPairedKey pairedKey = null, bool? isShortKeySize = null, FirmwareProvisioningState? provisioningState = null)
         {
-            usage ??= new List<string>();
+            cryptoKeyUsage ??= new List<string>();
             filePaths ??= new List<string>();
 
             return new CryptoKeyResult(
@@ -494,10 +494,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 resourceType,
                 systemData,
                 cryptoKeyId,
-                keyType,
+                cryptoKeyType,
                 cryptoKeySize,
                 keyAlgorithm,
-                usage?.ToList(),
+                cryptoKeyUsage?.ToList(),
                 filePaths?.ToList(),
                 pairedKey,
                 isShortKeySize,

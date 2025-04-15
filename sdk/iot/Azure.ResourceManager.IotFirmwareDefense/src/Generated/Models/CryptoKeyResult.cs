@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of <see cref="CryptoKeyResult"/>. </summary>
         public CryptoKeyResult()
         {
-            Usage = new ChangeTrackingList<string>();
+            CryptoKeyUsage = new ChangeTrackingList<string>();
             FilePaths = new ChangeTrackingList<string>();
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// ID for the key result.
         /// Serialized Name: CryptoKeyResource.properties.cryptoKeyId
         /// </param>
-        /// <param name="keyType">
+        /// <param name="cryptoKeyType">
         /// Type of the key (public or private).
         /// Serialized Name: CryptoKeyResource.properties.keyType
         /// </param>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// Key algorithm name.
         /// Serialized Name: CryptoKeyResource.properties.keyAlgorithm
         /// </param>
-        /// <param name="usage">
+        /// <param name="cryptoKeyUsage">
         /// Functions the key can fulfill.
         /// Serialized Name: CryptoKeyResource.properties.usage
         /// </param>
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// Serialized Name: CryptoKeyResource.properties.provisioningState
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CryptoKeyResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cryptoKeyId, CryptoKeyType? keyType, long? cryptoKeySize, string keyAlgorithm, IList<string> usage, IReadOnlyList<string> filePaths, CryptoPairedKey pairedKey, bool? isShortKeySize, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CryptoKeyResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cryptoKeyId, CryptoKeyType? cryptoKeyType, long? cryptoKeySize, string keyAlgorithm, IList<string> cryptoKeyUsage, IReadOnlyList<string> filePaths, CryptoPairedKey pairedKey, bool? isShortKeySize, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CryptoKeyId = cryptoKeyId;
-            KeyType = keyType;
+            CryptoKeyType = cryptoKeyType;
             CryptoKeySize = cryptoKeySize;
             KeyAlgorithm = keyAlgorithm;
-            Usage = usage;
+            CryptoKeyUsage = cryptoKeyUsage;
             FilePaths = filePaths;
             PairedKey = pairedKey;
             IsShortKeySize = isShortKeySize;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// Type of the key (public or private).
         /// Serialized Name: CryptoKeyResource.properties.keyType
         /// </summary>
-        public CryptoKeyType? KeyType { get; set; }
+        public CryptoKeyType? CryptoKeyType { get; set; }
         /// <summary>
         /// Size of the key in bits.
         /// Serialized Name: CryptoKeyResource.properties.cryptoKeySize
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// Functions the key can fulfill.
         /// Serialized Name: CryptoKeyResource.properties.usage
         /// </summary>
-        public IList<string> Usage { get; }
+        public IList<string> CryptoKeyUsage { get; }
         /// <summary>
         /// List of files where this key was found.
         /// Serialized Name: CryptoKeyResource.properties.filePaths

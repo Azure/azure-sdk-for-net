@@ -27,15 +27,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
         {
             testFirmware = new IotFirmwareData
             {
-                Properties = new Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProperties
-                {
-                    FileName = "testFileName",
-                    FileSize = 1,
-                    Vendor = "testVendor",
-                    Model = "testModel",
-                    Version = "testVersion",
-                    Description = "testDescription"
-                }
+                FileName = "testFileName",
+                FileSize = 1,
+                Vendor = "testVendor",
+                Model = "testModel",
+                Version = "testVersion",
+                Description = "testDescription"
             };
         }
 
@@ -71,23 +68,20 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
             var name = Recording.GenerateAssetName("resource");
             var updatedFirmware = new IotFirmwareData()
             {
-                Properties = new Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProperties
-                {
-                    Description = "updatedDescription"
-                }
+                Description = "updatedDescription"
             };
             var workspace = await getWorkspace();
             var response = await workspace.GetIotFirmwares().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 name,
                 testFirmware);
-            response.Value.Data.Properties.Description.Should().Equals(testFirmware.Properties.Description);
+            response.Value.Data.Description.Should().Equals(testFirmware.Description);
 
             response = await workspace.GetIotFirmwares().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 name,
                 updatedFirmware);
-            response.Value.Data.Properties.Description.Should().Equals(updatedFirmware.Properties.Description);
+            response.Value.Data.Description.Should().Equals(updatedFirmware.Description);
         }
 
         [TestCase]

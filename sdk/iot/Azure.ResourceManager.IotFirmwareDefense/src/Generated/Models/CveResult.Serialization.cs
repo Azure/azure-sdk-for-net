@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                             List<CvssScore> array = new List<CvssScore>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add( Azure.ResourceManager.IotFirmwareDefense.Models.CvssScore.DeserializeCvssScore(item, options));
+                                array.Add(Models.CvssScore.DeserializeCvssScore(item, options));
                             }
                             cvssScores = array;
                             continue;

@@ -34,14 +34,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string NamePropertiesName
         {
-            get
-            {
-                return CveName;
-            }
-            set
-            {
-                CveName = value;
-            }
+            get => CveName;
+            set => CveName = value;
         }
         /// <summary> A single CVSS score to represent the CVE. If a V3 score is specified, then it will use the V3 score. Otherwise if the V2 score is specified it will be the V2 score. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

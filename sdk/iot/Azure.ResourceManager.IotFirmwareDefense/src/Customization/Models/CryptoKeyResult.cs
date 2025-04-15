@@ -1,12 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
@@ -22,8 +18,22 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             set => CryptoKeySize = value;
         }
 
-        ///// <summary> Type of the key (public or private). </summary>
-        //[EditorBrowsable(EditorBrowsableState.Never)]
-        //public string KeyType { get; set; }
+        /// <summary> Type of the key (public or private). </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string KeyType {
+            get => KeyType.ToString();
+            set { }
+        }
+
+        /// <summary>
+        /// Functions the key can fulfill.
+        /// Serialized Name: CryptoKeyResource.properties.usage
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IList<string> Usage
+        {
+            get => CryptoKeyUsage.ToString().Split(',');
+            set { }
+        }
     }
 }

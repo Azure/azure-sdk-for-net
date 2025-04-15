@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("cryptoKeyId"u8);
                 writer.WriteStringValue(CryptoKeyId);
             }
-            if (Optional.IsDefined(KeyType))
+            if (Optional.IsDefined(CryptoKeyType))
             {
                 writer.WritePropertyName("keyType"u8);
-                writer.WriteStringValue(KeyType.Value.ToString());
+                writer.WriteStringValue(CryptoKeyType.Value.ToString());
             }
             if (Optional.IsDefined(CryptoKeySize))
             {
@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("keyAlgorithm"u8);
                 writer.WriteStringValue(KeyAlgorithm);
             }
-            if (Optional.IsCollectionDefined(Usage))
+            if (Optional.IsCollectionDefined(CryptoKeyUsage))
             {
                 writer.WritePropertyName("usage"u8);
                 writer.WriteStartArray();
-                foreach (var item in Usage)
+                foreach (var item in CryptoKeyUsage)
                 {
                     writer.WriteStringValue(item);
                 }

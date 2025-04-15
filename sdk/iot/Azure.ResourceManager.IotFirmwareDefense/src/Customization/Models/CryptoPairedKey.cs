@@ -14,15 +14,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     {
         /// <summary> ID of the paired key or certificate. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string Id {
-            get
-            {
-                return PairedKeyId;
-            }
-            set
-            {
-                PairedKeyId = value;
-            }
+        public string Id
+        {
+            get => PairedKeyId;
+            set => PairedKeyId = value;
         }
     }
 }

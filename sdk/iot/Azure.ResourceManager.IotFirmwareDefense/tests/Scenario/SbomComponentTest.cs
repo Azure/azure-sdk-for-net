@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
             IotFirmwareResource testFirmware = await testWorkspace.GetIotFirmwareAsync(firmwareId);
 
             var results = testFirmware.GetSbomComponentsAsync();
-            await foreach ( SbomComponent result in results ) {
+            await foreach ( SbomComponentResult result in results ) {
                 Console.WriteLine($"Fetched: {result}");
             }
             Assert.NotNull(results);

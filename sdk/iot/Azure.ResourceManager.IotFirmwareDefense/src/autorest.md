@@ -61,7 +61,6 @@ override-operation-name:
 rename-mapping:
   GenerateUploadUrlRequest: FirmwareUploadUrlRequest
   Workspace: FirmwareAnalysisWorkspace
-  WorkspaceProvisioningState: ProvisioningState
   BinaryHardeningResource: BinaryHardeningResult
   BinaryHardeningSummaryResource: BinaryHardeningSummary
   CveResource: CveResult
@@ -70,8 +69,10 @@ rename-mapping:
   SummaryType: FirmwareAnalysisSummaryType
   CryptoCertificateResource: CryptoCertificateResult
   CryptoCertificateSummaryResource: CryptoCertificateSummary
-  CryptoKeyResource: CryptoKeyResult
+  CryptoKeyResource.properties.keyType: CryptoKeyType
+  CryptoKeyResource.properties.usage: CryptoKeyUsage
   CryptoKeyResource.properties.cryptoKeyId: CryptoKeyId
+  CryptoKeyResource: CryptoKeyResult
   CryptoKeySummaryResource: CryptoKeySummary
   Firmware: IotFirmware
   ProvisioningState: FirmwareProvisioningState

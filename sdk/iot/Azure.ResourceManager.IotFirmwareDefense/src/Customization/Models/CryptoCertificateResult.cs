@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.ResourceManager.Models;
 
@@ -46,8 +47,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             set => CertificateKeyAlgorithm = value;
         }
 
-        ///// <summary> Type of the key (public or private). </summary>
-        //[EditorBrowsable(EditorBrowsableState.Never)]
-        //public string KeyType { get; set; }
+        /// <summary> List of functions the certificate can fulfill. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IList<string> Usage
+        {
+            get
+            {
+                var r = new List<string>();
+                foreach (var u in CertificateUsage)
+                {
+                    r.Add(u.ToString());
+                }
+                return r;
+            }
+            set
+            {
+                return;
+            }
+        }
     }
 }
