@@ -68,5 +68,5 @@ extends:
       OnlyGenerateTypespec: true
     TestMatrix:
       All:
-        TestArguments: -UnitTests -GenerationChecks -EmitterPackagePath eng/packages/http-client-csharp -Filter .NET
+        TestArguments: -UnitTests -GenerationChecks -Filter .NET
         SpectorName: "http-client-csharp"
