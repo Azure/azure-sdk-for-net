@@ -267,8 +267,11 @@ namespace Azure.Identity
             options = null;
             try
             {
+                // Use Type.GetType and ConstructorInfo because they can be analyzed by the ILLinker and are
+                // AOT friendly.
+
                 // Try to get the options type
-                Type optionsType = Type.GetType("Azure.Identity.Broker.DevelopmentBrokerOptions", throwOnError: false);
+                Type optionsType = Type.GetType("Azure.Identity.Broker.DevelopmentBrokerOptions, Azure.Identity.Broker", throwOnError: false);
                 ConstructorInfo optionsCtor = optionsType?.GetConstructor(Type.EmptyTypes);
                 object optionsInstance = optionsCtor?.Invoke(null);
                 options = optionsInstance as InteractiveBrowserCredentialOptions;
