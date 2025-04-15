@@ -194,7 +194,7 @@ jobs:
             Write-Host $errorcontent
           }
         displayName: Dump Proxy Logs
-
+        condition: succeededOrFailed()
 
       - pwsh: |
           $result = Invoke-WebRequest -Uri "http://localhost:5000/Audit/Logs"
@@ -211,6 +211,7 @@ jobs:
             }
           }
         displayName: Dump Proxy Audit Logs
+        condition: succeededOrFailed()
 
       - task: PublishTestResults@2
         condition: always()
