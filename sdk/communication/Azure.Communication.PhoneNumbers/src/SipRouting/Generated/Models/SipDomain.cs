@@ -13,13 +13,6 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
     /// </summary>
     public partial class SipDomain
     {
-        /// <summary> Initializes a new instance of <see cref="SipDomain"/>. </summary>
-        /// <param name="enabled"> Enabled flag. </param>
-        public SipDomain(bool enabled)
-        {
-            Enabled = enabled;
-        }
-
         /// <summary> Enabled flag. </summary>
         public bool Enabled { get; set; }
     }

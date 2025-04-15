@@ -85,16 +85,20 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
 
         public async Task<Response<SipConfiguration>> GetAsync(bool includeHealth, CancellationToken cancellationToken = default)
         {
-            var expandParameter = includeHealth ? ExpandEnum.TrunksHealth : null;
-
-            return await this.GetAsync(expandParameter, cancellationToken).ConfigureAwait(false);
+            if (includeHealth)
+            {
+                return await this.GetAsync(ExpandEnum.TrunksHealth, cancellationToken).ConfigureAwait(false);
+            }
+            return await this.GetAsync(null, cancellationToken).ConfigureAwait(false);
         }
 
         public Response<SipConfiguration> Get(bool includeHealth, CancellationToken cancellationToken = default)
         {
-            var expandParameter = includeHealth ? ExpandEnum.TrunksHealth : null;
-
-            return Get(expandParameter, cancellationToken);
+            if (includeHealth)
+            {
+                return Get(ExpandEnum.TrunksHealth, cancellationToken);
+            }
+            return Get(null, cancellationToken);
         }
     }
 }

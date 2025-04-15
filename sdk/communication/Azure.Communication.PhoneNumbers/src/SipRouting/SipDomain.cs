@@ -18,6 +18,13 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             Enabled = enabled;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SipDomain"/>. </summary>
+        /// <param name="enabled"> Enabled flag. </param>
+        private SipDomain(bool enabled)
+        {
+            Enabled = enabled;
+        }
+
         /// <summary> Name of the trunk. </summary>
         public string Fqdn { get; internal set; }
     }

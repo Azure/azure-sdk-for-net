@@ -27,6 +27,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         {
             var client = CreateClient();
             client.SetRoutesAsync(new List<SipTrunkRoute>()).Wait();
+            client.SetDomainsAsync(new List<SipDomain> { TestData!.Domain }).Wait();
             client.SetTrunksAsync(TestData!.TrunkList).Wait();
             client.SetRoutesAsync(new List<SipTrunkRoute> { TestData!.RuleWithoutTrunks }).Wait();
 
@@ -122,6 +123,22 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         }
 
         [Test]
+        public async Task AddSipDomainForResource()
+        {
+            if (SkipSipConfigurationLiveTest)
+            {
+                Assert.Ignore("Skip sip configuration flag is on.");
+            }
+
+            var client = InitializeTest();
+            var response = await client.SetDomainAsync(TestData!.NewDomain).ConfigureAwait(false);
+            var actualDomains = await client.GetDomainsAsync().ConfigureAwait(false);
+
+            Assert.AreEqual(2, actualDomains.Value.Count());
+            Assert.IsNotNull(actualDomains.Value.FirstOrDefault(x => x.Fqdn == TestData!.NewDomain.Fqdn));
+        }
+
+        [Test]
         public async Task SetSipTrunkForResource()
         {
             if (SkipSipConfigurationLiveTest)
@@ -171,6 +188,25 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
             var trunk = response.Value;
             Assert.IsNotNull(trunk);
             Assert.IsTrue(TrunkAreEqual(TestData!.TrunkList[1], trunk));
+        }
+
+        [Test]
+        public async Task GetSipTrunksWithHealthForResource()
+        {
+            if (SkipSipConfigurationLiveTest)
+            {
+                Assert.Ignore("Skip sip configuration flag is on.");
+            }
+
+            var client = InitializeTest();
+
+            var response = await client.GetTrunksAsync(true).ConfigureAwait(false);
+
+            var trunks = response.Value;
+
+            Assert.IsNotNull(trunks);
+            Assert.IsNotNull(trunks[0].Health);
+            Assert.IsNotNull(trunks[1].Health);
         }
 
         [Test]

@@ -14,7 +14,9 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         public readonly int[] TrunkPorts = { 1122, 1123 };
 
         public readonly List<SipTrunk> TrunkList;
+        public readonly SipDomain Domain;
         public readonly SipTrunk NewTrunk;
+        public readonly SipDomain NewDomain;
 
         public readonly SipTrunkRoute RuleNavigateToTrunk1;
         public readonly SipTrunkRoute RuleNavigateToAllTrunks;
@@ -25,6 +27,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
 
         public TestData(string domain, string randomGuid)
         {
+            Domain = new SipDomain(domain, true);
             Fqdns = new List<string>() { "sbs1-" + randomGuid + "." + domain, "sbs2-" + randomGuid + "." + domain };
             TrunkList = new List<SipTrunk>
             {
@@ -32,6 +35,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
                 new SipTrunk(Fqdns[1], TrunkPorts[1])
             };
             NewTrunk = new SipTrunk("newsbs-" + randomGuid + "." + domain, 3333);
+            NewDomain = new SipDomain("new-domain" + randomGuid + domain, false);
 
             RuleNavigateToTrunk1 = new SipTrunkRoute(
                 name: "First rule",

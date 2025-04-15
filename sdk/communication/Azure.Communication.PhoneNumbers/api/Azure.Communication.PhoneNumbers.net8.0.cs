@@ -442,7 +442,6 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
     }
     public partial class SipDomain
     {
-        public SipDomain(bool enabled) { }
         public SipDomain(string fqdn, bool enabled) { }
         public bool Enabled { get { throw null; } set { } }
         public string Fqdn { get { throw null; } }

@@ -127,6 +127,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                         else
                         {
                             var sipDomain = SipDomain.DeserializeSipDomain(property0.Value);
+                            sipDomain.Fqdn = property0.Name;
                             sipDomain.Enabled = property0.Value.GetProperty("enabled").GetBoolean();
                             dictionary.Add(property0.Name, sipDomain);
                         }

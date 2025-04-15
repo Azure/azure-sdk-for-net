@@ -593,7 +593,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             string fqdn,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(GetDomainAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(GetDomain)}");
             scope.Start();
             try
             {
@@ -651,7 +651,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         public async virtual Task<Response<IReadOnlyList<SipDomain>>> GetDomainsAsync(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(GetDomainsAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(GetDomains)}");
             scope.Start();
             try
             {
@@ -722,7 +722,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         {
             var config = new SipConfiguration(new Dictionary<string, SipDomain> { { domain.Fqdn, domain } });
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(SetDomainAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(SetDomain)}");
             scope.Start();
             try
             {
@@ -784,7 +784,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             IEnumerable<SipDomain> domains,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(SetDomainsAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(SetDomains)}");
             scope.Start();
             try
             {
@@ -850,7 +850,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         {
             var removeConfig = new SipConfiguration(new Dictionary<string, SipDomain> { { fqdn, null } });
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(DeleteDomainAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(DeleteDomain)}");
             scope.Start();
             try
             {
