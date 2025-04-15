@@ -262,30 +262,16 @@ namespace Azure.Identity
         /// This is used to enable broker authentication for development purposes.
         /// </summary>
         /// <param name="options"></param>
-        /// <returns></returns>
-        [UnconditionalSuppressMessage("Trimming", "IL2026",
-    Justification = "Assembly.Load is used for optional functionality. If the assembly is trimmed, the catch block handles it gracefully.")]
-        [UnconditionalSuppressMessage("Trimming", "IL2072",
-    Justification = "Loading Azure.Identity.Broker assembly is optional, method handles missing assembly gracefully")]
         internal static bool TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions options)
         {
             options = null;
             try
             {
-                // Check if the Azure.Identity.Broker assembly is loaded
-                Assembly brokerAssembly;
-                brokerAssembly = Assembly.Load("Azure.Identity.Broker");
-
-                if (brokerAssembly != null)
-                {
-                    // Get the DevelopmentBrokerOptions type
-                    var optionsType = brokerAssembly.GetType("Azure.Identity.Broker.DevelopmentBrokerOptions");
-                    if (optionsType != null)
-                    {
-                        // Create an instance using the parameterless constructor
-                        options = (InteractiveBrowserCredentialOptions)Activator.CreateInstance(optionsType);
-                    }
-                }
+                // Try to get the options type
+                Type optionsType = Type.GetType("Azure.Identity.Broker.DevelopmentBrokerOptions", throwOnError: false);
+                ConstructorInfo optionsCtor = optionsType?.GetConstructor(Type.EmptyTypes);
+                object optionsInstance = optionsCtor?.Invoke(null);
+                options = optionsInstance as InteractiveBrowserCredentialOptions;
 
                 return options != null;
             }
