@@ -98,6 +98,7 @@ extends:
 
         - ${{ parameters.InitializationSteps }}
 
+        # Initialize-WorkingDirectory.ps1 is responsible for setting the emitterVersion output variable.
         - task: PowerShell@2
           displayName: 'Run initialize script'
           name: initialize
