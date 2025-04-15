@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.Projects
@@ -50,7 +52,7 @@ namespace Azure.AI.Projects
                 role,
                 content is null
                     ? throw new ArgumentNullException(nameof(content))
-                    : BinaryData.FromString(content))
+                    : BinaryData.FromObjectAsJson(content))
         {
             // Calls the generated constructor (MessageRole, BinaryData).
         }
@@ -78,9 +80,38 @@ namespace Azure.AI.Projects
                 role,
                 contentBlocks is null
                     ? throw new ArgumentNullException(nameof(contentBlocks))
-                    : BinaryData.FromObjectAsJson(contentBlocks))
+                    : SerializeContentBlocks(contentBlocks))
         {
-            // Calls the generated constructor (MessageRole, BinaryData).
+            // Invokes the generated constructor (MessageRole, BinaryData).
+        }
+
+        /// <summary>
+        /// Converts a collection of <see cref="MessageInputContentBlock"/> instances into
+        /// a JSON array, storing the resulting JSON as <see cref="BinaryData"/>.
+        /// </summary>
+        /// <param name="contentBlocks">The collection of content blocks to be serialized.</param>
+        /// <returns>A <see cref="BinaryData"/> instance containing the JSON array.</returns>
+        private static BinaryData SerializeContentBlocks(IEnumerable<MessageInputContentBlock> contentBlocks)
+        {
+            var jsonElements = new List<JsonElement>();
+
+            foreach (MessageInputContentBlock block in contentBlocks)
+            {
+                using var memStream = new MemoryStream();
+
+                // Convert the block into a JSON payload by writing to a MemoryStream.
+                block.ToRequestContent().WriteTo(memStream, default);
+
+                // Reset stream position to the beginning.
+                memStream.Position = 0;
+
+                // Parse to a JsonDocument, then clone the root element for safe reuse.
+                using var tempDoc = JsonDocument.Parse(memStream);
+                jsonElements.Add(tempDoc.RootElement.Clone());
+            }
+
+            // Serialize the array of JsonElements into a single BinaryData.
+            return BinaryData.FromObjectAsJson(jsonElements);
         }
 
         /// <summary>

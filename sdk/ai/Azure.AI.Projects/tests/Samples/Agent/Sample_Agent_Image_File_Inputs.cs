@@ -14,7 +14,7 @@ using NUnit.Framework;
 namespace Azure.AI.Projects.Tests
 {
     /// <summary>
-    /// Demonstrates examples of sending an image URL and image file (along with optional text)
+    /// Demonstrates examples of sending an image file (along with optional text)
     /// as a structured content block in a single message.
     /// </summary>
     /// <remarks>
