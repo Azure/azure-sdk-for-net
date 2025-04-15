@@ -516,15 +516,13 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             string sourcePrefix = "sourceFolder";
             string destPrefix = "destFolder";
 
-            PermissionInfo permissionInfo = await source.Container.CreatePermissionAsync(new ShareFilePermission() { Permission = _defaultPermissions });
-            string permissionKey = permissionInfo.FilePermissionKey;
             ShareDirectoryCreateOptions directoryCreateOptions = new ShareDirectoryCreateOptions()
             {
                 Metadata = _defaultMetadata,
+                FilePermission = new ShareFilePermission() { Permission = _defaultPermissions },
                 SmbProperties = new FileSmbProperties()
                 {
                     FileAttributes = _defaultFileAttributes,
-                    FilePermissionKey = permissionKey,
                     FileCreatedOn = _defaultFileCreatedOn,
                     FileChangedOn = _defaultFileChangedOn,
                     FileLastWrittenOn = _defaultFileLastWrittenOn,
