@@ -337,10 +337,9 @@ namespace Azure.Security.ConfidentialLedger.Tests
             string filePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "programmability.js");
             string programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create("test", filePath));
             RequestContent programmabilityContent = RequestContent.Create(programmabilityPayload);
-
+            Console.WriteLine(programmabilityContent);
             Response result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
-            var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
-
+            Console.WriteLine(result.Content.ToString());
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
 
             var resp = await Client.GetUserDefinedEndpointsModuleAsync("test");
