@@ -202,7 +202,7 @@ namespace Azure.Communication.Identity.Samples
 
         [Test]
         [AsyncOnly]
-        public async Task CreateCommunicationUserWithCustomIdAsync()
+        public async Task CreateCommunicationUserWithCustomlIdAsync()
         {
             var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
             var client = new CommunicationIdentityClient(connectionString);
