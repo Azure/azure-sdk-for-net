@@ -218,7 +218,7 @@ extends:
                 Write-Host "Using overrides.json to generate emitter-package.json"
                 tsp-client generate-config-files `
                 --package-json '$(buildArtifactsPath)/lock-files/package.json' `
-                --output-dir '$(Build.SourcesDirectory)' `
+                --output-dir '$(Build.ArtifactStagingDirectory)' `
                 --emitter-package-json-path '${{ parameters.EmitterPackageJsonOutputPath }}' `
                 --overrides '$(buildArtifactsPath)/packages/overrides.json'
               } else {
@@ -226,7 +226,7 @@ extends:
                 
                 tsp-client generate-config-files `
                 --package-json '$(buildArtifactsPath)/lock-files/package.json' `
-                --output-dir '$(Build.SourcesDirectory)' `
+                --output-dir '$(Build.ArtifactStagingDirectory)' `
                 --emitter-package-json-path '${{ parameters.EmitterPackageJsonOutputPath }}'
               }
             displayName: Generate emitter-package.json and emitter-package-lock files
