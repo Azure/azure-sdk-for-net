@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
@@ -123,11 +124,14 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            // Reuse the existing generated method internally by converting the string to BinaryData.
+            // Serialize the plain text into JSON so that the underlying generated code
+            // sees a properly quoted/escaped string instead of raw text.
+            BinaryData contentJson = BinaryData.FromObjectAsJson(content);
+
             return await CreateMessageAsync(
                 threadId,
                 role,
-                BinaryData.FromString(content),
+                contentJson,
                 attachments,
                 metadata,
                 cancellationToken
@@ -161,11 +165,15 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
+            // Serialize the plain text into JSON so that the underlying generated code
+            // sees a properly quoted/escaped string instead of raw text.
+            BinaryData contentJson = BinaryData.FromObjectAsJson(content);
+
             // Reuse the existing generated method internally by converting the string to BinaryData.
             return CreateMessage(
                 threadId,
                 role,
-                BinaryData.FromString(content),
+                contentJson,
                 attachments,
                 metadata,
                 cancellationToken
@@ -206,7 +214,25 @@ namespace Azure.AI.Projects
             Argument.AssertNotNull(contentBlocks, nameof(contentBlocks));
 
             // Convert blocks to a JSON array stored as BinaryData
-            BinaryData serializedBlocks = BinaryData.FromObjectAsJson(contentBlocks);
+            var jsonElements = new List<JsonElement>();
+            foreach (MessageInputContentBlock block in contentBlocks)
+            {
+                // Write the content into a MemoryStream.
+                using var memStream = new MemoryStream();
+
+                // Write the RequestContent into the MemoryStream
+                block.ToRequestContent().WriteTo(memStream, default);
+
+                // Reset stream position to the beginning
+                memStream.Position = 0;
+
+                // Parse to a JsonDocument, then clone the root element so we can reuse it
+                using var tempDoc = JsonDocument.Parse(memStream);
+                jsonElements.Add(tempDoc.RootElement.Clone());
+            }
+
+            // Now serialize the array of JsonElements into a single BinaryData for the request:
+            BinaryData serializedBlocks = BinaryData.FromObjectAsJson(jsonElements);
 
             return await CreateMessageAsync(
                 threadId,
@@ -252,7 +278,25 @@ namespace Azure.AI.Projects
             Argument.AssertNotNull(contentBlocks, nameof(contentBlocks));
 
             // Convert blocks to a JSON array stored as BinaryData
-            BinaryData serializedBlocks = BinaryData.FromObjectAsJson(contentBlocks);
+            var jsonElements = new List<JsonElement>();
+            foreach (MessageInputContentBlock block in contentBlocks)
+            {
+                // Write the content into a MemoryStream.
+                using var memStream = new MemoryStream();
+
+                // Write the RequestContent into the MemoryStream
+                block.ToRequestContent().WriteTo(memStream, default);
+
+                // Reset stream position to the beginning
+                memStream.Position = 0;
+
+                // Parse to a JsonDocument, then clone the root element so we can reuse it
+                using var tempDoc = JsonDocument.Parse(memStream);
+                jsonElements.Add(tempDoc.RootElement.Clone());
+            }
+
+            // Now serialize the array of JsonElements into a single BinaryData for the request:
+            BinaryData serializedBlocks = BinaryData.FromObjectAsJson(jsonElements);
 
             return CreateMessage(
                 threadId,

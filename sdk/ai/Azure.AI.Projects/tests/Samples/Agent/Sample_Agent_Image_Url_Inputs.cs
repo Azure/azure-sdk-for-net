@@ -21,7 +21,7 @@ namespace Azure.AI.Projects.Tests
     /// post content blocks combining text and image inputs,
     /// and then run the agent to see how it interprets the multimedia input.
     /// </remarks>
-    public partial class Sample_Agent_ContentBlocks : SamplesBase<AIProjectsTestEnvironment>
+    public partial class Sample_Agent_ImageUrlInputs : SamplesBase<AIProjectsTestEnvironment>
     {
         [Test]
         [AsyncOnly]
@@ -56,12 +56,14 @@ namespace Azure.AI.Projects.Tests
             // Step 3: Create a message using multiple content blocks.
             // Here we combine a short text and an image URL in a single user message.
             #region Snippet:ImageUrlInMessageCreateMessage
+            MessageImageUrlParam imageUrlParam = new MessageImageUrlParam(
+                url: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"
+            );
+            imageUrlParam.Detail = ImageDetailLevel.High;
             var contentBlocks = new List<MessageInputContentBlock>
             {
                 new MessageInputTextBlock("Could you describe this image?"),
-                new MessageInputImageUrlBlock(new MessageImageUrlParam(
-                    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"
-                ))
+                new MessageInputImageUrlBlock(imageUrlParam)
             };
 
             ThreadMessage imageMessage = await client.CreateMessageAsync(
@@ -126,73 +128,70 @@ namespace Azure.AI.Projects.Tests
         }
 
         [Test]
-        [AsyncOnly]
-        public async Task ImageFileInMessageExampleAsync()
+        [SyncOnly]
+        public void ImageUrlInMessageExample()
         {
+            #region Snippet:ImageUrlInMessageCreateClient_Sync
 #if SNIPPET
-            var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
-            var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+            var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+            var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
             var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
             var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-            // 1) Create an AgentsClient for agent-management and messaging.
+            // Create an AgentsClient, enabling agent-management and messaging.
             AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
-
-            // 2) (Optional) Upload a file for referencing in your message:
-            #region Snippet:ImageFileInMessageUpload
-            // The file might be an image or any relevant binary.
-            // Make sure the server or container is set up for "Agents" usage if required.
-            AgentFile uploadedFile = await client.UploadFileAsync(
-                filePath: "sample_file_for_upload.jpg",
-                purpose: AgentFilePurpose.Agents
-            );
-            Console.WriteLine($"Uploaded file with ID: {uploadedFile.Id}");
             #endregion
 
-            // 3) Create an agent
-            #region Snippet:ImageFileInMessageCreateAgent
-            Agent agent = await client.CreateAgentAsync(
+            // Step 1: Create an agent
+            #region Snippet:ImageUrlInMessageCreateAgent_Sync
+            Agent agent = client.CreateAgent(
                 model: modelDeploymentName,
-                name: "File Image Understanding Agent",
-                instructions: "Analyze images from internally uploaded files."
+                name: "Image Understanding Agent",
+                instructions: "You are an image-understanding assistant. Analyze images and provide textual descriptions."
             );
             #endregion
 
-            // 4) Create a thread
-            #region Snippet:ImageFileInMessageCreateThread
-            AgentThread thread = await client.CreateThreadAsync();
+            // Step 2: Create a thread
+            #region Snippet:ImageUrlInMessageCreateThread_Sync
+            AgentThread thread = client.CreateThread();
             #endregion
 
-            // 5) Create a message referencing the uploaded file
-            #region Snippet:ImageFileInMessageCreateMessage
+            // Step 3: Create a message using multiple content blocks.
+            // Here we combine a short text and an image URL in a single user message.
+            #region Snippet:ImageUrlInMessageCreateMessage_Sync
+            MessageImageUrlParam imageUrlParam = new MessageImageUrlParam(
+                url: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"
+            );
+            imageUrlParam.Detail = ImageDetailLevel.High;
+
             var contentBlocks = new List<MessageInputContentBlock>
             {
-                new MessageInputTextBlock("Here is an uploaded file. Please describe it:"),
-                new MessageInputImageFileBlock(new MessageImageFileParam(uploadedFile.Id))
+                new MessageInputTextBlock("Could you describe this image?"),
+                new MessageInputImageUrlBlock(imageUrlParam)
             };
 
-            ThreadMessage imageMessage = await client.CreateMessageAsync(
-                thread.Id,
-                MessageRole.User,
+            ThreadMessage imageMessage = client.CreateMessage(
+                threadId: thread.Id,
+                role: MessageRole.User,
                 contentBlocks: contentBlocks
             );
             #endregion
 
-            // 6) Run the agent
-            #region Snippet:ImageFileInMessageCreateRun
-            ThreadRun run = await client.CreateRunAsync(
+            // Step 4: Run the agent against the thread that has an image to analyze.
+            #region Snippet:ImageUrlInMessageCreateRun_Sync
+            ThreadRun run = client.CreateRun(
                 threadId: thread.Id,
                 assistantId: agent.Id
             );
             #endregion
 
-            // 7) Wait for the run to complete
-            #region Snippet:ImageFileInMessageWaitForRun
+            // Step 5: Wait for the run to complete.
+            #region Snippet:ImageUrlInMessageWaitForRun_Sync
             do
             {
-                await Task.Delay(500);
-                run = await client.GetRunAsync(thread.Id, run.Id);
+                Thread.Sleep(TimeSpan.FromMilliseconds(500));
+                run = client.GetRun(thread.Id, run.Id);
             }
             while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress);
 
@@ -202,9 +201,9 @@ namespace Azure.AI.Projects.Tests
             }
             #endregion
 
-            // 8) Retrieve messages (including any agent responses) and print them
-            #region Snippet:ImageFileInMessageReview
-            PageableList<ThreadMessage> messages = await client.GetMessagesAsync(thread.Id);
+            // Step 6: Retrieve messages (including how the agent responds) and print their contents.
+            #region Snippet:ImageUrlInMessageReview_Sync
+            PageableList<ThreadMessage> messages = client.GetMessages(thread.Id);
 
             foreach (ThreadMessage msg in messages)
             {
@@ -226,10 +225,10 @@ namespace Azure.AI.Projects.Tests
             }
             #endregion
 
-            // 9) Cleanup
-            #region Snippet:ImageFileInMessageCleanup
-            await client.DeleteThreadAsync(thread.Id);
-            await client.DeleteAgentAsync(agent.Id);
+            // Step 7: Cleanup
+            #region Snippet:ImageUrlInMessageCleanup_Sync
+            client.DeleteThread(thread.Id);
+            client.DeleteAgent(agent.Id);
             #endregion
         }
     }
