@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Linq;
 using System.Text;
 using System.Security.Cryptography.X509Certificates;
@@ -422,7 +423,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task CustomRoleTest()
         {
-            string roleName = "userread";
+            string roleName = "usermanage";
 
             // Add Custom Role
             var rolesParam = new RolesParam
@@ -482,44 +483,46 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task UserDefinedFunctionTest()
         {
-            // Deploy Empty JS Bundle to remove JS App
-            using RequestContent content = RequestContent.Create(new
-            {
-                metadata = new
-                {
-                    endpoints = new
-                    {
-                    },
-                },
-                modules = new List<object>()
-            });
-            Response response = await Client.CreateUserDefinedEndpointAsync(content);
-            Assert.AreEqual((int)HttpStatusCode.Created, response.Status);
-
             string functionId = "myFunction";
-
-            // Create UDF
+            Response userFunctionResult = null;
             var functionParam = new UserFunctionParam
             {
-                Code= "export function main() { return true }",
+                Code = "export function main() { return true }",
                 Id = "myFunction"
             };
-
-            try
+            Response response = await Client.GetUserDefinedEndpointAsync();
+            if (response.Content.ToString() == null)
             {
-                Response userFunctionResult = await Client.CreateUserDefinedFunctionAsync(functionId, RequestContent.Create(JsonSerializer.Serialize(functionParam)));
-                Assert.AreEqual((int)HttpStatusCode.Created, userFunctionResult.Status);
-                userFunctionResult = await Client.GetUserDefinedFunctionAsync(functionId);
+                // Create UDF
+                try
+                {
+                    userFunctionResult = await Client.CreateUserDefinedFunctionAsync(functionId, RequestContent.Create(JsonSerializer.Serialize(functionParam)));
+                    Assert.AreEqual((int)HttpStatusCode.Created, userFunctionResult.Status);
+                    userFunctionResult = await Client.GetUserDefinedFunctionAsync(functionId);
 
-                var functionData = JsonSerializer.Deserialize<UserFunctionParam>(userFunctionResult.Content.ToString());
-                // Validate Fetched user function with Added function Id
-                Assert.AreEqual(functionId, functionData.Id);
+                    var functionData = JsonSerializer.Deserialize<UserFunctionParam>(userFunctionResult.Content.ToString());
+                    // Validate Fetched user function with Added function Id
+                    Assert.AreEqual(functionId, functionData.Id);
+                }
+                finally
+                {
+                    Console.WriteLine(functionId);
+                    Response deleteResult = await Client.DeleteUserDefinedFunctionAsync(functionId);
+                    Assert.AreEqual((int)HttpStatusCode.NoContent, deleteResult.Status);
+                }
             }
-            finally
+            else
             {
-                Console.WriteLine(functionId);
-                Response deleteResult = await Client.DeleteUserDefinedFunctionAsync(functionId);
-                Assert.AreEqual((int)HttpStatusCode.NoContent, deleteResult.Status);
+                try
+                {
+                    userFunctionResult = await Client.CreateUserDefinedFunctionAsync(functionId, RequestContent.Create(JsonSerializer.Serialize(functionParam)));
+                    Assert.AreEqual(HttpStatusCode.BadRequest, userFunctionResult.Status);
+                }
+                catch (RequestFailedException ex)
+                {
+                    Assert.AreEqual((int)HttpStatusCode.BadRequest, ex.Status);
+                    Assert.That(ex.Message, Does.Contain("User defined functions cannot be created when user defined endpoints are defined. Please apply an empty application bundle for user defined endpoints and retry"));
+                }
             }
         }
         #endregion
