@@ -39,6 +39,13 @@ namespace Azure.Security.ConfidentialLedger.Tests
         {
             // https://github.com/Azure/autorest.csharp/issues/1214
             TestDiagnostics = false;
+            BodyRegexSanitizers.Add(
+                new BodyRegexSanitizer(
+                    "[^\\r](?<break>\\n)")
+                {
+                    GroupForReplace = "break",
+                    Value = "\r\n"
+                });
         }
 
         [SetUp]
