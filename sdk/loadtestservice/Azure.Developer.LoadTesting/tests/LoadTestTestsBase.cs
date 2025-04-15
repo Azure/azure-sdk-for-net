@@ -83,11 +83,12 @@ namespace Azure.Developer.LoadTesting.Tests
 
         public LoadTestTestsBase(bool isAsync) : base(isAsync)
         {
-            _testId = "test-from-csharp-sdk-testing-framework";
-            _testProfileId = "test-profile-from-csharp-sdk-testing";
+            var asyncSuffix = isAsync ? "a" : string.Empty;
+            _testId = "test-from-csharp-sdk-testing-framework" + asyncSuffix;
+            _testProfileId = "test-profile-from-csharp-sdk-testing" + asyncSuffix;
             _fileName = "sample.jmx";
-            _testRunId = "test-run-id-from-csharp-sdk";
-            _testProfileRunId = "test-profile-run-id-from-csharp-sdk";
+            _testRunId = "test-run-id-from-csharp-sdk" + asyncSuffix;
+            _testProfileRunId = "test-profile-run-id-from-csharp-sdk" + asyncSuffix;
             _testHelper = new TestHelper();
 
             BodyKeySanitizers.Add(new BodyKeySanitizer("$..url")
