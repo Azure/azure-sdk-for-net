@@ -589,6 +589,12 @@
 # ServiceLabel: %Lab Services
 # ServiceOwners:                                                   @Tanmayeekamath
 
+# PRLabel: %LambdaTest HyperExecute
+/sdk/liftrhyperexecute/Azure.ResourceManager.*/                        @aggarwalsw
+
+# ServiceLabel: %LambdaTest HyperExecute %Mgmt
+# ServiceOwners:                                                   @aggarwalsw
+
 # PRLabel: %Load Test Service
 /sdk/loadtestservice/                                              @abranj1219 @ninallam @christothes
 
