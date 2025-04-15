@@ -58,16 +58,16 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// This is the URL of a certificate that has been uploaded to Key Vault as a
         /// secret. For adding a secret to the Key Vault, see [Add a key or secret to the
         /// key
-        /// vault](https://docs.microsoft.com/azure/key-vault/key-vault-get-started/#add).
+        /// vault](https://learn.microsoft.com/azure/key-vault/key-vault-get-started/#add).
         /// In this case, your certificate needs to be It is the Base64 encoding of the
         /// following JSON Object which is encoded in UTF-8: &lt;br&gt;&lt;br&gt; {&lt;br&gt;
         /// "data":"&lt;Base64-encoded-certificate&gt;",&lt;br&gt;  "dataType":"pfx",&lt;br&gt;
         /// "password":"&lt;pfx-file-password&gt;"&lt;br&gt;} &lt;br&gt; To install certificates on a virtual
         /// machine it is recommended to use the [Azure Key Vault virtual machine extension
         /// for
-        /// Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux)
+        /// Linux](https://learn.microsoft.com/azure/virtual-machines/extensions/key-vault-linux)
         /// or the [Azure Key Vault virtual machine extension for
-        /// Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows).
+        /// Windows](https://learn.microsoft.com/azure/virtual-machines/extensions/key-vault-windows).
         /// </param>
         /// <param name="certificateStore">
         /// For Windows VMs, specifies the certificate store on the Virtual Machine to
@@ -90,16 +90,16 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// This is the URL of a certificate that has been uploaded to Key Vault as a
         /// secret. For adding a secret to the Key Vault, see [Add a key or secret to the
         /// key
-        /// vault](https://docs.microsoft.com/azure/key-vault/key-vault-get-started/#add).
+        /// vault](https://learn.microsoft.com/azure/key-vault/key-vault-get-started/#add).
         /// In this case, your certificate needs to be It is the Base64 encoding of the
         /// following JSON Object which is encoded in UTF-8: &lt;br&gt;&lt;br&gt; {&lt;br&gt;
         /// "data":"&lt;Base64-encoded-certificate&gt;",&lt;br&gt;  "dataType":"pfx",&lt;br&gt;
         /// "password":"&lt;pfx-file-password&gt;"&lt;br&gt;} &lt;br&gt; To install certificates on a virtual
         /// machine it is recommended to use the [Azure Key Vault virtual machine extension
         /// for
-        /// Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux)
+        /// Linux](https://learn.microsoft.com/azure/virtual-machines/extensions/key-vault-linux)
         /// or the [Azure Key Vault virtual machine extension for
-        /// Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows).
+        /// Windows](https://learn.microsoft.com/azure/virtual-machines/extensions/key-vault-windows).
         /// </summary>
         public Uri CertificateUri { get; set; }
         /// <summary>

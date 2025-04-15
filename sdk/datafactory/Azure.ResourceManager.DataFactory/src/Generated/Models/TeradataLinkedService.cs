@@ -28,24 +28,36 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionString"> Teradata ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="connectionString"> Teradata ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Only applied for version 1.0. </param>
         /// <param name="server"> Server name for connection. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> AuthenticationType to be used for connection. </param>
         /// <param name="username"> Username for authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> Password for authentication. </param>
+        /// <param name="sslMode"> SSL mode for connection. Valid values including: “Disable”, “Allow”, “Prefer”, “Require”, “Verify-CA”, “Verify-Full”. Default value is “Verify-Full”. Type: string (or Expression with resultType string). Only applied for version 2.0. </param>
+        /// <param name="portNumber"> The port numbers when connecting to server through non HTTPS/TLS connections. Type: integer (or Expression with resultType integer). Only used for V2. Only applied for version 2.0. </param>
+        /// <param name="httpsPortNumber"> The port numbers when connecting to server through HTTPS/TLS connections. Type: integer (or Expression with resultType integer). Only applied for version 2.0. </param>
+        /// <param name="useDataEncryption"> Specifies whether to encrypt all communication with the Teradata database. Allowed values are 0 or 1. This setting will be ignored for HTTPS/TLS connections. Type: integer (or Expression with resultType integer). Only applied for version 2.0. </param>
+        /// <param name="characterSet"> The character set to use for the connection. Type: string (or Expression with resultType string). Only applied for version 2.0. </param>
+        /// <param name="maxRespSize"> The maximum size of the response buffer for SQL requests, in bytes. Type: integer. Only applied for version 2.0. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal TeradataLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryElement<string> server, TeradataAuthenticationType? authenticationType, DataFactoryElement<string> username, DataFactorySecret password, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        internal TeradataLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryElement<string> server, TeradataAuthenticationType? authenticationType, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<string> sslMode, DataFactoryElement<int> portNumber, DataFactoryElement<int> httpsPortNumber, DataFactoryElement<int> useDataEncryption, DataFactoryElement<string> characterSet, DataFactoryElement<int> maxRespSize, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             Server = server;
             AuthenticationType = authenticationType;
             Username = username;
             Password = password;
+            SslMode = sslMode;
+            PortNumber = portNumber;
+            HttpsPortNumber = httpsPortNumber;
+            UseDataEncryption = useDataEncryption;
+            CharacterSet = characterSet;
+            MaxRespSize = maxRespSize;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Teradata";
         }
 
-        /// <summary> Teradata ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        /// <summary> Teradata ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Only applied for version 1.0. </summary>
         public DataFactoryElement<string> ConnectionString { get; set; }
         /// <summary> Server name for connection. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Server { get; set; }
@@ -55,6 +67,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> Password for authentication. </summary>
         public DataFactorySecret Password { get; set; }
+        /// <summary> SSL mode for connection. Valid values including: “Disable”, “Allow”, “Prefer”, “Require”, “Verify-CA”, “Verify-Full”. Default value is “Verify-Full”. Type: string (or Expression with resultType string). Only applied for version 2.0. </summary>
+        public DataFactoryElement<string> SslMode { get; set; }
+        /// <summary> The port numbers when connecting to server through non HTTPS/TLS connections. Type: integer (or Expression with resultType integer). Only used for V2. Only applied for version 2.0. </summary>
+        public DataFactoryElement<int> PortNumber { get; set; }
+        /// <summary> The port numbers when connecting to server through HTTPS/TLS connections. Type: integer (or Expression with resultType integer). Only applied for version 2.0. </summary>
+        public DataFactoryElement<int> HttpsPortNumber { get; set; }
+        /// <summary> Specifies whether to encrypt all communication with the Teradata database. Allowed values are 0 or 1. This setting will be ignored for HTTPS/TLS connections. Type: integer (or Expression with resultType integer). Only applied for version 2.0. </summary>
+        public DataFactoryElement<int> UseDataEncryption { get; set; }
+        /// <summary> The character set to use for the connection. Type: string (or Expression with resultType string). Only applied for version 2.0. </summary>
+        public DataFactoryElement<string> CharacterSet { get; set; }
+        /// <summary> The maximum size of the response buffer for SQL requests, in bytes. Type: integer. Only applied for version 2.0. </summary>
+        public DataFactoryElement<int> MaxRespSize { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
     }

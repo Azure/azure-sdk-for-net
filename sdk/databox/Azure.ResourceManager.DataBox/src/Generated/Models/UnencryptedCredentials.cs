@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="jobSecrets">
         /// Secrets related to this job.
         /// Please note <see cref="Models.JobSecrets"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataboxJobSecrets"/>, <see cref="CustomerDiskJobSecrets"/>, <see cref="DataBoxDiskJobSecrets"/> and <see cref="DataBoxHeavyJobSecrets"/>.
+        /// The available derived classes include <see cref="DataBoxJobSecrets"/>, <see cref="CustomerDiskJobSecrets"/>, <see cref="DataBoxDiskJobSecrets"/> and <see cref="DataBoxHeavyJobSecrets"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UnencryptedCredentials(string jobName, JobSecrets jobSecrets, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary>
         /// Secrets related to this job.
         /// Please note <see cref="Models.JobSecrets"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataboxJobSecrets"/>, <see cref="CustomerDiskJobSecrets"/>, <see cref="DataBoxDiskJobSecrets"/> and <see cref="DataBoxHeavyJobSecrets"/>.
+        /// The available derived classes include <see cref="DataBoxJobSecrets"/>, <see cref="CustomerDiskJobSecrets"/>, <see cref="DataBoxDiskJobSecrets"/> and <see cref="DataBoxHeavyJobSecrets"/>.
         /// </summary>
         public JobSecrets JobSecrets { get; }
     }

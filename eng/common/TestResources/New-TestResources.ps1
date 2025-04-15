@@ -93,6 +93,11 @@ param (
     })]
     [array] $AllowIpRanges = @(),
 
+    # Instead of running the post script, create a wrapped file to run it with parameters
+    # so that CI can run it in a subsequent step with a refreshed azure login
+    [Parameter()]
+    [string] $SelfContainedPostScript,
+
     [Parameter()]
     [switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID),
 
@@ -120,6 +125,8 @@ param (
 . (Join-Path $PSScriptRoot .. scripts Helpers Resource-Helpers.ps1)
 . $PSScriptRoot/TestResources-Helpers.ps1
 . $PSScriptRoot/SubConfig-Helpers.ps1
+
+$wellKnownTMETenants = @('70a036f6-8e4d-4615-bad6-149c02e7720d')
 
 if (!$ServicePrincipalAuth) {
     # Clear secrets if not using Service Principal auth. This prevents secrets
@@ -191,6 +198,18 @@ try {
         -user (GetUserName) `
         -serviceDirectoryName $serviceName `
         -CI $CI
+
+    if ($wellKnownTMETenants.Contains($TenantId)) {
+        # Add a prefix to the resource group name to avoid flagging the usages of local auth
+        # See details at https://eng.ms/docs/products/onecert-certificates-key-vault-and-dsms/key-vault-dsms/certandsecretmngmt/credfreefaqs#how-can-i-disable-s360-reporting-when-testing-customer-facing-3p-features-that-depend-on-use-of-unsafe-local-auth
+        $ResourceGroupName = "SSS3PT_" + $ResourceGroupName
+    }
+
+    if ($ResourceGroupName.Length -gt 90) {
+        # See limits at https://docs.microsoft.com/azure/architecture/best-practices/resource-naming
+        Write-Warning -Message "Resource group name '$ResourceGroupName' is too long. So pruning it to be the first 90 characters."
+        $ResourceGroupName = $ResourceGroupName.Substring(0, 90)
+    }
 
     # Make sure pre- and post-scripts are passed formerly required arguments.
     $PSBoundParameters['BaseName'] = $BaseName
@@ -527,9 +546,11 @@ try {
     if ($CI -and $Environment -eq 'AzureCloud' -and $env:PoolSubnet) {
         $templateParameters.Add('azsdkPipelineSubnetList', @($env:PoolSubnet))
     }
-    # Some arm/bicep templates may want to change deployment settings (e.g. local auth) in sandboxed TME tenants
-    $templateParameters.Add('supportsSafeSecretStandard', ($context.Tenant.Name -notlike '*TME*'))
-
+    # The TME tenants are our place for local auth testing so we do not support safe secret standard there.
+    # Some arm/bicep templates may want to change deployment settings like local auth in sandboxed TME tenants.
+    # The pipeline account context does not have the .Tenant.Name property, so check against subscription via
+    # naming convention instead.
+    $templateParameters.Add('supportsSafeSecretStandard', (!$wellKnownTMETenants.Contains($TenantId)))
     $defaultCloudParameters = LoadCloudConfig $Environment
     MergeHashes $defaultCloudParameters $(Get-Variable templateParameters)
     MergeHashes $ArmTemplateParameters $(Get-Variable templateParameters)
@@ -609,9 +630,42 @@ try {
         SetResourceNetworkAccessRules -ResourceGroupName $ResourceGroupName -AllowIpRanges $AllowIpRanges -CI:$CI
 
         $postDeploymentScript = $templateFile.originalFilePath | Split-Path | Join-Path -ChildPath "$ResourceType-resources-post.ps1"
+
+        if ($SelfContainedPostScript -and !(Test-Path $postDeploymentScript)) {
+            throw "-SelfContainedPostScript is not supported if there is no 'test-resources-post.ps1' script in the deployment template directory"
+        }
+
         if (Test-Path $postDeploymentScript) {
-            Log "Invoking post-deployment script '$postDeploymentScript'"
-            &$postDeploymentScript -ResourceGroupName $ResourceGroupName -DeploymentOutputs $deploymentOutputs @PSBoundParameters
+            if ($SelfContainedPostScript) {
+                Log "Creating invokable post-deployment script '$SelfContainedPostScript' from '$postDeploymentScript'"
+
+                $deserialized = @{}
+                foreach ($parameter in $PSBoundParameters.GetEnumerator()) {
+                    if ($parameter.Value -is [System.Management.Automation.SwitchParameter]) {
+                        $deserialized[$parameter.Key] = $parameter.Value.ToBool()
+                    } else {
+                        $deserialized[$parameter.Key] = $parameter.Value
+                    }
+                }
+                $deserialized['ResourceGroupName'] = $ResourceGroupName
+                $deserialized['DeploymentOutputs'] = $deploymentOutputs
+                $serialized = $deserialized | ConvertTo-Json
+
+                $outScript = @"
+`$parameters = `@'
+$serialized
+'`@ | ConvertFrom-Json -AsHashtable
+# Set global variables that aren't always passed as parameters
+`$ResourceGroupName = `$parameters.ResourceGroupName
+`$AdditionalParameters = `$parameters.AdditionalParameters
+`$DeploymentOutputs = `$parameters.DeploymentOutputs
+$postDeploymentScript `@parameters
+"@
+                $outScript | Out-File $SelfContainedPostScript
+            } else {
+                Log "Invoking post-deployment script '$postDeploymentScript'"
+                &$postDeploymentScript -ResourceGroupName $ResourceGroupName -DeploymentOutputs $deploymentOutputs @PSBoundParameters
+            }
         }
 
         if ($templateFile.jsonFilePath.EndsWith('.compiled.json')) {

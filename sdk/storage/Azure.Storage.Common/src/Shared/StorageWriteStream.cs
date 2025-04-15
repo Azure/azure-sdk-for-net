@@ -321,6 +321,10 @@ namespace Azure.Storage.Shared
             }
         }
 
+        /// <summary>
+        /// Properly disposes the write stream.
+        /// Note: an exception may be raised during the disposal.
+        /// </summary>
         protected override void Dispose(bool disposing)
         {
             if (_disposed)
@@ -345,6 +349,34 @@ namespace Azure.Storage.Shared
 
             base.Dispose(disposing);
         }
+
+#if NETCOREAPP3_0_OR_GREATER || NETCORESTANDARD2_1_OR_GREATER
+        /// <summary>
+        /// Properly disposes the write stream.
+        /// Note: an exception may be raised during the disposal.
+        /// </summary>
+        public override async ValueTask DisposeAsync()
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            try
+            {
+                await FlushAsync(cancellationToken: default).ConfigureAwait(false);
+                ValidateCallerCrcIfAny();
+            }
+            finally
+            {
+                _accumulatedDisposables.Dispose();
+            }
+
+            _disposed = true;
+
+            await base.DisposeAsync().ConfigureAwait(false);
+        }
+#endif
 
         private void ValidateCallerCrcIfAny()
         {

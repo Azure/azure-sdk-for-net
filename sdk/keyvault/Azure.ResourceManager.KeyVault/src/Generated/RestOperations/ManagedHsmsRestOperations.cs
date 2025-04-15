@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-07-01";
+            _apiVersion = apiVersion ?? "2024-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         ManagedHsmData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedHsmData.DeserializeManagedHsmData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         ManagedHsmData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedHsmData.DeserializeManagedHsmData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         ManagedHsmListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedHsmListResult.DeserializeManagedHsmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         ManagedHsmListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedHsmListResult.DeserializeManagedHsmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         ManagedHsmListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedHsmListResult.DeserializeManagedHsmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         ManagedHsmListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedHsmListResult.DeserializeManagedHsmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         DeletedManagedHsmListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeletedManagedHsmListResult.DeserializeDeletedManagedHsmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         DeletedManagedHsmListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeletedManagedHsmListResult.DeserializeDeletedManagedHsmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         DeletedManagedHsmData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeletedManagedHsmData.DeserializeDeletedManagedHsmData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -749,7 +749,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         DeletedManagedHsmData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeletedManagedHsmData.DeserializeDeletedManagedHsmData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -892,7 +892,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         ManagedHsmNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedHsmNameAvailabilityResult.DeserializeManagedHsmNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -919,7 +919,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         ManagedHsmNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedHsmNameAvailabilityResult.DeserializeManagedHsmNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -971,7 +971,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         ManagedHsmListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedHsmListResult.DeserializeManagedHsmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1001,7 +1001,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         ManagedHsmListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedHsmListResult.DeserializeManagedHsmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1051,7 +1051,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         ManagedHsmListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedHsmListResult.DeserializeManagedHsmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1079,7 +1079,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         ManagedHsmListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedHsmListResult.DeserializeManagedHsmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1128,7 +1128,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         DeletedManagedHsmListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeletedManagedHsmListResult.DeserializeDeletedManagedHsmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1155,7 +1155,7 @@ namespace Azure.ResourceManager.KeyVault
                 case 200:
                     {
                         DeletedManagedHsmListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeletedManagedHsmListResult.DeserializeDeletedManagedHsmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

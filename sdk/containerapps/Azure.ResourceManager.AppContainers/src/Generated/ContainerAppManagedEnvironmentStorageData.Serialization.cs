@@ -156,14 +156,11 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ManagedEnvironmentStorageAzureFile", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  properties: ");
-                builder.AppendLine("{");
-                builder.Append("    azureFile: ");
                 builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
             }
             else
             {
@@ -231,7 +228,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerAppManagedEnvironmentStorageData(document.RootElement, options);
                     }
                 default:

@@ -15,9 +15,18 @@ namespace System.ClientModel.Primitives;
 public class ClientCache
 {
     private readonly Dictionary<(Type, string), ClientEntry> _clients = new();
-    private readonly ReaderWriterLockSlim _lock = new(LockRecursionPolicy.NoRecursion);
+    private readonly ReaderWriterLockSlim _lock = new(LockRecursionPolicy.SupportsRecursion);
 
-    private const int MaxCacheSize = 100;
+    private readonly int _maxSize;
+
+    /// <summary>
+    /// Initializes the ClientCache with a configurable cache size.
+    /// </summary>
+    /// <param name="maxSize">The maximum number of clients to store in the cache.</param>
+    public ClientCache(int maxSize = 100)
+    {
+        _maxSize = maxSize;
+    }
 
     /// <summary>
     /// Retrieves a client from the cache or creates a new one if it doesn't exist.
@@ -25,9 +34,9 @@ public class ClientCache
     /// </summary>
     /// <typeparam name="T">The type of the client.</typeparam>
     /// <param name="createClient">A factory function to create the client if not cached.</param>
-    /// <param name="id">An optional identifier for the client instance.</param>
+    /// <param name="id">An identifier for the client instance.</param>
     /// <returns>The cached or newly created client instance.</returns>
-    public T GetClient<T>(Func<T> createClient, string id = "") where T : class
+    public T GetClient<T>(Func<T> createClient, string? id) where T : class
     {
         (Type, string) key = (typeof(T), id ?? string.Empty);
 
@@ -46,7 +55,7 @@ public class ClientCache
             _clients[key] = new ClientEntry(created, Stopwatch.GetTimestamp());
 
             // After insertion, if cache exceeds the limit, perform cleanup.
-            if (_clients.Count > MaxCacheSize)
+            if (_clients.Count > _maxSize)
             {
                 Cleanup();
             }
@@ -63,7 +72,7 @@ public class ClientCache
     /// </summary>
     private void Cleanup()
     {
-        int excess = _clients.Count - MaxCacheSize;
+        int excess = _clients.Count - _maxSize;
         if (excess <= 0)
         {
             return;

@@ -85,7 +85,7 @@ namespace Azure.Communication.Identity
                 case 201:
                     {
                         CommunicationUserIdentifierAndToken value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationUserIdentifierAndToken.DeserializeCommunicationUserIdentifierAndToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -108,7 +108,7 @@ namespace Azure.Communication.Identity
                 case 201:
                     {
                         CommunicationUserIdentifierAndToken value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationUserIdentifierAndToken.DeserializeCommunicationUserIdentifierAndToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -352,7 +352,7 @@ namespace Azure.Communication.Identity
                 case 200:
                     {
                         CommunicationIdentityAccessToken value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationIdentityAccessToken.DeserializeCommunicationIdentityAccessToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -389,7 +389,7 @@ namespace Azure.Communication.Identity
                 case 200:
                     {
                         CommunicationIdentityAccessToken value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationIdentityAccessToken.DeserializeCommunicationIdentityAccessToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -446,7 +446,7 @@ namespace Azure.Communication.Identity
                 case 200:
                     {
                         CommunicationIdentityAccessToken value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CommunicationIdentityAccessToken.DeserializeCommunicationIdentityAccessToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -479,7 +479,7 @@ namespace Azure.Communication.Identity
                 case 200:
                     {
                         CommunicationIdentityAccessToken value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CommunicationIdentityAccessToken.DeserializeCommunicationIdentityAccessToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ResourceMover
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMoverResourceData(document.RootElement, options);
                     }
                 default:

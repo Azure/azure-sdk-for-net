@@ -89,6 +89,7 @@ namespace Azure.Storage.Blobs
             V2024_11_04 = 24,
             V2025_01_05 = 25,
             V2025_05_05 = 26,
+            V2025_07_05 = 27,
         }
     }
     public partial class BlobContainerClient
@@ -300,6 +301,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Storage.Blobs.Models.AppendBlobRequestConditions SourceConditions { get { throw null; } set { } }
         public byte[] SourceContentHash { get { throw null; } set { } }
         public Azure.HttpRange SourceRange { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.FileShareTokenIntent? SourceShareTokenIntent { get { throw null; } set { } }
     }
     public partial class AppendBlobAppendBlockOptions
     {
@@ -488,6 +490,7 @@ namespace Azure.Storage.Blobs.Models
         public bool? ShouldSealDestination { get { throw null; } set { } }
         public Azure.HttpAuthorization SourceAuthentication { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobRequestConditions SourceConditions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.FileShareTokenIntent? SourceShareTokenIntent { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
     }
     public partial class BlobCopyInfo
@@ -1179,6 +1182,7 @@ namespace Azure.Storage.Blobs.Models
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public Azure.HttpAuthorization SourceAuthentication { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobRequestConditions SourceConditions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.FileShareTokenIntent? SourceShareTokenIntent { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
     }
     [System.FlagsAttribute]
@@ -1314,6 +1318,23 @@ namespace Azure.Storage.Blobs.Models
     {
         Aes256 = 0,
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FileShareTokenIntent : System.IEquatable<Azure.Storage.Blobs.Models.FileShareTokenIntent>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FileShareTokenIntent(string value) { throw null; }
+        public static Azure.Storage.Blobs.Models.FileShareTokenIntent Backup { get { throw null; } }
+        public bool Equals(Azure.Storage.Blobs.Models.FileShareTokenIntent other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Storage.Blobs.Models.FileShareTokenIntent left, Azure.Storage.Blobs.Models.FileShareTokenIntent right) { throw null; }
+        public static implicit operator Azure.Storage.Blobs.Models.FileShareTokenIntent (string value) { throw null; }
+        public static bool operator !=(Azure.Storage.Blobs.Models.FileShareTokenIntent left, Azure.Storage.Blobs.Models.FileShareTokenIntent right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class GetBlobTagResult
     {
         public GetBlobTagResult() { }
@@ -1411,6 +1432,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.HttpAuthorization SourceAuthentication { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.PageBlobRequestConditions SourceConditions { get { throw null; } set { } }
         public byte[] SourceContentHash { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.FileShareTokenIntent? SourceShareTokenIntent { get { throw null; } set { } }
     }
     public partial class PageBlobUploadPagesOptions
     {
@@ -1495,6 +1517,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.RequestConditions SourceConditions { get { throw null; } set { } }
         public byte[] SourceContentHash { get { throw null; } set { } }
         public Azure.HttpRange SourceRange { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.FileShareTokenIntent? SourceShareTokenIntent { get { throw null; } set { } }
     }
     public partial class TaggedBlobItem
     {
@@ -2002,7 +2025,6 @@ namespace Microsoft.Extensions.Azure
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Blobs.BlobServiceClient, Azure.Storage.Blobs.BlobClientOptions> AddBlobServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.Core.TokenCredential tokenCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Blobs.BlobServiceClient, Azure.Storage.Blobs.BlobClientOptions> AddBlobServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.Storage.StorageSharedKeyCredential sharedKeyCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Blobs.BlobServiceClient, Azure.Storage.Blobs.BlobClientOptions> AddBlobServiceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

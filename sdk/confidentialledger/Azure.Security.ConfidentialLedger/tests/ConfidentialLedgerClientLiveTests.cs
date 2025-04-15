@@ -66,7 +66,11 @@ namespace Azure.Security.ConfidentialLedger.Tests
         {
             await SetProxyOptionsAsync(new ProxyOptions { Transport = new ProxyOptionsTransport { TLSValidationCert = serviceCert.PEM, Certificates = { new ProxyOptionsTransportCertificatesItem { PemValue = TestEnvironment.ClientPEM, PemKey = TestEnvironment.ClientPEMPk } } } });
             var _cert = X509Certificate2.CreateFromPem(TestEnvironment.ClientPEM, TestEnvironment.ClientPEMPk);
+#if NET9_0_OR_GREATER
+            _cert = X509CertificateLoader.LoadPkcs12(_cert.Export(X509ContentType.Pfx), null);
+#else
             _cert = new X509Certificate2(_cert.Export(X509ContentType.Pfx));
+#endif
             var certClient = InstrumentClient(new ConfidentialLedgerClient(
                 TestEnvironment.ConfidentialLedgerUrl,
                 credential: null,
@@ -80,7 +84,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 #endif
 
-        [RecordedTest]
+            [RecordedTest]
         [LiveOnly]
         public async Task GetLedgerIdentity()
         {

@@ -36,14 +36,7 @@ namespace Azure.AI.Projects
             }
 
             writer.WritePropertyName("file"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(global::System.BinaryData.FromStream(Data));
-#else
-            using (JsonDocument document = JsonDocument.Parse(BinaryData.FromStream(Data)))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
-#endif
+            writer.WriteObjectValue(Data, options);
             writer.WritePropertyName("purpose"u8);
             writer.WriteStringValue(Purpose.ToString());
             if (Optional.IsDefined(Filename))
@@ -59,7 +52,7 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -88,7 +81,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            Stream file = default;
+            File file = default;
             AgentFilePurpose purpose = default;
             string filename = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -97,7 +90,7 @@ namespace Azure.AI.Projects
             {
                 if (property.NameEquals("file"u8))
                 {
-                    file = BinaryData.FromString(property.Value.GetRawText()).ToStream();
+                    file = File.DeserializeFile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("purpose"u8))
@@ -157,7 +150,7 @@ namespace Azure.AI.Projects
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeUploadFileRequest(document.RootElement, options);
                     }
                 default:
@@ -171,7 +164,7 @@ namespace Azure.AI.Projects
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static UploadFileRequest FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeUploadFileRequest(document.RootElement);
         }
 
