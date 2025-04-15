@@ -327,7 +327,6 @@ extends:
           variables:
             generateJobResult: $[dependencies.Generate.result]
             emitterVersion: $[stageDependencies.Build.Build.outputs['ci_build.emitterVersion']]
-            openAsDraft: $[ not(and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main'))) ]
           steps:
           - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
 
@@ -387,7 +386,11 @@ extends:
               } else {
                 Write-Error "Build.Repository.Name not in the expected {Owner}/{Name} format"
               }
-              if ('$(openAsDraft)' -eq 'True') {
+
+              $openAsDraft = -not ($reason -eq 'IndividualCI' -and $sourceBranch -eq 'refs/heads/main')
+              Write-Host "Setting OpenAsDraftBool = $openAsDraft"
+              Write-Host "##vso[task.setvariable variable=OpenAsDraftBool]$openAsDraft"
+              if ($openAsDraft) {
                 Write-Host "##vso[task.setvariable variable=PRLabels]Do Not Merge"
               } else {
                 Write-Host "##vso[task.setvariable variable=PRLabels]"
