@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="NetAppReplicationObject"/>. </summary>
         public NetAppReplicationObject()
         {
+            DestinationReplications = new ChangeTrackingList<NetAppDestinationReplication>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppReplicationObject"/>. </summary>
@@ -58,8 +59,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. Required for cross region and cross zone replication. </param>
         /// <param name="remotePath"> The full path to a volume that is to be migrated into ANF. Required for Migration volumes. </param>
         /// <param name="remoteVolumeRegion"> The remote region for the other end of the Volume Replication. </param>
+        /// <param name="destinationReplications"> A list of destination replications. </param>
+        /// <param name="externalReplicationSetupStatus"> Property that only applies to external replications. Provides a machine-readable value for the status of the external replication setup. </param>
+        /// <param name="externalReplicationSetupInfo"> Contains human-readable instructions on what the next step is to finish the external replication setup. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppReplicationObject(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, RemotePath remotePath, string remoteVolumeRegion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppReplicationObject(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, RemotePath remotePath, string remoteVolumeRegion, IReadOnlyList<NetAppDestinationReplication> destinationReplications, ExternalReplicationSetupStatus? externalReplicationSetupStatus, string externalReplicationSetupInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReplicationId = replicationId;
             EndpointType = endpointType;
@@ -67,10 +71,13 @@ namespace Azure.ResourceManager.NetApp.Models
             RemoteVolumeResourceId = remoteVolumeResourceId;
             RemotePath = remotePath;
             RemoteVolumeRegion = remoteVolumeRegion;
+            DestinationReplications = destinationReplications;
+            ExternalReplicationSetupStatus = externalReplicationSetupStatus;
+            ExternalReplicationSetupInfo = externalReplicationSetupInfo;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> Indicates whether the local volume is the source or destination for the Volume Replication. </summary>
-        public NetAppEndpointType? EndpointType { get; set; }
+        public NetAppEndpointType? EndpointType { get; }
         /// <summary> Schedule. </summary>
         public NetAppReplicationSchedule? ReplicationSchedule { get; set; }
         /// <summary> The resource ID of the remote volume. Required for cross region and cross zone replication. </summary>
@@ -79,5 +86,11 @@ namespace Azure.ResourceManager.NetApp.Models
         public RemotePath RemotePath { get; set; }
         /// <summary> The remote region for the other end of the Volume Replication. </summary>
         public string RemoteVolumeRegion { get; set; }
+        /// <summary> A list of destination replications. </summary>
+        public IReadOnlyList<NetAppDestinationReplication> DestinationReplications { get; }
+        /// <summary> Property that only applies to external replications. Provides a machine-readable value for the status of the external replication setup. </summary>
+        public ExternalReplicationSetupStatus? ExternalReplicationSetupStatus { get; }
+        /// <summary> Contains human-readable instructions on what the next step is to finish the external replication setup. </summary>
+        public string ExternalReplicationSetupInfo { get; }
     }
 }

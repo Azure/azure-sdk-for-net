@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/dc6126aca1852126259a71852672555a6e69dbc2/specification/netapp/resource-manager/readme.md
-tag: package-2024-09-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/cb5ef7fc4cb443bd5f6b21d02cbce41051beb6ae/specification/netapp/resource-manager/readme.md
+tag: package-2025-01-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:

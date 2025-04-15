@@ -5,24 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Gets the status of the VolumeQuotaRule at the time the operation was called. </summary>
-    public enum NetAppProvisioningState
+    /// <summary> Provisioning state of the resource. </summary>
+    public readonly partial struct NetappProvisioningState : IEquatable<NetappProvisioningState>
     {
-        /// <summary> Accepted. </summary>
-        Accepted,
-        /// <summary> Creating. </summary>
-        Creating,
-        /// <summary> Patching. </summary>
-        Patching,
-        /// <summary> Deleting. </summary>
-        Deleting,
-        /// <summary> Moving. </summary>
-        Moving,
-        /// <summary> Failed. </summary>
-        Failed,
-        /// <summary> Succeeded. </summary>
-        Succeeded
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="NetappProvisioningState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public NetappProvisioningState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string SucceededValue = "Succeeded";
+        private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
+        private const string ProvisioningValue = "Provisioning";
+        private const string UpdatingValue = "Updating";
+        private const string DeletingValue = "Deleting";
+        private const string AcceptedValue = "Accepted";
+
+        /// <summary> Resource has been created. </summary>
+        public static NetappProvisioningState Succeeded { get; } = new NetappProvisioningState(SucceededValue);
+        /// <summary> Resource creation failed. </summary>
+        public static NetappProvisioningState Failed { get; } = new NetappProvisioningState(FailedValue);
+        /// <summary> Resource creation was canceled. </summary>
+        public static NetappProvisioningState Canceled { get; } = new NetappProvisioningState(CanceledValue);
+        /// <summary> Resource is getting provisioned. </summary>
+        public static NetappProvisioningState Provisioning { get; } = new NetappProvisioningState(ProvisioningValue);
+        /// <summary> Resource is updating. </summary>
+        public static NetappProvisioningState Updating { get; } = new NetappProvisioningState(UpdatingValue);
+        /// <summary> Resource is getting deleted. </summary>
+        public static NetappProvisioningState Deleting { get; } = new NetappProvisioningState(DeletingValue);
+        /// <summary> Resource has been accepted. </summary>
+        public static NetappProvisioningState Accepted { get; } = new NetappProvisioningState(AcceptedValue);
+        /// <summary> Determines if two <see cref="NetappProvisioningState"/> values are the same. </summary>
+        public static bool operator ==(NetappProvisioningState left, NetappProvisioningState right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="NetappProvisioningState"/> values are not the same. </summary>
+        public static bool operator !=(NetappProvisioningState left, NetappProvisioningState right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetappProvisioningState"/>. </summary>
+        public static implicit operator NetappProvisioningState(string value) => new NetappProvisioningState(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is NetappProvisioningState other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(NetappProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }
