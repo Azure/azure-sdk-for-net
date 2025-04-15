@@ -228,7 +228,7 @@ extends:
           - download: current
             displayName: Download pipeline artifacts
 
-            - pwsh: |
+          - pwsh: |
               npm install -g @azure-tools/typespec-client-generator-cli@latest
             displayName: Install tsp-client
 
