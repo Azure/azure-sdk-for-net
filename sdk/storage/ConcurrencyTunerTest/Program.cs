@@ -28,7 +28,7 @@ BlobsStorageResourceProvider blobsStorageResourceProvider = new BlobsStorageReso
 
 // Fix for CS0029 and CA2012: Directly await the ValueTask returned by FromContainerAsync
 StorageResource destinationResource = await blobsStorageResourceProvider.FromContainerAsync(
-        new Uri("https://davidbrowntest.blob.core.windows.net/testcontainer2"));
+        new Uri("https://davidbrowntest.blob.core.windows.net/testcontainer"));
 
 
 
@@ -46,7 +46,7 @@ Task.Run(async () =>
         Console.WriteLine($"Total MBs transferred: {(throughputMonitor.TotalBytesTransferred) / 1024 / 1024}");
         Console.WriteLine($"Throughput in Mbps: {(throughputMonitor.Throughput) * 8 / 1024 / 1024}");
         Console.WriteLine($"Current Max Concurrency in Program.cs: {tm._chunksProcessor.MaxConcurrentProcessing}");
-        Console.WriteLine($"Average Throughput in Mbps: {(throughputMonitor.TotalBytesTransferred * 8 / 1024/1024) /stopwatch.Elapsed.TotalSeconds}");
+        Console.WriteLine($"Average Throughput in Mbps: {throughputMonitor.AvgThroughput * 8 / 1024 / 1024}");
     }
 });
 

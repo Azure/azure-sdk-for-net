@@ -87,58 +87,70 @@ namespace Azure.Storage.DataMovement
             double currentConcurrency = 1;
             ConcurrencyTunerState rateChangeReason = ConcurrencyTunerState.ConcurrencyReasonInitial;
             decimal desiredNewThroughput = 0;
-            bool isThoughputIncreasing = false;
 
             decimal prevThroughput = 0;
             decimal currThroughput = 0;
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                // Creating a delay here so to give the recommendations time to get processed
-
-                await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
-                currThroughput = ThroughputMonitor.Throughput;
+                if (ThroughputMonitor.AvgThroughput == 0)
+                    return;
+                currThroughput = ThroughputMonitor.AvgThroughput;
                 atMax = IsAtMaxConcurrency(currentConcurrency, multiplier);
-                isThoughputIncreasing = prevThroughput < currThroughput;
+                DetermineThroughputChange(prevThroughput, currThroughput);
 
-                if (atMax)
-                {
-                    rateChangeReason = ConcurrencyTunerState.ConcurrencyReasonHitMax;
-                    await SetConcurrencyAsync((int)currentConcurrency, rateChangeReason, cancellationToken).ConfigureAwait(false);
-                    break;
-                }
-                // if the current throughput is less than the desired throughput,
-                // if throughput in increasing
-                // do nothing
-                // else
-                // increase mulitiplier
-                // else - current throughput is greater than desired throughput
-                // do nothing
+                await Task.Delay(100, CancellationToken.None).ConfigureAwait(false);
 
-                if (currThroughput <= desiredNewThroughput)
+                switch (DetermineThroughputChange(prevThroughput, currThroughput))
                 {
-                    if (isThoughputIncreasing)
-                    {
-                        // Do  nothing
-                    }
-                    else
-                    {
-                        currentConcurrency--;
-                    }
-                }
-                else
-                {
-                    currentConcurrency += 4;
+                    case ConcurrencyChange.Increase:
+                        break;
+                    case ConcurrencyChange.Decrease:
+                        if (currentConcurrency <= 0)
+                        {
+                            currentConcurrency = 1;
+                        }
+                        else
+                        {
+                            currentConcurrency--;
+                        }
+                        break;
+                    case ConcurrencyChange.NoChange:
+                        if (!atMax)
+                        {
+                            currentConcurrency = _concurrencyUpperLimit;
+                        }
+                        else
+                        {
+                            currentConcurrency++;
+                        }
+                            break;
                 }
 
-                //AdjustConcurrency(multiplier, ref currentConcurrency);
                 await SetConcurrencyAsync((int)currentConcurrency, rateChangeReason, cancellationToken).ConfigureAwait(false);
 
                 desiredNewThroughput = CalculateDesiredThroughput(prevThroughput);
                 prevThroughput = currThroughput;
-                currThroughput = ThroughputMonitor.Throughput;
+                currThroughput = ThroughputMonitor.AvgThroughput;
             }
         }
+
+        private static ConcurrencyChange DetermineThroughputChange(decimal prevThroughput, decimal currThroughput)
+        {
+            if (currThroughput > (1.03M * prevThroughput))
+            {
+                return ConcurrencyChange.Increase;
+            }
+            else if (currThroughput < (.97M * prevThroughput))
+            {
+                return ConcurrencyChange.Decrease;
+            }
+            else
+            {
+                return ConcurrencyChange.NoChange;
+            }
+        }
+
         private static decimal AdjustMultiplier(decimal multiplier)
 {
     if (multiplier > DataMovementConstants.ConcurrencyTuner.StandardMultiplier)
@@ -279,7 +291,7 @@ private void IncreaseMultiplier(double concurrency, ref decimal multiplier)
 /// </remarks>
 private bool IsAtMaxConcurrency(double concurrency, decimal multiplier)
 {
-    return Convert.ToInt32((decimal)concurrency * multiplier) >= _concurrencyUpperLimit;
+    return concurrency >= _concurrencyUpperLimit;
 }
 
         /// <summary>
@@ -305,5 +317,12 @@ private bool IsAtMaxConcurrency(double concurrency, decimal multiplier)
     public ConcurrencyTunerState State;
     public int Concurrency;
 }
+
+    internal enum ConcurrencyChange
+    {
+        Increase,
+        Decrease,
+        NoChange
+    }
     #endregion
 }

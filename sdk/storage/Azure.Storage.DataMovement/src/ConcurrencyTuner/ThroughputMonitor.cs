@@ -19,7 +19,7 @@ namespace Azure.Storage.DataMovement
         private Stopwatch _stopwatch = new Stopwatch();
         private bool _isStopwatchRunning = false;
         private Timer _timer;
-        private int _timerInterval = 10;
+        private int _timerInterval = 1000;
 
         private IProcessor<long> _bytesTransferredProcessor;
 
@@ -31,14 +31,25 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Gets the current throughput in bytes per second.
         /// </summary>
-        public virtual decimal Throughput { get; private set; }
+        public virtual decimal Throughput { get; set; }
 
         /// <summary>
         /// Gets the average throughput in bytes per second since the monitor started.
         /// </summary>
         public virtual decimal AvgThroughput
         {
-            get => (decimal)TotalBytesTransferred / (decimal)TimeElapsedInMilliseconds / (decimal)1000;
+            get
+            {
+                if (TimeElapsedInMilliseconds > 0)
+                {
+                    decimal timeInSeconds = (decimal)TimeElapsedInMilliseconds / 1000;
+                    return (decimal)TotalBytesTransferred / timeInSeconds;
+                }
+                else
+                {
+                    return 0M;
+                }
+            }
         }
 
         /// <summary>
@@ -92,7 +103,8 @@ namespace Azure.Storage.DataMovement
         {
             if (_timerInterval > 0)
             {
-                Throughput = (decimal)(_bytesTransferredInCurrentInterval / (decimal)(_timerInterval / 1000));
+                decimal timeInSeconds = (decimal)_timerInterval / 1000;
+                Throughput = (decimal)(_bytesTransferredInCurrentInterval / timeInSeconds);
                 _bytesTransferredInCurrentInterval = 0;
             }
         }
