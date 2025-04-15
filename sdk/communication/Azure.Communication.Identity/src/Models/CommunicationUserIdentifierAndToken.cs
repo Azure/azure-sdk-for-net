@@ -23,7 +23,6 @@ namespace Azure.Communication.Identity
             InternalAccessToken = accessToken;
             User = new CommunicationUserIdentifier(identity.Id);
             _accessToken = accessToken is null ? null : new AccessToken(accessToken.Token, accessToken.ExpiresOn);
-            LastTokenIssuedAt = identity.LastTokenIssuedAt;
         }
 
         /// <summary>Deconstructs the <see cref="CommunicationUserIdentifierAndToken"/> into a user and token.</summary>
@@ -37,9 +36,6 @@ namespace Azure.Communication.Identity
         }
 
         internal CommunicationIdentity Identity { get; }
-
-        /// <summary> Last time a token has been issued for the identity. </summary>
-        public DateTimeOffset? LastTokenIssuedAt { get; }
 
         [CodeGenMember("AccessToken")]
         internal CommunicationIdentityAccessToken InternalAccessToken { get; }

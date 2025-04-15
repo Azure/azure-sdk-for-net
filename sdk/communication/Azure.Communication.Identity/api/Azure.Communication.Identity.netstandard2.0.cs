@@ -69,7 +69,6 @@ namespace Azure.Communication.Identity
     {
         internal CommunicationUserIdentifierAndToken() { }
         public Azure.Core.AccessToken AccessToken { get { throw null; } }
-        public System.DateTimeOffset? LastTokenIssuedAt { get { throw null; } }
         public Azure.Communication.CommunicationUserIdentifier User { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void Deconstruct(out Azure.Communication.CommunicationUserIdentifier user, out Azure.Core.AccessToken accessToken) { throw null; }
