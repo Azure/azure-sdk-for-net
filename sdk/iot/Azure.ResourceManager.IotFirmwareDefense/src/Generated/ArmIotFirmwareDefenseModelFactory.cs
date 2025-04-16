@@ -112,49 +112,49 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FirmwareProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotFirmwarePatch"/>. </summary>
         /// <param name="fileName">
         /// File name for a firmware that user uploaded.
-        /// Serialized Name: FirmwareProperties.fileName
+        /// Serialized Name: FirmwareUpdateDefinition.properties.fileName
         /// </param>
         /// <param name="vendor">
         /// Firmware vendor.
-        /// Serialized Name: FirmwareProperties.vendor
+        /// Serialized Name: FirmwareUpdateDefinition.properties.vendor
         /// </param>
         /// <param name="model">
         /// Firmware model.
-        /// Serialized Name: FirmwareProperties.model
+        /// Serialized Name: FirmwareUpdateDefinition.properties.model
         /// </param>
         /// <param name="version">
         /// Firmware version.
-        /// Serialized Name: FirmwareProperties.version
+        /// Serialized Name: FirmwareUpdateDefinition.properties.version
         /// </param>
         /// <param name="description">
         /// User-specified description of the firmware.
-        /// Serialized Name: FirmwareProperties.description
+        /// Serialized Name: FirmwareUpdateDefinition.properties.description
         /// </param>
         /// <param name="fileSize">
         /// File size of the uploaded firmware image.
-        /// Serialized Name: FirmwareProperties.fileSize
+        /// Serialized Name: FirmwareUpdateDefinition.properties.fileSize
         /// </param>
         /// <param name="status">
         /// The status of firmware scan.
-        /// Serialized Name: FirmwareProperties.status
+        /// Serialized Name: FirmwareUpdateDefinition.properties.status
         /// </param>
         /// <param name="statusMessages">
         /// A list of errors or other messages generated during firmware analysis
-        /// Serialized Name: FirmwareProperties.statusMessages
+        /// Serialized Name: FirmwareUpdateDefinition.properties.statusMessages
         /// </param>
         /// <param name="provisioningState">
         /// Provisioning state of the resource.
-        /// Serialized Name: FirmwareProperties.provisioningState
+        /// Serialized Name: FirmwareUpdateDefinition.properties.provisioningState
         /// </param>
-        /// <returns> A new <see cref="Models.FirmwareProperties"/> instance for mocking. </returns>
-        public static FirmwareProperties FirmwareProperties(string fileName = null, string vendor = null, string model = null, string version = null, string description = null, long? fileSize = null, FirmwareAnalysisStatus? status = null, IEnumerable<FirmwareAnalysisStatusMessage> statusMessages = null, FirmwareProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.IotFirmwarePatch"/> instance for mocking. </returns>
+        public static IotFirmwarePatch IotFirmwarePatch(string fileName = null, string vendor = null, string model = null, string version = null, string description = null, long? fileSize = null, FirmwareAnalysisStatus? status = null, IEnumerable<FirmwareAnalysisStatusMessage> statusMessages = null, FirmwareProvisioningState? provisioningState = null)
         {
             statusMessages ??= new List<FirmwareAnalysisStatusMessage>();
 
-            return new FirmwareProperties(
+            return new IotFirmwarePatch(
                 fileName,
                 vendor,
                 model,

@@ -210,36 +210,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.IotFirmwarePatch"/>. </summary>
-        /// <param name="fileName"> File name for a firmware that user uploaded. </param>
-        /// <param name="vendor"> Firmware vendor. </param>
-        /// <param name="model"> Firmware model. </param>
-        /// <param name="version"> Firmware version. </param>
-        /// <param name="description"> User-specified description of the firmware. </param>
-        /// <param name="fileSize"> File size of the uploaded firmware image. </param>
-        /// <param name="status"> The status of firmware scan. </param>
-        /// <param name="statusMessages"> A list of errors or other messages generated during firmware analysis. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Models.IotFirmwarePatch"/> instance for mocking. </returns>
-        public static IotFirmwarePatch IotFirmwarePatch(string fileName = null, string vendor = null, string model = null, string version = null, string description = null, long? fileSize = null, FirmwareAnalysisStatus? status = null, IEnumerable<FirmwareAnalysisStatusMessage> statusMessages = null, FirmwareProvisioningState? provisioningState = null)
-        {
-            statusMessages ??= new List<FirmwareAnalysisStatusMessage>();
-
-            return new IotFirmwarePatch(
-                new FirmwareProperties(
-                     fileName,
-                     vendor,
-                     model,
-                     version,
-                     description,
-                     fileSize,
-                     status,
-                     statusMessages?.ToList(),
-                     provisioningState,
-                     null),
-                serializedAdditionalRawData: null);
-        }
-
          /// <summary> Initializes a new instance of <see cref="Models.FirmwareAnalysisWorkspacePatch"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.FirmwareAnalysisWorkspacePatch"/> instance for mocking. </returns>

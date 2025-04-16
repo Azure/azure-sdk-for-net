@@ -156,21 +156,18 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             // invoke the operation
             IotFirmwarePatch patch = new IotFirmwarePatch
             {
-                Properties = new FirmwareProperties
-                {
-                    FileName = "dmnqhyxssutvnewntlb",
-                    Vendor = "hymojocxpxqhtblioaavylnzyg",
-                    Model = "wmyfbyjsggbvxcuin",
-                    Version = "nhtxzslgcbtptu",
-                    Description = "nknvqnkgumzbupxe",
-                    FileSize = 30L,
-                    Status = FirmwareAnalysisStatus.Pending,
-                    StatusMessages = {new FirmwareAnalysisStatusMessage
+                FileName = "dmnqhyxssutvnewntlb",
+                Vendor = "hymojocxpxqhtblioaavylnzyg",
+                Model = "wmyfbyjsggbvxcuin",
+                Version = "nhtxzslgcbtptu",
+                Description = "nknvqnkgumzbupxe",
+                FileSize = 30L,
+                Status = FirmwareAnalysisStatus.Pending,
+                StatusMessages = {new FirmwareAnalysisStatusMessage
 {
 ErrorCode = 20L,
 Message = "edtylkjvj",
 }},
-                },
             };
             IotFirmwareResource result = await iotFirmware.UpdateAsync(patch);
 
