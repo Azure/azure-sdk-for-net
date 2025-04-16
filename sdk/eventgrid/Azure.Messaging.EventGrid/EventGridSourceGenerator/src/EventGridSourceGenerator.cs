@@ -127,17 +127,14 @@ namespace Azure.EventGrid.Messaging.SourceGeneration
                     return null;
                 }
 
-                // Move past the opening tag
                 summaryStartIndex += SummaryStartTag.Length;
 
-                // Find end tag starting from the position after start tag
                 int summaryEndIndex = docSpan.Slice(summaryStartIndex).IndexOf(SummaryEndTag);
                 if (summaryEndIndex < 0)
                 {
                     return null;
                 }
 
-                // Extract summary content as span
                 var summaryContent = docSpan.Slice(summaryStartIndex, summaryEndIndex);
 
                 var match = EventTypeRegex.Match(summaryContent.ToString());
