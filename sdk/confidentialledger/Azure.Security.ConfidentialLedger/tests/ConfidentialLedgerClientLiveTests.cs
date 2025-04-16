@@ -325,6 +325,15 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task UserDefinedEndpointsTest()
         {
+            // Add BodyRegexSanitizer to handle newline characters
+            BodyRegexSanitizers.Add(
+                new BodyRegexSanitizer(
+                    "\\n")
+                {
+                    GroupForReplace = "0",
+                    Value = "\r\n"
+                });
+
             await foreach (BinaryData functions in Client.GetUserDefinedFunctionsAsync())
             {
                 JsonElement functiondata = JsonDocument.Parse(functions.ToStream()).RootElement;
@@ -337,17 +346,14 @@ namespace Azure.Security.ConfidentialLedger.Tests
             string filePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "programmability.js");
             string programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create("test", filePath));
             RequestContent programmabilityContent = RequestContent.Create(programmabilityPayload);
-            Console.WriteLine(programmabilityContent);
             Response result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
-            Console.WriteLine(result.Content.ToString());
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
 
             var resp = await Client.GetUserDefinedEndpointsModuleAsync("test");
-            Console.WriteLine(resp.Content);
 
-/*            //var bundleData= JsonSerializer.Deserialize<Bundle>(resp.Content.ToString());
+            //var bundleData= JsonSerializer.Deserialize<Bundle>(resp.Content.ToString());
             string programContent = File.ReadAllText(filePath);
-            Assert.AreEqual(Regex.Replace(programContent, @"\s", ""), Regex.Replace(resp.Content.ToString(), @"\s", ""));*/
+            Assert.AreEqual(Regex.Replace(programContent, @"\s", ""), Regex.Replace(resp.Content.ToString(), @"\s", ""));
 
             // Verify Response by Querying endpt
             /// TODO: Investigate InternalServerError

@@ -46,7 +46,7 @@ namespace Azure.Data.ConfidentialLedger.Tests.Helper
 
             // Define modules list only if the module content is not empty
             var modules = new List<Module> { new Module { Name = moduleName, ModuleContent = moduleContent } };
-
+            Console.WriteLine($"Module Content: {moduleContent}");
             var bundle = new Bundle
             {
                 Metadata = new Metadata
