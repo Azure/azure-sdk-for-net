@@ -338,12 +338,12 @@ namespace Azure.Security.ConfidentialLedger.Tests
             // Deploy JS App
             string filePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "programmability.js");
             string programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create("test", filePath));
-            RequestContent programmabilityContent = RequestContent.Create(programmabilityPayload);
-
+            //RequestContent programmabilityContent = RequestContent.Create(programmabilityPayload);
+            Console.WriteLine("programmabilityPayload" + programmabilityPayload);
             // Remove line endings from request content
-            string sanitizedContent = programmabilityPayload.ToString().Replace("\r\n", "").Replace("\n", "").Replace("\r", "");
+            string sanitizedContent = programmabilityPayload.Replace("\r\n", "").Replace("\n", "").Replace("\r", "");
+            Console.WriteLine("sanitizedContent" + sanitizedContent);
             RequestContent sanitizedRequestContent = RequestContent.Create(sanitizedContent);
-            Console.WriteLine("sanitizedRequestContent" + sanitizedRequestContent.ToString());
             Response result = await Client.CreateUserDefinedEndpointAsync(sanitizedRequestContent);
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
 
@@ -434,7 +434,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task CustomRoleTest()
         {
-            string roleName = "testrole";
+            string roleName = "userDefinedRole";
 
             // Add Custom Role
             var rolesParam = new RolesParam
