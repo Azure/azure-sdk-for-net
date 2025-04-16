@@ -12,7 +12,7 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/6b08774c89877269e73e
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
   - AggregatedCost_GetForBillingPeriodByManagementGroup
