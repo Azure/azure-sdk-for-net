@@ -337,13 +337,8 @@ namespace Azure.Security.ConfidentialLedger.Tests
             // Deploy JS App
             string filePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "programmability.js");
             string programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create("test", filePath));
-            //RequestContent programmabilityContent = RequestContent.Create(programmabilityPayload);
-            Console.WriteLine("programmabilityPayload" + programmabilityPayload);
-            // Remove line endings from request content
-            string sanitizedContent = programmabilityPayload.Replace("\r\n", "").Replace("\n", "").Replace("\r", "");
-            Console.WriteLine("sanitizedContent" + sanitizedContent);
-            RequestContent sanitizedRequestContent = RequestContent.Create(sanitizedContent);
-            Response result = await Client.CreateUserDefinedEndpointAsync(sanitizedRequestContent);
+            RequestContent programmabilityContent = RequestContent.Create(programmabilityPayload);
+            Response result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
 
             var resp = await Client.GetUserDefinedEndpointsModuleAsync("test");
