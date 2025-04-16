@@ -39,9 +39,9 @@ parameters:
 variables:
   - template: /eng/pipelines/templates/variables/image.yml
 
-extends:
-  template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
-  parameters:
+stages:
+  - template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
+    parameters:
     EmitterPackageJsonOutputPath: eng/http-client-csharp-emitter-package.json
     EmitterPackagePath: eng/packages/http-client-csharp
     SparseCheckoutPaths:
@@ -70,3 +70,11 @@ extends:
       All:
         TestArguments: -UnitTests -GenerationChecks -Filter .NET
         SpectorName: "http-client-csharp"
+  - template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+    parameters:
+      ArtifactName: packages
+      Artifacts:
+      - name: Azure.Generator
+        safeName: AzureGenerator
+        skipReleaseStage: true
+
