@@ -28,8 +28,9 @@ namespace Azure.Generator.Management.Providers
         {
             _resource = resource;
 
-            foreach (var operation in inputClient.Operations)
+            foreach (var method in inputClient.Methods)
             {
+                var operation = method.Operation;
                 if (operation.HttpMethod == HttpMethod.Get.ToString())
                 {
                     if (operation.Name == "list")
