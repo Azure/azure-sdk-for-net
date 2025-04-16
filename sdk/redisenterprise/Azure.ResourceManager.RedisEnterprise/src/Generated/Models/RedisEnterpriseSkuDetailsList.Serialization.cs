@@ -15,11 +15,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class SkuDetailsList : IUtf8JsonSerializable, IJsonModel<SkuDetailsList>
+    public partial class RedisEnterpriseSkuDetailsList : IUtf8JsonSerializable, IJsonModel<RedisEnterpriseSkuDetailsList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SkuDetailsList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterpriseSkuDetailsList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SkuDetailsList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RedisEnterpriseSkuDetailsList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuDetailsList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseSkuDetailsList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuDetailsList)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisEnterpriseSkuDetailsList)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(Skus))
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
         }
 
-        SkuDetailsList IJsonModel<SkuDetailsList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RedisEnterpriseSkuDetailsList IJsonModel<RedisEnterpriseSkuDetailsList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuDetailsList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseSkuDetailsList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuDetailsList)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisEnterpriseSkuDetailsList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSkuDetailsList(document.RootElement, options);
+            return DeserializeRedisEnterpriseSkuDetailsList(document.RootElement, options);
         }
 
-        internal static SkuDetailsList DeserializeSkuDetailsList(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RedisEnterpriseSkuDetailsList DeserializeRedisEnterpriseSkuDetailsList(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            IReadOnlyList<SkuDetails> skus = default;
+            IReadOnlyList<RedisEnterpriseSkuDetails> skus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    List<SkuDetails> array = new List<SkuDetails>();
+                    List<RedisEnterpriseSkuDetails> array = new List<RedisEnterpriseSkuDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuDetails.DeserializeSkuDetails(item, options));
+                        array.Add(RedisEnterpriseSkuDetails.DeserializeRedisEnterpriseSkuDetails(item, options));
                     }
                     skus = array;
                     continue;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SkuDetailsList(skus ?? new ChangeTrackingList<SkuDetails>(), serializedAdditionalRawData);
+            return new RedisEnterpriseSkuDetailsList(skus ?? new ChangeTrackingList<RedisEnterpriseSkuDetails>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -149,9 +149,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<SkuDetailsList>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RedisEnterpriseSkuDetailsList>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuDetailsList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseSkuDetailsList>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -160,26 +160,26 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SkuDetailsList)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseSkuDetailsList)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SkuDetailsList IPersistableModel<SkuDetailsList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RedisEnterpriseSkuDetailsList IPersistableModel<RedisEnterpriseSkuDetailsList>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuDetailsList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseSkuDetailsList>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSkuDetailsList(document.RootElement, options);
+                        return DeserializeRedisEnterpriseSkuDetailsList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SkuDetailsList)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseSkuDetailsList)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SkuDetailsList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RedisEnterpriseSkuDetailsList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SkuDetailsList>> ListSkusForScalingAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<RedisEnterpriseSkuDetailsList>> ListSkusForScalingAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -621,9 +621,9 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 case 200:
                     {
-                        SkuDetailsList value = default;
+                        RedisEnterpriseSkuDetailsList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SkuDetailsList.DeserializeSkuDetailsList(document.RootElement);
+                        value = RedisEnterpriseSkuDetailsList.DeserializeRedisEnterpriseSkuDetailsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SkuDetailsList> ListSkusForScaling(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public Response<RedisEnterpriseSkuDetailsList> ListSkusForScaling(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -650,9 +650,9 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 case 200:
                     {
-                        SkuDetailsList value = default;
+                        RedisEnterpriseSkuDetailsList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SkuDetailsList.DeserializeSkuDetailsList(document.RootElement);
+                        value = RedisEnterpriseSkuDetailsList.DeserializeRedisEnterpriseSkuDetailsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

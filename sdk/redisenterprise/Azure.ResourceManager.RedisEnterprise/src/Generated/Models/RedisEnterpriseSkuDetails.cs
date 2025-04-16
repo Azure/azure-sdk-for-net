@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    /// <summary> The response of a listSkusForScaling operation. </summary>
-    public partial class SkuDetailsList
+    /// <summary> Details of a Redis Enterprise cluster SKU. </summary>
+    public partial class RedisEnterpriseSkuDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,23 +45,27 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SkuDetailsList"/>. </summary>
-        internal SkuDetailsList()
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseSkuDetails"/>. </summary>
+        internal RedisEnterpriseSkuDetails()
         {
-            Skus = new ChangeTrackingList<SkuDetails>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SkuDetailsList"/>. </summary>
-        /// <param name="skus"> List of SKUS available to scale up or scale down. </param>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseSkuDetails"/>. </summary>
+        /// <param name="name"> The name of the SKU. </param>
+        /// <param name="customerFacingSizeInGB"> The cache size in GB. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SkuDetailsList(IReadOnlyList<SkuDetails> skus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisEnterpriseSkuDetails(string name, float? customerFacingSizeInGB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Skus = skus;
+            Name = name;
+            CustomerFacingSizeInGB = customerFacingSizeInGB;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of SKUS available to scale up or scale down. </summary>
-        [WirePath("skus")]
-        public IReadOnlyList<SkuDetails> Skus { get; }
+        /// <summary> The name of the SKU. </summary>
+        [WirePath("name")]
+        public string Name { get; }
+        /// <summary> The cache size in GB. </summary>
+        [WirePath("customerFacingSizeInGB")]
+        public float? CustomerFacingSizeInGB { get; }
     }
 }

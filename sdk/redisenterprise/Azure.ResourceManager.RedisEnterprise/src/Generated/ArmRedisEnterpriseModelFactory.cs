@@ -270,23 +270,23 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SkuDetailsList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisEnterpriseSkuDetailsList"/>. </summary>
         /// <param name="skus"> List of SKUS available to scale up or scale down. </param>
-        /// <returns> A new <see cref="Models.SkuDetailsList"/> instance for mocking. </returns>
-        public static SkuDetailsList SkuDetailsList(IEnumerable<SkuDetails> skus = null)
+        /// <returns> A new <see cref="Models.RedisEnterpriseSkuDetailsList"/> instance for mocking. </returns>
+        public static RedisEnterpriseSkuDetailsList RedisEnterpriseSkuDetailsList(IEnumerable<RedisEnterpriseSkuDetails> skus = null)
         {
-            skus ??= new List<SkuDetails>();
+            skus ??= new List<RedisEnterpriseSkuDetails>();
 
-            return new SkuDetailsList(skus?.ToList(), serializedAdditionalRawData: null);
+            return new RedisEnterpriseSkuDetailsList(skus?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SkuDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisEnterpriseSkuDetails"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="customerFacingSizeInGB"> The cache size in GB. </param>
-        /// <returns> A new <see cref="Models.SkuDetails"/> instance for mocking. </returns>
-        public static SkuDetails SkuDetails(string name = null, float? customerFacingSizeInGB = null)
+        /// <returns> A new <see cref="Models.RedisEnterpriseSkuDetails"/> instance for mocking. </returns>
+        public static RedisEnterpriseSkuDetails RedisEnterpriseSkuDetails(string name = null, float? customerFacingSizeInGB = null)
         {
-            return new SkuDetails(name, customerFacingSizeInGB, serializedAdditionalRawData: null);
+            return new RedisEnterpriseSkuDetails(name, customerFacingSizeInGB, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RedisEnterprisePrivateLinkResource"/>. </summary>

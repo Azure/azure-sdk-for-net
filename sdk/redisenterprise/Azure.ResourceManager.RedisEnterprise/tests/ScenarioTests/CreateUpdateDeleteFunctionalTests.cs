@@ -195,9 +195,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             string redisEnterpriseCacheName = Recording.GenerateAssetName("RedisEnterpriseBegin");
             var data = new RedisEnterpriseClusterData(
                 DefaultLocation,
-                new RedisEnterpriseSku(RedisEnterpriseSkuName.BalancedB1)
-                {
-                })
+                new RedisEnterpriseSku(RedisEnterpriseSkuName.BalancedB1))
             {
                 MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,
                 HighAvailability = RedisEnterpriseHighAvailability.Disabled

@@ -77,6 +77,8 @@ rename-mapping:
   ResourceState: RedisEnterpriseClusterResourceState
   Sku: RedisEnterpriseSku
   SkuName: RedisEnterpriseSkuName
+  SkuDetails: RedisEnterpriseSkuDetails
+  SkuDetailsList: RedisEnterpriseSkuDetailsList
   TlsVersion: RedisEnterpriseTlsVersion
 
 format-by-name-rules:

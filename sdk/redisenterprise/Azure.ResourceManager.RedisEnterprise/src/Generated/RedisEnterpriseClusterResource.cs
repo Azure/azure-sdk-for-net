@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SkuDetailsList>> GetSkusForScalingAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RedisEnterpriseSkuDetailsList>> GetSkusForScalingAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _redisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("RedisEnterpriseClusterResource.GetSkusForScaling");
             scope.Start();
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SkuDetailsList> GetSkusForScaling(CancellationToken cancellationToken = default)
+        public virtual Response<RedisEnterpriseSkuDetailsList> GetSkusForScaling(CancellationToken cancellationToken = default)
         {
             using var scope = _redisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("RedisEnterpriseClusterResource.GetSkusForScaling");
             scope.Start();

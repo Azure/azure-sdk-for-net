@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             RedisEnterpriseClusterResource redisEnterpriseCluster = client.GetRedisEnterpriseClusterResource(redisEnterpriseClusterResourceId);
 
             // invoke the operation
-            SkuDetailsList result = await redisEnterpriseCluster.GetSkusForScalingAsync();
+            RedisEnterpriseSkuDetailsList result = await redisEnterpriseCluster.GetSkusForScalingAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
