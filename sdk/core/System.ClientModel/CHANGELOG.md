@@ -1,14 +1,10 @@
 # Release History
 
-## 1.4.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.4.0-beta.3 (2025-05-06)
 
 ### Bugs Fixed
 
-### Other Changes
+- Added defaults for properties to the ModelReaderWriter source generator even when a type builder does not exist.
 
 ## 1.4.0-beta.2 (2025-04-14)
 
