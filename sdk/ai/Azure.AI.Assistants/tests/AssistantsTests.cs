@@ -161,14 +161,14 @@ namespace Azure.AI.Assistants.Tests
             Assert.AreEqual(0, ids.Count);
             Assert.AreEqual(initialAgentCount + 2, count);
 
-            DeleteAndAssert(client, agent1);
+            await DeleteAndAssert(client, agent1);
             ids.Add(agent1.Id);
             ids.Add(agent2.Id);
             count = await CountElementsAndRemoveIds(client, ids);
             Assert.AreEqual(1, ids.Count);
             Assert.False(ids.Contains(agent2.Id));
             Assert.AreEqual(initialAgentCount + 1, count);
-            DeleteAndAssert(client, agent2);
+            await DeleteAndAssert(client, agent2);
         }
 
         [RecordedTest]
@@ -1354,7 +1354,7 @@ namespace Azure.AI.Assistants.Tests
             }
         }
 
-        private static async void DeleteAndAssert(AssistantsClient client, Assistant agent)
+        private static async Task DeleteAndAssert(AssistantsClient client, Assistant agent)
         {
             Response<bool> resp = await client.DeleteAssistantAsync(agent.Id);
             Assert.IsTrue(resp.Value);
