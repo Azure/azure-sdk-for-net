@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.3 (2025-05-06)
+## 1.4.0-beta.3 (2025-04-16)
 
 ### Bugs Fixed
 
