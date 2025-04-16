@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    public partial class OpenAIPageableListOfAgentThread : IUtf8JsonSerializable, IJsonModel<OpenAIPageableListOfAgentThread>
+    internal partial class OpenAIPageableListOfAgentThread : IUtf8JsonSerializable, IJsonModel<OpenAIPageableListOfAgentThread>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OpenAIPageableListOfAgentThread>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

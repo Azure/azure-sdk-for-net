@@ -83,7 +83,7 @@ First, you need to create an `AgentsClient`
 ```C# Snippet:OverviewCreateAgentClient
 var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AgentsClient client = new(connectionString, new DefaultAzureCredential());
+AgentsClient client = new(connectionString, new AzureCliCredential());
 ```
 
 With an authenticated client, an agent can be created:

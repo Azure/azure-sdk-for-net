@@ -7,6 +7,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
@@ -25,7 +26,7 @@ public partial class Sample_Agent_Basics : SamplesBase<AIProjectsTestEnvironment
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AgentsClient client = new(connectionString, new DefaultAzureCredential());
+        AgentsClient client = new(connectionString, new AzureCliCredential());
         #endregion
 
         // Step 1: Create an agent
@@ -41,6 +42,9 @@ public partial class Sample_Agent_Basics : SamplesBase<AIProjectsTestEnvironment
         #region Snippet:OverviewCreateThread
         AgentThread thread = await client.CreateThreadAsync();
         #endregion
+
+        Response<PageableList<AgentThread>> threadsListResponse = await client.GetThreadsAsync();
+        Assert.That(threadsListResponse.Value.Data[0].Id == thread.Id);
 
         // Step 3: Add a message to a thread
         #region Snippet:OverviewCreateMessage
@@ -117,7 +121,7 @@ public partial class Sample_Agent_Basics : SamplesBase<AIProjectsTestEnvironment
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AgentsClient client = new(connectionString, new DefaultAzureCredential());
+        AgentsClient client = new(connectionString, new AzureCliCredential());
 
         // Step 1: Create an agent
         #region Snippet:OverviewCreateAgentSync
@@ -132,6 +136,9 @@ public partial class Sample_Agent_Basics : SamplesBase<AIProjectsTestEnvironment
         #region Snippet:OverviewCreateThreadSync
         AgentThread thread = client.CreateThread();
         #endregion
+
+        Response<PageableList<AgentThread>> threadsListResponse = client.GetThreads();
+        Assert.That(threadsListResponse.Value.Data[0].Id == thread.Id);
 
         // Step 3: Add a message to a thread
         #region Snippet:OverviewCreateMessageSync
