@@ -19,17 +19,18 @@ namespace Azure.Generator.Management
         private ManagementLongRunningOperationProvider? _genericArmOperation;
         internal ManagementLongRunningOperationProvider GenericArmOperation => _genericArmOperation ??= new ManagementLongRunningOperationProvider(true);
 
-        private IReadOnlyList<ResourceClientProvider> BuildResources()
+        private (IReadOnlyList<ResourceClientProvider> Resources, IReadOnlyList<ResourceCollectionClientProvider> Collection) BuildResources()
         {
-            var result = new List<ResourceClientProvider>();
+            var resources = new List<ResourceClientProvider>();
+            var collections = new List<ResourceCollectionClientProvider>();
             foreach (var client in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
             {
-                BuildResourceCore(result, client);
+                BuildResourceCore(resources, collections, client);
             }
-            return result;
+            return (resources, collections);
         }
 
-        private static void BuildResourceCore(List<ResourceClientProvider> result, Microsoft.TypeSpec.Generator.Input.InputClient client)
+        private static void BuildResourceCore(List<ResourceClientProvider> resources, List<ResourceCollectionClientProvider> collections, Microsoft.TypeSpec.Generator.Input.InputClient client)
         {
             // A resource client should contain the decorator "Azure.ResourceManager.@resourceMetadata"
             var resourceMetadata = client.Decorators.FirstOrDefault(d => d.Name.Equals(KnownDecorators.ResourceMetadata));
@@ -37,21 +38,27 @@ namespace Azure.Generator.Management
             {
                 var resource = new ResourceClientProvider(client);
                 ManagementClientGenerator.Instance.AddTypeToKeep(resource.Name);
-                result.Add(resource);
+                resources.Add(resource);
+                var isSingleton = resourceMetadata.Arguments?.TryGetValue("isSingleton", out var result) == true ? result.ToObjectFromJson<string>() == "true" : false;
+                if (!isSingleton)
+                {
+                    var collection = new ResourceCollectionClientProvider(client, resource);
+                    ManagementClientGenerator.Instance.AddTypeToKeep(collection.Name);
+                    collections.Add(collection);
+                }
             }
 
             foreach (var child in client.Children)
             {
-                BuildResourceCore(result, child);
+                BuildResourceCore(resources, collections, child);
             }
         }
 
         /// <inheritdoc/>
-        // TODO: generate collections
         protected override TypeProvider[] BuildTypeProviders()
         {
-            var resources = BuildResources();
-            return [.. base.BuildTypeProviders().Where(p => p is not SystemObjectTypeProvider), ArmOperation, GenericArmOperation, .. resources, .. resources.Select(r => r.Source)];
+            var (resources, collections) = BuildResources();
+            return [.. base.BuildTypeProviders().Where(p => p is not SystemObjectTypeProvider), ArmOperation, GenericArmOperation, .. resources, .. collections, .. resources.Select(r => r.Source)];
         }
     }
 }

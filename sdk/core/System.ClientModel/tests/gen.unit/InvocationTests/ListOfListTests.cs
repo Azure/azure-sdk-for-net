@@ -12,22 +12,50 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         protected override List<TypeValidation> TypeValidations => [AssertListOfList, ListTests.AssertList];
 
-        internal static void AssertListOfList(string type, string expectedNamespace, Action<TypeRef> modelValidator, Dictionary<string, TypeBuilderSpec> dict)
+        internal static void AssertListOfList(ModelExpectation expectation, bool invocationDuped, Dictionary<string, TypeBuilderSpec> dict)
         {
-            Assert.IsTrue(dict.ContainsKey($"List<List<{type}>>"));
-            var listListJsonModel = dict[$"List<List<{type}>>"];
-            Assert.AreEqual($"List<List<{type}>>", listListJsonModel.Type.Name);
-            Assert.AreEqual("System.Collections.Generic", listListJsonModel.Type.Namespace);
-            Assert.IsNotNull(listListJsonModel.Type.ItemType);
-            Assert.AreEqual(TypeBuilderKind.IList, listListJsonModel.Kind);
+            TypeBuilderSpec listListModel = ValidateBuilder(expectation.Namespace, expectation, dict, out var listModel);
 
-            var genericArgument = listListJsonModel.Type.ItemType!;
-            Assert.AreEqual($"List<{type}>", genericArgument.Name);
+            if (invocationDuped)
+            {
+                var dupedListListModel = ValidateBuilder("TestProject1", expectation, dict, out var dupedListModel);
+            }
+
+            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}", out var itemModel));
+            Assert.AreEqual(itemModel!.Type, listModel!.Type.ItemType);
+            expectation.ModelValidation(itemModel);
+        }
+
+        private static TypeBuilderSpec ValidateBuilder(string lookupName, ModelExpectation expectation, Dictionary<string, TypeBuilderSpec> dict, out TypeBuilderSpec? innerList)
+        {
+            Assert.IsTrue(dict.TryGetValue($"{lookupName}.List<List<{expectation.TypeName}>>", out var listListModel));
+            Assert.AreEqual($"List<List<{expectation.TypeName}>>", listListModel!.Type.Name);
+            Assert.AreEqual("System.Collections.Generic", listListModel.Type.Namespace);
+            Assert.IsNotNull(listListModel.Type.ItemType);
+            Assert.AreEqual(TypeBuilderKind.IList, listListModel.Kind);
+            Assert.AreEqual(0, listListModel.Type.ArrayRank);
+            Assert.AreEqual($"List_List_{expectation.TypeName}_", listListModel.Type.TypeCaseName);
+            Assert.AreEqual($"list_List_{expectation.TypeName}_", listListModel.Type.CamelCaseName);
+            Assert.AreEqual(s_localContext, listListModel.ContextType);
+
+            var genericArgument = listListModel.Type.ItemType!;
+            Assert.AreEqual($"List<{expectation.TypeName}>", genericArgument.Name);
             Assert.AreEqual("System.Collections.Generic", genericArgument.Namespace);
             Assert.IsNotNull(genericArgument.ItemType);
+            Assert.AreEqual(0, genericArgument.ArrayRank);
+            Assert.AreEqual($"List_{expectation.TypeName}_", genericArgument.TypeCaseName);
+            Assert.AreEqual($"list_{expectation.TypeName}_", genericArgument.CamelCaseName);
 
-            var innerGenericArgument = genericArgument.ItemType!;
-            modelValidator(innerGenericArgument);
+            Assert.IsTrue(dict.TryGetValue($"{lookupName}.List<{expectation.TypeName}>", out innerList));
+            Assert.AreEqual($"List<{expectation.TypeName}>", innerList!.Type.Name);
+            Assert.AreEqual("System.Collections.Generic", innerList.Type.Namespace);
+            Assert.IsNotNull(innerList.Type.ItemType);
+            Assert.AreEqual(TypeBuilderKind.IList, innerList.Kind);
+            Assert.AreEqual(0, innerList.Type.ArrayRank);
+            Assert.AreEqual($"List_{expectation.TypeName}_", innerList.Type.TypeCaseName);
+            Assert.AreEqual($"list_{expectation.TypeName}_", innerList.Type.CamelCaseName);
+            Assert.AreEqual(s_localContext, innerList.ContextType);
+            return listListModel;
         }
     }
 }
