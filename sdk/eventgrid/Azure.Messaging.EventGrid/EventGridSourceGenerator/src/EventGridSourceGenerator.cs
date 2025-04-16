@@ -110,17 +110,16 @@ namespace Azure.Messaging.EventGrid
         public static object AsSystemEventData(string eventType, JsonElement data)
         {{
             var eventTypeSpan = eventType.AsSpan();
-            return eventTypeSpan switch
-            {{
 ");
             foreach (SystemEventNode sysEvent in _visitor.SystemEvents)
             {
                 // Add each an entry for each system event to the dictionary containing a mapping from constant name to deserialization method.
                 sourceBuilder.AppendLine(
-                    $"{Indent}{Indent}{Indent}{Indent}_ when eventTypeSpan.Equals(SystemEventNames.{sysEvent.EventConstantName}.AsSpan(), StringComparison.OrdinalIgnoreCase) => {sysEvent.EventName}.{sysEvent.DeserializeMethod}(data{(_isSystemEventsLibrary ? ", null": string.Empty)}),");
+                    $"{Indent}{Indent}{Indent}if (eventTypeSpan.Equals(SystemEventNames.{sysEvent.EventConstantName}.AsSpan(), StringComparison.OrdinalIgnoreCase))");
+                sourceBuilder.AppendLine(
+                    $"{Indent}{Indent}{Indent}{Indent}return {sysEvent.EventName}.{sysEvent.DeserializeMethod}(data{(_isSystemEventsLibrary ? ", null" : string.Empty)});");
             }
-            sourceBuilder.AppendLine($"{Indent}{Indent}{Indent}{Indent}_ => null");
-            sourceBuilder.AppendLine($"{Indent}{Indent}{Indent}}};");
+            sourceBuilder.AppendLine($"{Indent}{Indent}{Indent}return null;");
             sourceBuilder.AppendLine($"{Indent}{Indent}}}");
             sourceBuilder.AppendLine($"{Indent}}}");
             sourceBuilder.AppendLine("}");
