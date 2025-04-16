@@ -22,7 +22,12 @@ namespace Azure.AI.Assistants
         public static Azure.AI.Assistants.MessageDeltaTextFilePathAnnotationObject MessageDeltaTextFilePathAnnotationObject(string fileId = null) { throw null; }
         public static Azure.AI.Assistants.MessageDeltaTextUrlCitationAnnotation MessageDeltaTextUrlCitationAnnotation(int index = 0, Azure.AI.Assistants.MessageDeltaTextUrlCitationDetails urlCitation = null, int? startIndex = default(int?), int? endIndex = default(int?)) { throw null; }
         public static Azure.AI.Assistants.MessageDeltaTextUrlCitationDetails MessageDeltaTextUrlCitationDetails(string url = null, string title = null) { throw null; }
+        public static Azure.AI.Assistants.MessageImageFileParam MessageImageFileParam(string fileId = null, Azure.AI.Assistants.ImageDetailLevel? detail = default(Azure.AI.Assistants.ImageDetailLevel?)) { throw null; }
+        public static Azure.AI.Assistants.MessageImageUrlParam MessageImageUrlParam(string url = null, Azure.AI.Assistants.ImageDetailLevel? detail = default(Azure.AI.Assistants.ImageDetailLevel?)) { throw null; }
         public static Azure.AI.Assistants.MessageIncompleteDetails MessageIncompleteDetails(Azure.AI.Assistants.MessageIncompleteDetailsReason reason = default(Azure.AI.Assistants.MessageIncompleteDetailsReason)) { throw null; }
+        public static Azure.AI.Assistants.MessageInputImageFileBlock MessageInputImageFileBlock(Azure.AI.Assistants.MessageImageFileParam imageFile = null) { throw null; }
+        public static Azure.AI.Assistants.MessageInputImageUrlBlock MessageInputImageUrlBlock(Azure.AI.Assistants.MessageImageUrlParam imageUrl = null) { throw null; }
+        public static Azure.AI.Assistants.MessageInputTextBlock MessageInputTextBlock(string text = null) { throw null; }
         public static Azure.AI.Assistants.MessageTextAnnotation MessageTextAnnotation(string type = null, string text = null) { throw null; }
         public static Azure.AI.Assistants.MessageTextUrlCitationAnnotation MessageTextUrlCitationAnnotation(string text = null, Azure.AI.Assistants.MessageTextUrlCitationDetails urlCitation = null, int? startIndex = default(int?), int? endIndex = default(int?)) { throw null; }
         public static Azure.AI.Assistants.MessageTextUrlCitationDetails MessageTextUrlCitationDetails(string url = null, string title = null) { throw null; }
@@ -63,7 +68,7 @@ namespace Azure.AI.Assistants
         public static Azure.AI.Assistants.RunStepSharepointToolCall RunStepSharepointToolCall(string id = null, System.Collections.Generic.IReadOnlyDictionary<string, string> sharePoint = null) { throw null; }
         public static Azure.AI.Assistants.RunStepToolCall RunStepToolCall(string type = null, string id = null) { throw null; }
         public static Azure.AI.Assistants.RunStepToolCallDetails RunStepToolCallDetails(System.Collections.Generic.IEnumerable<Azure.AI.Assistants.RunStepToolCall> toolCalls = null) { throw null; }
-        public static Azure.AI.Assistants.ThreadMessageOptions ThreadMessageOptions(Azure.AI.Assistants.MessageRole role = default(Azure.AI.Assistants.MessageRole), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.Assistants.MessageAttachment> attachments = null, System.Collections.Generic.IDictionary<string, string> metadata = null) { throw null; }
+        public static Azure.AI.Assistants.ThreadMessageOptions ThreadMessageOptions(Azure.AI.Assistants.MessageRole role = default(Azure.AI.Assistants.MessageRole), System.BinaryData content = null, System.Collections.Generic.IEnumerable<Azure.AI.Assistants.MessageAttachment> attachments = null, System.Collections.Generic.IDictionary<string, string> metadata = null) { throw null; }
         public static Azure.AI.Assistants.VectorStore VectorStore(string id = null, Azure.AI.Assistants.VectorStoreObject @object = default(Azure.AI.Assistants.VectorStoreObject), System.DateTimeOffset createdAt = default(System.DateTimeOffset), string name = null, int usageBytes = 0, Azure.AI.Assistants.VectorStoreFileCount fileCounts = null, Azure.AI.Assistants.VectorStoreStatus status = default(Azure.AI.Assistants.VectorStoreStatus), Azure.AI.Assistants.VectorStoreExpirationPolicy expiresAfter = null, System.DateTimeOffset? expiresAt = default(System.DateTimeOffset?), System.DateTimeOffset? lastActiveAt = default(System.DateTimeOffset?), System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null) { throw null; }
         public static Azure.AI.Assistants.VectorStoreDeletionStatus VectorStoreDeletionStatus(string id = null, bool deleted = false, Azure.AI.Assistants.VectorStoreDeletionStatusObject @object = default(Azure.AI.Assistants.VectorStoreDeletionStatusObject)) { throw null; }
         public static Azure.AI.Assistants.VectorStoreFile VectorStoreFile(string id = null, Azure.AI.Assistants.VectorStoreFileObject @object = default(Azure.AI.Assistants.VectorStoreFileObject), int usageBytes = 0, System.DateTimeOffset createdAt = default(System.DateTimeOffset), string vectorStoreId = null, Azure.AI.Assistants.VectorStoreFileStatus status = default(Azure.AI.Assistants.VectorStoreFileStatus), Azure.AI.Assistants.VectorStoreFileError lastError = null, Azure.AI.Assistants.VectorStoreChunkingStrategyResponse chunkingStrategy = null) { throw null; }
@@ -302,8 +307,12 @@ namespace Azure.AI.Assistants
         public virtual Azure.Response<Azure.AI.Assistants.Assistant> CreateAssistant(string model, string name = null, string description = null, string instructions = null, System.Collections.Generic.IEnumerable<Azure.AI.Assistants.ToolDefinition> tools = null, Azure.AI.Assistants.ToolResources toolResources = null, float? temperature = default(float?), float? topP = default(float?), System.BinaryData responseFormat = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateAssistantAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Assistants.Assistant>> CreateAssistantAsync(string model, string name = null, string description = null, string instructions = null, System.Collections.Generic.IEnumerable<Azure.AI.Assistants.ToolDefinition> tools = null, Azure.AI.Assistants.ToolResources toolResources = null, float? temperature = default(float?), float? topP = default(float?), System.BinaryData responseFormat = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Assistants.ThreadMessage> CreateMessage(string threadId, Azure.AI.Assistants.MessageRole role, System.BinaryData content, System.Collections.Generic.IEnumerable<Azure.AI.Assistants.MessageAttachment> attachments = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Assistants.ThreadMessage> CreateMessage(string threadId, Azure.AI.Assistants.MessageRole role, System.Collections.Generic.IEnumerable<Azure.AI.Assistants.MessageInputContentBlock> contentBlocks, System.Collections.Generic.IEnumerable<Azure.AI.Assistants.MessageAttachment> attachments = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Assistants.ThreadMessage> CreateMessage(string threadId, Azure.AI.Assistants.MessageRole role, string content, System.Collections.Generic.IEnumerable<Azure.AI.Assistants.MessageAttachment> attachments = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateMessage(string threadId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Assistants.ThreadMessage>> CreateMessageAsync(string threadId, Azure.AI.Assistants.MessageRole role, System.BinaryData content, System.Collections.Generic.IEnumerable<Azure.AI.Assistants.MessageAttachment> attachments = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Assistants.ThreadMessage>> CreateMessageAsync(string threadId, Azure.AI.Assistants.MessageRole role, System.Collections.Generic.IEnumerable<Azure.AI.Assistants.MessageInputContentBlock> contentBlocks, System.Collections.Generic.IEnumerable<Azure.AI.Assistants.MessageAttachment> attachments = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Assistants.ThreadMessage>> CreateMessageAsync(string threadId, Azure.AI.Assistants.MessageRole role, string content, System.Collections.Generic.IEnumerable<Azure.AI.Assistants.MessageAttachment> attachments = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateMessageAsync(string threadId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.AI.Assistants.ThreadRun> CreateRun(Azure.AI.Assistants.AssistantThread thread, Azure.AI.Assistants.Assistant assistant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -888,6 +897,25 @@ namespace Azure.AI.Assistants
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.FunctionToolDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ImageDetailLevel : System.IEquatable<Azure.AI.Assistants.ImageDetailLevel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ImageDetailLevel(string value) { throw null; }
+        public static Azure.AI.Assistants.ImageDetailLevel Auto { get { throw null; } }
+        public static Azure.AI.Assistants.ImageDetailLevel High { get { throw null; } }
+        public static Azure.AI.Assistants.ImageDetailLevel Low { get { throw null; } }
+        public bool Equals(Azure.AI.Assistants.ImageDetailLevel other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Assistants.ImageDetailLevel left, Azure.AI.Assistants.ImageDetailLevel right) { throw null; }
+        public static implicit operator Azure.AI.Assistants.ImageDetailLevel (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Assistants.ImageDetailLevel left, Azure.AI.Assistants.ImageDetailLevel right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IncompleteDetailsReason : System.IEquatable<Azure.AI.Assistants.IncompleteDetailsReason>
     {
         private readonly object _dummy;
@@ -1166,6 +1194,30 @@ namespace Azure.AI.Assistants
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageImageFileContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageImageFileContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class MessageImageFileParam : System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.MessageImageFileParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageImageFileParam>
+    {
+        public MessageImageFileParam(string fileId) { }
+        public Azure.AI.Assistants.ImageDetailLevel? Detail { get { throw null; } set { } }
+        public string FileId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Assistants.MessageImageFileParam System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.MessageImageFileParam>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.MessageImageFileParam>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Assistants.MessageImageFileParam System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageImageFileParam>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageImageFileParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageImageFileParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MessageImageUrlParam : System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.MessageImageUrlParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageImageUrlParam>
+    {
+        public MessageImageUrlParam(string url) { }
+        public Azure.AI.Assistants.ImageDetailLevel? Detail { get { throw null; } set { } }
+        public string Url { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Assistants.MessageImageUrlParam System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.MessageImageUrlParam>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.MessageImageUrlParam>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Assistants.MessageImageUrlParam System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageImageUrlParam>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageImageUrlParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageImageUrlParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class MessageIncompleteDetails : System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.MessageIncompleteDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageIncompleteDetails>
     {
         internal MessageIncompleteDetails() { }
@@ -1197,6 +1249,49 @@ namespace Azure.AI.Assistants
         public static implicit operator Azure.AI.Assistants.MessageIncompleteDetailsReason (string value) { throw null; }
         public static bool operator !=(Azure.AI.Assistants.MessageIncompleteDetailsReason left, Azure.AI.Assistants.MessageIncompleteDetailsReason right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public abstract partial class MessageInputContentBlock : System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.MessageInputContentBlock>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageInputContentBlock>
+    {
+        protected MessageInputContentBlock() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Assistants.MessageInputContentBlock System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.MessageInputContentBlock>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.MessageInputContentBlock>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Assistants.MessageInputContentBlock System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageInputContentBlock>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageInputContentBlock>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageInputContentBlock>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MessageInputImageFileBlock : Azure.AI.Assistants.MessageInputContentBlock, System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.MessageInputImageFileBlock>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageInputImageFileBlock>
+    {
+        public MessageInputImageFileBlock(Azure.AI.Assistants.MessageImageFileParam imageFile) { }
+        public Azure.AI.Assistants.MessageImageFileParam ImageFile { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Assistants.MessageInputImageFileBlock System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.MessageInputImageFileBlock>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.MessageInputImageFileBlock>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Assistants.MessageInputImageFileBlock System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageInputImageFileBlock>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageInputImageFileBlock>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageInputImageFileBlock>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MessageInputImageUrlBlock : Azure.AI.Assistants.MessageInputContentBlock, System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.MessageInputImageUrlBlock>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageInputImageUrlBlock>
+    {
+        public MessageInputImageUrlBlock(Azure.AI.Assistants.MessageImageUrlParam imageUrl) { }
+        public Azure.AI.Assistants.MessageImageUrlParam ImageUrl { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Assistants.MessageInputImageUrlBlock System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.MessageInputImageUrlBlock>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.MessageInputImageUrlBlock>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Assistants.MessageInputImageUrlBlock System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageInputImageUrlBlock>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageInputImageUrlBlock>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageInputImageUrlBlock>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MessageInputTextBlock : Azure.AI.Assistants.MessageInputContentBlock, System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.MessageInputTextBlock>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageInputTextBlock>
+    {
+        public MessageInputTextBlock(string text) { }
+        public string Text { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Assistants.MessageInputTextBlock System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.MessageInputTextBlock>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.MessageInputTextBlock>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Assistants.MessageInputTextBlock System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageInputTextBlock>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageInputTextBlock>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.MessageInputTextBlock>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MessageRole : System.IEquatable<Azure.AI.Assistants.MessageRole>
@@ -2338,11 +2433,15 @@ namespace Azure.AI.Assistants
     }
     public partial class ThreadMessageOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.ThreadMessageOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.ThreadMessageOptions>
     {
+        public ThreadMessageOptions(Azure.AI.Assistants.MessageRole role, System.BinaryData content) { }
+        public ThreadMessageOptions(Azure.AI.Assistants.MessageRole role, System.Collections.Generic.IEnumerable<Azure.AI.Assistants.MessageInputContentBlock> contentBlocks) { }
         public ThreadMessageOptions(Azure.AI.Assistants.MessageRole role, string content) { }
         public System.Collections.Generic.IList<Azure.AI.Assistants.MessageAttachment> Attachments { get { throw null; } set { } }
-        public string Content { get { throw null; } }
+        public System.BinaryData Content { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public Azure.AI.Assistants.MessageRole Role { get { throw null; } }
+        public System.Collections.Generic.IEnumerable<Azure.AI.Assistants.MessageInputContentBlock> GetContentBlocks() { throw null; }
+        public string GetTextContent() { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Assistants.ThreadMessageOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.ThreadMessageOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.ThreadMessageOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
