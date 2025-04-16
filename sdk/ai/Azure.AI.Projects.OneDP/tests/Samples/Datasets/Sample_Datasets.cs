@@ -24,7 +24,7 @@ namespace Azure.AI.Projects.OneDP.Tests
             var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
             var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
 #else
-            var endpoint = TestEnvironment.AzureAICONNECTIONSTRING;
+            var endpoint = TestEnvironment.PROJECTENDPOINT;
             var datasetName = TestEnvironment.DATASETNAME;
 #endif
             AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
@@ -36,7 +36,7 @@ namespace Azure.AI.Projects.OneDP.Tests
             var dataset = datasets.UploadFileAndCreate(
                 name: datasetName,
                 version: "1",
-                filePath: "sample_folder/file1.txt"
+                filePath: "sample_folder/sample_file1.txt"
                 );
             Console.WriteLine(dataset);
             #endregion
