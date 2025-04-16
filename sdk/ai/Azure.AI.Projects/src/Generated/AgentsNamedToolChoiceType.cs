@@ -30,6 +30,7 @@ namespace Azure.AI.Projects
         private const string SharepointValue = "sharepoint_grounding";
         private const string AzureAISearchValue = "azure_ai_search";
         private const string BingCustomSearchValue = "bing_custom_search";
+        private const string ConnectedAgentValue = "connected_agent";
 
         /// <summary> Tool type `function`. </summary>
         public static AgentsNamedToolChoiceType Function { get; } = new AgentsNamedToolChoiceType(FunctionValue);
@@ -47,6 +48,8 @@ namespace Azure.AI.Projects
         public static AgentsNamedToolChoiceType AzureAISearch { get; } = new AgentsNamedToolChoiceType(AzureAISearchValue);
         /// <summary> Tool type `bing_custom_search`. </summary>
         public static AgentsNamedToolChoiceType BingCustomSearch { get; } = new AgentsNamedToolChoiceType(BingCustomSearchValue);
+        /// <summary> Tool type `connected_agent`. </summary>
+        public static AgentsNamedToolChoiceType ConnectedAgent { get; } = new AgentsNamedToolChoiceType(ConnectedAgentValue);
         /// <summary> Determines if two <see cref="AgentsNamedToolChoiceType"/> values are the same. </summary>
         public static bool operator ==(AgentsNamedToolChoiceType left, AgentsNamedToolChoiceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgentsNamedToolChoiceType"/> values are not the same. </summary>
