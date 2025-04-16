@@ -39,6 +39,14 @@ namespace Azure.Security.ConfidentialLedger.Tests
         {
             // https://github.com/Azure/autorest.csharp/issues/1214
             TestDiagnostics = false;
+            // Add BodyRegexSanitizer to handle newline characters
+            BodyRegexSanitizers.Add(
+                new BodyRegexSanitizer(
+                    "\\n")
+                {
+                    GroupForReplace = "0",
+                    Value = "\r\n"
+                });
         }
 
         [SetUp]
@@ -318,15 +326,6 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task UserDefinedEndpointsTest()
         {
-            // Add BodyRegexSanitizer to handle newline characters
-            BodyRegexSanitizers.Add(
-                new BodyRegexSanitizer(
-                    "\\n")
-                {
-                    GroupForReplace = "0",
-                    Value = "\r\n"
-                });
-
             await foreach (BinaryData functions in Client.GetUserDefinedFunctionsAsync())
             {
                 JsonElement functiondata = JsonDocument.Parse(functions.ToStream()).RootElement;
@@ -434,7 +433,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task CustomRoleTest()
         {
-            string roleName = "userDefinedRole";
+            string roleName = "userDefinedTestRole";
 
             // Add Custom Role
             var rolesParam = new RolesParam
