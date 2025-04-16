@@ -117,7 +117,7 @@
     <PackageReference Update="Azure.Core.Expressions.DataFactory" Version="1.0.0" />
     <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.2.0" />
     <PackageReference Update="Azure.Data.Tables" Version="12.8.0" />
-    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.12.0" />
+    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.12.1" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.21.0" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.19.0" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.4.0" />
@@ -168,9 +168,9 @@
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.9" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.4.0" />
-    <PackageReference Update="Microsoft.Identity.Client" Version="4.69.1" />
-    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.69.1" />
-    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.69.1" />
+    <PackageReference Update="Microsoft.Identity.Client" Version="4.70.2" />
+    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.70.2" />
+    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.70.2" />
     <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.35.0" />
     <PackageReference Update="Microsoft.IdentityModel.Tokens" Version="6.35.0" />
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
@@ -206,7 +206,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsGeneratorLibrary)' == 'true'">
-    <PackageReference Update="Microsoft.TypeSpec.Generator.ClientModel" Version="1.0.0-alpha.20250320.1" />
+    <PackageReference Update="Microsoft.TypeSpec.Generator.ClientModel" Version="1.0.0-alpha.20250407.1" />
     <PackageReference Update="System.ClientModel" Version="1.3.0" />
   </ItemGroup>
 
@@ -275,7 +275,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20250409.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20250410.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20250310.1" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <!-- Note: Upgrading the .NET SDK version needs to be synchronized with the autorest.csharp repository -->
@@ -301,7 +301,7 @@
     <PackageReference Update="Azure.Core" Version="1.44.1" />
     <PackageReference Update="Azure.Identity" Version="1.13.1" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.17.0" />
-    <PackageReference Update="Azure.Messaging.EventHubs.Processor" Version="5.11.6" />
+    <PackageReference Update="Azure.Messaging.EventHubs.Processor" Version="5.12.0" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.19.0" />
     <PackageReference Update="Azure.ResourceManager" Version="1.13.0" />
     <PackageReference Update="Azure.ResourceManager.Compute" Version="1.7.0-beta.1" />
