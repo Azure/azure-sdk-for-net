@@ -7,7 +7,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
@@ -26,7 +25,7 @@ public partial class Sample_Agent_Basics : SamplesBase<AIProjectsTestEnvironment
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AgentsClient client = new(connectionString, new AzureCliCredential());
+        AgentsClient client = new(connectionString, new DefaultAzureCredential());
         #endregion
 
         // Step 1: Create an agent
@@ -121,7 +120,7 @@ public partial class Sample_Agent_Basics : SamplesBase<AIProjectsTestEnvironment
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AgentsClient client = new(connectionString, new AzureCliCredential());
+        AgentsClient client = new(connectionString, new DefaultAzureCredential());
 
         // Step 1: Create an agent
         #region Snippet:OverviewCreateAgentSync

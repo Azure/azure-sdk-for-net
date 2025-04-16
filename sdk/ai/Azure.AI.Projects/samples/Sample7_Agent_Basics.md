@@ -6,7 +6,7 @@ In this example we will demonstrate creation and basic use of an agent step by s
 ```C# Snippet:OverviewCreateAgentClient
 var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AgentsClient client = new(connectionString, new AzureCliCredential());
+AgentsClient client = new(connectionString, new DefaultAzureCredential());
 ```
 
 2. Next we will need to create an agent.
