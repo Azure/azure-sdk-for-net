@@ -42,9 +42,9 @@ namespace Azure.Security.ConfidentialLedger.Tests
             // Add BodyRegexSanitizer to handle newline characters
             BodyRegexSanitizers.Add(
                 new BodyRegexSanitizer(
-                    "\\n")
+                    "[^\\r](?<break>\\n)")
                 {
-                    GroupForReplace = "0",
+                    GroupForReplace = "break",
                     Value = "\r\n"
                 });
         }
