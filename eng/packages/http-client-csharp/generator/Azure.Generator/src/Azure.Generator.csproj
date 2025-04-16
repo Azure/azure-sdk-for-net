@@ -8,7 +8,6 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
 	  <PackageReference Include="Azure.ResourceManager" />
-    <PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
   </ItemGroup>
 
 	<Target Name="CheckEmitterBuild" BeforeTargets="Build">
@@ -34,6 +33,9 @@
 		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\RawRequestUriBuilder.cs" LinkBase="Shared/Core">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\..\..\..\..\work\typespec\packages\http-client-csharp\generator\Microsoft.TypeSpec.Generator.ClientModel\src\Microsoft.TypeSpec.Generator.ClientModel.csproj" />
 	</ItemGroup>
 
 </Project>

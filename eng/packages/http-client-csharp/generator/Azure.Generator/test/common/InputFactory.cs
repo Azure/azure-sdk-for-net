@@ -135,7 +135,7 @@ namespace Azure.Generator.Tests.Common
                 defaultValue: Constant.String(contentType),
                 nameInRequest: "Content-Type",
                 isContentType: true,
-                kind: InputOperationParameterKind.Constant);
+                kind: InputParameterKind.Constant);
 
         /// <summary>
         /// Construct input paraemter
@@ -157,7 +157,7 @@ namespace Azure.Generator.Tests.Common
             InputConstant? defaultValue = null,
             InputRequestLocation location = InputRequestLocation.Body,
             bool isRequired = false,
-            InputOperationParameterKind kind = InputOperationParameterKind.Method,
+            InputParameterKind kind = InputParameterKind.Method,
             bool isEndpoint = false,
             bool isContentType = false)
         {
@@ -191,6 +191,8 @@ namespace Azure.Generator.Tests.Common
         /// <param name="wireName"></param>
         /// <param name="summary"></param>
         /// <param name="description"></param>
+        /// <param name="serializedName"></param>
+        /// <param name="kind"></param>
         /// <returns></returns>
         public static InputModelProperty Property(
             string name,
@@ -200,16 +202,20 @@ namespace Azure.Generator.Tests.Common
             bool isDiscriminator = false,
             string? wireName = null,
             string? summary = null,
-            string? description = null)
+            string? description = null,
+            string? serializedName = null,
+            InputModelPropertyKind kind = InputModelPropertyKind.Property)
         {
             return new InputModelProperty(
                 name,
+                kind,
                 summary,
                 description ?? $"Description for {name}",
                 type,
                 isRequired,
                 isReadOnly,
                 isDiscriminator,
+                serializedName,
                 new(json: new(wireName ?? name)));
         }
 
@@ -269,6 +275,85 @@ namespace Azure.Generator.Tests.Common
                 setDecoratorMethod!.Invoke(model, [decorators]);
             }
             return model;
+        }
+
+        /// <summary>
+        /// Construct basic service method
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="operation"></param>
+        /// <param name="access"></param>
+        /// <param name="parameters"></param>
+        /// <param name="response"></param>
+        /// <param name="exception"></param>
+        /// <returns></returns>
+        public static InputBasicServiceMethod BasicServiceMethod(
+            string name,
+            InputOperation operation,
+            string access = "public",
+            IReadOnlyList<InputParameter>? parameters = null,
+            InputServiceMethodResponse? response = null,
+            InputServiceMethodResponse? exception = null)
+        {
+            return new InputBasicServiceMethod(
+                name,
+                access,
+                [],
+                null,
+                null,
+                operation,
+                parameters ?? [],
+                response ?? ServiceMethodResponse(null, null),
+                exception,
+                false,
+                true,
+                true,
+                string.Empty);
+        }
+
+        /// <summary>
+        /// Construct service method response
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="resultSegments"></param>
+        /// <returns></returns>
+        public static InputServiceMethodResponse ServiceMethodResponse(InputType? type, IReadOnlyList<string>? resultSegments)
+        {
+            return new InputServiceMethodResponse(type, resultSegments);
+        }
+
+        /// <summary>
+        /// Construct paging service method
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="operation"></param>
+        /// <param name="access"></param>
+        /// <param name="parameters"></param>
+        /// <param name="response"></param>
+        /// <param name="exception"></param>
+        /// <returns></returns>
+        public static InputPagingServiceMethod PagingServiceMethod(
+           string name,
+           InputOperation operation,
+           string access = "public",
+           IReadOnlyList<InputParameter>? parameters = null,
+           InputServiceMethodResponse? response = null,
+           InputServiceMethodResponse? exception = null)
+        {
+            return new InputPagingServiceMethod(
+                name,
+                access,
+                [],
+                null,
+                null,
+                operation,
+                parameters ?? [],
+                response ?? ServiceMethodResponse(null, null),
+                exception,
+                false,
+                true,
+                true,
+                string.Empty);
         }
 
         /// <summary>
@@ -343,13 +428,13 @@ namespace Azure.Generator.Tests.Common
         /// <param name="name"></param>
         /// <param name="clientNamespace"></param>
         /// <param name="doc"></param>
-        /// <param name="operations"></param>
+        /// <param name="methods"></param>
         /// <param name="parameters"></param>
         /// <param name="parent"></param>
         /// <param name="decorators"></param>
         /// <param name="crossLanguageDefinitionId"></param>
         /// <returns></returns>
-        public static InputClient Client(string name, string clientNamespace = "Samples", string? doc = null, IEnumerable<InputOperation>? operations = null, IEnumerable<InputParameter>? parameters = null, InputClient? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null, string? crossLanguageDefinitionId = null)
+        public static InputClient Client(string name, string clientNamespace = "Samples", string? doc = null, IEnumerable<InputServiceMethod>? methods = null, IEnumerable<InputParameter>? parameters = null, InputClient? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null, string? crossLanguageDefinitionId = null)
         {
             // when this client has parent, we add the constructed client into the `children` list of the parent
             var clientChildren = new List<InputClient>();
@@ -359,7 +444,7 @@ namespace Azure.Generator.Tests.Common
                 crossLanguageDefinitionId ?? $"{clientNamespace}.{name}",
                 string.Empty,
                 doc ?? $"{name} description",
-                operations is null ? [] : [.. operations],
+                methods is null ? [] : [.. methods],
                 parameters is null ? [] : [.. parameters],
                 parent,
                 clientChildren

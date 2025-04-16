@@ -3,7 +3,6 @@
 
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
-using Azure.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,7 +57,7 @@ namespace Azure.Generator.Management
         protected override TypeProvider[] BuildTypeProviders()
         {
             var (resources, collections) = BuildResources();
-            return [.. base.BuildTypeProviders().Where(p => p is not SystemObjectTypeProvider), ArmOperation, GenericArmOperation, .. resources, .. collections, .. resources.Select(r => r.Source)];
+            return [.. base.BuildTypeProviders(), ArmOperation, GenericArmOperation, .. resources, .. collections, .. resources.Select(r => r.Source)];
         }
     }
 }
