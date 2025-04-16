@@ -94,6 +94,7 @@ namespace Azure.EventGrid.Messaging.SourceGeneration
         private static List<SystemEventNode> GetSystemEventNodes(Compilation compilation, ImmutableArray<ClassDeclarationSyntax> classes)
         {
             var systemEventNodes = new List<SystemEventNode>();
+            var eventTypeSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
             foreach (var classDeclaration in classes)
             {
@@ -114,6 +115,11 @@ namespace Azure.EventGrid.Messaging.SourceGeneration
                 if (string.IsNullOrEmpty(eventType))
                 {
                     // Skip if no event type is found (likely a base type)
+                    continue;
+                }
+
+                if (!eventTypeSet.Add(eventType))
+                {
                     continue;
                 }
 
