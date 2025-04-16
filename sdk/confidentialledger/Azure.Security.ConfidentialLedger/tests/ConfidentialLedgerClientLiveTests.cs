@@ -318,14 +318,14 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task UserDefinedEndpointsTest()
         {
-            // Add BodyRegexSanitizer to handle newline characters
-            BodyRegexSanitizers.Add(
-                new BodyRegexSanitizer(
-                    "\\n")
-                {
-                    GroupForReplace = "0",
-                    Value = "\r\n"
-                });
+            // Add BodyRegexSanitizer to handle newline characters
+            BodyRegexSanitizers.Add(
+                new BodyRegexSanitizer(
+                    "\\n")
+                {
+                    GroupForReplace = "0",
+                    Value = "\r\n"
+                });
 
             await foreach (BinaryData functions in Client.GetUserDefinedFunctionsAsync())
             {
@@ -339,10 +339,16 @@ namespace Azure.Security.ConfidentialLedger.Tests
             string filePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "programmability.js");
             string programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create("test", filePath));
             RequestContent programmabilityContent = RequestContent.Create(programmabilityPayload);
-            Response result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
+
+            // Remove line endings from request content
+            string sanitizedContent = programmabilityPayload.ToString().Replace("\r\n", "").Replace("\n", "").Replace("\r", "");
+            RequestContent sanitizedRequestContent = RequestContent.Create(sanitizedContent);
+            Console.WriteLine("sanitizedRequestContent" + sanitizedRequestContent.ToString());
+            Response result = await Client.CreateUserDefinedEndpointAsync(sanitizedRequestContent);
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
 
             var resp = await Client.GetUserDefinedEndpointsModuleAsync("test");
+            Console.WriteLine(resp.Content);
 
             //var bundleData= JsonSerializer.Deserialize<Bundle>(resp.Content.ToString());
 /*            string programContent = File.ReadAllText(filePath);
@@ -428,7 +434,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task CustomRoleTest()
         {
-            string roleName = "usermanage";
+            string roleName = "testrole";
 
             // Add Custom Role
             var rolesParam = new RolesParam
