@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Initializes a new instance of <see cref="ConnectedRegistryLoginServer"/>. </summary>
         /// <param name="host"> The host of the connected registry. Can be FQDN or IP. </param>
-        /// <param name="tls"></param>
+        /// <param name="tls"> The TLS properties of the connected registry login server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedRegistryLoginServer(string host, LoginServerPropertiesTls tls, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectedRegistryLoginServer(string host, ContainerRegistryTlsProperties tls, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Host = host;
             Tls = tls;
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The host of the connected registry. Can be FQDN or IP. </summary>
         [WirePath("host")]
         public string Host { get; }
-        /// <summary> Gets the tls. </summary>
+        /// <summary> The TLS properties of the connected registry login server. </summary>
         [WirePath("tls")]
-        public LoginServerPropertiesTls Tls { get; }
+        public ContainerRegistryTlsProperties Tls { get; }
     }
 }
