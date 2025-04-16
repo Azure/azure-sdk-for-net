@@ -72,11 +72,11 @@ namespace Azure.Storage.DataMovement
         {
             if (concurrencyRecommandation.Concurrency == 0)
                 return Task.CompletedTask;
-            //_concurrencyRecommendationCount++;
-            //_concurrencyRecommendationSum += concurrencyRecommandation.Concurrency;
+            _concurrencyRecommendationCount++;
+            _concurrencyRecommendationSum += concurrencyRecommandation.Concurrency;
 
-            //MaxConcurrency = _concurrencyRecommendationSum / _concurrencyRecommendationCount;
-            MaxConcurrency = concurrencyRecommandation.Concurrency;
+            MaxConcurrency = _concurrencyRecommendationSum / _concurrencyRecommendationCount;
+            //MaxConcurrency = concurrencyRecommandation.Concurrency;
             return Task.CompletedTask;
         }
 
@@ -86,7 +86,6 @@ namespace Azure.Storage.DataMovement
             bool atMax = false;
             double currentConcurrency = 1;
             ConcurrencyTunerState rateChangeReason = ConcurrencyTunerState.ConcurrencyReasonInitial;
-            decimal desiredNewThroughput = 0;
 
             decimal prevThroughput = 0;
             decimal currThroughput = 0;
@@ -95,59 +94,60 @@ namespace Azure.Storage.DataMovement
             {
                 if (ThroughputMonitor.AvgThroughput == 0)
                     return;
-                currThroughput = ThroughputMonitor.AvgThroughput;
+                currThroughput = ThroughputMonitor.AvgThroughputInMB;
                 atMax = IsAtMaxConcurrency(currentConcurrency, multiplier);
-                DetermineThroughputChange(prevThroughput, currThroughput);
 
-                await Task.Delay(100, CancellationToken.None).ConfigureAwait(false);
+                await Task.Delay(100, cancellationToken).ConfigureAwait(false);
 
                 switch (DetermineThroughputChange(prevThroughput, currThroughput))
                 {
-                    case ConcurrencyChange.Increase:
+                    //case ThroughputChange.Increase:
+                    //    if (atMax)
+                    //    {
+                    //        currentConcurrency = _concurrencyUpperLimit;
+                    //    }
+                    //    else
+                    //    {
+                    //        currentConcurrency = currentConcurrency + (double)(currThroughput - prevThroughput) / DataMovementConstants.ConcurrencyTuner.ScalingFactor;
+                    //    }
+                    //    break;
+                    //case ThroughputChange.Decrease:
+                    //    if (currentConcurrency <= 0)
+                    //    {
+                    //        currentConcurrency = 1;
+                    //    }
+                    //    else
+                    //    {
+                    //        currentConcurrency--;
+                    //    }
+                    //    break;
+                    case ThroughputChange.NoChange:
+                        // Do nothing
+                         break;
+                    default:
+                        currentConcurrency = currentConcurrency + (double)(currThroughput - prevThroughput) / DataMovementConstants.ConcurrencyTuner.ScalingFactor;
                         break;
-                    case ConcurrencyChange.Decrease:
-                        if (currentConcurrency <= 0)
-                        {
-                            currentConcurrency = 1;
-                        }
-                        else
-                        {
-                            currentConcurrency--;
-                        }
-                        break;
-                    case ConcurrencyChange.NoChange:
-                        if (!atMax)
-                        {
-                            currentConcurrency = _concurrencyUpperLimit;
-                        }
-                        else
-                        {
-                            currentConcurrency++;
-                        }
-                            break;
                 }
 
                 await SetConcurrencyAsync((int)currentConcurrency, rateChangeReason, cancellationToken).ConfigureAwait(false);
-
-                desiredNewThroughput = CalculateDesiredThroughput(prevThroughput);
                 prevThroughput = currThroughput;
-                currThroughput = ThroughputMonitor.AvgThroughput;
+                currThroughput = ThroughputMonitor.AvgThroughputInMB;
             }
         }
 
-        private static ConcurrencyChange DetermineThroughputChange(decimal prevThroughput, decimal currThroughput)
+        private static ThroughputChange DetermineThroughputChange(decimal prevThroughput, decimal currThroughput)
         {
-            if (currThroughput > (1.03M * prevThroughput))
+            if (currThroughput > (1.01M * prevThroughput))
             {
-                return ConcurrencyChange.Increase;
+                return ThroughputChange.Increase;
             }
-            else if (currThroughput < (.97M * prevThroughput))
+            else if (currThroughput < (.991M * prevThroughput))
             {
-                return ConcurrencyChange.Decrease;
+                return ThroughputChange.Decrease;
             }
             else
             {
-                return ConcurrencyChange.NoChange;
+                return ThroughputChange.NoChange;
             }
         }
 
@@ -318,7 +318,7 @@ private bool IsAtMaxConcurrency(double concurrency, decimal multiplier)
     public int Concurrency;
 }
 
-    internal enum ConcurrencyChange
+    internal enum ThroughputChange
     {
         Increase,
         Decrease,
