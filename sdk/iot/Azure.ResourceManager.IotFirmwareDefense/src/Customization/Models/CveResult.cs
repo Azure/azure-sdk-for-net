@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 EffectiveCvssVersion = int.Parse(value);
             }
         }
-        private string _getCvssScore(int version)
+        private string GetCvssScore(int version)
         {
             for (var i = 0; i < CvssScores.Count; i++)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             return null;
         }
-        private void _setCvssScore(int version, string newScore)
+        private void SetCvssScore(int version, string newScore)
         {
             for (var i = 0; i < CvssScores.Count; i++)
             {
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         {
             get
             {
-                return _getCvssScore(2);
+                return GetCvssScore(2);
             }
             set
             {
-                _setCvssScore(2, value);
+                SetCvssScore(2, value);
             }
         }
         /// <summary> CVSS V3 score of the CVE. </summary>
@@ -107,11 +107,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         {
             get
             {
-                return _getCvssScore(3);
+                return GetCvssScore(3);
             }
             set
             {
-                _setCvssScore(3, value);
+                SetCvssScore(3, value);
             }
         }
     }

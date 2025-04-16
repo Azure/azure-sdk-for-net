@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
@@ -17,14 +18,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             get => Name;
             set{ return; }
         }
-
-        ///// <summary> List of functions the certificate can fulfill. </summary>
-        //[EditorBrowsable(EditorBrowsableState.Never)]
-        //public IList<string> Usage
-        //{
-        //    get => CertificateUsage;
-        //    set{ return; }
-        //}
 
         /// <summary> Role of the certificate (Root CA, etc). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -51,17 +44,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IList<string> Usage
         {
-            get
-            {
-                var r = new List<string>();
-                foreach (var u in CertificateUsage)
-                {
-                    r.Add(u.ToString());
-                }
-                return r;
-            }
+            get => CertificateUsage.Select(u => u.ToString()).ToList();
             set
             {
+                // CertificateUsage does not have a setter, there is nothing to do
                 return;
             }
         }

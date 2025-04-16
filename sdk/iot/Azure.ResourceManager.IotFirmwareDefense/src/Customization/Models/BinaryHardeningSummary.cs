@@ -10,18 +10,18 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     {
         /// <summary> NX summary percentage. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public int? NXPercentage => (int)NotExecutableStackCount;
+        public int? NXPercentage => NotExecutableStackCount.HasValue ? (int)NotExecutableStackCount : null;
         /// <summary> PIE summary percentage. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public int? PiePercentage => (int)PositionIndependentExecutableCount;
+        public int? PiePercentage => PositionIndependentExecutableCount.HasValue ? (int)PositionIndependentExecutableCount : null;
         /// <summary> RELRO summary percentage. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public int? RelroPercentage => (int)RelocationReadOnlyCount;
+        public int? RelroPercentage => RelocationReadOnlyCount.HasValue ? (int)RelocationReadOnlyCount : null;
         /// <summary> Canary summary percentage. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public int? CanaryPercentage => (int)StackCanaryCount;
+        public int? CanaryPercentage => StackCanaryCount.HasValue ? (int)StackCanaryCount : null;
         /// <summary> Stripped summary percentage. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public int? StrippedPercentage => (int)StrippedBinaryCount;
+        public int? StrippedPercentage => StrippedBinaryCount.HasValue ? (int)StrippedBinaryCount : null;
     }
 }

@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
@@ -21,8 +22,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Type of the key (public or private). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string KeyType {
-            get => KeyType.ToString();
-            set { }
+            get => CryptoKeyType.ToString();
+            set => CryptoKeyType = value;
         }
 
         /// <summary>
@@ -32,8 +33,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IList<string> Usage
         {
-            get => CryptoKeyUsage.ToString().Split(',');
-            set { }
+            get => CryptoKeyUsage.ToList();
+            set
+            {
+                // CryptoKeyUsage does not have a setter, there is nothing to do
+                return;
+            }
         }
     }
 }

@@ -41,36 +41,56 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? NXFlag
         {
-            get => SecurityHardeningFeatures.NoExecute;
-            set => SecurityHardeningFeatures.NoExecute = value;
+            get => SecurityHardeningFeatures?.NoExecute;
+            set
+            {
+                SecurityHardeningFeatures ??= new();
+                SecurityHardeningFeatures.NoExecute = value;
+            }
         }
         /// <summary> PIE (position independent executable) flag. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? PieFlag
         {
-            get => SecurityHardeningFeatures.PositionIndependentExecutable;
-            set => SecurityHardeningFeatures.PositionIndependentExecutable = value;
+            get => SecurityHardeningFeatures?.PositionIndependentExecutable;
+            set
+            {
+                SecurityHardeningFeatures ??= new();
+                SecurityHardeningFeatures.PositionIndependentExecutable = value;
+            }
         }
         /// <summary> RELRO (relocation read-only) flag. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? RelroFlag
         {
-            get => SecurityHardeningFeatures.RelocationReadOnly;
-            set => SecurityHardeningFeatures.RelocationReadOnly = value;
+            get => SecurityHardeningFeatures?.RelocationReadOnly;
+            set
+            {
+                SecurityHardeningFeatures ??= new();
+                SecurityHardeningFeatures.RelocationReadOnly = value;
+            }
         }
         /// <summary> Canary (stack canaries) flag. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? CanaryFlag
         {
-            get => SecurityHardeningFeatures.Canary;
-            set => SecurityHardeningFeatures.Canary = value;
+            get => SecurityHardeningFeatures?.Canary;
+            set
+            {
+                SecurityHardeningFeatures ??= new();
+                SecurityHardeningFeatures.Canary = value;
+            }
         }
         /// <summary> Stripped flag. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? StrippedFlag
         {
-            get => SecurityHardeningFeatures.Stripped;
-            set => SecurityHardeningFeatures.Stripped = value;
+            get => SecurityHardeningFeatures?.Stripped;
+            set
+            {
+                SecurityHardeningFeatures ??= new();
+                SecurityHardeningFeatures.Stripped = value;
+            }
         }
     }
 }
