@@ -34,7 +34,32 @@ namespace Azure.EventGrid.Messaging.SourceGeneration
             var classDeclarations = context.SyntaxProvider
                 .CreateSyntaxProvider(
                     predicate: static (s, _) => s is ClassDeclarationSyntax cds && cds.Identifier.Text.EndsWith("EventData"),
-                    transform: static (ctx, _) => (ClassDeclarationSyntax)ctx.Node)
+                    transform: static (ctx, cancellationToken) =>
+                    {
+                        var semanticModel = ctx.SemanticModel;
+                        var classDecl = (ClassDeclarationSyntax)ctx.Node;
+
+                        // Get the symbol for the class declaration
+                        var symbol = semanticModel.GetDeclaredSymbol(classDecl, cancellationToken);
+                        if (symbol == null)
+                        {
+                            return null;
+                        }
+
+                        // Check if the symbol is in the SystemEvents namespace
+                        var containingNamespace = symbol.ContainingNamespace;
+                        while (containingNamespace != null)
+                        {
+                            if (containingNamespace.Name == "SystemEvents")
+                            {
+                                return (ClassDeclarationSyntax)ctx.Node;
+                            }
+                            containingNamespace = containingNamespace.ContainingNamespace;
+                        }
+
+                        // Not in the SystemEvents namespace
+                        return null;
+                    })
                 .Where(static cls => cls != null);
 
             var compilationAndClasses = context.CompilationProvider.Combine(classDeclarations.Collect());
