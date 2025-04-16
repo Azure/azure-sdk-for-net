@@ -104,12 +104,7 @@ namespace Azure.EventGrid.Messaging.SourceGeneration
                 }
 
                 // Create a SystemEventNode for this event
-                systemEventNodes.Add(new SystemEventNode
-                {
-                    EventName = classSymbol.Name,
-                    EventType = $@"""{eventType}""",
-                    DeserializeMethod = deserializeMethod
-                });
+                systemEventNodes.Add(new SystemEventNode(eventName: classSymbol.Name, eventType: $@"""{eventType}""", deserializeMethod: deserializeMethod));
             }
 
             return systemEventNodes;
