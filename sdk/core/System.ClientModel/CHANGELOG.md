@@ -4,7 +4,7 @@
 
 ### Bugs Fixed
 
-- Added defaults for properties to the ModelReaderWriter source generator even when a type builder does not exist.
+- System.ClientModel.SourceGeneration adds the Default property even when no type builders exist.
 
 ## 1.4.0-beta.2 (2025-04-14)
 
