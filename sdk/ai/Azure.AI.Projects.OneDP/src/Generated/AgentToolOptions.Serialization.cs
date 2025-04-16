@@ -73,13 +73,6 @@ namespace Azure.AI.Projects.OneDP
             {
                 return null;
             }
-            if (element.TryGetProperty("type", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "Function": return FunctionToolOptions.DeserializeFunctionToolOptions(element, options);
-                }
-            }
             return UnknownAgentToolOptions.DeserializeUnknownAgentToolOptions(element, options);
         }
 

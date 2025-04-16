@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.AI.Projects.OneDP
 {
-    /// <summary> The CreateThreadRequest. </summary>
-    internal partial class CreateThreadRequest
+    /// <summary> Represents a chat conversation, which can contain multiple messages. </summary>
+    public partial class Conversation
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,43 +46,47 @@ namespace Azure.AI.Projects.OneDP
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CreateThreadRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Conversation"/>. </summary>
         /// <param name="messages">
-        /// A list of messages in this thread.
+        /// A list of messages in this conversation.
         /// Please note <see cref="ChatMessage"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AgentMessage"/>, <see cref="DeveloperMessage"/>, <see cref="SystemMessage"/>, <see cref="ToolMessage"/> and <see cref="UserMessage"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messages"/> is null. </exception>
-        internal CreateThreadRequest(IEnumerable<ChatMessage> messages)
+        public Conversation(IEnumerable<ChatMessage> messages)
         {
             Argument.AssertNotNull(messages, nameof(messages));
 
             Messages = messages.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateThreadRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Conversation"/>. </summary>
+        /// <param name="conversationId"> A unique identifier for this conversation. </param>
         /// <param name="messages">
-        /// A list of messages in this thread.
+        /// A list of messages in this conversation.
         /// Please note <see cref="ChatMessage"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AgentMessage"/>, <see cref="DeveloperMessage"/>, <see cref="SystemMessage"/>, <see cref="ToolMessage"/> and <see cref="UserMessage"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateThreadRequest(IReadOnlyList<ChatMessage> messages, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Conversation(string conversationId, IList<ChatMessage> messages, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            ConversationId = conversationId;
             Messages = messages;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateThreadRequest"/> for deserialization. </summary>
-        internal CreateThreadRequest()
+        /// <summary> Initializes a new instance of <see cref="Conversation"/> for deserialization. </summary>
+        internal Conversation()
         {
         }
 
+        /// <summary> A unique identifier for this conversation. </summary>
+        public string ConversationId { get; }
         /// <summary>
-        /// A list of messages in this thread.
+        /// A list of messages in this conversation.
         /// Please note <see cref="ChatMessage"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AgentMessage"/>, <see cref="DeveloperMessage"/>, <see cref="SystemMessage"/>, <see cref="ToolMessage"/> and <see cref="UserMessage"/>.
         /// </summary>
-        public IReadOnlyList<ChatMessage> Messages { get; }
+        public IList<ChatMessage> Messages { get; }
     }
 }

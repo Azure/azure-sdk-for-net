@@ -46,28 +46,28 @@ namespace Azure.AI.Projects.OneDP
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="Agent"/>. </summary>
-        /// <param name="creationOptions"> Options that were used to create this agent. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="creationOptions"/> is null. </exception>
-        public Agent(AgentCreationOptions creationOptions)
+        /// <param name="configurationOptions"> Configuration options for this agent. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationOptions"/> is null. </exception>
+        public Agent(AgentConfigurationOptions configurationOptions)
         {
-            Argument.AssertNotNull(creationOptions, nameof(creationOptions));
+            Argument.AssertNotNull(configurationOptions, nameof(configurationOptions));
 
             Metadata = new ChangeTrackingDictionary<string, string>();
-            CreationOptions = creationOptions;
+            ConfigurationOptions = configurationOptions;
         }
 
         /// <summary> Initializes a new instance of <see cref="Agent"/>. </summary>
         /// <param name="agentId"> A unique identifier for the agent. </param>
         /// <param name="description"> A description of the agent; used for display purposes and to describe the agent. </param>
         /// <param name="metadata"> Arbitrary metadata associated with this agent. </param>
-        /// <param name="creationOptions"> Options that were used to create this agent. </param>
+        /// <param name="configurationOptions"> Configuration options for this agent. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Agent(string agentId, string description, IDictionary<string, string> metadata, AgentCreationOptions creationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Agent(string agentId, string description, IDictionary<string, string> metadata, AgentConfigurationOptions configurationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AgentId = agentId;
             Description = description;
             Metadata = metadata;
-            CreationOptions = creationOptions;
+            ConfigurationOptions = configurationOptions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -82,7 +82,7 @@ namespace Azure.AI.Projects.OneDP
         public string Description { get; set; }
         /// <summary> Arbitrary metadata associated with this agent. </summary>
         public IDictionary<string, string> Metadata { get; }
-        /// <summary> Options that were used to create this agent. </summary>
-        public AgentCreationOptions CreationOptions { get; set; }
+        /// <summary> Configuration options for this agent. </summary>
+        public AgentConfigurationOptions ConfigurationOptions { get; set; }
     }
 }

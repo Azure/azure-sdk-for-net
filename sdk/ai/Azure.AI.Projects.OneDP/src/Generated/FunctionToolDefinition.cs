@@ -10,13 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.OneDP
 {
-    /// <summary> Options for a function-based tool behavior. </summary>
-    public partial class FunctionToolOptions : AgentToolOptions
+    /// <summary> Definitions for a function-based tool behavior. </summary>
+    public partial class FunctionToolDefinition : AgentToolDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="FunctionToolOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionToolDefinition"/>. </summary>
         /// <param name="name"> The function/tool name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public FunctionToolOptions(string name)
+        public FunctionToolDefinition(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -24,14 +24,16 @@ namespace Azure.AI.Projects.OneDP
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FunctionToolOptions"/>. </summary>
-        /// <param name="type"> Discriminates the various child 'tool options' types. </param>
+        /// <summary> Initializes a new instance of <see cref="FunctionToolDefinition"/>. </summary>
+        /// <param name="type"> Discriminates the various child 'tool definition' types. </param>
+        /// <param name="options"> Additional options that specify the behavior of this tool (also polymorphic). </param>
+        /// <param name="override"> A set of overrides for the tool's name, description, or parameters. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The function/tool name. </param>
         /// <param name="description"> An optional description for the function-based tool. </param>
         /// <param name="parameters"> A JSON schema describing the function's parameters. </param>
         /// <param name="strict"> Indicates whether strict validation is required. </param>
-        internal FunctionToolOptions(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string description, JSONSchema parameters, bool? strict) : base(type, serializedAdditionalRawData)
+        internal FunctionToolDefinition(string type, AgentToolOptions options, AgentToolDefinitionOverride @override, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string description, JSONSchema parameters, bool? strict) : base(type, options, @override, serializedAdditionalRawData)
         {
             Name = name;
             Description = description;
@@ -39,8 +41,8 @@ namespace Azure.AI.Projects.OneDP
             Strict = strict;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FunctionToolOptions"/> for deserialization. </summary>
-        internal FunctionToolOptions()
+        /// <summary> Initializes a new instance of <see cref="FunctionToolDefinition"/> for deserialization. </summary>
+        internal FunctionToolDefinition()
         {
         }
 

@@ -10,11 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.OneDP
 {
-    /// <summary>
-    /// Base type for any agent tool-specific options, used in a polymorphic manner.
-    /// Please note <see cref="AgentToolOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="FunctionToolOptions"/>.
-    /// </summary>
+    /// <summary> Base type for any agent tool-specific options, used in a polymorphic manner. </summary>
     public abstract partial class AgentToolOptions
     {
         /// <summary>

@@ -61,7 +61,7 @@ namespace Azure.AI.Projects.OneDP
             string agentId = default;
             string messageId = default;
             string agentRunId = default;
-            string threadId = default;
+            string conversationId = default;
             AuthorRole role = default;
             IList<AIContent> content = default;
             string authorName = default;
@@ -91,9 +91,9 @@ namespace Azure.AI.Projects.OneDP
                     agentRunId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("threadId"u8))
+                if (property.NameEquals("conversationId"u8))
                 {
-                    threadId = property.Value.GetString();
+                    conversationId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("role"u8))
@@ -145,7 +145,7 @@ namespace Azure.AI.Projects.OneDP
                 agentId,
                 messageId,
                 agentRunId,
-                threadId,
+                conversationId,
                 role,
                 content,
                 authorName,

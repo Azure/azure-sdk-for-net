@@ -34,6 +34,8 @@ namespace Azure.AI.Projects.OneDP
                 throw new FormatException($"The model {nameof(AgentConfigurationOptions)} does not support writing '{format}' format.");
             }
 
+            writer.WritePropertyName("displayName"u8);
+            writer.WriteStringValue(DisplayName);
             if (Optional.IsDefined(AgentModel))
             {
                 writer.WritePropertyName("agentModel"u8);
@@ -96,6 +98,7 @@ namespace Azure.AI.Projects.OneDP
             {
                 return null;
             }
+            string displayName = default;
             AgentModel agentModel = default;
             string instructions = default;
             IList<AgentToolDefinition> tools = default;
@@ -104,6 +107,11 @@ namespace Azure.AI.Projects.OneDP
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("displayName"u8))
+                {
+                    displayName = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("agentModel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -147,7 +155,13 @@ namespace Azure.AI.Projects.OneDP
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AgentConfigurationOptions(agentModel, instructions, tools ?? new ChangeTrackingList<AgentToolDefinition>(), toolChoice, serializedAdditionalRawData);
+            return new AgentConfigurationOptions(
+                displayName,
+                agentModel,
+                instructions,
+                tools ?? new ChangeTrackingList<AgentToolDefinition>(),
+                toolChoice,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentConfigurationOptions>.Write(ModelReaderWriterOptions options)

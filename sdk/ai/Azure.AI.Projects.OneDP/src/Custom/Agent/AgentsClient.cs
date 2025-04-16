@@ -29,18 +29,9 @@ namespace Azure.AI.Projects
         /// <returns>The response containing the created agent.</returns>
         public virtual Response<Agent> CreateAgent(string displayName, string modelId, string instructions, CancellationToken cancellationToken = default)
         {
-            // Create AgentConfigurationOptions
-            var agentConfigurationOptions = new AgentConfigurationOptions
-            {
-                AgentModel = new AzureAgentModel(modelId),
-                Instructions = instructions
-            };
-
-            // Create AgentCreationOptions
-            var agentCreationOptions = new AgentCreationOptions(displayName, agentConfigurationOptions);
-
+            var model = new AzureAgentModel(modelId);
             // Call the existing CreateAgent method
-            return CreateAgent(agentCreationOptions, cancellationToken);
+            return CreateAgent(displayName: displayName, agentModel: model, instructions: instructions);
         }
 
         /// <summary>
@@ -53,18 +44,10 @@ namespace Azure.AI.Projects
         /// <returns>The response containing the created agent.</returns>
         public virtual async Task<Response<Agent>> CreateAgentAsync(string displayName, string modelId, string instructions, CancellationToken cancellationToken = default)
         {
-            // Create AgentConfigurationOptions
-            var agentConfigurationOptions = new AgentConfigurationOptions
-            {
-                AgentModel = new AzureAgentModel(modelId),
-                Instructions = instructions
-            };
-
-            // Create AgentCreationOptions
-            var agentCreationOptions = new AgentCreationOptions(displayName, agentConfigurationOptions);
+            var model = new AzureAgentModel(modelId);
 
             // Call the existing CreateAgentAsync method
-            return await CreateAgentAsync(agentCreationOptions, cancellationToken).ConfigureAwait(false);
+            return await CreateAgentAsync(displayName: displayName, agentModel: model, instructions: instructions, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -92,10 +75,9 @@ namespace Azure.AI.Projects
                     new TextContent(message)
                 })
             };
-            var runInputs = new RunInputs(inputMessages);
 
             // Call the existing Run method
-            return Run(agentConfigurationOptions, runInputs, cancellationToken);
+            return Run(input: inputMessages, agentId: null, conversationId: null, metadata: null, options: null, userId: null, agentConfiguration: agentConfigurationOptions, cancellationToken);
         }
 
         /// <summary>
@@ -123,10 +105,9 @@ namespace Azure.AI.Projects
                     new TextContent(message)
                 })
             };
-            var runInputs = new RunInputs(inputMessages);
 
             // Call the existing RunAsync method
-            return await RunAsync(agentConfigurationOptions, runInputs, cancellationToken).ConfigureAwait(false);
+            return await RunAsync(input: inputMessages, agentId: null, conversationId: null, metadata: null, options: null, userId: null, agentConfiguration: agentConfigurationOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -146,10 +127,9 @@ namespace Azure.AI.Projects
                     new TextContent(message)
                 })
             };
-            var runInputs = new RunInputs(agentId, inputMessages, null, null, null, null, null);
 
             // Call the existing Run method
-            return Run(new AgentConfigurationOptions(), runInputs, cancellationToken);
+            return Run(input: inputMessages, agentId: agentId, conversationId: null, metadata: null, options: null, userId: null, agentConfiguration: null, cancellationToken);
         }
 
         /// <summary>
@@ -169,10 +149,9 @@ namespace Azure.AI.Projects
                     new TextContent(message)
                 })
             };
-            var runInputs = new RunInputs(agentId, inputMessages, null, null, null, null, null);
 
             // Call the existing RunAsync method
-            return await RunAsync(new AgentConfigurationOptions(), runInputs, cancellationToken).ConfigureAwait(false);
+            return await RunAsync(input: inputMessages, agentId: agentId, conversationId: null, metadata: null, options: null, userId: null, agentConfiguration: null, cancellationToken).ConfigureAwait(false);
         }
     }
 }

@@ -14,34 +14,20 @@ namespace Azure.AI.Projects.OneDP
     public partial class ToolResultContent : AIContent
     {
         /// <summary> Initializes a new instance of <see cref="ToolResultContent"/>. </summary>
-        /// <param name="toolCallId"> The ID of the tool call to which this result pertains. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="toolCallId"/> is null. </exception>
-        public ToolResultContent(string toolCallId)
+        public ToolResultContent()
         {
-            Argument.AssertNotNull(toolCallId, nameof(toolCallId));
-
             Type = "toolResult";
-            ToolCallId = toolCallId;
         }
 
         /// <summary> Initializes a new instance of <see cref="ToolResultContent"/>. </summary>
         /// <param name="type"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="toolCallId"> The ID of the tool call to which this result pertains. </param>
         /// <param name="results"> The results returned from the tool, using JSONAny instead of `unknown`. </param>
-        internal ToolResultContent(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string toolCallId, JSONAny results) : base(type, serializedAdditionalRawData)
+        internal ToolResultContent(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, JSONAny results) : base(type, serializedAdditionalRawData)
         {
-            ToolCallId = toolCallId;
             Results = results;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolResultContent"/> for deserialization. </summary>
-        internal ToolResultContent()
-        {
-        }
-
-        /// <summary> The ID of the tool call to which this result pertains. </summary>
-        public string ToolCallId { get; set; }
         /// <summary> The results returned from the tool, using JSONAny instead of `unknown`. </summary>
         public JSONAny Results { get; set; }
     }

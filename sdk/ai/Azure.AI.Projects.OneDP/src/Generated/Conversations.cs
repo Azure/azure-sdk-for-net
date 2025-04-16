@@ -18,11 +18,11 @@ namespace Azure.AI.Projects.OneDP
 {
     // Data plane generated sub-client.
     /// <summary>
-    /// THREADS
+    /// CONVERSATIONS
     ///
-    /// Interface is rooted at /threads.
+    /// Interface is rooted at /conversations.
     /// </summary>
-    public partial class Threads
+    public partial class Conversations
     {
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
@@ -39,19 +39,19 @@ namespace Azure.AI.Projects.OneDP
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of Threads for mocking. </summary>
-        protected Threads()
+        /// <summary> Initializes a new instance of Conversations for mocking. </summary>
+        protected Conversations()
         {
         }
 
-        /// <summary> Initializes a new instance of Threads. </summary>
+        /// <summary> Initializes a new instance of Conversations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal Threads(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal Conversations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -61,38 +61,38 @@ namespace Azure.AI.Projects.OneDP
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Creates a new Thread and returns it. </summary>
-        /// <param name="messages"> A list of messages in this thread. </param>
+        /// <summary> Creates a new Conversation and returns it. </summary>
+        /// <param name="messages"> A list of messages in this conversation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messages"/> is null. </exception>
-        /// <include file="Docs/Threads.xml" path="doc/members/member[@name='CreateThreadAsync(IEnumerable{ChatMessage},CancellationToken)']/*" />
-        public virtual async Task<Response<Thread>> CreateThreadAsync(IEnumerable<ChatMessage> messages, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Conversations.xml" path="doc/members/member[@name='CreateConversationAsync(IEnumerable{ChatMessage},CancellationToken)']/*" />
+        public virtual async Task<Response<Conversation>> CreateConversationAsync(IEnumerable<ChatMessage> messages, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(messages, nameof(messages));
 
-            CreateThreadRequest createThreadRequest = new CreateThreadRequest(messages.ToList(), null);
+            CreateConversationRequest createConversationRequest = new CreateConversationRequest(messages.ToList(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateThreadAsync(createThreadRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(Thread.FromResponse(response), response);
+            Response response = await CreateConversationAsync(createConversationRequest.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(Conversation.FromResponse(response), response);
         }
 
-        /// <summary> Creates a new Thread and returns it. </summary>
-        /// <param name="messages"> A list of messages in this thread. </param>
+        /// <summary> Creates a new Conversation and returns it. </summary>
+        /// <param name="messages"> A list of messages in this conversation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messages"/> is null. </exception>
-        /// <include file="Docs/Threads.xml" path="doc/members/member[@name='CreateThread(IEnumerable{ChatMessage},CancellationToken)']/*" />
-        public virtual Response<Thread> CreateThread(IEnumerable<ChatMessage> messages, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Conversations.xml" path="doc/members/member[@name='CreateConversation(IEnumerable{ChatMessage},CancellationToken)']/*" />
+        public virtual Response<Conversation> CreateConversation(IEnumerable<ChatMessage> messages, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(messages, nameof(messages));
 
-            CreateThreadRequest createThreadRequest = new CreateThreadRequest(messages.ToList(), null);
+            CreateConversationRequest createConversationRequest = new CreateConversationRequest(messages.ToList(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateThread(createThreadRequest.ToRequestContent(), context);
-            return Response.FromValue(Thread.FromResponse(response), response);
+            Response response = CreateConversation(createConversationRequest.ToRequestContent(), context);
+            return Response.FromValue(Conversation.FromResponse(response), response);
         }
 
         /// <summary>
-        /// [Protocol Method] Creates a new Thread and returns it.
+        /// [Protocol Method] Creates a new Conversation and returns it.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -101,7 +101,7 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateThreadAsync(IEnumerable{ChatMessage},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateConversationAsync(IEnumerable{ChatMessage},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -111,16 +111,16 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Threads.xml" path="doc/members/member[@name='CreateThreadAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateThreadAsync(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Conversations.xml" path="doc/members/member[@name='CreateConversationAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateConversationAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Threads.CreateThread");
+            using var scope = ClientDiagnostics.CreateScope("Conversations.CreateConversation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateThreadRequest(content, context);
+                using HttpMessage message = CreateCreateConversationRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -131,7 +131,7 @@ namespace Azure.AI.Projects.OneDP
         }
 
         /// <summary>
-        /// [Protocol Method] Creates a new Thread and returns it.
+        /// [Protocol Method] Creates a new Conversation and returns it.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -140,7 +140,7 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateThread(IEnumerable{ChatMessage},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateConversation(IEnumerable{ChatMessage},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -150,16 +150,16 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Threads.xml" path="doc/members/member[@name='CreateThread(RequestContent,RequestContext)']/*" />
-        public virtual Response CreateThread(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Conversations.xml" path="doc/members/member[@name='CreateConversation(RequestContent,RequestContext)']/*" />
+        public virtual Response CreateConversation(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Threads.CreateThread");
+            using var scope = ClientDiagnostics.CreateScope("Conversations.CreateConversation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateThreadRequest(content, context);
+                using HttpMessage message = CreateCreateConversationRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -169,38 +169,38 @@ namespace Azure.AI.Projects.OneDP
             }
         }
 
-        /// <summary> Retrieves an existing thread by its ID. </summary>
-        /// <param name="threadId"> The identifier of the Thread. </param>
+        /// <summary> Retrieves an existing conversation by its ID. </summary>
+        /// <param name="conversationId"> The identifier of the Conversation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Threads.xml" path="doc/members/member[@name='GetThreadAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<Thread>> GetThreadAsync(string threadId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Conversations.xml" path="doc/members/member[@name='GetConversationAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<Conversation>> GetConversationAsync(string conversationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetThreadAsync(threadId, context).ConfigureAwait(false);
-            return Response.FromValue(Thread.FromResponse(response), response);
+            Response response = await GetConversationAsync(conversationId, context).ConfigureAwait(false);
+            return Response.FromValue(Conversation.FromResponse(response), response);
         }
 
-        /// <summary> Retrieves an existing thread by its ID. </summary>
-        /// <param name="threadId"> The identifier of the Thread. </param>
+        /// <summary> Retrieves an existing conversation by its ID. </summary>
+        /// <param name="conversationId"> The identifier of the Conversation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Threads.xml" path="doc/members/member[@name='GetThread(string,CancellationToken)']/*" />
-        public virtual Response<Thread> GetThread(string threadId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Conversations.xml" path="doc/members/member[@name='GetConversation(string,CancellationToken)']/*" />
+        public virtual Response<Conversation> GetConversation(string conversationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetThread(threadId, context);
-            return Response.FromValue(Thread.FromResponse(response), response);
+            Response response = GetConversation(conversationId, context);
+            return Response.FromValue(Conversation.FromResponse(response), response);
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieves an existing thread by its ID.
+        /// [Protocol Method] Retrieves an existing conversation by its ID.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -209,27 +209,27 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetThreadAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetConversationAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="threadId"> The identifier of the Thread. </param>
+        /// <param name="conversationId"> The identifier of the Conversation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Threads.xml" path="doc/members/member[@name='GetThreadAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetThreadAsync(string threadId, RequestContext context)
+        /// <include file="Docs/Conversations.xml" path="doc/members/member[@name='GetConversationAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetConversationAsync(string conversationId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            using var scope = ClientDiagnostics.CreateScope("Threads.GetThread");
+            using var scope = ClientDiagnostics.CreateScope("Conversations.GetConversation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetThreadRequest(threadId, context);
+                using HttpMessage message = CreateGetConversationRequest(conversationId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -240,7 +240,7 @@ namespace Azure.AI.Projects.OneDP
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieves an existing thread by its ID.
+        /// [Protocol Method] Retrieves an existing conversation by its ID.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -249,27 +249,27 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetThread(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetConversation(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="threadId"> The identifier of the Thread. </param>
+        /// <param name="conversationId"> The identifier of the Conversation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Threads.xml" path="doc/members/member[@name='GetThread(string,RequestContext)']/*" />
-        public virtual Response GetThread(string threadId, RequestContext context)
+        /// <include file="Docs/Conversations.xml" path="doc/members/member[@name='GetConversation(string,RequestContext)']/*" />
+        public virtual Response GetConversation(string conversationId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            using var scope = ClientDiagnostics.CreateScope("Threads.GetThread");
+            using var scope = ClientDiagnostics.CreateScope("Conversations.GetConversation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetThreadRequest(threadId, context);
+                using HttpMessage message = CreateGetConversationRequest(conversationId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -279,44 +279,44 @@ namespace Azure.AI.Projects.OneDP
             }
         }
 
-        /// <summary> Updates or replaces a thread by its ID, returning the updated Thread. </summary>
-        /// <param name="threadId"> The identifier of the Thread to update. </param>
-        /// <param name="body"> The updated Thread resource data. </param>
+        /// <summary> Updates or replaces a conversation by its ID, returning the updated Conversation. </summary>
+        /// <param name="conversationId"> The identifier of the Conversation to update. </param>
+        /// <param name="body"> The updated Conversation resource data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Threads.xml" path="doc/members/member[@name='UpdateThreadAsync(string,Thread,CancellationToken)']/*" />
-        public virtual async Task<Response<Thread>> UpdateThreadAsync(string threadId, Thread body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Conversations.xml" path="doc/members/member[@name='UpdateConversationAsync(string,Conversation,CancellationToken)']/*" />
+        public virtual async Task<Response<Conversation>> UpdateConversationAsync(string conversationId, Conversation body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNull(body, nameof(body));
 
             using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UpdateThreadAsync(threadId, content, context).ConfigureAwait(false);
-            return Response.FromValue(Thread.FromResponse(response), response);
+            Response response = await UpdateConversationAsync(conversationId, content, context).ConfigureAwait(false);
+            return Response.FromValue(Conversation.FromResponse(response), response);
         }
 
-        /// <summary> Updates or replaces a thread by its ID, returning the updated Thread. </summary>
-        /// <param name="threadId"> The identifier of the Thread to update. </param>
-        /// <param name="body"> The updated Thread resource data. </param>
+        /// <summary> Updates or replaces a conversation by its ID, returning the updated Conversation. </summary>
+        /// <param name="conversationId"> The identifier of the Conversation to update. </param>
+        /// <param name="body"> The updated Conversation resource data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Threads.xml" path="doc/members/member[@name='UpdateThread(string,Thread,CancellationToken)']/*" />
-        public virtual Response<Thread> UpdateThread(string threadId, Thread body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Conversations.xml" path="doc/members/member[@name='UpdateConversation(string,Conversation,CancellationToken)']/*" />
+        public virtual Response<Conversation> UpdateConversation(string conversationId, Conversation body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNull(body, nameof(body));
 
             using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = UpdateThread(threadId, content, context);
-            return Response.FromValue(Thread.FromResponse(response), response);
+            Response response = UpdateConversation(conversationId, content, context);
+            return Response.FromValue(Conversation.FromResponse(response), response);
         }
 
         /// <summary>
-        /// [Protocol Method] Updates or replaces a thread by its ID, returning the updated Thread.
+        /// [Protocol Method] Updates or replaces a conversation by its ID, returning the updated Conversation.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -325,29 +325,29 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UpdateThreadAsync(string,Thread,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UpdateConversationAsync(string,Conversation,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="threadId"> The identifier of the Thread to update. </param>
+        /// <param name="conversationId"> The identifier of the Conversation to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Threads.xml" path="doc/members/member[@name='UpdateThreadAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> UpdateThreadAsync(string threadId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Conversations.xml" path="doc/members/member[@name='UpdateConversationAsync(string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> UpdateConversationAsync(string conversationId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Threads.UpdateThread");
+            using var scope = ClientDiagnostics.CreateScope("Conversations.UpdateConversation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateThreadRequest(threadId, content, context);
+                using HttpMessage message = CreateUpdateConversationRequest(conversationId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -358,7 +358,7 @@ namespace Azure.AI.Projects.OneDP
         }
 
         /// <summary>
-        /// [Protocol Method] Updates or replaces a thread by its ID, returning the updated Thread.
+        /// [Protocol Method] Updates or replaces a conversation by its ID, returning the updated Conversation.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -367,29 +367,29 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UpdateThread(string,Thread,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UpdateConversation(string,Conversation,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="threadId"> The identifier of the Thread to update. </param>
+        /// <param name="conversationId"> The identifier of the Conversation to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Threads.xml" path="doc/members/member[@name='UpdateThread(string,RequestContent,RequestContext)']/*" />
-        public virtual Response UpdateThread(string threadId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Conversations.xml" path="doc/members/member[@name='UpdateConversation(string,RequestContent,RequestContext)']/*" />
+        public virtual Response UpdateConversation(string conversationId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Threads.UpdateThread");
+            using var scope = ClientDiagnostics.CreateScope("Conversations.UpdateConversation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateThreadRequest(threadId, content, context);
+                using HttpMessage message = CreateUpdateConversationRequest(conversationId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -401,7 +401,7 @@ namespace Azure.AI.Projects.OneDP
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Deletes a thread, returning 204 on success.
+        /// [Protocol Method] Deletes a conversation, returning 204 on success.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -410,22 +410,22 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="threadId"> The ID of the thread to delete. </param>
+        /// <param name="conversationId"> The ID of the conversation to delete. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Threads.xml" path="doc/members/member[@name='DeleteThreadAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteThreadAsync(string threadId, RequestContext context = null)
+        /// <include file="Docs/Conversations.xml" path="doc/members/member[@name='DeleteConversationAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteConversationAsync(string conversationId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            using var scope = ClientDiagnostics.CreateScope("Threads.DeleteThread");
+            using var scope = ClientDiagnostics.CreateScope("Conversations.DeleteConversation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteThreadRequest(threadId, context);
+                using HttpMessage message = CreateDeleteConversationRequest(conversationId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -437,7 +437,7 @@ namespace Azure.AI.Projects.OneDP
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Deletes a thread, returning 204 on success.
+        /// [Protocol Method] Deletes a conversation, returning 204 on success.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -446,22 +446,22 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="threadId"> The ID of the thread to delete. </param>
+        /// <param name="conversationId"> The ID of the conversation to delete. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Threads.xml" path="doc/members/member[@name='DeleteThread(string,RequestContext)']/*" />
-        public virtual Response DeleteThread(string threadId, RequestContext context = null)
+        /// <include file="Docs/Conversations.xml" path="doc/members/member[@name='DeleteConversation(string,RequestContext)']/*" />
+        public virtual Response DeleteConversation(string conversationId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            using var scope = ClientDiagnostics.CreateScope("Threads.DeleteThread");
+            using var scope = ClientDiagnostics.CreateScope("Conversations.DeleteConversation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteThreadRequest(threadId, context);
+                using HttpMessage message = CreateDeleteConversationRequest(conversationId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -471,44 +471,44 @@ namespace Azure.AI.Projects.OneDP
             }
         }
 
-        /// <summary> Lists all threads, returning an array of Thread items. </summary>
+        /// <summary> Lists all conversations, returning an array of Conversation items. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Threads.xml" path="doc/members/member[@name='GetThreadsAsync(CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<Thread>>> GetThreadsAsync(CancellationToken cancellationToken = default)
+        /// <include file="Docs/Conversations.xml" path="doc/members/member[@name='GetConversationsAsync(CancellationToken)']/*" />
+        public virtual async Task<Response<IReadOnlyList<Conversation>>> GetConversationsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetThreadsAsync(context).ConfigureAwait(false);
-            IReadOnlyList<Thread> value = default;
+            Response response = await GetConversationsAsync(context).ConfigureAwait(false);
+            IReadOnlyList<Conversation> value = default;
             using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<Thread> array = new List<Thread>();
+            List<Conversation> array = new List<Conversation>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(Thread.DeserializeThread(item));
+                array.Add(Conversation.DeserializeConversation(item));
             }
             value = array;
             return Response.FromValue(value, response);
         }
 
-        /// <summary> Lists all threads, returning an array of Thread items. </summary>
+        /// <summary> Lists all conversations, returning an array of Conversation items. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Threads.xml" path="doc/members/member[@name='GetThreads(CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<Thread>> GetThreads(CancellationToken cancellationToken = default)
+        /// <include file="Docs/Conversations.xml" path="doc/members/member[@name='GetConversations(CancellationToken)']/*" />
+        public virtual Response<IReadOnlyList<Conversation>> GetConversations(CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetThreads(context);
-            IReadOnlyList<Thread> value = default;
+            Response response = GetConversations(context);
+            IReadOnlyList<Conversation> value = default;
             using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<Thread> array = new List<Thread>();
+            List<Conversation> array = new List<Conversation>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(Thread.DeserializeThread(item));
+                array.Add(Conversation.DeserializeConversation(item));
             }
             value = array;
             return Response.FromValue(value, response);
         }
 
         /// <summary>
-        /// [Protocol Method] Lists all threads, returning an array of Thread items.
+        /// [Protocol Method] Lists all conversations, returning an array of Conversation items.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -517,7 +517,7 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetThreadsAsync(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetConversationsAsync(CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -525,14 +525,14 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Threads.xml" path="doc/members/member[@name='GetThreadsAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetThreadsAsync(RequestContext context)
+        /// <include file="Docs/Conversations.xml" path="doc/members/member[@name='GetConversationsAsync(RequestContext)']/*" />
+        public virtual async Task<Response> GetConversationsAsync(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("Threads.GetThreads");
+            using var scope = ClientDiagnostics.CreateScope("Conversations.GetConversations");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetThreadsRequest(context);
+                using HttpMessage message = CreateGetConversationsRequest(context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -543,7 +543,7 @@ namespace Azure.AI.Projects.OneDP
         }
 
         /// <summary>
-        /// [Protocol Method] Lists all threads, returning an array of Thread items.
+        /// [Protocol Method] Lists all conversations, returning an array of Conversation items.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -552,7 +552,7 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetThreads(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetConversations(CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -560,14 +560,14 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Threads.xml" path="doc/members/member[@name='GetThreads(RequestContext)']/*" />
-        public virtual Response GetThreads(RequestContext context)
+        /// <include file="Docs/Conversations.xml" path="doc/members/member[@name='GetConversations(RequestContext)']/*" />
+        public virtual Response GetConversations(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("Threads.GetThreads");
+            using var scope = ClientDiagnostics.CreateScope("Conversations.GetConversations");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetThreadsRequest(context);
+                using HttpMessage message = CreateGetConversationsRequest(context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -577,14 +577,14 @@ namespace Azure.AI.Projects.OneDP
             }
         }
 
-        internal HttpMessage CreateCreateThreadRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateConversationRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/threads", false);
+            uri.AppendPath("/conversations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -593,30 +593,30 @@ namespace Azure.AI.Projects.OneDP
             return message;
         }
 
-        internal HttpMessage CreateGetThreadRequest(string threadId, RequestContext context)
+        internal HttpMessage CreateGetConversationRequest(string conversationId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/threads/", false);
-            uri.AppendPath(threadId, true);
+            uri.AppendPath("/conversations/", false);
+            uri.AppendPath(conversationId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateUpdateThreadRequest(string threadId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateConversationRequest(string conversationId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/threads/", false);
-            uri.AppendPath(threadId, true);
+            uri.AppendPath("/conversations/", false);
+            uri.AppendPath(conversationId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -625,29 +625,29 @@ namespace Azure.AI.Projects.OneDP
             return message;
         }
 
-        internal HttpMessage CreateDeleteThreadRequest(string threadId, RequestContext context)
+        internal HttpMessage CreateDeleteConversationRequest(string conversationId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/threads/", false);
-            uri.AppendPath(threadId, true);
+            uri.AppendPath("/conversations/", false);
+            uri.AppendPath(conversationId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetThreadsRequest(RequestContext context)
+        internal HttpMessage CreateGetConversationsRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/threads", false);
+            uri.AppendPath("/conversations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Projects.OneDP
 {
-    public partial class Thread : IUtf8JsonSerializable, IJsonModel<Thread>
+    public partial class RunIncompleteDetails : IUtf8JsonSerializable, IJsonModel<RunIncompleteDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Thread>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunIncompleteDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Thread>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RunIncompleteDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,24 +28,14 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Thread>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunIncompleteDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Thread)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RunIncompleteDetails)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("threadId"u8);
-                writer.WriteStringValue(ThreadId);
-            }
-            writer.WritePropertyName("messages"u8);
-            writer.WriteStartArray();
-            foreach (var item in Messages)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
+            writer.WritePropertyName("reason"u8);
+            writer.WriteStringValue(Reason);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -63,19 +53,19 @@ namespace Azure.AI.Projects.OneDP
             }
         }
 
-        Thread IJsonModel<Thread>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RunIncompleteDetails IJsonModel<RunIncompleteDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Thread>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunIncompleteDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Thread)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RunIncompleteDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeThread(document.RootElement, options);
+            return DeserializeRunIncompleteDetails(document.RootElement, options);
         }
 
-        internal static Thread DeserializeThread(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RunIncompleteDetails DeserializeRunIncompleteDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -83,25 +73,14 @@ namespace Azure.AI.Projects.OneDP
             {
                 return null;
             }
-            string threadId = default;
-            IList<ChatMessage> messages = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("threadId"u8))
+                if (property.NameEquals("reason"u8))
                 {
-                    threadId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("messages"u8))
-                {
-                    List<ChatMessage> array = new List<ChatMessage>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ChatMessage.DeserializeChatMessage(item, options));
-                    }
-                    messages = array;
+                    reason = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -110,46 +89,46 @@ namespace Azure.AI.Projects.OneDP
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Thread(threadId, messages, serializedAdditionalRawData);
+            return new RunIncompleteDetails(reason, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Thread>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RunIncompleteDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Thread>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunIncompleteDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Thread)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunIncompleteDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Thread IPersistableModel<Thread>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RunIncompleteDetails IPersistableModel<RunIncompleteDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Thread>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunIncompleteDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeThread(document.RootElement, options);
+                        return DeserializeRunIncompleteDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Thread)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunIncompleteDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Thread>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RunIncompleteDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Thread FromResponse(Response response)
+        internal static RunIncompleteDetails FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeThread(document.RootElement);
+            return DeserializeRunIncompleteDetails(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

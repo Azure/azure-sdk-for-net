@@ -55,8 +55,8 @@ namespace Azure.AI.Projects.OneDP
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("creationOptions"u8);
-            writer.WriteObjectValue(CreationOptions, options);
+            writer.WritePropertyName("configurationOptions"u8);
+            writer.WriteObjectValue(ConfigurationOptions, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -97,7 +97,7 @@ namespace Azure.AI.Projects.OneDP
             string agentId = default;
             string description = default;
             IDictionary<string, string> metadata = default;
-            AgentCreationOptions creationOptions = default;
+            AgentConfigurationOptions configurationOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,9 +126,9 @@ namespace Azure.AI.Projects.OneDP
                     metadata = dictionary;
                     continue;
                 }
-                if (property.NameEquals("creationOptions"u8))
+                if (property.NameEquals("configurationOptions"u8))
                 {
-                    creationOptions = AgentCreationOptions.DeserializeAgentCreationOptions(property.Value, options);
+                    configurationOptions = AgentConfigurationOptions.DeserializeAgentConfigurationOptions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -137,7 +137,7 @@ namespace Azure.AI.Projects.OneDP
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Agent(agentId, description, metadata ?? new ChangeTrackingDictionary<string, string>(), creationOptions, serializedAdditionalRawData);
+            return new Agent(agentId, description, metadata ?? new ChangeTrackingDictionary<string, string>(), configurationOptions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Agent>.Write(ModelReaderWriterOptions options)

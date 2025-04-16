@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.OneDP
 {
-    /// <summary> The RunOutputsIncompleteDetails. </summary>
-    public partial class RunOutputsIncompleteDetails
+    /// <summary> The RunIncompleteDetails. </summary>
+    public partial class RunIncompleteDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +45,27 @@ namespace Azure.AI.Projects.OneDP
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RunOutputsIncompleteDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunIncompleteDetails"/>. </summary>
         /// <param name="reason"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="reason"/> is null. </exception>
-        internal RunOutputsIncompleteDetails(string reason)
+        internal RunIncompleteDetails(string reason)
         {
             Argument.AssertNotNull(reason, nameof(reason));
 
             Reason = reason;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunOutputsIncompleteDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunIncompleteDetails"/>. </summary>
         /// <param name="reason"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RunOutputsIncompleteDetails(string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RunIncompleteDetails(string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Reason = reason;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunOutputsIncompleteDetails"/> for deserialization. </summary>
-        internal RunOutputsIncompleteDetails()
+        /// <summary> Initializes a new instance of <see cref="RunIncompleteDetails"/> for deserialization. </summary>
+        internal RunIncompleteDetails()
         {
         }
 

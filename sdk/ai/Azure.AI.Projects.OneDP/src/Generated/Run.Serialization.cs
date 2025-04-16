@@ -45,8 +45,6 @@ namespace Azure.AI.Projects.OneDP
             writer.WriteNumberValue(CompletedAt);
             writer.WritePropertyName("runInputs"u8);
             writer.WriteObjectValue(RunInputs, options);
-            writer.WritePropertyName("runOutputs"u8);
-            writer.WriteObjectValue(RunOutputs, options);
             if (Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
@@ -56,6 +54,22 @@ namespace Azure.AI.Projects.OneDP
             {
                 writer.WritePropertyName("store"u8);
                 writer.WriteBooleanValue(Store.Value);
+            }
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToString());
+            writer.WritePropertyName("output"u8);
+            writer.WriteStartArray();
+            foreach (var item in Output)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("usage"u8);
+            writer.WriteObjectValue(Usage, options);
+            if (Optional.IsDefined(IncompleteDetails))
+            {
+                writer.WritePropertyName("incompleteDetails"u8);
+                writer.WriteObjectValue(IncompleteDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,9 +112,12 @@ namespace Azure.AI.Projects.OneDP
             long createdAt = default;
             long completedAt = default;
             RunInputs runInputs = default;
-            RunOutputs runOutputs = default;
             string userId = default;
             bool? store = default;
+            RunOutputsStatus status = default;
+            IReadOnlyList<ChatMessage> output = default;
+            CompletionUsage usage = default;
+            RunIncompleteDetails incompleteDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,11 +142,6 @@ namespace Azure.AI.Projects.OneDP
                     runInputs = RunInputs.DeserializeRunInputs(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("runOutputs"u8))
-                {
-                    runOutputs = RunOutputs.DeserializeRunOutputs(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("userId"u8))
                 {
                     userId = property.Value.GetString();
@@ -144,6 +156,35 @@ namespace Azure.AI.Projects.OneDP
                     store = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("status"u8))
+                {
+                    status = new RunOutputsStatus(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("output"u8))
+                {
+                    List<ChatMessage> array = new List<ChatMessage>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ChatMessage.DeserializeChatMessage(item, options));
+                    }
+                    output = array;
+                    continue;
+                }
+                if (property.NameEquals("usage"u8))
+                {
+                    usage = CompletionUsage.DeserializeCompletionUsage(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("incompleteDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    incompleteDetails = RunIncompleteDetails.DeserializeRunIncompleteDetails(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -155,9 +196,12 @@ namespace Azure.AI.Projects.OneDP
                 createdAt,
                 completedAt,
                 runInputs,
-                runOutputs,
                 userId,
                 store,
+                status,
+                output,
+                usage,
+                incompleteDetails,
                 serializedAdditionalRawData);
         }
 

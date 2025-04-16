@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="CreateAgentAsync(AgentCreationOptions,CancellationToken)">
+    <member name="CreateAgentAsync(string,AgentModel,string,IEnumerable{AgentToolDefinition},ToolChoiceBehavior,CancellationToken)">
       <example>
 This sample shows how to call CreateAgentAsync.
 <code><![CDATA[
@@ -9,8 +9,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(apiVersion: "2025-05-01-preview");
 
-AgentCreationOptions options = new AgentCreationOptions("<displayName>", new AgentConfigurationOptions());
-Response<Agent> response = await client.CreateAgentAsync(options);
+Response<Agent> response = await client.CreateAgentAsync("<displayName>");
 ]]></code>
 This sample shows how to call CreateAgentAsync with all parameters.
 <code><![CDATA[
@@ -18,40 +17,36 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(apiVersion: "2025-05-01-preview");
 
-AgentCreationOptions options = new AgentCreationOptions("<displayName>", new AgentConfigurationOptions
+AgentModel agentModel = new OpenAIAgentModel("<id>", new JSONAny())
 {
-    AgentModel = new OpenAIAgentModel("<id>", new JSONAny())
+    Endpoint = "<endpoint>",
+};
+ToolChoiceBehavior toolChoice = new AutoToolChoiceBehavior(new string[] { "<toolNames>" });
+Response<Agent> response = await client.CreateAgentAsync("<displayName>", agentModel: agentModel, instructions: "<instructions>", tools: new AgentToolDefinition[]
+{
+    new FunctionToolDefinition("<name>")
     {
-        Endpoint = "<endpoint>",
-    },
-    Instructions = "<instructions>",
-    Tools = {new BingGroundingToolDefinition("<connectionName>")
-    {
-        Options = new FunctionToolOptions("<name>")
+        Description = "<description>",
+        Parameters = new JSONSchema("<type>", new Dictionary<string, JSONSchema>
         {
-            Description = "<description>",
-            Parameters = new JSONSchema("<type>", new Dictionary<string, JSONSchema>
-            {
-                ["key"] = default
-            })
-            {
-                Required = {"<required>"},
-            },
-            Strict = true,
+            ["key"] = default
+        })
+        {
+            Required = {"<required>"},
         },
+        Strict = true,
+        Options = default,
         Override = new AgentToolDefinitionOverride
         {
             Name = "<name>",
             Description = "<description>",
             Parameters = default,
         },
-    }},
-    ToolChoice = new AutoToolChoiceBehavior(new string[] { "<toolNames>" }),
-});
-Response<Agent> response = await client.CreateAgentAsync(options);
+    }
+}, toolChoice: toolChoice);
 ]]></code></example>
     </member>
-    <member name="CreateAgent(AgentCreationOptions,CancellationToken)">
+    <member name="CreateAgent(string,AgentModel,string,IEnumerable{AgentToolDefinition},ToolChoiceBehavior,CancellationToken)">
       <example>
 This sample shows how to call CreateAgent.
 <code><![CDATA[
@@ -59,8 +54,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(apiVersion: "2025-05-01-preview");
 
-AgentCreationOptions options = new AgentCreationOptions("<displayName>", new AgentConfigurationOptions());
-Response<Agent> response = client.CreateAgent(options);
+Response<Agent> response = client.CreateAgent("<displayName>");
 ]]></code>
 This sample shows how to call CreateAgent with all parameters.
 <code><![CDATA[
@@ -68,37 +62,33 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(apiVersion: "2025-05-01-preview");
 
-AgentCreationOptions options = new AgentCreationOptions("<displayName>", new AgentConfigurationOptions
+AgentModel agentModel = new OpenAIAgentModel("<id>", new JSONAny())
 {
-    AgentModel = new OpenAIAgentModel("<id>", new JSONAny())
+    Endpoint = "<endpoint>",
+};
+ToolChoiceBehavior toolChoice = new AutoToolChoiceBehavior(new string[] { "<toolNames>" });
+Response<Agent> response = client.CreateAgent("<displayName>", agentModel: agentModel, instructions: "<instructions>", tools: new AgentToolDefinition[]
+{
+    new FunctionToolDefinition("<name>")
     {
-        Endpoint = "<endpoint>",
-    },
-    Instructions = "<instructions>",
-    Tools = {new BingGroundingToolDefinition("<connectionName>")
-    {
-        Options = new FunctionToolOptions("<name>")
+        Description = "<description>",
+        Parameters = new JSONSchema("<type>", new Dictionary<string, JSONSchema>
         {
-            Description = "<description>",
-            Parameters = new JSONSchema("<type>", new Dictionary<string, JSONSchema>
-            {
-                ["key"] = default
-            })
-            {
-                Required = {"<required>"},
-            },
-            Strict = true,
+            ["key"] = default
+        })
+        {
+            Required = {"<required>"},
         },
+        Strict = true,
+        Options = default,
         Override = new AgentToolDefinitionOverride
         {
             Name = "<name>",
             Description = "<description>",
             Parameters = default,
         },
-    }},
-    ToolChoice = new AutoToolChoiceBehavior(new string[] { "<toolNames>" }),
-});
-Response<Agent> response = client.CreateAgent(options);
+    }
+}, toolChoice: toolChoice);
 ]]></code></example>
     </member>
     <member name="CreateAgentAsync(RequestContent,RequestContext)">
@@ -111,18 +101,13 @@ AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(
 
 using RequestContent content = RequestContent.Create(new
 {
-    options = new
-    {
-        displayName = "<displayName>",
-        configurationOptions = new object(),
-    },
+    displayName = "<displayName>",
 });
 Response response = await client.CreateAgentAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("agentId").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("displayName").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("displayName").ToString());
 ]]></code>
 This sample shows how to call CreateAgentAsync with all request content and parse the result.
 <code><![CDATA[
@@ -132,60 +117,50 @@ AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(
 
 using RequestContent content = RequestContent.Create(new
 {
-    options = new
+    displayName = "<displayName>",
+    agentModel = new
     {
-        displayName = "<displayName>",
-        configurationOptions = new
+        provider = "openai",
+        options = new
         {
-            agentModel = new
+            temperature = 123.45F,
+            topP = 123.45F,
+        },
+        id = "<id>",
+        endpoint = "<endpoint>",
+    },
+    instructions = "<instructions>",
+    tools = new object[]
+    {
+        new Dictionary<string, object>
+        {
+            ["type"] = "Function",
+            ["name"] = "<name>",
+            ["description"] = "<description>",
+            ["parameters"] = new
             {
-                provider = "openai",
-                options = new
+                type = "<type>",
+                properties = new {},
+                required = new object[]
                 {
-                    temperature = 123.45F,
-                    topP = 123.45F,
-                },
-                id = "<id>",
-                endpoint = "<endpoint>",
-            },
-            instructions = "<instructions>",
-            tools = new object[]
-            {
-                new Dictionary<string, object>
-                {
-                    ["type"] = "Microsoft.BingGrounding",
-                    ["connectionName"] = "<connectionName>",
-                    ["options"] = new
-                    {
-                        type = "Function",
-                        name = "<name>",
-                        description = "<description>",
-                        parameters = new
-                        {
-                            type = "<type>",
-                            properties = new {},
-                            required = new object[]
-                            {
-                                "<required>"
-                            },
-                        },
-                        strict = true,
-                    },
-                    ["override"] = new
-                    {
-                        name = "<name>",
-                        description = "<description>",
-                    }
-                }
-            },
-            toolChoice = new
-            {
-                type = "auto",
-                toolNames = new object[]
-                {
-                    "<toolNames>"
+                    "<required>"
                 },
             },
+            ["strict"] = true,
+            ["options"] = null,
+            ["override"] = new
+            {
+                name = "<name>",
+                description = "<description>",
+            }
+        }
+    },
+    toolChoice = new
+    {
+        type = "auto",
+        toolNames = new object[]
+        {
+            "<toolNames>"
         },
     },
 });
@@ -195,23 +170,23 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("agentId").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("displayName").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("provider").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("endpoint").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("instructions").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("toolChoice").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("provider").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("endpoint").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("toolChoice").GetProperty("type").ToString());
 ]]></code></example>
     </member>
     <member name="CreateAgent(RequestContent,RequestContext)">
@@ -224,18 +199,13 @@ AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(
 
 using RequestContent content = RequestContent.Create(new
 {
-    options = new
-    {
-        displayName = "<displayName>",
-        configurationOptions = new object(),
-    },
+    displayName = "<displayName>",
 });
 Response response = client.CreateAgent(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("agentId").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("displayName").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("displayName").ToString());
 ]]></code>
 This sample shows how to call CreateAgent with all request content and parse the result.
 <code><![CDATA[
@@ -245,60 +215,50 @@ AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(
 
 using RequestContent content = RequestContent.Create(new
 {
-    options = new
+    displayName = "<displayName>",
+    agentModel = new
     {
-        displayName = "<displayName>",
-        configurationOptions = new
+        provider = "openai",
+        options = new
         {
-            agentModel = new
+            temperature = 123.45F,
+            topP = 123.45F,
+        },
+        id = "<id>",
+        endpoint = "<endpoint>",
+    },
+    instructions = "<instructions>",
+    tools = new object[]
+    {
+        new Dictionary<string, object>
+        {
+            ["type"] = "Function",
+            ["name"] = "<name>",
+            ["description"] = "<description>",
+            ["parameters"] = new
             {
-                provider = "openai",
-                options = new
+                type = "<type>",
+                properties = new {},
+                required = new object[]
                 {
-                    temperature = 123.45F,
-                    topP = 123.45F,
-                },
-                id = "<id>",
-                endpoint = "<endpoint>",
-            },
-            instructions = "<instructions>",
-            tools = new object[]
-            {
-                new Dictionary<string, object>
-                {
-                    ["type"] = "Microsoft.BingGrounding",
-                    ["connectionName"] = "<connectionName>",
-                    ["options"] = new
-                    {
-                        type = "Function",
-                        name = "<name>",
-                        description = "<description>",
-                        parameters = new
-                        {
-                            type = "<type>",
-                            properties = new {},
-                            required = new object[]
-                            {
-                                "<required>"
-                            },
-                        },
-                        strict = true,
-                    },
-                    ["override"] = new
-                    {
-                        name = "<name>",
-                        description = "<description>",
-                    }
-                }
-            },
-            toolChoice = new
-            {
-                type = "auto",
-                toolNames = new object[]
-                {
-                    "<toolNames>"
+                    "<required>"
                 },
             },
+            ["strict"] = true,
+            ["options"] = null,
+            ["override"] = new
+            {
+                name = "<name>",
+                description = "<description>",
+            }
+        }
+    },
+    toolChoice = new
+    {
+        type = "auto",
+        toolNames = new object[]
+        {
+            "<toolNames>"
         },
     },
 });
@@ -308,23 +268,23 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("agentId").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("displayName").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("provider").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("endpoint").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("instructions").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("toolChoice").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("provider").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("endpoint").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("toolChoice").GetProperty("type").ToString());
 ]]></code></example>
     </member>
     <member name="GetAgentAsync(string,CancellationToken)">
@@ -377,8 +337,7 @@ Response response = await client.GetAgentAsync("<agentId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("agentId").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("displayName").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("displayName").ToString());
 ]]></code>
 This sample shows how to call GetAgentAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -392,23 +351,23 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("agentId").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("displayName").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("provider").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("endpoint").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("instructions").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("toolChoice").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("provider").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("endpoint").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("toolChoice").GetProperty("type").ToString());
 ]]></code></example>
     </member>
     <member name="GetAgent(string,RequestContext)">
@@ -423,8 +382,7 @@ Response response = client.GetAgent("<agentId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("agentId").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("displayName").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("displayName").ToString());
 ]]></code>
 This sample shows how to call GetAgent with all parameters and parse the result.
 <code><![CDATA[
@@ -438,23 +396,23 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("agentId").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("displayName").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("provider").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("endpoint").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("instructions").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("toolChoice").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("provider").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("endpoint").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("toolChoice").GetProperty("type").ToString());
 ]]></code></example>
     </member>
     <member name="UpdateAgentAsync(string,Agent,CancellationToken)">
@@ -465,7 +423,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(apiVersion: "2025-05-01-preview");
 
-Agent body = new Agent(new AgentCreationOptions("<displayName>", new AgentConfigurationOptions()));
+Agent body = new Agent(new AgentConfigurationOptions("<displayName>"));
 Response<Agent> response = await client.UpdateAgentAsync("<agentId>", body);
 ]]></code>
 This sample shows how to call UpdateAgentAsync with all parameters.
@@ -474,27 +432,25 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(apiVersion: "2025-05-01-preview");
 
-Agent body = new Agent(new AgentCreationOptions("<displayName>", new AgentConfigurationOptions
+Agent body = new Agent(new AgentConfigurationOptions("<displayName>")
 {
     AgentModel = new OpenAIAgentModel("<id>", new JSONAny())
     {
         Endpoint = "<endpoint>",
     },
     Instructions = "<instructions>",
-    Tools = {new BingGroundingToolDefinition("<connectionName>")
+    Tools = {new FunctionToolDefinition("<name>")
     {
-        Options = new FunctionToolOptions("<name>")
+        Description = "<description>",
+        Parameters = new JSONSchema("<type>", new Dictionary<string, JSONSchema>
         {
-            Description = "<description>",
-            Parameters = new JSONSchema("<type>", new Dictionary<string, JSONSchema>
-            {
-                ["key"] = default
-            })
-            {
-                Required = {"<required>"},
-            },
-            Strict = true,
+            ["key"] = default
+        })
+        {
+            Required = {"<required>"},
         },
+        Strict = true,
+        Options = default,
         Override = new AgentToolDefinitionOverride
         {
             Name = "<name>",
@@ -503,7 +459,7 @@ Agent body = new Agent(new AgentCreationOptions("<displayName>", new AgentConfig
         },
     }},
     ToolChoice = new AutoToolChoiceBehavior(new string[] { "<toolNames>" }),
-}))
+})
 {
     Description = "<description>",
     Metadata =
@@ -522,7 +478,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(apiVersion: "2025-05-01-preview");
 
-Agent body = new Agent(new AgentCreationOptions("<displayName>", new AgentConfigurationOptions()));
+Agent body = new Agent(new AgentConfigurationOptions("<displayName>"));
 Response<Agent> response = client.UpdateAgent("<agentId>", body);
 ]]></code>
 This sample shows how to call UpdateAgent with all parameters.
@@ -531,27 +487,25 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(apiVersion: "2025-05-01-preview");
 
-Agent body = new Agent(new AgentCreationOptions("<displayName>", new AgentConfigurationOptions
+Agent body = new Agent(new AgentConfigurationOptions("<displayName>")
 {
     AgentModel = new OpenAIAgentModel("<id>", new JSONAny())
     {
         Endpoint = "<endpoint>",
     },
     Instructions = "<instructions>",
-    Tools = {new BingGroundingToolDefinition("<connectionName>")
+    Tools = {new FunctionToolDefinition("<name>")
     {
-        Options = new FunctionToolOptions("<name>")
+        Description = "<description>",
+        Parameters = new JSONSchema("<type>", new Dictionary<string, JSONSchema>
         {
-            Description = "<description>",
-            Parameters = new JSONSchema("<type>", new Dictionary<string, JSONSchema>
-            {
-                ["key"] = default
-            })
-            {
-                Required = {"<required>"},
-            },
-            Strict = true,
+            ["key"] = default
+        })
+        {
+            Required = {"<required>"},
         },
+        Strict = true,
+        Options = default,
         Override = new AgentToolDefinitionOverride
         {
             Name = "<name>",
@@ -560,7 +514,7 @@ Agent body = new Agent(new AgentCreationOptions("<displayName>", new AgentConfig
         },
     }},
     ToolChoice = new AutoToolChoiceBehavior(new string[] { "<toolNames>" }),
-}))
+})
 {
     Description = "<description>",
     Metadata =
@@ -581,18 +535,16 @@ AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(
 
 using RequestContent content = RequestContent.Create(new
 {
-    creationOptions = new
+    configurationOptions = new
     {
         displayName = "<displayName>",
-        configurationOptions = new object(),
     },
 });
 Response response = await client.UpdateAgentAsync("<agentId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("agentId").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("displayName").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("displayName").ToString());
 ]]></code>
 This sample shows how to call UpdateAgentAsync with all parameters and request content and parse the result.
 <code><![CDATA[
@@ -607,59 +559,52 @@ using RequestContent content = RequestContent.Create(new
     {
         key = "<metadata>",
     },
-    creationOptions = new
+    configurationOptions = new
     {
         displayName = "<displayName>",
-        configurationOptions = new
+        agentModel = new
         {
-            agentModel = new
+            provider = "openai",
+            options = new
             {
-                provider = "openai",
-                options = new
-                {
-                    temperature = 123.45F,
-                    topP = 123.45F,
-                },
-                id = "<id>",
-                endpoint = "<endpoint>",
+                temperature = 123.45F,
+                topP = 123.45F,
             },
-            instructions = "<instructions>",
-            tools = new object[]
+            id = "<id>",
+            endpoint = "<endpoint>",
+        },
+        instructions = "<instructions>",
+        tools = new object[]
+        {
+            new Dictionary<string, object>
             {
-                new Dictionary<string, object>
+                ["type"] = "Function",
+                ["name"] = "<name>",
+                ["description"] = "<description>",
+                ["parameters"] = new
                 {
-                    ["type"] = "Microsoft.BingGrounding",
-                    ["connectionName"] = "<connectionName>",
-                    ["options"] = new
+                    type = "<type>",
+                    properties = new {},
+                    required = new object[]
                     {
-                        type = "Function",
-                        name = "<name>",
-                        description = "<description>",
-                        parameters = new
-                        {
-                            type = "<type>",
-                            properties = new {},
-                            required = new object[]
-                            {
-                                "<required>"
-                            },
-                        },
-                        strict = true,
+                        "<required>"
                     },
-                    ["override"] = new
-                    {
-                        name = "<name>",
-                        description = "<description>",
-                    }
-                }
-            },
-            toolChoice = new
-            {
-                type = "auto",
-                toolNames = new object[]
-                {
-                    "<toolNames>"
                 },
+                ["strict"] = true,
+                ["options"] = null,
+                ["override"] = new
+                {
+                    name = "<name>",
+                    description = "<description>",
+                }
+            }
+        },
+        toolChoice = new
+        {
+            type = "auto",
+            toolNames = new object[]
+            {
+                "<toolNames>"
             },
         },
     },
@@ -670,23 +615,23 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("agentId").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("displayName").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("provider").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("endpoint").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("instructions").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("toolChoice").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("provider").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("endpoint").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("toolChoice").GetProperty("type").ToString());
 ]]></code></example>
     </member>
     <member name="UpdateAgent(string,RequestContent,RequestContext)">
@@ -699,18 +644,16 @@ AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(
 
 using RequestContent content = RequestContent.Create(new
 {
-    creationOptions = new
+    configurationOptions = new
     {
         displayName = "<displayName>",
-        configurationOptions = new object(),
     },
 });
 Response response = client.UpdateAgent("<agentId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("agentId").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("displayName").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("displayName").ToString());
 ]]></code>
 This sample shows how to call UpdateAgent with all parameters and request content and parse the result.
 <code><![CDATA[
@@ -725,59 +668,52 @@ using RequestContent content = RequestContent.Create(new
     {
         key = "<metadata>",
     },
-    creationOptions = new
+    configurationOptions = new
     {
         displayName = "<displayName>",
-        configurationOptions = new
+        agentModel = new
         {
-            agentModel = new
+            provider = "openai",
+            options = new
             {
-                provider = "openai",
-                options = new
-                {
-                    temperature = 123.45F,
-                    topP = 123.45F,
-                },
-                id = "<id>",
-                endpoint = "<endpoint>",
+                temperature = 123.45F,
+                topP = 123.45F,
             },
-            instructions = "<instructions>",
-            tools = new object[]
+            id = "<id>",
+            endpoint = "<endpoint>",
+        },
+        instructions = "<instructions>",
+        tools = new object[]
+        {
+            new Dictionary<string, object>
             {
-                new Dictionary<string, object>
+                ["type"] = "Function",
+                ["name"] = "<name>",
+                ["description"] = "<description>",
+                ["parameters"] = new
                 {
-                    ["type"] = "Microsoft.BingGrounding",
-                    ["connectionName"] = "<connectionName>",
-                    ["options"] = new
+                    type = "<type>",
+                    properties = new {},
+                    required = new object[]
                     {
-                        type = "Function",
-                        name = "<name>",
-                        description = "<description>",
-                        parameters = new
-                        {
-                            type = "<type>",
-                            properties = new {},
-                            required = new object[]
-                            {
-                                "<required>"
-                            },
-                        },
-                        strict = true,
+                        "<required>"
                     },
-                    ["override"] = new
-                    {
-                        name = "<name>",
-                        description = "<description>",
-                    }
-                }
-            },
-            toolChoice = new
-            {
-                type = "auto",
-                toolNames = new object[]
-                {
-                    "<toolNames>"
                 },
+                ["strict"] = true,
+                ["options"] = null,
+                ["override"] = new
+                {
+                    name = "<name>",
+                    description = "<description>",
+                }
+            }
+        },
+        toolChoice = new
+        {
+            type = "auto",
+            toolNames = new object[]
+            {
+                "<toolNames>"
             },
         },
     },
@@ -788,23 +724,23 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("agentId").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("displayName").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("provider").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("endpoint").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("instructions").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
-Console.WriteLine(result.GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("toolChoice").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("provider").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("endpoint").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
+Console.WriteLine(result.GetProperty("configurationOptions").GetProperty("toolChoice").GetProperty("type").ToString());
 ]]></code></example>
     </member>
     <member name="DeleteAgentAsync(string,RequestContext)">
@@ -903,8 +839,7 @@ Response response = await client.GetAgentsAsync(null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("agentId").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("displayName").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("displayName").ToString());
 ]]></code>
 This sample shows how to call GetAgentsAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -918,23 +853,23 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("agentId").ToString());
 Console.WriteLine(result[0].GetProperty("description").ToString());
 Console.WriteLine(result[0].GetProperty("metadata").GetProperty("<key>").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("displayName").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("id").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("provider").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("endpoint").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("instructions").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("type").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("toolChoice").GetProperty("type").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("displayName").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("provider").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("endpoint").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("instructions").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("toolChoice").GetProperty("type").ToString());
 ]]></code></example>
     </member>
     <member name="GetAgents(RequestContext)">
@@ -949,8 +884,7 @@ Response response = client.GetAgents(null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("agentId").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("displayName").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("displayName").ToString());
 ]]></code>
 This sample shows how to call GetAgents with all parameters and parse the result.
 <code><![CDATA[
@@ -964,26 +898,26 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result[0].GetProperty("agentId").ToString());
 Console.WriteLine(result[0].GetProperty("description").ToString());
 Console.WriteLine(result[0].GetProperty("metadata").GetProperty("<key>").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("displayName").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("id").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("provider").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("endpoint").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("instructions").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("type").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
-Console.WriteLine(result[0].GetProperty("creationOptions").GetProperty("configurationOptions").GetProperty("toolChoice").GetProperty("type").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("displayName").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("provider").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("endpoint").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("instructions").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
+Console.WriteLine(result[0].GetProperty("configurationOptions").GetProperty("toolChoice").GetProperty("type").ToString());
 ]]></code></example>
     </member>
-    <member name="RunAsync(AgentConfigurationOptions,RunInputs,CancellationToken)">
+    <member name="RunAsync(IEnumerable{ChatMessage},string,string,IReadOnlyDictionary{string,string},RunOptions,string,AgentConfigurationOptions,CancellationToken)">
       <example>
 This sample shows how to call RunAsync.
 <code><![CDATA[
@@ -991,15 +925,13 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(apiVersion: "2025-05-01-preview");
 
-AgentConfigurationOptions options = new AgentConfigurationOptions();
-RunInputs inputs = new RunInputs(new ChatMessage[]
+Response<Run> response = await client.RunAsync(new ChatMessage[]
 {
     new UserMessage(new AIContent[]
     {
         new TextContent("<text>")
     })
 });
-Response<Run> response = await client.RunAsync(options, inputs);
 ]]></code>
 This sample shows how to call RunAsync with all parameters.
 <code><![CDATA[
@@ -1007,27 +939,32 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(apiVersion: "2025-05-01-preview");
 
-AgentConfigurationOptions options = new AgentConfigurationOptions
+RunOptions options = new RunOptions
+{
+    TruncationStrategy = new TruncationStrategy(TruncationStrategyType.Auto)
+    {
+        LastMessages = 1234,
+    },
+};
+AgentConfigurationOptions agentConfiguration = new AgentConfigurationOptions("<displayName>")
 {
     AgentModel = new OpenAIAgentModel("<id>", new JSONAny())
     {
         Endpoint = "<endpoint>",
     },
     Instructions = "<instructions>",
-    Tools = {new BingGroundingToolDefinition("<connectionName>")
+    Tools = {new FunctionToolDefinition("<name>")
     {
-        Options = new FunctionToolOptions("<name>")
+        Description = "<description>",
+        Parameters = new JSONSchema("<type>", new Dictionary<string, JSONSchema>
         {
-            Description = "<description>",
-            Parameters = new JSONSchema("<type>", new Dictionary<string, JSONSchema>
-            {
-                ["key"] = default
-            })
-            {
-                Required = {"<required>"},
-            },
-            Strict = true,
+            ["key"] = default
+        })
+        {
+            Required = {"<required>"},
         },
+        Strict = true,
+        Options = default,
         Override = new AgentToolDefinitionOverride
         {
             Name = "<name>",
@@ -1037,7 +974,7 @@ AgentConfigurationOptions options = new AgentConfigurationOptions
     }},
     ToolChoice = new AutoToolChoiceBehavior(new string[] { "<toolNames>" }),
 };
-RunInputs inputs = new RunInputs(new ChatMessage[]
+Response<Run> response = await client.RunAsync(new ChatMessage[]
 {
     new UserMessage(new AIContent[]
     {
@@ -1061,27 +998,13 @@ RunInputs inputs = new RunInputs(new ChatMessage[]
         CreatedAt = 1234L,
         CompletedAt = 1234L,
     }
-})
+}, agentId: "<agentId>", conversationId: "<conversationId>", metadata: new Dictionary<string, string>
 {
-    AgentId = "<agentId>",
-    ThreadId = "<threadId>",
-    Metadata =
-    {
-        ["key"] = "<metadata>"
-    },
-    Options = new RunOptions
-    {
-        TruncationStrategy = new TruncationStrategy(TruncationStrategyType.Auto)
-        {
-            LastMessages = 1234,
-        },
-    },
-    UserId = "<userId>",
-};
-Response<Run> response = await client.RunAsync(options, inputs);
+    ["key"] = "<metadata>"
+}, options: options, userId: "<userId>", agentConfiguration: agentConfiguration);
 ]]></code></example>
     </member>
-    <member name="Run(AgentConfigurationOptions,RunInputs,CancellationToken)">
+    <member name="Run(IEnumerable{ChatMessage},string,string,IReadOnlyDictionary{string,string},RunOptions,string,AgentConfigurationOptions,CancellationToken)">
       <example>
 This sample shows how to call Run.
 <code><![CDATA[
@@ -1089,15 +1012,13 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(apiVersion: "2025-05-01-preview");
 
-AgentConfigurationOptions options = new AgentConfigurationOptions();
-RunInputs inputs = new RunInputs(new ChatMessage[]
+Response<Run> response = client.Run(new ChatMessage[]
 {
     new UserMessage(new AIContent[]
     {
         new TextContent("<text>")
     })
 });
-Response<Run> response = client.Run(options, inputs);
 ]]></code>
 This sample shows how to call Run with all parameters.
 <code><![CDATA[
@@ -1105,27 +1026,32 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(apiVersion: "2025-05-01-preview");
 
-AgentConfigurationOptions options = new AgentConfigurationOptions
+RunOptions options = new RunOptions
+{
+    TruncationStrategy = new TruncationStrategy(TruncationStrategyType.Auto)
+    {
+        LastMessages = 1234,
+    },
+};
+AgentConfigurationOptions agentConfiguration = new AgentConfigurationOptions("<displayName>")
 {
     AgentModel = new OpenAIAgentModel("<id>", new JSONAny())
     {
         Endpoint = "<endpoint>",
     },
     Instructions = "<instructions>",
-    Tools = {new BingGroundingToolDefinition("<connectionName>")
+    Tools = {new FunctionToolDefinition("<name>")
     {
-        Options = new FunctionToolOptions("<name>")
+        Description = "<description>",
+        Parameters = new JSONSchema("<type>", new Dictionary<string, JSONSchema>
         {
-            Description = "<description>",
-            Parameters = new JSONSchema("<type>", new Dictionary<string, JSONSchema>
-            {
-                ["key"] = default
-            })
-            {
-                Required = {"<required>"},
-            },
-            Strict = true,
+            ["key"] = default
+        })
+        {
+            Required = {"<required>"},
         },
+        Strict = true,
+        Options = default,
         Override = new AgentToolDefinitionOverride
         {
             Name = "<name>",
@@ -1135,7 +1061,7 @@ AgentConfigurationOptions options = new AgentConfigurationOptions
     }},
     ToolChoice = new AutoToolChoiceBehavior(new string[] { "<toolNames>" }),
 };
-RunInputs inputs = new RunInputs(new ChatMessage[]
+Response<Run> response = client.Run(new ChatMessage[]
 {
     new UserMessage(new AIContent[]
     {
@@ -1159,24 +1085,10 @@ RunInputs inputs = new RunInputs(new ChatMessage[]
         CreatedAt = 1234L,
         CompletedAt = 1234L,
     }
-})
+}, agentId: "<agentId>", conversationId: "<conversationId>", metadata: new Dictionary<string, string>
 {
-    AgentId = "<agentId>",
-    ThreadId = "<threadId>",
-    Metadata =
-    {
-        ["key"] = "<metadata>"
-    },
-    Options = new RunOptions
-    {
-        TruncationStrategy = new TruncationStrategy(TruncationStrategyType.Auto)
-        {
-            LastMessages = 1234,
-        },
-    },
-    UserId = "<userId>",
-};
-Response<Run> response = client.Run(options, inputs);
+    ["key"] = "<metadata>"
+}, options: options, userId: "<userId>", agentConfiguration: agentConfiguration);
 ]]></code></example>
     </member>
     <member name="RunAsync(RequestContent,RequestContext)">
@@ -1189,24 +1101,20 @@ AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(
 
 using RequestContent content = RequestContent.Create(new
 {
-    options = new object(),
-    inputs = new
+    input = new object[]
     {
-        input = new object[]
+        new
         {
-            new
+            role = "user",
+            content = new object[]
             {
-                role = "user",
-                content = new object[]
+                new
                 {
-                    new
-                    {
-                        type = "text",
-                        text = "<text>",
-                    }
-                },
-            }
-        },
+                    type = "text",
+                    text = "<text>",
+                }
+            },
+        }
     },
 });
 Response response = await client.RunAsync(content);
@@ -1216,17 +1124,17 @@ Console.WriteLine(result.GetProperty("runId").ToString());
 Console.WriteLine(result.GetProperty("createdAt").ToString());
 Console.WriteLine(result.GetProperty("completedAt").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
-Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("conversationId").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("role").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("role").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("conversationId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("outputTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("inputTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("totalTokens").ToString());
 ]]></code>
 This sample shows how to call RunAsync with all request content and parse the result.
 <code><![CDATA[
@@ -1236,8 +1144,57 @@ AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(
 
 using RequestContent content = RequestContent.Create(new
 {
+    agentId = "<agentId>",
+    input = new object[]
+    {
+        new
+        {
+            role = "user",
+            content = new object[]
+            {
+                new
+                {
+                    type = "text",
+                    text = "<text>",
+                    annotations = new object[]
+                    {
+                        new
+                        {
+                            type = "<type>",
+                            ToolCallId = "<ToolCallId>",
+                            jsonPath = "<jsonPath>",
+                            url = "<url>",
+                            start = 1234,
+                            end = 1234,
+                        }
+                    },
+                }
+            },
+            userId = "<userId>",
+            agentId = "<agentId>",
+            agentRunId = "<agentRunId>",
+            authorName = "<authorName>",
+            createdAt = 1234L,
+            completedAt = 1234L,
+        }
+    },
+    conversationId = "<conversationId>",
+    metadata = new
+    {
+        key = "<metadata>",
+    },
     options = new
     {
+        truncationStrategy = new
+        {
+            type = "auto",
+            lastMessages = 1234,
+        },
+    },
+    userId = "<userId>",
+    agentConfiguration = new
+    {
+        displayName = "<displayName>",
         agentModel = new
         {
             provider = "openai",
@@ -1254,24 +1211,20 @@ using RequestContent content = RequestContent.Create(new
         {
             new Dictionary<string, object>
             {
-                ["type"] = "Microsoft.BingGrounding",
-                ["connectionName"] = "<connectionName>",
-                ["options"] = new
+                ["type"] = "Function",
+                ["name"] = "<name>",
+                ["description"] = "<description>",
+                ["parameters"] = new
                 {
-                    type = "Function",
-                    name = "<name>",
-                    description = "<description>",
-                    parameters = new
+                    type = "<type>",
+                    properties = new {},
+                    required = new object[]
                     {
-                        type = "<type>",
-                        properties = new {},
-                        required = new object[]
-                        {
-                            "<required>"
-                        },
+                        "<required>"
                     },
-                    strict = true,
                 },
+                ["strict"] = true,
+                ["options"] = null,
                 ["override"] = new
                 {
                     name = "<name>",
@@ -1288,57 +1241,6 @@ using RequestContent content = RequestContent.Create(new
             },
         },
     },
-    inputs = new
-    {
-        agentId = "<agentId>",
-        input = new object[]
-        {
-            new
-            {
-                role = "user",
-                content = new object[]
-                {
-                    new
-                    {
-                        type = "text",
-                        text = "<text>",
-                        annotations = new object[]
-                        {
-                            new
-                            {
-                                type = "<type>",
-                                ToolCallId = "<ToolCallId>",
-                                jsonPath = "<jsonPath>",
-                                url = "<url>",
-                                start = 1234,
-                                end = 1234,
-                            }
-                        },
-                    }
-                },
-                userId = "<userId>",
-                agentId = "<agentId>",
-                agentRunId = "<agentRunId>",
-                authorName = "<authorName>",
-                createdAt = 1234L,
-                completedAt = 1234L,
-            }
-        },
-        threadId = "<threadId>",
-        metadata = new
-        {
-            key = "<metadata>",
-        },
-        options = new
-        {
-            truncationStrategy = new
-            {
-                type = "auto",
-                lastMessages = 1234,
-            },
-        },
-        userId = "<userId>",
-    },
 });
 Response response = await client.RunAsync(content);
 
@@ -1351,36 +1253,53 @@ Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetPro
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentId").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentRunId").ToString());
-Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("conversationId").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("role").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("authorName").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("createdAt").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("completedAt").ToString());
-Console.WriteLine(result.GetProperty("runInputs").GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("conversationId").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("metadata").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("lastMessages").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("userId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("userId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentRunId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("role").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("authorName").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("createdAt").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("completedAt").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokenDetails").GetProperty("cachedTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokenDetails").GetProperty("reasoningTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("incompleteDetails").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("provider").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("endpoint").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("toolChoice").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("userId").ToString());
 Console.WriteLine(result.GetProperty("store").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("conversationId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("outputTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("inputTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("totalTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("inputTokenDetails").GetProperty("cachedTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("outputTokenDetails").GetProperty("reasoningTokens").ToString());
+Console.WriteLine(result.GetProperty("incompleteDetails").GetProperty("reason").ToString());
 ]]></code></example>
     </member>
     <member name="Run(RequestContent,RequestContext)">
@@ -1393,24 +1312,20 @@ AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(
 
 using RequestContent content = RequestContent.Create(new
 {
-    options = new object(),
-    inputs = new
+    input = new object[]
     {
-        input = new object[]
+        new
         {
-            new
+            role = "user",
+            content = new object[]
             {
-                role = "user",
-                content = new object[]
+                new
                 {
-                    new
-                    {
-                        type = "text",
-                        text = "<text>",
-                    }
-                },
-            }
-        },
+                    type = "text",
+                    text = "<text>",
+                }
+            },
+        }
     },
 });
 Response response = client.Run(content);
@@ -1420,17 +1335,17 @@ Console.WriteLine(result.GetProperty("runId").ToString());
 Console.WriteLine(result.GetProperty("createdAt").ToString());
 Console.WriteLine(result.GetProperty("completedAt").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
-Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("conversationId").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("role").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("role").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("conversationId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("outputTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("inputTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("totalTokens").ToString());
 ]]></code>
 This sample shows how to call Run with all request content and parse the result.
 <code><![CDATA[
@@ -1440,8 +1355,57 @@ AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(
 
 using RequestContent content = RequestContent.Create(new
 {
+    agentId = "<agentId>",
+    input = new object[]
+    {
+        new
+        {
+            role = "user",
+            content = new object[]
+            {
+                new
+                {
+                    type = "text",
+                    text = "<text>",
+                    annotations = new object[]
+                    {
+                        new
+                        {
+                            type = "<type>",
+                            ToolCallId = "<ToolCallId>",
+                            jsonPath = "<jsonPath>",
+                            url = "<url>",
+                            start = 1234,
+                            end = 1234,
+                        }
+                    },
+                }
+            },
+            userId = "<userId>",
+            agentId = "<agentId>",
+            agentRunId = "<agentRunId>",
+            authorName = "<authorName>",
+            createdAt = 1234L,
+            completedAt = 1234L,
+        }
+    },
+    conversationId = "<conversationId>",
+    metadata = new
+    {
+        key = "<metadata>",
+    },
     options = new
     {
+        truncationStrategy = new
+        {
+            type = "auto",
+            lastMessages = 1234,
+        },
+    },
+    userId = "<userId>",
+    agentConfiguration = new
+    {
+        displayName = "<displayName>",
         agentModel = new
         {
             provider = "openai",
@@ -1458,24 +1422,20 @@ using RequestContent content = RequestContent.Create(new
         {
             new Dictionary<string, object>
             {
-                ["type"] = "Microsoft.BingGrounding",
-                ["connectionName"] = "<connectionName>",
-                ["options"] = new
+                ["type"] = "Function",
+                ["name"] = "<name>",
+                ["description"] = "<description>",
+                ["parameters"] = new
                 {
-                    type = "Function",
-                    name = "<name>",
-                    description = "<description>",
-                    parameters = new
+                    type = "<type>",
+                    properties = new {},
+                    required = new object[]
                     {
-                        type = "<type>",
-                        properties = new {},
-                        required = new object[]
-                        {
-                            "<required>"
-                        },
+                        "<required>"
                     },
-                    strict = true,
                 },
+                ["strict"] = true,
+                ["options"] = null,
                 ["override"] = new
                 {
                     name = "<name>",
@@ -1492,57 +1452,6 @@ using RequestContent content = RequestContent.Create(new
             },
         },
     },
-    inputs = new
-    {
-        agentId = "<agentId>",
-        input = new object[]
-        {
-            new
-            {
-                role = "user",
-                content = new object[]
-                {
-                    new
-                    {
-                        type = "text",
-                        text = "<text>",
-                        annotations = new object[]
-                        {
-                            new
-                            {
-                                type = "<type>",
-                                ToolCallId = "<ToolCallId>",
-                                jsonPath = "<jsonPath>",
-                                url = "<url>",
-                                start = 1234,
-                                end = 1234,
-                            }
-                        },
-                    }
-                },
-                userId = "<userId>",
-                agentId = "<agentId>",
-                agentRunId = "<agentRunId>",
-                authorName = "<authorName>",
-                createdAt = 1234L,
-                completedAt = 1234L,
-            }
-        },
-        threadId = "<threadId>",
-        metadata = new
-        {
-            key = "<metadata>",
-        },
-        options = new
-        {
-            truncationStrategy = new
-            {
-                type = "auto",
-                lastMessages = 1234,
-            },
-        },
-        userId = "<userId>",
-    },
 });
 Response response = client.Run(content);
 
@@ -1555,39 +1464,56 @@ Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetPro
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentId").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentRunId").ToString());
-Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("conversationId").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("role").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("authorName").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("createdAt").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("completedAt").ToString());
-Console.WriteLine(result.GetProperty("runInputs").GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("conversationId").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("metadata").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("lastMessages").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("userId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("userId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentRunId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("role").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("authorName").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("createdAt").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("completedAt").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokenDetails").GetProperty("cachedTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokenDetails").GetProperty("reasoningTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("incompleteDetails").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("provider").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("endpoint").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("toolChoice").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("userId").ToString());
 Console.WriteLine(result.GetProperty("store").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("conversationId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("outputTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("inputTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("totalTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("inputTokenDetails").GetProperty("cachedTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("outputTokenDetails").GetProperty("reasoningTokens").ToString());
+Console.WriteLine(result.GetProperty("incompleteDetails").GetProperty("reason").ToString());
 ]]></code></example>
     </member>
-    <member name="StreamAsync(AgentConfigurationOptions,RunInputs,CancellationToken)">
+    <member name="StreamAsync(IEnumerable{ChatMessage},string,string,IReadOnlyDictionary{string,string},RunOptions,string,AgentConfigurationOptions,CancellationToken)">
       <example>
 This sample shows how to call StreamAsync.
 <code><![CDATA[
@@ -1595,15 +1521,13 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(apiVersion: "2025-05-01-preview");
 
-AgentConfigurationOptions options = new AgentConfigurationOptions();
-RunInputs inputs = new RunInputs(new ChatMessage[]
+Response response = await client.StreamAsync(new ChatMessage[]
 {
     new UserMessage(new AIContent[]
     {
         new TextContent("<text>")
     })
 });
-Response response = await client.StreamAsync(options, inputs);
 ]]></code>
 This sample shows how to call StreamAsync with all parameters.
 <code><![CDATA[
@@ -1611,27 +1535,32 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(apiVersion: "2025-05-01-preview");
 
-AgentConfigurationOptions options = new AgentConfigurationOptions
+RunOptions options = new RunOptions
+{
+    TruncationStrategy = new TruncationStrategy(TruncationStrategyType.Auto)
+    {
+        LastMessages = 1234,
+    },
+};
+AgentConfigurationOptions agentConfiguration = new AgentConfigurationOptions("<displayName>")
 {
     AgentModel = new OpenAIAgentModel("<id>", new JSONAny())
     {
         Endpoint = "<endpoint>",
     },
     Instructions = "<instructions>",
-    Tools = {new BingGroundingToolDefinition("<connectionName>")
+    Tools = {new FunctionToolDefinition("<name>")
     {
-        Options = new FunctionToolOptions("<name>")
+        Description = "<description>",
+        Parameters = new JSONSchema("<type>", new Dictionary<string, JSONSchema>
         {
-            Description = "<description>",
-            Parameters = new JSONSchema("<type>", new Dictionary<string, JSONSchema>
-            {
-                ["key"] = default
-            })
-            {
-                Required = {"<required>"},
-            },
-            Strict = true,
+            ["key"] = default
+        })
+        {
+            Required = {"<required>"},
         },
+        Strict = true,
+        Options = default,
         Override = new AgentToolDefinitionOverride
         {
             Name = "<name>",
@@ -1641,7 +1570,7 @@ AgentConfigurationOptions options = new AgentConfigurationOptions
     }},
     ToolChoice = new AutoToolChoiceBehavior(new string[] { "<toolNames>" }),
 };
-RunInputs inputs = new RunInputs(new ChatMessage[]
+Response response = await client.StreamAsync(new ChatMessage[]
 {
     new UserMessage(new AIContent[]
     {
@@ -1665,27 +1594,13 @@ RunInputs inputs = new RunInputs(new ChatMessage[]
         CreatedAt = 1234L,
         CompletedAt = 1234L,
     }
-})
+}, agentId: "<agentId>", conversationId: "<conversationId>", metadata: new Dictionary<string, string>
 {
-    AgentId = "<agentId>",
-    ThreadId = "<threadId>",
-    Metadata =
-    {
-        ["key"] = "<metadata>"
-    },
-    Options = new RunOptions
-    {
-        TruncationStrategy = new TruncationStrategy(TruncationStrategyType.Auto)
-        {
-            LastMessages = 1234,
-        },
-    },
-    UserId = "<userId>",
-};
-Response response = await client.StreamAsync(options, inputs);
+    ["key"] = "<metadata>"
+}, options: options, userId: "<userId>", agentConfiguration: agentConfiguration);
 ]]></code></example>
     </member>
-    <member name="Stream(AgentConfigurationOptions,RunInputs,CancellationToken)">
+    <member name="Stream(IEnumerable{ChatMessage},string,string,IReadOnlyDictionary{string,string},RunOptions,string,AgentConfigurationOptions,CancellationToken)">
       <example>
 This sample shows how to call Stream.
 <code><![CDATA[
@@ -1693,15 +1608,13 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(apiVersion: "2025-05-01-preview");
 
-AgentConfigurationOptions options = new AgentConfigurationOptions();
-RunInputs inputs = new RunInputs(new ChatMessage[]
+Response response = client.Stream(new ChatMessage[]
 {
     new UserMessage(new AIContent[]
     {
         new TextContent("<text>")
     })
 });
-Response response = client.Stream(options, inputs);
 ]]></code>
 This sample shows how to call Stream with all parameters.
 <code><![CDATA[
@@ -1709,27 +1622,32 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(apiVersion: "2025-05-01-preview");
 
-AgentConfigurationOptions options = new AgentConfigurationOptions
+RunOptions options = new RunOptions
+{
+    TruncationStrategy = new TruncationStrategy(TruncationStrategyType.Auto)
+    {
+        LastMessages = 1234,
+    },
+};
+AgentConfigurationOptions agentConfiguration = new AgentConfigurationOptions("<displayName>")
 {
     AgentModel = new OpenAIAgentModel("<id>", new JSONAny())
     {
         Endpoint = "<endpoint>",
     },
     Instructions = "<instructions>",
-    Tools = {new BingGroundingToolDefinition("<connectionName>")
+    Tools = {new FunctionToolDefinition("<name>")
     {
-        Options = new FunctionToolOptions("<name>")
+        Description = "<description>",
+        Parameters = new JSONSchema("<type>", new Dictionary<string, JSONSchema>
         {
-            Description = "<description>",
-            Parameters = new JSONSchema("<type>", new Dictionary<string, JSONSchema>
-            {
-                ["key"] = default
-            })
-            {
-                Required = {"<required>"},
-            },
-            Strict = true,
+            ["key"] = default
+        })
+        {
+            Required = {"<required>"},
         },
+        Strict = true,
+        Options = default,
         Override = new AgentToolDefinitionOverride
         {
             Name = "<name>",
@@ -1739,7 +1657,7 @@ AgentConfigurationOptions options = new AgentConfigurationOptions
     }},
     ToolChoice = new AutoToolChoiceBehavior(new string[] { "<toolNames>" }),
 };
-RunInputs inputs = new RunInputs(new ChatMessage[]
+Response response = client.Stream(new ChatMessage[]
 {
     new UserMessage(new AIContent[]
     {
@@ -1763,24 +1681,10 @@ RunInputs inputs = new RunInputs(new ChatMessage[]
         CreatedAt = 1234L,
         CompletedAt = 1234L,
     }
-})
+}, agentId: "<agentId>", conversationId: "<conversationId>", metadata: new Dictionary<string, string>
 {
-    AgentId = "<agentId>",
-    ThreadId = "<threadId>",
-    Metadata =
-    {
-        ["key"] = "<metadata>"
-    },
-    Options = new RunOptions
-    {
-        TruncationStrategy = new TruncationStrategy(TruncationStrategyType.Auto)
-        {
-            LastMessages = 1234,
-        },
-    },
-    UserId = "<userId>",
-};
-Response response = client.Stream(options, inputs);
+    ["key"] = "<metadata>"
+}, options: options, userId: "<userId>", agentConfiguration: agentConfiguration);
 ]]></code></example>
     </member>
     <member name="StreamAsync(RequestContent,RequestContext)">
@@ -1793,24 +1697,20 @@ AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(
 
 using RequestContent content = RequestContent.Create(new
 {
-    options = new object(),
-    inputs = new
+    input = new object[]
     {
-        input = new object[]
+        new
         {
-            new
+            role = "user",
+            content = new object[]
             {
-                role = "user",
-                content = new object[]
+                new
                 {
-                    new
-                    {
-                        type = "text",
-                        text = "<text>",
-                    }
-                },
-            }
-        },
+                    type = "text",
+                    text = "<text>",
+                }
+            },
+        }
     },
 });
 Response response = await client.StreamAsync(content);
@@ -1825,8 +1725,57 @@ AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(
 
 using RequestContent content = RequestContent.Create(new
 {
+    agentId = "<agentId>",
+    input = new object[]
+    {
+        new
+        {
+            role = "user",
+            content = new object[]
+            {
+                new
+                {
+                    type = "text",
+                    text = "<text>",
+                    annotations = new object[]
+                    {
+                        new
+                        {
+                            type = "<type>",
+                            ToolCallId = "<ToolCallId>",
+                            jsonPath = "<jsonPath>",
+                            url = "<url>",
+                            start = 1234,
+                            end = 1234,
+                        }
+                    },
+                }
+            },
+            userId = "<userId>",
+            agentId = "<agentId>",
+            agentRunId = "<agentRunId>",
+            authorName = "<authorName>",
+            createdAt = 1234L,
+            completedAt = 1234L,
+        }
+    },
+    conversationId = "<conversationId>",
+    metadata = new
+    {
+        key = "<metadata>",
+    },
     options = new
     {
+        truncationStrategy = new
+        {
+            type = "auto",
+            lastMessages = 1234,
+        },
+    },
+    userId = "<userId>",
+    agentConfiguration = new
+    {
+        displayName = "<displayName>",
         agentModel = new
         {
             provider = "openai",
@@ -1843,24 +1792,20 @@ using RequestContent content = RequestContent.Create(new
         {
             new Dictionary<string, object>
             {
-                ["type"] = "Microsoft.BingGrounding",
-                ["connectionName"] = "<connectionName>",
-                ["options"] = new
+                ["type"] = "Function",
+                ["name"] = "<name>",
+                ["description"] = "<description>",
+                ["parameters"] = new
                 {
-                    type = "Function",
-                    name = "<name>",
-                    description = "<description>",
-                    parameters = new
+                    type = "<type>",
+                    properties = new {},
+                    required = new object[]
                     {
-                        type = "<type>",
-                        properties = new {},
-                        required = new object[]
-                        {
-                            "<required>"
-                        },
+                        "<required>"
                     },
-                    strict = true,
                 },
+                ["strict"] = true,
+                ["options"] = null,
                 ["override"] = new
                 {
                     name = "<name>",
@@ -1876,57 +1821,6 @@ using RequestContent content = RequestContent.Create(new
                 "<toolNames>"
             },
         },
-    },
-    inputs = new
-    {
-        agentId = "<agentId>",
-        input = new object[]
-        {
-            new
-            {
-                role = "user",
-                content = new object[]
-                {
-                    new
-                    {
-                        type = "text",
-                        text = "<text>",
-                        annotations = new object[]
-                        {
-                            new
-                            {
-                                type = "<type>",
-                                ToolCallId = "<ToolCallId>",
-                                jsonPath = "<jsonPath>",
-                                url = "<url>",
-                                start = 1234,
-                                end = 1234,
-                            }
-                        },
-                    }
-                },
-                userId = "<userId>",
-                agentId = "<agentId>",
-                agentRunId = "<agentRunId>",
-                authorName = "<authorName>",
-                createdAt = 1234L,
-                completedAt = 1234L,
-            }
-        },
-        threadId = "<threadId>",
-        metadata = new
-        {
-            key = "<metadata>",
-        },
-        options = new
-        {
-            truncationStrategy = new
-            {
-                type = "auto",
-                lastMessages = 1234,
-            },
-        },
-        userId = "<userId>",
     },
 });
 Response response = await client.StreamAsync(content);
@@ -1944,24 +1838,20 @@ AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(
 
 using RequestContent content = RequestContent.Create(new
 {
-    options = new object(),
-    inputs = new
+    input = new object[]
     {
-        input = new object[]
+        new
         {
-            new
+            role = "user",
+            content = new object[]
             {
-                role = "user",
-                content = new object[]
+                new
                 {
-                    new
-                    {
-                        type = "text",
-                        text = "<text>",
-                    }
-                },
-            }
-        },
+                    type = "text",
+                    text = "<text>",
+                }
+            },
+        }
     },
 });
 Response response = client.Stream(content);
@@ -1976,8 +1866,57 @@ AgentsClient client = new AIProjectClient(endpoint, credential).GetAgentsClient(
 
 using RequestContent content = RequestContent.Create(new
 {
+    agentId = "<agentId>",
+    input = new object[]
+    {
+        new
+        {
+            role = "user",
+            content = new object[]
+            {
+                new
+                {
+                    type = "text",
+                    text = "<text>",
+                    annotations = new object[]
+                    {
+                        new
+                        {
+                            type = "<type>",
+                            ToolCallId = "<ToolCallId>",
+                            jsonPath = "<jsonPath>",
+                            url = "<url>",
+                            start = 1234,
+                            end = 1234,
+                        }
+                    },
+                }
+            },
+            userId = "<userId>",
+            agentId = "<agentId>",
+            agentRunId = "<agentRunId>",
+            authorName = "<authorName>",
+            createdAt = 1234L,
+            completedAt = 1234L,
+        }
+    },
+    conversationId = "<conversationId>",
+    metadata = new
+    {
+        key = "<metadata>",
+    },
     options = new
     {
+        truncationStrategy = new
+        {
+            type = "auto",
+            lastMessages = 1234,
+        },
+    },
+    userId = "<userId>",
+    agentConfiguration = new
+    {
+        displayName = "<displayName>",
         agentModel = new
         {
             provider = "openai",
@@ -1994,24 +1933,20 @@ using RequestContent content = RequestContent.Create(new
         {
             new Dictionary<string, object>
             {
-                ["type"] = "Microsoft.BingGrounding",
-                ["connectionName"] = "<connectionName>",
-                ["options"] = new
+                ["type"] = "Function",
+                ["name"] = "<name>",
+                ["description"] = "<description>",
+                ["parameters"] = new
                 {
-                    type = "Function",
-                    name = "<name>",
-                    description = "<description>",
-                    parameters = new
+                    type = "<type>",
+                    properties = new {},
+                    required = new object[]
                     {
-                        type = "<type>",
-                        properties = new {},
-                        required = new object[]
-                        {
-                            "<required>"
-                        },
+                        "<required>"
                     },
-                    strict = true,
                 },
+                ["strict"] = true,
+                ["options"] = null,
                 ["override"] = new
                 {
                     name = "<name>",
@@ -2027,57 +1962,6 @@ using RequestContent content = RequestContent.Create(new
                 "<toolNames>"
             },
         },
-    },
-    inputs = new
-    {
-        agentId = "<agentId>",
-        input = new object[]
-        {
-            new
-            {
-                role = "user",
-                content = new object[]
-                {
-                    new
-                    {
-                        type = "text",
-                        text = "<text>",
-                        annotations = new object[]
-                        {
-                            new
-                            {
-                                type = "<type>",
-                                ToolCallId = "<ToolCallId>",
-                                jsonPath = "<jsonPath>",
-                                url = "<url>",
-                                start = 1234,
-                                end = 1234,
-                            }
-                        },
-                    }
-                },
-                userId = "<userId>",
-                agentId = "<agentId>",
-                agentRunId = "<agentRunId>",
-                authorName = "<authorName>",
-                createdAt = 1234L,
-                completedAt = 1234L,
-            }
-        },
-        threadId = "<threadId>",
-        metadata = new
-        {
-            key = "<metadata>",
-        },
-        options = new
-        {
-            truncationStrategy = new
-            {
-                type = "auto",
-                lastMessages = 1234,
-            },
-        },
-        userId = "<userId>",
     },
 });
 Response response = client.Stream(content);
@@ -2138,17 +2022,17 @@ Console.WriteLine(result.GetProperty("runId").ToString());
 Console.WriteLine(result.GetProperty("createdAt").ToString());
 Console.WriteLine(result.GetProperty("completedAt").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
-Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("conversationId").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("role").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("role").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("conversationId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("outputTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("inputTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("totalTokens").ToString());
 ]]></code>
 This sample shows how to call GetRunAsync with all parameters and parse the result.
 <code><![CDATA[
@@ -2167,36 +2051,53 @@ Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetPro
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentId").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentRunId").ToString());
-Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("conversationId").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("role").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("authorName").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("createdAt").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("completedAt").ToString());
-Console.WriteLine(result.GetProperty("runInputs").GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("conversationId").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("metadata").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("lastMessages").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("userId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("userId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentRunId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("role").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("authorName").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("createdAt").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("completedAt").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokenDetails").GetProperty("cachedTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokenDetails").GetProperty("reasoningTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("incompleteDetails").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("provider").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("endpoint").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("toolChoice").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("userId").ToString());
 Console.WriteLine(result.GetProperty("store").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("conversationId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("outputTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("inputTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("totalTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("inputTokenDetails").GetProperty("cachedTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("outputTokenDetails").GetProperty("reasoningTokens").ToString());
+Console.WriteLine(result.GetProperty("incompleteDetails").GetProperty("reason").ToString());
 ]]></code></example>
     </member>
     <member name="GetRun(string,RequestContext)">
@@ -2214,17 +2115,17 @@ Console.WriteLine(result.GetProperty("runId").ToString());
 Console.WriteLine(result.GetProperty("createdAt").ToString());
 Console.WriteLine(result.GetProperty("completedAt").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
-Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("conversationId").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("role").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("role").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("conversationId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("outputTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("inputTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("totalTokens").ToString());
 ]]></code>
 This sample shows how to call GetRun with all parameters and parse the result.
 <code><![CDATA[
@@ -2243,36 +2144,53 @@ Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetPro
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentId").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentRunId").ToString());
-Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("conversationId").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("role").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("authorName").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("createdAt").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("completedAt").ToString());
-Console.WriteLine(result.GetProperty("runInputs").GetProperty("threadId").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("conversationId").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("metadata").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("lastMessages").ToString());
 Console.WriteLine(result.GetProperty("runInputs").GetProperty("userId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("userId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentRunId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("role").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("authorName").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("createdAt").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("completedAt").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokenDetails").GetProperty("cachedTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokenDetails").GetProperty("reasoningTokens").ToString());
-Console.WriteLine(result.GetProperty("runOutputs").GetProperty("incompleteDetails").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("provider").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("endpoint").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("instructions").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
+Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("toolChoice").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("userId").ToString());
 Console.WriteLine(result.GetProperty("store").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("userId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("agentId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("agentRunId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("conversationId").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("authorName").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("output")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("outputTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("inputTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("totalTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("inputTokenDetails").GetProperty("cachedTokens").ToString());
+Console.WriteLine(result.GetProperty("usage").GetProperty("outputTokenDetails").GetProperty("reasoningTokens").ToString());
+Console.WriteLine(result.GetProperty("incompleteDetails").GetProperty("reason").ToString());
 ]]></code></example>
     </member>
     <member name="GetRunsAsync(CancellationToken)">
@@ -2336,17 +2254,17 @@ await foreach (BinaryData item in client.GetRunsAsync(null))
     Console.WriteLine(result.GetProperty("createdAt").ToString());
     Console.WriteLine(result.GetProperty("completedAt").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
-    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("conversationId").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("role").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("role").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("messageId").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("conversationId").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("role").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("content")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("usage").GetProperty("outputTokens").ToString());
+    Console.WriteLine(result.GetProperty("usage").GetProperty("inputTokens").ToString());
+    Console.WriteLine(result.GetProperty("usage").GetProperty("totalTokens").ToString());
 }
 ]]></code>
 This sample shows how to call GetRunsAsync with all parameters and parse the result.
@@ -2366,36 +2284,53 @@ await foreach (BinaryData item in client.GetRunsAsync(null))
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentId").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentRunId").ToString());
-    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("conversationId").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("role").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("authorName").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("createdAt").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("completedAt").ToString());
-    Console.WriteLine(result.GetProperty("runInputs").GetProperty("threadId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("conversationId").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("metadata").GetProperty("<key>").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("lastMessages").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("userId").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("userId").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentId").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentRunId").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("role").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("authorName").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("createdAt").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("completedAt").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokenDetails").GetProperty("cachedTokens").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokenDetails").GetProperty("reasoningTokens").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("incompleteDetails").GetProperty("reason").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("provider").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("endpoint").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("instructions").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("toolChoice").GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("userId").ToString());
     Console.WriteLine(result.GetProperty("store").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("userId").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("agentId").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("messageId").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("agentRunId").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("conversationId").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("role").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("content")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("authorName").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("createdAt").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("completedAt").ToString());
+    Console.WriteLine(result.GetProperty("usage").GetProperty("outputTokens").ToString());
+    Console.WriteLine(result.GetProperty("usage").GetProperty("inputTokens").ToString());
+    Console.WriteLine(result.GetProperty("usage").GetProperty("totalTokens").ToString());
+    Console.WriteLine(result.GetProperty("usage").GetProperty("inputTokenDetails").GetProperty("cachedTokens").ToString());
+    Console.WriteLine(result.GetProperty("usage").GetProperty("outputTokenDetails").GetProperty("reasoningTokens").ToString());
+    Console.WriteLine(result.GetProperty("incompleteDetails").GetProperty("reason").ToString());
 }
 ]]></code></example>
     </member>
@@ -2414,17 +2349,17 @@ foreach (BinaryData item in client.GetRuns(null))
     Console.WriteLine(result.GetProperty("createdAt").ToString());
     Console.WriteLine(result.GetProperty("completedAt").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
-    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("conversationId").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("role").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("role").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("messageId").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("conversationId").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("role").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("content")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("usage").GetProperty("outputTokens").ToString());
+    Console.WriteLine(result.GetProperty("usage").GetProperty("inputTokens").ToString());
+    Console.WriteLine(result.GetProperty("usage").GetProperty("totalTokens").ToString());
 }
 ]]></code>
 This sample shows how to call GetRuns with all parameters and parse the result.
@@ -2444,36 +2379,53 @@ foreach (BinaryData item in client.GetRuns(null))
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentId").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("messageId").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("agentRunId").ToString());
-    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("threadId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("conversationId").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("role").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("content")[0].GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("authorName").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("createdAt").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("input")[0].GetProperty("completedAt").ToString());
-    Console.WriteLine(result.GetProperty("runInputs").GetProperty("threadId").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("conversationId").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("metadata").GetProperty("<key>").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("options").GetProperty("truncationStrategy").GetProperty("lastMessages").ToString());
     Console.WriteLine(result.GetProperty("runInputs").GetProperty("userId").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("status").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("userId").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentId").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("messageId").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("agentRunId").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("threadId").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("role").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("content")[0].GetProperty("type").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("authorName").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("createdAt").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("messages")[0].GetProperty("completedAt").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokens").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokens").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("totalTokens").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("inputTokenDetails").GetProperty("cachedTokens").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("usage").GetProperty("outputTokenDetails").GetProperty("reasoningTokens").ToString());
-    Console.WriteLine(result.GetProperty("runOutputs").GetProperty("incompleteDetails").GetProperty("reason").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("provider").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("endpoint").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("stringValue").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("intValue").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("floatValue").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("boolValue").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("agentModel").GetProperty("options").GetProperty("nullValue").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("instructions").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("options").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("tools")[0].GetProperty("override").GetProperty("parameters").GetProperty("required")[0].ToString());
+    Console.WriteLine(result.GetProperty("runInputs").GetProperty("agentConfiguration").GetProperty("toolChoice").GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("userId").ToString());
     Console.WriteLine(result.GetProperty("store").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("userId").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("agentId").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("messageId").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("agentRunId").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("conversationId").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("role").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("content")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("authorName").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("createdAt").ToString());
+    Console.WriteLine(result.GetProperty("output")[0].GetProperty("completedAt").ToString());
+    Console.WriteLine(result.GetProperty("usage").GetProperty("outputTokens").ToString());
+    Console.WriteLine(result.GetProperty("usage").GetProperty("inputTokens").ToString());
+    Console.WriteLine(result.GetProperty("usage").GetProperty("totalTokens").ToString());
+    Console.WriteLine(result.GetProperty("usage").GetProperty("inputTokenDetails").GetProperty("cachedTokens").ToString());
+    Console.WriteLine(result.GetProperty("usage").GetProperty("outputTokenDetails").GetProperty("reasoningTokens").ToString());
+    Console.WriteLine(result.GetProperty("incompleteDetails").GetProperty("reason").ToString());
 }
 ]]></code></example>
     </member>

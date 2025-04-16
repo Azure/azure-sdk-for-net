@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.OneDP
     /// <summary>
     /// Represents a definition of a tool that an agent may use, used in a polymorphic manner.
     /// Please note <see cref="AgentToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="FileSearchToolDefinition"/> and <see cref="OpenApiToolDefinition"/>.
+    /// The available derived classes include <see cref="FunctionToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="FileSearchToolDefinition"/> and <see cref="OpenApiToolDefinition"/>.
     /// </summary>
     public abstract partial class AgentToolDefinition
     {
@@ -56,11 +56,7 @@ namespace Azure.AI.Projects.OneDP
 
         /// <summary> Initializes a new instance of <see cref="AgentToolDefinition"/>. </summary>
         /// <param name="type"> Discriminates the various child 'tool definition' types. </param>
-        /// <param name="options">
-        /// Additional options that specify the behavior of this tool (also polymorphic).
-        /// Please note <see cref="AgentToolOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FunctionToolOptions"/>.
-        /// </param>
+        /// <param name="options"> Additional options that specify the behavior of this tool (also polymorphic). </param>
         /// <param name="override"> A set of overrides for the tool's name, description, or parameters. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AgentToolDefinition(string type, AgentToolOptions options, AgentToolDefinitionOverride @override, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -73,11 +69,7 @@ namespace Azure.AI.Projects.OneDP
 
         /// <summary> Discriminates the various child 'tool definition' types. </summary>
         internal string Type { get; set; }
-        /// <summary>
-        /// Additional options that specify the behavior of this tool (also polymorphic).
-        /// Please note <see cref="AgentToolOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FunctionToolOptions"/>.
-        /// </summary>
+        /// <summary> Additional options that specify the behavior of this tool (also polymorphic). </summary>
         public AgentToolOptions Options { get; set; }
         /// <summary> A set of overrides for the tool's name, description, or parameters. </summary>
         public AgentToolDefinitionOverride Override { get; set; }

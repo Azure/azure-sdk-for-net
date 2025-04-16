@@ -34,10 +34,49 @@ namespace Azure.AI.Projects.OneDP
                 throw new FormatException($"The model {nameof(RunRequest)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("options"u8);
-            writer.WriteObjectValue(Options, options);
-            writer.WritePropertyName("inputs"u8);
-            writer.WriteObjectValue(Inputs, options);
+            if (Optional.IsDefined(AgentId))
+            {
+                writer.WritePropertyName("agentId"u8);
+                writer.WriteStringValue(AgentId);
+            }
+            writer.WritePropertyName("input"u8);
+            writer.WriteStartArray();
+            foreach (var item in Input)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(ConversationId))
+            {
+                writer.WritePropertyName("conversationId"u8);
+                writer.WriteStringValue(ConversationId);
+            }
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Options))
+            {
+                writer.WritePropertyName("options"u8);
+                writer.WriteObjectValue(Options, options);
+            }
+            if (Optional.IsDefined(UserId))
+            {
+                writer.WritePropertyName("userId"u8);
+                writer.WriteStringValue(UserId);
+            }
+            if (Optional.IsDefined(AgentConfiguration))
+            {
+                writer.WritePropertyName("agentConfiguration"u8);
+                writer.WriteObjectValue(AgentConfiguration, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -75,20 +114,72 @@ namespace Azure.AI.Projects.OneDP
             {
                 return null;
             }
-            AgentConfigurationOptions options0 = default;
-            RunInputs inputs = default;
+            string agentId = default;
+            IReadOnlyList<ChatMessage> input = default;
+            string conversationId = default;
+            IReadOnlyDictionary<string, string> metadata = default;
+            RunOptions options0 = default;
+            string userId = default;
+            AgentConfigurationOptions agentConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("options"u8))
+                if (property.NameEquals("agentId"u8))
                 {
-                    options0 = AgentConfigurationOptions.DeserializeAgentConfigurationOptions(property.Value, options);
+                    agentId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inputs"u8))
+                if (property.NameEquals("input"u8))
                 {
-                    inputs = RunInputs.DeserializeRunInputs(property.Value, options);
+                    List<ChatMessage> array = new List<ChatMessage>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ChatMessage.DeserializeChatMessage(item, options));
+                    }
+                    input = array;
+                    continue;
+                }
+                if (property.NameEquals("conversationId"u8))
+                {
+                    conversationId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("metadata"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    metadata = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("options"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    options0 = RunOptions.DeserializeRunOptions(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("userId"u8))
+                {
+                    userId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("agentConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentConfiguration = AgentConfigurationOptions.DeserializeAgentConfigurationOptions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,7 +188,15 @@ namespace Azure.AI.Projects.OneDP
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RunRequest(options0, inputs, serializedAdditionalRawData);
+            return new RunRequest(
+                agentId,
+                input,
+                conversationId,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                options0,
+                userId,
+                agentConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RunRequest>.Write(ModelReaderWriterOptions options)

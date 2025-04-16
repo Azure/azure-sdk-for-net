@@ -35,8 +35,6 @@ namespace Azure.AI.Projects.OneDP
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("toolCallId"u8);
-            writer.WriteStringValue(ToolCallId);
             if (Optional.IsDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
@@ -64,18 +62,12 @@ namespace Azure.AI.Projects.OneDP
             {
                 return null;
             }
-            string toolCallId = default;
             JSONAny results = default;
             string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("toolCallId"u8))
-                {
-                    toolCallId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("results"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -96,7 +88,7 @@ namespace Azure.AI.Projects.OneDP
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ToolResultContent(type, serializedAdditionalRawData, toolCallId, results);
+            return new ToolResultContent(type, serializedAdditionalRawData, results);
         }
 
         BinaryData IPersistableModel<ToolResultContent>.Write(ModelReaderWriterOptions options)

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.OneDP
 {
-    /// <summary> Options used when completing a run. </summary>
+    /// <summary> Options used when creating and an agent or completing a run without an existing agent. </summary>
     public partial class AgentConfigurationOptions
     {
         /// <summary>
@@ -46,12 +46,18 @@ namespace Azure.AI.Projects.OneDP
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AgentConfigurationOptions"/>. </summary>
-        public AgentConfigurationOptions()
+        /// <param name="displayName"> The display name of the agent; used for display purposes and sent to the LLM to identify the agent. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> is null. </exception>
+        public AgentConfigurationOptions(string displayName)
         {
+            Argument.AssertNotNull(displayName, nameof(displayName));
+
+            DisplayName = displayName;
             Tools = new ChangeTrackingList<AgentToolDefinition>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentConfigurationOptions"/>. </summary>
+        /// <param name="displayName"> The display name of the agent; used for display purposes and sent to the LLM to identify the agent. </param>
         /// <param name="agentModel">
         /// The model definition for this agent. This is optional (not needed) when doing a run using persistent agent.
         /// Please note <see cref="OneDP.AgentModel"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -61,7 +67,7 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="tools">
         /// A list of tool definitions available to the agent.
         /// Please note <see cref="AgentToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="FileSearchToolDefinition"/> and <see cref="OpenApiToolDefinition"/>.
+        /// The available derived classes include <see cref="FunctionToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="FileSearchToolDefinition"/> and <see cref="OpenApiToolDefinition"/>.
         /// </param>
         /// <param name="toolChoice">
         /// How the agent should choose among provided tools.
@@ -69,8 +75,9 @@ namespace Azure.AI.Projects.OneDP
         /// The available derived classes include <see cref="AutoToolChoiceBehavior"/>, <see cref="NoneToolChoiceBehavior"/> and <see cref="RequiredToolChoiceBehavior"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgentConfigurationOptions(AgentModel agentModel, string instructions, IList<AgentToolDefinition> tools, ToolChoiceBehavior toolChoice, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AgentConfigurationOptions(string displayName, AgentModel agentModel, string instructions, IList<AgentToolDefinition> tools, ToolChoiceBehavior toolChoice, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            DisplayName = displayName;
             AgentModel = agentModel;
             Instructions = instructions;
             Tools = tools;
@@ -78,6 +85,13 @@ namespace Azure.AI.Projects.OneDP
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AgentConfigurationOptions"/> for deserialization. </summary>
+        internal AgentConfigurationOptions()
+        {
+        }
+
+        /// <summary> The display name of the agent; used for display purposes and sent to the LLM to identify the agent. </summary>
+        public string DisplayName { get; set; }
         /// <summary>
         /// The model definition for this agent. This is optional (not needed) when doing a run using persistent agent.
         /// Please note <see cref="OneDP.AgentModel"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -89,7 +103,7 @@ namespace Azure.AI.Projects.OneDP
         /// <summary>
         /// A list of tool definitions available to the agent.
         /// Please note <see cref="AgentToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="FileSearchToolDefinition"/> and <see cref="OpenApiToolDefinition"/>.
+        /// The available derived classes include <see cref="FunctionToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="FileSearchToolDefinition"/> and <see cref="OpenApiToolDefinition"/>.
         /// </summary>
         public IList<AgentToolDefinition> Tools { get; }
         /// <summary>

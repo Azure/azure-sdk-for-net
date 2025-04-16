@@ -103,14 +103,14 @@ namespace Azure.AI.Projects.OneDP
             return new Messages(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
         }
 
-        /// <summary> Initializes a new instance of Threads. </summary>
+        /// <summary> Initializes a new instance of Conversations. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Threads GetThreadsClient(string apiVersion = "2025-05-01-preview")
+        public virtual Conversations GetConversationsClient(string apiVersion = "2025-05-01-preview")
         {
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            return new Threads(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
+            return new Conversations(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
         }
 
         /// <summary> Initializes a new instance of AgentsClient. </summary>
@@ -121,6 +121,16 @@ namespace Azure.AI.Projects.OneDP
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
             return new AgentsClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of Runs. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual Runs GetRunsClient(string apiVersion = "2025-05-01-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new Runs(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
         }
 
         /// <summary> Initializes a new instance of Connections. </summary>

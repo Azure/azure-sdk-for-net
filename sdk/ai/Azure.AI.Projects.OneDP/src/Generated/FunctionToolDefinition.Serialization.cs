@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Projects.OneDP
 {
-    public partial class FunctionToolOptions : IUtf8JsonSerializable, IJsonModel<FunctionToolOptions>
+    public partial class FunctionToolDefinition : IUtf8JsonSerializable, IJsonModel<FunctionToolDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionToolOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionToolDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<FunctionToolOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FunctionToolDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionToolOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FunctionToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionToolOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FunctionToolDefinition)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -54,19 +54,19 @@ namespace Azure.AI.Projects.OneDP
             }
         }
 
-        FunctionToolOptions IJsonModel<FunctionToolOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FunctionToolDefinition IJsonModel<FunctionToolDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionToolOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FunctionToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionToolOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FunctionToolDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFunctionToolOptions(document.RootElement, options);
+            return DeserializeFunctionToolDefinition(document.RootElement, options);
         }
 
-        internal static FunctionToolOptions DeserializeFunctionToolOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static FunctionToolDefinition DeserializeFunctionToolDefinition(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -79,6 +79,8 @@ namespace Azure.AI.Projects.OneDP
             JSONSchema parameters = default;
             bool? strict = default;
             string type = default;
+            AgentToolOptions options0 = default;
+            AgentToolDefinitionOverride @override = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,14 +118,34 @@ namespace Azure.AI.Projects.OneDP
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("options"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    options0 = AgentToolOptions.DeserializeAgentToolOptions(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("override"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    @override = AgentToolDefinitionOverride.DeserializeAgentToolDefinitionOverride(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FunctionToolOptions(
+            return new FunctionToolDefinition(
                 type,
+                options0,
+                @override,
                 serializedAdditionalRawData,
                 name,
                 description,
@@ -131,43 +153,43 @@ namespace Azure.AI.Projects.OneDP
                 strict);
         }
 
-        BinaryData IPersistableModel<FunctionToolOptions>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<FunctionToolDefinition>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionToolOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FunctionToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FunctionToolOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FunctionToolDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
-        FunctionToolOptions IPersistableModel<FunctionToolOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        FunctionToolDefinition IPersistableModel<FunctionToolDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionToolOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FunctionToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFunctionToolOptions(document.RootElement, options);
+                        return DeserializeFunctionToolDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FunctionToolOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FunctionToolDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FunctionToolOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FunctionToolDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new FunctionToolOptions FromResponse(Response response)
+        internal static new FunctionToolDefinition FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeFunctionToolOptions(document.RootElement);
+            return DeserializeFunctionToolDefinition(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

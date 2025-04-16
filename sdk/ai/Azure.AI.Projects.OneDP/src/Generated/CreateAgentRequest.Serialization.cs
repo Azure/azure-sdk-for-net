@@ -34,8 +34,33 @@ namespace Azure.AI.Projects.OneDP
                 throw new FormatException($"The model {nameof(CreateAgentRequest)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("options"u8);
-            writer.WriteObjectValue(Options, options);
+            writer.WritePropertyName("displayName"u8);
+            writer.WriteStringValue(DisplayName);
+            if (Optional.IsDefined(AgentModel))
+            {
+                writer.WritePropertyName("agentModel"u8);
+                writer.WriteObjectValue(AgentModel, options);
+            }
+            if (Optional.IsDefined(Instructions))
+            {
+                writer.WritePropertyName("instructions"u8);
+                writer.WriteStringValue(Instructions);
+            }
+            if (Optional.IsCollectionDefined(Tools))
+            {
+                writer.WritePropertyName("tools"u8);
+                writer.WriteStartArray();
+                foreach (var item in Tools)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ToolChoice))
+            {
+                writer.WritePropertyName("toolChoice"u8);
+                writer.WriteObjectValue(ToolChoice, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -73,14 +98,55 @@ namespace Azure.AI.Projects.OneDP
             {
                 return null;
             }
-            AgentCreationOptions options0 = default;
+            string displayName = default;
+            AgentModel agentModel = default;
+            string instructions = default;
+            IReadOnlyList<AgentToolDefinition> tools = default;
+            ToolChoiceBehavior toolChoice = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("options"u8))
+                if (property.NameEquals("displayName"u8))
                 {
-                    options0 = AgentCreationOptions.DeserializeAgentCreationOptions(property.Value, options);
+                    displayName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("agentModel"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentModel = AgentModel.DeserializeAgentModel(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("instructions"u8))
+                {
+                    instructions = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tools"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AgentToolDefinition> array = new List<AgentToolDefinition>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(AgentToolDefinition.DeserializeAgentToolDefinition(item, options));
+                    }
+                    tools = array;
+                    continue;
+                }
+                if (property.NameEquals("toolChoice"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    toolChoice = ToolChoiceBehavior.DeserializeToolChoiceBehavior(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +155,13 @@ namespace Azure.AI.Projects.OneDP
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CreateAgentRequest(options0, serializedAdditionalRawData);
+            return new CreateAgentRequest(
+                displayName,
+                agentModel,
+                instructions,
+                tools ?? new ChangeTrackingList<AgentToolDefinition>(),
+                toolChoice,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CreateAgentRequest>.Write(ModelReaderWriterOptions options)

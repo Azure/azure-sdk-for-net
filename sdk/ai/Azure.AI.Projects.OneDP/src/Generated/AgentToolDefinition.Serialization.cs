@@ -87,6 +87,7 @@ namespace Azure.AI.Projects.OneDP
             {
                 switch (discriminator.GetString())
                 {
+                    case "Function": return FunctionToolDefinition.DeserializeFunctionToolDefinition(element, options);
                     case "Microsoft.BingGrounding": return BingGroundingToolDefinition.DeserializeBingGroundingToolDefinition(element, options);
                     case "OpenAI.CodeInterpreter": return CodeInterpreterToolDefinition.DeserializeCodeInterpreterToolDefinition(element, options);
                     case "OpenAI.FileSearch": return FileSearchToolDefinition.DeserializeFileSearchToolDefinition(element, options);

@@ -15,11 +15,7 @@ namespace Azure.AI.Projects.OneDP
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAgentToolDefinition"/>. </summary>
         /// <param name="type"> Discriminates the various child 'tool definition' types. </param>
-        /// <param name="options">
-        /// Additional options that specify the behavior of this tool (also polymorphic).
-        /// Please note <see cref="AgentToolOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FunctionToolOptions"/>.
-        /// </param>
+        /// <param name="options"> Additional options that specify the behavior of this tool (also polymorphic). </param>
         /// <param name="override"> A set of overrides for the tool's name, description, or parameters. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UnknownAgentToolDefinition(string type, AgentToolOptions options, AgentToolDefinitionOverride @override, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, options, @override, serializedAdditionalRawData)

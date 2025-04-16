@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Projects.OneDP
 {
-    public partial class AgentCreationOptions : IUtf8JsonSerializable, IJsonModel<AgentCreationOptions>
+    public partial class Conversation : IUtf8JsonSerializable, IJsonModel<Conversation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentCreationOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Conversation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AgentCreationOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<Conversation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,16 +28,24 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AgentCreationOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Conversation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentCreationOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(Conversation)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("displayName"u8);
-            writer.WriteStringValue(DisplayName);
-            writer.WritePropertyName("configurationOptions"u8);
-            writer.WriteObjectValue(ConfigurationOptions, options);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("conversationId"u8);
+                writer.WriteStringValue(ConversationId);
+            }
+            writer.WritePropertyName("messages"u8);
+            writer.WriteStartArray();
+            foreach (var item in Messages)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -55,19 +63,19 @@ namespace Azure.AI.Projects.OneDP
             }
         }
 
-        AgentCreationOptions IJsonModel<AgentCreationOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        Conversation IJsonModel<Conversation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AgentCreationOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Conversation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentCreationOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(Conversation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentCreationOptions(document.RootElement, options);
+            return DeserializeConversation(document.RootElement, options);
         }
 
-        internal static AgentCreationOptions DeserializeAgentCreationOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static Conversation DeserializeConversation(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -75,20 +83,25 @@ namespace Azure.AI.Projects.OneDP
             {
                 return null;
             }
-            string displayName = default;
-            AgentConfigurationOptions configurationOptions = default;
+            string conversationId = default;
+            IList<ChatMessage> messages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("displayName"u8))
+                if (property.NameEquals("conversationId"u8))
                 {
-                    displayName = property.Value.GetString();
+                    conversationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("configurationOptions"u8))
+                if (property.NameEquals("messages"u8))
                 {
-                    configurationOptions = AgentConfigurationOptions.DeserializeAgentConfigurationOptions(property.Value, options);
+                    List<ChatMessage> array = new List<ChatMessage>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ChatMessage.DeserializeChatMessage(item, options));
+                    }
+                    messages = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,46 +110,46 @@ namespace Azure.AI.Projects.OneDP
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AgentCreationOptions(displayName, configurationOptions, serializedAdditionalRawData);
+            return new Conversation(conversationId, messages, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AgentCreationOptions>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<Conversation>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AgentCreationOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Conversation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AgentCreationOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Conversation)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AgentCreationOptions IPersistableModel<AgentCreationOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        Conversation IPersistableModel<Conversation>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AgentCreationOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Conversation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAgentCreationOptions(document.RootElement, options);
+                        return DeserializeConversation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentCreationOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Conversation)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AgentCreationOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<Conversation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AgentCreationOptions FromResponse(Response response)
+        internal static Conversation FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAgentCreationOptions(document.RootElement);
+            return DeserializeConversation(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

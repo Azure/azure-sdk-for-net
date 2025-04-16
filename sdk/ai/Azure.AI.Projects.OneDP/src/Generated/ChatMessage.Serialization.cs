@@ -56,8 +56,8 @@ namespace Azure.AI.Projects.OneDP
             }
             if (options.Format != "W")
             {
-                writer.WritePropertyName("threadId"u8);
-                writer.WriteStringValue(ThreadId);
+                writer.WritePropertyName("conversationId"u8);
+                writer.WriteStringValue(ConversationId);
             }
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToString());

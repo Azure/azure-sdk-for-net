@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -65,30 +66,50 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Creates a new Agent resource and returns it. </summary>
-        /// <param name="options"> The options for agent creation. </param>
+        /// <param name="displayName"> The display name of the agent; used for display purposes and sent to the LLM to identify the agent. </param>
+        /// <param name="agentModel"> The model definition for this agent. This is optional (not needed) when doing a run using persistent agent. </param>
+        /// <param name="instructions"> Instructions provided to guide how this agent operates. </param>
+        /// <param name="tools"> A list of tool definitions available to the agent. </param>
+        /// <param name="toolChoice"> How the agent should choose among provided tools. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='CreateAgentAsync(AgentCreationOptions,CancellationToken)']/*" />
-        public virtual async Task<Response<Agent>> CreateAgentAsync(AgentCreationOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> is null. </exception>
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='CreateAgentAsync(string,AgentModel,string,IEnumerable{AgentToolDefinition},ToolChoiceBehavior,CancellationToken)']/*" />
+        public virtual async Task<Response<Agent>> CreateAgentAsync(string displayName, AgentModel agentModel = null, string instructions = null, IEnumerable<AgentToolDefinition> tools = null, ToolChoiceBehavior toolChoice = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(displayName, nameof(displayName));
 
-            CreateAgentRequest createAgentRequest = new CreateAgentRequest(options, null);
+            CreateAgentRequest createAgentRequest = new CreateAgentRequest(
+                displayName,
+                agentModel,
+                instructions,
+                tools?.ToList() as IReadOnlyList<AgentToolDefinition> ?? new ChangeTrackingList<AgentToolDefinition>(),
+                toolChoice,
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateAgentAsync(createAgentRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(Agent.FromResponse(response), response);
         }
 
         /// <summary> Creates a new Agent resource and returns it. </summary>
-        /// <param name="options"> The options for agent creation. </param>
+        /// <param name="displayName"> The display name of the agent; used for display purposes and sent to the LLM to identify the agent. </param>
+        /// <param name="agentModel"> The model definition for this agent. This is optional (not needed) when doing a run using persistent agent. </param>
+        /// <param name="instructions"> Instructions provided to guide how this agent operates. </param>
+        /// <param name="tools"> A list of tool definitions available to the agent. </param>
+        /// <param name="toolChoice"> How the agent should choose among provided tools. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='CreateAgent(AgentCreationOptions,CancellationToken)']/*" />
-        public virtual Response<Agent> CreateAgent(AgentCreationOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> is null. </exception>
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='CreateAgent(string,AgentModel,string,IEnumerable{AgentToolDefinition},ToolChoiceBehavior,CancellationToken)']/*" />
+        public virtual Response<Agent> CreateAgent(string displayName, AgentModel agentModel = null, string instructions = null, IEnumerable<AgentToolDefinition> tools = null, ToolChoiceBehavior toolChoice = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(displayName, nameof(displayName));
 
-            CreateAgentRequest createAgentRequest = new CreateAgentRequest(options, null);
+            CreateAgentRequest createAgentRequest = new CreateAgentRequest(
+                displayName,
+                agentModel,
+                instructions,
+                tools?.ToList() as IReadOnlyList<AgentToolDefinition> ?? new ChangeTrackingList<AgentToolDefinition>(),
+                toolChoice,
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateAgent(createAgentRequest.ToRequestContent(), context);
             return Response.FromValue(Agent.FromResponse(response), response);
@@ -104,7 +125,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateAgentAsync(AgentCreationOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateAgentAsync(string,AgentModel,string,IEnumerable{AgentToolDefinition},ToolChoiceBehavior,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -143,7 +164,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateAgent(AgentCreationOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateAgent(string,AgentModel,string,IEnumerable{AgentToolDefinition},ToolChoiceBehavior,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -581,34 +602,58 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Creates and waits for a run to finish, returning the completed Run (including its outputs). </summary>
-        /// <param name="options"> The options for the agent completing the run. </param>
-        /// <param name="inputs"> The inputs for the run. </param>
+        /// <param name="input"> The list of input messages for the run. </param>
+        /// <param name="agentId"> Unique identifier for the agent responsible for the run. This is optional (not needeed) when doing a run using ephemeral agent. </param>
+        /// <param name="conversationId"> Optional identifier for an existing conversation. </param>
+        /// <param name="metadata"> Optional metadata associated with the run request. </param>
+        /// <param name="options"> Optional configuration for run generation. </param>
+        /// <param name="userId"> Identifier for the user making the request. </param>
+        /// <param name="agentConfiguration"> The agent configuration when not using a previously created agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> or <paramref name="inputs"/> is null. </exception>
-        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='RunAsync(AgentConfigurationOptions,RunInputs,CancellationToken)']/*" />
-        public virtual async Task<Response<Run>> RunAsync(AgentConfigurationOptions options, RunInputs inputs, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='RunAsync(IEnumerable{ChatMessage},string,string,IReadOnlyDictionary{string,string},RunOptions,string,AgentConfigurationOptions,CancellationToken)']/*" />
+        public virtual async Task<Response<Run>> RunAsync(IEnumerable<ChatMessage> input, string agentId = null, string conversationId = null, IReadOnlyDictionary<string, string> metadata = null, RunOptions options = null, string userId = null, AgentConfigurationOptions agentConfiguration = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(input, nameof(input));
 
-            RunRequest runRequest = new RunRequest(options, inputs, null);
+            RunRequest runRequest = new RunRequest(
+                agentId,
+                input.ToList(),
+                conversationId,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                options,
+                userId,
+                agentConfiguration,
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await RunAsync(runRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(OneDP.Run.FromResponse(response), response);
         }
 
         /// <summary> Creates and waits for a run to finish, returning the completed Run (including its outputs). </summary>
-        /// <param name="options"> The options for the agent completing the run. </param>
-        /// <param name="inputs"> The inputs for the run. </param>
+        /// <param name="input"> The list of input messages for the run. </param>
+        /// <param name="agentId"> Unique identifier for the agent responsible for the run. This is optional (not needeed) when doing a run using ephemeral agent. </param>
+        /// <param name="conversationId"> Optional identifier for an existing conversation. </param>
+        /// <param name="metadata"> Optional metadata associated with the run request. </param>
+        /// <param name="options"> Optional configuration for run generation. </param>
+        /// <param name="userId"> Identifier for the user making the request. </param>
+        /// <param name="agentConfiguration"> The agent configuration when not using a previously created agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> or <paramref name="inputs"/> is null. </exception>
-        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='Run(AgentConfigurationOptions,RunInputs,CancellationToken)']/*" />
-        public virtual Response<Run> Run(AgentConfigurationOptions options, RunInputs inputs, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='Run(IEnumerable{ChatMessage},string,string,IReadOnlyDictionary{string,string},RunOptions,string,AgentConfigurationOptions,CancellationToken)']/*" />
+        public virtual Response<Run> Run(IEnumerable<ChatMessage> input, string agentId = null, string conversationId = null, IReadOnlyDictionary<string, string> metadata = null, RunOptions options = null, string userId = null, AgentConfigurationOptions agentConfiguration = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(input, nameof(input));
 
-            RunRequest runRequest = new RunRequest(options, inputs, null);
+            RunRequest runRequest = new RunRequest(
+                agentId,
+                input.ToList(),
+                conversationId,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                options,
+                userId,
+                agentConfiguration,
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Run(runRequest.ToRequestContent(), context);
             return Response.FromValue(OneDP.Run.FromResponse(response), response);
@@ -624,7 +669,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="RunAsync(AgentConfigurationOptions,RunInputs,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="RunAsync(IEnumerable{ChatMessage},string,string,IReadOnlyDictionary{string,string},RunOptions,string,AgentConfigurationOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -663,7 +708,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Run(AgentConfigurationOptions,RunInputs,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Run(IEnumerable{ChatMessage},string,string,IReadOnlyDictionary{string,string},RunOptions,string,AgentConfigurationOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -693,34 +738,58 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The most basic operation. </summary>
-        /// <param name="options"> The options for the agent completing the run. </param>
-        /// <param name="inputs"> The inputs for the run. </param>
+        /// <param name="input"> The list of input messages for the run. </param>
+        /// <param name="agentId"> Unique identifier for the agent responsible for the run. This is optional (not needeed) when doing a run using ephemeral agent. </param>
+        /// <param name="conversationId"> Optional identifier for an existing conversation. </param>
+        /// <param name="metadata"> Optional metadata associated with the run request. </param>
+        /// <param name="options"> Optional configuration for run generation. </param>
+        /// <param name="userId"> Identifier for the user making the request. </param>
+        /// <param name="agentConfiguration"> The agent configuration when not using a previously created agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> or <paramref name="inputs"/> is null. </exception>
-        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='StreamAsync(AgentConfigurationOptions,RunInputs,CancellationToken)']/*" />
-        public virtual async Task<Response> StreamAsync(AgentConfigurationOptions options, RunInputs inputs, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='StreamAsync(IEnumerable{ChatMessage},string,string,IReadOnlyDictionary{string,string},RunOptions,string,AgentConfigurationOptions,CancellationToken)']/*" />
+        public virtual async Task<Response> StreamAsync(IEnumerable<ChatMessage> input, string agentId = null, string conversationId = null, IReadOnlyDictionary<string, string> metadata = null, RunOptions options = null, string userId = null, AgentConfigurationOptions agentConfiguration = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(input, nameof(input));
 
-            StreamRequest streamRequest = new StreamRequest(options, inputs, null);
+            StreamRequest streamRequest = new StreamRequest(
+                agentId,
+                input.ToList(),
+                conversationId,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                options,
+                userId,
+                agentConfiguration,
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await StreamAsync(streamRequest.ToRequestContent(), context).ConfigureAwait(false);
             return response;
         }
 
         /// <summary> The most basic operation. </summary>
-        /// <param name="options"> The options for the agent completing the run. </param>
-        /// <param name="inputs"> The inputs for the run. </param>
+        /// <param name="input"> The list of input messages for the run. </param>
+        /// <param name="agentId"> Unique identifier for the agent responsible for the run. This is optional (not needeed) when doing a run using ephemeral agent. </param>
+        /// <param name="conversationId"> Optional identifier for an existing conversation. </param>
+        /// <param name="metadata"> Optional metadata associated with the run request. </param>
+        /// <param name="options"> Optional configuration for run generation. </param>
+        /// <param name="userId"> Identifier for the user making the request. </param>
+        /// <param name="agentConfiguration"> The agent configuration when not using a previously created agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> or <paramref name="inputs"/> is null. </exception>
-        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='Stream(AgentConfigurationOptions,RunInputs,CancellationToken)']/*" />
-        public virtual Response Stream(AgentConfigurationOptions options, RunInputs inputs, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='Stream(IEnumerable{ChatMessage},string,string,IReadOnlyDictionary{string,string},RunOptions,string,AgentConfigurationOptions,CancellationToken)']/*" />
+        public virtual Response Stream(IEnumerable<ChatMessage> input, string agentId = null, string conversationId = null, IReadOnlyDictionary<string, string> metadata = null, RunOptions options = null, string userId = null, AgentConfigurationOptions agentConfiguration = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(input, nameof(input));
 
-            StreamRequest streamRequest = new StreamRequest(options, inputs, null);
+            StreamRequest streamRequest = new StreamRequest(
+                agentId,
+                input.ToList(),
+                conversationId,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                options,
+                userId,
+                agentConfiguration,
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Stream(streamRequest.ToRequestContent(), context);
             return response;
@@ -736,7 +805,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="StreamAsync(AgentConfigurationOptions,RunInputs,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="StreamAsync(IEnumerable{ChatMessage},string,string,IReadOnlyDictionary{string,string},RunOptions,string,AgentConfigurationOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -775,7 +844,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Stream(AgentConfigurationOptions,RunInputs,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Stream(IEnumerable{ChatMessage},string,string,IReadOnlyDictionary{string,string},RunOptions,string,AgentConfigurationOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

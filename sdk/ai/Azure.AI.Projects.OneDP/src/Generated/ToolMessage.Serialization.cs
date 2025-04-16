@@ -35,6 +35,8 @@ namespace Azure.AI.Projects.OneDP
             }
 
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("toolCallId"u8);
+            writer.WriteStringValue(ToolCallId);
         }
 
         ToolMessage IJsonModel<ToolMessage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -57,11 +59,12 @@ namespace Azure.AI.Projects.OneDP
             {
                 return null;
             }
+            string toolCallId = default;
             string userId = default;
             string agentId = default;
             string messageId = default;
             string agentRunId = default;
-            string threadId = default;
+            string conversationId = default;
             AuthorRole role = default;
             IList<AIContent> content = default;
             string authorName = default;
@@ -71,6 +74,11 @@ namespace Azure.AI.Projects.OneDP
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("toolCallId"u8))
+                {
+                    toolCallId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("userId"u8))
                 {
                     userId = property.Value.GetString();
@@ -91,9 +99,9 @@ namespace Azure.AI.Projects.OneDP
                     agentRunId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("threadId"u8))
+                if (property.NameEquals("conversationId"u8))
                 {
-                    threadId = property.Value.GetString();
+                    conversationId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("role"u8))
@@ -145,13 +153,14 @@ namespace Azure.AI.Projects.OneDP
                 agentId,
                 messageId,
                 agentRunId,
-                threadId,
+                conversationId,
                 role,
                 content,
                 authorName,
                 createdAt,
                 completedAt,
-                serializedAdditionalRawData);
+                serializedAdditionalRawData,
+                toolCallId);
         }
 
         BinaryData IPersistableModel<ToolMessage>.Write(ModelReaderWriterOptions options)
