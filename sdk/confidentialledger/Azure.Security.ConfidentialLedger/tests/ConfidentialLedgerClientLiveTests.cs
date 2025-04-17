@@ -339,8 +339,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             string programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create("test", filePath));
 
             // Normalize line endings to Unix-style (\n)
-            programmabilityPayload = programmabilityPayload.Replace("\r\n", "\n").Replace("\r", "\n");
-
+            programmabilityPayload = programmabilityPayload.Replace("\r\n", "\n").Replace("\r", "\n").Replace(@"\s", "");
             RequestContent programmabilityContent = RequestContent.Create(programmabilityPayload);
             Response result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
@@ -349,8 +348,8 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Console.WriteLine(resp.Content);
 
             //var bundleData= JsonSerializer.Deserialize<Bundle>(resp.Content.ToString());
-/*            string programContent = File.ReadAllText(filePath);
-            Assert.AreEqual(Regex.Replace(programContent, @"\s", ""), Regex.Replace(resp.Content.ToString(), @"\s", ""));*/
+            string programContent = File.ReadAllText(filePath);
+            Assert.AreEqual(Regex.Replace(programContent, @"\s", ""), Regex.Replace(resp.Content.ToString(), @"\s", ""));
 
             // Verify Response by Querying endpt
             /// TODO: Investigate InternalServerError
@@ -359,13 +358,13 @@ namespace Azure.Security.ConfidentialLedger.Tests
             //Assert.AreEqual((int)HttpStatusCode.OK, statusCode);
             //Assert.AreEqual("Test content", response);
 
-/*            // Deploy Empty JS Bundle to remove JS App
-            programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create());
+            /*            // Deploy Empty JS Bundle to remove JS App
+                        programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create());
 
-            result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
-            stringResult = new StreamReader(result.ContentStream).ReadToEnd();
+                        result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
+                        stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
-            Assert.AreEqual((int)HttpStatusCode.Created, result.Status);*/
+                        Assert.AreEqual((int)HttpStatusCode.Created, result.Status);*/
         }
 
         [RecordedTest]
