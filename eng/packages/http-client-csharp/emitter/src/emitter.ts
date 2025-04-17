@@ -27,7 +27,7 @@ export const AzureEmitterOptionsSchema: JSONSchemaType<AzureEmitterOptions> = {
     ...CSharpEmitterOptionsSchema.properties,
     namespace: {
       type: "string",
-      description: "The namespace to use for the generated code.",
+      description: "The C# namespace to use for the generated code. This will override the TypeSpec namespaces.",
     },
   },
 };
