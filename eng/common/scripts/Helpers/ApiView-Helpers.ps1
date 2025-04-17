@@ -168,8 +168,8 @@ function Set-ApiViewCommentForPR {
   $commentText = @()
   $commentText += "## API Change Check"
   try {
-    $response = Invoke-RestMethod -Uri $apiviewEndpoint -Method Get -MaximumRetryCount 3
-    if ($response.Count -eq 0) {
+    $response = Invoke-WebRequest -Uri $apiviewEndpoint -Method Get -MaximumRetryCount 3
+    if ($response.StatusCode -ne 200) {
       LogWarning "API changes are not detected in this pull request."
       $commentText += ""
       $commentText += "API changes are not detected in this pull request."
@@ -179,10 +179,18 @@ function Set-ApiViewCommentForPR {
       $commentText += ""
       $commentText += "APIView identified API level changes in this PR and created the following API reviews"
       $commentText += ""
-      $commentText += "| Language | API Review for Package |"
-      $commentText += "|----------|---------|"
-      $response | ForEach-Object {
-        $commentText += "| $($_.language) | [$($_.packageName)]($($_.url)) |"
+
+      $responseContent = $response.Content | ConvertFrom-Json
+      if ($RepoName.StartsWith(("azure-sdk-for-"))) {
+        $responseContent | ForEach-Object {
+          $commentText += "[$($_.packageName)]($($_.url))"
+        }
+      } else {
+        $commentText += "| Language | API Review for Package |"
+        $commentText += "|----------|---------|"
+        $responseContent | ForEach-Object {
+          $commentText += "| $($_.language) | [$($_.packageName)]($($_.url)) |"
+        }
       }
     }
   } catch{
