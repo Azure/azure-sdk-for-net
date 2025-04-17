@@ -338,8 +338,8 @@ namespace Azure.Security.ConfidentialLedger.Tests
             string filePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "programmability.js");
             string programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create("test", filePath));
 
-            // Normalize line endings to Unix-style (\n)
-            programmabilityPayload = Regex.Replace(programmabilityPayload, @"\r\n|\r", "\n");
+            // Normalize line endings to to Windows style (CRLF)
+            programmabilityPayload = Regex.Replace(programmabilityPayload, @"\r\n|\n|\r", "\r\n");
             Console.WriteLine("Payload: " + programmabilityPayload);
             RequestContent programmabilityContent = RequestContent.Create(programmabilityPayload);
 
@@ -347,14 +347,11 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
 
-/*            var resp = await Client.GetUserDefinedEndpointsModuleAsync("test");
-            Console.WriteLine(resp.Content);
-            string stringResult = new StreamReader(resp.ContentStream).ReadToEnd();
-            stringResult = string.Join("", stringResult);
-            stringResult = Regex.Replace(stringResult, @"\r\n|\r", "\n");*/
+            var resp = await Client.GetUserDefinedEndpointsModuleAsync("test");
+
             //var bundleData= JsonSerializer.Deserialize<Bundle>(resp.Content.ToString());
-/*            string programContent = File.ReadAllText(filePath);
-            Assert.AreEqual(Regex.Replace(programContent, @"\s", ""), Regex.Replace(resp.Content.ToString(), @"\s", ""));*/
+            string programContent = File.ReadAllText(filePath);
+            Assert.AreEqual(Regex.Replace(programContent, @"\s", ""), Regex.Replace(resp.Content.ToString(), @"\s", ""));
 
             // Verify Response by Querying endpt
             /// TODO: Investigate InternalServerError
@@ -363,13 +360,11 @@ namespace Azure.Security.ConfidentialLedger.Tests
             //Assert.AreEqual((int)HttpStatusCode.OK, statusCode);
             //Assert.AreEqual("Test content", response);
 
-            /*            // Deploy Empty JS Bundle to remove JS App
-                        programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create());
+            // Deploy Empty JS Bundle to remove JS App
+            programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create());
 
-                        result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
-                        stringResult = new StreamReader(result.ContentStream).ReadToEnd();
-
-                        Assert.AreEqual((int)HttpStatusCode.Created, result.Status);*/
+            result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
+            Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
         }
 
         [RecordedTest]
