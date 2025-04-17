@@ -42,6 +42,9 @@ public partial class Sample_Agent_Basics : SamplesBase<AIProjectsTestEnvironment
         AgentThread thread = await client.CreateThreadAsync();
         #endregion
 
+        Response<PageableList<AgentThread>> threadsListResponse = await client.GetThreadsAsync();
+        Assert.That(threadsListResponse.Value.Data[0].Id == thread.Id);
+
         // Step 3: Add a message to a thread
         #region Snippet:OverviewCreateMessage
         ThreadMessage message = await client.CreateMessageAsync(
@@ -132,6 +135,9 @@ public partial class Sample_Agent_Basics : SamplesBase<AIProjectsTestEnvironment
         #region Snippet:OverviewCreateThreadSync
         AgentThread thread = client.CreateThread();
         #endregion
+
+        Response<PageableList<AgentThread>> threadsListResponse = client.GetThreads();
+        Assert.That(threadsListResponse.Value.Data[0].Id == thread.Id);
 
         // Step 3: Add a message to a thread
         #region Snippet:OverviewCreateMessageSync

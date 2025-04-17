@@ -426,6 +426,12 @@
       ]
     },
     {
+      "filename": "**/sdk/containerregistry/**/*",
+      "words": [
+        "Abac"
+      ]
+    },
+    {
       "filename": "**/sdk/containerservice/**/*",
       "words": [
         "gmsa",

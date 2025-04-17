@@ -1168,10 +1168,10 @@ namespace Azure.AI.Projects
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OpenAIPageableListOfAgentThread>> GetThreadsAsync(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<OpenAIPageableListOfAgentThread>> InternalGetThreadsAsync(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetThreadsAsync(limit, order?.ToString(), after, before, context).ConfigureAwait(false);
+            Response response = await InternalGetThreadsAsync(limit, order?.ToString(), after, before, context).ConfigureAwait(false);
             return Response.FromValue(OpenAIPageableListOfAgentThread.FromResponse(response), response);
         }
 
@@ -1181,10 +1181,10 @@ namespace Azure.AI.Projects
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OpenAIPageableListOfAgentThread> GetThreads(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        internal virtual Response<OpenAIPageableListOfAgentThread> InternalGetThreads(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetThreads(limit, order?.ToString(), after, before, context);
+            Response response = InternalGetThreads(limit, order?.ToString(), after, before, context);
             return Response.FromValue(OpenAIPageableListOfAgentThread.FromResponse(response), response);
         }
 
@@ -1198,7 +1198,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetThreadsAsync(int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="InternalGetThreadsAsync(int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1210,13 +1210,13 @@ namespace Azure.AI.Projects
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetThreadsAsync(int? limit, string order, string after, string before, RequestContext context)
+        internal virtual async Task<Response> InternalGetThreadsAsync(int? limit, string order, string after, string before, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("AgentsClient.GetThreads");
+            using var scope = ClientDiagnostics.CreateScope("AgentsClient.InternalGetThreads");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetThreadsRequest(limit, order, after, before, context);
+                using HttpMessage message = CreateInternalGetThreadsRequest(limit, order, after, before, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1236,7 +1236,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetThreads(int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="InternalGetThreads(int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1248,13 +1248,13 @@ namespace Azure.AI.Projects
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetThreads(int? limit, string order, string after, string before, RequestContext context)
+        internal virtual Response InternalGetThreads(int? limit, string order, string after, string before, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("AgentsClient.GetThreads");
+            using var scope = ClientDiagnostics.CreateScope("AgentsClient.InternalGetThreads");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetThreadsRequest(limit, order, after, before, context);
+                using HttpMessage message = CreateInternalGetThreadsRequest(limit, order, after, before, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -5184,7 +5184,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetThreadsRequest(int? limit, string order, string after, string before, RequestContext context)
+        internal HttpMessage CreateInternalGetThreadsRequest(int? limit, string order, string after, string before, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
