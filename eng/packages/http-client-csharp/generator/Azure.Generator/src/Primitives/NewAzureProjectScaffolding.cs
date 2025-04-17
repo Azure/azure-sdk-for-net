@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using System;
 using System.Collections.Generic;
@@ -89,7 +90,7 @@ namespace Azure.Generator.Primitives
                 foreach (var method in inputClient.Methods)
                 {
                     hasOperation = true;
-                    if (method.Operation.LongRunning != null)
+                    if (method is InputLongRunningServiceMethod || method is InputLongRunningPagingServiceMethod)
                     {
                         hasLongRunningOperation = true;
                         return;
