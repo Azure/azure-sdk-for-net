@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Projects.OneDP
 {
-    /// <summary> The different Credential types. </summary>
+    /// <summary> The credential type used by the connection. </summary>
     internal readonly partial struct CredentialType : IEquatable<CredentialType>
     {
         private readonly string _value;
@@ -23,15 +23,21 @@ namespace Azure.AI.Projects.OneDP
         }
 
         private const string ApiKeyValue = "ApiKey";
-        private const string AADValue = "AAD";
+        private const string EntraIdValue = "AAD";
         private const string SASValue = "SAS";
+        private const string CustomValue = "CustomKeys";
+        private const string NoneValue = "None";
 
-        /// <summary> ApiKey. </summary>
+        /// <summary> API Key credential. </summary>
         public static CredentialType ApiKey { get; } = new CredentialType(ApiKeyValue);
-        /// <summary> AAD. </summary>
-        public static CredentialType AAD { get; } = new CredentialType(AADValue);
-        /// <summary> SAS. </summary>
+        /// <summary> Entra ID credential (formerly known as AAD). </summary>
+        public static CredentialType EntraId { get; } = new CredentialType(EntraIdValue);
+        /// <summary> Shared Access Signature (SAS) credential. </summary>
         public static CredentialType SAS { get; } = new CredentialType(SASValue);
+        /// <summary> Custom credential. </summary>
+        public static CredentialType Custom { get; } = new CredentialType(CustomValue);
+        /// <summary> No credential. </summary>
+        public static CredentialType None { get; } = new CredentialType(NoneValue);
         /// <summary> Determines if two <see cref="CredentialType"/> values are the same. </summary>
         public static bool operator ==(CredentialType left, CredentialType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CredentialType"/> values are not the same. </summary>

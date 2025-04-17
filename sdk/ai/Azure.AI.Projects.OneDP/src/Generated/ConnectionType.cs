@@ -24,22 +24,28 @@ namespace Azure.AI.Projects.OneDP
 
         private const string AzureOpenAIValue = "AzureOpenAI";
         private const string AzureBlobStorageValue = "AzureBlob";
+        private const string AzureStorageAccountValue = "AzureStorageAccount";
         private const string AzureAISearchValue = "CognitiveSearch";
         private const string CosmosDBValue = "CosmosDB";
         private const string APIKeyValue = "ApiKey";
+        private const string ApplicationConfigurationValue = "AppConfig";
         private const string ApplicationInsightsValue = "AppInsights";
         private const string CustomValue = "CustomKeys";
 
         /// <summary> Azure OpenAI Service. </summary>
         public static ConnectionType AzureOpenAI { get; } = new ConnectionType(AzureOpenAIValue);
-        /// <summary> Azure Blob Storage. </summary>
+        /// <summary> Azure Blob Storage, with specified container. </summary>
         public static ConnectionType AzureBlobStorage { get; } = new ConnectionType(AzureBlobStorageValue);
+        /// <summary> Azure Blob Storage, with container not specified (used by Assistants). </summary>
+        public static ConnectionType AzureStorageAccount { get; } = new ConnectionType(AzureStorageAccountValue);
         /// <summary> Azure AI Search. </summary>
         public static ConnectionType AzureAISearch { get; } = new ConnectionType(AzureAISearchValue);
         /// <summary> CosmosDB. </summary>
         public static ConnectionType CosmosDB { get; } = new ConnectionType(CosmosDBValue);
         /// <summary> Generic connection that uses API Key authentication. </summary>
         public static ConnectionType APIKey { get; } = new ConnectionType(APIKeyValue);
+        /// <summary> Application Configuration. </summary>
+        public static ConnectionType ApplicationConfiguration { get; } = new ConnectionType(ApplicationConfigurationValue);
         /// <summary> Application Insights. </summary>
         public static ConnectionType ApplicationInsights { get; } = new ConnectionType(ApplicationInsightsValue);
         /// <summary> Custom Keys. </summary>

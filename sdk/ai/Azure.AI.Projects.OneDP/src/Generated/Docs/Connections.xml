@@ -7,17 +7,17 @@ This sample shows how to call GetConnectionAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
 
-Response<Connection> response = await client.GetConnectionAsync("<connectionName>");
+Response<Connection> response = await client.GetConnectionAsync("<name>");
 ]]></code>
 This sample shows how to call GetConnectionAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
 
-Response<Connection> response = await client.GetConnectionAsync("<connectionName>");
+Response<Connection> response = await client.GetConnectionAsync("<name>");
 ]]></code></example>
     </member>
     <member name="GetConnection(string,CancellationToken)">
@@ -26,17 +26,17 @@ This sample shows how to call GetConnection.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
 
-Response<Connection> response = client.GetConnection("<connectionName>");
+Response<Connection> response = client.GetConnection("<name>");
 ]]></code>
 This sample shows how to call GetConnection with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
 
-Response<Connection> response = client.GetConnection("<connectionName>");
+Response<Connection> response = client.GetConnection("<name>");
 ]]></code></example>
     </member>
     <member name="GetConnectionAsync(string,RequestContext)">
@@ -45,28 +45,34 @@ This sample shows how to call GetConnectionAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
 
-Response response = await client.GetConnectionAsync("<connectionName>", null);
+Response response = await client.GetConnectionAsync("<name>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("authType").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("isDefault").ToString());
+Console.WriteLine(result.GetProperty("credentials").GetProperty("authType").ToString());
 Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
 ]]></code>
 This sample shows how to call GetConnectionAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
 
-Response response = await client.GetConnectionAsync("<connectionName>", null);
+Response response = await client.GetConnectionAsync("<name>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("authType").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("isDefault").ToString());
+Console.WriteLine(result.GetProperty("credentials").GetProperty("authType").ToString());
 Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
 ]]></code></example>
     </member>
@@ -76,38 +82,156 @@ This sample shows how to call GetConnection and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
 
-Response response = client.GetConnection("<connectionName>", null);
+Response response = client.GetConnection("<name>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("authType").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("isDefault").ToString());
+Console.WriteLine(result.GetProperty("credentials").GetProperty("authType").ToString());
 Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
 ]]></code>
 This sample shows how to call GetConnection with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
 
-Response response = client.GetConnection("<connectionName>", null);
+Response response = client.GetConnection("<name>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("authType").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("isDefault").ToString());
+Console.WriteLine(result.GetProperty("credentials").GetProperty("authType").ToString());
 Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
 ]]></code></example>
     </member>
-    <member name="GetConnectionsAsync(ConnectionType?,int?,int?,int?,CancellationToken)">
+    <member name="GetWithCredentialsAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetWithCredentialsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
+
+Response<Connection> response = await client.GetWithCredentialsAsync("<name>");
+]]></code>
+This sample shows how to call GetWithCredentialsAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
+
+Response<Connection> response = await client.GetWithCredentialsAsync("<name>");
+]]></code></example>
+    </member>
+    <member name="GetWithCredentials(string,CancellationToken)">
+      <example>
+This sample shows how to call GetWithCredentials.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
+
+Response<Connection> response = client.GetWithCredentials("<name>");
+]]></code>
+This sample shows how to call GetWithCredentials with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
+
+Response<Connection> response = client.GetWithCredentials("<name>");
+]]></code></example>
+    </member>
+    <member name="GetWithCredentialsAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetWithCredentialsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
+
+Response response = await client.GetWithCredentialsAsync("<name>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("authType").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("isDefault").ToString());
+Console.WriteLine(result.GetProperty("credentials").GetProperty("authType").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call GetWithCredentialsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
+
+Response response = await client.GetWithCredentialsAsync("<name>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("authType").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("isDefault").ToString());
+Console.WriteLine(result.GetProperty("credentials").GetProperty("authType").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetWithCredentials(string,RequestContext)">
+      <example>
+This sample shows how to call GetWithCredentials and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
+
+Response response = client.GetWithCredentials("<name>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("authType").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("isDefault").ToString());
+Console.WriteLine(result.GetProperty("credentials").GetProperty("authType").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call GetWithCredentials with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
+
+Response response = client.GetWithCredentials("<name>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("authType").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("isDefault").ToString());
+Console.WriteLine(result.GetProperty("credentials").GetProperty("authType").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetConnectionsAsync(ConnectionType?,bool?,int?,int?,int?,CancellationToken)">
       <example>
 This sample shows how to call GetConnectionsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
 
 await foreach (Connection item in client.GetConnectionsAsync())
 {
@@ -117,20 +241,20 @@ This sample shows how to call GetConnectionsAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
 
-await foreach (Connection item in client.GetConnectionsAsync(connectionType: ConnectionType.AzureOpenAI, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+await foreach (Connection item in client.GetConnectionsAsync(connectionType: ConnectionType.AzureOpenAI, defaultConnection: true, maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetConnections(ConnectionType?,int?,int?,int?,CancellationToken)">
+    <member name="GetConnections(ConnectionType?,bool?,int?,int?,int?,CancellationToken)">
       <example>
 This sample shows how to call GetConnections.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
 
 foreach (Connection item in client.GetConnections())
 {
@@ -140,27 +264,30 @@ This sample shows how to call GetConnections with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
 
-foreach (Connection item in client.GetConnections(connectionType: ConnectionType.AzureOpenAI, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+foreach (Connection item in client.GetConnections(connectionType: ConnectionType.AzureOpenAI, defaultConnection: true, maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetConnectionsAsync(string,int?,int?,int?,RequestContext)">
+    <member name="GetConnectionsAsync(string,bool?,int?,int?,int?,RequestContext)">
       <example>
 This sample shows how to call GetConnectionsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
 
-await foreach (BinaryData item in client.GetConnectionsAsync(null, null, null, null, null))
+await foreach (BinaryData item in client.GetConnectionsAsync(null, null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("authType").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("isDefault").ToString());
+    Console.WriteLine(result.GetProperty("credentials").GetProperty("authType").ToString());
     Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
 }
 ]]></code>
@@ -168,32 +295,38 @@ This sample shows how to call GetConnectionsAsync with all parameters and parse 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
 
-await foreach (BinaryData item in client.GetConnectionsAsync("AzureOpenAI", 1234, 1234, 1234, null))
+await foreach (BinaryData item in client.GetConnectionsAsync("AzureOpenAI", true, 1234, 1234, 1234, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("authType").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("isDefault").ToString());
+    Console.WriteLine(result.GetProperty("credentials").GetProperty("authType").ToString());
     Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
 }
 ]]></code></example>
     </member>
-    <member name="GetConnections(string,int?,int?,int?,RequestContext)">
+    <member name="GetConnections(string,bool?,int?,int?,int?,RequestContext)">
       <example>
 This sample shows how to call GetConnections and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
 
-foreach (BinaryData item in client.GetConnections(null, null, null, null, null))
+foreach (BinaryData item in client.GetConnections(null, null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("authType").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("isDefault").ToString());
+    Console.WriteLine(result.GetProperty("credentials").GetProperty("authType").ToString());
     Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
 }
 ]]></code>
@@ -201,14 +334,17 @@ This sample shows how to call GetConnections with all parameters and parse the r
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-01-preview");
+Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
 
-foreach (BinaryData item in client.GetConnections("AzureOpenAI", 1234, 1234, 1234, null))
+foreach (BinaryData item in client.GetConnections("AzureOpenAI", true, 1234, 1234, 1234, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("authType").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("isDefault").ToString());
+    Console.WriteLine(result.GetProperty("credentials").GetProperty("authType").ToString());
     Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
 }
 ]]></code></example>

@@ -16,5 +16,10 @@ namespace Azure.AI.Projects.OneDP.Tests
         public string EMBEDDINGMODELDEPLOYMENTNAME => GetRecordedVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
         public string STORAGE_QUEUE_URI => GetRecordedVariable("STORAGE_QUEUE_URI");
         public string AZURE_BLOB_URI => GetRecordedVariable("AZURE_BLOB_URI");
+        public string INDEXNAME => GetRecordedVariable("INDEX_NAME");
+        public string INDEXVERSION => GetRecordedVariable("INDEX_VERSION");
+        public string AISEARCHCONNECTIONNAME => GetRecordedVariable("AI_SEARCH_CONNECTION_NAME");
+        public string AISEARCHINDEXNAME => GetRecordedVariable("AI_SEARCH_INDEX_NAME");
+        public string CONNECTIONNAME => GetRecordedVariable("CONNECTION_NAME");
     }
 }

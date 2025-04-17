@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.OneDP
 {
-    /// <summary> Response from the listSecrets operation. </summary>
-    public partial class Connection
+    /// <summary> Response from the list and get connections operations. </summary>
+    public abstract partial class Connection
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -43,44 +43,55 @@ namespace Azure.AI.Projects.OneDP
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="Connection"/>. </summary>
-        /// <param name="metadata"> Metadata of the connection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> is null. </exception>
-        internal Connection(IReadOnlyDictionary<string, string> metadata)
+        protected Connection()
         {
-            Argument.AssertNotNull(metadata, nameof(metadata));
-
-            Metadata = metadata;
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="Connection"/>. </summary>
+        /// <param name="authType"> Discriminator property for Connection. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> Category of the connection. </param>
         /// <param name="target"> The connection URL to be used for this service. </param>
+        /// <param name="isDefault"> Whether the connection is tagged as the default connection of its type. </param>
+        /// <param name="credentials">
+        /// The credentials used by the connection
+        /// Please note <see cref="BaseCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="EntraIDCredentials"/>, <see cref="ApiKeyCredentials"/>, <see cref="CustomCredential"/>, <see cref="NoAuthenticationCredentials"/> and <see cref="SASCredentials"/>.
+        /// </param>
         /// <param name="metadata"> Metadata of the connection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Connection(string name, ConnectionType type, string target, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Connection(string authType, string name, ConnectionType type, string target, bool isDefault, BaseCredentials credentials, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            AuthType = authType;
             Name = name;
             Type = type;
             Target = target;
+            IsDefault = isDefault;
+            Credentials = credentials;
             Metadata = metadata;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Connection"/> for deserialization. </summary>
-        internal Connection()
-        {
-        }
-
+        /// <summary> Discriminator property for Connection. </summary>
+        internal string AuthType { get; set; }
         /// <summary> The name of the resource. </summary>
         public string Name { get; }
         /// <summary> Category of the connection. </summary>
         public ConnectionType Type { get; }
         /// <summary> The connection URL to be used for this service. </summary>
         public string Target { get; }
+        /// <summary> Whether the connection is tagged as the default connection of its type. </summary>
+        public bool IsDefault { get; }
+        /// <summary>
+        /// The credentials used by the connection
+        /// Please note <see cref="BaseCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="EntraIDCredentials"/>, <see cref="ApiKeyCredentials"/>, <see cref="CustomCredential"/>, <see cref="NoAuthenticationCredentials"/> and <see cref="SASCredentials"/>.
+        /// </summary>
+        public BaseCredentials Credentials { get; }
         /// <summary> Metadata of the connection. </summary>
         public IReadOnlyDictionary<string, string> Metadata { get; }
     }

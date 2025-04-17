@@ -93,40 +93,10 @@ namespace Azure.AI.Projects.OneDP
             return Volatile.Read(ref _cachedServicePatterns) ?? Interlocked.CompareExchange(ref _cachedServicePatterns, new ServicePatterns(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint), null) ?? _cachedServicePatterns;
         }
 
-        /// <summary> Initializes a new instance of Messages. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Messages GetMessagesClient(string apiVersion = "2025-05-01-preview")
-        {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new Messages(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
-        }
-
-        /// <summary> Initializes a new instance of Threads. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Threads GetThreadsClient(string apiVersion = "2025-05-01-preview")
-        {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new Threads(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
-        }
-
-        /// <summary> Initializes a new instance of AgentsClient. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual AgentsClient GetAgentsClient(string apiVersion = "2025-05-01-preview")
-        {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new AgentsClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
-        }
-
         /// <summary> Initializes a new instance of Connections. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Connections GetConnectionsClient(string apiVersion = "2025-05-01-preview")
+        public virtual Connections GetConnectionsClient(string apiVersion = "2025-05-15-preview")
         {
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
@@ -136,7 +106,7 @@ namespace Azure.AI.Projects.OneDP
         /// <summary> Initializes a new instance of Evaluations. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Evaluations GetEvaluationsClient(string apiVersion = "2025-05-01-preview")
+        public virtual Evaluations GetEvaluationsClient(string apiVersion = "2025-05-15-preview")
         {
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
@@ -146,7 +116,7 @@ namespace Azure.AI.Projects.OneDP
         /// <summary> Initializes a new instance of Datasets. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Datasets GetDatasetsClient(string apiVersion = "2025-05-01-preview")
+        public virtual Datasets GetDatasetsClient(string apiVersion = "2025-05-15-preview")
         {
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
@@ -156,7 +126,7 @@ namespace Azure.AI.Projects.OneDP
         /// <summary> Initializes a new instance of Indexes. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Indexes GetIndexesClient(string apiVersion = "2025-05-01-preview")
+        public virtual Indexes GetIndexesClient(string apiVersion = "2025-05-15-preview")
         {
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
@@ -166,11 +136,21 @@ namespace Azure.AI.Projects.OneDP
         /// <summary> Initializes a new instance of Deployments. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Deployments GetDeploymentsClient(string apiVersion = "2025-05-01-preview")
+        public virtual Deployments GetDeploymentsClient(string apiVersion = "2025-05-15-preview")
         {
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
             return new Deployments(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of RedTeams. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual RedTeams GetRedTeamsClient(string apiVersion = "2025-05-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new RedTeams(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
         }
     }
 }

@@ -7,13 +7,13 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.Projects.OneDP
 {
-    [PersistableModelProxy(typeof(UnknownConnection))]
-    public partial class Connection : IUtf8JsonSerializable, IJsonModel<Connection>
+    internal partial class UnknownConnection : IUtf8JsonSerializable, IJsonModel<Connection>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Connection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -26,7 +26,7 @@ namespace Azure.AI.Projects.OneDP
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<Connection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -34,59 +34,7 @@ namespace Azure.AI.Projects.OneDP
                 throw new FormatException($"The model {nameof(Connection)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("authType"u8);
-            writer.WriteStringValue(AuthType);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.ToString());
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("target"u8);
-                writer.WriteStringValue(Target);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("isDefault"u8);
-                writer.WriteBooleanValue(IsDefault);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials, options);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("metadata"u8);
-                writer.WriteStartObject();
-                foreach (var item in Metadata)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+            base.JsonModelWriteCore(writer, options);
         }
 
         Connection IJsonModel<Connection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -101,7 +49,7 @@ namespace Azure.AI.Projects.OneDP
             return DeserializeConnection(document.RootElement, options);
         }
 
-        internal static Connection DeserializeConnection(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownConnection DeserializeUnknownConnection(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -109,7 +57,72 @@ namespace Azure.AI.Projects.OneDP
             {
                 return null;
             }
-            return UnknownConnection.DeserializeUnknownConnection(element, options);
+            string authType = "Unknown";
+            string name = default;
+            ConnectionType type = default;
+            string target = default;
+            bool isDefault = default;
+            BaseCredentials credentials = default;
+            IReadOnlyDictionary<string, string> metadata = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("authType"u8))
+                {
+                    authType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ConnectionType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("target"u8))
+                {
+                    target = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("isDefault"u8))
+                {
+                    isDefault = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("credentials"u8))
+                {
+                    credentials = BaseCredentials.DeserializeBaseCredentials(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("metadata"u8))
+                {
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    metadata = dictionary;
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UnknownConnection(
+                authType,
+                name,
+                type,
+                target,
+                isDefault,
+                credentials,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Connection>.Write(ModelReaderWriterOptions options)
@@ -145,17 +158,17 @@ namespace Azure.AI.Projects.OneDP
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Connection FromResponse(Response response)
+        internal static new UnknownConnection FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeConnection(document.RootElement);
+            return DeserializeUnknownConnection(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue<Connection>(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }
