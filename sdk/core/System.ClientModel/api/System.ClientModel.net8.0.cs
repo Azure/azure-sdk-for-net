@@ -62,6 +62,11 @@ namespace System.ClientModel
 }
 namespace System.ClientModel.Primitives
 {
+    public static partial class ActivityExtensions
+    {
+        public static System.Diagnostics.Activity MarkFailed(this System.Diagnostics.Activity activity, System.Exception? exception) { throw null; }
+        public static System.Diagnostics.Activity? StartClientActivity(this System.Diagnostics.ActivitySource activitySource, System.ClientModel.Primitives.ClientPipelineOptions options, string name, System.Diagnostics.ActivityKind kind = System.Diagnostics.ActivityKind.Internal, System.Diagnostics.ActivityContext parentContext = default(System.Diagnostics.ActivityContext), System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object?>>? tags = null) { throw null; }
+    }
     public partial class ApiKeyAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
         internal ApiKeyAuthenticationPolicy() { }
@@ -85,7 +90,7 @@ namespace System.ClientModel.Primitives
     }
     public partial class ClientCache
     {
-        public ClientCache() { }
+        public ClientCache(int maxSize = 100) { }
         public T GetClient<T>(System.Func<T> createClient, string? id) where T : class { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -136,6 +141,7 @@ namespace System.ClientModel.Primitives
     {
         public ClientPipelineOptions() { }
         public System.ClientModel.Primitives.ClientLoggingOptions? ClientLoggingOptions { get { throw null; } set { } }
+        public bool? EnableDistributedTracing { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? MessageLoggingPolicy { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
@@ -176,7 +182,7 @@ namespace System.ClientModel.Primitives
     }
     public abstract partial class ConnectionProvider
     {
-        protected ConnectionProvider() { }
+        protected ConnectionProvider(int maxCacheSize = 100) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.ClientModel.Primitives.ClientCache Subclients { get { throw null; } }
         public abstract System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> GetAllConnections();
@@ -207,11 +213,11 @@ namespace System.ClientModel.Primitives
         string GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options);
         System.BinaryData Write(System.ClientModel.Primitives.ModelReaderWriterOptions options);
     }
-    [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("The constructors of the type being deserialized are dynamically accessed and may be trimmed.")]
     public partial class JsonModelConverter : System.Text.Json.Serialization.JsonConverter<System.ClientModel.Primitives.IJsonModel<object>>
     {
         public JsonModelConverter() { }
         public JsonModelConverter(System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public JsonModelConverter(System.ClientModel.Primitives.ModelReaderWriterOptions options, System.ClientModel.Primitives.ModelReaderWriterContext context) { }
         public override bool CanConvert(System.Type typeToConvert) { throw null; }
         public override System.ClientModel.Primitives.IJsonModel<object> Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
         public override void Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.IJsonModel<object> value, System.Text.Json.JsonSerializerOptions options) { }
@@ -226,9 +232,25 @@ namespace System.ClientModel.Primitives
     public static partial class ModelReaderWriter
     {
         public static object? Read(System.BinaryData data, [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.NonPublicConstructors | System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicConstructors)] System.Type returnType, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
+        public static object? Read(System.BinaryData data, System.Type returnType, System.ClientModel.Primitives.ModelReaderWriterOptions options, System.ClientModel.Primitives.ModelReaderWriterContext context) { throw null; }
         public static T? Read<T>(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
+        public static T? Read<T>(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options, System.ClientModel.Primitives.ModelReaderWriterContext context) { throw null; }
         public static System.BinaryData Write(object model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
+        public static System.BinaryData Write(object model, System.ClientModel.Primitives.ModelReaderWriterOptions options, System.ClientModel.Primitives.ModelReaderWriterContext context) { throw null; }
         public static System.BinaryData Write<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
+        public static System.BinaryData Write<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions options, System.ClientModel.Primitives.ModelReaderWriterContext context) { throw null; }
+    }
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple=true)]
+    public partial class ModelReaderWriterBuildableAttribute : System.Attribute
+    {
+        public ModelReaderWriterBuildableAttribute(System.Type type) { }
+    }
+    public abstract partial class ModelReaderWriterContext
+    {
+        protected ModelReaderWriterContext() { }
+        public System.ClientModel.Primitives.ModelReaderWriterTypeBuilder GetTypeBuilder(System.Type type) { throw null; }
+        public bool TryGetTypeBuilder(System.Type type, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder? builder) { throw null; }
+        protected virtual bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder? builder) { throw null; }
     }
     public partial class ModelReaderWriterOptions
     {
@@ -236,6 +258,17 @@ namespace System.ClientModel.Primitives
         public string Format { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
+    }
+    public abstract partial class ModelReaderWriterTypeBuilder
+    {
+        protected ModelReaderWriterTypeBuilder() { }
+        protected abstract System.Type BuilderType { get; }
+        protected virtual System.Type? ItemType { get { throw null; } }
+        protected virtual void AddItem(object collection, object? item) { }
+        protected virtual void AddKeyValuePair(object collection, string key, object? item) { }
+        protected abstract object CreateInstance();
+        protected virtual System.Collections.IEnumerable? GetItems(object obj) { throw null; }
+        protected virtual object ToCollection(object builder) { throw null; }
     }
     public abstract partial class OperationResult
     {

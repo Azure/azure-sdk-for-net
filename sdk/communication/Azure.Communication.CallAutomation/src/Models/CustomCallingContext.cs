@@ -20,10 +20,10 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new CustomCallingContext.
         /// </summary>
-        internal CustomCallingContext(IDictionary<string, string> sipHeaders, IDictionary<string, string> voipHeaders)
+        internal CustomCallingContext(IDictionary<string, string> voipHeaders, IDictionary<string, string> sipHeaders)
         {
-            SipHeaders = sipHeaders;
-            VoipHeaders = voipHeaders;
+            SipHeaders = sipHeaders ?? new ChangeTrackingDictionary<string, string>();
+            VoipHeaders = voipHeaders ?? new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary>
@@ -44,13 +44,21 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="key">custom calling context sip X header's key.</param>
         /// <param name="value">custom calling context sip X header's value.</param>
-        public void AddSipX(string key, string value)
+        /// <param name="prefix">prefix to be used for SIP X headers.</param>
+        public void AddSipX(string key, string value, SipHeaderPrefix prefix = SipHeaderPrefix.XMSCustom)
         {
             if (SipHeaders == null)
             {
                 throw new InvalidOperationException("Cannot add sip X header, SipHeaders is null.");
             }
-            SipHeaders.Add("X-MS-Custom-" + key, value);
+            if (prefix == SipHeaderPrefix.XMSCustom)
+            {
+                SipHeaders.Add("X-MS-Custom-" + key, value);
+            }
+            else
+            {
+                SipHeaders.Add("X-" + key, value);
+            }
         }
 
         /// <summary>
@@ -65,6 +73,22 @@ namespace Azure.Communication.CallAutomation
                 throw new InvalidOperationException("Cannot add voip header, VoipHeaders is null.");
             }
             VoipHeaders.Add(key, value);
+        }
+
+        /// <summary>
+        /// Enum representing the prefix to be used for SIP X headers.
+        /// </summary>
+        public enum SipHeaderPrefix
+        {
+            /// <summary>
+            /// Use the legacy "X-MS-Custom-" prefix.
+            /// </summary>
+            XMSCustom = 0,
+
+            /// <summary>
+            /// Use the generic "X-" prefix.
+            /// </summary>
+            X = 1
         }
     }
 }

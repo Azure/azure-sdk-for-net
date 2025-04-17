@@ -4,15 +4,13 @@
 import { EmitContext } from "@typespec/compiler";
 
 import {
-  $onEmit as $OnMGCEmit,
-  CSharpEmitterOptions,
-  setSDKContextOptions
+  $onEmit as $onMTGEmit,
+  CSharpEmitterOptions
 } from "@typespec/http-client-csharp";
-import { azureSDKContextOptions } from "./sdk-context-options.js";
 
 export async function $onEmit(context: EmitContext<CSharpEmitterOptions>) {
-  context.options["plugin-name"] ??= "AzureClientPlugin";
-  context.options["emitter-extension-path"] = import.meta.url;
-  setSDKContextOptions(azureSDKContextOptions);
-  await $OnMGCEmit(context);
+  context.options["generator-name"] ??= "AzureClientGenerator";
+  context.options["emitter-extension-path"] ??= import.meta.url;
+  context.options["license"] ??= { name: "MIT License", company: "Microsoft Corporation" };
+  await $onMTGEmit(context);
 }

@@ -1,10 +1,9 @@
 #Requires -Version 7.0
 
 param(
-    [string] $BuildNumber,
     [string] $OutputDirectory,
-    [switch] $Prerelease,
-    [switch] $TargetNpmJsFeed
+    [switch] $TargetNpmJsFeed,
+    [string] $emitterPackagePath
 )
 
 $ErrorActionPreference = 'Stop'
@@ -12,66 +11,66 @@ Set-StrictMode -Version 3.0
 . "$PSScriptRoot/../../common/scripts/common.ps1"
 Set-ConsoleEncoding
 
-$packageRoot = Resolve-Path "$RepoRoot/eng/packages/http-client-csharp"
-$outputPath = $OutputDirectory ? $OutputDirectory : (Join-Path $packageRoot "artifacts" "build")
+function Build-Emitter {
+    param (
+        [string]$packageRoot,
+        [string]$outputPath,
+        [hashtable]$overrides
+    )
 
-Push-Location $packageRoot
-try {
-    Write-Host "Working in $PWD"
-    
-    $outputPath = New-Item -ItemType Directory -Force -Path $outputPath | Select-Object -ExpandProperty FullName
+    Push-Location $packageRoot
+    try {
+        Write-Host "Working in $PWD"
+        Write-Host "TargetNpmJsFeed: $TargetNpmJsFeed"
 
-    $emitterVersion = (npm pkg get version).Trim('"')
+        $outputPath = New-Item -ItemType Directory -Force -Path $outputPath | Select-Object -ExpandProperty FullName
 
-    if ($BuildNumber) {
-        # set package versions
-        $versionTag = $Prerelease ? "-alpha" : "-beta"
+        # build and pack the emitter
+        Invoke-LoggedCommand "npm run build" -GroupOutput
 
-        $emitterVersion = "$($emitterVersion.Split('-')[0])$versionTag.$BuildNumber"
-        Write-Host "Setting output variable 'emitterVersion' to $emitterVersion"
-        Write-Host "##vso[task.setvariable variable=emitterVersion;isoutput=true]$emitterVersion"
-    }
+        # remove any existing tarballs
+        Remove-Item -Path "./*.tgz" -Force | Out-Null
 
-    # build and pack the emitter
-    Invoke-LoggedCommand "npm run build" -GroupOutput
+        #pack the emitter
+        Invoke-LoggedCommand "npm pack"
+        $file = Get-ChildItem -Filter "*.tgz" | Select-Object -ExpandProperty FullName
 
-    if ($BuildNumber) {
-        Write-Host "Updating version package.json to the new emitter version`n"
-        Invoke-LoggedCommand "npm pkg set version=$emitterVersion"
-    }
+        Write-Host "Copying $file to $outputPath"
+        Copy-Item $file -Destination $outputPath
 
-    # remove any existing tarballs
-    Remove-Item -Path "./*.tgz" -Force | Out-Null
-    
-    #pack the emitter
-    Invoke-LoggedCommand "npm pack"
-    $file = Get-ChildItem -Filter "*.tgz" | Select-Object -ExpandProperty FullName
+        if (!$TargetNpmJsFeed) {
+            $feedUrl = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest/npm/registry"
 
-    # ensure the packages directory exists
-    New-Item -ItemType Directory -Force -Path "$outputPath/packages" | Out-Null
+            $packageJson = Get-Content -Path "./package.json" | ConvertFrom-Json
+            $packageVersion = $packageJson.version
+            $packageName = $packageJson.name
 
-    Write-Host "Copying $file to $outputPath/packages"
-    Copy-Item $file -Destination "$outputPath/packages"
-
-    if ($TargetNpmJsFeed) {
-        $overrides = @{}
-    }
-    else {
-        $feedUrl = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest/npm/registry"
-
-        $overrides = @{
-            "@azure-typespec/http-client-csharp" = "$feedUrl/@azure-typespec/http-client-csharp/-/http-client-csharp-$emitterVersion.tgz"
+            $unscopedName = $packageName.Split("/")[1]
+            $overrides[$packageName] = "$feedUrl/$packageName/-/$unscopedName-$packageVersion.tgz"
         }
+
+        # restore the package.json and package-lock.json files to their original state
+        Write-Host "Restoring package.json and package-lock.json to their original state"
+        Invoke-LoggedCommand "git restore package.json package-lock.json"
     }
-
-    $overrides | ConvertTo-Json | Set-Content "$outputPath/overrides.json"
-
-    $packageMatrix = [ordered]@{
-        "emitter" = $emitterVersion
+    finally {
+        Pop-Location
     }
+}
 
-    $packageMatrix | ConvertTo-Json | Set-Content "$outputPath/package-versions.json"
+$overrides = @{}
+
+$outputPath = $OutputDirectory ? $OutputDirectory : (Join-Path $RepoRoot "artifacts" "emitters")
+New-Item -ItemType Directory -Force -Path $outputPath | Out-Null
+
+# strip leading slash from emitterPackagePath if it exists
+if ($emitterPackagePath.StartsWith("/")) {
+    $emitterPackagePath = $emitterPackagePath.Substring(1)
 }
-finally {
-    Pop-Location
-}
+$packageRoot = Join-Path $RepoRoot $emitterPackagePath
+Build-Emitter -packageRoot $packageRoot -outputPath $outputPath -overrides $overrides
+
+Write-Host "Writing overrides to $outputPath/overrides.json"
+
+$overrides | ConvertTo-Json | Out-File -FilePath "$outputPath/overrides.json" -Encoding utf8 -Force
+Get-Content -Path "$outputPath/overrides.json" | Out-Host
