@@ -6,10 +6,9 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -181,8 +180,8 @@ namespace Azure.AI.Projects.OneDP
         }
 
         /// <summary> Retrieves (reads) an existing chat message. </summary>
-        /// <param name="conversationId"> The ID of the conversation. </param>
-        /// <param name="messageId"> The ID of the message to retrieve. </param>
+        /// <param name="conversationId"> A unique identifier for this conversation. </param>
+        /// <param name="messageId"> A unique identifier for this message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -198,8 +197,8 @@ namespace Azure.AI.Projects.OneDP
         }
 
         /// <summary> Retrieves (reads) an existing chat message. </summary>
-        /// <param name="conversationId"> The ID of the conversation. </param>
-        /// <param name="messageId"> The ID of the message to retrieve. </param>
+        /// <param name="conversationId"> A unique identifier for this conversation. </param>
+        /// <param name="messageId"> A unique identifier for this message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -229,8 +228,8 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="conversationId"> The ID of the conversation. </param>
-        /// <param name="messageId"> The ID of the message to retrieve. </param>
+        /// <param name="conversationId"> A unique identifier for this conversation. </param>
+        /// <param name="messageId"> A unique identifier for this message. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -271,8 +270,8 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="conversationId"> The ID of the conversation. </param>
-        /// <param name="messageId"> The ID of the message to retrieve. </param>
+        /// <param name="conversationId"> A unique identifier for this conversation. </param>
+        /// <param name="messageId"> A unique identifier for this message. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -299,40 +298,40 @@ namespace Azure.AI.Projects.OneDP
         }
 
         /// <summary> Updates an existing chat message (or creates if not found) and returns the updated message. </summary>
-        /// <param name="conversationId"> The ID of the conversation. </param>
-        /// <param name="messageId"> The ID of the message to update. </param>
-        /// <param name="body"> The updated message data. </param>
+        /// <param name="conversationId"> A unique identifier for this conversation. </param>
+        /// <param name="messageId"> A unique identifier for this message. </param>
+        /// <param name="resource"> The resource instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/>, <paramref name="messageId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/>, <paramref name="messageId"/> or <paramref name="resource"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Messages.xml" path="doc/members/member[@name='UpdateMessageAsync(string,string,ChatMessage,CancellationToken)']/*" />
-        public virtual async Task<Response<ChatMessage>> UpdateMessageAsync(string conversationId, string messageId, ChatMessage body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChatMessage>> UpdateMessageAsync(string conversationId, string messageId, ChatMessage resource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(resource, nameof(resource));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = resource.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UpdateMessageAsync(conversationId, messageId, content, context).ConfigureAwait(false);
             return Response.FromValue(ChatMessage.FromResponse(response), response);
         }
 
         /// <summary> Updates an existing chat message (or creates if not found) and returns the updated message. </summary>
-        /// <param name="conversationId"> The ID of the conversation. </param>
-        /// <param name="messageId"> The ID of the message to update. </param>
-        /// <param name="body"> The updated message data. </param>
+        /// <param name="conversationId"> A unique identifier for this conversation. </param>
+        /// <param name="messageId"> A unique identifier for this message. </param>
+        /// <param name="resource"> The resource instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/>, <paramref name="messageId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/>, <paramref name="messageId"/> or <paramref name="resource"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Messages.xml" path="doc/members/member[@name='UpdateMessage(string,string,ChatMessage,CancellationToken)']/*" />
-        public virtual Response<ChatMessage> UpdateMessage(string conversationId, string messageId, ChatMessage body, CancellationToken cancellationToken = default)
+        public virtual Response<ChatMessage> UpdateMessage(string conversationId, string messageId, ChatMessage resource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(resource, nameof(resource));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = resource.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UpdateMessage(conversationId, messageId, content, context);
             return Response.FromValue(ChatMessage.FromResponse(response), response);
@@ -353,8 +352,8 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="conversationId"> The ID of the conversation. </param>
-        /// <param name="messageId"> The ID of the message to update. </param>
+        /// <param name="conversationId"> A unique identifier for this conversation. </param>
+        /// <param name="messageId"> A unique identifier for this message. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/>, <paramref name="messageId"/> or <paramref name="content"/> is null. </exception>
@@ -397,8 +396,8 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="conversationId"> The ID of the conversation. </param>
-        /// <param name="messageId"> The ID of the message to update. </param>
+        /// <param name="conversationId"> A unique identifier for this conversation. </param>
+        /// <param name="messageId"> A unique identifier for this message. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/>, <paramref name="messageId"/> or <paramref name="content"/> is null. </exception>
@@ -437,8 +436,8 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="conversationId"> The ID of the conversation. </param>
-        /// <param name="messageId"> The ID of the message to delete. </param>
+        /// <param name="conversationId"> A unique identifier for this conversation. </param>
+        /// <param name="messageId"> A unique identifier for this message. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -475,8 +474,8 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="conversationId"> The ID of the conversation. </param>
-        /// <param name="messageId"> The ID of the message to delete. </param>
+        /// <param name="conversationId"> A unique identifier for this conversation. </param>
+        /// <param name="messageId"> A unique identifier for this message. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -503,49 +502,35 @@ namespace Azure.AI.Projects.OneDP
         }
 
         /// <summary> Lists chat messages, returning a collection of ChatMessage objects. </summary>
-        /// <param name="conversationId"> The ID of the conversation. </param>
+        /// <param name="conversationId"> A unique identifier for this conversation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Messages.xml" path="doc/members/member[@name='GetMessagesAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<ChatMessage>>> GetMessagesAsync(string conversationId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ChatMessage> GetMessagesAsync(string conversationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetMessagesAsync(conversationId, context).ConfigureAwait(false);
-            IReadOnlyList<ChatMessage> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<ChatMessage> array = new List<ChatMessage>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(ChatMessage.DeserializeChatMessage(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(conversationId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMessagesNextPageRequest(nextLink, conversationId, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ChatMessage.DeserializeChatMessage(e), ClientDiagnostics, _pipeline, "Messages.GetMessages", "value", "nextLink", context);
         }
 
         /// <summary> Lists chat messages, returning a collection of ChatMessage objects. </summary>
-        /// <param name="conversationId"> The ID of the conversation. </param>
+        /// <param name="conversationId"> A unique identifier for this conversation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Messages.xml" path="doc/members/member[@name='GetMessages(string,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<ChatMessage>> GetMessages(string conversationId, CancellationToken cancellationToken = default)
+        public virtual Pageable<ChatMessage> GetMessages(string conversationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetMessages(conversationId, context);
-            IReadOnlyList<ChatMessage> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<ChatMessage> array = new List<ChatMessage>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(ChatMessage.DeserializeChatMessage(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(conversationId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMessagesNextPageRequest(nextLink, conversationId, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ChatMessage.DeserializeChatMessage(e), ClientDiagnostics, _pipeline, "Messages.GetMessages", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -563,29 +548,20 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="conversationId"> The ID of the conversation. </param>
+        /// <param name="conversationId"> A unique identifier for this conversation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/Messages.xml" path="doc/members/member[@name='GetMessagesAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetMessagesAsync(string conversationId, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetMessagesAsync(string conversationId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            using var scope = ClientDiagnostics.CreateScope("Messages.GetMessages");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetMessagesRequest(conversationId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(conversationId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMessagesNextPageRequest(nextLink, conversationId, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Messages.GetMessages", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -603,29 +579,20 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="conversationId"> The ID of the conversation. </param>
+        /// <param name="conversationId"> A unique identifier for this conversation. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/Messages.xml" path="doc/members/member[@name='GetMessages(string,RequestContext)']/*" />
-        public virtual Response GetMessages(string conversationId, RequestContext context)
+        public virtual Pageable<BinaryData> GetMessages(string conversationId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            using var scope = ClientDiagnostics.CreateScope("Messages.GetMessages");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetMessagesRequest(conversationId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(conversationId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMessagesNextPageRequest(nextLink, conversationId, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Messages.GetMessages", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateSendMessageRequest(string conversationId, RequestContent content, RequestContext context)
@@ -655,7 +622,7 @@ namespace Azure.AI.Projects.OneDP
             uri.Reset(_endpoint);
             uri.AppendPath("/conversations/", false);
             uri.AppendPath(conversationId, true);
-            uri.AppendPath("/messages/", false);
+            uri.AppendPath("/message/", false);
             uri.AppendPath(messageId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -665,14 +632,14 @@ namespace Azure.AI.Projects.OneDP
 
         internal HttpMessage CreateUpdateMessageRequest(string conversationId, string messageId, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/conversations/", false);
             uri.AppendPath(conversationId, true);
-            uri.AppendPath("/messages/", false);
+            uri.AppendPath("/message/", false);
             uri.AppendPath(messageId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -691,7 +658,7 @@ namespace Azure.AI.Projects.OneDP
             uri.Reset(_endpoint);
             uri.AppendPath("/conversations/", false);
             uri.AppendPath(conversationId, true);
-            uri.AppendPath("/messages/", false);
+            uri.AppendPath("/message/", false);
             uri.AppendPath(messageId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -708,8 +675,21 @@ namespace Azure.AI.Projects.OneDP
             uri.Reset(_endpoint);
             uri.AppendPath("/conversations/", false);
             uri.AppendPath(conversationId, true);
-            uri.AppendPath("/messages", false);
+            uri.AppendPath("/message", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetMessagesNextPageRequest(string nextLink, string conversationId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -728,6 +708,8 @@ namespace Azure.AI.Projects.OneDP
 
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier200201;
+        private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
         private static ResponseClassifier _responseClassifier204;
         private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
     }
