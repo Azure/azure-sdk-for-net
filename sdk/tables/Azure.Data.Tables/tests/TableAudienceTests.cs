@@ -39,6 +39,7 @@ namespace Azure.Data.Tables.Tests
                 // custom audience
                 yield return new TestCaseData(new TableAudience("my.custom.audience"), false, "my.custom.audience/.default");
                 yield return new TestCaseData(new TableAudience("my.custom.audience/"), false, "my.custom.audience/.default");
+                yield return new TestCaseData(new TableAudience("my.custom.audience/.default"), false, "my.custom.audience/.default");
             }
         }
     }

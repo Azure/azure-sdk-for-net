@@ -62,7 +62,8 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Gets or sets the Audience to use for authentication with Microsoft Entra. The audience is not considered when using a shared key.
+        /// Gets or sets the Audience to use for authentication with Microsoft Entra.
+        /// The audience is not considered when using a shared key or connection string.
         /// </summary>
         public TableAudience? Audience { get; set; }
 

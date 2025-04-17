@@ -76,6 +76,11 @@ namespace Azure.Data.Tables
                 _ => _value
             };
 
+            if (audience.EndsWith($"/{TableConstants.DefaultScope}", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return audience;
+            }
+
             return audience.EndsWith("/", StringComparison.InvariantCultureIgnoreCase)
                 ? $"{audience}{TableConstants.DefaultScope}"
                 : $"{audience}/{TableConstants.DefaultScope}";
