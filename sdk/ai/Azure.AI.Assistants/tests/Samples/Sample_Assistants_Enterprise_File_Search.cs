@@ -18,17 +18,17 @@ public partial class Sample_Assistants_Enterprise_File_Search : SamplesBase<AIAs
     {
         #region Snippet:AssistantsEnterpriseFileSearch_CreateProject
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var blobURI = Environment.GetEnvironmentVariable("AZURE_BLOB_URI");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         // For now we will take the File URI from the environment variables.
         // In future we may want to upload file to Azure here.
         var blobURI = TestEnvironment.AZURE_BLOB_URI;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+        AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
         #endregion
         #region Snippet:AssistantsCreateVectorStoreBlob
         var ds = new VectorStoreDataSource(
@@ -125,17 +125,17 @@ public partial class Sample_Assistants_Enterprise_File_Search : SamplesBase<AIAs
     public void EnterpriseFileSearch()
     {
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var blobURI = Environment.GetEnvironmentVariable("AZURE_BLOB_URI");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         // For now we will take the File URI from the environment variables.
         // In future we may want to upload file to Azure here.
         var blobURI = TestEnvironment.AZURE_BLOB_URI;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+        AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
         #region Snippet:AssistantsCreateVectorStoreBlobSync
         var ds = new VectorStoreDataSource(
             assetIdentifier: blobURI,

@@ -37,15 +37,15 @@ namespace Azure.AI.Assistants.Tests
         {
             #region Snippet:AssistantsImageFileInMessageCreateClient
 #if SNIPPET
-            var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+            var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
             var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-            var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+            var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
             var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
             var filePath = GetFile();
             // 1) Create an AssistantsClient for assistant-management and messaging.
-            AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+            AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
             #endregion
 
             // 2) (Optional) Upload a file for referencing in your message:
@@ -152,15 +152,15 @@ namespace Azure.AI.Assistants.Tests
         public void ImageFileInMessageExample()
         {
 #if SNIPPET
-            var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
-            var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+            var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+            var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-            var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+            var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
             var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
             var filePath = GetFile();
             // 1) Create an AssistantsClient for assistant management and messaging.
-            AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+            AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
             // 2) (Optional) Upload a file for referencing in your message:
             #region Snippet:AssistantsImageFileInMessageUpload_Sync

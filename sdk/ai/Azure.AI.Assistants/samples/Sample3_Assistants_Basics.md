@@ -4,9 +4,9 @@ In this example we will demonstrate creation and basic use of an assistant step 
 
 1. First we need to create assistant client and read the environment variables, which will be used in the next steps.
 ```C# Snippet:AssistantsOverviewCreateAgentClient
-var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 ```
 
 2. Next we will need to create an assistant.

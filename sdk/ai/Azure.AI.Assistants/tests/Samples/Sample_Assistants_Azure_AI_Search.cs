@@ -20,11 +20,11 @@ public partial class Sample_Assistants_Azure_AI_Search : SamplesBase<AIAssistant
     {
         #region Snippet:AssistantsAzureAISearchExample_CreateProjectClient
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var connectionID = System.Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_ID");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var connectionID = TestEnvironment.AI_SEARCH_CONNECTION_ID;
 #endif
@@ -42,7 +42,7 @@ public partial class Sample_Assistants_Azure_AI_Search : SamplesBase<AIAssistant
             AzureAISearch = searchResource
         };
 
-        AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+        AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
         Assistant assistant = await client.CreateAssistantAsync(
            model: modelDeploymentName,
@@ -129,11 +129,11 @@ public partial class Sample_Assistants_Azure_AI_Search : SamplesBase<AIAssistant
     public void AzureAISearchExample()
     {
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var connectionID = System.Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_ID");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var connectionID = TestEnvironment.AI_SEARCH_CONNECTION_ID;
 #endif
@@ -150,7 +150,7 @@ public partial class Sample_Assistants_Azure_AI_Search : SamplesBase<AIAssistant
             AzureAISearch = searchResource
         };
 
-        AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+        AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
         Assistant assistant = client.CreateAssistant(
            model: modelDeploymentName,

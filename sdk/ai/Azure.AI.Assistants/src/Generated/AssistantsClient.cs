@@ -22,13 +22,10 @@ namespace Azure.AI.Assistants
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
         private const string AuthorizationApiKeyPrefix = "Bearer";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://management.azure.com/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
-        private readonly string _subscriptionId;
-        private readonly string _resourceGroupName;
-        private readonly string _projectName;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -43,32 +40,29 @@ namespace Azure.AI.Assistants
         }
 
         /// <summary> Initializes a new instance of AssistantsClient. </summary>
-        /// <param name="endpoint"> The Azure AI Foundry project endpoint, in the form `https://&lt;azure-region&gt;.api.azureml.ms` or `https://&lt;private-link-guid&gt;.&lt;azure-region&gt;.api.azureml.ms`, where &lt;azure-region&gt; is the Azure region where the project is deployed (e.g. westus) and &lt;private-link-guid&gt; is the GUID of the Enterprise private link. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the Azure Resource Group. </param>
-        /// <param name="projectName"> The Azure AI Foundry project name. </param>
+        /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public AssistantsClient(Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, AzureKeyCredential credential) : this(endpoint, subscriptionId, resourceGroupName, projectName, credential, new AssistantsClientOptions())
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public AssistantsClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AssistantsClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of AssistantsClient. </summary>
-        /// <param name="endpoint"> The Azure AI Foundry project endpoint, in the form `https://&lt;azure-region&gt;.api.azureml.ms` or `https://&lt;private-link-guid&gt;.&lt;azure-region&gt;.api.azureml.ms`, where &lt;azure-region&gt; is the Azure region where the project is deployed (e.g. westus) and &lt;private-link-guid&gt; is the GUID of the Enterprise private link. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the Azure Resource Group. </param>
-        /// <param name="projectName"> The Azure AI Foundry project name. </param>
+        /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public AssistantsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AssistantsClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of AssistantsClient. </summary>
+        /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public AssistantsClient(Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, AzureKeyCredential credential, AssistantsClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public AssistantsClient(Uri endpoint, AzureKeyCredential credential, AssistantsClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new AssistantsClientOptions();
 
@@ -76,9 +70,24 @@ namespace Azure.AI.Assistants
             _keyCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) }, new ResponseClassifier());
             _endpoint = endpoint;
-            _subscriptionId = subscriptionId;
-            _resourceGroupName = resourceGroupName;
-            _projectName = projectName;
+            _apiVersion = options.Version;
+        }
+
+        /// <summary> Initializes a new instance of AssistantsClient. </summary>
+        /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public AssistantsClient(Uri endpoint, TokenCredential credential, AssistantsClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new AssistantsClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
             _apiVersion = options.Version;
         }
 
@@ -4901,12 +4910,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/assistants", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -4923,12 +4926,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/assistants", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (limit != null)
@@ -4959,12 +4956,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/assistants/", false);
             uri.AppendPath(assistantId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -4980,12 +4971,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/assistants/", false);
             uri.AppendPath(assistantId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -5003,12 +4988,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/assistants/", false);
             uri.AppendPath(assistantId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -5024,12 +5003,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/threads", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -5046,12 +5019,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/threads/", false);
             uri.AppendPath(threadId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -5067,12 +5034,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/threads/", false);
             uri.AppendPath(threadId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -5090,12 +5051,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/threads/", false);
             uri.AppendPath(threadId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -5111,12 +5066,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/threads/", false);
             uri.AppendPath(threadId, true);
             uri.AppendPath("/messages", false);
@@ -5135,12 +5084,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/threads/", false);
             uri.AppendPath(threadId, true);
             uri.AppendPath("/messages", false);
@@ -5177,12 +5120,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/threads/", false);
             uri.AppendPath(threadId, true);
             uri.AppendPath("/messages/", false);
@@ -5200,12 +5137,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/threads/", false);
             uri.AppendPath(threadId, true);
             uri.AppendPath("/messages/", false);
@@ -5225,12 +5156,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/threads/", false);
             uri.AppendPath(threadId, true);
             uri.AppendPath("/runs", false);
@@ -5253,12 +5178,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/threads/", false);
             uri.AppendPath(threadId, true);
             uri.AppendPath("/runs", false);
@@ -5291,12 +5210,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/threads/", false);
             uri.AppendPath(threadId, true);
             uri.AppendPath("/runs/", false);
@@ -5314,12 +5227,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/threads/", false);
             uri.AppendPath(threadId, true);
             uri.AppendPath("/runs/", false);
@@ -5339,12 +5246,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/threads/", false);
             uri.AppendPath(threadId, true);
             uri.AppendPath("/runs/", false);
@@ -5365,12 +5266,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/threads/", false);
             uri.AppendPath(threadId, true);
             uri.AppendPath("/runs/", false);
@@ -5389,12 +5284,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/threads/runs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -5411,12 +5300,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/threads/", false);
             uri.AppendPath(threadId, true);
             uri.AppendPath("/runs/", false);
@@ -5440,12 +5323,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/threads/", false);
             uri.AppendPath(threadId, true);
             uri.AppendPath("/runs/", false);
@@ -5484,12 +5361,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/files", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (purpose != null)
@@ -5508,12 +5379,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/files", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -5530,12 +5395,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(fileId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -5551,12 +5410,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(fileId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -5572,12 +5425,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(fileId, true);
             uri.AppendPath("/content", false);
@@ -5594,12 +5441,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/vector_stores", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (limit != null)
@@ -5630,12 +5471,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/vector_stores", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -5652,12 +5487,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/vector_stores/", false);
             uri.AppendPath(vectorStoreId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -5673,12 +5502,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/vector_stores/", false);
             uri.AppendPath(vectorStoreId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -5696,12 +5519,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/vector_stores/", false);
             uri.AppendPath(vectorStoreId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -5717,12 +5534,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/vector_stores/", false);
             uri.AppendPath(vectorStoreId, true);
             uri.AppendPath("/files", false);
@@ -5759,12 +5570,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/vector_stores/", false);
             uri.AppendPath(vectorStoreId, true);
             uri.AppendPath("/files", false);
@@ -5783,12 +5588,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/vector_stores/", false);
             uri.AppendPath(vectorStoreId, true);
             uri.AppendPath("/files/", false);
@@ -5806,12 +5605,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/vector_stores/", false);
             uri.AppendPath(vectorStoreId, true);
             uri.AppendPath("/files/", false);
@@ -5829,12 +5622,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/vector_stores/", false);
             uri.AppendPath(vectorStoreId, true);
             uri.AppendPath("/file_batches", false);
@@ -5853,12 +5640,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/vector_stores/", false);
             uri.AppendPath(vectorStoreId, true);
             uri.AppendPath("/file_batches/", false);
@@ -5876,12 +5657,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/vector_stores/", false);
             uri.AppendPath(vectorStoreId, true);
             uri.AppendPath("/file_batches/", false);
@@ -5900,12 +5675,6 @@ namespace Azure.AI.Assistants
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
-            uri.AppendRaw(_subscriptionId, true);
-            uri.AppendRaw("/resourceGroups/", false);
-            uri.AppendRaw(_resourceGroupName, true);
-            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendRaw(_projectName, true);
             uri.AppendPath("/vector_stores/", false);
             uri.AppendPath(vectorStoreId, true);
             uri.AppendPath("/file_batches/", false);

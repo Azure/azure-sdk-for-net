@@ -64,8 +64,8 @@ dotnet add package Azure.Identity
 To interact with Azure AI Assistants, you’ll need to create an instance of `AIAssistantClient`. Use the appropriate credential type from the Azure Identity library. For example, [DefaultAzureCredential][azure_identity_dac]:
 
 ```C# Snippet:AssistantsOverviewCreateClient
-var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
-AssistantsClient projectClient = new(connectionString, new DefaultAzureCredential());
+var projectEndpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+AssistantsClient projectClient = new(projectEndpoint, new DefaultAzureCredential());
 ```
 
 ## Examples
@@ -78,9 +78,9 @@ Agents in the Azure AI Assistants client library are designed to facilitate vari
 
 First, you need to create an `AssistantsClient`
 ```C# Snippet:AssistantsOverviewCreateAgentClient
-var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 ```
 
 With an authenticated client, an assistant can be created:
@@ -353,7 +353,7 @@ ToolResources toolResource = new()
     AzureAISearch = searchResource
 };
 
-AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
 Assistant assistant = await client.CreateAssistantAsync(
    model: modelDeploymentName,
@@ -635,11 +635,11 @@ while (toolOutputs.Count > 0);
 
 We can use Azure Function from inside the assistant. In the example below we are calling function "foo", which responds "Bar". In this example we create `AzureFunctionToolDefinition` object, with the function name, description, input and output queues, followed by function parameters. See below for the instructions on function deployment.
 ```C# Snippet:AssistantsAzureFunctionsDefineFunctionTools
-var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var storageQueueUri = System.Environment.GetEnvironmentVariable("STORAGE_QUEUE_URI");
 
-AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
 AzureFunctionToolDefinition azureFnTool = new(
     name: "foo",

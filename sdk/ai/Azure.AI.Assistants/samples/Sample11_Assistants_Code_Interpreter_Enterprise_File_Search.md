@@ -4,10 +4,10 @@ In this example we demonstrate, how the Azure Blob can be utilized for enterpriz
 
 1. First we need to create assistant client and read the environment variables, which will be used in the next steps.
 ```C# Snippet:AssistantsCodeInterpreterEnterpriseSearch_CreateClient
-var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var blobURI = Environment.GetEnvironmentVariable("AZURE_BLOB_URI");
-AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 ```
 2. Create assistant.
 

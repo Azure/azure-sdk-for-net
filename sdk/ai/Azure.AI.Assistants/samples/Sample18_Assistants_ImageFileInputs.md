@@ -5,11 +5,11 @@ Demonstrates examples of sending an image file (along with optional text) as a s
 1. First we need to create an assistant client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:AssistantsImageFileInMessageCreateClient
-var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var filePath = GetFile();
 // 1) Create an AssistantsClient for assistant-management and messaging.
-AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 ```
 
 2. (Optional) Upload a file for referencing in your message:

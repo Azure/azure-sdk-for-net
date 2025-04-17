@@ -4,10 +4,10 @@ To enable your Assistant to perform search through Bing search API, you use `Bin
 1. First we need to create an assistant and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:AssistantsBingGrounding_CreateProject
-var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var connectionId = System.Environment.GetEnvironmentVariable("AZURE_BING_CONECTION_ID");
-AssistantsClient assistantClient = new(connectionString, new DefaultAzureCredential());
+AssistantsClient assistantClient = new(projectEndpoint, new DefaultAzureCredential());
 ```
 
 2. We will use the Bing connection ID to initialize the `BingGroundingToolDefinition`.

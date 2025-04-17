@@ -16,19 +16,19 @@ public partial class Readme : SamplesBase<AIAssistantsTestEnvironment>
     {
         #region Snippet:AssistantsOverviewCreateClient
 #if SNIPPET
-        var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var projectEndpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
 #endif
-        AssistantsClient projectClient = new(connectionString, new DefaultAzureCredential());
+        AssistantsClient projectClient = new(projectEndpoint, new DefaultAzureCredential());
         #endregion
     }
 
     [Test]
     public void Troubleshooting()
     {
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-        AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
+        AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
         #region Snippet:AssistantsReadme_Troubleshooting
         try

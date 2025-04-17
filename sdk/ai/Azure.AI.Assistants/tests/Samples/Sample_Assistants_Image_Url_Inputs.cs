@@ -29,14 +29,14 @@ namespace Azure.AI.Assistants.Tests
         {
             #region Snippet:AssistantImageUrlInMessageCreateClient
 #if SNIPPET
-            var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+            var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
             var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-            var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+            var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
             var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
             // Create an AssistantsClient, enabling assistant-management and messaging.
-            AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+            AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
             #endregion
 
             // Step 1: Create an assistant
@@ -132,14 +132,14 @@ namespace Azure.AI.Assistants.Tests
         public void ImageUrlInMessageExample()
         {
 #if SNIPPET
-            var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
-            var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+            var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+            var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-            var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+            var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
             var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
             // Create an AssistantsClient, enabling assistant-management and messaging.
-            AssistantsClient client = new AssistantsClient(connectionString, new DefaultAzureCredential());
+            AssistantsClient client = new AssistantsClient(projectEndpoint, new DefaultAzureCredential());
 
             // Step 1: Create an assistant
             #region Snippet:AssistantImageUrlInMessageCreateAssistant_Sync

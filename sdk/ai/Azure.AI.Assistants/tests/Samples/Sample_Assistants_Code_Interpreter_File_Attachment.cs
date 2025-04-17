@@ -20,13 +20,13 @@ public partial class Sample_Assistants_Code_Interpreter_File_Attachment : Sample
     {
         #region Snippet:AssistantsCodeInterpreterFileAttachment_CreateClient
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+        AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
         #endregion
         #region Snippet:AssistantsCreateAgentWithInterpreterTool
         List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
@@ -95,14 +95,14 @@ public partial class Sample_Assistants_Code_Interpreter_File_Attachment : Sample
     public void CodeInterpreterFileAttachment()
     {
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 
 #endif
-        AssistantsClient client = new(connectionString, new DefaultAzureCredential());
+        AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
         #region Snippet:AssistantsCreateAgentWithInterpreterToolSync
         List<ToolDefinition> tools = [new CodeInterpreterToolDefinition()];
         Assistant assistant = client.CreateAssistant(

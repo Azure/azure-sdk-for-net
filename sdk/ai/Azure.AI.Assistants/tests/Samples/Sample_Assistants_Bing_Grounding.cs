@@ -19,15 +19,15 @@ public partial class Sample_Assistants_Bing_Grounding : SamplesBase<AIAssistants
     {
         #region Snippet:AssistantsBingGrounding_CreateProject
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var connectionId = System.Environment.GetEnvironmentVariable("AZURE_BING_CONECTION_ID");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var connectionId = TestEnvironment.BING_CONECTION_ID;
 #endif
-        AssistantsClient assistantClient = new(connectionString, new DefaultAzureCredential());
+        AssistantsClient assistantClient = new(projectEndpoint, new DefaultAzureCredential());
         #endregion
         #region Snippet:AssistantsBingGroundingAsync_GetConnection
         ToolConnectionList connectionList = new()
@@ -114,15 +114,15 @@ public partial class Sample_Assistants_Bing_Grounding : SamplesBase<AIAssistants
     public void BingGroundingExample()
     {
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var connectionId = System.Environment.GetEnvironmentVariable("AZURE_BING_CONECTION_ID");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var connectionId = TestEnvironment.BING_CONECTION_ID;
 #endif
-        AssistantsClient assistantClient = new(connectionString, new DefaultAzureCredential());
+        AssistantsClient assistantClient = new(projectEndpoint, new DefaultAzureCredential());
         #region Snippet:AssistantsBingGrounding_GetConnection
         ToolConnectionList connectionList = new()
         {

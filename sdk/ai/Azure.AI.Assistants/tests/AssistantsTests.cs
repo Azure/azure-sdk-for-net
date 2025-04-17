@@ -1333,7 +1333,9 @@ namespace Azure.AI.Assistants.Tests
 
         private AssistantsClient GetClient()
         {
-            var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+            // TODO: Replace project connections string by PROJECT_ENDPOINT when 1DP will be available.
+            //var connectionString = TestEnvironment.PROJECT_ENDPOINT;
+            var connectionString = TestEnvironment.PROJECT_CONNECTION_STRING;
             // If we are in the Playback, do not ask for authentication.
             if (Mode == RecordedTestMode.Playback)
             {
@@ -1474,11 +1476,11 @@ namespace Azure.AI.Assistants.Tests
             var cli = System.Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL");
             if (!string.IsNullOrEmpty(cli) && string.Compare(cli, "true", StringComparison.OrdinalIgnoreCase) == 0)
             {
-                client = new AssistantsClient(TestEnvironment.AzureAICONNECTIONSTRING, new AzureCliCredential());
+                client = new AssistantsClient(TestEnvironment.PROJECT_ENDPOINT, new AzureCliCredential());
             }
             else
             {
-                client = new AssistantsClient(TestEnvironment.AzureAICONNECTIONSTRING, new DefaultAzureCredential());
+                client = new AssistantsClient(TestEnvironment.PROJECT_ENDPOINT, new DefaultAzureCredential());
             }
 
             // Remove all files

@@ -19,14 +19,14 @@ public partial class Sample_Assistants_Multiple_Messages : SamplesBase<AIAssista
     {
         #region Snippet:Sample_Assistant_Multiple_Messages_CreateAsync
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
         var assistantClient = new AssistantsClient(
-            connectionString,
+            projectEndpoint,
             new DefaultAzureCredential());
 
         Assistant assistant = await assistantClient.CreateAssistantAsync(
@@ -93,14 +93,14 @@ public partial class Sample_Assistants_Multiple_Messages : SamplesBase<AIAssista
     {
         #region Snippet:Sample_Assistant_Multiple_Messages_Create
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
         var assistantClient = new AssistantsClient(
-            connectionString,
+            projectEndpoint,
             new DefaultAzureCredential());
 
         Assistant assistant = assistantClient.CreateAssistant(
