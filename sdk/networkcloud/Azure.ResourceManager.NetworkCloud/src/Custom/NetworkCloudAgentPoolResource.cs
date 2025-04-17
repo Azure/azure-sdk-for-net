@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="patch"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<NetworkCloudAgentPoolResource> Update(WaitUntil waitUntil, NetworkCloudAgentPoolPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudAgentPoolResource> Update(WaitUntil waitUntil, NetworkCloudAgentPoolPatch patch, CancellationToken cancellationToken)
         {
-            return Update(waitUntil, patch, null, null, cancellationToken);
+            return Update(waitUntil, patch, null, null);
         }
 
         /// <summary>
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="patch"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkCloudAgentPoolResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudAgentPoolPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudAgentPoolResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudAgentPoolPatch patch, CancellationToken cancellationToken)
         {
-            return await UpdateAsync(waitUntil, patch, null, null, cancellationToken).ConfigureAwait(false);
+            return await UpdateAsync(waitUntil, patch, null, null).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteWithResponseAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteWithResponseAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
         {
             using var scope = _networkCloudAgentPoolAgentPoolsClientDiagnostics.CreateScope("NetworkCloudAgentPoolResource.Delete");
             scope.Start();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NetworkCloudOperationStatusResult> DeleteWithResponse(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> DeleteWithResponse(WaitUntil waitUntil, CancellationToken cancellationToken)
         {
             using var scope = _networkCloudAgentPoolAgentPoolsClientDiagnostics.CreateScope("NetworkCloudAgentPoolResource.Delete");
             scope.Start();
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
         {
             using var scope = _networkCloudAgentPoolAgentPoolsClientDiagnostics.CreateScope("NetworkCloudAgentPoolResource.Delete");
             scope.Start();
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable (EditorBrowsableState.Never)]
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken)
         {
             using var scope = _networkCloudAgentPoolAgentPoolsClientDiagnostics.CreateScope("NetworkCloudAgentPoolResource.Delete");
             scope.Start();

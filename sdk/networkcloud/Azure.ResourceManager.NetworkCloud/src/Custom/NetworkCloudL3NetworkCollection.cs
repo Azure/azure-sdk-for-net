@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="l3NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l3NetworkName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkCloudL3NetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string l3NetworkName, NetworkCloudL3NetworkData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudL3NetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string l3NetworkName, NetworkCloudL3NetworkData data, CancellationToken cancellationToken)
         {
             return await CreateOrUpdateAsync(waitUntil, l3NetworkName, data, null, null, cancellationToken).ConfigureAwait(false);
         }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="l3NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l3NetworkName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<NetworkCloudL3NetworkResource> CreateOrUpdate(WaitUntil waitUntil, string l3NetworkName, NetworkCloudL3NetworkData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudL3NetworkResource> CreateOrUpdate(WaitUntil waitUntil, string l3NetworkName, NetworkCloudL3NetworkData data, CancellationToken cancellationToken)
         {
             return CreateOrUpdate(waitUntil, l3NetworkName, data, null, null, cancellationToken);
         }

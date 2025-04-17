@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkCloudVolumeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string volumeName, NetworkCloudVolumeData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudVolumeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string volumeName, NetworkCloudVolumeData data, CancellationToken cancellationToken)
         {
             return await CreateOrUpdateAsync(waitUntil, volumeName, data, null, null, cancellationToken).ConfigureAwait(false);
         }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<NetworkCloudVolumeResource> CreateOrUpdate(WaitUntil waitUntil, string volumeName, NetworkCloudVolumeData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudVolumeResource> CreateOrUpdate(WaitUntil waitUntil, string volumeName, NetworkCloudVolumeData data, CancellationToken cancellationToken)
         {
             return CreateOrUpdate(waitUntil, volumeName, data, null, null, cancellationToken);
         }

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="patch"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<NetworkCloudClusterManagerResource>> UpdateAsync(NetworkCloudClusterManagerPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkCloudClusterManagerResource>> UpdateAsync(NetworkCloudClusterManagerPatch patch, CancellationToken cancellationToken)
         {
             return await UpdateAsync(patch, null, null, cancellationToken).ConfigureAwait(false);
         }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="patch"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<NetworkCloudClusterManagerResource> Update(NetworkCloudClusterManagerPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkCloudClusterManagerResource> Update(NetworkCloudClusterManagerPatch patch, CancellationToken cancellationToken)
         {
             return Update(patch, null, null, cancellationToken);
         }

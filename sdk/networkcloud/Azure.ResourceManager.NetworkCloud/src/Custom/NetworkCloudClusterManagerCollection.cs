@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterManagerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkCloudClusterManagerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterManagerName, NetworkCloudClusterManagerData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudClusterManagerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterManagerName, NetworkCloudClusterManagerData data, CancellationToken cancellationToken)
         {
             return await CreateOrUpdateAsync(waitUntil, clusterManagerName, data, null, null, cancellationToken).ConfigureAwait(false);
         }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterManagerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<NetworkCloudClusterManagerResource> CreateOrUpdate(WaitUntil waitUntil, string clusterManagerName, NetworkCloudClusterManagerData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudClusterManagerResource> CreateOrUpdate(WaitUntil waitUntil, string clusterManagerName, NetworkCloudClusterManagerData data, CancellationToken cancellationToken)
         {
             return CreateOrUpdate(waitUntil, clusterManagerName, data, null, null, cancellationToken);
         }

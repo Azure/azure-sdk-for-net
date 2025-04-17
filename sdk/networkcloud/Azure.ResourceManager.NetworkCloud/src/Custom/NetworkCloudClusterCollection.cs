@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkCloudClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterName, NetworkCloudClusterData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterName, NetworkCloudClusterData data, CancellationToken cancellationToken)
         {
             return await CreateOrUpdateAsync(waitUntil, clusterName, data, null, null, cancellationToken).ConfigureAwait(false);
         }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<NetworkCloudClusterResource> CreateOrUpdate(WaitUntil waitUntil, string clusterName, NetworkCloudClusterData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudClusterResource> CreateOrUpdate(WaitUntil waitUntil, string clusterName, NetworkCloudClusterData data, CancellationToken cancellationToken)
         {
             return CreateOrUpdate(waitUntil, clusterName, data, null, null, cancellationToken);
         }
