@@ -339,9 +339,12 @@ namespace Azure.Security.ConfidentialLedger.Tests
             string programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create("test", filePath));
 
             // Normalize line endings to Unix-style (\n)
-            programmabilityPayload = Regex.Replace(programmabilityPayload, @"\r\n|\n|\r", "");
+            programmabilityPayload = Regex.Replace(programmabilityPayload, @"\r\n|\r", "\n");
+            Console.WriteLine("Payload: " + programmabilityPayload);
             RequestContent programmabilityContent = RequestContent.Create(programmabilityPayload);
+
             Response result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
+
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
 
             var resp = await Client.GetUserDefinedEndpointsModuleAsync("test");
