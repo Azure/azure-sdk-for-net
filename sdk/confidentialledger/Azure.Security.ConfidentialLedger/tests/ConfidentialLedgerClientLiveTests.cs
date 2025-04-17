@@ -337,10 +337,10 @@ namespace Azure.Security.ConfidentialLedger.Tests
             // Deploy JS App
             string filePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "programmability.js");
             string programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create("test", filePath));
-
+            Console.WriteLine("Payload before: " + programmabilityPayload);
             // Normalize line endings to to Windows style (CRLF)
             programmabilityPayload = Regex.Replace(programmabilityPayload, @"\r\n|\n|\r", "\r\n");
-            Console.WriteLine("Payload: " + programmabilityPayload);
+            Console.WriteLine("Payload after: " + programmabilityPayload);
             RequestContent programmabilityContent = RequestContent.Create(programmabilityPayload);
 
             Response result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
