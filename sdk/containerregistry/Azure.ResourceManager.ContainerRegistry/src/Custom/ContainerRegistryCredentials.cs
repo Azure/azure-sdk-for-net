@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The parameters that describes a set of credentials that will be used when a run is invoked. </summary>
@@ -11,6 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// will be generated using the given scope. These credentials will be used to login to
         /// the source registry during the run.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("sourceRegistry.loginMode")]
         public SourceRegistryLoginMode? SourceRegistryLoginMode
         {
