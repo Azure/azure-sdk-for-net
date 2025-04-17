@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.OneDP
 {
-    /// <summary> SAS Credential definition. </summary>
-    public partial class SasCredential
+    /// <summary> The GetCredentialsRequest. </summary>
+    public partial class GetCredentialsRequest
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,16 @@ namespace Azure.AI.Projects.OneDP
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SasCredential"/>. </summary>
-        internal SasCredential()
+        /// <summary> Initializes a new instance of <see cref="GetCredentialsRequest"/>. </summary>
+        public GetCredentialsRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SasCredential"/>. </summary>
-        /// <param name="sasUri"> SAS uri. </param>
-        /// <param name="type"> Type of credential. </param>
+        /// <summary> Initializes a new instance of <see cref="GetCredentialsRequest"/>. </summary>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SasCredential(string sasUri, SasCredentialType type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetCredentialsRequest(IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SasUri = sasUri;
-            Type = type;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> SAS uri. </summary>
-        public string SasUri { get; }
-        /// <summary> Type of credential. </summary>
-        public SasCredentialType Type { get; } = SasCredentialType.SAS;
     }
 }

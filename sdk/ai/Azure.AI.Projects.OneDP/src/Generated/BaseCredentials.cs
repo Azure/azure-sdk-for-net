@@ -10,8 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.OneDP
 {
-    /// <summary> SAS Credential definition. </summary>
-    public partial class SasCredential
+    /// <summary>
+    /// A base class for connection credentials
+    /// Please note <see cref="BaseCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="EntraIDCredentials"/>, <see cref="ApiKeyCredentials"/>, <see cref="CustomCredential"/>, <see cref="NoAuthenticationCredentials"/> and <see cref="SASCredentials"/>.
+    /// </summary>
+    public abstract partial class BaseCredentials
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -43,27 +47,23 @@ namespace Azure.AI.Projects.OneDP
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SasCredential"/>. </summary>
-        internal SasCredential()
+        /// <summary> Initializes a new instance of <see cref="BaseCredentials"/>. </summary>
+        protected BaseCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SasCredential"/>. </summary>
-        /// <param name="sasUri"> SAS uri. </param>
-        /// <param name="type"> Type of credential. </param>
+        /// <summary> Initializes a new instance of <see cref="BaseCredentials"/>. </summary>
+        /// <param name="authType"> The type of credential used by the connection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SasCredential(string sasUri, SasCredentialType type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BaseCredentials(CredentialType authType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SasUri = sasUri;
-            Type = type;
+            AuthType = authType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> SAS uri. </summary>
-        public string SasUri { get; }
-        /// <summary> Type of credential. </summary>
-        public SasCredentialType Type { get; } = SasCredentialType.SAS;
+        /// <summary> The type of credential used by the connection. </summary>
+        internal CredentialType AuthType { get; set; }
     }
 }

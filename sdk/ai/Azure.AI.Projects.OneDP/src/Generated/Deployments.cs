@@ -168,34 +168,32 @@ namespace Azure.AI.Projects.OneDP
         /// <summary> List all deployed models in the project. </summary>
         /// <param name="modelPublisher"> Model publisher to filter models by. </param>
         /// <param name="modelName"> Model name (the publisher specific name) to filter models by. </param>
-        /// <param name="includeConnectionModels"> Flag to include models from connections in response. </param>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Deployments.xml" path="doc/members/member[@name='GetDeploymentsAsync(string,string,bool?,int?,int?,int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<Deployment> GetDeploymentsAsync(string modelPublisher = null, string modelName = null, bool? includeConnectionModels = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Deployments.xml" path="doc/members/member[@name='GetDeploymentsAsync(string,string,int?,int?,int?,CancellationToken)']/*" />
+        public virtual AsyncPageable<Deployment> GetDeploymentsAsync(string modelPublisher = null, string modelName = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(modelPublisher, modelName, includeConnectionModels, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, modelPublisher, modelName, includeConnectionModels, maxCount, skip, pageSizeHint, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(modelPublisher, modelName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, modelPublisher, modelName, maxCount, skip, pageSizeHint, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Deployment.DeserializeDeployment(e), ClientDiagnostics, _pipeline, "Deployments.GetDeployments", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> List all deployed models in the project. </summary>
         /// <param name="modelPublisher"> Model publisher to filter models by. </param>
         /// <param name="modelName"> Model name (the publisher specific name) to filter models by. </param>
-        /// <param name="includeConnectionModels"> Flag to include models from connections in response. </param>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Deployments.xml" path="doc/members/member[@name='GetDeployments(string,string,bool?,int?,int?,int?,CancellationToken)']/*" />
-        public virtual Pageable<Deployment> GetDeployments(string modelPublisher = null, string modelName = null, bool? includeConnectionModels = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Deployments.xml" path="doc/members/member[@name='GetDeployments(string,string,int?,int?,int?,CancellationToken)']/*" />
+        public virtual Pageable<Deployment> GetDeployments(string modelPublisher = null, string modelName = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(modelPublisher, modelName, includeConnectionModels, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, modelPublisher, modelName, includeConnectionModels, maxCount, skip, pageSizeHint, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(modelPublisher, modelName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, modelPublisher, modelName, maxCount, skip, pageSizeHint, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Deployment.DeserializeDeployment(e), ClientDiagnostics, _pipeline, "Deployments.GetDeployments", "value", "nextLink", maxpagesize, context);
         }
 
@@ -209,25 +207,24 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetDeploymentsAsync(string,string,bool?,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetDeploymentsAsync(string,string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="modelPublisher"> Model publisher to filter models by. </param>
         /// <param name="modelName"> Model name (the publisher specific name) to filter models by. </param>
-        /// <param name="includeConnectionModels"> Flag to include models from connections in response. </param>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Deployments.xml" path="doc/members/member[@name='GetDeploymentsAsync(string,string,bool?,int?,int?,int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string modelPublisher, string modelName, bool? includeConnectionModels, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        /// <include file="Docs/Deployments.xml" path="doc/members/member[@name='GetDeploymentsAsync(string,string,int?,int?,int?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string modelPublisher, string modelName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(modelPublisher, modelName, includeConnectionModels, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, modelPublisher, modelName, includeConnectionModels, maxCount, skip, pageSizeHint, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(modelPublisher, modelName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, modelPublisher, modelName, maxCount, skip, pageSizeHint, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Deployments.GetDeployments", "value", "nextLink", maxpagesize, context);
         }
 
@@ -241,25 +238,24 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetDeployments(string,string,bool?,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetDeployments(string,string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="modelPublisher"> Model publisher to filter models by. </param>
         /// <param name="modelName"> Model name (the publisher specific name) to filter models by. </param>
-        /// <param name="includeConnectionModels"> Flag to include models from connections in response. </param>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Deployments.xml" path="doc/members/member[@name='GetDeployments(string,string,bool?,int?,int?,int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetDeployments(string modelPublisher, string modelName, bool? includeConnectionModels, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        /// <include file="Docs/Deployments.xml" path="doc/members/member[@name='GetDeployments(string,string,int?,int?,int?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetDeployments(string modelPublisher, string modelName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(modelPublisher, modelName, includeConnectionModels, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, modelPublisher, modelName, includeConnectionModels, maxCount, skip, pageSizeHint, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(modelPublisher, modelName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, modelPublisher, modelName, maxCount, skip, pageSizeHint, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Deployments.GetDeployments", "value", "nextLink", maxpagesize, context);
         }
 
@@ -278,7 +274,7 @@ namespace Azure.AI.Projects.OneDP
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentsRequest(string modelPublisher, string modelName, bool? includeConnectionModels, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetDeploymentsRequest(string modelPublisher, string modelName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -294,10 +290,6 @@ namespace Azure.AI.Projects.OneDP
             if (modelName != null)
             {
                 uri.AppendQuery("modelName", modelName, true);
-            }
-            if (includeConnectionModels != null)
-            {
-                uri.AppendQuery("includeConnectedModels", includeConnectionModels.Value, true);
             }
             if (maxCount != null)
             {
@@ -316,7 +308,7 @@ namespace Azure.AI.Projects.OneDP
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentsNextPageRequest(string nextLink, string modelPublisher, string modelName, bool? includeConnectionModels, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetDeploymentsNextPageRequest(string nextLink, string modelPublisher, string modelName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

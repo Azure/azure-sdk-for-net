@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.OneDP
 {
-    /// <summary> SAS Credential definition. </summary>
-    public partial class SasCredential
+    /// <summary> Represents a reference to a blob for consumption. </summary>
+    public partial class AssetCredentialResponse
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,31 @@ namespace Azure.AI.Projects.OneDP
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SasCredential"/>. </summary>
-        internal SasCredential()
+        /// <summary> Initializes a new instance of <see cref="AssetCredentialResponse"/>. </summary>
+        /// <param name="blobReferenceForConsumption"> Credential info to access the storage account. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="blobReferenceForConsumption"/> is null. </exception>
+        internal AssetCredentialResponse(BlobReferenceForConsumption blobReferenceForConsumption)
         {
+            Argument.AssertNotNull(blobReferenceForConsumption, nameof(blobReferenceForConsumption));
+
+            BlobReferenceForConsumption = blobReferenceForConsumption;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SasCredential"/>. </summary>
-        /// <param name="sasUri"> SAS uri. </param>
-        /// <param name="type"> Type of credential. </param>
+        /// <summary> Initializes a new instance of <see cref="AssetCredentialResponse"/>. </summary>
+        /// <param name="blobReferenceForConsumption"> Credential info to access the storage account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SasCredential(string sasUri, SasCredentialType type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssetCredentialResponse(BlobReferenceForConsumption blobReferenceForConsumption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SasUri = sasUri;
-            Type = type;
+            BlobReferenceForConsumption = blobReferenceForConsumption;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> SAS uri. </summary>
-        public string SasUri { get; }
-        /// <summary> Type of credential. </summary>
-        public SasCredentialType Type { get; } = SasCredentialType.SAS;
+        /// <summary> Initializes a new instance of <see cref="AssetCredentialResponse"/> for deserialization. </summary>
+        internal AssetCredentialResponse()
+        {
+        }
+
+        /// <summary> Credential info to access the storage account. </summary>
+        public BlobReferenceForConsumption BlobReferenceForConsumption { get; }
     }
 }

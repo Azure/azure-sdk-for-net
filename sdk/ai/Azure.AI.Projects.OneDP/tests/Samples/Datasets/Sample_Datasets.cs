@@ -10,6 +10,8 @@ using NUnit.Framework;
 using System.Threading.Tasks;
 using Azure.AI.Inference;
 using Azure.Core.TestFramework;
+using System.IO;
+using System.Reflection;
 
 namespace Azure.AI.Projects.OneDP.Tests
 {

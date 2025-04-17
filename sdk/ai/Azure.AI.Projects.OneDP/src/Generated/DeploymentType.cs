@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Projects.OneDP
 {
-    /// <summary> Represents the type of the deployment. Known literal is 'ModelDeployment'. </summary>
+    /// <summary> The DeploymentType. </summary>
     internal readonly partial struct DeploymentType : IEquatable<DeploymentType>
     {
         private readonly string _value;

@@ -7,7 +7,7 @@ This sample shows how to call GetEvaluationAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 Response<Evaluation> response = await client.GetEvaluationAsync("<name>");
 ]]></code>
@@ -15,7 +15,7 @@ This sample shows how to call GetEvaluationAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 Response<Evaluation> response = await client.GetEvaluationAsync("<name>");
 ]]></code></example>
@@ -26,7 +26,7 @@ This sample shows how to call GetEvaluation.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 Response<Evaluation> response = client.GetEvaluation("<name>");
 ]]></code>
@@ -34,7 +34,7 @@ This sample shows how to call GetEvaluation with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 Response<Evaluation> response = client.GetEvaluation("<name>");
 ]]></code></example>
@@ -45,7 +45,7 @@ This sample shows how to call GetEvaluationAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 Response response = await client.GetEvaluationAsync("<name>", null);
 
@@ -58,7 +58,7 @@ This sample shows how to call GetEvaluationAsync with all parameters and parse t
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 Response response = await client.GetEvaluationAsync("<name>", null);
 
@@ -81,7 +81,7 @@ This sample shows how to call GetEvaluation and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 Response response = client.GetEvaluation("<name>", null);
 
@@ -94,7 +94,7 @@ This sample shows how to call GetEvaluation with all parameters and parse the re
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 Response response = client.GetEvaluation("<name>", null);
 
@@ -117,7 +117,7 @@ This sample shows how to call CreateRunAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 Evaluation evaluation = new Evaluation(new InputDataset("<id>"), new Dictionary<string, EvaluatorConfiguration>
 {
@@ -129,7 +129,7 @@ This sample shows how to call CreateRunAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 Evaluation evaluation = new Evaluation(new InputDataset("<id>"), new Dictionary<string, EvaluatorConfiguration>
 {
@@ -166,7 +166,7 @@ This sample shows how to call CreateRun.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 Evaluation evaluation = new Evaluation(new InputDataset("<id>"), new Dictionary<string, EvaluatorConfiguration>
 {
@@ -178,7 +178,7 @@ This sample shows how to call CreateRun with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 Evaluation evaluation = new Evaluation(new InputDataset("<id>"), new Dictionary<string, EvaluatorConfiguration>
 {
@@ -215,7 +215,7 @@ This sample shows how to call CreateRunAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -243,7 +243,7 @@ This sample shows how to call CreateRunAsync with all request content and parse 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -299,7 +299,7 @@ This sample shows how to call CreateRun and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -327,7 +327,7 @@ This sample shows how to call CreateRun with all request content and parse the r
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -383,7 +383,7 @@ This sample shows how to call GetEvaluationsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 await foreach (Evaluation item in client.GetEvaluationsAsync())
 {
@@ -393,7 +393,7 @@ This sample shows how to call GetEvaluationsAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 await foreach (Evaluation item in client.GetEvaluationsAsync(maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
@@ -406,7 +406,7 @@ This sample shows how to call GetEvaluations.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 foreach (Evaluation item in client.GetEvaluations())
 {
@@ -416,7 +416,7 @@ This sample shows how to call GetEvaluations with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 foreach (Evaluation item in client.GetEvaluations(maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
@@ -429,7 +429,7 @@ This sample shows how to call GetEvaluationsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 await foreach (BinaryData item in client.GetEvaluationsAsync(null, null, null, null))
 {
@@ -443,7 +443,7 @@ This sample shows how to call GetEvaluationsAsync with all parameters and parse 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 await foreach (BinaryData item in client.GetEvaluationsAsync(1234, 1234, 1234, null))
 {
@@ -467,7 +467,7 @@ This sample shows how to call GetEvaluations and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 foreach (BinaryData item in client.GetEvaluations(null, null, null, null))
 {
@@ -481,7 +481,7 @@ This sample shows how to call GetEvaluations with all parameters and parse the r
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-01-preview");
+Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 foreach (BinaryData item in client.GetEvaluations(1234, 1234, 1234, null))
 {

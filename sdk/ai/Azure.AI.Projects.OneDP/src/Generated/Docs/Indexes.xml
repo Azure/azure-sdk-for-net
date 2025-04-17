@@ -7,7 +7,7 @@ This sample shows how to call GetVersionAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 Response<Index> response = await client.GetVersionAsync("<name>", "<version>");
 ]]></code>
@@ -15,7 +15,7 @@ This sample shows how to call GetVersionAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 Response<Index> response = await client.GetVersionAsync("<name>", "<version>");
 ]]></code></example>
@@ -26,7 +26,7 @@ This sample shows how to call GetVersion.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 Response<Index> response = client.GetVersion("<name>", "<version>");
 ]]></code>
@@ -34,7 +34,7 @@ This sample shows how to call GetVersion with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 Response<Index> response = client.GetVersion("<name>", "<version>");
 ]]></code></example>
@@ -45,7 +45,7 @@ This sample shows how to call GetVersionAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 Response response = await client.GetVersionAsync("<name>", "<version>", null);
 
@@ -58,7 +58,7 @@ This sample shows how to call GetVersionAsync with all parameters and parse the 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 Response response = await client.GetVersionAsync("<name>", "<version>", null);
 
@@ -78,7 +78,7 @@ This sample shows how to call GetVersion and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 Response response = client.GetVersion("<name>", "<version>", null);
 
@@ -91,7 +91,7 @@ This sample shows how to call GetVersion with all parameters and parse the resul
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 Response response = client.GetVersion("<name>", "<version>", null);
 
@@ -111,7 +111,7 @@ This sample shows how to call DeleteVersionAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 Response response = await client.DeleteVersionAsync("<name>", "<version>");
 
@@ -121,7 +121,7 @@ This sample shows how to call DeleteVersionAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 Response response = await client.DeleteVersionAsync("<name>", "<version>");
 
@@ -134,7 +134,7 @@ This sample shows how to call DeleteVersion.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 Response response = client.DeleteVersion("<name>", "<version>");
 
@@ -144,171 +144,11 @@ This sample shows how to call DeleteVersion with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 Response response = client.DeleteVersion("<name>", "<version>");
 
 Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="CreateAsync(string,Index,CancellationToken)">
-      <example>
-This sample shows how to call CreateAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
-
-Index body = new AzureAISearchIndex("<connectionName>", "<indexName>");
-Response<Index> response = await client.CreateAsync("<name>", body);
-]]></code>
-This sample shows how to call CreateAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
-
-Index body = new AzureAISearchIndex("<connectionName>", "<indexName>")
-{
-    Stage = "<stage>",
-    Description = "<description>",
-    Tags =
-    {
-        ["key"] = "<tags>"
-    },
-};
-Response<Index> response = await client.CreateAsync("<name>", body);
-]]></code></example>
-    </member>
-    <member name="Create(string,Index,CancellationToken)">
-      <example>
-This sample shows how to call Create.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
-
-Index body = new AzureAISearchIndex("<connectionName>", "<indexName>");
-Response<Index> response = client.Create("<name>", body);
-]]></code>
-This sample shows how to call Create with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
-
-Index body = new AzureAISearchIndex("<connectionName>", "<indexName>")
-{
-    Stage = "<stage>",
-    Description = "<description>",
-    Tags =
-    {
-        ["key"] = "<tags>"
-    },
-};
-Response<Index> response = client.Create("<name>", body);
-]]></code></example>
-    </member>
-    <member name="CreateAsync(string,RequestContent,RequestContext)">
-      <example>
-This sample shows how to call CreateAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
-
-using RequestContent content = RequestContent.Create(new
-{
-    type = "AzureSearch",
-    connectionName = "<connectionName>",
-    indexName = "<indexName>",
-});
-Response response = await client.CreateAsync("<name>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("version").ToString());
-]]></code>
-This sample shows how to call CreateAsync with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
-
-using RequestContent content = RequestContent.Create(new
-{
-    type = "AzureSearch",
-    connectionName = "<connectionName>",
-    indexName = "<indexName>",
-    stage = "<stage>",
-    description = "<description>",
-    tags = new
-    {
-        key = "<tags>",
-    },
-});
-Response response = await client.CreateAsync("<name>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("stage").ToString());
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("version").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
-]]></code></example>
-    </member>
-    <member name="Create(string,RequestContent,RequestContext)">
-      <example>
-This sample shows how to call Create and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
-
-using RequestContent content = RequestContent.Create(new
-{
-    type = "AzureSearch",
-    connectionName = "<connectionName>",
-    indexName = "<indexName>",
-});
-Response response = client.Create("<name>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("version").ToString());
-]]></code>
-This sample shows how to call Create with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
-
-using RequestContent content = RequestContent.Create(new
-{
-    type = "AzureSearch",
-    connectionName = "<connectionName>",
-    indexName = "<indexName>",
-    stage = "<stage>",
-    description = "<description>",
-    tags = new
-    {
-        key = "<tags>",
-    },
-});
-Response response = client.Create("<name>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("stage").ToString());
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("version").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 ]]></code></example>
     </member>
     <member name="CreateVersionAsync(string,string,Index,CancellationToken)">
@@ -317,7 +157,7 @@ This sample shows how to call CreateVersionAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 Index body = new AzureAISearchIndex("<connectionName>", "<indexName>");
 Response<Index> response = await client.CreateVersionAsync("<name>", "<version>", body);
@@ -326,7 +166,7 @@ This sample shows how to call CreateVersionAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 Index body = new AzureAISearchIndex("<connectionName>", "<indexName>")
 {
@@ -346,7 +186,7 @@ This sample shows how to call CreateVersion.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 Index body = new AzureAISearchIndex("<connectionName>", "<indexName>");
 Response<Index> response = client.CreateVersion("<name>", "<version>", body);
@@ -355,7 +195,7 @@ This sample shows how to call CreateVersion with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 Index body = new AzureAISearchIndex("<connectionName>", "<indexName>")
 {
@@ -375,7 +215,7 @@ This sample shows how to call CreateVersionAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -394,7 +234,7 @@ This sample shows how to call CreateVersionAsync with all parameters and request
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -426,7 +266,7 @@ This sample shows how to call CreateVersion and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -445,7 +285,7 @@ This sample shows how to call CreateVersion with all parameters and request cont
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -477,7 +317,7 @@ This sample shows how to call GetVersionsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 await foreach (Index item in client.GetVersionsAsync("<name>"))
 {
@@ -487,7 +327,7 @@ This sample shows how to call GetVersionsAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 await foreach (Index item in client.GetVersionsAsync("<name>", maxCount: 1234, skip: "<skip>", tags: "<tags>", listViewType: ListViewType.ActiveOnly))
 {
@@ -500,7 +340,7 @@ This sample shows how to call GetVersions.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 foreach (Index item in client.GetVersions("<name>"))
 {
@@ -510,7 +350,7 @@ This sample shows how to call GetVersions with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 foreach (Index item in client.GetVersions("<name>", maxCount: 1234, skip: "<skip>", tags: "<tags>", listViewType: ListViewType.ActiveOnly))
 {
@@ -523,7 +363,7 @@ This sample shows how to call GetVersionsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 await foreach (BinaryData item in client.GetVersionsAsync("<name>", null, null, null, null, null))
 {
@@ -537,7 +377,7 @@ This sample shows how to call GetVersionsAsync with all parameters and parse the
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 await foreach (BinaryData item in client.GetVersionsAsync("<name>", 1234, "<skip>", "<tags>", "ActiveOnly", null))
 {
@@ -558,7 +398,7 @@ This sample shows how to call GetVersions and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 foreach (BinaryData item in client.GetVersions("<name>", null, null, null, null, null))
 {
@@ -572,7 +412,7 @@ This sample shows how to call GetVersions with all parameters and parse the resu
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 foreach (BinaryData item in client.GetVersions("<name>", 1234, "<skip>", "<tags>", "ActiveOnly", null))
 {
@@ -593,7 +433,7 @@ This sample shows how to call GetLatestsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 await foreach (Index item in client.GetLatestsAsync())
 {
@@ -603,7 +443,7 @@ This sample shows how to call GetLatestsAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 await foreach (Index item in client.GetLatestsAsync(maxCount: 1234, skip: "<skip>", tags: "<tags>", listViewType: ListViewType.ActiveOnly))
 {
@@ -616,7 +456,7 @@ This sample shows how to call GetLatests.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 foreach (Index item in client.GetLatests())
 {
@@ -626,7 +466,7 @@ This sample shows how to call GetLatests with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 foreach (Index item in client.GetLatests(maxCount: 1234, skip: "<skip>", tags: "<tags>", listViewType: ListViewType.ActiveOnly))
 {
@@ -639,7 +479,7 @@ This sample shows how to call GetLatestsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 await foreach (BinaryData item in client.GetLatestsAsync(null, null, null, null, null))
 {
@@ -653,7 +493,7 @@ This sample shows how to call GetLatestsAsync with all parameters and parse the 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 await foreach (BinaryData item in client.GetLatestsAsync(1234, "<skip>", "<tags>", "ActiveOnly", null))
 {
@@ -674,7 +514,7 @@ This sample shows how to call GetLatests and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 foreach (BinaryData item in client.GetLatests(null, null, null, null, null))
 {
@@ -688,7 +528,7 @@ This sample shows how to call GetLatests with all parameters and parse the resul
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-01-preview");
+Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
 foreach (BinaryData item in client.GetLatests(1234, "<skip>", "<tags>", "ActiveOnly", null))
 {
