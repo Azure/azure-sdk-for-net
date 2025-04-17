@@ -1333,7 +1333,9 @@ namespace Azure.AI.Assistants.Tests
 
         private AssistantsClient GetClient()
         {
-            var connectionString = TestEnvironment.PROJECT_ENDPOINT;
+            // TODO: Replace project connections string by PROJECT_ENDPOINT when 1DP will be available.
+            //var connectionString = TestEnvironment.PROJECT_ENDPOINT;
+            var connectionString = TestEnvironment.PROJECT_CONNECTION_STRING;
             // If we are in the Playback, do not ask for authentication.
             if (Mode == RecordedTestMode.Playback)
             {

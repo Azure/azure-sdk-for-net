@@ -51,8 +51,29 @@ namespace Azure.AI.Assistants
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> is an empty string, and was expected to be non-empty. </exception>
-        public AssistantsClient(string endpoint, TokenCredential credential, AssistantsClientOptions options) : this(new Uri(endpoint), credential, options)
+        public AssistantsClient(string endpoint, TokenCredential credential, AssistantsClientOptions options) //: this(new Uri(endpoint), credential, options)
         {
+            // TODO: Remve this code when 1DP endpoint will be available and just call the upsteam constructor.
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new AssistantsClientOptions();
+
+            if (endpoint.Split(';').Length != 4)
+            {
+                ClientDiagnostics = new ClientDiagnostics(options, true);
+                _tokenCredential = credential;
+                _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) }, new ResponseClassifier());
+                _endpoint = new Uri(endpoint);
+                _apiVersion = options.Version;
+            }
+            else
+            {
+                ClientDiagnostics = new ClientDiagnostics(options, true);
+                _tokenCredential = credential;
+                _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, ["https://management.azure.com/.default"]) }, new ResponseClassifier());
+                _endpoint = new Uri($"{ClientHelper.ParseConnectionString(endpoint, "endpoint")}/agents/v1.0/subscriptions/{ClientHelper.ParseConnectionString(endpoint, "subscriptionid")}/resourceGroups/{ClientHelper.ParseConnectionString(endpoint, "resourcegroupname")}/providers/Microsoft.MachineLearningServices/workspaces/{ClientHelper.ParseConnectionString(endpoint, "projectname")}");
+                _apiVersion = options.Version;
+            }
         }
 
         /*
