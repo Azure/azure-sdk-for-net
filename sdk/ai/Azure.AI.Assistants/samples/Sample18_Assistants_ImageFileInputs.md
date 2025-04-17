@@ -6,7 +6,7 @@ Demonstrates examples of sending an image file (along with optional text) as a s
 
 ```C# Snippet:AssistantsImageFileInMessageCreateClient
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var filePath = GetFile();
 // 1) Create an AssistantsClient for assistant-management and messaging.
 AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());

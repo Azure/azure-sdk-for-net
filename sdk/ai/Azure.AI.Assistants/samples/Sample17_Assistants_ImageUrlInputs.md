@@ -6,7 +6,7 @@ This sample demonstrates examples of sending an image URL (along with optional t
 
 ```C# Snippet:AssistantImageUrlInMessageCreateClient
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 // Create an AssistantsClient, enabling assistant-management and messaging.
 AssistantsClient client = new(projectEndpoint, new DefaultAzureCredential());
 ```
