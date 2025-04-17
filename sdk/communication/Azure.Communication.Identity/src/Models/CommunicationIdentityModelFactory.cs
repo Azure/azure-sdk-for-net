@@ -9,7 +9,7 @@ namespace Azure.Communication.Identity.Models
     /// <summary>
     /// Model factory that enables mocking for the Identity library.
     /// </summary>
-    public partial class CommunicationIdentityModelFactory
+    public static partial class CommunicationIdentityModelFactory
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Azure.Communication.Identity.CommunicationUserIdentifierAndToken"/> class.

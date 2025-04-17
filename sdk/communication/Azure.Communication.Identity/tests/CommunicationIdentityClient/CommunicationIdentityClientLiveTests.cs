@@ -533,49 +533,35 @@ namespace Azure.Communication.Identity.Tests
         [Test]
         public async Task CreateUserWithCustomIdShouldReturnExistingIdentity()
         {
-            try
-            {
-                var customId = "bob@contoso.com";
-                CommunicationIdentityClient client = CreateClient();
-                Response<CommunicationUserIdentifier> createResponse = await client.CreateUserAsync(customId);
+            var customId = "bob@contoso.com";
+            CommunicationIdentityClient client = CreateClient();
+            Response<CommunicationUserIdentifier> createResponse = await client.CreateUserAsync(customId);
 
-                Assert.IsTrue((int)HttpStatusCode.Created == createResponse.GetRawResponse().Status);
-                Assert.IsNotNull(createResponse.Value.Id);
+            Assert.IsTrue((int)HttpStatusCode.Created == createResponse.GetRawResponse().Status);
+            Assert.IsNotNull(createResponse.Value.Id);
 
-                Response<CommunicationUserIdentifier> getResponse = await client.CreateUserAsync(customId);
-                Assert.AreEqual((int)HttpStatusCode.Created, getResponse.GetRawResponse().Status);
-                Assert.AreEqual(createResponse.Value.Id, getResponse.Value.Id);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
+            Response<CommunicationUserIdentifier> createResponse2 = await client.CreateUserAsync(customId);
+            Assert.AreEqual((int)HttpStatusCode.Created, createResponse2.GetRawResponse().Status);
+            Assert.AreEqual(createResponse.Value.Id, createResponse2.Value.Id);
         }
 
         [Test]
         public async Task GetUserShouldReturnTheCustomId()
         {
-            try
-            {
-                var customId = "alice@contoso.com";
-                CommunicationIdentityClient client = CreateClient();
-                Response<CommunicationUserIdentifierAndToken> createResponse = await client.CreateUserAndTokenAsync(customId,
-                    new List<CommunicationTokenScope> { CommunicationTokenScope.VoIP },
-                    TimeSpan.FromHours(2));
-                Assert.IsTrue((int)HttpStatusCode.Created == createResponse.GetRawResponse().Status
-                    || (int)HttpStatusCode.OK == createResponse.GetRawResponse().Status);
-                Assert.IsNotNull(createResponse.Value.User);
+            var customId = "alice@contoso.com";
+            CommunicationIdentityClient client = CreateClient();
+            Response<CommunicationUserIdentifierAndToken> createResponse = await client.CreateUserAndTokenAsync(customId,
+                new List<CommunicationTokenScope> { CommunicationTokenScope.VoIP },
+                TimeSpan.FromHours(2));
+            Assert.IsTrue((int)HttpStatusCode.Created == createResponse.GetRawResponse().Status
+                || (int)HttpStatusCode.OK == createResponse.GetRawResponse().Status);
+            Assert.IsNotNull(createResponse.Value.User);
 
-                Response<CommunicationUserDetail> getResponse = await client.GetUserDetailAsync(createResponse.Value.User);
-                Assert.AreEqual((int)HttpStatusCode.OK, getResponse.GetRawResponse().Status);
-                Assert.AreEqual(createResponse.Value.User.Id, getResponse.Value.User.Id);
-                Assert.AreEqual(customId, getResponse.Value.CustomId);
-                Assert.IsNotNull(getResponse.Value.LastTokenIssuedAt);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
+            Response<CommunicationUserDetail> getResponse = await client.GetUserDetailAsync(createResponse.Value.User);
+            Assert.AreEqual((int)HttpStatusCode.OK, getResponse.GetRawResponse().Status);
+            Assert.AreEqual(createResponse.Value.User.Id, getResponse.Value.User.Id);
+            Assert.AreEqual(customId, getResponse.Value.CustomId);
+            Assert.IsNotNull(getResponse.Value.LastTokenIssuedAt);
         }
 
         [Test]

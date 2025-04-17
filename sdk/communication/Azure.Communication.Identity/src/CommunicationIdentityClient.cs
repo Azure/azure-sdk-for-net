@@ -152,10 +152,7 @@ namespace Azure.Communication.Identity
 
         /// <summary>Creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual Response<CommunicationUserIdentifier> CreateUser(CancellationToken cancellationToken = default)
-        {
-            return CreateUser(default, cancellationToken);
-        }
+        public virtual Response<CommunicationUserIdentifier> CreateUser(CancellationToken cancellationToken = default) => CreateUser(default, cancellationToken);
 
         /// <summary>Asynchronously creates a new <see cref="CommunicationUserIdentifier"/> if the to doesn't exist or get the user otherwise/>.</summary>
         /// <param name="customId">Custom Id to be associated with the user.</param>
@@ -179,10 +176,7 @@ namespace Azure.Communication.Identity
 
         /// <summary>Asynchronously creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        public virtual async Task<Response<CommunicationUserIdentifier>> CreateUserAsync(CancellationToken cancellationToken = default)
-        {
-            return await CreateUserAsync(default, cancellationToken).ConfigureAwait(false);
-        }
+        public virtual async Task<Response<CommunicationUserIdentifier>> CreateUserAsync(CancellationToken cancellationToken = default) => await CreateUserAsync(default, cancellationToken).ConfigureAwait(false);
 
         /// <summary>Creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="customId">Custom Id to be associated with the user.</param>
@@ -211,26 +205,20 @@ namespace Azure.Communication.Identity
         /// <param name="scopes">List of <see cref="CommunicationTokenScope"/> scopes for the token.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual Response<CommunicationUserIdentifierAndToken> CreateUserAndToken(string customId, IEnumerable<CommunicationTokenScope> scopes, CancellationToken cancellationToken = default)
-        {
-            return CreateUserAndToken(customId, scopes, default, cancellationToken);
-        }
+            =>  CreateUserAndToken(customId, scopes, default, cancellationToken);
 
         /// <summary>Creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="scopes">List of <see cref="CommunicationTokenScope"/> scopes for the token.</param>
         /// <param name="tokenExpiresIn">Custom validity period of the token within [1,24] hours range.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual Response<CommunicationUserIdentifierAndToken> CreateUserAndToken(IEnumerable<CommunicationTokenScope> scopes, TimeSpan tokenExpiresIn, CancellationToken cancellationToken = default)
-        {
-            return CreateUserAndToken(default, scopes, tokenExpiresIn, cancellationToken);
-        }
+            => CreateUserAndToken(default, scopes, tokenExpiresIn, cancellationToken);
 
         /// <summary>Creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="scopes">The scopes that the token should have.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual Response<CommunicationUserIdentifierAndToken> CreateUserAndToken(IEnumerable<CommunicationTokenScope> scopes, CancellationToken cancellationToken = default)
-        {
-            return CreateUserAndToken(scopes, default, cancellationToken);
-        }
+            => CreateUserAndToken(scopes, default, cancellationToken);
 
         /// <summary>Asynchronously creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="customId">Custom Id to be associated with the user.</param>
@@ -259,26 +247,20 @@ namespace Azure.Communication.Identity
         /// <param name="scopes">List of <see cref="CommunicationTokenScope"/> scopes for the token.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<CommunicationUserIdentifierAndToken>> CreateUserAndTokenAsync(string customId, IEnumerable<CommunicationTokenScope> scopes, CancellationToken cancellationToken = default)
-        {
-            return await CreateUserAndTokenAsync(customId, scopes, default, cancellationToken).ConfigureAwait(false);
-        }
+            => await CreateUserAndTokenAsync(customId, scopes, default, cancellationToken).ConfigureAwait(false);
 
         /// <summary>Asynchronously creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="scopes">List of <see cref="CommunicationTokenScope"/> scopes for the token.</param>
         /// <param name="tokenExpiresIn">Custom validity period of the token within [1,24] hours range.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<CommunicationUserIdentifierAndToken>> CreateUserAndTokenAsync(IEnumerable<CommunicationTokenScope> scopes, TimeSpan tokenExpiresIn, CancellationToken cancellationToken = default)
-        {
-            return await CreateUserAndTokenAsync(default, scopes, tokenExpiresIn, cancellationToken).ConfigureAwait(false);
-        }
+            => await CreateUserAndTokenAsync(default, scopes, tokenExpiresIn, cancellationToken).ConfigureAwait(false);
 
         /// <summary>Asynchronously creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="scopes">The scopes that the token should have.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<CommunicationUserIdentifierAndToken>> CreateUserAndTokenAsync(IEnumerable<CommunicationTokenScope> scopes, CancellationToken cancellationToken = default)
-        {
-            return await CreateUserAndTokenAsync(scopes, default, cancellationToken).ConfigureAwait(false);
-        }
+            => await CreateUserAndTokenAsync(scopes, default, cancellationToken).ConfigureAwait(false);
 
         /// <summary>Asynchronously deletes a <see cref="CommunicationUserIdentifier"/>, revokes its tokens and deletes its data.</summary>
         /// <param name="communicationUser"> The user to be deleted.</param>
