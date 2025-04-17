@@ -339,7 +339,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             string programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create("test", filePath));
             Console.WriteLine("Payload before: " + programmabilityPayload);
             // Normalize line endings to to Windows style (CRLF)
-            programmabilityPayload = Regex.Replace(programmabilityPayload, @"\r\n|\n|\r", "\r\n");
+            programmabilityPayload = programmabilityPayload.Replace("\r", "").Replace("\n", "");
             Console.WriteLine("Payload after: " + programmabilityPayload);
             RequestContent programmabilityContent = RequestContent.Create(programmabilityPayload);
 
