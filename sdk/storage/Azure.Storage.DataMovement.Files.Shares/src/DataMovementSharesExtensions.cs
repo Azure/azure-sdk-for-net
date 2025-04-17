@@ -214,54 +214,62 @@ namespace Azure.Storage.DataMovement.Files.Shares
             this ShareFileStorageResourceOptions options,
             StorageResourceItemProperties sourceProperties)
         {
+            NfsFileMode FileMode = default;
+            string Owner = default;
+            string Group = default;
+
             // Only set NFS permissions if Copy transfer and FilePermissions is on.
             bool setPermissions = (!sourceProperties?.Uri?.IsFile ?? false) && (options?.FilePermissions ?? false);
 
             if ((options?.IsNfs ?? false) && setPermissions)
             {
-                NfsFileMode FileMode = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileMode, out object fileMode) == true
+                FileMode = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileMode, out object fileMode) == true
                         ? (NfsFileMode)fileMode
                         : default;
-                string Owner = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.Owner, out object owner) == true
+                Owner = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.Owner, out object owner) == true
                         ? (string)owner
                         : default;
-                string Group = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.Group, out object group) == true
+                Group = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.Group, out object group) == true
                         ? (string)group
                         : default;
-
-                return FilesModelFactory.FilePosixProperties(
-                    fileMode: FileMode,
-                    owner: Owner,
-                    group: Group,
-                    fileType: NfsFileType.Regular,
-                    linkCount: default);
             }
-            return new();
+            return FilesModelFactory.FilePosixProperties(
+                fileMode: FileMode,
+                owner: Owner,
+                group: Group,
+                fileType: NfsFileType.Regular,
+                linkCount: default);
         }
 
         public static FilePosixProperties GetFilePosixProperties(
             this ShareFileStorageResourceOptions options,
             StorageResourceContainerProperties sourceProperties)
         {
+            NfsFileMode FileMode = default;
+            string Owner = default;
+            string Group = default;
+
             // Only set NFS permissions if Copy transfer and FilePermissions is on.
             bool setPermissions = (!sourceProperties?.Uri?.IsFile ?? false) && (options?.FilePermissions ?? false);
 
             if ((options?.IsNfs ?? false) && setPermissions)
             {
-                return new()
-                {
-                    FileMode = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileMode, out object fileMode) == true
-                            ? (NfsFileMode)fileMode
-                            : default,
-                    Owner = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.Owner, out object owner) == true
-                            ? (string)owner
-                            : default,
-                    Group = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.Group, out object group) == true
-                            ? (string)group
-                            : default
-                };
+                FileMode = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileMode, out object fileMode) == true
+                        ? (NfsFileMode)fileMode
+                        : default;
+                Owner = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.Owner, out object owner) == true
+                        ? (string)owner
+                        : default;
+                Group = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.Group, out object group) == true
+                        ? (string)group
+                        : default;
             }
-            return new();
+            return FilesModelFactory.FilePosixProperties(
+                fileMode: FileMode,
+                owner: Owner,
+                group: Group,
+                fileType: default,
+                linkCount: default);
         }
 
         internal static ShareFileUploadRangeOptions ToShareFileUploadRangeOptions(
