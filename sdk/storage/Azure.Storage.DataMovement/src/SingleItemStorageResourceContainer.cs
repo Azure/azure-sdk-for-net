@@ -59,10 +59,9 @@ namespace Azure.Storage.DataMovement
             yield return _resourceItem;
         }
 
-        protected internal async override Task<StorageResourceContainerProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        protected internal override Task<StorageResourceContainerProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            StorageResourceItemProperties property = await _resourceItem.GetPropertiesAsync(cancellationToken).ConfigureAwait(false);
-            return property.ToStorageResourceContainerProperties();
+            throw new InvalidOperationException("SingleItemStorageResourceContainer does not support GetPropertiesAsync");
         }
     }
 }

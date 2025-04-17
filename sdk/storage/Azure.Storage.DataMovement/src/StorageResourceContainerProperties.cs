@@ -20,18 +20,6 @@ namespace Azure.Storage.DataMovement
         public Uri Uri { get; set; }
 
         /// <summary>
-        /// The HTTP ETag of the Storage Resource Container.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ETag? ETag { get; set; }
-
-        /// <summary>
-        /// The Last Modified Time of the Storage Resource Container.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public DateTimeOffset? LastModifiedTime { get; set; }
-
-        /// <summary>
         /// Dictionary of the properties associated with this resource container.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

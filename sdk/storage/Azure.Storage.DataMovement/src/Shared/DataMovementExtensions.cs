@@ -28,8 +28,6 @@ namespace Azure.Storage.DataMovement
             return new StorageResourceContainerProperties()
             {
                 Uri = properties.Uri,
-                ETag = properties.ETag,
-                LastModifiedTime = properties.LastModifiedTime,
                 RawProperties = properties.RawProperties
             };
         }

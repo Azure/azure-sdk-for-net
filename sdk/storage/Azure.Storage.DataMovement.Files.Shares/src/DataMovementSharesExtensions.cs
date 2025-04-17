@@ -509,8 +509,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
             return new StorageResourceContainerProperties()
             {
-                ETag = directoryProperties.ETag,
-                LastModifiedTime = directoryProperties.LastModified,
                 RawProperties = rawProperties
             };
         }
@@ -542,14 +540,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             if (directoryProperties.SmbProperties.FilePermissionKey != default)
             {
                 existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.SourceFilePermissionKey, directoryProperties.SmbProperties.FilePermissionKey);
-            }
-            if (existingProperties.LastModifiedTime == default)
-            {
-                existingProperties.LastModifiedTime = directoryProperties.LastModified;
-            }
-            if (existingProperties.ETag == default)
-            {
-                existingProperties.ETag = directoryProperties.ETag;
             }
             if (directoryProperties.PosixProperties.Owner != default)
             {
@@ -671,8 +661,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
             return new StorageResourceContainerProperties()
             {
-                ETag = shareItem?.Properties?.ETag,
-                LastModifiedTime = shareItem?.Properties?.LastModified,
                 RawProperties = properties
             };
         }
