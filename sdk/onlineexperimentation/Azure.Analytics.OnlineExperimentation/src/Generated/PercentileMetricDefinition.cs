@@ -17,7 +17,7 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="value"> The value to aggregate, including the event name and property to measure. </param>
         /// <param name="percentile"> The percentile to measure. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PercentileMetricDefinition(AggregatedValue value, int percentile)
+        public PercentileMetricDefinition(AggregatedValue value, double percentile)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,7 +31,7 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The value to aggregate, including the event name and property to measure. </param>
         /// <param name="percentile"> The percentile to measure. </param>
-        internal PercentileMetricDefinition(ExperimentMetricType type, IDictionary<string, BinaryData> serializedAdditionalRawData, AggregatedValue value, int percentile) : base(type, serializedAdditionalRawData)
+        internal PercentileMetricDefinition(ExperimentMetricType type, IDictionary<string, BinaryData> serializedAdditionalRawData, AggregatedValue value, double percentile) : base(type, serializedAdditionalRawData)
         {
             Value = value;
             Percentile = percentile;
@@ -45,6 +45,6 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <summary> The value to aggregate, including the event name and property to measure. </summary>
         public AggregatedValue Value { get; set; }
         /// <summary> The percentile to measure. </summary>
-        public int Percentile { get; set; }
+        public double Percentile { get; set; }
     }
 }

@@ -62,7 +62,7 @@ namespace Azure.Analytics.OnlineExperimentation
                 return null;
             }
             AggregatedValue value = default;
-            int percentile = default;
+            double percentile = default;
             ExperimentMetricType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -75,7 +75,7 @@ namespace Azure.Analytics.OnlineExperimentation
                 }
                 if (property.NameEquals("percentile"u8))
                 {
-                    percentile = property.Value.GetInt32();
+                    percentile = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("type"u8))

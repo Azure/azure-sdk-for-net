@@ -27,11 +27,11 @@ namespace Azure.Analytics.OnlineExperimentation
         private const string UnsupportedEventConditionValue = "UnsupportedEventCondition";
         private const string InvalidExperimentMetricDefinitionValue = "InvalidExperimentMetricDefinition";
 
-        /// <summary> The metric definition does not conform to the JSON schema. </summary>
+        /// <summary> The metric definition does not conform to the required schema. </summary>
         public static DiagnosticCode FailedSchemaValidation { get; } = new DiagnosticCode(FailedSchemaValidationValue);
-        /// <summary> The KQL filter condition provided is invalid. </summary>
+        /// <summary> The filter condition is invalid. </summary>
         public static DiagnosticCode InvalidEventCondition { get; } = new DiagnosticCode(InvalidEventConditionValue);
-        /// <summary> The KQL filter condition is valid but not currently supported. </summary>
+        /// <summary> The filter condition is valid but not currently supported. </summary>
         public static DiagnosticCode UnsupportedEventCondition { get; } = new DiagnosticCode(UnsupportedEventConditionValue);
         /// <summary>
         /// The provided metric definition is invalid.
