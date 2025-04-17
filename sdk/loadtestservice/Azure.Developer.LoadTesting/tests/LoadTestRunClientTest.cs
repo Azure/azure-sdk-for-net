@@ -25,7 +25,6 @@ namespace Azure.Developer.LoadTesting.Tests
 
             if (RequiresTestProfile() || RequiresTestProfileRun())
             {
-                _testProfileId = $"{_testProfileId}2";
                await _testHelper.SetupTestProfileAsync(_loadTestAdministrationClient, _testProfileId, _testId, TestEnvironment.TargetResourceId);
             }
 
@@ -36,7 +35,6 @@ namespace Azure.Developer.LoadTesting.Tests
 
             if (RequiresTestProfileRun())
             {
-                _testProfileRunId = $"{_testProfileRunId}2";
                 _testProfileRunOperation = await _testHelper.SetupTestProfileRunAsync(_loadTestRunClient, _testProfileRunId, _testProfileId, WaitUntil.Started);
             }
         }
@@ -354,7 +352,7 @@ namespace Azure.Developer.LoadTesting.Tests
         [Category(REQUIRES_TEST_PROFILE)]
         public async Task BeginTestProfileRun_WaitUntilCompleted()
         {
-            _testProfileRunId = $"{_testProfileRunId}w";
+            _testProfileRunId = $"{_testProfileRunId}";
             var testProfileRunOperation = await _loadTestRunClient.BeginTestProfileRunAsync(
                 WaitUntil.Completed, _testProfileRunId, RequestContent.Create(
                     new
@@ -376,7 +374,7 @@ namespace Azure.Developer.LoadTesting.Tests
         [Category(REQUIRES_TEST_PROFILE)]
         public async Task BeginTestProfileRun_PollOperation()
         {
-            _testProfileRunId = $"{_testProfileRunId}p";
+            _testProfileRunId = $"{_testProfileRunId}";
             var testProfileRunOperation = await _loadTestRunClient.BeginTestProfileRunAsync(
                 WaitUntil.Started, _testProfileRunId, RequestContent.Create(
                     new

@@ -36,7 +36,6 @@ namespace Azure.Developer.LoadTesting.Tests
 
             if (RequiresTestProfile())
             {
-                _testProfileId = $"{_testProfileId}2";
                 await _testHelper.SetupTestProfileAsync(_loadTestAdministrationClient, _testProfileId, _testId, TestEnvironment.TargetResourceId);
             }
         }
@@ -321,7 +320,7 @@ namespace Azure.Developer.LoadTesting.Tests
 
         [Test]
         [Category(REQUIRES_LOAD_TEST)]
-        public async Task UploadTestFile()
+        public async Task UploadTestFile_WaitUntilCompleted()
         {
             FileUploadResultOperation fileUploadOperation = await _loadTestAdministrationClient.UploadTestFileAsync(
                 WaitUntil.Completed, _testId, _fileName, RequestContent.Create(
@@ -334,11 +333,13 @@ namespace Azure.Developer.LoadTesting.Tests
             Assert.AreEqual("VALIDATION_SUCCESS", jsonDocument.RootElement.GetProperty("validationStatus").ToString());
             Assert.IsTrue(fileUploadOperation.HasValue);
             Assert.IsTrue(fileUploadOperation.HasCompleted);
+        }
 
-            await TearDown();
-            await SetUp();
-
-            fileUploadOperation = await _loadTestAdministrationClient.UploadTestFileAsync(
+        [Test]
+        [Category(REQUIRES_LOAD_TEST)]
+        public async Task UploadTestFile_PollOperation()
+        {
+            FileUploadResultOperation fileUploadOperation = await _loadTestAdministrationClient.UploadTestFileAsync(
                    WaitUntil.Started, _testId, _fileName, RequestContent.Create(
                         File.OpenRead(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), _fileName))
                     )
@@ -346,7 +347,7 @@ namespace Azure.Developer.LoadTesting.Tests
 
             await fileUploadOperation.WaitForCompletionAsync();
 
-            jsonDocument = JsonDocument.Parse(fileUploadOperation.Value.ToString());
+            JsonDocument jsonDocument = JsonDocument.Parse(fileUploadOperation.Value.ToString());
             Assert.AreEqual(_fileName, jsonDocument.RootElement.GetProperty("fileName").ToString());
             Assert.AreEqual("VALIDATION_SUCCESS", jsonDocument.RootElement.GetProperty("validationStatus").ToString());
             Assert.IsTrue(fileUploadOperation.HasValue);
