@@ -358,7 +358,7 @@ namespace Azure.Generator.Tests.Common
         }
 
         /// <summary>
-        /// Constrcut paging metadata
+        /// Construct paging metadata
         /// </summary>
         /// <param name="itemPropertySegments"></param>
         /// <param name="nextLink"></param>

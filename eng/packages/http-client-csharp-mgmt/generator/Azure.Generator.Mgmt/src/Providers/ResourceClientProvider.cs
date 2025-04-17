@@ -53,7 +53,7 @@ namespace Azure.Generator.Management.Providers
 
             // We should be able to assume that all operations in the resource client are for the same resource
             var requestPath = new RequestPath(inputClient.Methods.First().Operation.Path);
-            _resourceServiceMethods = inputClient.Methods.ToList();
+            _resourceServiceMethods = inputClient.Methods;
             ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(resourceModel)!;
             _clientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
 
