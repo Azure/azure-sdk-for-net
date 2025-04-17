@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string InvalidValue = "Invalid";
         private const string RegisterValue = "Register";
         private const string ReregisterValue = "Reregister";
+        private const string RehydrateValue = "Rehydrate";
 
         /// <summary> Invalid. </summary>
         public static WorkloadOperationType Invalid { get; } = new WorkloadOperationType(InvalidValue);
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static WorkloadOperationType Register { get; } = new WorkloadOperationType(RegisterValue);
         /// <summary> Reregister. </summary>
         public static WorkloadOperationType Reregister { get; } = new WorkloadOperationType(ReregisterValue);
+        /// <summary> Rehydrate. </summary>
+        public static WorkloadOperationType Rehydrate { get; } = new WorkloadOperationType(RehydrateValue);
         /// <summary> Determines if two <see cref="WorkloadOperationType"/> values are the same. </summary>
         public static bool operator ==(WorkloadOperationType left, WorkloadOperationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadOperationType"/> values are not the same. </summary>

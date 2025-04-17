@@ -21,15 +21,6 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             if (invocationDuped)
             {
                 var dupedArrayArrayModel = ValidateBuilder("TestProject1", expectation, dict, out var dupedArrayModel);
-                Assert.AreEqual($"{expectation.TypeName}_0[][]", arrayArrayModel.Type.Alias);
-                Assert.AreEqual($"{expectation.TypeName}_0[]", arrayModel!.Type.Alias);
-                Assert.AreEqual($"{expectation.TypeName}_1[][]", dupedArrayArrayModel.Type.Alias);
-                Assert.AreEqual($"{expectation.TypeName}_1[]", dupedArrayModel!.Type.Alias);
-            }
-            else
-            {
-                Assert.IsNull(arrayArrayModel.Type.Alias);
-                Assert.IsNull(arrayModel!.Type.Alias);
             }
 
             Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}", out var itemModel));

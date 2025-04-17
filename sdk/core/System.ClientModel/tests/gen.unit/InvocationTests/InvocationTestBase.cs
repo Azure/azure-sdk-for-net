@@ -37,7 +37,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             public TypeRef Context { get; }
         }
 
-        internal static readonly TypeRef s_localContext = new("LocalContext", "TestProject", "");
+        internal static readonly TypeRef s_localContext = new("LocalContext", "TestProject", "", "global::TestProject.LocalContext");
 
         internal static readonly Dictionary<string, ModelExpectation> s_modelExpectations = new()
         {
@@ -50,12 +50,20 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
                 AvailabilitySetData,
                 "System.ClientModel.Tests.Client.Models.ResourceManager.Compute",
                 AssertAvailabilitySetDataBuilder,
-                new TypeRef("TestClientModelReaderWriterContext", "System.ClientModel.Tests.ModelReaderWriterTests", "")) },
+                new TypeRef(
+                    "TestClientModelReaderWriterContext",
+                    "System.ClientModel.Tests.ModelReaderWriterTests",
+                    "",
+                    "global::System.ClientModel.Tests.ModelReaderWriterTests.TestClientModelReaderWriterContext")) },
             { BaseModel, new(
                 BaseModel,
                 "System.ClientModel.Tests.Client.ModelReaderWriterTests.Models",
                 AssertBaseModelBuilder,
-                new TypeRef("TestClientModelReaderWriterContext", "System.ClientModel.Tests.ModelReaderWriterTests", "")) },
+                new TypeRef(
+                    "TestClientModelReaderWriterContext",
+                    "System.ClientModel.Tests.ModelReaderWriterTests",
+                    "",
+                    "global::System.ClientModel.Tests.ModelReaderWriterTests.TestClientModelReaderWriterContext")) },
             { LocalBaseModel, new(
                 LocalBaseModel,
                 "TestProject",
@@ -384,9 +392,6 @@ namespace TestProject1
                     Assert.IsTrue(dict.TryGetValue(dupeFullName, out var dupeTypeModel));
                     builderValidator = s_builderValidators[dupeFullName];
                     builderValidator(dupeTypeModel!);
-
-                    Assert.AreEqual($"{type}_0", typeModel!.Type.Alias);
-                    Assert.AreEqual($"{type}_1", dupeTypeModel!.Type.Alias);
                 }
 
                 if (type == LocalBaseModel)
@@ -399,8 +404,6 @@ namespace TestProject1
                         var dupeFullName = $"TestProject1.{type}";
                         Assert.IsNotNull(dict[dupeFullName].PersistableModelProxy);
                         AssertUnknownLocalBaseModel(dict[dupeFullName].PersistableModelProxy!, "TestProject1");
-                        Assert.AreEqual($"Unknown{type}_0", dict[fullName].PersistableModelProxy!.Alias);
-                        Assert.AreEqual($"Unknown{type}_1", dict[dupeFullName].PersistableModelProxy!.Alias);
                     }
                 }
 

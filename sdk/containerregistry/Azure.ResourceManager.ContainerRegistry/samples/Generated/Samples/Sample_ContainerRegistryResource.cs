@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RegistryGet()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/RegistryGet.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/RegistryGet.json
             // this example is just showing the usage of "Registries_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_RegistryDelete()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/RegistryDelete.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/RegistryDelete.json
             // this example is just showing the usage of "Registries_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_RegistryUpdate()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/RegistryUpdate.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/RegistryUpdate.json
             // this example is just showing the usage of "Registries_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,6 +101,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
 },
                 Sku = new ContainerRegistrySku(ContainerRegistrySkuName.Standard),
                 IsAdminUserEnabled = true,
+                RoleAssignmentMode = ContainerRegistryRoleAssignmentMode.AbacRepositoryPermissions,
             };
             ArmOperation<ContainerRegistryResource> lro = await containerRegistry.UpdateAsync(WaitUntil.Completed, patch);
             ContainerRegistryResource result = lro.Value;
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ImportImage_ImportImageByManifestDigest()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/ImportImageByManifestDigest.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/ImportImageByManifestDigest.json
             // this example is just showing the usage of "Registries_ImportImage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ImportImage_ImportImageByTag()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/ImportImageByTag.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/ImportImageByTag.json
             // this example is just showing the usage of "Registries_ImportImage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ImportImage_ImportImageFromPublicRegistry()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/ImportImageFromPublicRegistry.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/ImportImageFromPublicRegistry.json
             // this example is just showing the usage of "Registries_ImportImage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -221,7 +222,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetUsages_RegistryListUsages()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/RegistryListUsages.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/RegistryListUsages.json
             // this example is just showing the usage of "Registries_ListUsages" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetCredentials_RegistryListCredentials()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/RegistryListCredentials.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/RegistryListCredentials.json
             // this example is just showing the usage of "Registries_ListCredentials" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -276,7 +277,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RegenerateCredential_RegistryRegenerateCredential()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/RegistryRegenerateCredential.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/RegistryRegenerateCredential.json
             // this example is just showing the usage of "Registries_RegenerateCredential" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -303,7 +304,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GenerateCredentials_RegistryGenerateCredentials()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/RegistryGenerateCredentials.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/RegistryGenerateCredentials.json
             // this example is just showing the usage of "Registries_GenerateCredentials" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -335,7 +336,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ScheduleRun_RegistriesScheduleRun()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesScheduleRun.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/RegistriesScheduleRun.json
             // this example is just showing the usage of "Schedules_ScheduleRun" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -371,8 +372,7 @@ IsSecret = true,
                 SourceLocation = "https://myaccount.blob.core.windows.net/sascontainer/source.zip?sv=2015-04-05&st=2015-04-29T22%3A18%3A26Z&se=2015-04-30T02%3A23%3A26Z&sr=b&sp=rw&sip=168.1.5.60-168.1.5.70&spr=https&sig=Z%2FRHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk%3D",
                 IsArchiveEnabled = true,
             };
-            ArmOperation<ContainerRegistryRunResource> lro = await containerRegistry.ScheduleRunAsync(WaitUntil.Completed, content);
-            ContainerRegistryRunResource result = lro.Value;
+            ContainerRegistryRunResource result = await containerRegistry.ScheduleRunAsync(content);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -385,7 +385,7 @@ IsSecret = true,
         [Ignore("Only validating compilation of examples")]
         public async Task ScheduleRun_RegistriesScheduleRunEncodedTaskRun()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesScheduleRun_EncodedTaskRun.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/RegistriesScheduleRun_EncodedTaskRun.json
             // this example is just showing the usage of "Schedules_ScheduleRun" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -414,8 +414,7 @@ IsSecret = true,
 }},
                 AgentCpu = 2,
             };
-            ArmOperation<ContainerRegistryRunResource> lro = await containerRegistry.ScheduleRunAsync(WaitUntil.Completed, content);
-            ContainerRegistryRunResource result = lro.Value;
+            ContainerRegistryRunResource result = await containerRegistry.ScheduleRunAsync(content);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -428,7 +427,7 @@ IsSecret = true,
         [Ignore("Only validating compilation of examples")]
         public async Task ScheduleRun_RegistriesScheduleRunFileTaskRun()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesScheduleRun_FileTaskRun.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/RegistriesScheduleRun_FileTaskRun.json
             // this example is just showing the usage of "Schedules_ScheduleRun" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -458,8 +457,7 @@ IsSecret = true,
                 AgentCpu = 2,
                 SourceLocation = "https://myaccount.blob.core.windows.net/sascontainer/source.zip?sv=2015-04-05&st=2015-04-29T22%3A18%3A26Z&se=2015-04-30T02%3A23%3A26Z&sr=b&sp=rw&sip=168.1.5.60-168.1.5.70&spr=https&sig=Z%2FRHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk%3D",
             };
-            ArmOperation<ContainerRegistryRunResource> lro = await containerRegistry.ScheduleRunAsync(WaitUntil.Completed, content);
-            ContainerRegistryRunResource result = lro.Value;
+            ContainerRegistryRunResource result = await containerRegistry.ScheduleRunAsync(content);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -472,7 +470,7 @@ IsSecret = true,
         [Ignore("Only validating compilation of examples")]
         public async Task ScheduleRun_RegistriesScheduleRunTask()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesScheduleRun_Task.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/RegistriesScheduleRun_Task.json
             // this example is just showing the usage of "Schedules_ScheduleRun" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -512,8 +510,7 @@ IsSecret = true,
                     UpdateTriggerToken = "aGVsbG8gd29ybGQ=",
                 },
             };
-            ArmOperation<ContainerRegistryRunResource> lro = await containerRegistry.ScheduleRunAsync(WaitUntil.Completed, content);
-            ContainerRegistryRunResource result = lro.Value;
+            ContainerRegistryRunResource result = await containerRegistry.ScheduleRunAsync(content);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -526,7 +523,7 @@ IsSecret = true,
         [Ignore("Only validating compilation of examples")]
         public async Task ScheduleRun_RegistriesScheduleRunTaskWithCustomCredentials()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesScheduleRun_FileTask_WithCustomCredentials.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/RegistriesScheduleRun_FileTask_WithCustomCredentials.json
             // this example is just showing the usage of "Schedules_ScheduleRun" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -554,7 +551,10 @@ IsSecret = true,
 }},
                 Credentials = new ContainerRegistryCredentials
                 {
-                    SourceRegistryLoginMode = SourceRegistryLoginMode.Default,
+                    SourceRegistry = new SourceRegistryCredentials
+                    {
+                        LoginMode = SourceRegistryLoginMode.Default,
+                    },
                     CustomRegistries =
 {
 ["myregistry.azurecr.io"] = new CustomRegistryCredentials
@@ -573,8 +573,7 @@ ObjectType = ContainerRegistrySecretObjectType.Opaque,
 },
                 },
             };
-            ArmOperation<ContainerRegistryRunResource> lro = await containerRegistry.ScheduleRunAsync(WaitUntil.Completed, content);
-            ContainerRegistryRunResource result = lro.Value;
+            ContainerRegistryRunResource result = await containerRegistry.ScheduleRunAsync(content);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -587,7 +586,7 @@ ObjectType = ContainerRegistrySecretObjectType.Opaque,
         [Ignore("Only validating compilation of examples")]
         public async Task ScheduleRun_RegistriesScheduleRunWithCustomCredentials()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesScheduleRun_WithCustomCredentials.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/RegistriesScheduleRun_WithCustomCredentials.json
             // this example is just showing the usage of "Schedules_ScheduleRun" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -624,7 +623,10 @@ IsSecret = true,
                 SourceLocation = "https://myaccount.blob.core.windows.net/sascontainer/source.zip?sv=2015-04-05&st=2015-04-29T22%3A18%3A26Z&se=2015-04-30T02%3A23%3A26Z&sr=b&sp=rw&sip=168.1.5.60-168.1.5.70&spr=https&sig=Z%2FRHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk%3D",
                 Credentials = new ContainerRegistryCredentials
                 {
-                    SourceRegistryLoginMode = SourceRegistryLoginMode.Default,
+                    SourceRegistry = new SourceRegistryCredentials
+                    {
+                        LoginMode = SourceRegistryLoginMode.Default,
+                    },
                     CustomRegistries =
 {
 ["myregistry.azurecr.io"] = new CustomRegistryCredentials
@@ -657,8 +659,7 @@ ObjectType = ContainerRegistrySecretObjectType.Opaque,
                 },
                 IsArchiveEnabled = true,
             };
-            ArmOperation<ContainerRegistryRunResource> lro = await containerRegistry.ScheduleRunAsync(WaitUntil.Completed, content);
-            ContainerRegistryRunResource result = lro.Value;
+            ContainerRegistryRunResource result = await containerRegistry.ScheduleRunAsync(content);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -671,7 +672,7 @@ ObjectType = ContainerRegistrySecretObjectType.Opaque,
         [Ignore("Only validating compilation of examples")]
         public async Task ScheduleRun_RegistriesScheduleRunWithLogTemplate()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesScheduleRun_WithLogTemplate.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/RegistriesScheduleRun_WithLogTemplate.json
             // this example is just showing the usage of "Schedules_ScheduleRun" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -708,8 +709,7 @@ IsSecret = true,
                 IsArchiveEnabled = true,
                 LogTemplate = "acr/tasks:{{.Run.OS}}",
             };
-            ArmOperation<ContainerRegistryRunResource> lro = await containerRegistry.ScheduleRunAsync(WaitUntil.Completed, content);
-            ContainerRegistryRunResource result = lro.Value;
+            ContainerRegistryRunResource result = await containerRegistry.ScheduleRunAsync(content);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -722,7 +722,7 @@ IsSecret = true,
         [Ignore("Only validating compilation of examples")]
         public async Task GetBuildSourceUploadUrl_RegistriesGetBuildSourceUploadUrl()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesGetBuildSourceUploadUrl.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/RegistriesGetBuildSourceUploadUrl.json
             // this example is just showing the usage of "Builds_GetBuildSourceUploadUrl" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -5,10 +5,10 @@ import { EmitContext } from "@typespec/compiler";
 
 import {
   $onEmit as $onMTGEmit,
-  CSharpEmitterOptions
 } from "@typespec/http-client-csharp";
+import { AzureEmitterOptions } from "./options.js";
 
-export async function $onEmit(context: EmitContext<CSharpEmitterOptions>) {
+export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
   context.options["generator-name"] ??= "AzureClientGenerator";
   context.options["emitter-extension-path"] ??= import.meta.url;
   context.options["license"] ??= { name: "MIT License", company: "Microsoft Corporation" };
