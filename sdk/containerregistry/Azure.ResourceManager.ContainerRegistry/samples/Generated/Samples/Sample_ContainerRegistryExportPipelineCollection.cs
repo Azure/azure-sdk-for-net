@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ExportPipelineCreate()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/ExportPipelineCreate.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/ExportPipelineCreate.json
             // this example is just showing the usage of "ExportPipelines_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ExportPipelineGet()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/ExportPipelineGet.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/ExportPipelineGet.json
             // this example is just showing the usage of "ExportPipelines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ExportPipelineList()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/ExportPipelineList.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/ExportPipelineList.json
             // this example is just showing the usage of "ExportPipelines_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ExportPipelineGet()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/ExportPipelineGet.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/ExportPipelineGet.json
             // this example is just showing the usage of "ExportPipelines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ExportPipelineGet()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2024-11-01-preview/examples/ExportPipelineGet.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/ExportPipelineGet.json
             // this example is just showing the usage of "ExportPipelines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

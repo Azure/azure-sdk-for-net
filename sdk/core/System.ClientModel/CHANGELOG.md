@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.3 (Unreleased)
+## 1.4.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0-beta.3 (2025-04-16)
+
+### Bugs Fixed
+
+- System.ClientModel.SourceGeneration adds the Default property even when no type builders exist.
 
 ## 1.4.0-beta.2 (2025-04-14)
 
