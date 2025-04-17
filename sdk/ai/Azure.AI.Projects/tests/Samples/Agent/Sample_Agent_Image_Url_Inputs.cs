@@ -27,7 +27,7 @@ namespace Azure.AI.Projects.Tests
         [AsyncOnly]
         public async Task ImageUrlInMessageExampleAsync()
         {
-            #region Snippet:ImageUrlInMessageCreateClient
+            #region ImageUrlInMessageCreateClient
 #if SNIPPET
             var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
             var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -131,7 +131,7 @@ namespace Azure.AI.Projects.Tests
         [SyncOnly]
         public void ImageUrlInMessageExample()
         {
-            #region Snippet:ImageUrlInMessageCreateClient_Sync
+            #region ImageUrlInMessageCreateClient_Sync
 #if SNIPPET
             var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
             var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
