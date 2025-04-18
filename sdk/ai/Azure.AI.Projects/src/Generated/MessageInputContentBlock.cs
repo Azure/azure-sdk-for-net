@@ -11,11 +11,11 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary>
-    /// An abstract representation of an input tool definition that an agent can use.
-    /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
+    /// Defines a single content block when creating a message. The 'type' field determines whether it is text, an image file, or an external image URL, etc.
+    /// Please note <see cref="MessageInputContentBlock"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="MessageInputImageFileBlock"/>, <see cref="MessageInputImageUrlBlock"/> and <see cref="MessageInputTextBlock"/>.
     /// </summary>
-    public abstract partial class ToolDefinition
+    public abstract partial class MessageInputContentBlock
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,21 +49,21 @@ namespace Azure.AI.Projects
         /// </summary>
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ToolDefinition"/>. </summary>
-        protected ToolDefinition()
+        /// <summary> Initializes a new instance of <see cref="MessageInputContentBlock"/>. </summary>
+        protected MessageInputContentBlock()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolDefinition"/>. </summary>
-        /// <param name="type"> The object type. </param>
+        /// <summary> Initializes a new instance of <see cref="MessageInputContentBlock"/>. </summary>
+        /// <param name="type"> Specifies which kind of content block this is (text, image_file, image_url, etc.). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MessageInputContentBlock(MessageBlockType type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The object type. </summary>
-        internal string Type { get; set; }
+        /// <summary> Specifies which kind of content block this is (text, image_file, image_url, etc.). </summary>
+        internal MessageBlockType Type { get; set; }
     }
 }

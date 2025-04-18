@@ -10,12 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary>
-    /// An abstract representation of an input tool definition that an agent can use.
-    /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
-    /// </summary>
-    public abstract partial class ToolDefinition
+    /// <summary> Defines how an internally uploaded image file is referenced when creating an image-file block. </summary>
+    public partial class MessageImageFileParam
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,23 +43,37 @@ namespace Azure.AI.Projects
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ToolDefinition"/>. </summary>
-        protected ToolDefinition()
+        /// <summary> Initializes a new instance of <see cref="MessageImageFileParam"/>. </summary>
+        /// <param name="fileId"> The ID of the previously uploaded image file. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
+        public MessageImageFileParam(string fileId)
         {
+            Argument.AssertNotNull(fileId, nameof(fileId));
+
+            FileId = fileId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolDefinition"/>. </summary>
-        /// <param name="type"> The object type. </param>
+        /// <summary> Initializes a new instance of <see cref="MessageImageFileParam"/>. </summary>
+        /// <param name="fileId"> The ID of the previously uploaded image file. </param>
+        /// <param name="detail"> Optional detail level for the image (auto, low, or high). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MessageImageFileParam(string fileId, ImageDetailLevel? detail, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
+            FileId = fileId;
+            Detail = detail;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The object type. </summary>
-        internal string Type { get; set; }
+        /// <summary> Initializes a new instance of <see cref="MessageImageFileParam"/> for deserialization. </summary>
+        internal MessageImageFileParam()
+        {
+        }
+
+        /// <summary> The ID of the previously uploaded image file. </summary>
+        public string FileId { get; }
+        /// <summary> Optional detail level for the image (auto, low, or high). </summary>
+        public ImageDetailLevel? Detail { get; set; }
     }
 }

@@ -10,12 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary>
-    /// An abstract representation of an input tool definition that an agent can use.
-    /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
-    /// </summary>
-    public abstract partial class ToolDefinition
+    /// <summary> Defines how an external image URL is referenced when creating an image-URL block. </summary>
+    public partial class MessageImageUrlParam
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,23 +43,37 @@ namespace Azure.AI.Projects
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ToolDefinition"/>. </summary>
-        protected ToolDefinition()
+        /// <summary> Initializes a new instance of <see cref="MessageImageUrlParam"/>. </summary>
+        /// <param name="url"> The publicly accessible URL of the external image. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        public MessageImageUrlParam(string url)
         {
+            Argument.AssertNotNull(url, nameof(url));
+
+            Url = url;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolDefinition"/>. </summary>
-        /// <param name="type"> The object type. </param>
+        /// <summary> Initializes a new instance of <see cref="MessageImageUrlParam"/>. </summary>
+        /// <param name="url"> The publicly accessible URL of the external image. </param>
+        /// <param name="detail"> Optional detail level for the image (auto, low, or high). Defaults to 'auto' if not specified. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MessageImageUrlParam(string url, ImageDetailLevel? detail, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
+            Url = url;
+            Detail = detail;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The object type. </summary>
-        internal string Type { get; set; }
+        /// <summary> Initializes a new instance of <see cref="MessageImageUrlParam"/> for deserialization. </summary>
+        internal MessageImageUrlParam()
+        {
+        }
+
+        /// <summary> The publicly accessible URL of the external image. </summary>
+        public string Url { get; }
+        /// <summary> Optional detail level for the image (auto, low, or high). Defaults to 'auto' if not specified. </summary>
+        public ImageDetailLevel? Detail { get; set; }
     }
 }
