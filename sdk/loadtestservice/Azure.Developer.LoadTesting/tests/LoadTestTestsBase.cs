@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Linq;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;

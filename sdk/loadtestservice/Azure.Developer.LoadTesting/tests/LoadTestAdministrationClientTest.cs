@@ -322,9 +322,10 @@ namespace Azure.Developer.LoadTesting.Tests
         [Category(REQUIRES_LOAD_TEST)]
         public async Task UploadTestFile_WaitUntilCompleted()
         {
+            var fileContentStream = await _testHelper.GetFileContentStreamAsync(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), _fileName));
             FileUploadResultOperation fileUploadOperation = await _loadTestAdministrationClient.UploadTestFileAsync(
                 WaitUntil.Completed, _testId, _fileName, RequestContent.Create(
-                    File.OpenRead(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), _fileName))
+                    fileContentStream
                     )
                 );
 
@@ -339,9 +340,10 @@ namespace Azure.Developer.LoadTesting.Tests
         [Category(REQUIRES_LOAD_TEST)]
         public async Task UploadTestFile_PollOperation()
         {
+            var fileContentStream = await _testHelper.GetFileContentStreamAsync(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), _fileName));
             FileUploadResultOperation fileUploadOperation = await _loadTestAdministrationClient.UploadTestFileAsync(
                    WaitUntil.Started, _testId, _fileName, RequestContent.Create(
-                        File.OpenRead(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), _fileName))
+                        fileContentStream
                     )
                 );
 

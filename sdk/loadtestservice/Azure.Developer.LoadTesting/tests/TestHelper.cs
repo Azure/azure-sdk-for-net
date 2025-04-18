@@ -66,7 +66,7 @@ namespace Azure.Developer.LoadTesting.Tests.Helper
         {
             loadTestAdministrationClient.UploadTestFile(
                 waitUntil, testId, fileName, RequestContent.Create(
-                    File.OpenRead(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), fileName))
+                    GetFileContentStream(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), fileName))
                     )
                 );
         }
@@ -75,7 +75,7 @@ namespace Azure.Developer.LoadTesting.Tests.Helper
         {
             await loadTestAdministrationClient.UploadTestFileAsync(
                  waitUntil, testId, fileName, RequestContent.Create(
-                    File.OpenRead(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), fileName))
+                    await GetFileContentStreamAsync(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), fileName))
                     )
                 );
         }
@@ -226,6 +226,30 @@ namespace Azure.Developer.LoadTesting.Tests.Helper
                         displayName = "TestProfileRun created from dotnet test framework"
                     }
                 ));
+        }
+
+        public Stream GetFileContentStream(string filePath)
+        {
+            // NOTE: This is just used to escape the line endings in the file before sending it.
+            var fileContent = File.ReadAllText(filePath)
+                .Replace("\n\r", "\n"); // Normalize line endings
+
+            var fileBytes = System.Text.Encoding.UTF8.GetBytes(fileContent);
+            return new MemoryStream(fileBytes);
+        }
+
+        public async Task<Stream> GetFileContentStreamAsync(string filePath)
+        {
+            // NOTE: This is just used to escape the line endings in the file before sending it.
+#if NETFRAMEWORK
+            var fileContent = await Task.FromResult(File.ReadAllText(filePath)
+                .Replace("\n\r", "\n"));
+#else
+            var fileContent = await File.ReadAllTextAsync(filePath);
+            fileContent.Replace("\n\r", "\n"); // Normalize line endings
+#endif
+            var fileBytes = System.Text.Encoding.UTF8.GetBytes(fileContent);
+            return new MemoryStream(fileBytes);
         }
     }
 }
