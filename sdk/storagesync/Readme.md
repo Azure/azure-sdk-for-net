@@ -8,6 +8,7 @@ This handbook provides guidelines and instructions for developers working on the
 To set up test resources, run the following PowerShell script in Powershell core (pwsh):
 
 ```powershell
+cd eng\scripts
 .\New-TestResources.ps1 `
     -BaseName 'azsdk' `
     -ResourceGroupName 'azsdk2022-09-01' `
@@ -29,7 +30,7 @@ To set up test resources, run the following PowerShell script in Powershell core
 To update snippets, run the following PowerShell script:
 
 ```powershell
-Location : eng\scripts
+cd eng\scripts
 .\Update-Snippets.ps1 storagesync
 ```
 
@@ -38,7 +39,7 @@ Location : eng\scripts
 To export the API, run the following PowerShell script:
 
 ```powershell
-Location : eng\scripts
+cd eng\scripts
 .\Export-API.ps1 storagesync
 ```
 
@@ -47,7 +48,7 @@ Location : eng\scripts
 After changing `sdk\storagesync\Azure.ResourceManager.StorageSync\autorest.md`, generate the code by running:
 
 ```powershell
-Location : sdk\storagesync\Azure.ResourceManager.StorageSync\
+cd sdk\storagesync\Azure.ResourceManager.StorageSync\
 dotnet build /t:GenerateCode
 ```
 
@@ -56,13 +57,13 @@ dotnet build /t:GenerateCode
 To run tests, use the following command:
 
 ```powershell
-Location : sdk\storagesync\Azure.ResourceManager.StorageSync\
+cd sdk\storagesync\Azure.ResourceManager.StorageSync\
 dotnet test --framework net9.0 --filter "Name~StorageSyncServiceGetTest"
 ```
 
 ## Download GitHub CLI
 
-Download the GitHub CLI from https://github.com/cli/cli/releases/tag/v2.70.0 and authenticate:
+Download the GitHub CLI from [GitHub Download Release](https://github.com/cli/cli/releases/tag/v2.70.0) and authenticate:
 
 ```powershell
 github auth login
@@ -73,17 +74,17 @@ github auth login
 To push the test proxy, run:
 
 ```powershell
-Location : sdk\storagesync\Azure.ResourceManager.StorageSync\
+cd sdk\storagesync\Azure.ResourceManager.StorageSync\
 test-proxy push -a .\assets.json
 ```
 
 ## Observations
 
-- Session Recording are now stored in separate repository https://github.com/Azure/azure-sdk-assets. This link can help to extract test recordings : https://github.com/Azure/azure-sdk-tools/tree/main/tools/test-proxy/documentation/asset-sync#asset-sync-retrieve-external-test-recordings
+- Session Recording are now stored in separate repository [azure-sdk-assets](https://github.com/Azure/azure-sdk-assets). This link can help to extract test recordings : [asset-sync#asset-sync-retrieve-external-test-recordings](https://github.com/Azure/azure-sdk-tools/tree/main/tools/test-proxy/documentation/asset-sync#asset-sync-retrieve-external-test-recordings)
 
 - Test-proxy has been shipped within the eng/common/testproxy folder for any repo owned by the azure-sdk team.
 
-- **Enable Logging to a file:** https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#enable-and-configure-logging
+- **Enable Logging to a file:** [Azure.Identity#enable-and-configure-logging](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#enable-and-configure-logging)
 
 - **Tenant Mismatch Error:** This error occurs due to the credential not honoring the tenant ID provided in the default credentials construction. 
 
@@ -102,3 +103,10 @@ test-proxy push -a .\assets.json
 - Tests are not required to be run for Samples.
 
 - It is sufficient to run tests for one framework only; running tests for all frameworks is not necessary.
+
+- TestProxy command can fail with the following error and can be resolved by Github auth login command:
+   
+   ```powershell
+   github auth login
+   ```
+  Git ran into an unrecoverable error. Test-Proxy is exiting. The error output from git is: remote: The 'Azure' organization has enabled or enforced SAML SSO. remote: To access this repository, you must re-authorize the OAuth Application 'Visual Studio'. fatal: unable to access 'https://github.com/Azure/azure-sdk-assets/': The requested URL returned error: 403
