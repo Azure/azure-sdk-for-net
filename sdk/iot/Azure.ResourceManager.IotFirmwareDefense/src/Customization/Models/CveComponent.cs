@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CveComponent"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public CveComponent()
         {
         }
@@ -51,6 +53,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="name"> Name of the SBOM component. </param>
         /// <param name="version"> Version of the SBOM component. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         internal CveComponent(string componentId, string name, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ComponentId = componentId;
@@ -60,10 +63,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> ID of the SBOM component. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string ComponentId { get; set; }
         /// <summary> Name of the SBOM component. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string Name { get; set; }
         /// <summary> Version of the SBOM component. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string Version { get; set; }
     }
 }

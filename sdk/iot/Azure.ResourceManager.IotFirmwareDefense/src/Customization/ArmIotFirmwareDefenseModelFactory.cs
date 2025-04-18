@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             foreach (string usageString in usage)
             {
                 certificateUsage.Add(new CertificateUsage(usageString));
-            }   
+            }
 
             return CryptoCertificateResult(
                 id: id,
@@ -125,6 +125,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="pairedKey"> A matching paired key or certificate. </param>
         /// <param name="isShortKeySize"> Indicates the key size is considered too small to be secure for the algorithm. </param>
         /// <returns> A new <see cref="Models.CryptoKeyResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static CryptoKeyResult CryptoKeyResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cryptoKeyId, string keyType, long? keySize = null, string keyAlgorithm = null, IEnumerable<string> usage = null, IEnumerable<string> filePaths = null, CryptoPairedKey pairedKey = null, bool? isShortKeySize = null)
         {
             usage ??= new List<string>();
@@ -162,6 +163,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="links"> The list of reference links for the CVE. </param>
         /// <param name="description"> The CVE description. </param>
         /// <returns> A new <see cref="Models.CveResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static CveResult CveResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cveId, CveComponent component = null, string severity = null, string namePropertiesName = null, string cvssScore = null, string cvssVersion = null, string cvssV2Score = null, string cvssV3Score = null, IEnumerable<CveLink> links = null, string description = null)
         {
             links ??= new List<CveLink>();
@@ -197,6 +199,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
          /// <summary> Initializes a new instance of <see cref="Models.FirmwareAnalysisWorkspacePatch"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.FirmwareAnalysisWorkspacePatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static FirmwareAnalysisWorkspacePatch FirmwareAnalysisWorkspacePatch(FirmwareProvisioningState? provisioningState = null)
         {
             return new FirmwareAnalysisWorkspacePatch();
@@ -209,6 +212,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="low"> The total number of low severity CVEs detected. </param>
         /// <param name="unknown"> The total number of unknown severity CVEs detected. </param>
         /// <returns> A new <see cref="Models.CveSummary"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static CveSummary CveSummary(long? critical = null, long? high = null, long? medium = null, long? low = null, long? unknown = null) =>
             CveSummary(
                 critical: critical,
@@ -225,6 +229,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="canaryPercentage"> Canary summary percentage. </param>
         /// <param name="strippedPercentage"> Stripped summary percentage. </param>
         /// <returns> A new <see cref="Models.BinaryHardeningSummary"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static BinaryHardeningSummary BinaryHardeningSummary(long? totalFiles = null, int? nxPercentage = null, int? piePercentage = null, int? relroPercentage = null, int? canaryPercentage = null, int? strippedPercentage = null) =>
             BinaryHardeningSummary(
                 totalFiles: totalFiles,
@@ -243,6 +248,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="selfSigned"> Total number of certificates found that are self-signed. </param>
         /// <param name="shortKeySize"> Total number of certificates found that have an insecure key size for the key algorithm. </param>
         /// <returns> A new <see cref="Models.CryptoCertificateSummary"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static CryptoCertificateSummary CryptoCertificateSummary(long? totalCertificates = null, long? pairedKeys = null, long? expired = null, long? expiringSoon = null, long? weakSignature = null, long? selfSigned = null, long? shortKeySize = null) =>
             CryptoCertificateSummary(
                 totalCertificateCount: totalCertificates,
@@ -260,6 +266,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="pairedKeys"> Total number of keys found that have a matching paired key or certificate. </param>
         /// <param name="shortKeySize"> Total number of keys found that have an insecure key size for the algorithm. </param>
         /// <returns> A new <see cref="Models.CryptoKeySummary"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static CryptoKeySummary CryptoKeySummary(long? totalKeys = null, long? publicKeys = null, long? privateKeys = null, long? pairedKeys = null, long? shortKeySize = null) =>
             CryptoKeySummary(
                 totalKeyCount: totalKeys,
