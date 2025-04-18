@@ -61,7 +61,8 @@ namespace Azure.Storage.DataMovement
 
         protected internal override Task<StorageResourceContainerProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            throw new InvalidOperationException("SingleItemStorageResourceContainer does not support GetPropertiesAsync");
+            // This should never be called for a single item
+            throw Errors.SingleItemContainerNoGetProperties();
         }
     }
 }
