@@ -243,18 +243,8 @@ namespace Azure.Core.TestFramework
                     }
                     else
                     {
-                        var defaultAzureCredentialOptions = new DefaultAzureCredentialOptions
-                        {
-                            ExcludeManagedIdentityCredential = true
-                        };
-
-                        var tenantId = GetVariable("TENANT_ID");
-                        if (!string.IsNullOrWhiteSpace(tenantId))
-                        {
-                            defaultAzureCredentialOptions.TenantId = tenantId;
-                        }
-
-                        _credential = new DefaultAzureCredential(defaultAzureCredentialOptions);
+                        _credential = new DefaultAzureCredential(
+                             new DefaultAzureCredentialOptions { ExcludeManagedIdentityCredential = true });
                     }
                 }
 
