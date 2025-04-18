@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     internal class ContainerRegistryRunOperationSource : IOperationSource<ContainerRegistryRunResource>
     {
+        private readonly ArmClient _client;
+
         ContainerRegistryRunResource IOperationSource<ContainerRegistryRunResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             var data = ModelReaderWriter.Read<ContainerRegistryRunData>(response.Content);
@@ -24,6 +26,11 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             var data = ModelReaderWriter.Read<ContainerRegistryRunData>(response.Content);
             return await Task.FromResult(new ContainerRegistryRunResource(_client, data)).ConfigureAwait(false);
+        }
+
+        internal ContainerRegistryRunOperationSource(ArmClient client)
+        {
+            _client = client;
         }
     }
 }
