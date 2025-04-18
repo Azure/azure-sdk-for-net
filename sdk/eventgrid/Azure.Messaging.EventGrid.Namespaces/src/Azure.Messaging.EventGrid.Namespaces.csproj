@@ -9,14 +9,13 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
-      </PropertyGroup>
+  </PropertyGroup>
 
     <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
-  <!-- Import EventGrid shared source -->
   <ItemGroup>
     <Compile Include="$(AzureEventGridSharedSources)CloudEventRequestContent.cs" LinkBase="Shared/EventGrid" />
   </ItemGroup>

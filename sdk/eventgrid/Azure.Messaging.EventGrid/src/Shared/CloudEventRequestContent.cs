@@ -18,7 +18,13 @@ namespace Azure.Messaging.EventGrid
         private const string TraceParentHeaderName = "traceparent";
         private const string TraceStateHeaderName = "tracestate";
         private readonly bool _isDistributedTracingEnabled;
-        private byte[] _data;
+        private RequestContent _data;
+
+        public CloudEventRequestContent(CloudEvent cloudEvent, bool isDistributedTracingEnabled)
+        {
+            _cloudEvents = [ cloudEvent ];
+            _isDistributedTracingEnabled = isDistributedTracingEnabled;
+        }
 
         public CloudEventRequestContent(IEnumerable<CloudEvent> cloudEvents, bool isDistributedTracingEnabled)
         {
@@ -33,20 +39,19 @@ namespace Azure.Messaging.EventGrid
         public override bool TryComputeLength(out long length)
         {
             EnsureSerialized();
-            length = _data.Length;
-            return true;
+            return _data.TryComputeLength(out length);
         }
 
         public override void WriteTo(Stream stream, CancellationToken cancellationToken)
         {
             EnsureSerialized();
-            stream.Write(_data, 0, _data.Length);
+            _data.WriteTo(stream, cancellationToken);
         }
 
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
         {
             EnsureSerialized();
-            await stream.WriteAsync(_data, 0, _data.Length, cancellationToken).ConfigureAwait(false);
+            await _data.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
         }
 
         private void EnsureSerialized()
@@ -81,7 +86,7 @@ namespace Azure.Messaging.EventGrid
                     }
                 }
             }
-            _data = JsonSerializer.SerializeToUtf8Bytes(_cloudEvents, typeof(IEnumerable<CloudEvent>));
+            _data = RequestContent.Create(_cloudEvents);
         }
     }
 }
