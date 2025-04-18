@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json.Serialization;
 using Azure.Core;
+using System.Text.Json.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {

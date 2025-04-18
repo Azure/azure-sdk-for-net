@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// The states of a call.
+    /// Media streaming auido channel.
     /// </summary>
     [CodeGenModel("MediaStreamingAudioChannelType", Usage = new string[] { "input" }, Formats = new string[] { "json" })]
     public readonly partial struct MediaStreamingAudioChannel

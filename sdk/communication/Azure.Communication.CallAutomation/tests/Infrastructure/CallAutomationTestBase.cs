@@ -32,7 +32,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                                         "\"subject\": \"dummySubject\"," +
                                         "\"callbackUri\": \"https://bot.contoso.com/callback\"," +
                                         "\"mediaStreamingSubscription\": {0}," +
-                                        "\"transcriptionSubscription\": {1}" +
+                                        "\"dataSubscriptionId\": {1}" +
                                         "}}";
         protected const string DummyConnectPayload = "{" +
                                         "\"callConnectionId\": \"someCallConnectionId\"," +
@@ -75,18 +75,14 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         private const string NoneMediaStreamingSubscription = "null";
         private const string MediaSubscriptionId = "\"mediaSubscriptionId\"";
+        private const string DataSubscriptionId = "\"dataSubscriptionId\"";
         private const string MediaStreamingSubscription = "{" +
                                         " \"id\": \"22c3a25a-aed5-47df-9ef9-5ba5c7b6d08e\"," +
                                         "\"state\": \"disabled\",\"subscribedContentTypes\": [" +
                                         "\"audio\"] }";
-        private const string TranscriptionSubscription = "{" +
-                                        "\"id\": \"81c66a1b-12eb-4d89-ab99-c9f0de59e893\"," +
-                                        "\"state\": \"inactive\"," +
-                                        "\"subscribedResultTypes\": [\"final\"]}";
         private const string NoneTranscriptionSubscription = "null";
-        private const string DataSubscriptionId = "\"dataSubscriptionId\"";
         protected string CreateOrAnswerCallOrGetCallConnectionPayload = string.Format(DummyPayload, NoneMediaStreamingSubscription, NoneTranscriptionSubscription);
-        protected string CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionAndTranscriptionPayload = string.Format(DummyPayload, MediaStreamingSubscription, TranscriptionSubscription);
+        protected string CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionAndTranscriptionPayload = string.Format(DummyPayload, MediaStreamingSubscription, DataSubscriptionId);
         protected string CreateOrAnswerCallOrGetCallConnectionPayloadWithTeamsAppSource = string.Format(DummyOPSPayload, NoneMediaStreamingSubscription, NoneTranscriptionSubscription);
 
         internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null)
@@ -115,7 +111,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
             var callAutomationClientOptions = new CallAutomationClientOptions()
             {
-                Source = new CommunicationUserIdentifier(SourceId),
+                Source = new CommunicationUserIdentifier("12345"),
                 Transport = new MockTransport(mockResponse)
             };
 
@@ -149,7 +145,6 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             Assert.AreEqual(CallConnectionState.Connecting, callConnectionProperties.CallConnectionState);
             Assert.AreEqual(CallBackUri, callConnectionProperties.CallbackUri.ToString());
         }
-
         protected void verifyOPSCallConnectionProperties(CallConnectionProperties callConnectionProperties)
         {
             Assert.AreEqual(CallConnectionId, callConnectionProperties.CallConnectionId);

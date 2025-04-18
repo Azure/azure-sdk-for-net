@@ -242,7 +242,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                                 ChannelAffinity = testChannelAffinities
                             })
                 },
-               new Func<CallRecording, TestDelegate>?[]
+                new Func<CallRecording, TestDelegate>?[]
                 {
                     callRecording => () =>
                         callRecording.Start(

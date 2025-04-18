@@ -17,19 +17,19 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public MediaEventReasonCode ReasonCode { get; internal set; }
 
-        /// <summary> Initializes a new instance of PlayPaused. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlayPaused"/>. </summary>
+        /// <param name="operationContext"></param>
+        /// <param name="resultInformation"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        internal PlayPaused(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
+        internal PlayPaused(string operationContext, ResultInformation resultInformation, string callConnectionId, string serverCallId, string correlationId)
         {
+            OperationContext = operationContext;
+            ResultInformation = resultInformation;
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
-            OperationContext = operationContext;
-            ResultInformation = resultInformation;
             ReasonCode = new MediaEventReasonCode(resultInformation.SubCode.ToString());
         }
 

@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Messaging;
 using Newtonsoft.Json.Linq;
@@ -477,32 +478,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         }
 
         [Test]
-        public void PlayFailedEventParsed_Test()
-        {
-            PlayFailed @event = CallAutomationModelFactory.PlayFailed(
-                callConnectionId: "callConnectionId",
-                serverCallId: "serverCallId",
-                correlationId: "correlationId",
-                operationContext: "operationContext",
-                resultInformation: new ResultInformation(code: 400, subCode: 8536, message: "Action failed, file could not be downloaded."));
-            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
-            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.PlayFailed");
-            if (parsedEvent is PlayFailed playFailed)
-            {
-                Assert.AreEqual("correlationId", playFailed.CorrelationId);
-                Assert.AreEqual("serverCallId", playFailed.ServerCallId);
-                Assert.AreEqual(400, playFailed.ResultInformation?.Code);
-                //Assert.AreEqual(MediaEventReasonCode.PlayDownloadFailed, playFailed.ResultInformation);
-                Assert.AreEqual(8536, playFailed.ResultInformation?.SubCode);
-            }
-            else
-            {
-                Assert.Fail("Event parsed wrongfully");
-            }
-        }
-
-        [Test]
         public void PlayStartedEventParsed_Test()
         {
             PlayStarted @event = CallAutomationModelFactory.PlayStarted(
@@ -519,6 +494,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("correlationId", playStarted.CorrelationId);
                 Assert.AreEqual("serverCallId", playStarted.ServerCallId);
                 Assert.AreEqual(200, playStarted.ResultInformation?.Code);
+                Assert.AreEqual(MediaEventReasonCode.CompletedSuccessfully, playStarted.ReasonCode);
             }
             else
             {
@@ -569,6 +545,32 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("serverCallId", playResumed.ServerCallId);
                 Assert.AreEqual(200, playResumed.ResultInformation?.Code);
                 Assert.AreEqual(MediaEventReasonCode.CompletedSuccessfully, playResumed.ReasonCode);
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
+        public void PlayFailedEventParsed_Test()
+        {
+            PlayFailed @event = CallAutomationModelFactory.PlayFailed(
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId",
+                operationContext: "operationContext",
+                resultInformation: new ResultInformation(code: 400, subCode: 8536, message: "Action failed, file could not be downloaded."));
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.PlayFailed");
+            if (parsedEvent is PlayFailed playFailed)
+            {
+                Assert.AreEqual("correlationId", playFailed.CorrelationId);
+                Assert.AreEqual("serverCallId", playFailed.ServerCallId);
+                Assert.AreEqual(400, playFailed.ResultInformation?.Code);
+                //Assert.AreEqual(MediaEventReasonCode.PlayDownloadFailed, playFailed.ResultInformation);
+                Assert.AreEqual(8536, playFailed.ResultInformation?.SubCode);
             }
             else
             {
@@ -1082,7 +1084,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 correlationId: "correlationId",
                 operationContext: "operationContext",
                 resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"),
-                transcriptionUpdate: new TranscriptionUpdate(TranscriptionStatus.TranscriptionStarted, TranscriptionStatusDetails.SubscriptionStarted));
+                transcriptionUpdateResult: new TranscriptionUpdate(TranscriptionStatus.TranscriptionStarted, TranscriptionStatusDetails.SubscriptionStarted));
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.TranscriptionStarted");
@@ -1093,8 +1095,8 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("serverCallId", transcriptionStarted.ServerCallId);
                 Assert.AreEqual("operationContext", transcriptionStarted.OperationContext);
                 Assert.AreEqual(200, transcriptionStarted.ResultInformation?.Code);
-                Assert.AreEqual(TranscriptionStatus.TranscriptionStarted, transcriptionStarted.TranscriptionUpdate.TranscriptionStatus);
-                Assert.AreEqual(TranscriptionStatusDetails.SubscriptionStarted, transcriptionStarted.TranscriptionUpdate.TranscriptionStatusDetails);
+                Assert.AreEqual(TranscriptionStatus.TranscriptionStarted, transcriptionStarted.TranscriptionUpdateResult.TranscriptionStatus);
+                Assert.AreEqual(TranscriptionStatusDetails.SubscriptionStarted, transcriptionStarted.TranscriptionUpdateResult.TranscriptionStatusDetails);
             }
             else
             {
@@ -1111,7 +1113,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 correlationId: "correlationId",
                 operationContext: "operationContext",
                 resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"),
-                transcriptionUpdate: new TranscriptionUpdate(TranscriptionStatus.TranscriptionUpdated, TranscriptionStatusDetails.StreamConnectionReestablished));
+                transcriptionUpdateResult: new TranscriptionUpdate(TranscriptionStatus.TranscriptionUpdated, TranscriptionStatusDetails.StreamConnectionReestablished));
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.TranscriptionUpdated");
@@ -1122,8 +1124,8 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("serverCallId", transcriptionUpdated.ServerCallId);
                 Assert.AreEqual("operationContext", transcriptionUpdated.OperationContext);
                 Assert.AreEqual(200, transcriptionUpdated.ResultInformation?.Code);
-                Assert.AreEqual(TranscriptionStatus.TranscriptionUpdated, transcriptionUpdated.TranscriptionUpdate.TranscriptionStatus);
-                Assert.AreEqual(TranscriptionStatusDetails.StreamConnectionReestablished, transcriptionUpdated.TranscriptionUpdate.TranscriptionStatusDetails);
+                Assert.AreEqual(TranscriptionStatus.TranscriptionUpdated, transcriptionUpdated.TranscriptionUpdateResult.TranscriptionStatus);
+                Assert.AreEqual(TranscriptionStatusDetails.StreamConnectionReestablished, transcriptionUpdated.TranscriptionUpdateResult.TranscriptionStatusDetails);
             }
             else
             {
@@ -1140,7 +1142,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 correlationId: "correlationId",
                 operationContext: "operationContext",
                 resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"),
-                transcriptionUpdate: new TranscriptionUpdate(transcriptionStatus: TranscriptionStatus.TranscriptionStopped, transcriptionStatusDetails: TranscriptionStatusDetails.SubscriptionStopped));
+                transcriptionUpdateResult: new TranscriptionUpdate(transcriptionStatus: TranscriptionStatus.TranscriptionStopped, transcriptionStatusDetails: TranscriptionStatusDetails.SubscriptionStopped));
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.TranscriptionStopped");
@@ -1151,8 +1153,8 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("serverCallId", transcriptionStopped.ServerCallId);
                 Assert.AreEqual("operationContext", transcriptionStopped.OperationContext);
                 Assert.AreEqual(200, transcriptionStopped.ResultInformation?.Code);
-                Assert.AreEqual(TranscriptionStatus.TranscriptionStopped, transcriptionStopped.TranscriptionUpdate.TranscriptionStatus);
-                Assert.AreEqual(TranscriptionStatusDetails.SubscriptionStopped, transcriptionStopped.TranscriptionUpdate.TranscriptionStatusDetails);
+                Assert.AreEqual(TranscriptionStatus.TranscriptionStopped, transcriptionStopped.TranscriptionUpdateResult.TranscriptionStatus);
+                Assert.AreEqual(TranscriptionStatusDetails.SubscriptionStopped, transcriptionStopped.TranscriptionUpdateResult.TranscriptionStatusDetails);
             }
             else
             {
@@ -1169,7 +1171,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 correlationId: "correlationId",
                 operationContext: "operationContext",
                 resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"),
-                transcriptionUpdate: new TranscriptionUpdate(transcriptionStatus: TranscriptionStatus.TranscriptionFailed, transcriptionStatusDetails: TranscriptionStatusDetails.UnspecifiedError));
+                transcriptionUpdateResult: new TranscriptionUpdate(transcriptionStatus: TranscriptionStatus.TranscriptionFailed, transcriptionStatusDetails: TranscriptionStatusDetails.UnspecifiedError));
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.TranscriptionFailed");
@@ -1180,8 +1182,8 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("serverCallId", transcriptionFailed.ServerCallId);
                 Assert.AreEqual("operationContext", transcriptionFailed.OperationContext);
                 Assert.AreEqual(200, transcriptionFailed.ResultInformation?.Code);
-                Assert.AreEqual(TranscriptionStatus.TranscriptionFailed, transcriptionFailed.TranscriptionUpdate.TranscriptionStatus);
-                Assert.AreEqual(TranscriptionStatusDetails.UnspecifiedError, transcriptionFailed.TranscriptionUpdate.TranscriptionStatusDetails);
+                Assert.AreEqual(TranscriptionStatus.TranscriptionFailed, transcriptionFailed.TranscriptionUpdateResult.TranscriptionStatus);
+                Assert.AreEqual(TranscriptionStatusDetails.UnspecifiedError, transcriptionFailed.TranscriptionUpdateResult.TranscriptionStatusDetails);
             }
             else
             {
@@ -1403,56 +1405,27 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         }
 
         [Test]
-        public void IncomingCallEventParsed_XMS_Header_Test()
+        public void ConnectFailedEventParsed_Test()
         {
             // arrange
-            var to = new CommunicationUserIdentifier("8:acs:12345");
-            var from = new CommunicationUserIdentifier("8:acs:54321");
-            var callerDisplayName = "callerDisplayName";
+            var callConnectionId = "callConnectionId";
             var serverCallId = "serverCallId";
-
-            Dictionary<string, string> sipHeaders = new Dictionary<string, string>();
-            Dictionary<string, string> voipHeaders = new Dictionary<string, string>();
-            var customContext = new CustomCallingContext(sipHeaders, voipHeaders);
-            customContext.AddSipX("Test-SIP-Header", "TestSIPValue", CustomCallingContext.SipHeaderPrefix.XMSCustom);
-            customContext.AddVoip("Test-VoIP-Header", "TestVoIPValue");
-
-            var incomingCallContext = "incomingCallContext";
-            var onBehalfOfCallee = from;
             var correlationId = "correlationId";
-            var @event = CallAutomationModelFactory.IncomingCall(to, from, callerDisplayName, serverCallId, customContext, incomingCallContext, onBehalfOfCallee, correlationId);
-
+            var @event = CallAutomationModelFactory.ConnectFailed(callConnectionId, serverCallId, correlationId);
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
 
             // act
-            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.IncomingCall");
-            var IncomingCall = (IncomingCall)parsedEvent;
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.ConnectFailed");
 
             // assert
-            if (parsedEvent is IncomingCall)
+            if (parsedEvent is ConnectFailed connectFailed)
             {
-                Assert.AreEqual(to.RawId, IncomingCall.To.RawId);
-                Assert.AreEqual(from.RawId, IncomingCall.From.RawId);
-                Assert.AreEqual(callerDisplayName, IncomingCall.CallerDisplayName);
-                Assert.AreEqual(serverCallId, IncomingCall.ServerCallId);
-
-                Assert.AreEqual(customContext.SipHeaders.First().Key, IncomingCall.CustomContext.SipHeaders.First().Key);
-                Assert.AreEqual(customContext.SipHeaders.First().Value, IncomingCall.CustomContext.SipHeaders.First().Value);
-                Assert.AreEqual(customContext.VoipHeaders.First().Key, IncomingCall.CustomContext.VoipHeaders.First().Key);
-                Assert.AreEqual(customContext.VoipHeaders.First().Value, IncomingCall.CustomContext.VoipHeaders.First().Value);
-
-                Assert.AreEqual(incomingCallContext, IncomingCall.IncomingCallContext);
-                Assert.AreEqual(onBehalfOfCallee.RawId, IncomingCall.OnBehalfOfCallee.RawId);
-                Assert.AreEqual(correlationId, IncomingCall.CorrelationId);
-
-                var sipHeaderKey = IncomingCall.CustomContext.SipHeaders.First().Key;
-                var sipHeaderValue = IncomingCall.CustomContext.SipHeaders.First().Value;
-                Console.WriteLine($"SIP Header -> Key: {sipHeaderKey}, Value: {sipHeaderValue}");
-
-                var voipHeaderKey = IncomingCall.CustomContext.VoipHeaders.First().Key;
-                var voipHeaderValue = IncomingCall.CustomContext.VoipHeaders.First().Value;
-                Console.WriteLine($"VoIP Header -> Key: {voipHeaderKey}, Value: {voipHeaderValue}");
+                Assert.AreEqual(callConnectionId, connectFailed.CallConnectionId);
+                Assert.AreEqual(serverCallId, connectFailed.ServerCallId);
+                Assert.AreEqual(correlationId, connectFailed.CorrelationId);
+                Assert.IsNull(connectFailed.OperationContext);
+                Assert.IsNull(connectFailed.ResultInformation);
             }
             else
             {
@@ -1461,7 +1434,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         }
 
         [Test]
-        public void IncomingCallEventParsed_X_Header_Test()
+        public void IncomingCallEventParsed_Test()
         {
             // arrange
             var to = new CommunicationUserIdentifier("8:acs:12345");
@@ -1472,13 +1445,13 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             Dictionary<string, string> sipHeaders = new Dictionary<string, string>();
             Dictionary<string, string> voipHeaders = new Dictionary<string, string>();
             var customContext = new CustomCallingContext(sipHeaders, voipHeaders);
-            customContext.AddSipX("Test-SIP-Header", "TestSIPValue", CustomCallingContext.SipHeaderPrefix.X);
+            customContext.AddSipX("Test-SIP-Header", "TestSIPValue");
             customContext.AddVoip("Test-VoIP-Header", "TestVoIPValue");
 
             var incomingCallContext = "incomingCallContext";
             var onBehalfOfCallee = from;
             var correlationId = "correlationId";
-            var @event = CallAutomationModelFactory.IncomingCall(to, from, callerDisplayName, serverCallId, customContext, incomingCallContext, onBehalfOfCallee, correlationId);
+            var @event = CallAutomationModelFactory.IncomingCall(to, from ,callerDisplayName, serverCallId, customContext, incomingCallContext, onBehalfOfCallee, correlationId);
 
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
@@ -1503,14 +1476,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual(incomingCallContext, IncomingCall.IncomingCallContext);
                 Assert.AreEqual(onBehalfOfCallee.RawId, IncomingCall.OnBehalfOfCallee.RawId);
                 Assert.AreEqual(correlationId, IncomingCall.CorrelationId);
-
-                var sipHeaderKey = IncomingCall.CustomContext.SipHeaders.First().Key;
-                var sipHeaderValue = IncomingCall.CustomContext.SipHeaders.First().Value;
-                Console.WriteLine($"SIP Header -> Key: {sipHeaderKey}, Value: {sipHeaderValue}");
-
-                var voipHeaderKey = IncomingCall.CustomContext.VoipHeaders.First().Key;
-                var voipHeaderValue = IncomingCall.CustomContext.VoipHeaders.First().Value;
-                Console.WriteLine($"VoIP Header -> Key: {voipHeaderKey}, Value: {voipHeaderValue}");
             }
             else
             {

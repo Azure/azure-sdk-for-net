@@ -18,25 +18,28 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="RecordingStateChanged"/>. </summary>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="recordingId"> The call recording id. </param>
         /// <param name="state"></param>
         /// <param name="startDateTime"> The time of the recording started. </param>
         /// <param name="recordingKind"></param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
-        internal RecordingStateChanged(string callConnectionId, string serverCallId, string correlationId, string recordingId, RecordingState state, DateTimeOffset? startDateTime, RecordingKind? recordingKind, ResultInformation resultInformation)
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        internal RecordingStateChanged(string recordingId, RecordingState state, DateTimeOffset? startDateTime, RecordingKind? recordingKind, string operationContext, ResultInformation resultInformation, string callConnectionId, string serverCallId, string correlationId)
         {
-            CallConnectionId = callConnectionId;
-            ServerCallId = serverCallId;
-            CorrelationId = correlationId;
             RecordingId = recordingId;
             State = state;
             StartDateTime = startDateTime;
             RecordingKind = recordingKind;
+            OperationContext = operationContext;
             ResultInformation = resultInformation;
+            CallConnectionId = callConnectionId;
+            ServerCallId = serverCallId;
+            CorrelationId = correlationId;
         }
+
         /// <summary> The call recording id. </summary>
         public string RecordingId { get; }
         /// <summary> The time of the recording started. </summary>

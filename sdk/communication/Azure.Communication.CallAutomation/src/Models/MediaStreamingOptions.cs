@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
             MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType, MediaStreamingTransport transportType = default, bool? startMediaStreaming = null)
         {
             TransportUri = transportUri;
-            MediaStreamingTransport = transportType;
+            MediaStreamingTransport = transportType == default ? MediaStreamingTransport.Websocket : transportType;
             MediaStreamingContent = contentType;
             MediaStreamingAudioChannel = audioChannelType;
             StartMediaStreaming = startMediaStreaming;

@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="dialog">
         /// Defines the dialog.
         /// Please note <see cref="BaseDialog"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureOpenAIDialog"/> and <see cref="PowerVirtualAgentsDialog"/>.
+        /// The available derived classes include <see cref="PowerVirtualAgentsDialog"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dialog"/> is null. </exception>
         public StartDialogRequestInternal(BaseDialog dialog)
@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="dialog">
         /// Defines the dialog.
         /// Please note <see cref="BaseDialog"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureOpenAIDialog"/> and <see cref="PowerVirtualAgentsDialog"/>.
+        /// The available derived classes include <see cref="PowerVirtualAgentsDialog"/>.
         /// </param>
         /// <param name="operationCallbackUri">
         /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
@@ -47,7 +47,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Defines the dialog.
         /// Please note <see cref="BaseDialog"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureOpenAIDialog"/> and <see cref="PowerVirtualAgentsDialog"/>.
+        /// The available derived classes include <see cref="PowerVirtualAgentsDialog"/>.
         /// </summary>
         public BaseDialog Dialog { get; }
         /// <summary>

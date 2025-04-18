@@ -34,14 +34,14 @@ namespace Azure.Communication.CallAutomation
         public Uri CallbackUri { get; }
 
         /// <summary>
-        /// Media Streaming Configuration.
-        /// </summary>
-        public MediaStreamingOptions MediaStreamingOptions { get; set; }
-
-        /// <summary>
         /// Live Transcription Configuration.
         /// </summary>
         public TranscriptionOptions TranscriptionOptions { get; set; }
+
+        /// <summary>
+        /// Media Streaming Configuration.
+        /// </summary>
+        public MediaStreamingOptions MediaStreamingOptions { get; set; }
 
         /// <summary>
         /// AI options for the call such as endpoint URI of the Azure Cognitive Services resource

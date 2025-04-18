@@ -1,74 +1,41 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
+- The StartRecording function now accepts the PauseOnStart parameter.
+- Added support for CreateCallFailed and AnswerCallFailed events.
+- Enabled audio streaming support for various APIs such as CreateCall, AnswerCall, CreateGroupCall, and ConnectCall.
+  - Receive events for audio streaming, including MediaStreamStarted, MediaStreamStopped, and MediaStreamFailed.
+- Enhanced media streaming with bidirectional capabilities, supporting audio formats in both directions. Currently, it supports sample rates of 24kHz and 16kHz.
+- Added support to manage rooms, server calls, and group calls using the ConnectAPI.
+  - Receive events for CallConnected and ConnectFailed.
+- Added support for ConnectAPI to enable streaming and real-time transcription.
+- Added the ability to hold and unhold participants.
+  - Ability to hold participants with a play source.
+- The new InterruptAudioAnnounce API now allows for the interruption of hold audio
+- With the InterruptHoldAudio option in PlayOptions, it is now possible to interrupt the hold audio.
+- Events now include ResultInformation, which provides more details on the success or failure of the events.
+- Added support for Teams multipersona users in add participant, transfer, and redirect scenarios in OPS calls
+- Added ability to send custom calling context when answering calls
+- Added TeamsAppSource for use when creating outbound OPS calls
+- Recording with the call connection ID is now supported. OPS calls can be recorded using the call connection ID.
+- Added a backup identifier of the Cognitive Service resource for the call
+
+### Breaking Changes
+
+### Bugs Fixed
+- Media streaming with AudioFormat default Pcm24kMono is removed and changed to null if AudioFormat is not passed.
+
+### Other Changes
+- Introduced audio streaming data parsing capabilities.
+- Note: The ordering of the events input parameters has been changed. This modification won't affect existing code, but if you have used unit tests for the events, you may need to update the parameter order accordingly.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
-
-## 1.4.0-beta.1 (2024-11-22)
-
-### Features Added
-
-- Added support for ConnectAPI to enable streaming and real-time transcription
-- Enhanced media streaming with bidirectional capabilities, enabling support for audio formats in both directions. Currently, it supports sample rates of 24kHz and 16kHz
-
-### Other Changes
-
-- Introduced audio streaming and transcription data parsing capabilities.
-
-## 1.3.0 (2024-11-22)
-
-### Features Added
-
-- Support multiple play sources for Play and Recognize
-- Support for PlayStarted event in Play/Recognize
-- Hold and Unhold the participant
-- CallDisconnected now includes more information on why the call has ended
-- Support to manage the rooms/servercall/group call using connect API
-- Expose original PSTN number target from incoming call event in call connection properties
-- Support for VoIP to PSTN transfer scenario
-
-### Other Changes
-
-- Added CreateCallFailed event to signify when create call API fails to establish a call
-- Added AnswerFailed event to signify when answer call API fails to answer a call
-
-## 1.3.0-beta.2 (2024-10-28)
-
-### Features Added
-
-- Added CreateCallFailed event to signify when create call API fails to establish a call
-
-## 1.3.0-beta.1 (2024-08-02)
-
-### Features Added
-
-- Support multiple play sources for Play and Recognize
-- Support for PlayStarted event in Play/Recognize
-- Support for the real time transcription
-- Monetization for real-time transcription and audio streaming
-- Hold and Unhold the participant
-- Support to manage the rooms/servercall/group call using connect API
-- Support for the audio streaming
-- Expose original PSTN number target from incoming call event in call connection properties
-- Support for VoIP to PSTN transfer scenario
-
-## 1.2.0 (2024-04-15)
-
-### Features Added
-
-- Support for Bring Your Own Storage recording option
-- Support for PauseOnStart recording option 
-- Support for Recording state change with new recording kind's
-
-### Other Changes
-
-- Support for MicrosoftTeamsAppIdentifier CommunicationIdentifier
 
 ## 1.1.0 (2023-11-23)
 

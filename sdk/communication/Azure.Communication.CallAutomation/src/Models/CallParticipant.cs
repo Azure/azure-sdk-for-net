@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
         {
             Identifier = CommunicationIdentifierSerializer.Deserialize(callParticipantInternal.Identifier);
             IsMuted = (bool)callParticipantInternal.IsMuted;
-            IsOnHold = callParticipantInternal.IsOnHold.GetValueOrDefault(false);
+            IsOnHold = (bool)callParticipantInternal.IsOnHold;
         }
 
         /// <summary> The communication identifier. </summary>
