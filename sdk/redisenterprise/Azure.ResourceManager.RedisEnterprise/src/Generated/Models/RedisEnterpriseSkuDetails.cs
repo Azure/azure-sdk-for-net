@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    /// <summary> Parameters for reconfiguring active geo-replication, of an existing database that was previously unlinked from a replication group. </summary>
-    public partial class ForceLinkContent
+    /// <summary> Details of a Redis Enterprise cluster SKU. </summary>
+    public partial class RedisEnterpriseSkuDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +45,27 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ForceLinkContent"/>. </summary>
-        /// <param name="geoReplication"> Properties to configure geo replication for this database. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="geoReplication"/> is null. </exception>
-        public ForceLinkContent(ForceLinkParametersGeoReplication geoReplication)
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseSkuDetails"/>. </summary>
+        internal RedisEnterpriseSkuDetails()
         {
-            Argument.AssertNotNull(geoReplication, nameof(geoReplication));
-
-            GeoReplication = geoReplication;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ForceLinkContent"/>. </summary>
-        /// <param name="geoReplication"> Properties to configure geo replication for this database. </param>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseSkuDetails"/>. </summary>
+        /// <param name="name"> The name of the SKU. </param>
+        /// <param name="customerFacingSizeInGB"> The cache size in GB. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ForceLinkContent(ForceLinkParametersGeoReplication geoReplication, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisEnterpriseSkuDetails(string name, float? customerFacingSizeInGB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            GeoReplication = geoReplication;
+            Name = name;
+            CustomerFacingSizeInGB = customerFacingSizeInGB;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ForceLinkContent"/> for deserialization. </summary>
-        internal ForceLinkContent()
-        {
-        }
-
-        /// <summary> Properties to configure geo replication for this database. </summary>
-        [WirePath("geoReplication")]
-        public ForceLinkParametersGeoReplication GeoReplication { get; }
+        /// <summary> The name of the SKU. </summary>
+        [WirePath("name")]
+        public string Name { get; }
+        /// <summary> The cache size in GB. </summary>
+        [WirePath("customerFacingSizeInGB")]
+        public float? CustomerFacingSizeInGB { get; }
     }
 }

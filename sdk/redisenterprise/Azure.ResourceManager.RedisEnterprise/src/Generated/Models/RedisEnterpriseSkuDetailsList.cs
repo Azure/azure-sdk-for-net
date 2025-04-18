@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    /// <summary> Parameters for reconfiguring active geo-replication, of an existing database that was previously unlinked from a replication group. </summary>
-    public partial class ForceLinkContent
+    /// <summary> The response of a listSkusForScaling operation. </summary>
+    public partial class RedisEnterpriseSkuDetailsList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +45,23 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ForceLinkContent"/>. </summary>
-        /// <param name="geoReplication"> Properties to configure geo replication for this database. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="geoReplication"/> is null. </exception>
-        public ForceLinkContent(ForceLinkParametersGeoReplication geoReplication)
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseSkuDetailsList"/>. </summary>
+        internal RedisEnterpriseSkuDetailsList()
         {
-            Argument.AssertNotNull(geoReplication, nameof(geoReplication));
-
-            GeoReplication = geoReplication;
+            Skus = new ChangeTrackingList<RedisEnterpriseSkuDetails>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ForceLinkContent"/>. </summary>
-        /// <param name="geoReplication"> Properties to configure geo replication for this database. </param>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseSkuDetailsList"/>. </summary>
+        /// <param name="skus"> List of SKUS available to scale up or scale down. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ForceLinkContent(ForceLinkParametersGeoReplication geoReplication, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisEnterpriseSkuDetailsList(IReadOnlyList<RedisEnterpriseSkuDetails> skus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            GeoReplication = geoReplication;
+            Skus = skus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ForceLinkContent"/> for deserialization. </summary>
-        internal ForceLinkContent()
-        {
-        }
-
-        /// <summary> Properties to configure geo replication for this database. </summary>
-        [WirePath("geoReplication")]
-        public ForceLinkParametersGeoReplication GeoReplication { get; }
+        /// <summary> List of SKUS available to scale up or scale down. </summary>
+        [WirePath("skus")]
+        public IReadOnlyList<RedisEnterpriseSkuDetails> Skus { get; }
     }
 }
