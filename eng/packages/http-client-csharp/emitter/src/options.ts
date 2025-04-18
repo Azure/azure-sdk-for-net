@@ -11,16 +11,20 @@ export interface AzureEmitterOptions extends CSharpEmitterOptions {
   
 export const AzureEmitterOptionsSchema: JSONSchemaType<AzureEmitterOptions> = {
   type: "object",
+  additionalProperties: false,
   properties: {
     ...CSharpEmitterOptionsSchema.properties,
     namespace: {
       type: "string",
+      nullable: true,
       description: "The C# namespace to use for the generated code. This will override the TypeSpec namespaces.",
     },
     "model-namespace": {
       type: "boolean",
+      nullable: true,
       description: "Whether to put models under a separate 'Models' sub-namespace. This only applies if the 'namespace' option is set. " + 
       " The default value is 'true' when the 'namespace' option is set. Otherwise, each model will be in the corresponding namespace defined in the TypeSpec.",
     },
   },
+  required: [],
 };

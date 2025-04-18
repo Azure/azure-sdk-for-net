@@ -4,7 +4,9 @@
   "type": "module",
   "main": "dist/emitter/index.js",
   "exports": {
-    ".": "./dist/emitter/index.js"
+    ".": {
+      "import": "./dist/emitter/index.js"
+    }
   },
   "scripts": {
     "clean": "rimraf ./dist ./emitter/temp && dotnet clean ./generator",
@@ -17,7 +19,8 @@
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
     "prettier:fix": "prettier --write --config .prettierrc.json ./**/*.ts",
-    "prettier": "prettier --check --config .prettierrc.json ./**/*.ts"
+    "prettier": "prettier --check --config .prettierrc.json ./**/*.ts",
+    "regen-docs": "npm run build:emitter && tspd doc . --enable-experimental --skip-js"
   },
   "files": [
     "dist/**"
@@ -43,6 +46,7 @@
     "@typespec/library-linter": "0.68.0",
     "@typespec/openapi": "1.0.0-rc.0",
     "@typespec/rest": "0.68.0",
+    "@typespec/tspd": "0.68.0",
     "@typespec/versioning": "0.68.0",
     "@typespec/xml": "0.68.0",
     "@vitest/coverage-v8": "^3.0.5",
@@ -51,6 +55,8 @@
     "eslint": "^8.57.0",
     "prettier": "~3.0.3",
     "rimraf": "~6.0.1",
+    "typedoc": "^0.28.1",
+    "typedoc-plugin-markdown": "^4.5.2",
     "typescript": "~5.6.3",
     "typescript-eslint": "^7.8.0",
     "vitest": "^3.0.5"
