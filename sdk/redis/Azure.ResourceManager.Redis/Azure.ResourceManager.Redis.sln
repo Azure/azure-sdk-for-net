@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Redis
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Redis.Tests", "tests\Azure.ResourceManager.Redis.Tests.csproj", "{BFB2FA06-3DAA-4845-A20F-8FB60F3438E2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Redis.Samples", "samples\Azure.ResourceManager.Redis.Samples.csproj", "{4579FB37-CAD4-4B6D-B123-A4049492C33B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,18 +41,6 @@ Global
 		{BFB2FA06-3DAA-4845-A20F-8FB60F3438E2}.Release|x64.Build.0 = Release|Any CPU
 		{BFB2FA06-3DAA-4845-A20F-8FB60F3438E2}.Release|x86.ActiveCfg = Release|Any CPU
 		{BFB2FA06-3DAA-4845-A20F-8FB60F3438E2}.Release|x86.Build.0 = Release|Any CPU
-		{4579FB37-CAD4-4B6D-B123-A4049492C33B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4579FB37-CAD4-4B6D-B123-A4049492C33B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4579FB37-CAD4-4B6D-B123-A4049492C33B}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{4579FB37-CAD4-4B6D-B123-A4049492C33B}.Debug|x64.Build.0 = Debug|Any CPU
-		{4579FB37-CAD4-4B6D-B123-A4049492C33B}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{4579FB37-CAD4-4B6D-B123-A4049492C33B}.Debug|x86.Build.0 = Debug|Any CPU
-		{4579FB37-CAD4-4B6D-B123-A4049492C33B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4579FB37-CAD4-4B6D-B123-A4049492C33B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4579FB37-CAD4-4B6D-B123-A4049492C33B}.Release|x64.ActiveCfg = Release|Any CPU
-		{4579FB37-CAD4-4B6D-B123-A4049492C33B}.Release|x64.Build.0 = Release|Any CPU
-		{4579FB37-CAD4-4B6D-B123-A4049492C33B}.Release|x86.ActiveCfg = Release|Any CPU
-		{4579FB37-CAD4-4B6D-B123-A4049492C33B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

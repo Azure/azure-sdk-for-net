@@ -13,7 +13,7 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/f5321f9b29083f9ea4c0
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -47,7 +47,7 @@ rename-mapping:
   FlushParameters: FlushRedisEnterpriseDatabaseParameters
   ForceUnlinkParameters.ids: -|arm-id
   ForceUnlinkParameters: ForceUnlinkRedisEnterpriseDatabaseParameters
-  HighAvailability: RedisEnterpriseHighAvailability 
+  HighAvailability: RedisEnterpriseHighAvailability
   ImportClusterParameters: ImportRedisEnterpriseDatabaseParameters
   LinkedDatabase.id: -|arm-id
   LinkedDatabase: RedisEnterpriseLinkedDatabase
