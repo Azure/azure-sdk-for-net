@@ -1581,6 +1581,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<IEnumerable<string>>(),
                 It.Is<CommitBlockListOptions>(
                     options =>
+                        options.AccessTier == DefaultAccessTier &&
                         options.HttpHeaders.ContentType == DefaultContentType &&
                         options.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
                         options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&

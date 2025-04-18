@@ -671,7 +671,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Mock<PageBlobClient> mockDestination = new(
                 new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
                 new BlobClientOptions());
-
+            mockDestination.Object
             int length = 1024;
             var data = GetRandomBuffer(length);
             using var stream = new MemoryStream(data);
