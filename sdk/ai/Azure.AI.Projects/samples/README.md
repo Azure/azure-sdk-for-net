@@ -31,6 +31,7 @@ description: Samples for the Azure.AI.Projects client library.
 | [Sample20_Agents_Azure_AI_Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample20_Agents_Azure_AI_Search.md) | Sample using agents with Azure AI Search tool. |
 | [Sample21_Agent_Vector_Store_Batch_Enterprise_File_Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample21_Agent_Vector_Store_Batch_Enterprise_File_Search.md) | Sample for enterprise batch file search. |
 | [Sample22_Agents_Azure_AI_Search_Streaming](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample22_Agents_Azure_AI_Search_Streaming.md) | Sample using agents with Azure AI Search tool with streaming. |
+| [Sample23_Agent_Fabric](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample23_Agent_Fabric.md) | Sample using agents with Fabric tool. |
 
 # Azure.AI.Projects Samples for Connections
 
