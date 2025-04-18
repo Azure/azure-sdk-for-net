@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            WorkspaceSku sku = default;
+            IotFirmwareDefenseSkuUpdate sku = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    sku = WorkspaceSku.DeserializeWorkspaceSku(property.Value, options);
+                    sku = IotFirmwareDefenseSkuUpdate.DeserializeIotFirmwareDefenseSkuUpdate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

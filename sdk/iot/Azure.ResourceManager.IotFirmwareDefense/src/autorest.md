@@ -82,7 +82,7 @@ rename-mapping:
   StatusMessage: FirmwareAnalysisStatusMessage
   PairedKey: CryptoPairedKey
   UrlToken: FirmwareUrlToken
-  AzureResourceManagerCommonTypesSkuUpdate: WorkspaceSku
+  AzureResourceManagerCommonTypesSkuUpdate: IotFirmwareDefenseSkuUpdate
 
 directive:
   - from: iotfirmwaredefense.json
