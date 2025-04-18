@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// The resource model definition representing SKU
     /// Serialized Name: AzureResourceManagerCommonTypesSkuUpdate
     /// </summary>
-    public partial class AzureResourceManagerCommonTypesSkuUpdate
+    public partial class WorkspaceSku
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AzureResourceManagerCommonTypesSkuUpdate"/>. </summary>
-        public AzureResourceManagerCommonTypesSkuUpdate()
+        /// <summary> Initializes a new instance of <see cref="WorkspaceSku"/>. </summary>
+        public WorkspaceSku()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureResourceManagerCommonTypesSkuUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceSku"/>. </summary>
         /// <param name="name">
         /// The name of the SKU. Ex - P3. It is typically a letter+number code
         /// Serialized Name: AzureResourceManagerCommonTypesSkuUpdate.name
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// Serialized Name: AzureResourceManagerCommonTypesSkuUpdate.capacity
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureResourceManagerCommonTypesSkuUpdate(string name, IotFirmwareDefenseSkuTier? tier, string size, string family, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkspaceSku(string name, IotFirmwareDefenseSkuTier? tier, string size, string family, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;

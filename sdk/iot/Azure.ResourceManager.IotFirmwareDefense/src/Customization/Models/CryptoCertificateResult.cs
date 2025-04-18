@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string NamePropertiesName
         {
-            get => Name;
-            set{ return; }
+            get => CertificateName;
+            set => CertificateName = value;
         }
 
         /// <summary> Role of the certificate (Root CA, etc). </summary>

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// Serialized Name: WorkspaceUpdate.tags
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirmwareAnalysisWorkspacePatch(AzureResourceManagerCommonTypesSkuUpdate sku, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FirmwareAnalysisWorkspacePatch(WorkspaceSku sku, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Tags = tags;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// The SKU (Stock Keeping Unit) assigned to this resource.
         /// Serialized Name: WorkspaceUpdate.sku
         /// </summary>
-        public AzureResourceManagerCommonTypesSkuUpdate Sku { get; set; }
+        public WorkspaceSku Sku { get; set; }
         /// <summary>
         /// Resource tags.
         /// Serialized Name: WorkspaceUpdate.tags

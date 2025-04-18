@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class AzureResourceManagerCommonTypesSkuUpdate : IUtf8JsonSerializable, IJsonModel<AzureResourceManagerCommonTypesSkuUpdate>
+    public partial class WorkspaceSku : IUtf8JsonSerializable, IJsonModel<WorkspaceSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureResourceManagerCommonTypesSkuUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkspaceSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AzureResourceManagerCommonTypesSkuUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<WorkspaceSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureResourceManagerCommonTypesSkuUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureResourceManagerCommonTypesSkuUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkspaceSku)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Name))
@@ -76,19 +76,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
         }
 
-        AzureResourceManagerCommonTypesSkuUpdate IJsonModel<AzureResourceManagerCommonTypesSkuUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WorkspaceSku IJsonModel<WorkspaceSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureResourceManagerCommonTypesSkuUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureResourceManagerCommonTypesSkuUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkspaceSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureResourceManagerCommonTypesSkuUpdate(document.RootElement, options);
+            return DeserializeWorkspaceSku(document.RootElement, options);
         }
 
-        internal static AzureResourceManagerCommonTypesSkuUpdate DeserializeAzureResourceManagerCommonTypesSkuUpdate(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static WorkspaceSku DeserializeWorkspaceSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AzureResourceManagerCommonTypesSkuUpdate(
+            return new WorkspaceSku(
                 name,
                 tier,
                 size,
@@ -153,35 +153,35 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AzureResourceManagerCommonTypesSkuUpdate>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<WorkspaceSku>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureResourceManagerCommonTypesSkuUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceSku>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureResourceManagerCommonTypesSkuUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkspaceSku)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AzureResourceManagerCommonTypesSkuUpdate IPersistableModel<AzureResourceManagerCommonTypesSkuUpdate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        WorkspaceSku IPersistableModel<WorkspaceSku>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureResourceManagerCommonTypesSkuUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceSku>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAzureResourceManagerCommonTypesSkuUpdate(document.RootElement, options);
+                        return DeserializeWorkspaceSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureResourceManagerCommonTypesSkuUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkspaceSku)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AzureResourceManagerCommonTypesSkuUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WorkspaceSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

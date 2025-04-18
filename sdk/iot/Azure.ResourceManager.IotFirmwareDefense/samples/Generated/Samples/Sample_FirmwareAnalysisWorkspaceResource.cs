@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             // invoke the operation
             FirmwareAnalysisWorkspacePatch patch = new FirmwareAnalysisWorkspacePatch
             {
-                Sku = new AzureResourceManagerCommonTypesSkuUpdate
+                Sku = new WorkspaceSku
                 {
                     Name = "jmlbmmdyyxoreypd",
                     Tier = IotFirmwareDefenseSkuTier.Free,

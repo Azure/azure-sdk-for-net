@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -34,6 +35,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public IList<string> Usage
         {
             get => CryptoKeyUsage.ToList();
+            [Obsolete("This property is now deprecated. Please use the new property `CryptoKeyUsage` moving forward.")]
             set
             {
                 // CryptoKeyUsage does not have a setter, there is nothing to do

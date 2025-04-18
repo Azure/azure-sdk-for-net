@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public static FirmwareAnalysisWorkspacePatch FirmwareAnalysisWorkspacePatch(FirmwareProvisioningState? provisioningState = null)
         {
             return new FirmwareAnalysisWorkspacePatch(
-            new AzureResourceManagerCommonTypesSkuUpdate(
+            new WorkspaceSku(
                 name: "A0",
                 tier: IotFirmwareDefenseSkuTier.Free,
                 size: string.Empty,
