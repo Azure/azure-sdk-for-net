@@ -4,11 +4,7 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Exposed new property in Capability Type resource: "requiredAzureRoleDefinitionIds"
 
 ## 1.1.0-beta.2 (2025-03-11)
 
