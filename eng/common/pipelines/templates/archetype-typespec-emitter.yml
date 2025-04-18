@@ -22,11 +22,6 @@ parameters:
   type: stepList
   default: []
 
-# Custom steps to run after the primary build task.
-- name: AdditionalBuildSteps
-  type: stepList
-  default: []
-
 # Indicates the build matrix to use for post-build autorest validation
 - name: TestMatrix
   type: object
@@ -136,9 +131,7 @@ extends:
               -OutputDirectory "$(Build.ArtifactStagingDirectory)/packages"
               -TargetNpmJsFeed:$${{ parameters.PublishPublic }}
               -EmitterPackagePath:${{ parameters.EmitterPackagePath }}
-
-        - ${{ each step in parameters.AdditionalBuildSteps }}:
-          - ${{ step }}
+              -GeneratorVersion: $(initialize.emitterVersion)
 
         - pwsh: |
             $sourceBranch = '$(Build.SourceBranch)'

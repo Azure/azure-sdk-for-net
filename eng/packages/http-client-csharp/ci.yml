@@ -68,23 +68,11 @@ extends:
         ShouldPublish: true
         ShouldRegenerate: true
         PublishDependsOnTest: false
-        PublishPublic: false #${{ and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}
+        PublishPublic: ${{ and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}
         HasNugetPackages: true
       RegenerationJobCount: 5
       MinimumPerJob: 10
       OnlyGenerateTypespec: true
-    AdditionalBuildSteps:
-      - task: PowerShell@2
-        displayName: "Build & Pack Azure.Generator"
-        name: build_pack_generator
-        inputs:
-          pwsh: true
-          filePath: eng/packages/http-client-csharp/eng/scripts/Build-Pack-Generator.ps1
-          arguments: >
-            -BuildNumber "$(Build.BuildNumber)"
-            -OutputDirectory "$(Build.ArtifactStagingDirectory)"
-            -GeneratorVersion: $(initialize.emitterVersion)
-          workingDirectory: $(Build.SourcesDirectory)
     TestMatrix:
       All:
         TestArguments: -UnitTests -GenerationChecks -Filter .NET
