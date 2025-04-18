@@ -1,4 +1,4 @@
-```markdown
+
 # Developer Handbook for StorageSync team
 
 This handbook provides guidelines and instructions for developers working on the project. It includes steps for setting up test resources, updating snippets, exporting APIs, generating code, running tests, downloading GitHub CLI, and FAQs.
