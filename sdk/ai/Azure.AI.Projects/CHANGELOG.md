@@ -3,12 +3,15 @@
 ## 1.0.0-beta.7 (Unreleased)
 
 ### Features Added
+* Added image input support for agents create message
+* Added list threads support for agents
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
-### Other Changes
+### Sample Updates
+* New samples added for image input from url and file.
 
 ## 1.0.0-beta.6 (2025-03-28)
 
