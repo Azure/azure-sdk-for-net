@@ -56,7 +56,7 @@ namespace Azure.Rest.WebPubSub.Tests
 
             var clients = new ClientWebSocket[totalConnectionCount];
             // Client WebSocket connections cannot be recorded, so disable them in playback mode.
-            if (TestEnvironment.Mode == RecordedTestMode.Live)
+            if (TestEnvironment.Mode != RecordedTestMode.Playback)
             {
                 for (int i = 0; i < totalConnectionCount; i++)
                 {
@@ -103,7 +103,7 @@ namespace Azure.Rest.WebPubSub.Tests
 
             var clients = new ClientWebSocket[totalCount];
             // Client WebSocket connections cannot be recorded, so disable them in playback mode.
-            if (TestEnvironment.Mode == RecordedTestMode.Live)
+            if (TestEnvironment.Mode != RecordedTestMode.Playback)
             {
                 for (int i = 0; i < totalCount; i++)
                 {
