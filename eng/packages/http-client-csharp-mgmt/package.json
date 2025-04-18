@@ -18,8 +18,8 @@
     "test": "npm run test:generator && npm run test:emitter",
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
-    "prettier:fix": "prettier --write --config .prettierrc.json ./**/*.ts",
-    "prettier": "prettier --check --config .prettierrc.json ./**/*.ts",
+    "prettier:fix": "prettier --write --config .prettierrc.json ./**/*.ts package.json",
+    "prettier": "prettier --check --config .prettierrc.json ./**/*.ts package.json",
     "regen-docs": "npm run build:emitter && tspd doc . --enable-experimental --skip-js"
   },
   "files": [
