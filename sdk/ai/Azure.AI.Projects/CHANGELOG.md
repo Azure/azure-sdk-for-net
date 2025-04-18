@@ -1,14 +1,14 @@
 # Release History
 
-## 1.0.0-beta.7 (Unreleased)
+## 1.0.0-beta.7 (2025-04-18)
 
 ### Features Added
+* Added image input support for agents create message
+* Added list threads support for agents
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+### Sample Updates
+* New samples added for image input from url and file.
+* New Fabric tool sample for agents
 
 ## 1.0.0-beta.6 (2025-03-28)
 
