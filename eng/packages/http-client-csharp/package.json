@@ -55,9 +55,9 @@
     "eslint": "^8.57.0",
     "prettier": "~3.0.3",
     "rimraf": "~6.0.1",
-    "typescript": "~5.6.3",
     "typedoc": "^0.28.1",
     "typedoc-plugin-markdown": "^4.5.2",
+    "typescript": "~5.6.3",
     "typescript-eslint": "^7.8.0",
     "vitest": "^3.0.5"
   },
