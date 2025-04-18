@@ -590,7 +590,7 @@
 # ServiceOwners:                                                   @Tanmayeekamath
 
 # PRLabel: %Load Test Service
-/sdk/loadtestservice/                                              @prativen @mitsha-microsoft @ninallam @christothes
+/sdk/loadtestservice/                                              @prativen @mitsha-microsoft @ninallam
 
 # ServiceLabel: %Load Test Service
 # ServiceOwners:                                                   @prativen @mitsha-microsoft @ninallam
