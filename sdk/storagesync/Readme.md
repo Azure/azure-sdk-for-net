@@ -77,9 +77,14 @@ Location : sdk\storagesync\Azure.ResourceManager.StorageSync\
 test-proxy push -a .\assets.json
 ```
 
-## FAQs
+## Observations
+
+- Session Recording are now stored in separate repository https://github.com/Azure/azure-sdk-assets. This link can help to extract test recordings : https://github.com/Azure/azure-sdk-tools/tree/main/tools/test-proxy/documentation/asset-sync#asset-sync-retrieve-external-test-recordings
+
+- Test-proxy has been shipped within the eng/common/testproxy folder for any repo owned by the azure-sdk team.
 
 - **Enable Logging to a file:** https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#enable-and-configure-logging
+
 - **Tenant Mismatch Error:** This error occurs due to the credential not honoring the tenant ID provided in the default credentials construction. 
 
   ```json
@@ -87,5 +92,13 @@ test-proxy push -a .\assets.json
   ```
 
 - **Test Proxy Failure:** If a test proxy failure occurs, it requires re-recording the test due to a known bug.
-```
 
+- StorageSyncManagementTestBase have logging enabled to a random file in output folder for troubleshooting.
+
+- StorageSyncManagementTestBase class have ModeFromSourceCode which can be used to set the test mode : Playback or Record
+
+- Tests must be executed in two variations: synchronous and asynchronous.
+
+- Tests are not required to be run for Samples.
+
+- It is sufficient to run tests for one framework only; running tests for all frameworks is not necessary.
