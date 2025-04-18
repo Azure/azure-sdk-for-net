@@ -78,11 +78,46 @@ cd sdk\storagesync\Azure.ResourceManager.StorageSync\
 test-proxy push -a .\assets.json
 ```
 
+Example output
+```powershell
+d:\code\ab\azure-sdk-for-net3\sdk\storagesync\Azure.ResourceManager.StorageSync>test-proxy push -a .\assets.json
+Running proxy version is Azure.Sdk.Tools.TestProxy 20250415.1
+git --version
+git remote -v
+git remote set-url origin https://github.com/Azure/azure-sdk-assets
+git status --porcelain
+Detected new recordings. Prior to pushing to destination repo, test-proxy will scan 1 files.
+
+←[2KScanned 1/1.
+git config --get user.name
+git config --get user.email
+git branch f61702d3
+git checkout f61702d3
+git diff --output=changes.patch --no-color --binary --no-prefix HEAD main -- eng/
+git apply --check --directory=eng/ changes.patch
+git diff --output=changes.patch --no-color --binary HEAD main -- .gitignore
+git apply --check changes.patch
+git add -A .
+git -c user.name="Ankush" -c user.email="ankushb@microsoft.com" commit --no-gpg-sign -m "Automatic asset update from test-proxy."
+git rev-parse --short=10 HEAD
+git tag --no-sign net/storagesync/Azure.ResourceManager.StorageSync_aacd543f4a
+git ls-remote origin --tags net/storagesync/Azure.ResourceManager.StorageSync_aacd543f4a
+git push origin net/storagesync/Azure.ResourceManager.StorageSync_aacd543f4a
+git remote -v
+git remote set-url origin https://github.com/Azure/azure-sdk-assets
+```
+
 ## Observations
 
 - Session Recording are now stored in separate repository [azure-sdk-assets](https://github.com/Azure/azure-sdk-assets). This link can help to extract test recordings : [asset-sync#asset-sync-retrieve-external-test-recordings](https://github.com/Azure/azure-sdk-tools/tree/main/tools/test-proxy/documentation/asset-sync#asset-sync-retrieve-external-test-recordings)
 
-- Test-proxy has been shipped within the eng/common/testproxy folder for any repo owned by the azure-sdk team.
+- Test-proxy has been shipped within the eng/common/testproxy folder for any repo owned by the azure-sdk team. Testing will present itself to download test-proxy
+
+New test recordings detected but the required test-proxy tool could not be found.
+You must install it to push new recordings to the assets repository.
+This can be done manually by following the instructions at:
+[Test-proxy download instructions](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/README.md#installation)
+Would you like to install the test-proxy tool now? [y/n]:
 
 - **Enable Logging to a file:** [Azure.Identity#enable-and-configure-logging](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#enable-and-configure-logging)
 
@@ -94,7 +129,7 @@ test-proxy push -a .\assets.json
 
 - **Test Proxy Failure:** If a test proxy failure occurs, it requires re-recording the test due to a known bug.
 
-- StorageSyncManagementTestBase have logging enabled to a random file in output folder for troubleshooting.
+- StorageSyncManagementTestBase have logging enabled to a random file in output folder for troubleshooting. Example : artifacts\bin\Azure.ResourceManager.StorageSync.Tests\Debug\net9.0\Test-845edb93-b08a-440b-92dc-49ad317bd51a.log
 
 - StorageSyncManagementTestBase class have ModeFromSourceCode which can be used to set the test mode : Playback or Record
 
