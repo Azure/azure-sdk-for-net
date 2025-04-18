@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
 {
     public class StorageSyncManagementTestBase : ManagementRecordedTestBase<StorageSyncManagementTestEnvironment>
     {
+        public static RecordedTestMode ModeFromSourceCode => RecordedTestMode.Playback;
         public static bool IsTestTenant = false;
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
