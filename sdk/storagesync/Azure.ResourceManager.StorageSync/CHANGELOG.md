@@ -4,6 +4,10 @@
 
 ### Features Added
 
+- Upgrade the ApiVersion to 2022-09-01
+- Managaed Identity support for Storage Sync Service.
+- Fast DR V2 support for Storage Sync Service.
+
 ### Breaking Changes
 
 ### Bugs Fixed

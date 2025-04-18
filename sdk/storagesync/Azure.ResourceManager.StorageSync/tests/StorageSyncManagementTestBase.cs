@@ -36,20 +36,17 @@ namespace Azure.ResourceManager.StorageSync.Tests
         protected StorageSyncManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
-           streamWriter = new StreamWriter(new FileStream($"Test-{Guid.NewGuid()}.log",FileMode.OpenOrCreate,FileAccess.Write,FileShare.Read))
+            streamWriter = new StreamWriter(new FileStream($"Test-{Guid.NewGuid()}.log", FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read))
             {
                 AutoFlush = true
             };
             identityListener = new AzureEventSourceListener((args, message) =>
             {
-                //if (args.EventSource.Name.StartsWith("Azure-Identity"))
+                try
                 {
-                    try
-                    {
-                        streamWriter.WriteLine(message);
-                    }
-                    catch { }
+                    streamWriter.WriteLine(message);
                 }
+                catch { }
             }, EventLevel.LogAlways);
         }
 
