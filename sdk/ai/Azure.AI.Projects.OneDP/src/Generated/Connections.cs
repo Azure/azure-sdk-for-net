@@ -43,7 +43,12 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
-        /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
+        /// <param name="endpoint">
+        /// Project endpoint. In the form "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/_project"
+        /// if your Foundry Hub has only one Project, or to use the default Project in your Hub. Or in the form
+        /// "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/&lt;your-project-name&gt;" if you want to explicitly
+        /// specify the Foundry Project name.
+        /// </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         internal Connections(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
@@ -369,6 +374,100 @@ namespace Azure.AI.Projects.OneDP
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Connections.GetConnections", "value", "nextLink", maxpagesize, context);
         }
 
+        /// <summary> List all connections in the project, with their connection credentials. </summary>
+        /// <param name="connectionType"> List connections of this specific type. </param>
+        /// <param name="defaultConnection"> List connections that are default connections. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetWithCredentialsAsync(ConnectionType?,bool?,int?,int?,int?,CancellationToken)']/*" />
+        public virtual AsyncPageable<Connection> GetWithCredentialsAsync(ConnectionType? connectionType = null, bool? defaultConnection = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWithCredentialsRequest(connectionType?.ToString(), defaultConnection, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWithCredentialsNextPageRequest(nextLink, connectionType?.ToString(), defaultConnection, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Connection.DeserializeConnection(e), ClientDiagnostics, _pipeline, "Connections.GetWithCredentials", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> List all connections in the project, with their connection credentials. </summary>
+        /// <param name="connectionType"> List connections of this specific type. </param>
+        /// <param name="defaultConnection"> List connections that are default connections. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetWithCredentials(ConnectionType?,bool?,int?,int?,int?,CancellationToken)']/*" />
+        public virtual Pageable<Connection> GetWithCredentials(ConnectionType? connectionType = null, bool? defaultConnection = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWithCredentialsRequest(connectionType?.ToString(), defaultConnection, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWithCredentialsNextPageRequest(nextLink, connectionType?.ToString(), defaultConnection, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Connection.DeserializeConnection(e), ClientDiagnostics, _pipeline, "Connections.GetWithCredentials", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] List all connections in the project, with their connection credentials
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetWithCredentialsAsync(ConnectionType?,bool?,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectionType"> List connections of this specific type. Allowed values: "AzureOpenAI" | "AzureBlob" | "AzureStorageAccount" | "CognitiveSearch" | "CosmosDB" | "ApiKey" | "AppConfig" | "AppInsights" | "CustomKeys". </param>
+        /// <param name="defaultConnection"> List connections that are default connections. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetWithCredentialsAsync(string,bool?,int?,int?,int?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetWithCredentialsAsync(string connectionType, bool? defaultConnection, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWithCredentialsRequest(connectionType, defaultConnection, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWithCredentialsNextPageRequest(nextLink, connectionType, defaultConnection, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Connections.GetWithCredentials", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] List all connections in the project, with their connection credentials
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetWithCredentials(ConnectionType?,bool?,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectionType"> List connections of this specific type. Allowed values: "AzureOpenAI" | "AzureBlob" | "AzureStorageAccount" | "CognitiveSearch" | "CosmosDB" | "ApiKey" | "AppConfig" | "AppInsights" | "CustomKeys". </param>
+        /// <param name="defaultConnection"> List connections that are default connections. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetWithCredentials(string,bool?,int?,int?,int?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetWithCredentials(string connectionType, bool? defaultConnection, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWithCredentialsRequest(connectionType, defaultConnection, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWithCredentialsNextPageRequest(nextLink, connectionType, defaultConnection, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Connections.GetWithCredentials", "value", "nextLink", maxpagesize, context);
+        }
+
         internal HttpMessage CreateGetConnectionRequest(string name, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -388,7 +487,7 @@ namespace Azure.AI.Projects.OneDP
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
-            request.Method = RequestMethod.Get;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/connections/", false);
@@ -434,7 +533,54 @@ namespace Azure.AI.Projects.OneDP
             return message;
         }
 
+        internal HttpMessage CreateGetWithCredentialsRequest(string connectionType, bool? defaultConnection, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/connections/withCredentials", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (connectionType != null)
+            {
+                uri.AppendQuery("connectionType", connectionType, true);
+            }
+            if (defaultConnection != null)
+            {
+                uri.AppendQuery("defaultConnection", defaultConnection.Value, true);
+            }
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
         internal HttpMessage CreateGetConnectionsNextPageRequest(string nextLink, string connectionType, bool? defaultConnection, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetWithCredentialsNextPageRequest(string nextLink, string connectionType, bool? defaultConnection, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

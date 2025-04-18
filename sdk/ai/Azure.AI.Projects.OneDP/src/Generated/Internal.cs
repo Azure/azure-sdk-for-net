@@ -6,15 +6,14 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.AI.Projects.OneDP
 {
     // Data plane generated sub-client.
-    /// <summary> The ServicePatterns sub-client. </summary>
-    public partial class ServicePatterns
+    /// <summary> The Internal sub-client. </summary>
+    public partial class Internal
     {
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
@@ -30,12 +29,12 @@ namespace Azure.AI.Projects.OneDP
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of ServicePatterns for mocking. </summary>
-        protected ServicePatterns()
+        /// <summary> Initializes a new instance of Internal for mocking. </summary>
+        protected Internal()
         {
         }
 
-        /// <summary> Initializes a new instance of ServicePatterns. </summary>
+        /// <summary> Initializes a new instance of Internal. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
@@ -46,21 +45,13 @@ namespace Azure.AI.Projects.OneDP
         /// "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/&lt;your-project-name&gt;" if you want to explicitly
         /// specify the Foundry Project name.
         /// </param>
-        internal ServicePatterns(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint)
+        internal Internal(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _keyCredential = keyCredential;
             _tokenCredential = tokenCredential;
             _endpoint = endpoint;
-        }
-
-        private ServicePatternsBuildingBlocks _cachedServicePatternsBuildingBlocks;
-
-        /// <summary> Initializes a new instance of ServicePatternsBuildingBlocks. </summary>
-        public virtual ServicePatternsBuildingBlocks GetServicePatternsBuildingBlocksClient()
-        {
-            return Volatile.Read(ref _cachedServicePatternsBuildingBlocks) ?? Interlocked.CompareExchange(ref _cachedServicePatternsBuildingBlocks, new ServicePatternsBuildingBlocks(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint), null) ?? _cachedServicePatternsBuildingBlocks;
         }
     }
 }
