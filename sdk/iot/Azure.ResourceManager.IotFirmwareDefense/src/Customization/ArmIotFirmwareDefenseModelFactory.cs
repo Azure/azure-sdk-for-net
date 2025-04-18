@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <returns> A new <see cref="Models.FirmwareAnalysisWorkspacePatch"/> instance for mocking. </returns>
         public static FirmwareAnalysisWorkspacePatch FirmwareAnalysisWorkspacePatch(FirmwareProvisioningState? provisioningState = null)
         {
-            return new FirmwareAnalysisWorkspacePatch(sku: null, tags: null, serializedAdditionalRawData: null);
+            return new FirmwareAnalysisWorkspacePatch();
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CveSummary"/>. </summary>
