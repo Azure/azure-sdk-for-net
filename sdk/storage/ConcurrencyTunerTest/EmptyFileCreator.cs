@@ -46,17 +46,17 @@ namespace ConcurrencyTunerTest
             return this;
         }
 
-        internal EmptyFileCreator RangeOfFileSizeInMB(int lower = 0, int upper = 1)
+        internal EmptyFileCreator RangeOfFileSizeInKB(int lower = 0, int upper = 1)
         {
-            lower = ConvertToMB(lower);
-            upper = ConvertToMB(upper);
+            lower = ConvertToKB(lower);
+            upper = ConvertToKB(upper);
             _fileSizeRange = new Range(lower, upper);
             return this;
         }
 
-        private int ConvertToMB(int num)
+        private int ConvertToKB(int num)
         {
-            return num * 1024 * 1024;
+            return num * 1024;
         }
     }
 }

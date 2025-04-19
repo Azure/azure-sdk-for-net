@@ -32,10 +32,12 @@ namespace Azure.Storage.DataMovement
             internal const int BoostedMultiplier = StandardMultiplier * 2;
             internal const int TopOfBoostZone = 256; // boosted multiplier applies up to this many connections
             internal const int SlowdownFactor = 5;
-            internal const double MinMulitplier = 1.19; // really this is 1.2, but use a little less to make the floating point comparisons robust
             internal const double FudgeFactor = 0.2;
             internal static int ConcurrencyUpperLimit = Environment.ProcessorCount * 8;
-            internal const double ScalingFactor = 5;
+            internal static double ScalingFactor = 1.19;
+            internal static double MinimumConcurrency = Environment.ProcessorCount;
+            internal const int StabilizationThreshold = 30;
+            internal const int InstabilityThreshold = 30;
         }
 
         internal static class TransferManagerOptions

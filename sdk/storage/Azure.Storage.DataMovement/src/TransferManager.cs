@@ -147,6 +147,7 @@ namespace Azure.Storage.DataMovement
             _transferOptions.ProgressHandlerOptions.TrackBytesTransferred = true;
 
             ConfigureProcessorCallbacks();
+            _concurrencyTuner.StartConcurrencyTuner();
         }
 
         private void ConfigureProcessorCallbacks()
@@ -168,7 +169,6 @@ namespace Azure.Storage.DataMovement
         {
             part.SetQueueChunkDelegate(_chunksProcessor.QueueAsync);
             await part.ProcessPartToChunkAsync().ConfigureAwait(false);
-            _concurrencyTuner.StartConcurrencyTuner();
         }
 
         #region Transfer Job Management

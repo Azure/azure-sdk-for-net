@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace Azure.Storage.DataMovement
 {
@@ -18,8 +19,8 @@ namespace Azure.Storage.DataMovement
         private long _bytesTransferredInCurrentInterval;
         private Stopwatch _stopwatch = new Stopwatch();
         private bool _isStopwatchRunning = false;
-        private Timer _timer;
-        private int _timerInterval = 1000;
+        private readonly System.Timers.Timer _timer;
+        private readonly int _timerInterval;
 
         private IProcessor<long> _bytesTransferredProcessor;
 
@@ -32,6 +33,11 @@ namespace Azure.Storage.DataMovement
         /// Gets the current throughput in bytes per second.
         /// </summary>
         public virtual decimal Throughput { get; set; }
+
+        /// <summary>
+        /// Gets the current throughput in megabits per second.
+        /// </summary>
+        public virtual decimal ThroughputInMb { get => Throughput * 8 / 1024 / 1024; }
 
         /// <summary>
         /// Gets the average throughput in bytes per second since the monitor started.
@@ -65,7 +71,15 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Initializes a new instance of the <see cref="ThroughputMonitor"/> class.
         /// </summary>
-        public ThroughputMonitor() : this(ChannelProcessing.NewProcessor<long>(readers: 1)) { }
+        public ThroughputMonitor(int timerInterval = 1000) :
+            this(ChannelProcessing.NewProcessor<long>(readers: 1))
+        {
+            _timerInterval = timerInterval;
+            _timer = new System.Timers.Timer(timerInterval);
+            _timer.AutoReset = true;
+            _timer.Enabled = true;
+            _timer.Elapsed += UpdateThroughput;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ThroughputMonitor"/> class with a custom processor.
@@ -75,7 +89,6 @@ namespace Azure.Storage.DataMovement
         {
             _bytesTransferredProcessor = bytesTransferredProcessor;
             _bytesTransferredProcessor.Process = ProcessBytesTransferredAsync;
-            _timer = new Timer(UpdateThroughput, null, 0, _timerInterval);
         }
 
         /// <summary>
@@ -103,15 +116,11 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Updates the throughput calculation.
         /// </summary>
-        /// <param name="state">State object (not used).</param>
-        private void UpdateThroughput(object state)
+        private void UpdateThroughput(object sender, ElapsedEventArgs e)
         {
-            if (_timerInterval > 0)
-            {
-                decimal timeInSeconds = (decimal)_timerInterval / 1000;
-                Throughput = (decimal)(_bytesTransferredInCurrentInterval / timeInSeconds);
-                _bytesTransferredInCurrentInterval = 0;
-            }
+            decimal timeInSeconds = (decimal)_timerInterval / 1000;
+            Throughput = (decimal)(_bytesTransferredInCurrentInterval / timeInSeconds);
+            _bytesTransferredInCurrentInterval = 0;
         }
 
         /// <summary>
