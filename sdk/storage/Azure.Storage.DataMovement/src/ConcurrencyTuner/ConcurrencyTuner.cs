@@ -105,8 +105,8 @@ namespace Azure.Storage.DataMovement
                     continue;
 
                 // This determines the number of recommendations the tuner will make per second
-                await Task.Delay(100, CancellationToken.None).ConfigureAwait(false);
-                currThroughput = ThroughputMonitor.AvgThroughputInMB;
+                await Task.Delay(1000, CancellationToken.None).ConfigureAwait(false);
+                currThroughput = ThroughputMonitor.AvgThroughputInMb;
 
                 var throughputChange = DetermineThroughputChange(prevThroughput, currThroughput, currentConcurrency);
                 double delta = (double)(currThroughput / prevThroughput);

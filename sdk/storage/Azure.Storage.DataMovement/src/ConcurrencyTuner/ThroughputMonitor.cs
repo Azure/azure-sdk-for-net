@@ -37,7 +37,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Gets the current throughput in megabits per second.
         /// </summary>
-        public virtual decimal ThroughputInMb { get => Throughput * 8 / 1024 / 1024; }
+        public virtual decimal ThroughputInMb { get => ((Throughput * 8) / 1024) / 1024; }
 
         /// <summary>
         /// Gets the average throughput in bytes per second since the monitor started.
@@ -59,9 +59,9 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Gets the average throughput in megabytes per second since the monitor started.
+        /// Gets the average throughput in megabits per second since the monitor started.
         /// </summary>
-        public virtual decimal AvgThroughputInMB { get => AvgThroughput * 8 / 1024 / 1024; }
+        public virtual decimal AvgThroughputInMb { get => ((AvgThroughput * 8) / 1024) / 1024; }
 
         /// <summary>
         /// Gets the total time elapsed in milliseconds since the monitor started.

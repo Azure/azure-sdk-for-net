@@ -7,9 +7,10 @@ using System.Diagnostics;
 using Azure.Storage.Blobs.Models;
 using ConcurrencyTunerTest;
 
-string location = "C:/Users/t-davidbrown/Documents/temp_for_testing(really_small_files)/";
+string location = "C:/Users/t-davidbrown/Documents/temp_for_testing(tiny_files)/";
 //Create empty files
-//CreateEmptyFiles(60_000, 500, 1000, location);
+//CreateEmptyFiles(240_000, 125, 250, location);
+//CreateEmptyFiles(1_000, 30_000, 60_000, location);
 
 string url = "https://davidbrowntest.blob.core.windows.net/testcontainer3";
 TokenCredential credential = new DefaultAzureCredential();
@@ -97,11 +98,10 @@ static async Task RunDataMovement(TokenCredential credential, string url, string
             Console.Clear();
             Console.WriteLine($"# of Cores: {Environment.ProcessorCount}");
             Console.WriteLine($"Total MBs transferred: {(throughputMonitor.TotalBytesTransferred) / 1024 / 1024}");
-            Console.WriteLine($"Throughput in Mbps: {(throughputMonitor.ThroughputInMb) * 8}");
+            Console.WriteLine($"Throughput in Mbps: {(throughputMonitor.ThroughputInMb)}");
             Console.WriteLine($"Current Max Concurrency in Program.cs: {tm._chunksProcessor.MaxConcurrentProcessing}");
-            Console.WriteLine($"Average Throughput in Mbps: {throughputMonitor.AvgThroughput * 8 / 1024 / 1024}");
+            Console.WriteLine($"Average Throughput in Mbps: {throughputMonitor.AvgThroughputInMb}");
             Console.WriteLine($"Concurrency Recommendations: {tm._concurrencyTuner.ConcurrencyRecommendationCount}");
-            Console.WriteLine($"Current Concurrency recommendation sum: {tm._concurrencyTuner.ConcurrencyRecommendationSum}");
         }
     });
 #pragma warning restore CS4014

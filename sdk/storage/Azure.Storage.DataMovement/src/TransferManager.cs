@@ -147,7 +147,7 @@ namespace Azure.Storage.DataMovement
             _transferOptions.ProgressHandlerOptions.TrackBytesTransferred = true;
 
             ConfigureProcessorCallbacks();
-            _concurrencyTuner.StartConcurrencyTuner();
+            //_concurrencyTuner.StartConcurrencyTuner();
         }
 
         private void ConfigureProcessorCallbacks()
