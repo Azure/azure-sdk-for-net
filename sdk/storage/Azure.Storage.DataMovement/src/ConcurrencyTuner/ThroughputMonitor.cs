@@ -5,45 +5,86 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class ThroughputMonitor : IAsyncDisposable
+    /// <summary>
+    /// Monitors the throughput of data transfer operations by tracking the total bytes transferred
+    /// and calculating the throughput in bytes per second.
+    /// </summary>
+    public class ThroughputMonitor : IAsyncDisposable
     {
         private long _totalBytesTransferred;
+        private long _bytesTransferredInCurrentInterval;
         private Stopwatch _stopwatch = new Stopwatch();
         private bool _isStopwatchRunning = false;
+        private readonly System.Timers.Timer _timer;
+        private readonly int _timerInterval;
 
         private IProcessor<long> _bytesTransferredProcessor;
+
+        /// <summary>
+        /// Gets the total number of bytes transferred since the monitor started.
+        /// </summary>
         public long TotalBytesTransferred { get => _totalBytesTransferred; }
 
         /// <summary>
-        /// This is a measure of Bytes per second
+        /// Gets the current throughput in bytes per second.
         /// </summary>
-        public virtual decimal Throughput
+        public virtual decimal Throughput { get; set; }
+
+        /// <summary>
+        /// Gets the current throughput in megabits per second.
+        /// </summary>
+        public virtual decimal ThroughputInMb { get => Throughput * 8 / 1024 / 1024; }
+
+        /// <summary>
+        /// Gets the average throughput in bytes per second since the monitor started.
+        /// </summary>
+        public virtual decimal AvgThroughput
         {
             get
             {
-                if (_totalBytesTransferred == 0 || _stopwatch.Elapsed.TotalMilliseconds == 0)
+                if (TimeElapsedInMilliseconds > 0)
                 {
-                    return 0.0M;
+                    decimal timeInSeconds = (decimal)TimeElapsedInMilliseconds / 1000;
+                    return (decimal)TotalBytesTransferred / timeInSeconds;
                 }
                 else
                 {
-                    return (decimal)(_totalBytesTransferred / (_stopwatch.Elapsed.TotalMilliseconds / 1000));
+                    return 0M;
                 }
             }
         }
 
-        public long TimeElapsedInMilliseconds {
-            get => _stopwatch.ElapsedMilliseconds;
+        /// <summary>
+        /// Gets the average throughput in megabytes per second since the monitor started.
+        /// </summary>
+        public virtual decimal AvgThroughputInMB { get => AvgThroughput * 8 / 1024 / 1024; }
+
+        /// <summary>
+        /// Gets the total time elapsed in milliseconds since the monitor started.
+        /// </summary>
+        public long TimeElapsedInMilliseconds { get => _stopwatch.ElapsedMilliseconds; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ThroughputMonitor"/> class.
+        /// </summary>
+        public ThroughputMonitor(int timerInterval = 1000) :
+            this(ChannelProcessing.NewProcessor<long>(readers: 1))
+        {
+            _timerInterval = timerInterval;
+            _timer = new System.Timers.Timer(timerInterval);
+            _timer.AutoReset = true;
+            _timer.Enabled = true;
+            _timer.Elapsed += UpdateThroughput;
         }
 
-        public ThroughputMonitor() : this
-            (
-                ChannelProcessing.NewProcessor<long>(readers: 1)
-            ){ }
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ThroughputMonitor"/> class with a custom processor.
+        /// </summary>
+        /// <param name="bytesTransferredProcessor">The processor to handle bytes transferred.</param>
         internal ThroughputMonitor(IProcessor<long> bytesTransferredProcessor)
         {
             _bytesTransferredProcessor = bytesTransferredProcessor;
@@ -54,33 +95,51 @@ namespace Azure.Storage.DataMovement
         /// Processes the bytes transferred asynchronously.
         /// </summary>
         /// <param name="bytesTransferred">The number of bytes transferred.</param>
-        /// <param name="_">A token to monitor for cancellation requests. This is here to implment the interface, but does not do anything</param>
+        /// <param name="_">A cancellation token (not used).</param>
         private Task ProcessBytesTransferredAsync(long bytesTransferred, CancellationToken _)
         {
+            _totalBytesTransferred += bytesTransferred;
+            _bytesTransferredInCurrentInterval += bytesTransferred;
+
+            if (_totalBytesTransferred == 0)
+                return Task.CompletedTask;
+
             if (!_isStopwatchRunning)
             {
                 _stopwatch.Start();
+                _isStopwatchRunning = true;
             }
-
-            _totalBytesTransferred += bytesTransferred;
 
             return Task.CompletedTask;
         }
 
         /// <summary>
-        /// Enqueues the number of bytes transferred to be processed asynchronously.
+        /// Updates the throughput calculation.
+        /// </summary>
+        private void UpdateThroughput(object sender, ElapsedEventArgs e)
+        {
+            decimal timeInSeconds = (decimal)_timerInterval / 1000;
+            Throughput = (decimal)(_bytesTransferredInCurrentInterval / timeInSeconds);
+            _bytesTransferredInCurrentInterval = 0;
+        }
+
+        /// <summary>
+        /// Queues the number of bytes transferred for processing.
         /// </summary>
         /// <param name="bytesTransferred">The number of bytes transferred.</param>
-        /// <param name="_">A token to monitor for cancellation requests. This is implmented to just comply with the interface</param>
-        /// <returns>A task that represents the asynchronous operation.</returns>
+        /// <param name="_">A cancellation token (not used).</param>
         public async ValueTask QueueBytesTransferredAsync(long bytesTransferred, CancellationToken _)
         {
             await _bytesTransferredProcessor.QueueAsync(bytesTransferred, CancellationToken.None).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Disposes the resources used by the <see cref="ThroughputMonitor"/> class asynchronously.
+        /// </summary>
         public ValueTask DisposeAsync()
         {
-            throw new NotImplementedException();
+            _timer?.Dispose();
+            return new ValueTask(Task.CompletedTask);
         }
     }
 }

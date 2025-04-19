@@ -41,6 +41,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.DataMovement.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.DataMovement.Blobs.Files.Shares.Tests", "Azure.Storage.DataMovement.Blobs.Files.Shares\tests\Azure.Storage.DataMovement.Blobs.Files.Shares.Tests.csproj", "{938DEDA1-794B-4496-9FD2-73BE11E1C8A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConcurrencyTunerTest", "ConcurrencyTunerTest\ConcurrencyTunerTest.csproj", "{5D3ACEF7-0B85-40EB-8CAF-90DD0752C8F6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{52A000B2-8476-4F88-83FA-E88A878EA0EB} = {52A000B2-8476-4F88-83FA-E88A878EA0EB}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +128,10 @@ Global
 		{938DEDA1-794B-4496-9FD2-73BE11E1C8A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{938DEDA1-794B-4496-9FD2-73BE11E1C8A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{938DEDA1-794B-4496-9FD2-73BE11E1C8A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D3ACEF7-0B85-40EB-8CAF-90DD0752C8F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D3ACEF7-0B85-40EB-8CAF-90DD0752C8F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D3ACEF7-0B85-40EB-8CAF-90DD0752C8F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D3ACEF7-0B85-40EB-8CAF-90DD0752C8F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

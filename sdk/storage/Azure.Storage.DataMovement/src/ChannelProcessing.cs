@@ -12,12 +12,36 @@ namespace Azure.Storage.DataMovement;
 
 internal delegate Task ProcessAsync<T>(T item, CancellationToken cancellationToken);
 
-internal interface IProcessor<TItem> : IAsyncDisposable
+/// <summary>
+/// Represents a processor that handles asynchronous processing of items of type <typeparamref name="TItem"/>.
+/// </summary>
+/// <typeparam name="TItem">The type of items to be processed.</typeparam>
+#pragma warning disable AZC0012 // Avoid single word type names
+public interface IProcessor<TItem> : IAsyncDisposable
+#pragma warning restore AZC0012 // Avoid single word type names
 {
+    /// <summary>
+    /// Queues an item for processing.
+    /// </summary>
+    /// <param name="item">The item to be processed.</param>
+    /// <param name="cancellationToken">A token to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation.</returns>
     ValueTask QueueAsync(TItem item, CancellationToken cancellationToken = default);
-    bool TryComplete();
-    ProcessAsync<TItem> Process { get; set; }
 
+    /// <summary>
+    /// Attempts to mark the processor as complete, indicating no more items will be queued.
+    /// </summary>
+    /// <returns>True if the processor was successfully marked as complete; otherwise, false.</returns>
+    bool TryComplete();
+
+    /// <summary>
+    /// Gets or sets the delegate that processes items.
+    /// </summary>
+    internal ProcessAsync<TItem> Process { get; set; }
+
+    /// <summary>
+    /// Gets or sets the maximum number of concurrent processing tasks.
+    /// </summary>
     int MaxConcurrentProcessing { get; set; }
 }
 

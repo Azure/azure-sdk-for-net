@@ -22,7 +22,10 @@ namespace Azure.Storage.DataMovement
     {
         private readonly IProcessor<TransferJobInternal> _jobsProcessor;
         private readonly IProcessor<JobPartInternal> _partsProcessor;
-        private readonly IProcessor<Func<Task>> _chunksProcessor;
+        /// <summary>
+        /// Processor for handling chunks of tasks to be executed concurrently.
+        /// </summary>
+        public IProcessor<Func<Task>> _chunksProcessor;
 
         private readonly JobBuilder _jobBuilder;
 
@@ -36,7 +39,11 @@ namespace Azure.Storage.DataMovement
         /// If unspecified will default to LocalTransferCheckpointer at {currentpath}/.azstoragedml
         /// </summary>
         private readonly ITransferCheckpointer _checkpointer;
-        private readonly ConcurrencyTuner _concurrencyTuner;
+
+        /// <summary>
+        /// Manages concurrency tuning for transfer operations.
+        /// </summary>
+        public ConcurrencyTuner _concurrencyTuner;
 
         private readonly List<StorageResourceProvider> _resumeProviders;
 
@@ -140,6 +147,7 @@ namespace Azure.Storage.DataMovement
             _transferOptions.ProgressHandlerOptions.TrackBytesTransferred = true;
 
             ConfigureProcessorCallbacks();
+            _concurrencyTuner.StartConcurrencyTuner();
         }
 
         private void ConfigureProcessorCallbacks()

@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -15,23 +16,41 @@ namespace Azure.Storage.DataMovement
     ///
     /// The worker should only start when we have any traffic.
     /// </summary>
-    internal class ConcurrencyTuner
+    public class ConcurrencyTuner
     {
         internal static ResourceMonitor _resourceMonitor;
+        internal static double _concurrencyRecommendationCount;
+        internal static double _concurrencyRecommendationSum;
         private int _concurrencyUpperLimit = DataMovementConstants.ConcurrencyTuner.ConcurrencyUpperLimit;
-        internal int _maxConcurrency = DataMovementConstants.ConcurrencyTuner.ConcurrencyUpperLimit;
         internal int _finalReason;
         internal int _finalConcurrency;
-        internal SemaphoreSlim _lockFinal;
         internal IProcessor<ConcurrencyRecommendation> _concurrencyRecommendations;
+        private double _maxConcurrency;
+        private double _minConcurrency = DataMovementConstants.ConcurrencyTuner.MinimumConcurrency;
 
-        internal ThroughputMonitor ThroughputMonitor { get; }
+        /// <summary>
+        /// The the total count of concurrency recommendations received.
+        /// </summary>
+        public double ConcurrencyRecommendationCount => _concurrencyRecommendationCount;
+
+        /// <summary>
+        /// The sum of all concurrency recommendations received.
+        /// </summary>
+        public double ConcurrencyRecommendationSum => _concurrencyRecommendationSum;
+
+        /// <summary>
+        /// Thoughtput monitor returns throughput in Bytes per measure
+        /// </summary>
+        public ThroughputMonitor ThroughputMonitor { get; }
 
         private IProcessor<Func<Task>> _chunkProcessor;
 
+        /// <summary>
+        /// Gets the maximum concurrency level.
+        /// </summary>
         public int MaxConcurrency
         {
-            get => _maxConcurrency;
+            get => (int)_maxConcurrency;
             private set
             {
                 _maxConcurrency = value;
@@ -48,13 +67,13 @@ namespace Azure.Storage.DataMovement
             _finalReason = (int)ConcurrencyTunerState.ConcurrencyReasonNone;
             _concurrencyRecommendations = ChannelProcessing.NewProcessor<ConcurrencyRecommendation>(readers: 1);
             ThroughputMonitor = throughputMonitor;
+            MaxConcurrency = _chunkProcessor.MaxConcurrentProcessing;
 
             // Passing no cancellation token. Leaving open possibility to pass token in the future
-            StartConcurrencyTuner();
             _concurrencyRecommendations.Process = ProcessConcurrencyRecommendationsAsync;
         }
 
-        private void StartConcurrencyTuner()
+        internal void StartConcurrencyTuner()
         {
             //_resourceMonitor.StartMonitoring(cancellationToken);
             Task.Run(() => Worker(CancellationToken.None));
@@ -64,96 +83,69 @@ namespace Azure.Storage.DataMovement
         {
             if (concurrencyRecommandation.Concurrency == 0)
                 return Task.CompletedTask;
+            _concurrencyRecommendationCount++;
+            //_concurrencyRecommendationSum += concurrencyRecommandation.Concurrency;
 
-            _chunkProcessor.MaxConcurrentProcessing = concurrencyRecommandation.Concurrency;
+            //MaxConcurrency = (int)(_concurrencyRecommendationSum / _concurrencyRecommendationCount);
+            MaxConcurrency = concurrencyRecommandation.Concurrency;
             return Task.CompletedTask;
         }
 
         private async Task Worker(CancellationToken cancellationToken)
         {
-            decimal multiplier = DataMovementConstants.ConcurrencyTuner.BoostedMultiplier;
-            double concurrency = (double)_concurrencyUpperLimit;
-            bool atMax = false;
-            bool probeHigherRegardless = false;
-            bool dontBackoffRegardless = false;
-            int numOfReductions = 0;
-            ConcurrencyTunerState lastReason = ConcurrencyTunerState.ConcurrencyReasonNone;
+            double currentConcurrency = DataMovementConstants.ConcurrencyTuner.MinimumConcurrency;
+            ConcurrencyTunerState rateChangeReason = ConcurrencyTunerState.ConcurrencyReasonInitial;
 
-            decimal prevThroughput = ThroughputMonitor.Throughput;
-            decimal currThroughput;
+            decimal prevThroughput = 1;
+            decimal currThroughput = 1;
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                ConcurrencyTunerState rateChangeReason = ConcurrencyTunerState.ConcurrencyReasonSeeking;
+                if (ThroughputMonitor.AvgThroughput == 0)
+                    continue;
 
-                if (IsBoostedMultiplierNeeded(multiplier, concurrency))
+                // This determines the number of recommendations the tuner will make per second
+                await Task.Delay(100, CancellationToken.None).ConfigureAwait(false);
+                currThroughput = ThroughputMonitor.AvgThroughputInMB;
+
+                var throughputChange = DetermineThroughputChange(prevThroughput, currThroughput, currentConcurrency);
+                double delta = (double)(currThroughput / prevThroughput);
+
+                switch (throughputChange)
                 {
-                    multiplier = DataMovementConstants.ConcurrencyTuner.StandardMultiplier;
-                }
-                atMax = IsAtMaxConcurrency(concurrency);
-
-                if (atMax)
-                {
-                    DecreaseMultiplier(concurrency, ref multiplier);
-                    rateChangeReason = ConcurrencyTunerState.ConcurrencyReasonHitMax;
-                }
-
-                AdjustConcurrency(multiplier, ref concurrency);
-
-                decimal desiredNewThroughput = CalculateDesiredThroughput(prevThroughput, multiplier);
-
-                lastReason = rateChangeReason;
-                await SetConcurrencyAsync((int)concurrency, rateChangeReason, cancellationToken).ConfigureAwait(false);
-
-                currThroughput = ThroughputMonitor.Throughput;
-
-                if (
-                    ( atMax && (currThroughput >= desiredNewThroughput || probeHigherRegardless) ) ||
-                    dontBackoffRegardless
-                )
-                {
-                    break;
-                }
-                else
-                {
-                    concurrency = (double)((decimal)concurrency / multiplier);
-
-                    multiplier = AdjustMultiplier(multiplier);
-
-                    numOfReductions++;
-                    if (numOfReductions <= 2)
-                    {
-                        while ((int)multiplier * concurrency == (int)concurrency)
-                        {
-                            multiplier += 0.05M;
-                        }
-                    }
-
-                    if (multiplier < (decimal)DataMovementConstants.ConcurrencyTuner.MinMulitplier)
-                    {
+                    case ThroughputChange.Increase:
+                        currentConcurrency += delta * DataMovementConstants.ConcurrencyTuner.ScalingFactor;
+                        currentConcurrency = Math.Min(currentConcurrency, _concurrencyUpperLimit);
                         break;
-                    }
-                    else
-                    {
-                        lastReason = ConcurrencyTunerState.ConcurrencyReasonBackoff;
-                        await SetConcurrencyAsync((int)concurrency, ConcurrencyTunerState.ConcurrencyReasonBackoff, cancellationToken).ConfigureAwait(false);
-                        prevThroughput = currThroughput;
-                    }
+
+                    case ThroughputChange.Decrease:
+                        currentConcurrency -= delta * DataMovementConstants.ConcurrencyTuner.ScalingFactor;
+                        currentConcurrency = Math.Max(currentConcurrency, _minConcurrency);
+                        break;
                 }
-            }
+                await SetConcurrencyAsync((int)currentConcurrency, rateChangeReason, cancellationToken).ConfigureAwait(false);
 
-            if (!atMax)
-            {
-                lastReason = ConcurrencyTunerState.ConcurrencyReasonAtOptimum;
-                await SetConcurrencyAsync((int)concurrency, ConcurrencyTunerState.ConcurrencyReasonAtOptimum, cancellationToken).ConfigureAwait(false);
-                currThroughput = ThroughputMonitor.Throughput;
+                prevThroughput = currThroughput;
             }
+        }
 
-            StoreFinalState(new ConcurrencyRecommendation()
+        private static ThroughputChange DetermineThroughputChange(decimal prevThroughput, decimal currThroughput, double currentConcurrency)
+        {
+            decimal increaseThreshold = 1.01M - (decimal)(currentConcurrency * 0.001);
+            decimal decreaseThreshold = 0.99M + (decimal)(currentConcurrency * 0.001);
+
+            if (currThroughput > prevThroughput)
             {
-                State = lastReason,
-                Concurrency = (int)concurrency
-            });
+                return ThroughputChange.Increase;
+            }
+            else if (currThroughput < prevThroughput)
+            {
+                return ThroughputChange.Decrease;
+            }
+            else
+            {
+                return ThroughputChange.NoChange;
+            }
         }
 
         private static decimal AdjustMultiplier(decimal multiplier)
@@ -257,16 +249,16 @@ namespace Azure.Storage.DataMovement
         //}
 
         #region
-        private static decimal CalculateDesiredThroughput(decimal lastThroughput, decimal multiplier)
+        private static decimal CalculateDesiredThroughput(decimal lastThroughput)
         {
             lastThroughput = Math.Max(lastThroughput, 1);
-            decimal desiredSpeedIncrease = lastThroughput * (1 - multiplier) * (decimal)DataMovementConstants.ConcurrencyTuner.FudgeFactor;
+            decimal desiredSpeedIncrease = lastThroughput * 0.1M;
             return lastThroughput + desiredSpeedIncrease;
         }
 
         private static void AdjustConcurrency(decimal multiplier, ref double concurrency)
         {
-            concurrency = (double)((decimal)concurrency *multiplier);
+            concurrency = (double)Math.Ceiling((decimal)concurrency * multiplier);
         }
 
         /// <summary>
@@ -277,12 +269,12 @@ namespace Azure.Storage.DataMovement
         /// <param name="multiplier">The multiplier to be adjusted.</param>
         private void DecreaseMultiplier(double concurrency, ref decimal multiplier)
         {
-            decimal newMultiplier = (decimal)(_maxConcurrency / concurrency);
+            multiplier++;
+        }
 
-            multiplier = Math.Max(newMultiplier, 0.1M);
-
-            // Gradually reduce the multiplier to avoid drastic drops
-            multiplier = 1 + (multiplier - 2) / DataMovementConstants.ConcurrencyTuner.SlowdownFactor;
+        private void IncreaseMultiplier(double concurrency, ref decimal multiplier)
+        {
+            multiplier--;
         }
 
         /// <summary>
@@ -315,11 +307,18 @@ namespace Azure.Storage.DataMovement
         }
         #endregion
     }
-#region structs
+    #region structs
     internal struct ConcurrencyRecommendation
     {
         public ConcurrencyTunerState State;
         public int Concurrency;
+    }
+
+    internal enum ThroughputChange
+    {
+        Increase,
+        Decrease,
+        NoChange
     }
     #endregion
 }
