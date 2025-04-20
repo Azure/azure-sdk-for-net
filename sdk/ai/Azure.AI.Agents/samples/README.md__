@@ -6,7 +6,7 @@ products:
 # Including relevant stubs from https://review.learn.microsoft.com/help/contribute/metadata-taxonomies#product
 - azure
 name: Azure.AI.Projects samples for .NET
-description: Samples for the Azure.AI.Projects client library.
+description: Samples for the Azure.AI.Agents client library.
 ---
 
 # Azure.AI.Projects Samples for Agents
