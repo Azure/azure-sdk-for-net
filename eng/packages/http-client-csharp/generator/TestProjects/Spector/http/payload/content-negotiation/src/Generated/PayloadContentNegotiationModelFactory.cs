@@ -11,6 +11,6 @@ namespace Payload.ContentNegotiation.Models
 {
     public static partial class PayloadContentNegotiationModelFactory
     {
-        public static PngImageAsJson PngImageAsJson(BinaryData content = default) => throw null;
+        public static PngImageAsJson PngImageAsJson(PngImageAsJsonContentType contentType = default, BinaryData content = default) => throw null;
     }
 }
