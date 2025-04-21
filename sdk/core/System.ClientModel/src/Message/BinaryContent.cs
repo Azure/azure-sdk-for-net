@@ -4,9 +4,16 @@
 using System.Buffers;
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace System.ClientModel;
 
@@ -17,6 +24,14 @@ namespace System.ClientModel;
 public abstract class BinaryContent : IDisposable
 {
     private static readonly ModelReaderWriterOptions ModelWriteWireOptions = new ModelReaderWriterOptions("W");
+
+    /// <summary>
+    /// The content type of the binary content.
+    /// </summary>
+    public virtual string? ContentType { get; set; }
+
+    internal string? Name { get; set; }
+    internal string? Filename { get; set; }
 
     /// <summary>
     /// Creates an instance of <see cref="BinaryContent"/> that contains the
@@ -64,6 +79,43 @@ public abstract class BinaryContent : IDisposable
 
         return new StreamBinaryContent(stream);
     }
+
+    /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/>.
+    /// </summary>
+    /// <param name="name">The name of the part.</param>
+    /// <param name="value"></param>
+    /// <param name="filename">The filename of the part.</param>
+    /// <returns></returns>
+    public static BinaryContent CreatePart(string name, BinaryData value, string? filename = null)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNull(value, nameof(value));
+
+        return new BinaryDataBinaryContent(value.ToMemory())
+        {
+            Name = name,
+            Filename = filename
+        };
+    }
+
+    /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/> that contains the
+    /// the provided <see cref="BinaryContent"/> as multi-part form data.
+    /// </summary>
+    /// <param name="part"></param>
+    /// <returns></returns>
+    public static BinaryContent CreateMultiPartBinaryContent(BinaryContent part)
+    {
+        Argument.AssertNotNull(part, nameof(part));
+
+        return new MultiPartFormDataBinaryContent(part);
+    }
+
+    //public static BinaryContent CreateFromFile(string name, Stream stream, string? filename = default)
+    //{
+
+    //}
 
     /// <summary>
     /// Attempts to compute the length of the underlying body content, if available.
@@ -267,6 +319,158 @@ public abstract class BinaryContent : IDisposable
         public override void Dispose()
         {
             _stream.Dispose();
+        }
+    }
+
+    private sealed class MultiPartFormDataBinaryContent : BinaryContent
+    {
+        private readonly MultipartFormDataContent _multipartContent;
+
+        private const int BoundaryLength = 70;
+        private const string BoundaryValues = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
+
+        public MultiPartFormDataBinaryContent(BinaryContent part)
+        {
+            Argument.AssertNotNull(part, nameof(part));
+
+            _multipartContent = new MultipartFormDataContent(CreateBoundary());
+            Add(part);
+        }
+
+        public override string? ContentType
+        {
+            get
+            {
+                Debug.Assert(_multipartContent.Headers.ContentType is not null);
+
+                return _multipartContent.Headers.ContentType!.ToString();
+            }
+        }
+
+        public void Add(BinaryContent content)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(content.Name, nameof(content.Name));
+
+            HttpContent httpContent = new HttpContentAdapter(content);
+            if (content.ContentType is not null)
+            {
+                httpContent.Headers.ContentType = MediaTypeHeaderValue.Parse(content.ContentType);
+            }
+
+            Add(httpContent, content.Name!, content.Filename);
+        }
+
+        private void Add(HttpContent content, string name, string? fileName = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(name, nameof(name));
+
+            if (fileName is not null)
+            {
+                _multipartContent.Add(content, name, fileName);
+            }
+            else
+            {
+                _multipartContent.Add(content, name);
+            }
+        }
+
+#if NET6_0_OR_GREATER
+    private static string CreateBoundary() =>
+        string.Create(BoundaryLength, 0, (chars, _) =>
+        {
+            Span<byte> random = stackalloc byte[BoundaryLength];
+            Random.Shared.NextBytes(random);
+
+            for (int i = 0; i < chars.Length; i++)
+            {
+                chars[i] = BoundaryValues[random[i] % BoundaryValues.Length];
+            }
+        });
+#else
+        private static readonly Random _random = new();
+
+        private static string CreateBoundary()
+        {
+            Span<char> chars = stackalloc char[BoundaryLength];
+
+            byte[] random = new byte[BoundaryLength];
+            lock (_random)
+            {
+                _random.NextBytes(random);
+            }
+            const int Mask = 255 >> 2;
+            Debug.Assert(BoundaryValues.Length - 1 == Mask);
+
+            for (int i = 0; i < chars.Length; i++)
+            {
+                chars[i] = BoundaryValues[random[i] & Mask];
+            }
+
+            return chars.ToString();
+        }
+#endif
+
+        public override bool TryComputeLength(out long length)
+        {
+            if (_multipartContent.Headers.ContentLength is long contentLength)
+            {
+                length = contentLength;
+                return true;
+            }
+
+            length = 0;
+            return false;
+        }
+
+        public override void WriteTo(Stream stream, CancellationToken cancellationToken = default)
+        {
+#if NET5_0_OR_GREATER
+        _multipartContent.CopyTo(stream, default, cancellationToken);
+#else
+        Internal.TaskExtensions.EnsureCompleted(_multipartContent.CopyToAsync(stream));
+#endif
+        }
+
+        public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)
+        {
+#if NET5_0_OR_GREATER
+        await _multipartContent.CopyToAsync(stream, cancellationToken).ConfigureAwait(false);
+#else
+        await _multipartContent.CopyToAsync(stream).ConfigureAwait(false);
+#endif
+        }
+
+        public override void Dispose()
+        {
+            _multipartContent.Dispose();
+        }
+
+        private sealed class HttpContentAdapter : HttpContent
+        {
+            private readonly BinaryContent _content;
+
+            public HttpContentAdapter(BinaryContent content)
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                _content = content;
+            }
+
+            protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context)
+                => await _content.WriteToAsync(stream).ConfigureAwait(false);
+
+            protected override bool TryComputeLength(out long length)
+                => _content.TryComputeLength(out length);
+
+#if NET6_0_OR_GREATER
+            protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
+                => await _content!.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+
+            protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
+                => _content.WriteTo(stream, cancellationToken);
+#endif
         }
     }
 }
