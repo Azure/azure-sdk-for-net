@@ -91,17 +91,17 @@ namespace Azure.Generator.Primitives
         {
             hasOperation = false;
             hasLongRunningOperation = false;
+            foreach (var method in rootClient.Methods)
+            {
+                hasOperation = true;
+                if (method is InputLongRunningServiceMethod || method is InputLongRunningPagingServiceMethod)
+                {
+                    hasLongRunningOperation = true;
+                    return;
+                }
+            }
             foreach (var inputClient in rootClient.Children)
             {
-                foreach (var method in inputClient.Methods)
-                {
-                    hasOperation = true;
-                    if (method is InputLongRunningServiceMethod || method is InputLongRunningPagingServiceMethod)
-                    {
-                        hasLongRunningOperation = true;
-                        return;
-                    }
-                }
                 TraverseInput(inputClient, out hasOperation, out hasLongRunningOperation);
             }
         }
