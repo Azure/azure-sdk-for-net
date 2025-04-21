@@ -13,7 +13,7 @@ namespace Azure.Generator.Tests
         [TestCase("true", true)]
         [TestCase("false", false)]
         [TestCase("invalid", false)] // unparsable = fallback to false
-        public void UseModelNamespace_WithDictionary_WorksCorrectly(string? value, bool expected)
+        public void UseModelNamespaceIsSetCorrectly(string? value, bool expected)
         {
             var options = value is null
                 ? new Dictionary<string, BinaryData>()
