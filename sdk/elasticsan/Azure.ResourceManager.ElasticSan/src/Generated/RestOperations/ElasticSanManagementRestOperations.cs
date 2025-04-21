@@ -6,29 +6,27 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.ElasticSan.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    internal partial class PrivateLinkResourcesRestOperations
+    internal partial class ElasticSanManagementRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of PrivateLinkResourcesRestOperations. </summary>
+        /// <summary> Initializes a new instance of ElasticSanManagementRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public PrivateLinkResourcesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public ElasticSanManagementRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -36,7 +34,7 @@ namespace Azure.ResourceManager.ElasticSan
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListByElasticSanRequestUri(string subscriptionId, string resourceGroupName, string elasticSanName)
+        internal RequestUriBuilder CreateRestoreVolumeRequestUri(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string volumeName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -46,16 +44,20 @@ namespace Azure.ResourceManager.ElasticSan
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ElasticSan/elasticSans/", false);
             uri.AppendPath(elasticSanName, true);
-            uri.AppendPath("/privateLinkResources", false);
+            uri.AppendPath("/volumegroups/", false);
+            uri.AppendPath(volumeGroupName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/restore", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListByElasticSanRequest(string subscriptionId, string resourceGroupName, string elasticSanName)
+        internal HttpMessage CreateRestoreVolumeRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string volumeName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Get;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -64,7 +66,11 @@ namespace Azure.ResourceManager.ElasticSan
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ElasticSan/elasticSans/", false);
             uri.AppendPath(elasticSanName, true);
-            uri.AppendPath("/privateLinkResources", false);
+            uri.AppendPath("/volumegroups/", false);
+            uri.AppendPath(volumeGroupName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/restore", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -72,59 +78,59 @@ namespace Azure.ResourceManager.ElasticSan
             return message;
         }
 
-        /// <summary> Gets the private link resources that need to be created for a elastic San. </summary>
+        /// <summary> Restore Soft Deleted Volumes. The volume name is obtained by using the API to list soft deleted volumes by volume group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
+        /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
+        /// <param name="volumeName"> The name of the Volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="elasticSanName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="elasticSanName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ElasticSanPrivateLinkResourceListResult>> ListByElasticSanAsync(string subscriptionId, string resourceGroupName, string elasticSanName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/>, <paramref name="volumeGroupName"/> or <paramref name="volumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/>, <paramref name="volumeGroupName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> RestoreVolumeAsync(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string volumeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
+            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
-            using var message = CreateListByElasticSanRequest(subscriptionId, resourceGroupName, elasticSanName);
+            using var message = CreateRestoreVolumeRequest(subscriptionId, resourceGroupName, elasticSanName, volumeGroupName, volumeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        ElasticSanPrivateLinkResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ElasticSanPrivateLinkResourceListResult.DeserializeElasticSanPrivateLinkResourceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Gets the private link resources that need to be created for a elastic San. </summary>
+        /// <summary> Restore Soft Deleted Volumes. The volume name is obtained by using the API to list soft deleted volumes by volume group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
+        /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
+        /// <param name="volumeName"> The name of the Volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="elasticSanName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="elasticSanName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ElasticSanPrivateLinkResourceListResult> ListByElasticSan(string subscriptionId, string resourceGroupName, string elasticSanName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/>, <paramref name="volumeGroupName"/> or <paramref name="volumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/>, <paramref name="volumeGroupName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response RestoreVolume(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string volumeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
+            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
-            using var message = CreateListByElasticSanRequest(subscriptionId, resourceGroupName, elasticSanName);
+            using var message = CreateRestoreVolumeRequest(subscriptionId, resourceGroupName, elasticSanName, volumeGroupName, volumeName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        ElasticSanPrivateLinkResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ElasticSanPrivateLinkResourceListResult.DeserializeElasticSanPrivateLinkResourceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
