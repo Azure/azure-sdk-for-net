@@ -114,6 +114,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 tokenCredential,
                 _fullyQualifiedNamespace,
                 options.Version,
+                connectionStringProperties.Endpoint.Port,
                 useTls);
         }
 
@@ -216,6 +217,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 credential,
                 _fullyQualifiedNamespace,
                 options.Version,
+                uri.Port,
                 true);
         }
 
