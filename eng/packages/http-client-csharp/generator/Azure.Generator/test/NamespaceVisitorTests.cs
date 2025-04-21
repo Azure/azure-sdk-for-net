@@ -14,7 +14,7 @@ namespace Azure.Generator.Tests
         [Test]
         public void UpdatesNamespaceForModel()
         {
-            MockHelpers.LoadMockPlugin();
+            MockHelpers.LoadMockPlugin(configurationJson: "{ \"package-name\": \"TestLibrary\", \"model-namespace\": true }");
             var visitor = new TestNamespaceVisitor();
             var inputType = InputFactory.Model("TestModel", "Samples");
             var model = new ModelProvider(inputType);
@@ -28,6 +28,19 @@ namespace Azure.Generator.Tests
         public void DoesNotUseModelsNamespaceIfConfigSetToFalse()
         {
             MockHelpers.LoadMockPlugin(configurationJson: "{ \"package-name\": \"TestLibrary\", \"model-namespace\": false }");
+            var visitor = new TestNamespaceVisitor();
+            var inputType = InputFactory.Model("TestModel", "Samples");
+            var model = new ModelProvider(inputType);
+            var updatedModel = visitor.InvokePreVisitModel(inputType, model);
+
+            Assert.IsNotNull(updatedModel);
+            Assert.AreEqual("Samples", updatedModel!.Type.Namespace);
+        }
+
+        [Test]
+        public void DoesNotUseModelsNamespaceIfConfigNotSet()
+        {
+            MockHelpers.LoadMockPlugin();
             var visitor = new TestNamespaceVisitor();
             var inputType = InputFactory.Model("TestModel", "Samples");
             var model = new ModelProvider(inputType);

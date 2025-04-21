@@ -14,10 +14,9 @@ namespace Azure.Generator
 
         internal static bool UseModelNamespace(IReadOnlyDictionary<string, BinaryData> options)
         {
-            return !options.TryGetValue("model-namespace", out var value)
-                   // default to true if no value is provided or it cannot be parsed
-                   || !bool.TryParse(value.ToString(), out var parsed)
-                   || parsed;
+            return options.TryGetValue("model-namespace", out var value) &&
+                   bool.TryParse(value.ToString(), out var parsed) &&
+                   parsed;
         }
     }
 }

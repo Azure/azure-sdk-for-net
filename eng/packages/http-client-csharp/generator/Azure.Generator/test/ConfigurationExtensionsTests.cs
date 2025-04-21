@@ -9,10 +9,10 @@ namespace Azure.Generator.Tests
 {
     public class ConfigurationExtensionsTests
     {
-        [TestCase(null, true)] // no value = default true
+        [TestCase(null, false)] // no value = default false
         [TestCase("true", true)]
         [TestCase("false", false)]
-        [TestCase("invalid", true)] // unparsable = fallback to true
+        [TestCase("invalid", false)] // unparsable = fallback to false
         public void UseModelNamespace_WithDictionary_WorksCorrectly(string? value, bool expected)
         {
             var options = value is null
