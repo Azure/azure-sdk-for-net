@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed a bug where the custom port associated with a local emulator endpoint was reset by the `ServiceBusAdministrationClient`.
+
 ### Other Changes
 
 ## 7.19.0 (2025-04-08)
