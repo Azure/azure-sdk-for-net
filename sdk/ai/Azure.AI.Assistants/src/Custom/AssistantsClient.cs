@@ -870,5 +870,35 @@ namespace Azure.AI.Assistants
                 = await InternalGetRunsAsync(threadId, limit, order, after, before, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(PageableList<ThreadRun>.Create(baseResponse.Value), baseResponse.GetRawResponse());
         }
+
+        /// <inheritdoc cref="InternalGetThreads(int?, ListSortOrder?, string, string, CancellationToken)"/>
+        public virtual Response<PageableList<AssistantThread>> GetThreads(
+            int? limit = null,
+            ListSortOrder? order = null,
+            string after = null,
+            string before = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Assistants.GetThreads");
+            scope.Start();
+            Response<OpenAIPageableListOfAssistantThread> baseResponse
+                = InternalGetThreads(limit, order, after, before, cancellationToken);
+            return Response.FromValue(PageableList<AssistantThread>.Create(baseResponse.Value), baseResponse.GetRawResponse());
+        }
+
+        /// <inheritdoc cref="InternalGetThreadsAsync(int?, ListSortOrder?, string, string, CancellationToken)"/>
+        public virtual async Task<Response<PageableList<AssistantThread>>> GetThreadsAsync(
+            int? limit = null,
+            ListSortOrder? order = null,
+            string after = null,
+            string before = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Assistants.GetThreads");
+            scope.Start();
+            Response<OpenAIPageableListOfAssistantThread> baseResponse
+                = await InternalGetThreadsAsync(limit, order, after, before, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(PageableList<AssistantThread>.Create(baseResponse.Value), baseResponse.GetRawResponse());
+        }
     }
 }

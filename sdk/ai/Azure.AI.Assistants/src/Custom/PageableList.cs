@@ -55,7 +55,8 @@ public partial class PageableList<T> : IEnumerable<T>
         => new(internalList.Data, internalList.FirstId, internalList.LastId, internalList.HasMore);
     internal static PageableList<ThreadRun> Create(InternalOpenAIPageableListOfThreadRun internalList)
         => new(internalList.Data, internalList.FirstId, internalList.LastId, internalList.HasMore);
-
+    internal static PageableList<AssistantThread> Create(OpenAIPageableListOfAssistantThread internalList)
+         => new(internalList.Data, internalList.FirstId, internalList.LastId, internalList.HasMore);
     /*
     * CUSTOM CODE DESCRIPTION:
     *

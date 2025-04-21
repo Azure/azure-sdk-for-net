@@ -19,15 +19,15 @@ public partial class AssistantsClient
     /// <see cref="Assistant"/>.
     /// </summary>
     /// <param name="threadId"> Identifier of the thread. </param>
-    /// <param name="assistantId"> The ID of the agent that should run the thread. </param>
-    /// <param name="overrideModelName"> The overridden model name that the agent should use to run the thread. </param>
-    /// <param name="overrideInstructions"> The overridden system instructions that the agent should use to run the thread. </param>
+    /// <param name="assistantId"> The ID of the assistant that should run the thread. </param>
+    /// <param name="overrideModelName"> The overridden model name that the assistant should use to run the thread. </param>
+    /// <param name="overrideInstructions"> The overridden system instructions that the assistant should use to run the thread. </param>
     /// <param name="additionalInstructions">
     /// Additional instructions to append at the end of the instructions for the run. This is useful for modifying the behavior
     /// on a per-run basis without overriding other instructions.
     /// </param>
     /// <param name="additionalMessages"> Adds additional messages to the thread before creating the run. </param>
-    /// <param name="overrideTools"> The overridden list of enabled tools that the agent should use to run the thread. </param>
+    /// <param name="overrideTools"> The overridden list of enabled tools that the assistant should use to run the thread. </param>
     /// <param name="temperature">
     /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output
     /// more random, while lower values like 0.2 will make it more focused and deterministic.
@@ -95,15 +95,15 @@ public partial class AssistantsClient
     /// <see cref="Assistant"/>.
     /// </summary>
     /// <param name="threadId"> Identifier of the thread. </param>
-    /// <param name="assistantId"> The ID of the agent that should run the thread. </param>
-    /// <param name="overrideModelName"> The overridden model name that the agent should use to run the thread. </param>
-    /// <param name="overrideInstructions"> The overridden system instructions that the agent should use to run the thread. </param>
+    /// <param name="assistantId"> The ID of the assistant that should run the thread. </param>
+    /// <param name="overrideModelName"> The overridden model name that the assistant should use to run the thread. </param>
+    /// <param name="overrideInstructions"> The overridden system instructions that the assistant should use to run the thread. </param>
     /// <param name="additionalInstructions">
     /// Additional instructions to append at the end of the instructions for the run. This is useful for modifying the behavior
     /// on a per-run basis without overriding other instructions.
     /// </param>
     /// <param name="additionalMessages"> Adds additional messages to the thread before creating the run. </param>
-    /// <param name="overrideTools"> The overridden list of enabled tools that the agent should use to run the thread. </param>
+    /// <param name="overrideTools"> The overridden list of enabled tools that the assistant should use to run the thread. </param>
     /// <param name="temperature">
     /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output
     /// more random, while lower values like 0.2 will make it more focused and deterministic.
@@ -204,7 +204,7 @@ public partial class AssistantsClient
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
         Argument.AssertNotNull(content, nameof(content));
 
-        using var scope = ClientDiagnostics.CreateScope("AgentsClient.CreateRun");
+        using var scope = ClientDiagnostics.CreateScope("AssistantsClient.CreateRun");
         scope.Start();
         try
         {
@@ -224,7 +224,7 @@ public partial class AssistantsClient
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
         Argument.AssertNotNull(content, nameof(content));
 
-        using var scope = ClientDiagnostics.CreateScope("AgentsClient.CreateRun");
+        using var scope = ClientDiagnostics.CreateScope("AssistantsClient.CreateRun");
         scope.Start();
         try
         {

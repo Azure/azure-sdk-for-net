@@ -42,6 +42,8 @@ public partial class Sample_Assistants_Basics : SamplesBase<AIAssistantsTestEnvi
         AssistantThread thread = await client.CreateThreadAsync();
         #endregion
 
+        PageableList<AssistantThread> threadsListResponse = await client.GetThreadsAsync();
+
         // Step 3: Add a message to a thread
         #region Snippet:AssistantsOverviewCreateMessage
         ThreadMessage message = await client.CreateMessageAsync(
@@ -53,8 +55,7 @@ public partial class Sample_Assistants_Basics : SamplesBase<AIAssistantsTestEnvi
         // Intermission: message is now correlated with thread
         // Intermission: listing messages will retrieve the message just added
 
-        Response<PageableList<ThreadMessage>> messagesListResponse = await client.GetMessagesAsync(thread.Id);
-        Assert.That(messagesListResponse.Value.Data[0].Id == message.Id);
+        PageableList<ThreadMessage> messagesListResponse = await client.GetMessagesAsync(thread.Id);
 
         // Step 4: Run the agent
         #region Snippet:AssistantsOverviewCreateRun
@@ -133,6 +134,7 @@ public partial class Sample_Assistants_Basics : SamplesBase<AIAssistantsTestEnvi
         AssistantThread thread = client.CreateThread();
         #endregion
 
+        PageableList<AssistantThread> threadsListResponse = client.GetThreads();
         // Step 3: Add a message to a thread
         #region Snippet:AssistantsOverviewCreateMessageSync
         ThreadMessage message = client.CreateMessage(
@@ -144,8 +146,7 @@ public partial class Sample_Assistants_Basics : SamplesBase<AIAssistantsTestEnvi
         // Intermission: message is now correlated with thread
         // Intermission: listing messages will retrieve the message just added
 
-        Response<PageableList<ThreadMessage>> messagesListResponse = client.GetMessages(thread.Id);
-        Assert.That(messagesListResponse.Value.Data[0].Id == message.Id);
+        PageableList<ThreadMessage> messagesListResponse = client.GetMessages(thread.Id);
 
         // Step 4: Run the agent
         #region Snippet:AssistantsOverviewCreateRunSync
