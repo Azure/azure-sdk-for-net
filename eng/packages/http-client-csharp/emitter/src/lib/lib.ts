@@ -15,7 +15,8 @@ const diags: { [code: string]: DiagnosticDefinition<DiagnosticMessages> } = {
     severity: "warning",
     messages: {
       default:
-        "Cannot generate CSharp SDK since no public root client is defined in typespec file."
+        "The 'model-namespace' option is set to true, but the 'namespace' option is not set. " +
+        "'model-namespace' can only be true, if the 'namespace' option is."
     }
   }
 };

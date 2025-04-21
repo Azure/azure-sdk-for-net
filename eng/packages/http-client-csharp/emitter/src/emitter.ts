@@ -20,10 +20,6 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
     $lib.reportDiagnostic(context.program, {
       code: "invalid-model-namespace-usage",
       target: NoTarget,
-      severity: "warning",
-      message:
-        "The 'model-namespace' option is set to true, but the 'namespace' option is not set. " +
-        "'model-namespace' can only be true, if the 'namespace' option is."
     });
   }
 

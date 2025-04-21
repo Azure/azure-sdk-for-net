@@ -5,7 +5,9 @@
 
 #nullable disable
 
-namespace Streaming.Jsonl.Models
+using TypeSpec.Http.Streams;
+
+namespace Streaming.Jsonl
 {
     public static partial class StreamingJsonlModelFactory
     {

@@ -127,7 +127,19 @@ export async function createCSharpSdkContext(
       types: new Map(),
       models: new Map(),
       enums: new Map(),
-      clients: new Map()
+      clients: new Map(),
+      properties: new Map(),
+      responses: new Map(),
+      updateSdkClientReferences: (sdkClient, inputClient) => {
+      },
+      updateSdkPropertyReferences: (sdkProperty, inputProperty) => {
+      },
+      updateSdkResponseReferences: (sdkResponse, response) => {
+      },
+      updateSdkTypeReferences: (sdkType, inputType) => {
+      },
+      updateTypeCache: (typeName, type) => {
+      }
     }
   };
 }
