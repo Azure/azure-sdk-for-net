@@ -43,26 +43,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             Assert.AreEqual(RecordingState.Active, result.Value.RecordingState);
         }
 
-        [TestCaseSource(nameof(TestData_OperationsWithCallConnectionIdWithStatus))]
-        public void RecordingOperations_WithCallConnectionId_WithRecordingStatus_Success(Func<CallRecording, RecordingStateResult> operation)
-        {
-            CallRecording callRecording = getMockCallRecording(200, responseContent: DummyRecordingStatusResponse);
-
-            RecordingStateResult result = operation(callRecording);
-            Assert.AreEqual("dummyRecordingId", result.RecordingId);
-            Assert.AreEqual(RecordingState.Active, result.RecordingState);
-        }
-
-        [TestCaseSource(nameof(TestData_OperationsAsyncWithCallConnectionIdWithStatus))]
-        public async Task RecordingOperationsAsync_WithCallConnectionId_WithRecordingStatus_Success(Func<CallRecording, Task<Response<RecordingStateResult>>> operation)
-        {
-            CallRecording callRecording = getMockCallRecording(200, responseContent: DummyRecordingStatusResponse);
-
-            Response<RecordingStateResult> result = await operation(callRecording);
-            Assert.AreEqual("dummyRecordingId", result.Value.RecordingId);
-            Assert.AreEqual(RecordingState.Active, result.Value.RecordingState);
-        }
-
         [TestCaseSource(nameof(TestData_OperationsSuccess))]
         public void RecordingOperations_ReturnsSuccess(int expectedStatusCode, HttpStatusCode httpStatusCode, Func<CallRecording, Response> operation)
         {
@@ -237,16 +217,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                     callRecording => () =>
                         callRecording.Start(
                             new StartRecordingOptions(_callLocator)
-                            {
-                                RecordingStateCallbackUri = _callBackUri,
-                                ChannelAffinity = testChannelAffinities
-                            })
-                },
-               new Func<CallRecording, TestDelegate>?[]
-                {
-                    callRecording => () =>
-                        callRecording.Start(
-                            new StartRecordingOptions("callconnectionid")
                             {
                                 RecordingStateCallbackUri = _callBackUri,
                                 ChannelAffinity = testChannelAffinities

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Communication.CallAutomation.Models.Events;
 using Azure.Messaging;
 
 namespace Azure.Communication.CallAutomation
@@ -108,10 +109,10 @@ namespace Azure.Communication.CallAutomation
                     return CallTransferFailed.Deserialize(eventData);
                 case nameof(ParticipantsUpdated):
                     return ParticipantsUpdated.Deserialize(eventData);
-                case nameof(RecordingStateChanged):
-                    return RecordingStateChanged.Deserialize(eventData);
                 case nameof(StartRecordingFailed):
                     return StartRecordingFailed.Deserialize(eventData);
+                case nameof(RecordingStateChanged):
+                    return RecordingStateChanged.Deserialize(eventData);
                 case nameof(PlayCompleted):
                     return PlayCompleted.Deserialize(eventData);
                 case nameof(PlayFailed):
@@ -152,22 +153,10 @@ namespace Azure.Communication.CallAutomation
                     return TranscriptionFailed.Deserialize(eventData);
                 case nameof(PlayStarted):
                     return PlayStarted.Deserialize(eventData);
-                case nameof(PlayResumed):
-                    return PlayResumed.Deserialize(eventData);
-                case nameof(PlayPaused):
-                    return PlayPaused.Deserialize(eventData);
                 case nameof(AnswerFailed):
                     return AnswerFailed.Deserialize(eventData);
                 case nameof(CreateCallFailed):
                     return CreateCallFailed.Deserialize(eventData);
-                case nameof(HoldAudioCompleted):
-                    return HoldAudioCompleted.Deserialize(eventData);
-                case nameof(HoldAudioStarted):
-                    return HoldAudioStarted.Deserialize(eventData);
-                case nameof(HoldAudioPaused):
-                    return HoldAudioPaused.Deserialize(eventData);
-                case nameof(HoldAudioResumed):
-                    return HoldAudioResumed.Deserialize(eventData);
                 case nameof(HoldFailed):
                     return HoldFailed.Deserialize(eventData);
                 case nameof(MediaStreamingStarted):
@@ -176,26 +165,6 @@ namespace Azure.Communication.CallAutomation
                     return MediaStreamingStopped.Deserialize(eventData);
                 case nameof(MediaStreamingFailed):
                     return MediaStreamingFailed.Deserialize(eventData);
-                #region Dialog
-                case nameof(DialogCompleted):
-                    return DialogCompleted.Deserialize(eventData);
-                case nameof(DialogFailed):
-                    return DialogFailed.Deserialize(eventData);
-                case nameof(DialogConsent):
-                    return DialogConsent.Deserialize(eventData);
-                case nameof(DialogStarted):
-                    return DialogStarted.Deserialize(eventData);
-                case nameof(DialogHangup):
-                    return DialogHangup.Deserialize(eventData);
-                case nameof(DialogTransfer):
-                    return DialogTransfer.Deserialize(eventData);
-                case nameof(DialogSensitivityUpdate):
-                    return DialogSensitivityUpdate.Deserialize(eventData);
-                case nameof(DialogLanguageChange):
-                    return DialogLanguageChange.Deserialize(eventData);
-                case nameof(DialogUpdated):
-                    return DialogUpdated.Deserialize(eventData);
-                #endregion
                 #region Incoming Call
                 case nameof(IncomingCall):
                     return IncomingCall.Deserialize(eventData);
