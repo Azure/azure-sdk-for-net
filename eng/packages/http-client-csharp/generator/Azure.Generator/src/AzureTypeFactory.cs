@@ -1,16 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.InputTransformation;
 using Azure.Generator.Primitives;
 using Azure.Generator.Providers;
 using Azure.Generator.Providers.Abstraction;
+using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
-using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
@@ -46,6 +45,14 @@ namespace Azure.Generator
 
         /// <inheritdoc/>
         public override IHttpRequestOptionsApi HttpRequestOptionsApi => HttpRequestOptionsProvider.Instance;
+
+        /// <summary>
+        /// Get dependency packages for Azure.
+        /// </summary>
+        protected internal virtual IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> AzureDependencyPackages =>
+            [
+                new("Azure.Core")
+            ];
 
         /// <inheritdoc/>
         protected override CSharpType? CreateCSharpTypeCore(InputType inputType)
@@ -108,18 +115,6 @@ namespace Azure.Generator
             return KnownAzureTypes.TryGetJsonSerializationExpression(valueType, out var serializationExpression) ?
                 serializationExpression(value, utf8JsonWriter, mrwOptionsParameter, serializationFormat) :
                 null;
-        }
-
-        /// <inheritdoc/>
-        protected override ClientProvider? CreateClientCore(InputClient inputClient)
-        {
-            if (!AzureClientPlugin.Instance.IsAzureArm.Value)
-            {
-                return base.CreateClientCore(inputClient);
-            }
-
-            var transformedClient = InputClientTransformer.TransformInputClient(inputClient);
-            return transformedClient is null ? null : base.CreateClientCore(transformedClient);
         }
 
         /// <inheritdoc/>

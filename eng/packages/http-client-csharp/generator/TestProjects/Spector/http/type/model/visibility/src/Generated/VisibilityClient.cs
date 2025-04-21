@@ -23,17 +23,17 @@ namespace _Type.Model.Visibility
 
         public HttpPipeline Pipeline => throw null;
 
-        public virtual Response GetModel(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Response GetModel(int queryProp, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> GetModelAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<Response> GetModelAsync(int queryProp, RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response<VisibilityModel> GetModel(VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Task<Response<VisibilityModel>> GetModelAsync(VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Response HeadModel(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Response HeadModel(int queryProp, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> HeadModelAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<Response> HeadModelAsync(int queryProp, RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response HeadModel(VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
 

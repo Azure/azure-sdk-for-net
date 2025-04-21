@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// The SIMs to delete.
-    /// Serialized Name: SimDeleteList
-    /// </summary>
+    /// <summary> The SIMs to delete. </summary>
     public partial class SimDeleteList
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SimDeleteList"/>. </summary>
-        /// <param name="sims">
-        /// A list of SIM resource names to delete.
-        /// Serialized Name: SimDeleteList.sims
-        /// </param>
+        /// <param name="sims"> A list of SIM resource names to delete. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sims"/> is null. </exception>
         public SimDeleteList(IEnumerable<string> sims)
         {
@@ -63,10 +57,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SimDeleteList"/>. </summary>
-        /// <param name="sims">
-        /// A list of SIM resource names to delete.
-        /// Serialized Name: SimDeleteList.sims
-        /// </param>
+        /// <param name="sims"> A list of SIM resource names to delete. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SimDeleteList(IList<string> sims, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -79,10 +70,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary>
-        /// A list of SIM resource names to delete.
-        /// Serialized Name: SimDeleteList.sims
-        /// </summary>
+        /// <summary> A list of SIM resource names to delete. </summary>
         [WirePath("sims")]
         public IList<string> Sims { get; }
     }

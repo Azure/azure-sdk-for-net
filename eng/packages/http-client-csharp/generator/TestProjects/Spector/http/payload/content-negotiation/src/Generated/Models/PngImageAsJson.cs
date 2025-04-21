@@ -11,6 +11,8 @@ namespace Payload.ContentNegotiation.Models
 {
     public partial class PngImageAsJson
     {
+        public PngImageAsJsonContentType ContentType => throw null;
+
         public BinaryData Content => throw null;
     }
 }
