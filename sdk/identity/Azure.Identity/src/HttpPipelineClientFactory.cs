@@ -17,10 +17,12 @@ namespace Azure.Identity
     internal class HttpPipelineClientFactory : IMsalSFHttpClientFactory
     {
         private readonly HttpPipeline _pipeline;
+        private readonly ClientOptions _options;
 
-        public HttpPipelineClientFactory(HttpPipeline pipeline)
+        public HttpPipelineClientFactory(HttpPipeline pipeline, ClientOptions options = null)
         {
             _pipeline = pipeline;
+            _options = options;
         }
 
         public HttpClient GetHttpClient()
@@ -30,7 +32,12 @@ namespace Azure.Identity
 
         public HttpClient GetHttpClient(Func<HttpRequestMessage, X509Certificate2, X509Chain, SslPolicyErrors, bool> validateServerCert)
         {
-            throw new NotImplementedException();
+            var pipeline = HttpPipelineBuilder.Build(new HttpPipelineOptions(_options) { RequestFailedDetailsParser = new ManagedIdentityRequestFailedDetailsParser() },
+                new HttpPipelineTransportOptions()
+                {
+                    ServerCertificateCustomValidationCallback = (args) => validateServerCert(null, args.Certificate, args.CertificateAuthorityChain, args.SslPolicyErrors)
+                });
+            return new HttpClient(new HttpPipelineMessageHandler(pipeline));
         }
     }
 }
