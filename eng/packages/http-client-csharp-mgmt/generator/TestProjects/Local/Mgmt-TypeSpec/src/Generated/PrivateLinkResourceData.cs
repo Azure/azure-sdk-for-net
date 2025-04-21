@@ -18,10 +18,9 @@ namespace MgmtTypeSpec.Models
         {
         }
 
-        internal PrivateLinkResourceData(ResourceIdentifier id, string name, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateLinkResourceProperties properties, string name0, ManagedServiceIdentity identity) : base(id, name, @type, systemData, additionalBinaryDataProperties)
+        internal PrivateLinkResourceData(ResourceIdentifier id, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateLinkResourceProperties properties, string name, ManagedServiceIdentity identity) : base(id, name, @type, systemData, additionalBinaryDataProperties)
         {
             Properties = properties;
-            Name = name0;
             Identity = identity;
         }
 
@@ -29,7 +28,7 @@ namespace MgmtTypeSpec.Models
         public PrivateLinkResourceProperties Properties { get; }
 
         /// <summary> The name of the private link associated with the Azure resource. </summary>
-        public string Name { get; }
+        public new string Name => _name ?? default;
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; }
