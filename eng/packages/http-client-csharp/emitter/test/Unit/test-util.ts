@@ -91,7 +91,7 @@ export async function typeSpecCompile(
 
 export function createEmitterContext(
   program: Program,
-  options: AzureEmitterOptions = {},
+  options: AzureEmitterOptions = {}
 ): EmitContext<CSharpEmitterOptions> {
   return {
     program: program,
