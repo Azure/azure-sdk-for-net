@@ -46,21 +46,21 @@ namespace Azure.Analytics.OnlineExperimentation
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ExperimentMetricValidationResult"/>. </summary>
-        /// <param name="result"> Indicates whether the experiment metric is valid. </param>
-        internal ExperimentMetricValidationResult(ValidationResult result)
+        /// <param name="isValid"> Indicates whether the experiment metric is valid. </param>
+        internal ExperimentMetricValidationResult(bool isValid)
         {
+            IsValid = isValid;
             Diagnostics = new ChangeTrackingList<DiagnosticDetail>();
-            Result = result;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExperimentMetricValidationResult"/>. </summary>
+        /// <param name="isValid"> Indicates whether the experiment metric is valid. </param>
         /// <param name="diagnostics"> Diagnostic details from the validation process. </param>
-        /// <param name="result"> Indicates whether the experiment metric is valid. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExperimentMetricValidationResult(IReadOnlyList<DiagnosticDetail> diagnostics, ValidationResult result, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExperimentMetricValidationResult(bool isValid, IReadOnlyList<DiagnosticDetail> diagnostics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            IsValid = isValid;
             Diagnostics = diagnostics;
-            Result = result;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -69,9 +69,9 @@ namespace Azure.Analytics.OnlineExperimentation
         {
         }
 
+        /// <summary> Indicates whether the experiment metric is valid. </summary>
+        public bool IsValid { get; }
         /// <summary> Diagnostic details from the validation process. </summary>
         public IReadOnlyList<DiagnosticDetail> Diagnostics { get; }
-        /// <summary> Indicates whether the experiment metric is valid. </summary>
-        public ValidationResult Result { get; }
     }
 }

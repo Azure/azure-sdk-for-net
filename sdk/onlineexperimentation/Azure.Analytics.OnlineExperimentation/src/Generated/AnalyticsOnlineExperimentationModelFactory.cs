@@ -47,14 +47,14 @@ namespace Azure.Analytics.OnlineExperimentation
         }
 
         /// <summary> Initializes a new instance of <see cref="OnlineExperimentation.ExperimentMetricValidationResult"/>. </summary>
+        /// <param name="isValid"> Indicates whether the experiment metric is valid. </param>
         /// <param name="diagnostics"> Diagnostic details from the validation process. </param>
-        /// <param name="result"> Indicates whether the experiment metric is valid. </param>
         /// <returns> A new <see cref="OnlineExperimentation.ExperimentMetricValidationResult"/> instance for mocking. </returns>
-        public static ExperimentMetricValidationResult ExperimentMetricValidationResult(IEnumerable<DiagnosticDetail> diagnostics = null, ValidationResult result = default)
+        public static ExperimentMetricValidationResult ExperimentMetricValidationResult(bool isValid = default, IEnumerable<DiagnosticDetail> diagnostics = null)
         {
             diagnostics ??= new List<DiagnosticDetail>();
 
-            return new ExperimentMetricValidationResult(diagnostics?.ToList(), result, serializedAdditionalRawData: null);
+            return new ExperimentMetricValidationResult(isValid, diagnostics?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OnlineExperimentation.DiagnosticDetail"/>. </summary>

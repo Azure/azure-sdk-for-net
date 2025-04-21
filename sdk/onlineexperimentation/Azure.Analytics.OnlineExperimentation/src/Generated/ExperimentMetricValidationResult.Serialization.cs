@@ -34,6 +34,8 @@ namespace Azure.Analytics.OnlineExperimentation
                 throw new FormatException($"The model {nameof(ExperimentMetricValidationResult)} does not support writing '{format}' format.");
             }
 
+            writer.WritePropertyName("isValid"u8);
+            writer.WriteBooleanValue(IsValid);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("diagnostics"u8);
@@ -44,8 +46,6 @@ namespace Azure.Analytics.OnlineExperimentation
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("result"u8);
-            writer.WriteStringValue(Result.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,12 +83,17 @@ namespace Azure.Analytics.OnlineExperimentation
             {
                 return null;
             }
+            bool isValid = default;
             IReadOnlyList<DiagnosticDetail> diagnostics = default;
-            ValidationResult result = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("isValid"u8))
+                {
+                    isValid = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("diagnostics"u8))
                 {
                     List<DiagnosticDetail> array = new List<DiagnosticDetail>();
@@ -99,18 +104,13 @@ namespace Azure.Analytics.OnlineExperimentation
                     diagnostics = array;
                     continue;
                 }
-                if (property.NameEquals("result"u8))
-                {
-                    result = new ValidationResult(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ExperimentMetricValidationResult(diagnostics, result, serializedAdditionalRawData);
+            return new ExperimentMetricValidationResult(isValid, diagnostics, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExperimentMetricValidationResult>.Write(ModelReaderWriterOptions options)

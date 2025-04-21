@@ -31,7 +31,7 @@ namespace Azure.Analytics.OnlineExperimentation.Samples
             var validationResult = client.ValidateMetric(metricToValidate);
 
             // Check if the metric definition is valid
-            if (validationResult.Value.IsValid())
+            if (validationResult.Value.IsValid)
             {
                 Console.WriteLine("Metric definition is valid");
 

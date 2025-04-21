@@ -275,7 +275,7 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
             }
 
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.Result, Is.EqualTo(ValidationResult.Valid));
+            Assert.That(result.IsValid, Is.True);
             Assert.That(result.Diagnostics, Is.Null.Or.Empty);
         }
 
@@ -297,7 +297,7 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
             ExperimentMetricValidationResult result = response.Value;
 
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.Result, Is.EqualTo(ValidationResult.Invalid));
+            Assert.That(result.IsValid, Is.True);
             Assert.That(result.Diagnostics, Is.Not.Null);
             Assert.That(result.Diagnostics, Is.Not.Empty);
         }

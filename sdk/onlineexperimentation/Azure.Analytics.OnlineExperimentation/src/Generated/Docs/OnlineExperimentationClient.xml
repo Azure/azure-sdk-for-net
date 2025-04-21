@@ -711,9 +711,9 @@ using RequestContent content = RequestContent.Create(new
 Response response = await client.ValidateMetricAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("isValid").ToString());
 Console.WriteLine(result.GetProperty("diagnostics")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("diagnostics")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("result").ToString());
 ]]></code></example>
     </member>
     <member name="ValidateMetric(RequestContent,RequestContext)">
@@ -748,9 +748,9 @@ using RequestContent content = RequestContent.Create(new
 Response response = client.ValidateMetric(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("isValid").ToString());
 Console.WriteLine(result.GetProperty("diagnostics")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("diagnostics")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("result").ToString());
 ]]></code></example>
     </member>
     <member name="DeleteMetricAsync(string,RequestConditions,RequestContext)">

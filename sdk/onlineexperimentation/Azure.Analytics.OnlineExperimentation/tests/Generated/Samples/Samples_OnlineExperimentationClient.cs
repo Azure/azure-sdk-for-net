@@ -721,9 +721,9 @@ namespace Azure.Analytics.OnlineExperimentation.Samples
             Response response = client.ValidateMetric(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("isValid").ToString());
             Console.WriteLine(result.GetProperty("diagnostics")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("diagnostics")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("result").ToString());
         }
 
         [Test]
@@ -758,9 +758,9 @@ namespace Azure.Analytics.OnlineExperimentation.Samples
             Response response = await client.ValidateMetricAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("isValid").ToString());
             Console.WriteLine(result.GetProperty("diagnostics")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("diagnostics")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("result").ToString());
         }
 
         [Test]
