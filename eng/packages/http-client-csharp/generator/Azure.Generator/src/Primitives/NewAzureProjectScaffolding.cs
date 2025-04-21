@@ -42,7 +42,13 @@ namespace Azure.Generator.Primitives
                 builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("AzureKeyCredentialPolicy.cs", pathSegmentCount), "Shared/Core"));
             }
 
-            TraverseInput(out bool hasOperation, out bool hasLongRunningOperation);
+            bool hasOperation = false;
+            bool hasLongRunningOperation = false;
+            foreach (var client in AzureClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
+            {
+                TraverseInput(client, out hasOperation, out hasLongRunningOperation);
+            }
+
             if (hasOperation)
             {
                 builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("RawRequestUriBuilder.cs", pathSegmentCount), "Shared/Core"));
@@ -81,11 +87,11 @@ namespace Azure.Generator.Primitives
             "VoidValue.cs"
         ];
 
-        private static void TraverseInput(out bool hasOperation, out bool hasLongRunningOperation)
+        private static void TraverseInput(InputClient rootClient, out bool hasOperation, out bool hasLongRunningOperation)
         {
             hasOperation = false;
             hasLongRunningOperation = false;
-            foreach (var inputClient in AzureClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
+            foreach (var inputClient in rootClient.Children)
             {
                 foreach (var method in inputClient.Methods)
                 {
@@ -96,6 +102,7 @@ namespace Azure.Generator.Primitives
                         return;
                     }
                 }
+                TraverseInput(inputClient, out hasOperation, out hasLongRunningOperation);
             }
         }
 

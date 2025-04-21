@@ -80,6 +80,7 @@ namespace MgmtTypeSpec.Models
             IDictionary<string, string> tags = default;
             string location = default;
             FooProperties properties = default;
+            string name0 = default;
             ExtendedLocation extendedLocation = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -169,6 +170,7 @@ namespace MgmtTypeSpec.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name0,
                 extendedLocation);
         }
 

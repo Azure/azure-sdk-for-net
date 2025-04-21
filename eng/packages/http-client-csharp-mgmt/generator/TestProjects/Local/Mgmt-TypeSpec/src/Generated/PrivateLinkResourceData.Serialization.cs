@@ -74,6 +74,7 @@ namespace MgmtTypeSpec.Models
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             PrivateLinkResourceProperties properties = default;
+            string name0 = default;
             ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -135,6 +136,7 @@ namespace MgmtTypeSpec.Models
                 systemData,
                 additionalBinaryDataProperties,
                 properties,
+                name0,
                 identity);
         }
 
