@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Streaming.Jsonl.Models
+namespace TypeSpec.Http.Streams
 {
     public readonly partial struct JsonlStreamInfoContentType : IEquatable<JsonlStreamInfoContentType>
     {
