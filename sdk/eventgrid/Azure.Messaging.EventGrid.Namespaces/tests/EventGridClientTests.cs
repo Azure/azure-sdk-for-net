@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net.NetworkInformation;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.EventGrid.Tests
 {
-    public class CloudEventTests
+    public class EventGridClientTests
     {
         private const string TraceParentHeaderName = "traceparent";
         private const string TraceStateHeaderName = "tracestate";
@@ -25,7 +26,7 @@ namespace Azure.Messaging.EventGrid.Tests
         [TestCase(true, true)]
         [TestCase(true, false)]
         [TestCase(false, true)]
-        public async Task SetsTraceParentExtension(bool inclTraceparent, bool inclTracestate)
+        public async Task SendAsyncSetsTraceParentExtension(bool inclTraceparent, bool inclTracestate)
         {
             MockTransport mockTransport = CreateMockTransport();
 
@@ -41,74 +42,115 @@ namespace Azure.Messaging.EventGrid.Tests
             activity.Start();
             activity.TraceStateString = "tracestatevalue";
 
-            // create list of cloud events
-            List<CloudEvent> eventsList = new List<CloudEvent>();
-            for (int i = 0; i < 10; i++)
-            {
-                CloudEvent cloudEvent = new CloudEvent(
-                    "record",
-                    "Microsoft.MockPublisher.TestEvent",
-                    JsonDocument.Parse("{\"property1\": \"abc\",  \"property2\": 123}").RootElement)
-                {
-                    Id = "id",
-                    Subject = $"Subject-{i}",
-                    Time = DateTimeOffset.UtcNow
-                };
-                if (inclTraceparent && i % 2 == 0)
-                {
-                    cloudEvent.ExtensionAttributes.Add("traceparent", "traceparentValue");
-                }
-                if (inclTracestate && i % 2 == 0)
-                {
-                    cloudEvent.ExtensionAttributes.Add("tracestate", "param:value");
-                }
-                eventsList.Add(cloudEvent);
-            }
+            List<CloudEvent> cloudEvents = CreateCloudEventsToSend(inclTraceparent, inclTracestate);
 
             // send
-            await senderClient.SendAsync(eventsList).ConfigureAwait(false);
+            await senderClient.SendAsync(cloudEvents).ConfigureAwait(false);
 
             // stop activity after extracting the events from the request as this is where the cloudEvents would actually
             // be serialized
             activity.Stop();
 
-            // validate
-            IEnumerator<CloudEvent> cloudEnum = eventsList.GetEnumerator();
-            for (int i = 0; i < 10; i++)
+            ValidateCloudEvents(mockTransport, inclTraceparent, inclTracestate, cloudEvents);
+        }
+
+        [Test]
+        [TestCase(false, false)]
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        public void SendSetsTraceParentExtension(bool inclTraceparent, bool inclTracestate)
+        {
+            MockTransport mockTransport = CreateMockTransport();
+
+            EventGridSenderClientOptions options = new()
             {
-                cloudEnum.MoveNext();
-                IDictionary<string, object> cloudEventAttr = cloudEnum.Current.ExtensionAttributes;
-                if (inclTraceparent && inclTracestate && i % 2 == 0)
-                {
-                    Assert.AreEqual(
-                        "traceparentValue",
-                        cloudEventAttr[TraceParentHeaderName]);
+                Transport = mockTransport,
+            };
+            EventGridSenderClient senderClient = new(new Uri("http://www.example.com"), "topic", new AzureKeyCredential("fake"), options);
 
-                    Assert.AreEqual(
-                        "param:value",
-                        cloudEventAttr[TraceStateHeaderName]);
-                }
-                else if (inclTraceparent && i % 2 == 0)
-                {
-                    Assert.AreEqual(
-                        "traceparentValue",
-                        cloudEventAttr[TraceParentHeaderName]);
-                }
-                else if (inclTracestate && i % 2 == 0)
-                {
-                    Assert.AreEqual(
-                       "param:value",
-                       cloudEventAttr[TraceStateHeaderName]);
-                }
-                else
-                {
-                    Assert.IsTrue(mockTransport.SingleRequest.Headers.TryGetValue(TraceParentHeaderName, out string requestHeader));
+            // simulating some other activity already being started before doing operations with the client
+            var activity = new Activity("ParentEvent");
+            activity.SetIdFormat(ActivityIdFormat.W3C);
+            activity.Start();
+            activity.TraceStateString = "tracestatevalue";
 
-                    Assert.AreEqual(
-                        requestHeader,
-                        cloudEventAttr[TraceParentHeaderName]);
-                }
-            }
+            List<CloudEvent> cloudEvents = CreateCloudEventsToSend(inclTraceparent, inclTracestate);
+
+            // send
+            senderClient.Send(cloudEvents);
+
+            // stop activity after extracting the events from the request as this is where the cloudEvents would actually
+            // be serialized
+            activity.Stop();
+
+            ValidateCloudEvents(mockTransport, inclTraceparent, inclTracestate, cloudEvents);
+        }
+
+        [Test]
+        [TestCase(false, false)]
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        public async Task SingleEventSendAsyncSetsTraceParentExtension(bool inclTraceparent, bool inclTracestate)
+        {
+            MockTransport mockTransport = CreateMockTransport();
+
+            EventGridSenderClientOptions options = new()
+            {
+                Transport = mockTransport,
+            };
+            EventGridSenderClient senderClient = new(new Uri("http://www.example.com"), "topic", new AzureKeyCredential("fake"), options);
+
+            // simulating some other activity already being started before doing operations with the client
+            var activity = new Activity("ParentEvent");
+            activity.SetIdFormat(ActivityIdFormat.W3C);
+            activity.Start();
+            activity.TraceStateString = "tracestatevalue";
+
+            List<CloudEvent> cloudEvents = CreateCloudEventsToSend(inclTraceparent, inclTracestate);
+
+            // send
+            await senderClient.SendAsync(cloudEvents[0]);
+
+            // stop activity after extracting the events from the request as this is where the cloudEvents would actually
+            // be serialized
+            activity.Stop();
+
+            ValidateCloudEvents(mockTransport, inclTraceparent, inclTracestate, cloudEvents);
+        }
+
+        [Test]
+        [TestCase(false, false)]
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        public void SingleEventSendSetsTraceParentExtension(bool inclTraceparent, bool inclTracestate)
+        {
+            MockTransport mockTransport = CreateMockTransport();
+
+            EventGridSenderClientOptions options = new()
+            {
+                Transport = mockTransport,
+            };
+            EventGridSenderClient senderClient = new(new Uri("http://www.example.com"), "topic", new AzureKeyCredential("fake"), options);
+
+            // simulating some other activity already being started before doing operations with the client
+            var activity = new Activity("ParentEvent");
+            activity.SetIdFormat(ActivityIdFormat.W3C);
+            activity.Start();
+            activity.TraceStateString = "tracestatevalue";
+
+            List<CloudEvent> cloudEvents = CreateCloudEventsToSend(inclTraceparent, inclTracestate);
+
+            // send
+            senderClient.Send(cloudEvents[0]);
+
+            // stop activity after extracting the events from the request as this is where the cloudEvents would actually
+            // be serialized
+            activity.Stop();
+
+            ValidateCloudEvents(mockTransport, inclTraceparent, inclTracestate, cloudEvents);
         }
 
         [Test]
@@ -250,6 +292,76 @@ namespace Azure.Messaging.EventGrid.Tests
                     Assert.AreEqual(
                         traceState,
                         cloudEventAttr[TraceStateHeaderName]);
+                }
+            }
+        }
+
+        private static List<CloudEvent> CreateCloudEventsToSend(bool inclTraceparent, bool inclTracestate)
+        {
+            // create list of cloud events
+            List<CloudEvent> eventsList = new List<CloudEvent>();
+            for (int i = 0; i < 10; i++)
+            {
+                CloudEvent cloudEvent = new CloudEvent(
+                    "record",
+                    "Microsoft.MockPublisher.TestEvent",
+                    JsonDocument.Parse("{\"property1\": \"abc\",  \"property2\": 123}").RootElement)
+                {
+                    Id = "id",
+                    Subject = $"Subject-{i}",
+                    Time = DateTimeOffset.UtcNow
+                };
+                if (inclTraceparent && i % 2 == 0)
+                {
+                    cloudEvent.ExtensionAttributes.Add("traceparent", "traceparentValue");
+                }
+                if (inclTracestate && i % 2 == 0)
+                {
+                    cloudEvent.ExtensionAttributes.Add("tracestate", "param:value");
+                }
+                eventsList.Add(cloudEvent);
+            }
+
+            return eventsList;
+        }
+
+        private void ValidateCloudEvents(MockTransport mockTransport, bool inclTraceparent, bool inclTracestate, List<CloudEvent> eventsList)
+        {
+            // validate
+            IEnumerator<CloudEvent> cloudEnum = eventsList.GetEnumerator();
+            for (int i = 0; i < 10; i++)
+            {
+                cloudEnum.MoveNext();
+                IDictionary<string, object> cloudEventAttr = cloudEnum.Current.ExtensionAttributes;
+                if (inclTraceparent && inclTracestate && i % 2 == 0)
+                {
+                    Assert.AreEqual(
+                        "traceparentValue",
+                        cloudEventAttr[TraceParentHeaderName]);
+
+                    Assert.AreEqual(
+                        "param:value",
+                        cloudEventAttr[TraceStateHeaderName]);
+                }
+                else if (inclTraceparent && i % 2 == 0)
+                {
+                    Assert.AreEqual(
+                        "traceparentValue",
+                        cloudEventAttr[TraceParentHeaderName]);
+                }
+                else if (inclTracestate && i % 2 == 0)
+                {
+                    Assert.AreEqual(
+                       "param:value",
+                       cloudEventAttr[TraceStateHeaderName]);
+                }
+                else
+                {
+                    Assert.IsTrue(mockTransport.SingleRequest.Headers.TryGetValue(TraceParentHeaderName, out string requestHeader));
+
+                    Assert.AreEqual(
+                        requestHeader,
+                        cloudEventAttr[TraceParentHeaderName]);
                 }
             }
         }
