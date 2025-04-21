@@ -155,6 +155,23 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             Assert.AreEqual("Either PersistableModel or the PersistableModelProxyAttribute defined needs to implement IJsonModel.", ex!.Message);
         }
 
+        [Test]
+        public void ConverterAddedWithNoJsonModel()
+        {
+            var data = new Person
+            {
+                Name = "John Doe"
+            };
+            var jsonOptions = new JsonSerializerOptions { Converters = { new JsonModelConverter() } };
+            string json = JsonSerializer.Serialize(data, jsonOptions);
+            Assert.AreEqual("{\"Name\":\"John Doe\"}", json);
+        }
+
+        private class Person
+        {
+            public string? Name { get; init; }
+        }
+
         private static Dictionary<string, BinaryData> GetRawData(object model)
         {
             Type modelType = model.GetType();
