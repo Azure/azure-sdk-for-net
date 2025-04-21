@@ -66,7 +66,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersionAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<DatasetVersion>> GetVersionAsync(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -83,7 +82,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersion(string,string,CancellationToken)']/*" />
         public virtual Response<DatasetVersion> GetVersion(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -116,7 +114,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersionAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetVersionAsync(string name, string version, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -158,7 +155,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersion(string,string,RequestContext)']/*" />
         public virtual Response GetVersion(string name, string version, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -196,7 +192,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='DeleteVersionAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteVersionAsync(string name, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -234,7 +229,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='DeleteVersion(string,string,RequestContext)']/*" />
         public virtual Response DeleteVersion(string name, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -261,7 +255,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='CreateVersionAsync(string,string,DatasetVersion,CancellationToken)']/*" />
         public virtual async Task<Response<DatasetVersion>> CreateVersionAsync(string name, string version, DatasetVersion body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -281,7 +274,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='CreateVersion(string,string,DatasetVersion,CancellationToken)']/*" />
         public virtual Response<DatasetVersion> CreateVersion(string name, string version, DatasetVersion body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -317,7 +309,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='CreateVersionAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateVersionAsync(string name, string version, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -361,7 +352,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='CreateVersion(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateVersion(string name, string version, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -400,7 +390,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='CreateOrUpdateVersionAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateVersionAsync(string name, string version, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -439,7 +428,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='CreateOrUpdateVersion(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateVersion(string name, string version, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -467,7 +455,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='StartPendingUploadVersionAsync(string,string,PendingUploadRequest,CancellationToken)']/*" />
         public virtual async Task<Response<PendingUploadResponse>> StartPendingUploadVersionAsync(string name, string version, PendingUploadRequest body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -487,7 +474,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='StartPendingUploadVersion(string,string,PendingUploadRequest,CancellationToken)']/*" />
         public virtual Response<PendingUploadResponse> StartPendingUploadVersion(string name, string version, PendingUploadRequest body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -523,7 +509,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='StartPendingUploadVersionAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> StartPendingUploadVersionAsync(string name, string version, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -567,7 +552,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='StartPendingUploadVersion(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response StartPendingUploadVersion(string name, string version, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -595,7 +579,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetCredentialsAsync(string,string,GetCredentialsRequest,CancellationToken)']/*" />
         public virtual async Task<Response<AssetCredentialResponse>> GetCredentialsAsync(string name, string version, GetCredentialsRequest body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -615,7 +598,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetCredentials(string,string,GetCredentialsRequest,CancellationToken)']/*" />
         public virtual Response<AssetCredentialResponse> GetCredentials(string name, string version, GetCredentialsRequest body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -651,7 +633,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetCredentialsAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> GetCredentialsAsync(string name, string version, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -695,7 +676,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetCredentials(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response GetCredentials(string name, string version, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -725,7 +705,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersionsAsync(string,int?,string,string,ListViewType?,CancellationToken)']/*" />
         public virtual AsyncPageable<DatasetVersion> GetVersionsAsync(string name, int? maxCount = null, string skip = null, string tags = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -745,7 +724,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersions(string,int?,string,string,ListViewType?,CancellationToken)']/*" />
         public virtual Pageable<DatasetVersion> GetVersions(string name, int? maxCount = null, string skip = null, string tags = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -781,7 +759,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersionsAsync(string,int?,string,string,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetVersionsAsync(string name, int? maxCount, string skip, string tags, string listViewType, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -816,7 +793,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersions(string,int?,string,string,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetVersions(string name, int? maxCount, string skip, string tags, string listViewType, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -832,7 +808,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All] View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetLatestsAsync(int?,string,string,ListViewType?,CancellationToken)']/*" />
         public virtual AsyncPageable<DatasetVersion> GetLatestsAsync(int? maxCount = null, string skip = null, string tags = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -847,7 +822,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All] View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetLatests(int?,string,string,ListViewType?,CancellationToken)']/*" />
         public virtual Pageable<DatasetVersion> GetLatests(int? maxCount = null, string skip = null, string tags = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -878,7 +852,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetLatestsAsync(int?,string,string,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetLatestsAsync(int? maxCount, string skip, string tags, string listViewType, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLatestsRequest(maxCount, skip, tags, listViewType, context);
@@ -908,7 +881,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetLatests(int?,string,string,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetLatests(int? maxCount, string skip, string tags, string listViewType, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLatestsRequest(maxCount, skip, tags, listViewType, context);

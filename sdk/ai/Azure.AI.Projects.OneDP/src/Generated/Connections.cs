@@ -65,7 +65,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetConnectionAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<Connection>> GetConnectionAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -80,7 +79,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetConnection(string,CancellationToken)']/*" />
         public virtual Response<Connection> GetConnection(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -111,7 +109,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetConnectionAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetConnectionAsync(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -151,7 +148,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetConnection(string,RequestContext)']/*" />
         public virtual Response GetConnection(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -175,7 +171,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetWithCredentialsAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<Connection>> GetWithCredentialsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -190,7 +185,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetWithCredentials(string,CancellationToken)']/*" />
         public virtual Response<Connection> GetWithCredentials(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -221,7 +215,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetWithCredentialsAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetWithCredentialsAsync(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -261,7 +254,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetWithCredentials(string,RequestContext)']/*" />
         public virtual Response GetWithCredentials(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -287,7 +279,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetConnectionsAsync(ConnectionType?,bool?,int?,int?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<Connection> GetConnectionsAsync(ConnectionType? connectionType = null, bool? defaultConnection = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -303,7 +294,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetConnections(ConnectionType?,bool?,int?,int?,int?,CancellationToken)']/*" />
         public virtual Pageable<Connection> GetConnections(ConnectionType? connectionType = null, bool? defaultConnection = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -335,7 +325,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetConnectionsAsync(string,bool?,int?,int?,int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetConnectionsAsync(string connectionType, bool? defaultConnection, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConnectionsRequest(connectionType, defaultConnection, maxCount, skip, pageSizeHint, context);
@@ -366,7 +355,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetConnections(string,bool?,int?,int?,int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetConnections(string connectionType, bool? defaultConnection, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConnectionsRequest(connectionType, defaultConnection, maxCount, skip, pageSizeHint, context);
@@ -381,7 +369,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetWithCredentialsAsync(ConnectionType?,bool?,int?,int?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<Connection> GetWithCredentialsAsync(ConnectionType? connectionType = null, bool? defaultConnection = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -397,7 +384,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetWithCredentials(ConnectionType?,bool?,int?,int?,int?,CancellationToken)']/*" />
         public virtual Pageable<Connection> GetWithCredentials(ConnectionType? connectionType = null, bool? defaultConnection = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -429,7 +415,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetWithCredentialsAsync(string,bool?,int?,int?,int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetWithCredentialsAsync(string connectionType, bool? defaultConnection, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWithCredentialsRequest(connectionType, defaultConnection, maxCount, skip, pageSizeHint, context);
@@ -460,7 +445,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetWithCredentials(string,bool?,int?,int?,int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetWithCredentials(string connectionType, bool? defaultConnection, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWithCredentialsRequest(connectionType, defaultConnection, maxCount, skip, pageSizeHint, context);

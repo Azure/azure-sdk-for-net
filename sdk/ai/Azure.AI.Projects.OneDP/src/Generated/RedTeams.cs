@@ -65,7 +65,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='GetRedTeamAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<RedTeam>> GetRedTeamAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -80,7 +79,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='GetRedTeam(string,CancellationToken)']/*" />
         public virtual Response<RedTeam> GetRedTeam(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -111,7 +109,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='GetRedTeamAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetRedTeamAsync(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -151,7 +148,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='GetRedTeam(string,RequestContext)']/*" />
         public virtual Response GetRedTeam(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -174,7 +170,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="redTeam"> Redteam to be run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="redTeam"/> is null. </exception>
-        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='CreateRunAsync(RedTeam,CancellationToken)']/*" />
         public virtual async Task<Response<RedTeam>> CreateRunAsync(RedTeam redTeam, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(redTeam, nameof(redTeam));
@@ -189,7 +184,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="redTeam"> Redteam to be run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="redTeam"/> is null. </exception>
-        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='CreateRun(RedTeam,CancellationToken)']/*" />
         public virtual Response<RedTeam> CreateRun(RedTeam redTeam, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(redTeam, nameof(redTeam));
@@ -220,7 +214,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='CreateRunAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateRunAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -259,7 +252,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='CreateRun(RequestContent,RequestContext)']/*" />
         public virtual Response CreateRun(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -283,7 +275,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='GetRedTeamsAsync(int?,int?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<RedTeam> GetRedTeamsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -297,7 +288,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='GetRedTeams(int?,int?,int?,CancellationToken)']/*" />
         public virtual Pageable<RedTeam> GetRedTeams(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -327,7 +317,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='GetRedTeamsAsync(int?,int?,int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetRedTeamsAsync(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRedTeamsRequest(maxCount, skip, pageSizeHint, context);
@@ -356,7 +345,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='GetRedTeams(int?,int?,int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetRedTeams(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRedTeamsRequest(maxCount, skip, pageSizeHint, context);

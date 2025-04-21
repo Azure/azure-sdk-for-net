@@ -23,6 +23,8 @@ namespace Azure.AI.Projects.OneDP
         }
 
         private const string EasyValue = "easy";
+        private const string ModerateValue = "moderate";
+        private const string DifficultValue = "difficult";
         private const string AsciiArtValue = "ascii_art";
         private const string AsciiSmugglerValue = "ascii_smuggler";
         private const string AtbashValue = "atbash";
@@ -31,25 +33,68 @@ namespace Azure.AI.Projects.OneDP
         private const string CaesarValue = "caesar";
         private const string CharacterSpaceValue = "character_space";
         private const string JailbreakValue = "jailbreak";
+        private const string AnsiiAttackValue = "ansii_attack";
+        private const string CharacterSwapValue = "character_swap";
+        private const string SuffixAppendValue = "suffix_append";
+        private const string StringJoinValue = "string_join";
+        private const string UnicodeConfusableValue = "unicode_confusable";
+        private const string UnicodeSubstitutionValue = "unicode_substitution";
+        private const string DiacriticValue = "diacritic";
+        private const string FlipValue = "flip";
+        private const string LeetspeakValue = "leetspeak";
+        private const string ROT13Value = "rot13";
+        private const string MorseValue = "morse";
+        private const string UrlValue = "url";
+        private const string BaselineValue = "baseline";
 
-        /// <summary> Represents a default set of easy complexity attacks. Easy complexity attack strategies are defined as attacks that do not require any Large Language Model to convert or orchestrate. </summary>
+        /// <summary> Represents a default set of easy complexity attacks. Easy complexity attacks require less effort, such as translation of a prompt into some encoding, and does not require any Large Language Model to convert or orchestrate. </summary>
         public static AttackStrategy Easy { get; } = new AttackStrategy(EasyValue);
-        /// <summary> Represents ASCII art, a graphic design technique that uses printable characters. </summary>
+        /// <summary> Represents a default set of moderate complexity attacks. Moderate complexity attacks require having access to resources such as another generative AI model. </summary>
+        public static AttackStrategy Moderate { get; } = new AttackStrategy(ModerateValue);
+        /// <summary> Represents a default set of difficult complexity attacks. Difficult complexity attacks include attacks that require access to significant resources and effort to execute an attack such as knowledge of search-based algorithms in addition to a generative AI model. </summary>
+        public static AttackStrategy Difficult { get; } = new AttackStrategy(DifficultValue);
+        /// <summary> Generates visual art using ASCII characters, often used for creative or obfuscation purposes. </summary>
         public static AttackStrategy AsciiArt { get; } = new AttackStrategy(AsciiArtValue);
-        /// <summary> Represents ASCII smuggling, a technique for encoding or hiding data. </summary>
+        /// <summary> Conceals data within ASCII characters, making it harder to detect. </summary>
         public static AttackStrategy AsciiSmuggler { get; } = new AttackStrategy(AsciiSmugglerValue);
-        /// <summary> Represents the Atbash cipher, a substitution cipher that reverses the alphabet. </summary>
+        /// <summary> Implements the Atbash cipher, a simple substitution cipher where each letter is mapped to its reverse. </summary>
         public static AttackStrategy Atbash { get; } = new AttackStrategy(AtbashValue);
-        /// <summary> Represents Base64 encoding, a method for encoding binary data as text. </summary>
+        /// <summary> Encodes binary data into a text format using Base64, commonly used for data transmission. </summary>
         public static AttackStrategy Base64 { get; } = new AttackStrategy(Base64Value);
-        /// <summary> Represents binary encoding, a representation of data in binary format. </summary>
+        /// <summary> Converts text into binary code, representing data in a series of 0s and 1s. </summary>
         public static AttackStrategy Binary { get; } = new AttackStrategy(BinaryValue);
-        /// <summary> Represents the Caesar cipher, a substitution cipher that shifts characters. </summary>
+        /// <summary> Applies the Caesar cipher, a substitution cipher that shifts characters by a fixed number of positions. </summary>
         public static AttackStrategy Caesar { get; } = new AttackStrategy(CaesarValue);
-        /// <summary> Represents character space manipulation, a technique involving spacing between characters. </summary>
+        /// <summary> Alters text by adding spaces between characters, often used for obfuscation. </summary>
         public static AttackStrategy CharacterSpace { get; } = new AttackStrategy(CharacterSpaceValue);
-        /// <summary> Represents character swapping, a technique for rearranging characters in text. </summary>
+        /// <summary> Injects specially crafted prompts to bypass AI safeguards, known as User Injected Prompt Attacks (UPIA). </summary>
         public static AttackStrategy Jailbreak { get; } = new AttackStrategy(JailbreakValue);
+        /// <summary> Utilizes ANSI escape sequences to manipulate text appearance and behavior. </summary>
+        public static AttackStrategy AnsiiAttack { get; } = new AttackStrategy(AnsiiAttackValue);
+        /// <summary> Swaps characters within text to create variations or obfuscate the original content. </summary>
+        public static AttackStrategy CharacterSwap { get; } = new AttackStrategy(CharacterSwapValue);
+        /// <summary> Appends an adversarial suffix to the prompt. </summary>
+        public static AttackStrategy SuffixAppend { get; } = new AttackStrategy(SuffixAppendValue);
+        /// <summary> Joins multiple strings together, often used for concatenation or obfuscation. </summary>
+        public static AttackStrategy StringJoin { get; } = new AttackStrategy(StringJoinValue);
+        /// <summary> Uses Unicode characters that look similar to standard characters, creating visual confusion. </summary>
+        public static AttackStrategy UnicodeConfusable { get; } = new AttackStrategy(UnicodeConfusableValue);
+        /// <summary> Substitutes standard characters with Unicode equivalents, often for obfuscation. </summary>
+        public static AttackStrategy UnicodeSubstitution { get; } = new AttackStrategy(UnicodeSubstitutionValue);
+        /// <summary> Adds diacritical marks to characters, changing their appearance and sometimes their meaning. </summary>
+        public static AttackStrategy Diacritic { get; } = new AttackStrategy(DiacriticValue);
+        /// <summary> Flips characters from front to back, creating a mirrored effect. </summary>
+        public static AttackStrategy Flip { get; } = new AttackStrategy(FlipValue);
+        /// <summary> Transforms text into Leetspeak, a form of encoding that replaces letters with similar-looking numbers or symbols. </summary>
+        public static AttackStrategy Leetspeak { get; } = new AttackStrategy(LeetspeakValue);
+        /// <summary> Applies the ROT13 cipher, a simple substitution cipher that shifts characters by 13 positions. </summary>
+        public static AttackStrategy ROT13 { get; } = new AttackStrategy(ROT13Value);
+        /// <summary> Encodes text into Morse code, using dots and dashes to represent characters. </summary>
+        public static AttackStrategy Morse { get; } = new AttackStrategy(MorseValue);
+        /// <summary> Encodes text into URL format. </summary>
+        public static AttackStrategy Url { get; } = new AttackStrategy(UrlValue);
+        /// <summary> Represents the baseline direct adversarial probing, which is used by attack strategies as the attack objective. </summary>
+        public static AttackStrategy Baseline { get; } = new AttackStrategy(BaselineValue);
         /// <summary> Determines if two <see cref="AttackStrategy"/> values are the same. </summary>
         public static bool operator ==(AttackStrategy left, AttackStrategy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AttackStrategy"/> values are not the same. </summary>

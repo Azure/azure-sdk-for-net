@@ -47,21 +47,18 @@ namespace Azure.AI.Projects.OneDP
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RedTeam"/>. </summary>
-        /// <param name="scanName"> Name of the red-team scan. </param>
         /// <param name="numTurns"> Number of simulation rounds. </param>
-        /// <param name="attackStrategy"> List of attack strategies or nested lists of attack strategies. </param>
+        /// <param name="attackStrategies"> List of attack strategies or nested lists of attack strategies. </param>
         /// <param name="simulationOnly"> Simulation-only or Simulation + Evaluation. Default false, if true the scan outputs conversation not evaluation result. </param>
         /// <param name="riskCategories"> List of risk categories to generate attack objectives for. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scanName"/>, <paramref name="attackStrategy"/> or <paramref name="riskCategories"/> is null. </exception>
-        public RedTeam(string scanName, int numTurns, IEnumerable<AttackStrategy> attackStrategy, bool simulationOnly, IEnumerable<RiskCategory> riskCategories)
+        /// <exception cref="ArgumentNullException"> <paramref name="attackStrategies"/> or <paramref name="riskCategories"/> is null. </exception>
+        public RedTeam(int numTurns, IEnumerable<AttackStrategy> attackStrategies, bool simulationOnly, IEnumerable<RiskCategory> riskCategories)
         {
-            Argument.AssertNotNull(scanName, nameof(scanName));
-            Argument.AssertNotNull(attackStrategy, nameof(attackStrategy));
+            Argument.AssertNotNull(attackStrategies, nameof(attackStrategies));
             Argument.AssertNotNull(riskCategories, nameof(riskCategories));
 
-            ScanName = scanName;
             NumTurns = numTurns;
-            AttackStrategy = attackStrategy.ToList();
+            AttackStrategies = attackStrategies.ToList();
             SimulationOnly = simulationOnly;
             RiskCategories = riskCategories.ToList();
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -72,7 +69,7 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="id"> Identifier of the red team. </param>
         /// <param name="scanName"> Name of the red-team scan. </param>
         /// <param name="numTurns"> Number of simulation rounds. </param>
-        /// <param name="attackStrategy"> List of attack strategies or nested lists of attack strategies. </param>
+        /// <param name="attackStrategies"> List of attack strategies or nested lists of attack strategies. </param>
         /// <param name="simulationOnly"> Simulation-only or Simulation + Evaluation. Default false, if true the scan outputs conversation not evaluation result. </param>
         /// <param name="riskCategories"> List of risk categories to generate attack objectives for. </param>
         /// <param name="applicationScenario"> Application scenario for the red team operation, to generate scenario specific attacks. </param>
@@ -80,12 +77,12 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="properties"> Red team's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </param>
         /// <param name="status"> Status of the red-team. It is set by service and is read-only. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedTeam(string id, string scanName, int numTurns, IList<AttackStrategy> attackStrategy, bool simulationOnly, IList<RiskCategory> riskCategories, string applicationScenario, IDictionary<string, string> tags, IDictionary<string, string> properties, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedTeam(string id, string scanName, int numTurns, IList<AttackStrategy> attackStrategies, bool simulationOnly, IList<RiskCategory> riskCategories, string applicationScenario, IDictionary<string, string> tags, IDictionary<string, string> properties, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ScanName = scanName;
             NumTurns = numTurns;
-            AttackStrategy = attackStrategy;
+            AttackStrategies = attackStrategies;
             SimulationOnly = simulationOnly;
             RiskCategories = riskCategories;
             ApplicationScenario = applicationScenario;
@@ -107,7 +104,7 @@ namespace Azure.AI.Projects.OneDP
         /// <summary> Number of simulation rounds. </summary>
         public int NumTurns { get; set; }
         /// <summary> List of attack strategies or nested lists of attack strategies. </summary>
-        public IList<AttackStrategy> AttackStrategy { get; }
+        public IList<AttackStrategy> AttackStrategies { get; }
         /// <summary> Simulation-only or Simulation + Evaluation. Default false, if true the scan outputs conversation not evaluation result. </summary>
         public bool SimulationOnly { get; set; }
         /// <summary> List of risk categories to generate attack objectives for. </summary>

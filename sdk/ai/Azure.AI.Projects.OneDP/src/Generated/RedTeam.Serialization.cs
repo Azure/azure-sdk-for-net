@@ -39,13 +39,16 @@ namespace Azure.AI.Projects.OneDP
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("scanName"u8);
-            writer.WriteStringValue(ScanName);
+            if (Optional.IsDefined(ScanName))
+            {
+                writer.WritePropertyName("scanName"u8);
+                writer.WriteStringValue(ScanName);
+            }
             writer.WritePropertyName("numTurns"u8);
             writer.WriteNumberValue(NumTurns);
-            writer.WritePropertyName("attackStrategy"u8);
+            writer.WritePropertyName("attackStrategies"u8);
             writer.WriteStartArray();
-            foreach (var item in AttackStrategy)
+            foreach (var item in AttackStrategies)
             {
                 writer.WriteStringValue(item.ToString());
             }
@@ -131,7 +134,7 @@ namespace Azure.AI.Projects.OneDP
             string id = default;
             string scanName = default;
             int numTurns = default;
-            IList<AttackStrategy> attackStrategy = default;
+            IList<AttackStrategy> attackStrategies = default;
             bool simulationOnly = default;
             IList<RiskCategory> riskCategories = default;
             string applicationScenario = default;
@@ -157,14 +160,14 @@ namespace Azure.AI.Projects.OneDP
                     numTurns = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("attackStrategy"u8))
+                if (property.NameEquals("attackStrategies"u8))
                 {
                     List<AttackStrategy> array = new List<AttackStrategy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(new AttackStrategy(item.GetString()));
                     }
-                    attackStrategy = array;
+                    attackStrategies = array;
                     continue;
                 }
                 if (property.NameEquals("simulationOnly"u8))
@@ -230,7 +233,7 @@ namespace Azure.AI.Projects.OneDP
                 id,
                 scanName,
                 numTurns,
-                attackStrategy,
+                attackStrategies,
                 simulationOnly,
                 riskCategories,
                 applicationScenario,

@@ -385,7 +385,7 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="id"> Identifier of the red team. </param>
         /// <param name="scanName"> Name of the red-team scan. </param>
         /// <param name="numTurns"> Number of simulation rounds. </param>
-        /// <param name="attackStrategy"> List of attack strategies or nested lists of attack strategies. </param>
+        /// <param name="attackStrategies"> List of attack strategies or nested lists of attack strategies. </param>
         /// <param name="simulationOnly"> Simulation-only or Simulation + Evaluation. Default false, if true the scan outputs conversation not evaluation result. </param>
         /// <param name="riskCategories"> List of risk categories to generate attack objectives for. </param>
         /// <param name="applicationScenario"> Application scenario for the red team operation, to generate scenario specific attacks. </param>
@@ -393,9 +393,9 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="properties"> Red team's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </param>
         /// <param name="status"> Status of the red-team. It is set by service and is read-only. </param>
         /// <returns> A new <see cref="OneDP.RedTeam"/> instance for mocking. </returns>
-        public static RedTeam RedTeam(string id = null, string scanName = null, int numTurns = default, IEnumerable<AttackStrategy> attackStrategy = null, bool simulationOnly = default, IEnumerable<RiskCategory> riskCategories = null, string applicationScenario = null, IDictionary<string, string> tags = null, IDictionary<string, string> properties = null, string status = null)
+        public static RedTeam RedTeam(string id = null, string scanName = null, int numTurns = default, IEnumerable<AttackStrategy> attackStrategies = null, bool simulationOnly = default, IEnumerable<RiskCategory> riskCategories = null, string applicationScenario = null, IDictionary<string, string> tags = null, IDictionary<string, string> properties = null, string status = null)
         {
-            attackStrategy ??= new List<AttackStrategy>();
+            attackStrategies ??= new List<AttackStrategy>();
             riskCategories ??= new List<RiskCategory>();
             tags ??= new Dictionary<string, string>();
             properties ??= new Dictionary<string, string>();
@@ -404,7 +404,7 @@ namespace Azure.AI.Projects.OneDP
                 id,
                 scanName,
                 numTurns,
-                attackStrategy?.ToList(),
+                attackStrategies?.ToList(),
                 simulationOnly,
                 riskCategories?.ToList(),
                 applicationScenario,
