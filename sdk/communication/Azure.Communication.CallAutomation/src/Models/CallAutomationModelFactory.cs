@@ -330,17 +330,17 @@ namespace Azure.Communication.CallAutomation
             return new CallConnected(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
-        ///// <summary> Initializes a new instance of CallConnected. </summary>
-        ///// <param name="callConnectionId"> Call connection ID. </param>
-        ///// <param name="serverCallId"> Server call ID. </param>
-        ///// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        ///// <param name="operationContext"> Used by customers to set the context for creating a new call. This property will be null for answering a call. </param>
-        ///// /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
-        ///// <returns> A new <see cref="CallAutomation.ConnectFailed"/> instance for mocking. </returns>
-        //public static ConnectFailed ConnectFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
-        //{
-        //    return new ConnectFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
-        //}
+        /// <summary> Initializes a new instance of CallConnected. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers to set the context for creating a new call. This property will be null for answering a call. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <returns> A new <see cref="CallAutomation.ConnectFailed"/> instance for mocking. </returns>
+        public static ConnectFailed ConnectFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        {
+            return new ConnectFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+        }
 
         /// <summary> Initializes a new instance of CallDisconnected. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>

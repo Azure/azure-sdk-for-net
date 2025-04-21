@@ -13,8 +13,5 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
-
-        /// <summary> Endpoint where the custom model was deployed. </summary>
-        public string SpeechRecognitionModelEndpointId { get; set; }
     }
 }
