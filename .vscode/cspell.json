@@ -426,6 +426,12 @@
       ]
     },
     {
+      "filename": "**/sdk/containerregistry/**/*",
+      "words": [
+        "Abac"
+      ]
+    },
+    {
       "filename": "**/sdk/containerservice/**/*",
       "words": [
         "gmsa",
@@ -1623,13 +1629,14 @@
     {
       "filename": "**/sdk/iot/Azure.ResourceManager.IotFirmwareDefense/**/*.cs",
       "words": [
-        "RELRO",
-        "Relro",
         "relro",
-        "Rpath",
         "rpath",
         "runpath",
-        "Cves"
+        "cves",
+        "ocsp",
+        "sbom",
+        "diffie",
+        "iotfirmwaredefense"
       ]
     },
     {

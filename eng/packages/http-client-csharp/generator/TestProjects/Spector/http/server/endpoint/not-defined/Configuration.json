@@ -1,5 +1,4 @@
 {
-  "output-folder": ".",
   "package-name": "Server.Endpoint.NotDefined",
   "license": {
     "name": "MIT License",

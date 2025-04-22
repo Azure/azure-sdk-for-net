@@ -12,7 +12,6 @@ namespace Azure.Identity.Broker
     /// Options to configure the <see cref="InteractiveBrowserCredential"/> to use the system authentication broker in lieu of an embedded web view or the system browser.
     /// For more information, see <see href="https://aka.ms/azsdk/net/identity/interactive-brokered-auth">Interactive brokered authentication</see>.
     /// </summary>
-    [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
     internal class DevelopmentBrokerOptions : InteractiveBrowserCredentialOptions, IMsalSettablePublicClientInitializerOptions, IMsalPublicClientInitializerOptions
     {
         private Action<PublicClientApplicationBuilder> _beforeBuildClient;

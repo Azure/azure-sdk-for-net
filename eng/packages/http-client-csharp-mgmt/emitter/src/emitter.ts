@@ -6,13 +6,15 @@ import { DecoratorInfo } from "@azure-tools/typespec-client-generator-core";
 
 import {
   CodeModel,
-  CSharpEmitterOptions,
   InputClient,
   InputModelType,
   setSDKContextOptions
 } from "@typespec/http-client-csharp";
 
-import { $onEmit as $onAzureEmit } from "@azure-typespec/http-client-csharp";
+import {
+  $onEmit as $onAzureEmit,
+  AzureEmitterOptions
+} from "@azure-typespec/http-client-csharp";
 import { azureSDKContextOptions } from "./sdk-context-options.js";
 import { calculateResourceTypeFromPath } from "./resource-type.js";
 
@@ -23,7 +25,7 @@ const armResourceCreateOrUpdate =
 const singleton = "Azure.ResourceManager.@singleton";
 const resourceMetadata = "Azure.ClientGenerator.Core.@resourceSchema";
 
-export async function $onEmit(context: EmitContext<CSharpEmitterOptions>) {
+export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
   context.options["generator-name"] ??= "ManagementClientGenerator";
   context.options["update-code-model"] = updateCodeModel;
   context.options["emitter-extension-path"] ??= import.meta.url;
