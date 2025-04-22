@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PineconeVectorDB.Models
 {
-    public partial class OrganizationProperties : IUtf8JsonSerializable, IJsonModel<OrganizationProperties>
+    public partial class PineconeVectorDBOrganizationProperties : IUtf8JsonSerializable, IJsonModel<PineconeVectorDBOrganizationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrganizationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PineconeVectorDBOrganizationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<OrganizationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PineconeVectorDBOrganizationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PineconeVectorDBOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrganizationProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PineconeVectorDBOrganizationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("marketplace"u8);
@@ -70,19 +70,19 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
             }
         }
 
-        OrganizationProperties IJsonModel<OrganizationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PineconeVectorDBOrganizationProperties IJsonModel<PineconeVectorDBOrganizationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PineconeVectorDBOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrganizationProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PineconeVectorDBOrganizationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOrganizationProperties(document.RootElement, options);
+            return DeserializePineconeVectorDBOrganizationProperties(document.RootElement, options);
         }
 
-        internal static OrganizationProperties DeserializeOrganizationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PineconeVectorDBOrganizationProperties DeserializePineconeVectorDBOrganizationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -90,23 +90,23 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
             {
                 return null;
             }
-            MarketplaceDetails marketplace = default;
-            UserDetails user = default;
-            ResourceProvisioningState? provisioningState = default;
-            PartnerProperties partnerProperties = default;
-            SingleSignOnPropertiesV2 singleSignOnProperties = default;
+            PineconeVectorDBMarketplaceDetails marketplace = default;
+            PineconeVectorDBUserDetails user = default;
+            PineconeVectorDBProvisioningState? provisioningState = default;
+            PineconeVectorDBPartnerProperties partnerProperties = default;
+            PineconeVectorDBSingleSignOnPropertiesV2 singleSignOnProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("marketplace"u8))
                 {
-                    marketplace = MarketplaceDetails.DeserializeMarketplaceDetails(property.Value, options);
+                    marketplace = PineconeVectorDBMarketplaceDetails.DeserializePineconeVectorDBMarketplaceDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("user"u8))
                 {
-                    user = UserDetails.DeserializeUserDetails(property.Value, options);
+                    user = PineconeVectorDBUserDetails.DeserializePineconeVectorDBUserDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                     {
                         continue;
                     }
-                    provisioningState = new ResourceProvisioningState(property.Value.GetString());
+                    provisioningState = new PineconeVectorDBProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("partnerProperties"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                     {
                         continue;
                     }
-                    partnerProperties = PartnerProperties.DeserializePartnerProperties(property.Value, options);
+                    partnerProperties = PineconeVectorDBPartnerProperties.DeserializePineconeVectorDBPartnerProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("singleSignOnProperties"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                     {
                         continue;
                     }
-                    singleSignOnProperties = SingleSignOnPropertiesV2.DeserializeSingleSignOnPropertiesV2(property.Value, options);
+                    singleSignOnProperties = PineconeVectorDBSingleSignOnPropertiesV2.DeserializePineconeVectorDBSingleSignOnPropertiesV2(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OrganizationProperties(
+            return new PineconeVectorDBOrganizationProperties(
                 marketplace,
                 user,
                 provisioningState,
@@ -151,35 +151,35 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<OrganizationProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PineconeVectorDBOrganizationProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PineconeVectorDBOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OrganizationProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PineconeVectorDBOrganizationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        OrganizationProperties IPersistableModel<OrganizationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PineconeVectorDBOrganizationProperties IPersistableModel<PineconeVectorDBOrganizationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PineconeVectorDBOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeOrganizationProperties(document.RootElement, options);
+                        return DeserializePineconeVectorDBOrganizationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OrganizationProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PineconeVectorDBOrganizationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<OrganizationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PineconeVectorDBOrganizationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

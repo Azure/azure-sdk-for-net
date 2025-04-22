@@ -14,10 +14,10 @@ using Azure.ResourceManager.PineconeVectorDB.Models;
 namespace Azure.ResourceManager.PineconeVectorDB
 {
     /// <summary>
-    /// A class representing the OrganizationResource data model.
+    /// A class representing the PineconeVectorDBOrganization data model.
     /// Concrete tracked resource types can be created by aliasing this type using a specific property type.
     /// </summary>
-    public partial class OrganizationResourceData : TrackedResourceData
+    public partial class PineconeVectorDBOrganizationData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.PineconeVectorDB
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PineconeVectorDBOrganizationData"/>. </summary>
         /// <param name="location"> The location. </param>
-        public OrganizationResourceData(AzureLocation location) : base(location)
+        public PineconeVectorDBOrganizationData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PineconeVectorDBOrganizationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -67,20 +67,20 @@ namespace Azure.ResourceManager.PineconeVectorDB
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OrganizationResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, OrganizationProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal PineconeVectorDBOrganizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PineconeVectorDBOrganizationProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationResourceData"/> for deserialization. </summary>
-        internal OrganizationResourceData()
+        /// <summary> Initializes a new instance of <see cref="PineconeVectorDBOrganizationData"/> for deserialization. </summary>
+        internal PineconeVectorDBOrganizationData()
         {
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public OrganizationProperties Properties { get; set; }
+        public PineconeVectorDBOrganizationProperties Properties { get; set; }
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }

@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PineconeVectorDB.Models
 {
-    /// <summary> The type used for update operations of the Organization Resource. </summary>
-    public partial class OrganizationResourcePatch
+    /// <summary> Partner's specific Properties. </summary>
+    internal partial class PineconeVectorDBPartnerProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,26 +45,31 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationResourcePatch"/>. </summary>
-        public OrganizationResourcePatch()
+        /// <summary> Initializes a new instance of <see cref="PineconeVectorDBPartnerProperties"/>. </summary>
+        /// <param name="displayName"> Pinecone Organization Name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> is null. </exception>
+        public PineconeVectorDBPartnerProperties(string displayName)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Argument.AssertNotNull(displayName, nameof(displayName));
+
+            DisplayName = displayName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationResourcePatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="PineconeVectorDBPartnerProperties"/>. </summary>
+        /// <param name="displayName"> Pinecone Organization Name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OrganizationResourcePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PineconeVectorDBPartnerProperties(string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
-            Identity = identity;
+            DisplayName = displayName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-        /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> Initializes a new instance of <see cref="PineconeVectorDBPartnerProperties"/> for deserialization. </summary>
+        internal PineconeVectorDBPartnerProperties()
+        {
+        }
+
+        /// <summary> Pinecone Organization Name. </summary>
+        public string DisplayName { get; set; }
     }
 }

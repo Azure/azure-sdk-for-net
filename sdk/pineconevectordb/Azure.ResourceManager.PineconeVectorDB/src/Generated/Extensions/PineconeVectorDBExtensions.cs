@@ -33,39 +33,39 @@ namespace Azure.ResourceManager.PineconeVectorDB
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="OrganizationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OrganizationResource.CreateResourceIdentifier" /> to create an <see cref="OrganizationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PineconeVectorDBOrganizationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PineconeVectorDBOrganizationResource.CreateResourceIdentifier" /> to create a <see cref="PineconeVectorDBOrganizationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePineconeVectorDBArmClient.GetOrganizationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePineconeVectorDBArmClient.GetPineconeVectorDBOrganizationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="OrganizationResource"/> object. </returns>
-        public static OrganizationResource GetOrganizationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PineconeVectorDBOrganizationResource"/> object. </returns>
+        public static PineconeVectorDBOrganizationResource GetPineconeVectorDBOrganizationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockablePineconeVectorDBArmClient(client).GetOrganizationResource(id);
+            return GetMockablePineconeVectorDBArmClient(client).GetPineconeVectorDBOrganizationResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of OrganizationResources in the ResourceGroupResource.
+        /// Gets a collection of PineconeVectorDBOrganizationResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePineconeVectorDBResourceGroupResource.GetOrganizationResources()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePineconeVectorDBResourceGroupResource.GetPineconeVectorDBOrganizations()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of OrganizationResources and their operations over a OrganizationResource. </returns>
-        public static OrganizationResourceCollection GetOrganizationResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of PineconeVectorDBOrganizationResources and their operations over a PineconeVectorDBOrganizationResource. </returns>
+        public static PineconeVectorDBOrganizationCollection GetPineconeVectorDBOrganizations(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockablePineconeVectorDBResourceGroupResource(resourceGroupResource).GetOrganizationResources();
+            return GetMockablePineconeVectorDBResourceGroupResource(resourceGroupResource).GetPineconeVectorDBOrganizations();
         }
 
         /// <summary>
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.PineconeVectorDB
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="PineconeVectorDBOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePineconeVectorDBResourceGroupResource.GetOrganizationResourceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePineconeVectorDBResourceGroupResource.GetPineconeVectorDBOrganizationAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.PineconeVectorDB
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="organizationname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<OrganizationResource>> GetOrganizationResourceAsync(this ResourceGroupResource resourceGroupResource, string organizationname, CancellationToken cancellationToken = default)
+        public static async Task<Response<PineconeVectorDBOrganizationResource>> GetPineconeVectorDBOrganizationAsync(this ResourceGroupResource resourceGroupResource, string organizationname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockablePineconeVectorDBResourceGroupResource(resourceGroupResource).GetOrganizationResourceAsync(organizationname, cancellationToken).ConfigureAwait(false);
+            return await GetMockablePineconeVectorDBResourceGroupResource(resourceGroupResource).GetPineconeVectorDBOrganizationAsync(organizationname, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.PineconeVectorDB
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="PineconeVectorDBOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePineconeVectorDBResourceGroupResource.GetOrganizationResource(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePineconeVectorDBResourceGroupResource.GetPineconeVectorDBOrganization(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.PineconeVectorDB
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="organizationname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<OrganizationResource> GetOrganizationResource(this ResourceGroupResource resourceGroupResource, string organizationname, CancellationToken cancellationToken = default)
+        public static Response<PineconeVectorDBOrganizationResource> GetPineconeVectorDBOrganization(this ResourceGroupResource resourceGroupResource, string organizationname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockablePineconeVectorDBResourceGroupResource(resourceGroupResource).GetOrganizationResource(organizationname, cancellationToken);
+            return GetMockablePineconeVectorDBResourceGroupResource(resourceGroupResource).GetPineconeVectorDBOrganization(organizationname, cancellationToken);
         }
 
         /// <summary>
@@ -161,23 +161,23 @@ namespace Azure.ResourceManager.PineconeVectorDB
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="PineconeVectorDBOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePineconeVectorDBSubscriptionResource.GetOrganizationResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePineconeVectorDBSubscriptionResource.GetPineconeVectorDBOrganizations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="OrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OrganizationResource> GetOrganizationResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PineconeVectorDBOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PineconeVectorDBOrganizationResource> GetPineconeVectorDBOrganizationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockablePineconeVectorDBSubscriptionResource(subscriptionResource).GetOrganizationResourcesAsync(cancellationToken);
+            return GetMockablePineconeVectorDBSubscriptionResource(subscriptionResource).GetPineconeVectorDBOrganizationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -197,23 +197,23 @@ namespace Azure.ResourceManager.PineconeVectorDB
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="PineconeVectorDBOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePineconeVectorDBSubscriptionResource.GetOrganizationResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePineconeVectorDBSubscriptionResource.GetPineconeVectorDBOrganizations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="OrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OrganizationResource> GetOrganizationResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PineconeVectorDBOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PineconeVectorDBOrganizationResource> GetPineconeVectorDBOrganizations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockablePineconeVectorDBSubscriptionResource(subscriptionResource).GetOrganizationResources(cancellationToken);
+            return GetMockablePineconeVectorDBSubscriptionResource(subscriptionResource).GetPineconeVectorDBOrganizations(cancellationToken);
         }
     }
 }

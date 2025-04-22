@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.PineconeVectorDB.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockablePineconeVectorDBSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _organizationResourceOrganizationsClientDiagnostics;
-        private OrganizationsRestOperations _organizationResourceOrganizationsRestClient;
+        private ClientDiagnostics _pineconeVectorDBOrganizationOrganizationsClientDiagnostics;
+        private OrganizationsRestOperations _pineconeVectorDBOrganizationOrganizationsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockablePineconeVectorDBSubscriptionResource"/> class for mocking. </summary>
         protected MockablePineconeVectorDBSubscriptionResource()
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.PineconeVectorDB.Mocking
         {
         }
 
-        private ClientDiagnostics OrganizationResourceOrganizationsClientDiagnostics => _organizationResourceOrganizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PineconeVectorDB", OrganizationResource.ResourceType.Namespace, Diagnostics);
-        private OrganizationsRestOperations OrganizationResourceOrganizationsRestClient => _organizationResourceOrganizationsRestClient ??= new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(OrganizationResource.ResourceType));
+        private ClientDiagnostics PineconeVectorDBOrganizationOrganizationsClientDiagnostics => _pineconeVectorDBOrganizationOrganizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PineconeVectorDB", PineconeVectorDBOrganizationResource.ResourceType.Namespace, Diagnostics);
+        private OrganizationsRestOperations PineconeVectorDBOrganizationOrganizationsRestClient => _pineconeVectorDBOrganizationOrganizationsRestClient ??= new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PineconeVectorDBOrganizationResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.PineconeVectorDB.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="PineconeVectorDBOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OrganizationResource> GetOrganizationResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PineconeVectorDBOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PineconeVectorDBOrganizationResource> GetPineconeVectorDBOrganizationsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OrganizationResourceOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrganizationResourceOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OrganizationResource(Client, OrganizationResourceData.DeserializeOrganizationResourceData(e)), OrganizationResourceOrganizationsClientDiagnostics, Pipeline, "MockablePineconeVectorDBSubscriptionResource.GetOrganizationResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PineconeVectorDBOrganizationOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PineconeVectorDBOrganizationOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PineconeVectorDBOrganizationResource(Client, PineconeVectorDBOrganizationData.DeserializePineconeVectorDBOrganizationData(e)), PineconeVectorDBOrganizationOrganizationsClientDiagnostics, Pipeline, "MockablePineconeVectorDBSubscriptionResource.GetPineconeVectorDBOrganizations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.PineconeVectorDB.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="PineconeVectorDBOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OrganizationResource> GetOrganizationResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PineconeVectorDBOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PineconeVectorDBOrganizationResource> GetPineconeVectorDBOrganizations(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OrganizationResourceOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrganizationResourceOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OrganizationResource(Client, OrganizationResourceData.DeserializeOrganizationResourceData(e)), OrganizationResourceOrganizationsClientDiagnostics, Pipeline, "MockablePineconeVectorDBSubscriptionResource.GetOrganizationResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PineconeVectorDBOrganizationOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PineconeVectorDBOrganizationOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PineconeVectorDBOrganizationResource(Client, PineconeVectorDBOrganizationData.DeserializePineconeVectorDBOrganizationData(e)), PineconeVectorDBOrganizationOrganizationsClientDiagnostics, Pipeline, "MockablePineconeVectorDBSubscriptionResource.GetPineconeVectorDBOrganizations", "value", "nextLink", cancellationToken);
         }
     }
 }

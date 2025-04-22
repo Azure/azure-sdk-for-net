@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.PineconeVectorDB.Samples
 {
-    public partial class Sample_OrganizationResource
+    public partial class Sample_PineconeVectorDBOrganizationResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -29,20 +29,20 @@ namespace Azure.ResourceManager.PineconeVectorDB.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this OrganizationResource created on azure
-            // for more information of creating OrganizationResource, please refer to the document of OrganizationResource
+            // this example assumes you already have this PineconeVectorDBOrganizationResource created on azure
+            // for more information of creating PineconeVectorDBOrganizationResource, please refer to the document of PineconeVectorDBOrganizationResource
             string subscriptionId = "76a38ef6-c8c1-4f0d-bfe0-00ec782c8077";
             string resourceGroupName = "rgopenapi";
             string organizationname = "example-organization-name";
-            ResourceIdentifier organizationResourceId = OrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationname);
-            OrganizationResource organizationResource = client.GetOrganizationResource(organizationResourceId);
+            ResourceIdentifier pineconeVectorDBOrganizationResourceId = PineconeVectorDBOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationname);
+            PineconeVectorDBOrganizationResource pineconeVectorDBOrganization = client.GetPineconeVectorDBOrganizationResource(pineconeVectorDBOrganizationResourceId);
 
             // invoke the operation
-            OrganizationResource result = await organizationResource.GetAsync();
+            PineconeVectorDBOrganizationResource result = await pineconeVectorDBOrganization.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            OrganizationResourceData resourceData = result.Data;
+            PineconeVectorDBOrganizationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -59,16 +59,16 @@ namespace Azure.ResourceManager.PineconeVectorDB.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this OrganizationResource created on azure
-            // for more information of creating OrganizationResource, please refer to the document of OrganizationResource
+            // this example assumes you already have this PineconeVectorDBOrganizationResource created on azure
+            // for more information of creating PineconeVectorDBOrganizationResource, please refer to the document of PineconeVectorDBOrganizationResource
             string subscriptionId = "76a38ef6-c8c1-4f0d-bfe0-00ec782c8077";
             string resourceGroupName = "rgopenapi";
             string organizationname = "example-organization-name";
-            ResourceIdentifier organizationResourceId = OrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationname);
-            OrganizationResource organizationResource = client.GetOrganizationResource(organizationResourceId);
+            ResourceIdentifier pineconeVectorDBOrganizationResourceId = PineconeVectorDBOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationname);
+            PineconeVectorDBOrganizationResource pineconeVectorDBOrganization = client.GetPineconeVectorDBOrganizationResource(pineconeVectorDBOrganizationResourceId);
 
             // invoke the operation
-            await organizationResource.DeleteAsync(WaitUntil.Completed);
+            await pineconeVectorDBOrganization.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -85,16 +85,16 @@ namespace Azure.ResourceManager.PineconeVectorDB.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this OrganizationResource created on azure
-            // for more information of creating OrganizationResource, please refer to the document of OrganizationResource
+            // this example assumes you already have this PineconeVectorDBOrganizationResource created on azure
+            // for more information of creating PineconeVectorDBOrganizationResource, please refer to the document of PineconeVectorDBOrganizationResource
             string subscriptionId = "76a38ef6-c8c1-4f0d-bfe0-00ec782c8077";
             string resourceGroupName = "rgopenapi";
             string organizationname = "example-organization-name";
-            ResourceIdentifier organizationResourceId = OrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationname);
-            OrganizationResource organizationResource = client.GetOrganizationResource(organizationResourceId);
+            ResourceIdentifier pineconeVectorDBOrganizationResourceId = PineconeVectorDBOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationname);
+            PineconeVectorDBOrganizationResource pineconeVectorDBOrganization = client.GetPineconeVectorDBOrganizationResource(pineconeVectorDBOrganizationResourceId);
 
             // invoke the operation
-            OrganizationResourcePatch patch = new OrganizationResourcePatch
+            PineconeVectorDBOrganizationPatch patch = new PineconeVectorDBOrganizationPatch
             {
                 Tags =
 {
@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.PineconeVectorDB.Samples
 },
                 },
             };
-            OrganizationResource result = await organizationResource.UpdateAsync(patch);
+            PineconeVectorDBOrganizationResource result = await pineconeVectorDBOrganization.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            OrganizationResourceData resourceData = result.Data;
+            PineconeVectorDBOrganizationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

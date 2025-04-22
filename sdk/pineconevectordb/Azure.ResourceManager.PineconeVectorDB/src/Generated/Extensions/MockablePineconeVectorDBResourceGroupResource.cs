@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.PineconeVectorDB.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of OrganizationResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of OrganizationResources and their operations over a OrganizationResource. </returns>
-        public virtual OrganizationResourceCollection GetOrganizationResources()
+        /// <summary> Gets a collection of PineconeVectorDBOrganizationResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of PineconeVectorDBOrganizationResources and their operations over a PineconeVectorDBOrganizationResource. </returns>
+        public virtual PineconeVectorDBOrganizationCollection GetPineconeVectorDBOrganizations()
         {
-            return GetCachedClient(client => new OrganizationResourceCollection(client, Id));
+            return GetCachedClient(client => new PineconeVectorDBOrganizationCollection(client, Id));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="PineconeVectorDBOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.PineconeVectorDB.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<OrganizationResource>> GetOrganizationResourceAsync(string organizationname, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PineconeVectorDBOrganizationResource>> GetPineconeVectorDBOrganizationAsync(string organizationname, CancellationToken cancellationToken = default)
         {
-            return await GetOrganizationResources().GetAsync(organizationname, cancellationToken).ConfigureAwait(false);
+            return await GetPineconeVectorDBOrganizations().GetAsync(organizationname, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="PineconeVectorDBOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.PineconeVectorDB.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<OrganizationResource> GetOrganizationResource(string organizationname, CancellationToken cancellationToken = default)
+        public virtual Response<PineconeVectorDBOrganizationResource> GetPineconeVectorDBOrganization(string organizationname, CancellationToken cancellationToken = default)
         {
-            return GetOrganizationResources().Get(organizationname, cancellationToken);
+            return GetPineconeVectorDBOrganizations().Get(organizationname, cancellationToken);
         }
     }
 }

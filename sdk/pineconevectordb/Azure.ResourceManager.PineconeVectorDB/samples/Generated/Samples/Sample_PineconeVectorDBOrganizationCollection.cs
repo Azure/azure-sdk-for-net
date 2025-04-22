@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.PineconeVectorDB.Samples
 {
-    public partial class Sample_OrganizationResourceCollection
+    public partial class Sample_PineconeVectorDBOrganizationCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.PineconeVectorDB.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this OrganizationResource
-            OrganizationResourceCollection collection = resourceGroupResource.GetOrganizationResources();
+            // get the collection of this PineconeVectorDBOrganizationResource
+            PineconeVectorDBOrganizationCollection collection = resourceGroupResource.GetPineconeVectorDBOrganizations();
 
             // invoke the operation
             string organizationname = "example-organization-name";
-            OrganizationResourceData data = new OrganizationResourceData(new AzureLocation("us-east"))
+            PineconeVectorDBOrganizationData data = new PineconeVectorDBOrganizationData(new AzureLocation("us-east"))
             {
-                Properties = new OrganizationProperties(new MarketplaceDetails(new OfferDetails("4d194daf-fa20-46a8-bfb4-5b7d96cae009", "013124d0-bf05-4eab-a6bb-01fa83870642", "62dda065-5acd-4ac5-b418-8610beed92a2")
+                Properties = new PineconeVectorDBOrganizationProperties(new PineconeVectorDBMarketplaceDetails(new PineconeVectorDBOfferDetails("4d194daf-fa20-46a8-bfb4-5b7d96cae009", "013124d0-bf05-4eab-a6bb-01fa83870642", "62dda065-5acd-4ac5-b418-8610beed92a2")
                 {
                     PlanName = "Freemium",
                     TermUnit = "der",
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Samples
                 })
                 {
                     SubscriptionId = "76a38ef6-c8c1-4f0d-bfe0-00ec782c8077",
-                }, new UserDetails
+                }, new PineconeVectorDBUserDetails
                 {
                     FirstName = "Jimmy",
                     LastName = "McExample",
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.PineconeVectorDB.Samples
                 })
                 {
                     PartnerDisplayName = "My Example Organization",
-                    SingleSignOnProperties = new SingleSignOnPropertiesV2(SingleSignOnType.Saml)
+                    SingleSignOnProperties = new PineconeVectorDBSingleSignOnPropertiesV2(PineconeVectorDBSingleSignOnType.Saml)
                     {
-                        State = SingleSignOnState.Initial,
+                        State = PineconeVectorDBSingleSignOnState.Initial,
                         EnterpriseAppId = "44d3fb26-d8d5-41ff-9b9a-769737f22f13",
                         Uri = "https://login.pinecone.io/?sso=true&connection=dfwgsqzkbrjqrglcsa",
                         AadDomains = { "exampledomain" },
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.PineconeVectorDB.Samples
 ["my-tag"] = "tag.value"
 },
             };
-            ArmOperation<OrganizationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, organizationname, data);
-            OrganizationResource result = lro.Value;
+            ArmOperation<PineconeVectorDBOrganizationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, organizationname, data);
+            PineconeVectorDBOrganizationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            OrganizationResourceData resourceData = result.Data;
+            PineconeVectorDBOrganizationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -111,16 +111,16 @@ namespace Azure.ResourceManager.PineconeVectorDB.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this OrganizationResource
-            OrganizationResourceCollection collection = resourceGroupResource.GetOrganizationResources();
+            // get the collection of this PineconeVectorDBOrganizationResource
+            PineconeVectorDBOrganizationCollection collection = resourceGroupResource.GetPineconeVectorDBOrganizations();
 
             // invoke the operation
             string organizationname = "example-organization-name";
-            OrganizationResource result = await collection.GetAsync(organizationname);
+            PineconeVectorDBOrganizationResource result = await collection.GetAsync(organizationname);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            OrganizationResourceData resourceData = result.Data;
+            PineconeVectorDBOrganizationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -144,15 +144,15 @@ namespace Azure.ResourceManager.PineconeVectorDB.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this OrganizationResource
-            OrganizationResourceCollection collection = resourceGroupResource.GetOrganizationResources();
+            // get the collection of this PineconeVectorDBOrganizationResource
+            PineconeVectorDBOrganizationCollection collection = resourceGroupResource.GetPineconeVectorDBOrganizations();
 
             // invoke the operation and iterate over the result
-            await foreach (OrganizationResource item in collection.GetAllAsync())
+            await foreach (PineconeVectorDBOrganizationResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                OrganizationResourceData resourceData = item.Data;
+                PineconeVectorDBOrganizationData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -179,8 +179,8 @@ namespace Azure.ResourceManager.PineconeVectorDB.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this OrganizationResource
-            OrganizationResourceCollection collection = resourceGroupResource.GetOrganizationResources();
+            // get the collection of this PineconeVectorDBOrganizationResource
+            PineconeVectorDBOrganizationCollection collection = resourceGroupResource.GetPineconeVectorDBOrganizations();
 
             // invoke the operation
             string organizationname = "example-organization-name";
@@ -208,13 +208,13 @@ namespace Azure.ResourceManager.PineconeVectorDB.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this OrganizationResource
-            OrganizationResourceCollection collection = resourceGroupResource.GetOrganizationResources();
+            // get the collection of this PineconeVectorDBOrganizationResource
+            PineconeVectorDBOrganizationCollection collection = resourceGroupResource.GetPineconeVectorDBOrganizations();
 
             // invoke the operation
             string organizationname = "example-organization-name";
-            NullableResponse<OrganizationResource> response = await collection.GetIfExistsAsync(organizationname);
-            OrganizationResource result = response.HasValue ? response.Value : null;
+            NullableResponse<PineconeVectorDBOrganizationResource> response = await collection.GetIfExistsAsync(organizationname);
+            PineconeVectorDBOrganizationResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                OrganizationResourceData resourceData = result.Data;
+                PineconeVectorDBOrganizationData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

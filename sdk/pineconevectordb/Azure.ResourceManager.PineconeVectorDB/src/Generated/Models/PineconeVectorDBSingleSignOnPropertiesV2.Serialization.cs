@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PineconeVectorDB.Models
 {
-    public partial class SingleSignOnPropertiesV2 : IUtf8JsonSerializable, IJsonModel<SingleSignOnPropertiesV2>
+    public partial class PineconeVectorDBSingleSignOnPropertiesV2 : IUtf8JsonSerializable, IJsonModel<PineconeVectorDBSingleSignOnPropertiesV2>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SingleSignOnPropertiesV2>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PineconeVectorDBSingleSignOnPropertiesV2>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SingleSignOnPropertiesV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PineconeVectorDBSingleSignOnPropertiesV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PineconeVectorDBSingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SingleSignOnPropertiesV2)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PineconeVectorDBSingleSignOnPropertiesV2)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("type"u8);
@@ -78,19 +78,19 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
             }
         }
 
-        SingleSignOnPropertiesV2 IJsonModel<SingleSignOnPropertiesV2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PineconeVectorDBSingleSignOnPropertiesV2 IJsonModel<PineconeVectorDBSingleSignOnPropertiesV2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PineconeVectorDBSingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SingleSignOnPropertiesV2)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PineconeVectorDBSingleSignOnPropertiesV2)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSingleSignOnPropertiesV2(document.RootElement, options);
+            return DeserializePineconeVectorDBSingleSignOnPropertiesV2(document.RootElement, options);
         }
 
-        internal static SingleSignOnPropertiesV2 DeserializeSingleSignOnPropertiesV2(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PineconeVectorDBSingleSignOnPropertiesV2 DeserializePineconeVectorDBSingleSignOnPropertiesV2(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
             {
                 return null;
             }
-            SingleSignOnType type = default;
-            SingleSignOnState? state = default;
+            PineconeVectorDBSingleSignOnType type = default;
+            PineconeVectorDBSingleSignOnState? state = default;
             string enterpriseAppId = default;
             string url = default;
             IList<string> aadDomains = default;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new SingleSignOnType(property.Value.GetString());
+                    type = new PineconeVectorDBSingleSignOnType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                     {
                         continue;
                     }
-                    state = new SingleSignOnState(property.Value.GetString());
+                    state = new PineconeVectorDBSingleSignOnState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("enterpriseAppId"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SingleSignOnPropertiesV2(
+            return new PineconeVectorDBSingleSignOnPropertiesV2(
                 type,
                 state,
                 enterpriseAppId,
@@ -160,35 +160,35 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SingleSignOnPropertiesV2>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PineconeVectorDBSingleSignOnPropertiesV2>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PineconeVectorDBSingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SingleSignOnPropertiesV2)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PineconeVectorDBSingleSignOnPropertiesV2)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SingleSignOnPropertiesV2 IPersistableModel<SingleSignOnPropertiesV2>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PineconeVectorDBSingleSignOnPropertiesV2 IPersistableModel<PineconeVectorDBSingleSignOnPropertiesV2>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PineconeVectorDBSingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSingleSignOnPropertiesV2(document.RootElement, options);
+                        return DeserializePineconeVectorDBSingleSignOnPropertiesV2(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SingleSignOnPropertiesV2)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PineconeVectorDBSingleSignOnPropertiesV2)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SingleSignOnPropertiesV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PineconeVectorDBSingleSignOnPropertiesV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

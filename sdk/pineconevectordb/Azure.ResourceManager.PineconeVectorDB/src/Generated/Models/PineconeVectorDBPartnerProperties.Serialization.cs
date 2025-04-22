@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PineconeVectorDB.Models
 {
-    internal partial class PartnerProperties : IUtf8JsonSerializable, IJsonModel<PartnerProperties>
+    internal partial class PineconeVectorDBPartnerProperties : IUtf8JsonSerializable, IJsonModel<PineconeVectorDBPartnerProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PineconeVectorDBPartnerProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PartnerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PineconeVectorDBPartnerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PineconeVectorDBPartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PineconeVectorDBPartnerProperties)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("displayName"u8);
@@ -53,19 +53,19 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
             }
         }
 
-        PartnerProperties IJsonModel<PartnerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PineconeVectorDBPartnerProperties IJsonModel<PineconeVectorDBPartnerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PineconeVectorDBPartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PineconeVectorDBPartnerProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePartnerProperties(document.RootElement, options);
+            return DeserializePineconeVectorDBPartnerProperties(document.RootElement, options);
         }
 
-        internal static PartnerProperties DeserializePartnerProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PineconeVectorDBPartnerProperties DeserializePineconeVectorDBPartnerProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -89,38 +89,38 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PartnerProperties(displayName, serializedAdditionalRawData);
+            return new PineconeVectorDBPartnerProperties(displayName, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PartnerProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PineconeVectorDBPartnerProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PineconeVectorDBPartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PartnerProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PineconeVectorDBPartnerProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PartnerProperties IPersistableModel<PartnerProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PineconeVectorDBPartnerProperties IPersistableModel<PineconeVectorDBPartnerProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PineconeVectorDBPartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePartnerProperties(document.RootElement, options);
+                        return DeserializePineconeVectorDBPartnerProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PartnerProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PineconeVectorDBPartnerProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PartnerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PineconeVectorDBPartnerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

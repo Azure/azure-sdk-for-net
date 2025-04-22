@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.PineconeVectorDB.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="OrganizationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OrganizationResource.CreateResourceIdentifier" /> to create an <see cref="OrganizationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PineconeVectorDBOrganizationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PineconeVectorDBOrganizationResource.CreateResourceIdentifier" /> to create a <see cref="PineconeVectorDBOrganizationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OrganizationResource"/> object. </returns>
-        public virtual OrganizationResource GetOrganizationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PineconeVectorDBOrganizationResource"/> object. </returns>
+        public virtual PineconeVectorDBOrganizationResource GetPineconeVectorDBOrganizationResource(ResourceIdentifier id)
         {
-            OrganizationResource.ValidateResourceId(id);
-            return new OrganizationResource(Client, id);
+            PineconeVectorDBOrganizationResource.ValidateResourceId(id);
+            return new PineconeVectorDBOrganizationResource(Client, id);
         }
     }
 }

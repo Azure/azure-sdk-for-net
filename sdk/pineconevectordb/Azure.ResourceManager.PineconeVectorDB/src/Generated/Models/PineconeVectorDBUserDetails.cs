@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PineconeVectorDB.Models
 {
     /// <summary> User details for an organization. </summary>
-    public partial class UserDetails
+    public partial class PineconeVectorDBUserDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="UserDetails"/>. </summary>
-        public UserDetails()
+        /// <summary> Initializes a new instance of <see cref="PineconeVectorDBUserDetails"/>. </summary>
+        public PineconeVectorDBUserDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UserDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PineconeVectorDBUserDetails"/>. </summary>
         /// <param name="firstName"> First name of the user. </param>
         /// <param name="lastName"> Last name of the user. </param>
         /// <param name="emailAddress"> Email address of the user. </param>
         /// <param name="upn"> User's principal name. </param>
         /// <param name="phoneNumber"> User's phone number. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UserDetails(string firstName, string lastName, string emailAddress, string upn, string phoneNumber, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PineconeVectorDBUserDetails(string firstName, string lastName, string emailAddress, string upn, string phoneNumber, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FirstName = firstName;
             LastName = lastName;

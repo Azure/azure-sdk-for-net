@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PineconeVectorDB.Models
 {
     /// <summary> Properties specific to Organization. </summary>
-    public partial class OrganizationProperties
+    public partial class PineconeVectorDBOrganizationProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PineconeVectorDBOrganizationProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/> or <paramref name="user"/> is null. </exception>
-        public OrganizationProperties(MarketplaceDetails marketplace, UserDetails user)
+        public PineconeVectorDBOrganizationProperties(PineconeVectorDBMarketplaceDetails marketplace, PineconeVectorDBUserDetails user)
         {
             Argument.AssertNotNull(marketplace, nameof(marketplace));
             Argument.AssertNotNull(user, nameof(user));
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
             User = user;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PineconeVectorDBOrganizationProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerProperties"> partner properties. </param>
         /// <param name="singleSignOnProperties"> Single sign-on properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OrganizationProperties(MarketplaceDetails marketplace, UserDetails user, ResourceProvisioningState? provisioningState, PartnerProperties partnerProperties, SingleSignOnPropertiesV2 singleSignOnProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PineconeVectorDBOrganizationProperties(PineconeVectorDBMarketplaceDetails marketplace, PineconeVectorDBUserDetails user, PineconeVectorDBProvisioningState? provisioningState, PineconeVectorDBPartnerProperties partnerProperties, PineconeVectorDBSingleSignOnPropertiesV2 singleSignOnProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Marketplace = marketplace;
             User = user;
@@ -75,27 +75,27 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationProperties"/> for deserialization. </summary>
-        internal OrganizationProperties()
+        /// <summary> Initializes a new instance of <see cref="PineconeVectorDBOrganizationProperties"/> for deserialization. </summary>
+        internal PineconeVectorDBOrganizationProperties()
         {
         }
 
         /// <summary> Marketplace details of the resource. </summary>
-        public MarketplaceDetails Marketplace { get; set; }
+        public PineconeVectorDBMarketplaceDetails Marketplace { get; set; }
         /// <summary> Details of the user. </summary>
-        public UserDetails User { get; set; }
+        public PineconeVectorDBUserDetails User { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ResourceProvisioningState? ProvisioningState { get; }
+        public PineconeVectorDBProvisioningState? ProvisioningState { get; }
         /// <summary> partner properties. </summary>
-        internal PartnerProperties PartnerProperties { get; set; }
+        internal PineconeVectorDBPartnerProperties PartnerProperties { get; set; }
         /// <summary> Pinecone Organization Name. </summary>
         public string PartnerDisplayName
         {
             get => PartnerProperties is null ? default : PartnerProperties.DisplayName;
-            set => PartnerProperties = new PartnerProperties(value);
+            set => PartnerProperties = new PineconeVectorDBPartnerProperties(value);
         }
 
         /// <summary> Single sign-on properties. </summary>
-        public SingleSignOnPropertiesV2 SingleSignOnProperties { get; set; }
+        public PineconeVectorDBSingleSignOnPropertiesV2 SingleSignOnProperties { get; set; }
     }
 }
