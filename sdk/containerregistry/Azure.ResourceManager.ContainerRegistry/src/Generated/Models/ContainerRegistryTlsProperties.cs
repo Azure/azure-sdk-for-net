@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryTlsProperties"/>. </summary>
         internal ContainerRegistryTlsProperties()
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryTlsProperties"/>. </summary>
         /// <param name="status"> Indicates whether HTTPS is enabled for the login server. </param>
-        /// <param name="certificate"> The certificate used to configure HTTPS for the login server. </param>
+        /// <param name="certificate"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryTlsProperties(ContainerRegistryTlsStatus? status, ContainerRegistryTlsCertificateProperties certificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerRegistryTlsProperties(ContainerRegistryTlsStatus? status, TlsPropertiesCertificate certificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Certificate = certificate;
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Indicates whether HTTPS is enabled for the login server. </summary>
         [WirePath("status")]
         public ContainerRegistryTlsStatus? Status { get; }
-        /// <summary> The certificate used to configure HTTPS for the login server. </summary>
+        /// <summary> Gets the certificate. </summary>
         [WirePath("certificate")]
-        public ContainerRegistryTlsCertificateProperties Certificate { get; }
+        public TlsPropertiesCertificate Certificate { get; }
     }
 }
