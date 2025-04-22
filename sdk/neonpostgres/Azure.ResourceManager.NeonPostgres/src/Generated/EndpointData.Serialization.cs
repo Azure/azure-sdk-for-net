@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NeonPostgres
             {
                 return null;
             }
-            EndpointProperties properties = default;
+            NeonEndpointProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NeonPostgres
                     {
                         continue;
                     }
-                    properties = EndpointProperties.DeserializeEndpointProperties(property.Value, options);
+                    properties = NeonEndpointProperties.DeserializeNeonEndpointProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

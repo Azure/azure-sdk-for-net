@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             NeonCompanyDetails companyDetails = default;
             NeonResourceProvisioningState? provisioningState = default;
             PartnerOrganizationProperties partnerOrganizationProperties = default;
-            ProjectProperties projectProperties = default;
+            NeonProjectProperties projectProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                     {
                         continue;
                     }
-                    projectProperties = ProjectProperties.DeserializeProjectProperties(property.Value, options);
+                    projectProperties = NeonProjectProperties.DeserializeNeonProjectProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

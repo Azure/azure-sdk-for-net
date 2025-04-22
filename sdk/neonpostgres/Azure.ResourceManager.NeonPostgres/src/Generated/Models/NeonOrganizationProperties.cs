@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="partnerOrganizationProperties"> Neon Organization properties. </param>
         /// <param name="projectProperties"> Neon Project Properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonOrganizationProperties(NeonMarketplaceDetails marketplaceDetails, NeonUserDetails userDetails, NeonCompanyDetails companyDetails, NeonResourceProvisioningState? provisioningState, PartnerOrganizationProperties partnerOrganizationProperties, ProjectProperties projectProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NeonOrganizationProperties(NeonMarketplaceDetails marketplaceDetails, NeonUserDetails userDetails, NeonCompanyDetails companyDetails, NeonResourceProvisioningState? provisioningState, PartnerOrganizationProperties partnerOrganizationProperties, NeonProjectProperties projectProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MarketplaceDetails = marketplaceDetails;
             UserDetails = userDetails;
@@ -96,6 +96,6 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <summary> Neon Organization properties. </summary>
         public PartnerOrganizationProperties PartnerOrganizationProperties { get; set; }
         /// <summary> Neon Project Properties. </summary>
-        public ProjectProperties ProjectProperties { get; set; }
+        public NeonProjectProperties ProjectProperties { get; set; }
     }
 }

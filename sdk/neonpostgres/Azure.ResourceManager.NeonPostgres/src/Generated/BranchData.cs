@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BranchData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BranchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BranchData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NeonBranchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public BranchProperties Properties { get; set; }
+        public NeonBranchProperties Properties { get; set; }
     }
 }
