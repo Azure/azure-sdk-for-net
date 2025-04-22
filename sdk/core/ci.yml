@@ -46,6 +46,7 @@ extends:
       safeName: AzureCore
       triggeringPaths:
       - /sdk/resourcemanager/
+      - /eng/
     - name: Azure.Core.Experimental
       safeName: AzureCoreExperimental
     - name: Azure.Core.Expressions.DataFactory
