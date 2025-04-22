@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0 (2025-04-22)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Add GA AutoUpgrade and API version 2025-03-01 support
 
 ## 1.1.0-beta.1 (2024-10-10)
 
