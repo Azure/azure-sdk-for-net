@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Projects.OneDP
 {
-    /// <summary> Enumerates known index types, but also allows any custom string fallback. </summary>
+    /// <summary> The IndexType. </summary>
     internal readonly partial struct IndexType : IEquatable<IndexType>
     {
         private readonly string _value;

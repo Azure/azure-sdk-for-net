@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -44,7 +43,12 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
-        /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
+        /// <param name="endpoint">
+        /// Project endpoint. In the form "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/_project"
+        /// if your Foundry Hub has only one Project, or to use the default Project in your Hub. Or in the form
+        /// "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/&lt;your-project-name&gt;" if you want to explicitly
+        /// specify the Foundry Project name.
+        /// </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         internal Datasets(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
@@ -62,7 +66,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersionAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<DatasetVersion>> GetVersionAsync(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -79,7 +82,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersion(string,string,CancellationToken)']/*" />
         public virtual Response<DatasetVersion> GetVersion(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -112,7 +114,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersionAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetVersionAsync(string name, string version, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -154,7 +155,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersion(string,string,RequestContext)']/*" />
         public virtual Response GetVersion(string name, string version, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -192,7 +192,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='DeleteVersionAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteVersionAsync(string name, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -230,7 +229,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='DeleteVersion(string,string,RequestContext)']/*" />
         public virtual Response DeleteVersion(string name, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -250,126 +248,6 @@ namespace Azure.AI.Projects.OneDP
             }
         }
 
-        /// <summary> Create a new DatasetVersion. The version id will be generated by the service. </summary>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="body"> The definition of the DatasetVersion to create. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='CreateAsync(string,DatasetVersion,CancellationToken)']/*" />
-        public virtual async Task<Response<DatasetVersion>> CreateAsync(string name, DatasetVersion body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateAsync(name, content, context).ConfigureAwait(false);
-            return Response.FromValue(DatasetVersion.FromResponse(response), response);
-        }
-
-        /// <summary> Create a new DatasetVersion. The version id will be generated by the service. </summary>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="body"> The definition of the DatasetVersion to create. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='Create(string,DatasetVersion,CancellationToken)']/*" />
-        public virtual Response<DatasetVersion> Create(string name, DatasetVersion body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Create(name, content, context);
-            return Response.FromValue(DatasetVersion.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create a new DatasetVersion. The version id will be generated by the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateAsync(string,DatasetVersion,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='CreateAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateAsync(string name, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Datasets.Create");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateRequest(name, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create a new DatasetVersion. The version id will be generated by the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="Create(string,DatasetVersion,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='Create(string,RequestContent,RequestContext)']/*" />
-        public virtual Response Create(string name, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Datasets.Create");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateRequest(name, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Create a new or replace an existing DatasetVersion with the given version id. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the DatasetVersion to create or replace. </param>
@@ -377,7 +255,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='CreateVersionAsync(string,string,DatasetVersion,CancellationToken)']/*" />
         public virtual async Task<Response<DatasetVersion>> CreateVersionAsync(string name, string version, DatasetVersion body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -397,7 +274,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='CreateVersion(string,string,DatasetVersion,CancellationToken)']/*" />
         public virtual Response<DatasetVersion> CreateVersion(string name, string version, DatasetVersion body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -433,7 +309,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='CreateVersionAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateVersionAsync(string name, string version, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -477,7 +352,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='CreateVersion(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateVersion(string name, string version, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -498,81 +372,35 @@ namespace Azure.AI.Projects.OneDP
             }
         }
 
-        /// <summary> Create or start a pending upload of a dataset for a specific version. </summary>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
-        /// <param name="body"> Parameters for the action. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='StartPendingUploadAsync(string,string,PendingUploadRequest,CancellationToken)']/*" />
-        public virtual async Task<Response<PendingUploadResponse>> StartPendingUploadAsync(string name, string version, PendingUploadRequest body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await StartPendingUploadAsync(name, version, content, context).ConfigureAwait(false);
-            return Response.FromValue(PendingUploadResponse.FromResponse(response), response);
-        }
-
-        /// <summary> Create or start a pending upload of a dataset for a specific version. </summary>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
-        /// <param name="body"> Parameters for the action. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='StartPendingUpload(string,string,PendingUploadRequest,CancellationToken)']/*" />
-        public virtual Response<PendingUploadResponse> StartPendingUpload(string name, string version, PendingUploadRequest body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = StartPendingUpload(name, version, content, context);
-            return Response.FromValue(PendingUploadResponse.FromResponse(response), response);
-        }
-
         /// <summary>
-        /// [Protocol Method] Create or start a pending upload of a dataset for a specific version.
+        /// [Protocol Method] Create a new or update an existing DatasetVersion with the given version id
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="StartPendingUploadAsync(string,string,PendingUploadRequest,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
+        /// <param name="version"> The specific version id of the DatasetVersion to create or replace. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='StartPendingUploadAsync(string,string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> StartPendingUploadAsync(string name, string version, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> CreateOrUpdateVersionAsync(string name, string version, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Datasets.StartPendingUpload");
+            using var scope = ClientDiagnostics.CreateScope("Datasets.CreateOrUpdateVersion");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStartPendingUploadRequest(name, version, content, context);
+                using HttpMessage message = CreateCreateOrUpdateVersionRequest(name, version, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -583,40 +411,34 @@ namespace Azure.AI.Projects.OneDP
         }
 
         /// <summary>
-        /// [Protocol Method] Create or start a pending upload of a dataset for a specific version.
+        /// [Protocol Method] Create a new or update an existing DatasetVersion with the given version id
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="StartPendingUpload(string,string,PendingUploadRequest,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
+        /// <param name="version"> The specific version id of the DatasetVersion to create or replace. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='StartPendingUpload(string,string,RequestContent,RequestContext)']/*" />
-        public virtual Response StartPendingUpload(string name, string version, RequestContent content, RequestContext context = null)
+        public virtual Response CreateOrUpdateVersion(string name, string version, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Datasets.StartPendingUpload");
+            using var scope = ClientDiagnostics.CreateScope("Datasets.CreateOrUpdateVersion");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStartPendingUploadRequest(name, version, content, context);
+                using HttpMessage message = CreateCreateOrUpdateVersionRequest(name, version, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -626,46 +448,46 @@ namespace Azure.AI.Projects.OneDP
             }
         }
 
-        /// <summary> Create or start a pending upload of a dataset. The dataset version will be generated by service. </summary>
+        /// <summary> Start a new or get an existing pending upload of a dataset for a specific version. </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="pendingUploadType"> TemporaryBlobReference is the only supported type. </param>
-        /// <param name="pendingUploadId"> If PendingUploadId is not provided, a random GUID will be used. </param>
-        /// <param name="connectionName"> Name of Azure blob storage connection to use for generating temporary SAS token. </param>
+        /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
+        /// <param name="body"> Parameters for the action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='StartPendingUploadAutoIncrementAsync(string,PendingUploadType,string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<PendingUploadResponse>> StartPendingUploadAutoIncrementAsync(string name, PendingUploadType pendingUploadType, string pendingUploadId = null, string connectionName = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<PendingUploadResponse>> StartPendingUploadVersionAsync(string name, string version, PendingUploadRequest body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(body, nameof(body));
 
-            StartPendingUploadAutoIncrementRequest startPendingUploadAutoIncrementRequest = new StartPendingUploadAutoIncrementRequest(pendingUploadId, connectionName, pendingUploadType, null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await StartPendingUploadAutoIncrementAsync(name, startPendingUploadAutoIncrementRequest.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await StartPendingUploadVersionAsync(name, version, content, context).ConfigureAwait(false);
             return Response.FromValue(PendingUploadResponse.FromResponse(response), response);
         }
 
-        /// <summary> Create or start a pending upload of a dataset. The dataset version will be generated by service. </summary>
+        /// <summary> Start a new or get an existing pending upload of a dataset for a specific version. </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="pendingUploadType"> TemporaryBlobReference is the only supported type. </param>
-        /// <param name="pendingUploadId"> If PendingUploadId is not provided, a random GUID will be used. </param>
-        /// <param name="connectionName"> Name of Azure blob storage connection to use for generating temporary SAS token. </param>
+        /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
+        /// <param name="body"> Parameters for the action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='StartPendingUploadAutoIncrement(string,PendingUploadType,string,string,CancellationToken)']/*" />
-        public virtual Response<PendingUploadResponse> StartPendingUploadAutoIncrement(string name, PendingUploadType pendingUploadType, string pendingUploadId = null, string connectionName = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<PendingUploadResponse> StartPendingUploadVersion(string name, string version, PendingUploadRequest body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(body, nameof(body));
 
-            StartPendingUploadAutoIncrementRequest startPendingUploadAutoIncrementRequest = new StartPendingUploadAutoIncrementRequest(pendingUploadId, connectionName, pendingUploadType, null);
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = StartPendingUploadAutoIncrement(name, startPendingUploadAutoIncrementRequest.ToRequestContent(), context);
+            Response response = StartPendingUploadVersion(name, version, content, context);
             return Response.FromValue(PendingUploadResponse.FromResponse(response), response);
         }
 
         /// <summary>
-        /// [Protocol Method] Create or start a pending upload of a dataset. The dataset version will be generated by service.
+        /// [Protocol Method] Start a new or get an existing pending upload of a dataset for a specific version.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -674,29 +496,30 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="StartPendingUploadAutoIncrementAsync(string,PendingUploadType,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="StartPendingUploadVersionAsync(string,string,PendingUploadRequest,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
+        /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='StartPendingUploadAutoIncrementAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> StartPendingUploadAutoIncrementAsync(string name, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> StartPendingUploadVersionAsync(string name, string version, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Datasets.StartPendingUploadAutoIncrement");
+            using var scope = ClientDiagnostics.CreateScope("Datasets.StartPendingUploadVersion");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStartPendingUploadAutoIncrementRequest(name, content, context);
+                using HttpMessage message = CreateStartPendingUploadVersionRequest(name, version, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -707,7 +530,7 @@ namespace Azure.AI.Projects.OneDP
         }
 
         /// <summary>
-        /// [Protocol Method] Create or start a pending upload of a dataset. The dataset version will be generated by service.
+        /// [Protocol Method] Start a new or get an existing pending upload of a dataset for a specific version.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -716,29 +539,154 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="StartPendingUploadAutoIncrement(string,PendingUploadType,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="StartPendingUploadVersion(string,string,PendingUploadRequest,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
+        /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='StartPendingUploadAutoIncrement(string,RequestContent,RequestContext)']/*" />
-        public virtual Response StartPendingUploadAutoIncrement(string name, RequestContent content, RequestContext context = null)
+        public virtual Response StartPendingUploadVersion(string name, string version, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Datasets.StartPendingUploadAutoIncrement");
+            using var scope = ClientDiagnostics.CreateScope("Datasets.StartPendingUploadVersion");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStartPendingUploadAutoIncrementRequest(name, content, context);
+                using HttpMessage message = CreateStartPendingUploadVersionRequest(name, version, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get download sas for dataset version. </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
+        /// <param name="body"> Parameters for the action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<AssetCredentialResponse>> GetCredentialsAsync(string name, string version, GetCredentialsRequest body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetCredentialsAsync(name, version, content, context).ConfigureAwait(false);
+            return Response.FromValue(AssetCredentialResponse.FromResponse(response), response);
+        }
+
+        /// <summary> Get download sas for dataset version. </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
+        /// <param name="body"> Parameters for the action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<AssetCredentialResponse> GetCredentials(string name, string version, GetCredentialsRequest body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetCredentials(name, version, content, context);
+            return Response.FromValue(AssetCredentialResponse.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get download sas for dataset version.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetCredentialsAsync(string,string,GetCredentialsRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCredentialsAsync(string name, string version, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Datasets.GetCredentials");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetCredentialsRequest(name, version, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get download sas for dataset version.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetCredentials(string,string,GetCredentialsRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetCredentials(string name, string version, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Datasets.GetCredentials");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetCredentialsRequest(name, version, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -750,14 +698,13 @@ namespace Azure.AI.Projects.OneDP
 
         /// <summary> List all versions of the given DatasetVersion. </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount is larger than page size, results with be default page size count will be returned. </param>
+        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount &gt; page size, results with be default page size count will be returned. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All] View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersionsAsync(string,int?,string,string,ListViewType?,CancellationToken)']/*" />
         public virtual AsyncPageable<DatasetVersion> GetVersionsAsync(string name, int? maxCount = null, string skip = null, string tags = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -770,14 +717,13 @@ namespace Azure.AI.Projects.OneDP
 
         /// <summary> List all versions of the given DatasetVersion. </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount is larger than page size, results with be default page size count will be returned. </param>
+        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount &gt; page size, results with be default page size count will be returned. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All] View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersions(string,int?,string,string,ListViewType?,CancellationToken)']/*" />
         public virtual Pageable<DatasetVersion> GetVersions(string name, int? maxCount = null, string skip = null, string tags = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -804,7 +750,7 @@ namespace Azure.AI.Projects.OneDP
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount is larger than page size, results with be default page size count will be returned. </param>
+        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount &gt; page size, results with be default page size count will be returned. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All] View type for including/excluding (for example) archived entities. Allowed values: "ActiveOnly" | "ArchivedOnly" | "All". </param>
@@ -813,7 +759,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersionsAsync(string,int?,string,string,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetVersionsAsync(string name, int? maxCount, string skip, string tags, string listViewType, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -839,7 +784,7 @@ namespace Azure.AI.Projects.OneDP
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount is larger than page size, results with be default page size count will be returned. </param>
+        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount &gt; page size, results with be default page size count will be returned. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All] View type for including/excluding (for example) archived entities. Allowed values: "ActiveOnly" | "ArchivedOnly" | "All". </param>
@@ -848,7 +793,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersions(string,int?,string,string,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetVersions(string name, int? maxCount, string skip, string tags, string listViewType, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -859,12 +803,11 @@ namespace Azure.AI.Projects.OneDP
         }
 
         /// <summary> List the latest version of each DatasetVersion. </summary>
-        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount is larger than page size, results with be default page size count will be returned. </param>
+        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount &gt; page size, results with be default page size count will be returned. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All] View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetLatestsAsync(int?,string,string,ListViewType?,CancellationToken)']/*" />
         public virtual AsyncPageable<DatasetVersion> GetLatestsAsync(int? maxCount = null, string skip = null, string tags = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -874,12 +817,11 @@ namespace Azure.AI.Projects.OneDP
         }
 
         /// <summary> List the latest version of each DatasetVersion. </summary>
-        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount is larger than page size, results with be default page size count will be returned. </param>
+        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount &gt; page size, results with be default page size count will be returned. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All] View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetLatests(int?,string,string,ListViewType?,CancellationToken)']/*" />
         public virtual Pageable<DatasetVersion> GetLatests(int? maxCount = null, string skip = null, string tags = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -903,14 +845,13 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount is larger than page size, results with be default page size count will be returned. </param>
+        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount &gt; page size, results with be default page size count will be returned. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All] View type for including/excluding (for example) archived entities. Allowed values: "ActiveOnly" | "ArchivedOnly" | "All". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetLatestsAsync(int?,string,string,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetLatestsAsync(int? maxCount, string skip, string tags, string listViewType, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLatestsRequest(maxCount, skip, tags, listViewType, context);
@@ -933,14 +874,13 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount is larger than page size, results with be default page size count will be returned. </param>
+        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount &gt; page size, results with be default page size count will be returned. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All] View type for including/excluding (for example) archived entities. Allowed values: "ActiveOnly" | "ArchivedOnly" | "All". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetLatests(int?,string,string,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetLatests(int? maxCount, string skip, string tags, string listViewType, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLatestsRequest(maxCount, skip, tags, listViewType, context);
@@ -1044,26 +984,6 @@ namespace Azure.AI.Projects.OneDP
             return message;
         }
 
-        internal HttpMessage CreateCreateRequest(string name, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/datasets/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/versions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
-            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         internal HttpMessage CreateCreateVersionRequest(string name, string version, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
@@ -1083,7 +1003,26 @@ namespace Azure.AI.Projects.OneDP
             return message;
         }
 
-        internal HttpMessage CreateStartPendingUploadRequest(string name, string version, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateVersionRequest(string name, string version, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/datasets/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateStartPendingUploadVersionRequest(string name, string version, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1103,7 +1042,7 @@ namespace Azure.AI.Projects.OneDP
             return message;
         }
 
-        internal HttpMessage CreateStartPendingUploadAutoIncrementRequest(string name, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetCredentialsRequest(string name, string version, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1112,12 +1051,12 @@ namespace Azure.AI.Projects.OneDP
             uri.Reset(_endpoint);
             uri.AppendPath("/datasets/", false);
             uri.AppendPath(name, true);
-            uri.AppendPath("/startPendingUpload", false);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendPath("/credentials", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
-            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;

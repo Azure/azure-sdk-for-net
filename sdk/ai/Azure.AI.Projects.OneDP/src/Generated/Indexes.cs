@@ -43,7 +43,12 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
-        /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
+        /// <param name="endpoint">
+        /// Project endpoint. In the form "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/_project"
+        /// if your Foundry Hub has only one Project, or to use the default Project in your Hub. Or in the form
+        /// "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/&lt;your-project-name&gt;" if you want to explicitly
+        /// specify the Foundry Project name.
+        /// </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         internal Indexes(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
@@ -61,7 +66,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetVersionAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<Index>> GetVersionAsync(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -78,7 +82,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetVersion(string,string,CancellationToken)']/*" />
         public virtual Response<Index> GetVersion(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -111,7 +114,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetVersionAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetVersionAsync(string name, string version, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -153,7 +155,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetVersion(string,string,RequestContext)']/*" />
         public virtual Response GetVersion(string name, string version, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -191,7 +192,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='DeleteVersionAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteVersionAsync(string name, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -229,7 +229,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='DeleteVersion(string,string,RequestContext)']/*" />
         public virtual Response DeleteVersion(string name, string version, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -249,126 +248,6 @@ namespace Azure.AI.Projects.OneDP
             }
         }
 
-        /// <summary> Create a new Index. The version id will be generated by the service. </summary>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="body"> The definition of the Index to create. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='CreateAsync(string,Index,CancellationToken)']/*" />
-        public virtual async Task<Response<Index>> CreateAsync(string name, Index body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateAsync(name, content, context).ConfigureAwait(false);
-            return Response.FromValue(Index.FromResponse(response), response);
-        }
-
-        /// <summary> Create a new Index. The version id will be generated by the service. </summary>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="body"> The definition of the Index to create. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='Create(string,Index,CancellationToken)']/*" />
-        public virtual Response<Index> Create(string name, Index body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Create(name, content, context);
-            return Response.FromValue(Index.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create a new Index. The version id will be generated by the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateAsync(string,Index,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='CreateAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateAsync(string name, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Indexes.Create");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateRequest(name, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create a new Index. The version id will be generated by the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="Create(string,Index,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='Create(string,RequestContent,RequestContext)']/*" />
-        public virtual Response Create(string name, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Indexes.Create");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateRequest(name, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Create a new or replace an existing Index with the given version id. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the Index to create or replace. </param>
@@ -376,7 +255,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='CreateVersionAsync(string,string,Index,CancellationToken)']/*" />
         public virtual async Task<Response<Index>> CreateVersionAsync(string name, string version, Index body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -396,7 +274,6 @@ namespace Azure.AI.Projects.OneDP
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='CreateVersion(string,string,Index,CancellationToken)']/*" />
         public virtual Response<Index> CreateVersion(string name, string version, Index body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -432,7 +309,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='CreateVersionAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateVersionAsync(string name, string version, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -476,7 +352,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='CreateVersion(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateVersion(string name, string version, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -497,16 +372,91 @@ namespace Azure.AI.Projects.OneDP
             }
         }
 
+        /// <summary>
+        /// [Protocol Method] Create a new or update an existing Index with the given version id
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="version"> The specific version id of the Index to create or replace. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateOrUpdateVersionAsync(string name, string version, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Indexes.CreateOrUpdateVersion");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateVersionRequest(name, version, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a new or update an existing Index with the given version id
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="version"> The specific version id of the Index to create or replace. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateOrUpdateVersion(string name, string version, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Indexes.CreateOrUpdateVersion");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateVersionRequest(name, version, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> List all versions of the given Index. </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount is larger than page size, results with be default page size count will be returned. </param>
+        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount &gt; page size, results with be default page size count will be returned. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All] View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetVersionsAsync(string,int?,string,string,ListViewType?,CancellationToken)']/*" />
         public virtual AsyncPageable<Index> GetVersionsAsync(string name, int? maxCount = null, string skip = null, string tags = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -519,14 +469,13 @@ namespace Azure.AI.Projects.OneDP
 
         /// <summary> List all versions of the given Index. </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount is larger than page size, results with be default page size count will be returned. </param>
+        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount &gt; page size, results with be default page size count will be returned. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All] View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetVersions(string,int?,string,string,ListViewType?,CancellationToken)']/*" />
         public virtual Pageable<Index> GetVersions(string name, int? maxCount = null, string skip = null, string tags = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -553,7 +502,7 @@ namespace Azure.AI.Projects.OneDP
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount is larger than page size, results with be default page size count will be returned. </param>
+        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount &gt; page size, results with be default page size count will be returned. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All] View type for including/excluding (for example) archived entities. Allowed values: "ActiveOnly" | "ArchivedOnly" | "All". </param>
@@ -562,7 +511,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetVersionsAsync(string,int?,string,string,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetVersionsAsync(string name, int? maxCount, string skip, string tags, string listViewType, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -588,7 +536,7 @@ namespace Azure.AI.Projects.OneDP
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount is larger than page size, results with be default page size count will be returned. </param>
+        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount &gt; page size, results with be default page size count will be returned. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All] View type for including/excluding (for example) archived entities. Allowed values: "ActiveOnly" | "ArchivedOnly" | "All". </param>
@@ -597,7 +545,6 @@ namespace Azure.AI.Projects.OneDP
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetVersions(string,int?,string,string,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetVersions(string name, int? maxCount, string skip, string tags, string listViewType, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -608,12 +555,11 @@ namespace Azure.AI.Projects.OneDP
         }
 
         /// <summary> List the latest version of each Index. </summary>
-        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount is larger than page size, results with be default page size count will be returned. </param>
+        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount &gt; page size, results with be default page size count will be returned. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All] View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetLatestsAsync(int?,string,string,ListViewType?,CancellationToken)']/*" />
         public virtual AsyncPageable<Index> GetLatestsAsync(int? maxCount = null, string skip = null, string tags = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -623,12 +569,11 @@ namespace Azure.AI.Projects.OneDP
         }
 
         /// <summary> List the latest version of each Index. </summary>
-        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount is larger than page size, results with be default page size count will be returned. </param>
+        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount &gt; page size, results with be default page size count will be returned. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All] View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetLatests(int?,string,string,ListViewType?,CancellationToken)']/*" />
         public virtual Pageable<Index> GetLatests(int? maxCount = null, string skip = null, string tags = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -652,14 +597,13 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount is larger than page size, results with be default page size count will be returned. </param>
+        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount &gt; page size, results with be default page size count will be returned. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All] View type for including/excluding (for example) archived entities. Allowed values: "ActiveOnly" | "ArchivedOnly" | "All". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetLatestsAsync(int?,string,string,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetLatestsAsync(int? maxCount, string skip, string tags, string listViewType, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLatestsRequest(maxCount, skip, tags, listViewType, context);
@@ -682,14 +626,13 @@ namespace Azure.AI.Projects.OneDP
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount is larger than page size, results with be default page size count will be returned. </param>
+        /// <param name="maxCount"> Top count of results, top count cannot be greater than the page size. If topCount &gt; page size, results with be default page size count will be returned. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All] View type for including/excluding (for example) archived entities. Allowed values: "ActiveOnly" | "ArchivedOnly" | "All". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetLatests(int?,string,string,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetLatests(int? maxCount, string skip, string tags, string listViewType, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLatestsRequest(maxCount, skip, tags, listViewType, context);
@@ -793,31 +736,30 @@ namespace Azure.AI.Projects.OneDP
             return message;
         }
 
-        internal HttpMessage CreateCreateRequest(string name, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/indexes/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/versions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
-            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         internal HttpMessage CreateCreateVersionRequest(string name, string version, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
             request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/indexes/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateVersionRequest(string name, string version, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/indexes/", false);

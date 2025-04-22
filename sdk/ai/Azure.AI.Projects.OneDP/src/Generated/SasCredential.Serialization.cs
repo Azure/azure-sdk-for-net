@@ -26,7 +26,7 @@ namespace Azure.AI.Projects.OneDP
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SasCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -34,11 +34,27 @@ namespace Azure.AI.Projects.OneDP
                 throw new FormatException($"The model {nameof(SasCredential)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W")
             {
-                writer.WritePropertyName("sasToken"u8);
-                writer.WriteStringValue(SasToken);
+                writer.WritePropertyName("sasUri"u8);
+                writer.WriteStringValue(SasUri);
+            }
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
         }
 
@@ -62,20 +78,20 @@ namespace Azure.AI.Projects.OneDP
             {
                 return null;
             }
-            string sasToken = default;
-            CredentialType type = default;
+            string sasUri = default;
+            SasCredentialType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sasToken"u8))
+                if (property.NameEquals("sasUri"u8))
                 {
-                    sasToken = property.Value.GetString();
+                    sasUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new CredentialType(property.Value.GetString());
+                    type = new SasCredentialType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -84,7 +100,7 @@ namespace Azure.AI.Projects.OneDP
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SasCredential(type, serializedAdditionalRawData, sasToken);
+            return new SasCredential(sasUri, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SasCredential>.Write(ModelReaderWriterOptions options)
@@ -120,14 +136,14 @@ namespace Azure.AI.Projects.OneDP
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new SasCredential FromResponse(Response response)
+        internal static SasCredential FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSasCredential(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
+        internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);

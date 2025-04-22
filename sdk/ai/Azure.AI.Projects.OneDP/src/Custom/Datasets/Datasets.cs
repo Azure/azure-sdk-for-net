@@ -19,7 +19,7 @@ namespace Azure.AI.Projects.OneDP
         /// </summary>
         private (BlobContainerClient ContainerClient, string OutputVersion) CreateDatasetAndGetContainerClient(string name, string inputVersion)
         {
-            var pendingUploadResponse = StartPendingUpload(
+            var pendingUploadResponse = StartPendingUploadVersion(
                 name,
                 inputVersion,
                 new PendingUploadRequest(null, null, PendingUploadType.TemporaryBlobReference, null)
@@ -27,12 +27,12 @@ namespace Azure.AI.Projects.OneDP
 
             string outputVersion = inputVersion;
 
-            if (pendingUploadResponse.Value.BlobReferenceForConsumption == null ||
-                pendingUploadResponse.Value.BlobReferenceForConsumption.Credential?.Type != CredentialType.SAS ||
-                string.IsNullOrEmpty(pendingUploadResponse.Value.BlobReferenceForConsumption.BlobUri))
-            {
-                throw new InvalidOperationException("Invalid blob reference for consumption.");
-            }
+            //if (pendingUploadResponse.Value.BlobReferenceForConsumption == null ||
+            //    pendingUploadResponse.Value.BlobReferenceForConsumption.Credential?.Type != CredentialType.SAS ||
+            //    string.IsNullOrEmpty(pendingUploadResponse.Value.BlobReferenceForConsumption.BlobUri))
+            //{
+            //    throw new InvalidOperationException("Invalid blob reference for consumption.");
+            //}
 
             var containerClient = new BlobContainerClient(new Uri(pendingUploadResponse.Value.BlobReferenceForConsumption.BlobUri));
             return (containerClient, outputVersion);
@@ -45,7 +45,8 @@ namespace Azure.AI.Projects.OneDP
         {
             if (!File.Exists(filePath))
             {
-                throw new ArgumentException("The provided file does not exist.");
+                Console.WriteLine($"File path: {filePath}");
+                throw new ArgumentException($"The provided file does not exist: {filePath}.");
             }
 
             var (containerClient, outputVersion) = CreateDatasetAndGetContainerClient(name, version);
@@ -75,7 +76,8 @@ namespace Azure.AI.Projects.OneDP
         {
             if (!Directory.Exists(folderPath))
             {
-                throw new ArgumentException("The provided folder does not exist.");
+                Console.WriteLine($"File path: {folderPath}");
+                throw new ArgumentException($"The provided folder does not exist: {folderPath}");
             }
 
             var (containerClient, outputVersion) = CreateDatasetAndGetContainerClient(name, version);
