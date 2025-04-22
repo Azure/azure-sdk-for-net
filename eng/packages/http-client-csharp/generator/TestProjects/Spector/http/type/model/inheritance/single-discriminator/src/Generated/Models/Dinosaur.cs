@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace _Type.Model.Inheritance.SingleDiscriminator.Models
+namespace _Type.Model.Inheritance.SingleDiscriminator
 {
     public abstract partial class Dinosaur
     {
