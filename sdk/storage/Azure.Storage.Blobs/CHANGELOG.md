@@ -1,5 +1,10 @@
 # Release History
 
+## 12.25.0-beta.1 (Unreleased)
+
+### Features Added
+- Added `PageBlobCreateOptions.PremiumPageBlobAccessTier` for `PageBlobClient.Create(..)`
+
 ## 12.24.0 (2025-03-11)
 
 ### Features Added

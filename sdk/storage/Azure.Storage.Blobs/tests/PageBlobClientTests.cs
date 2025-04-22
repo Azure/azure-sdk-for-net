@@ -469,6 +469,31 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [RecordedTest]
+        public async Task CreateAsync_PremiumPageBlobAccessTier()
+        {
+            BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
+            await using DisposingContainer test = await GetTestContainerAsync(service: premiumService, premium: true);
+
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, Constants.KB);
+
+            PremiumPageBlobAccessTier accessTier = PremiumPageBlobAccessTier.P60;
+            PageBlobCreateOptions optionsAccessTier = new()
+            {
+                PremiumPageBlobAccessTier = accessTier
+            };
+
+            // Act
+            Response<BlobContentInfo> response = await blob.CreateAsync(
+                size: Constants.KB,
+                options: optionsAccessTier);
+
+            // Assert
+            BlobProperties properties = await blob.GetPropertiesAsync();
+            Assert.AreEqual(accessTier.ToString(), properties.AccessTier);
+        }
+
         /// <summary>
         /// Data for CreateAsync, GetPageRangesAsync, and GetPageRangesDiffAsync AccessConditions Fail tests.
         /// </summary>
