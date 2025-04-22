@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace _Type.Property.Nullable.Models
+namespace _Type.Property.Nullable
 {
     public partial class CollectionsByteProperty
     {

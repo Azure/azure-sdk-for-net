@@ -12,6 +12,17 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public abstract class ConnectionProvider
 {
+    private readonly ClientCache _subclients;
+
+    /// <summary>
+    /// Initializes a new instance of the ConnectionProvider class.
+    /// </summary>
+    /// <param name="maxCacheSize">The maximum number of subclients to store in the cache.</param>
+    protected ConnectionProvider(int maxCacheSize = 100)
+    {
+        _subclients = new ClientCache(maxCacheSize);
+    }
+
     /// <summary>
     /// Retrieves the connection settings associated with a given connection ID.
     /// </summary>
@@ -26,8 +37,8 @@ public abstract class ConnectionProvider
     public abstract IEnumerable<ClientConnection> GetAllConnections();
 
     /// <summary>
-    /// Gets a cache for subclients to optimize performance by reusing client instances.
+    /// Gets the cache for subclients to optimize performance by reusing client instances.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public ClientCache Subclients { get; } = new ClientCache();
+    public ClientCache Subclients => _subclients;
 }
