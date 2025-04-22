@@ -22,7 +22,7 @@ namespace Azure.Identity
         public HttpPipelineClientFactory(HttpPipeline pipeline, ClientOptions options = null)
         {
             _pipeline = pipeline;
-            _options = options;
+            _options = options ?? new TokenCredentialOptions();
         }
 
         public HttpClient GetHttpClient()

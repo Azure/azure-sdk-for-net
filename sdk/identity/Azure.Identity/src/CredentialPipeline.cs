@@ -52,7 +52,8 @@ namespace Azure.Identity
         }
 
         public HttpPipeline HttpPipeline { get; }
-        public ClientOptions ClientOptions {get;}
+
+        public ClientOptions ClientOptions { get; }
 
         public ClientDiagnostics Diagnostics { get; }
 
