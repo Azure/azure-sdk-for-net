@@ -2043,7 +2043,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="diskCapacityInBytes"> The disk capacity in bytes. </param>
         /// <param name="primaryStagingAzureStorageAccountId"> The primary staging storage account. </param>
         /// <param name="diskType"> The type of disk. </param>
-        /// <param name="resyncRequired"> A value indicating whether resync is required for this disk. </param>
+        /// <param name="isResyncRequired"> A value indicating whether resync is required for this disk. </param>
         /// <param name="monitoringPercentageCompletion"> The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property. </param>
         /// <param name="monitoringJobType"> The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property. </param>
         /// <param name="dataPendingInStagingStorageAccountInMB"> The data pending for replication in MB at staging account. </param>
@@ -2059,7 +2059,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="failoverDiskName"> The failover name for the managed disk. </param>
         /// <param name="tfoDiskName"> The test failover name for the managed disk. </param>
         /// <returns> A new <see cref="Models.A2AProtectedDiskDetails"/> instance for mocking. </returns>
-        public static A2AProtectedDiskDetails A2AProtectedDiskDetails(Uri diskUri = null, ResourceIdentifier recoveryAzureStorageAccountId = null, ResourceIdentifier primaryDiskAzureStorageAccountId = null, Uri recoveryDiskUri = null, string diskName = null, long? diskCapacityInBytes = null, ResourceIdentifier primaryStagingAzureStorageAccountId = null, string diskType = null, bool? resyncRequired = null, int? monitoringPercentageCompletion = null, string monitoringJobType = null, double? dataPendingInStagingStorageAccountInMB = null, double? dataPendingAtSourceAgentInMB = null, string diskState = null, IEnumerable<string> allowedDiskLevelOperation = null, bool? isDiskEncrypted = null, string secretIdentifier = null, ResourceIdentifier dekKeyVaultArmId = null, bool? isDiskKeyEncrypted = null, string keyIdentifier = null, ResourceIdentifier kekKeyVaultArmId = null, string failoverDiskName = null, string tfoDiskName = null)
+        public static A2AProtectedDiskDetails A2AProtectedDiskDetails(Uri diskUri = null, ResourceIdentifier recoveryAzureStorageAccountId = null, ResourceIdentifier primaryDiskAzureStorageAccountId = null, Uri recoveryDiskUri = null, string diskName = null, long? diskCapacityInBytes = null, ResourceIdentifier primaryStagingAzureStorageAccountId = null, string diskType = null, bool? isResyncRequired = null, int? monitoringPercentageCompletion = null, string monitoringJobType = null, double? dataPendingInStagingStorageAccountInMB = null, double? dataPendingAtSourceAgentInMB = null, string diskState = null, IEnumerable<string> allowedDiskLevelOperation = null, bool? isDiskEncrypted = null, string secretIdentifier = null, ResourceIdentifier dekKeyVaultArmId = null, bool? isDiskKeyEncrypted = null, string keyIdentifier = null, ResourceIdentifier kekKeyVaultArmId = null, string failoverDiskName = null, string tfoDiskName = null)
         {
             allowedDiskLevelOperation ??= new List<string>();
 
@@ -2072,7 +2072,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 diskCapacityInBytes,
                 primaryStagingAzureStorageAccountId,
                 diskType,
-                resyncRequired,
+                isResyncRequired,
                 monitoringPercentageCompletion,
                 monitoringJobType,
                 dataPendingInStagingStorageAccountInMB,

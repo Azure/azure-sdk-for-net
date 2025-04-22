@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryHealthError"/>. </summary>
         public SiteRecoveryHealthError()
         {
-            InnerHealthErrors = new ChangeTrackingList<SiteRecoveryInnerHealthError>();
+            SiteRecoveryInnerHealthErrorsList = new ChangeTrackingList<SiteRecoveryInnerHealthError>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryHealthError"/>. </summary>
-        /// <param name="innerHealthErrors"> The inner health errors. HealthError having a list of HealthError as child errors is problematic. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&gt; InnerException. </param>
+        /// <param name="siteRecoveryInnerHealthErrorsList"> The inner health errors. HealthError having a list of HealthError as child errors is problematic. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&gt; InnerException. </param>
         /// <param name="errorSource"> Source of error. </param>
         /// <param name="errorType"> Type of error. </param>
         /// <param name="errorLevel"> Level of error. </param>
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="errorId"> The health error unique id. </param>
         /// <param name="customerResolvability"> Value indicating whether the health error is customer resolvable. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteRecoveryHealthError(IList<SiteRecoveryInnerHealthError> innerHealthErrors, string errorSource, string errorType, string errorLevel, string errorCategory, string errorCode, string summaryMessage, string errorMessage, string possibleCauses, string recommendedAction, DateTimeOffset? creationTimeUtc, string recoveryProviderErrorMessage, string entityId, string errorId, HealthErrorCustomerResolvability? customerResolvability, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SiteRecoveryHealthError(IList<SiteRecoveryInnerHealthError> siteRecoveryInnerHealthErrorsList, string errorSource, string errorType, string errorLevel, string errorCategory, string errorCode, string summaryMessage, string errorMessage, string possibleCauses, string recommendedAction, DateTimeOffset? creationTimeUtc, string recoveryProviderErrorMessage, string entityId, string errorId, HealthErrorCustomerResolvability? customerResolvability, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            InnerHealthErrors = innerHealthErrors;
+            SiteRecoveryInnerHealthErrorsList = siteRecoveryInnerHealthErrorsList;
             ErrorSource = errorSource;
             ErrorType = errorType;
             ErrorLevel = errorLevel;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The inner health errors. HealthError having a list of HealthError as child errors is problematic. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&gt; InnerException. </summary>
-        public IList<SiteRecoveryInnerHealthError> InnerHealthErrors { get; }
+        public IList<SiteRecoveryInnerHealthError> SiteRecoveryInnerHealthErrorsList { get; }
         /// <summary> Source of error. </summary>
         public string ErrorSource { get; set; }
         /// <summary> Type of error. </summary>

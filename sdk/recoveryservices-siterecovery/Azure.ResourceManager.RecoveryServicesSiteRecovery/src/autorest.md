@@ -45,6 +45,7 @@ rename-mapping:
   A2AProtectedManagedDiskDetails.recoveryReplicaDiskId: -|arm-id
   A2AProtectedManagedDiskDetails.recoveryOrignalTargetDiskId: -|arm-id
   A2AProtectedManagedDiskDetails.resyncRequired: IsResyncRequired
+  A2AProtectedDiskDetails.resyncRequired: IsResyncRequired
   A2AProtectionIntentDiskInputDetails: A2AProtectionIntentDiskDetails
   A2AProtectionIntentManagedDiskInputDetails: A2AProtectionIntentManagedDiskDetails
   A2AVmDiskInputDetails: A2AVmDiskDetails
@@ -257,7 +258,7 @@ rename-mapping:
   RunAsAccount: SiteRecoveryRunAsAccount
   ServiceError: SiteRecoveryServiceError
   Severity: SiteRecoveryErrorSeverity
-  SiteRecoveryHealthError.innerHealthErrors: SiteRecoveryInnerHealthErrorsList
+  HealthError.innerHealthErrors: SiteRecoveryInnerHealthErrorsList
   SqlServerLicenseType: SiteRecoverySqlServerLicenseType
   StorageClassificationCollection: StorageClassificationListResult
   StorageClassificationProperties: StorageClassificationProperties
