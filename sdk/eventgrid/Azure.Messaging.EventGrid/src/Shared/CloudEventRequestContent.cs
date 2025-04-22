@@ -15,6 +15,7 @@ namespace Azure.Messaging.EventGrid
     internal class CloudEventRequestContent : RequestContent
     {
         private readonly IEnumerable<CloudEvent> _cloudEvents;
+        private readonly CloudEvent _cloudEvent;
         private const string TraceParentHeaderName = "traceparent";
         private const string TraceStateHeaderName = "tracestate";
         private readonly bool _isDistributedTracingEnabled;
@@ -22,7 +23,7 @@ namespace Azure.Messaging.EventGrid
 
         public CloudEventRequestContent(CloudEvent cloudEvent, bool isDistributedTracingEnabled)
         {
-            _cloudEvents = [ cloudEvent ];
+            _cloudEvent = cloudEvent;
             _isDistributedTracingEnabled = isDistributedTracingEnabled;
         }
 
@@ -72,21 +73,39 @@ namespace Azure.Messaging.EventGrid
                     traceState = currentActivity.TraceStateString;
                 }
 
-                foreach (CloudEvent cloudEvent in _cloudEvents)
+                if (_cloudEvent != null)
                 {
-                    if (currentActivityId != null &&
-                        !cloudEvent.ExtensionAttributes.ContainsKey(TraceParentHeaderName) &&
-                        !cloudEvent.ExtensionAttributes.ContainsKey(TraceStateHeaderName))
+                    AddExtensionAttributes(_cloudEvent, currentActivityId, traceState);
+                }
+                else
+                {
+                    foreach (CloudEvent cloudEvent in _cloudEvents)
                     {
-                        cloudEvent.ExtensionAttributes.Add(TraceParentHeaderName, currentActivityId);
-                        if (traceState != null)
-                        {
-                            cloudEvent.ExtensionAttributes.Add(TraceStateHeaderName, traceState);
-                        }
+                        AddExtensionAttributes(cloudEvent, currentActivityId, traceState);
                     }
                 }
             }
+
+            if (_cloudEvent != null)
+            {
+                _data = RequestContent.Create(_cloudEvent);
+                return;
+            }
             _data = RequestContent.Create(_cloudEvents);
+        }
+
+        private void AddExtensionAttributes(CloudEvent cloudEvent, string currentActivityId, string traceState)
+        {
+            if (currentActivityId != null &&
+                            !cloudEvent.ExtensionAttributes.ContainsKey(TraceParentHeaderName) &&
+                            !cloudEvent.ExtensionAttributes.ContainsKey(TraceStateHeaderName))
+            {
+                cloudEvent.ExtensionAttributes.Add(TraceParentHeaderName, currentActivityId);
+                if (traceState != null)
+                {
+                    cloudEvent.ExtensionAttributes.Add(TraceStateHeaderName, traceState);
+                }
+            }
         }
     }
 }
