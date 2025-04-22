@@ -396,8 +396,8 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
                     $shouldInclude = $shouldInclude -or $includedForValidation
                     if ($includedForValidation) {
                         $pkg.IncludedForValidation = $true
+                        break
                     }
-                    break
                 }
 
                 # handle service-level changes to the ci.yml files
