@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("eTag"u8);
+                writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag);
             }
         }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute
                     extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("eTag"u8))
+                if (property.NameEquals("etag"u8))
                 {
                     etag = property.Value.GetString();
                     continue;

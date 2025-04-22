@@ -18,6 +18,45 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmComputeModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.ComputeApiError"/>. </summary>
+        /// <param name="details"> The Api error details. </param>
+        /// <param name="innererror"> The Api inner error. </param>
+        /// <param name="code"> The error code. </param>
+        /// <param name="target"> The target of the particular error. </param>
+        /// <param name="message"> The error message. </param>
+        /// <returns> A new <see cref="Models.ComputeApiError"/> instance for mocking. </returns>
+        public static ComputeApiError ComputeApiError(IEnumerable<ComputeApiErrorBase> details = null, InnerError innererror = null, string code = null, string target = null, string message = null)
+        {
+            details ??= new List<ComputeApiErrorBase>();
+
+            return new ComputeApiError(
+                details?.ToList(),
+                innererror,
+                code,
+                target,
+                message,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ComputeApiErrorBase"/>. </summary>
+        /// <param name="code"> The error code. </param>
+        /// <param name="target"> The target of the particular error. </param>
+        /// <param name="message"> The error message. </param>
+        /// <returns> A new <see cref="Models.ComputeApiErrorBase"/> instance for mocking. </returns>
+        public static ComputeApiErrorBase ComputeApiErrorBase(string code = null, string target = null, string message = null)
+        {
+            return new ComputeApiErrorBase(code, target, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InnerError"/>. </summary>
+        /// <param name="exceptiontype"> The exception type. </param>
+        /// <param name="errordetail"> The internal error message or exception dump. </param>
+        /// <returns> A new <see cref="Models.InnerError"/> instance for mocking. </returns>
+        public static InnerError InnerError(string exceptiontype = null, string errordetail = null)
+        {
+            return new InnerError(exceptiontype, errordetail, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Compute.AvailabilitySetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -74,45 +113,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static DefaultVirtualMachineScaleSetInfo DefaultVirtualMachineScaleSetInfo(bool? constrainedMaximumCapacity = null, ResourceIdentifier defaultVirtualMachineScaleSetId = null)
         {
             return new DefaultVirtualMachineScaleSetInfo(constrainedMaximumCapacity, defaultVirtualMachineScaleSetId != null ? ResourceManagerModelFactory.WritableSubResource(defaultVirtualMachineScaleSetId) : null, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ComputeApiError"/>. </summary>
-        /// <param name="details"> The Api error details. </param>
-        /// <param name="innererror"> The Api inner error. </param>
-        /// <param name="code"> The error code. </param>
-        /// <param name="target"> The target of the particular error. </param>
-        /// <param name="message"> The error message. </param>
-        /// <returns> A new <see cref="Models.ComputeApiError"/> instance for mocking. </returns>
-        public static ComputeApiError ComputeApiError(IEnumerable<ComputeApiErrorBase> details = null, InnerError innererror = null, string code = null, string target = null, string message = null)
-        {
-            details ??= new List<ComputeApiErrorBase>();
-
-            return new ComputeApiError(
-                details?.ToList(),
-                innererror,
-                code,
-                target,
-                message,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ComputeApiErrorBase"/>. </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="target"> The target of the particular error. </param>
-        /// <param name="message"> The error message. </param>
-        /// <returns> A new <see cref="Models.ComputeApiErrorBase"/> instance for mocking. </returns>
-        public static ComputeApiErrorBase ComputeApiErrorBase(string code = null, string target = null, string message = null)
-        {
-            return new ComputeApiErrorBase(code, target, message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.InnerError"/>. </summary>
-        /// <param name="exceptiontype"> The exception type. </param>
-        /// <param name="errordetail"> The internal error message or exception dump. </param>
-        /// <returns> A new <see cref="Models.InnerError"/> instance for mocking. </returns>
-        public static InnerError InnerError(string exceptiontype = null, string errordetail = null)
-        {
-            return new InnerError(exceptiontype, errordetail, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.CapacityReservationGroupData"/>. </summary>
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="identity"> The identity of the virtual machine scale set, if configured. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <param name="extendedLocation"> The extended location of the Virtual Machine Scale Set. </param>
-        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="etag"> Etag is property returned in Create/Update/Get response of the VMSS, so that customer can supply it in the header to ensure optimistic updates. </param>
         /// <returns> A new <see cref="Compute.VirtualMachineScaleSetData"/> instance for mocking. </returns>
         public static VirtualMachineScaleSetData VirtualMachineScaleSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ComputeSku sku = null, ComputePlan plan = null, VirtualMachineScaleSetProperties properties = null, ManagedServiceIdentity identity = null, IEnumerable<string> zones = null, ExtendedLocation extendedLocation = null, string etag = null)
         {
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="zones"> The availability zones. </param>
         /// <param name="extendedLocation"> The extended location of the Virtual Machine. </param>
         /// <param name="managedBy"> ManagedBy is set to Virtual Machine Scale Set(VMSS) flex ARM resourceID, if the VM is part of the VMSS. This property is used by platform for internal resource group delete optimization. </param>
-        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="etag"> Etag is property returned in Create/Update/Get response of the VM, so that customer can supply it in the header to ensure optimistic updates. </param>
         /// <param name="placement"> The virtual machine automatic zone placement feature. </param>
         /// <param name="hardwareProfile"> Specifies the hardware settings for the virtual machine. </param>
         /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the virtual machine. </param>

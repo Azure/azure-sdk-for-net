@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/79114932d0c6c1a18f730f307c6620b15fec0d9d/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/f964e27befe2041e7ca5fd18a6528efd7751bca0/specification/compute/resource-manager/readme.md
 #tag: package-2025-02-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -562,4 +562,14 @@ directive:
   - from: ComputeRP.json
     where: $.definitions
     transform: delete $["Expand"]
+  - from: ComputeRP.json
+    where: $.definitions.VirtualMachineScaleSetStorageProfile.properties.diskControllerType
+    transform: >
+      delete $["$ref"];
+      $["type"] = "string";
+  - from: ComputeRP.json
+    where: $.definitions.VirtualMachineScaleSetUpdateStorageProfile.properties.diskControllerType
+    transform: >
+      delete $["$ref"];
+      $["type"] = "string";
 ```
