@@ -1,6 +1,8 @@
 # Microsoft Azure liftrarize management client library for .NET
 
-**[Describe the service briefly first.]**
+Arize AI's innovative observability and model evaluation empowers one to build more reliable and effective AI applications. With Arize AI on Azure, one can leverage the robust infrastructure of Microsoft's cloud computing platform to enhance your AI workflows.
+
+This library supports managing Microsoft Azure ArizeAI resources.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
