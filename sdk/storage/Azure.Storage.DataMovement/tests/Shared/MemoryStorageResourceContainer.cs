@@ -104,5 +104,10 @@ namespace Azure.Storage.DataMovement.Tests
         {
             throw new NotImplementedException();
         }
+
+        protected internal override Task<StorageResourceContainerProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

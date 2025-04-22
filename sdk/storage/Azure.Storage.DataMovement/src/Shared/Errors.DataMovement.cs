@@ -112,5 +112,8 @@ namespace Azure.Storage
 
         public static InvalidOperationException SingleItemContainerNoChildren()
             => new InvalidOperationException("Single item container has no children.");
+
+        public static InvalidOperationException SingleItemContainerNoGetProperties()
+            => new InvalidOperationException("SingleItemStorageResourceContainer does not support GetPropertiesAsync");
     }
 }
