@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.StorageActions.Models
             string objectFailedCount = default;
             string objectsSucceededCount = default;
             string runStatusError = default;
-            StorageTaskRunStatus? runStatusEnum = default;
+            RunStatusEnum? runStatusEnum = default;
             string summaryReportPath = default;
             ResourceIdentifier taskId = default;
             string taskVersion = default;
-            StorageTaskRunResult? runResult = default;
+            RunResult? runResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.StorageActions.Models
                     {
                         continue;
                     }
-                    runStatusEnum = new StorageTaskRunStatus(property.Value.GetString());
+                    runStatusEnum = new RunStatusEnum(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("summaryReportPath"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.StorageActions.Models
                     {
                         continue;
                     }
-                    runResult = new StorageTaskRunResult(property.Value.GetString());
+                    runResult = new RunResult(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

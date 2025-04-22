@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.StorageActions.Models
 {
-    /// <summary> The response from the List Storage Task operation. </summary>
-    internal partial class StorageTasksListResult
+    /// <summary> The else block of storage task operation. </summary>
+    internal partial class ElseCondition
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +46,31 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StorageTasksListResult"/>. </summary>
-        internal StorageTasksListResult()
+        /// <summary> Initializes a new instance of <see cref="ElseCondition"/>. </summary>
+        /// <param name="operations"> List of operations to execute in the else block. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operations"/> is null. </exception>
+        public ElseCondition(IEnumerable<StorageTaskOperationInfo> operations)
         {
-            Value = new ChangeTrackingList<StorageTaskData>();
+            Argument.AssertNotNull(operations, nameof(operations));
+
+            Operations = operations.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageTasksListResult"/>. </summary>
-        /// <param name="value"> Gets the list of storage tasks and their properties. </param>
-        /// <param name="nextLink"> Request URL that can be used to query next page of storage tasks. Returned when total number of requested storage tasks exceed maximum page size. </param>
+        /// <summary> Initializes a new instance of <see cref="ElseCondition"/>. </summary>
+        /// <param name="operations"> List of operations to execute in the else block. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTasksListResult(IReadOnlyList<StorageTaskData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElseCondition(IList<StorageTaskOperationInfo> operations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Operations = operations;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the list of storage tasks and their properties. </summary>
-        public IReadOnlyList<StorageTaskData> Value { get; }
-        /// <summary> Request URL that can be used to query next page of storage tasks. Returned when total number of requested storage tasks exceed maximum page size. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="ElseCondition"/> for deserialization. </summary>
+        internal ElseCondition()
+        {
+        }
+
+        /// <summary> List of operations to execute in the else block. </summary>
+        public IList<StorageTaskOperationInfo> Operations { get; }
     }
 }

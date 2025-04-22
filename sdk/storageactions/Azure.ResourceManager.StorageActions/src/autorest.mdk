@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: StorageActions
 namespace: Azure.ResourceManager.StorageActions
-require: https://github.com/Azure/azure-rest-api-specs/blob/524eb346ef48d8235b26280ff51a3b08c5bec864/specification/storageactions/resource-manager/readme.md
+require: D:\GitHub\mcgallan-azure-rest-api-specs\azure-rest-api-specs\specification\storageactions\resource-manager\readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:

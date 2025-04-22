@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.StorageActions.Models
 {
@@ -46,21 +47,31 @@ namespace Azure.ResourceManager.StorageActions.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskPreviewAction"/>. </summary>
-        /// <param name="properties"> Properties of the storage task preview. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public StorageTaskPreviewAction(StorageTaskPreviewActionProperties properties)
+        /// <param name="container"> Properties of a sample container to test for a match with the preview action. </param>
+        /// <param name="blobs"> Properties of some sample blobs in the container to test for matches with the preview action. </param>
+        /// <param name="action"> Preview action to test. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="container"/>, <paramref name="blobs"/> or <paramref name="action"/> is null. </exception>
+        public StorageTaskPreviewAction(StorageTaskPreviewContainerProperties container, IEnumerable<StorageTaskPreviewBlobProperties> blobs, StorageTaskPreviewActionCondition action)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(container, nameof(container));
+            Argument.AssertNotNull(blobs, nameof(blobs));
+            Argument.AssertNotNull(action, nameof(action));
 
-            Properties = properties;
+            Container = container;
+            Blobs = blobs.ToList();
+            Action = action;
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskPreviewAction"/>. </summary>
-        /// <param name="properties"> Properties of the storage task preview. </param>
+        /// <param name="container"> Properties of a sample container to test for a match with the preview action. </param>
+        /// <param name="blobs"> Properties of some sample blobs in the container to test for matches with the preview action. </param>
+        /// <param name="action"> Preview action to test. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskPreviewAction(StorageTaskPreviewActionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageTaskPreviewAction(StorageTaskPreviewContainerProperties container, IList<StorageTaskPreviewBlobProperties> blobs, StorageTaskPreviewActionCondition action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            Container = container;
+            Blobs = blobs;
+            Action = action;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -69,7 +80,11 @@ namespace Azure.ResourceManager.StorageActions.Models
         {
         }
 
-        /// <summary> Properties of the storage task preview. </summary>
-        public StorageTaskPreviewActionProperties Properties { get; set; }
+        /// <summary> Properties of a sample container to test for a match with the preview action. </summary>
+        public StorageTaskPreviewContainerProperties Container { get; set; }
+        /// <summary> Properties of some sample blobs in the container to test for matches with the preview action. </summary>
+        public IList<StorageTaskPreviewBlobProperties> Blobs { get; }
+        /// <summary> Preview action to test. </summary>
+        public StorageTaskPreviewActionCondition Action { get; set; }
     }
 }

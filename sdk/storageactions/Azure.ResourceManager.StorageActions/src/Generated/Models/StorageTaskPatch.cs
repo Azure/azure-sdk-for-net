@@ -55,13 +55,23 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <summary> Initializes a new instance of <see cref="StorageTaskPatch"/>. </summary>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="tags"> Gets or sets a list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater in length than 128 characters and a value no greater in length than 256 characters. </param>
-        /// <param name="properties"> Properties of the storage task. </param>
+        /// <param name="taskVersion"> Storage task version. </param>
+        /// <param name="enabled"> Storage Task is enabled when set to true and disabled when set to false. </param>
+        /// <param name="description"> Text that describes the purpose of the storage task. </param>
+        /// <param name="action"> The storage task action that is executed. </param>
+        /// <param name="provisioningState"> Represents the provisioning state of the storage task. </param>
+        /// <param name="creationTimeInUtc"> The creation date and time of the storage task in UTC. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, StorageTaskProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageTaskPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, long? taskVersion, bool? enabled, string description, StorageTaskAction action, ProvisioningState? provisioningState, DateTimeOffset? creationTimeInUtc, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identity = identity;
             Tags = tags;
-            Properties = properties;
+            TaskVersion = taskVersion;
+            Enabled = enabled;
+            Description = description;
+            Action = action;
+            ProvisioningState = provisioningState;
+            CreationTimeInUtc = creationTimeInUtc;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -69,7 +79,17 @@ namespace Azure.ResourceManager.StorageActions.Models
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Gets or sets a list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater in length than 128 characters and a value no greater in length than 256 characters. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Properties of the storage task. </summary>
-        public StorageTaskProperties Properties { get; set; }
+        /// <summary> Storage task version. </summary>
+        public long? TaskVersion { get; }
+        /// <summary> Storage Task is enabled when set to true and disabled when set to false. </summary>
+        public bool? Enabled { get; set; }
+        /// <summary> Text that describes the purpose of the storage task. </summary>
+        public string Description { get; set; }
+        /// <summary> The storage task action that is executed. </summary>
+        public StorageTaskAction Action { get; set; }
+        /// <summary> Represents the provisioning state of the storage task. </summary>
+        public ProvisioningState? ProvisioningState { get; }
+        /// <summary> The creation date and time of the storage task in UTC. </summary>
+        public DateTimeOffset? CreationTimeInUtc { get; }
     }
 }

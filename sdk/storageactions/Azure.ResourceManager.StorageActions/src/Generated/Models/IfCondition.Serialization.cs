@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageActions.Models
 {
-    public partial class StorageTaskIfCondition : IUtf8JsonSerializable, IJsonModel<StorageTaskIfCondition>
+    public partial class IfCondition : IUtf8JsonSerializable, IJsonModel<IfCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageTaskIfCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IfCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<StorageTaskIfCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IfCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskIfCondition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IfCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageTaskIfCondition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IfCondition)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("condition"u8);
@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.StorageActions.Models
             }
         }
 
-        StorageTaskIfCondition IJsonModel<StorageTaskIfCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        IfCondition IJsonModel<IfCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskIfCondition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IfCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageTaskIfCondition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IfCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStorageTaskIfCondition(document.RootElement, options);
+            return DeserializeIfCondition(document.RootElement, options);
         }
 
-        internal static StorageTaskIfCondition DeserializeStorageTaskIfCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static IfCondition DeserializeIfCondition(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -107,38 +107,38 @@ namespace Azure.ResourceManager.StorageActions.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StorageTaskIfCondition(condition, operations, serializedAdditionalRawData);
+            return new IfCondition(condition, operations, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<StorageTaskIfCondition>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<IfCondition>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskIfCondition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IfCondition>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageTaskIfCondition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IfCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
-        StorageTaskIfCondition IPersistableModel<StorageTaskIfCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        IfCondition IPersistableModel<IfCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskIfCondition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IfCondition>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeStorageTaskIfCondition(document.RootElement, options);
+                        return DeserializeIfCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageTaskIfCondition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IfCondition)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<StorageTaskIfCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IfCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

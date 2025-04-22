@@ -8,12 +8,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.StorageActions.Models
 {
-    /// <summary> The response from the List Storage Tasks operation. </summary>
-    internal partial class StorageTaskAssignmentsListResult
+    /// <summary> The response of a StorageTask list operation. </summary>
+    internal partial class StorageTaskListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,31 +46,31 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentsListResult"/>. </summary>
-        /// <param name="value"> List of Storage Task Assignment Resource IDs associated with this Storage Task. </param>
-        internal StorageTaskAssignmentsListResult(IEnumerable<SubResource> value)
+        /// <summary> Initializes a new instance of <see cref="StorageTaskListResult"/>. </summary>
+        /// <param name="value"> The StorageTask items on this page. </param>
+        internal StorageTaskListResult(IEnumerable<StorageTaskData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentsListResult"/>. </summary>
-        /// <param name="value"> List of Storage Task Assignment Resource IDs associated with this Storage Task. </param>
+        /// <summary> Initializes a new instance of <see cref="StorageTaskListResult"/>. </summary>
+        /// <param name="value"> The StorageTask items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskAssignmentsListResult(IReadOnlyList<SubResource> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageTaskListResult(IReadOnlyList<StorageTaskData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentsListResult"/> for deserialization. </summary>
-        internal StorageTaskAssignmentsListResult()
+        /// <summary> Initializes a new instance of <see cref="StorageTaskListResult"/> for deserialization. </summary>
+        internal StorageTaskListResult()
         {
         }
 
-        /// <summary> List of Storage Task Assignment Resource IDs associated with this Storage Task. </summary>
-        public IReadOnlyList<SubResource> Value { get; }
+        /// <summary> The StorageTask items on this page. </summary>
+        public IReadOnlyList<StorageTaskData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

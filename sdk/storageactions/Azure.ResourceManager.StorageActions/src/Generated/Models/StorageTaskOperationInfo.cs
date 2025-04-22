@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <param name="onSuccess"> Action to be taken when the operation is successful for a object. </param>
         /// <param name="onFailure"> Action to be taken when the operation fails for a object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskOperationInfo(StorageTaskOperationName name, IDictionary<string, string> parameters, OnSuccessAction? onSuccess, OnFailureAction? onFailure, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageTaskOperationInfo(StorageTaskOperationName name, IDictionary<string, string> parameters, OnSuccess? onSuccess, OnFailure? onFailure, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Parameters = parameters;
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <summary> Key-value parameters for the operation. </summary>
         public IDictionary<string, string> Parameters { get; }
         /// <summary> Action to be taken when the operation is successful for a object. </summary>
-        public OnSuccessAction? OnSuccess { get; set; }
+        public OnSuccess? OnSuccess { get; set; }
         /// <summary> Action to be taken when the operation fails for a object. </summary>
-        public OnFailureAction? OnFailure { get; set; }
+        public OnFailure? OnFailure { get; set; }
     }
 }

@@ -53,16 +53,21 @@ namespace Azure.ResourceManager.StorageActions
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskData"/>. </summary>
         /// <param name="location"> The location. </param>
+        /// <param name="enabled"> Storage Task is enabled when set to true and disabled when set to false. </param>
+        /// <param name="description"> Text that describes the purpose of the storage task. </param>
+        /// <param name="action"> The storage task action that is executed. </param>
         /// <param name="identity"> The managed service identity of the resource. </param>
-        /// <param name="properties"> Properties of the storage task. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="identity"/> or <paramref name="properties"/> is null. </exception>
-        public StorageTaskData(AzureLocation location, ManagedServiceIdentity identity, StorageTaskProperties properties) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="description"/>, <paramref name="action"/> or <paramref name="identity"/> is null. </exception>
+        public StorageTaskData(AzureLocation location, bool enabled, string description, StorageTaskAction action, ManagedServiceIdentity identity) : base(location)
         {
+            Argument.AssertNotNull(description, nameof(description));
+            Argument.AssertNotNull(action, nameof(action));
             Argument.AssertNotNull(identity, nameof(identity));
-            Argument.AssertNotNull(properties, nameof(properties));
 
+            Enabled = enabled;
+            Description = description;
+            Action = action;
             Identity = identity;
-            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskData"/>. </summary>
@@ -72,13 +77,23 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="taskVersion"> Storage task version. </param>
+        /// <param name="enabled"> Storage Task is enabled when set to true and disabled when set to false. </param>
+        /// <param name="description"> Text that describes the purpose of the storage task. </param>
+        /// <param name="action"> The storage task action that is executed. </param>
+        /// <param name="provisioningState"> Represents the provisioning state of the storage task. </param>
+        /// <param name="creationTimeInUtc"> The creation date and time of the storage task in UTC. </param>
         /// <param name="identity"> The managed service identity of the resource. </param>
-        /// <param name="properties"> Properties of the storage task. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, StorageTaskProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal StorageTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, long? taskVersion, bool enabled, string description, StorageTaskAction action, ProvisioningState? provisioningState, DateTimeOffset? creationTimeInUtc, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            TaskVersion = taskVersion;
+            Enabled = enabled;
+            Description = description;
+            Action = action;
+            ProvisioningState = provisioningState;
+            CreationTimeInUtc = creationTimeInUtc;
             Identity = identity;
-            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -87,9 +102,19 @@ namespace Azure.ResourceManager.StorageActions
         {
         }
 
+        /// <summary> Storage task version. </summary>
+        public long? TaskVersion { get; }
+        /// <summary> Storage Task is enabled when set to true and disabled when set to false. </summary>
+        public bool Enabled { get; set; }
+        /// <summary> Text that describes the purpose of the storage task. </summary>
+        public string Description { get; set; }
+        /// <summary> The storage task action that is executed. </summary>
+        public StorageTaskAction Action { get; set; }
+        /// <summary> Represents the provisioning state of the storage task. </summary>
+        public ProvisioningState? ProvisioningState { get; }
+        /// <summary> The creation date and time of the storage task in UTC. </summary>
+        public DateTimeOffset? CreationTimeInUtc { get; }
         /// <summary> The managed service identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Properties of the storage task. </summary>
-        public StorageTaskProperties Properties { get; set; }
     }
 }
