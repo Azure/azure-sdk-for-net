@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> The OpenAIPageableListOfAgentThread_object. </summary>
-    public readonly partial struct OpenAIPageableListOfAgentThreadObject : IEquatable<OpenAIPageableListOfAgentThreadObject>
+    internal readonly partial struct OpenAIPageableListOfAgentThreadObject : IEquatable<OpenAIPageableListOfAgentThreadObject>
     {
         private readonly string _value;
 

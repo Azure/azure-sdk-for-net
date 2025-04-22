@@ -4,7 +4,12 @@
 
 ### Features Added
 
+- Updated Microsoft.IoTfirmwareDefense API version to `2025-04-01-preview`
+- Added new get operations for fetching workspace usage metrics
+
 ### Breaking Changes
+
+- Renamed models as per previous API/SDK review instructions to align with standard naming conventions
 
 ### Bugs Fixed
 
