@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace SpecialWords._Models
+namespace SpecialWords._ModelProperties
 {
     public partial class SameAsModel
     {

@@ -590,10 +590,10 @@
 # ServiceOwners:                                                   @Tanmayeekamath
 
 # PRLabel: %Load Test Service
-/sdk/loadtestservice/                                              @abranj1219 @ninallam @christothes
+/sdk/loadtestservice/                                              @prativen @mitsha-microsoft @ninallam
 
 # ServiceLabel: %Load Test Service
-# ServiceOwners:                                                   @abranj1219 @ninallam
+# ServiceOwners:                                                   @prativen @mitsha-microsoft @ninallam
 
 # ServiceLabel: %Logic App
 # ServiceOwners:                                                   @Azure/azure-logicapps-team
@@ -1116,6 +1116,7 @@
 
 # Add owners for emitter version changes
 /eng/http-client-csharp-emitter-package.json                       @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @nisha-bhatia
+/eng/http-client-csharp-emitter-package-lock.json                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @nisha-bhatia
 
 # ######## Code Generation ########
 
