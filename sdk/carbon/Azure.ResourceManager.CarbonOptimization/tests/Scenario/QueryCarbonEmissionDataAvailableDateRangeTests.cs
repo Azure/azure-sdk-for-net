@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Tests
     public class QueryCarbonEmissionDataAvailableDateRangeTests : CarbonOptimizationManagementTestBase
     {
         public QueryCarbonEmissionDataAvailableDateRangeTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)
         {
         }
 

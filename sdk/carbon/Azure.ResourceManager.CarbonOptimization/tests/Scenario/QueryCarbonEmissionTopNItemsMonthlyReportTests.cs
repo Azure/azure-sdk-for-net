@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Tests
 {
     public class QueryCarbonEmissionTopNItemsMonthlyReportTests : CarbonOptimizationManagementTestBase
     {
-        public QueryCarbonEmissionTopNItemsMonthlyReportTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public QueryCarbonEmissionTopNItemsMonthlyReportTests(bool isAsync) : base(isAsync)
         {
         }
 
