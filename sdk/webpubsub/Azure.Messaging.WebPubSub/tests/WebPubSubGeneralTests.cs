@@ -80,7 +80,7 @@ namespace Azure.Rest.WebPubSub.Tests
             Assert.AreEqual(expectedPageCount, actualPageCount);
             Assert.AreEqual(expectedTotalCount, actualConnectionCount);
 
-            if (TestEnvironment.Mode == RecordedTestMode.Live)
+            if (TestEnvironment.Mode != RecordedTestMode.Playback)
             {
                 foreach (ClientWebSocket client in clients)
                 {
@@ -127,7 +127,7 @@ namespace Azure.Rest.WebPubSub.Tests
             List<WebPubSubGroupMember> remainingConnectionsAfterFirstPage = await serviceClient.ListConnectionsInGroupAsync(groupName, continuationToken: firstContinuationToken).ToEnumerableAsync();
             Assert.AreEqual(totalCount - firstPageSize, remainingConnectionsAfterFirstPage.Count);
 
-            if (TestEnvironment.Mode == RecordedTestMode.Live)
+            if (TestEnvironment.Mode != RecordedTestMode.Playback)
             {
                 foreach (ClientWebSocket client in clients)
                 {
