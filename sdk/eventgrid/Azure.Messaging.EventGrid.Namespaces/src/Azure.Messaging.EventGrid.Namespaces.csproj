@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Compile Include="$(AzureEventGridSharedSources)CloudEventRequestContent.cs" LinkBase="Shared/EventGrid" />
+    <Compile Include="$(AzureEventGridSharedSources)CloudEventsRequestContent.cs" LinkBase="Shared/EventGrid" />
   </ItemGroup>
 
     <ItemGroup>

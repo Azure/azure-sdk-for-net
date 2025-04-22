@@ -12,17 +12,17 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.EventGrid
 {
-    internal class CloudEventRequestContent : RequestContent
+    internal class CloudEventsRequestContent : RequestContent
     {
-        private readonly CloudEvent _cloudEvent;
+        private readonly IEnumerable<CloudEvent> _cloudEvents;
         private const string TraceParentHeaderName = "traceparent";
         private const string TraceStateHeaderName = "tracestate";
         private readonly bool _isDistributedTracingEnabled;
         private RequestContent _data;
 
-        public CloudEventRequestContent(CloudEvent cloudEvent, bool isDistributedTracingEnabled)
+        public CloudEventsRequestContent(IEnumerable<CloudEvent> cloudEvents, bool isDistributedTracingEnabled)
         {
-            _cloudEvent = cloudEvent;
+            _cloudEvents = cloudEvents;
             _isDistributedTracingEnabled = isDistributedTracingEnabled;
         }
 
@@ -66,19 +66,21 @@ namespace Azure.Messaging.EventGrid
                     traceState = currentActivity.TraceStateString;
                 }
 
-                if (currentActivityId != null &&
-                            !_cloudEvent.ExtensionAttributes.ContainsKey(TraceParentHeaderName) &&
-                            !_cloudEvent.ExtensionAttributes.ContainsKey(TraceStateHeaderName))
+                foreach (CloudEvent cloudEvent in _cloudEvents)
                 {
-                    _cloudEvent.ExtensionAttributes.Add(TraceParentHeaderName, currentActivityId);
-                    if (traceState != null)
+                    if (currentActivityId != null &&
+                            !cloudEvent.ExtensionAttributes.ContainsKey(TraceParentHeaderName) &&
+                            !cloudEvent.ExtensionAttributes.ContainsKey(TraceStateHeaderName))
                     {
-                        _cloudEvent.ExtensionAttributes.Add(TraceStateHeaderName, traceState);
+                        cloudEvent.ExtensionAttributes.Add(TraceParentHeaderName, currentActivityId);
+                        if (traceState != null)
+                        {
+                            cloudEvent.ExtensionAttributes.Add(TraceStateHeaderName, traceState);
+                        }
                     }
                 }
             }
-
-            _data = RequestContent.Create(_cloudEvent);
+            _data = RequestContent.Create(_cloudEvents);
         }
     }
 }

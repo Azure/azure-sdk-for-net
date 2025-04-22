@@ -139,7 +139,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             scope.Start();
             try
             {
-                return await SendEventsAsync(_topicName, new CloudEventRequestContent(cloudEvents, _isDistributedTracingEnabled), context).ConfigureAwait(false);
+                return await SendEventsAsync(_topicName, new CloudEventsRequestContent(cloudEvents, _isDistributedTracingEnabled), context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -163,7 +163,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             scope.Start();
             try
             {
-                return SendEvents(_topicName, new CloudEventRequestContent(cloudEvents, _isDistributedTracingEnabled), context);
+                return SendEvents(_topicName, new CloudEventsRequestContent(cloudEvents, _isDistributedTracingEnabled), context);
             }
             catch (Exception e)
             {
