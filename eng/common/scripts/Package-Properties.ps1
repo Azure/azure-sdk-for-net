@@ -395,7 +395,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
                     $includedForValidation = ($filePath -like (Join-Path "$resolvedRelativePath" "*") -or $filePath -eq $resolvedRelativePath)
                     $shouldInclude = $shouldInclude -or $includedForValidation
                     if ($includedForValidation) {
-                        $pkg.IncludedForValidation = $true
+                        $pkg.IncludedForValidation = $false
                         break
                     }
                 }
@@ -435,7 +435,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
 
                     if ($soleCIYml -and $filePath.Replace("`\", "/").StartsWith($directory)) {
                         if (-not $shouldInclude) {
-                            $pkg.IncludedForValidation = $true
+                            $pkg.IncludedForValidation = $false
                             $shouldInclude = $true
                         }
                         break
