@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace BasicTypeSpec.Models
+namespace BasicTypeSpec
 {
     /// <summary> The ThingModel_optionalLiteralFloat. </summary>
     public readonly partial struct ThingModelOptionalLiteralFloat : IEquatable<ThingModelOptionalLiteralFloat>

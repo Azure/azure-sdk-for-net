@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace _Type.Property.Nullable.Models
+namespace _Type.Property.Nullable
 {
     public partial class StringProperty : IJsonModel<StringProperty>
     {

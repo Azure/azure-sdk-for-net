@@ -62,7 +62,7 @@ jobs:
           - "!SessionRecords"
         EnablePRGeneration: true
         PRMatrixSetting: ProjectNames
-        PRJobBatchSize: 20
+        PRJobBatchSize: 10
         AdditionalParameters:
           Artifacts: ${{ parameters.Artifacts }}
           TestPipeline: ${{ parameters.TestPipeline }}

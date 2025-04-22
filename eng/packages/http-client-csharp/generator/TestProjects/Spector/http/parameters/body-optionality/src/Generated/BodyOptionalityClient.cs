@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Parameters.BodyOptionality.Models;
 
 namespace Parameters.BodyOptionality
 {

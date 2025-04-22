@@ -5,11 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using OpenAI.Chat;
+using OpenAI.Embeddings;
 
 namespace Azure.Projects.AI;
 
@@ -21,6 +23,8 @@ public class ChatTools
     private readonly Dictionary<string, MethodInfo> _methods = [];
     private readonly Dictionary<string, Func<string, BinaryData, Task<BinaryData>>> _mcpMethods = [];
     private readonly List<ChatTool> _definitions = [];
+    private readonly EmbeddingClient? _client;
+    private readonly List<VectorbaseEntry> _entries = [];
 
     private List<McpClient> _mcpClients = [];
     private Dictionary<string, McpClient> _mcpClientsByEndpoint = [];
@@ -29,8 +33,9 @@ public class ChatTools
     /// <summary>
     /// Initializes a new instance of the <see cref="ChatTools"/> class.
     /// </summary>
-    public ChatTools()
+    public ChatTools(EmbeddingClient? embeddingClient = null)
     {
+        _client = embeddingClient;
     }
 
     /// <summary>
@@ -60,7 +65,7 @@ public class ChatTools
         _mcpClientsByEndpoint[serverEndpoint.AbsoluteUri] = client;
         await client.StartAsync().ConfigureAwait(false);
         BinaryData tools = await client.ListToolsAsync().ConfigureAwait(false);
-        Add(tools, client);
+        await Add(tools, client).ConfigureAwait(false);
         _mcpClients.Add(client);
     }
 
@@ -68,6 +73,11 @@ public class ChatTools
     /// Gets the tool definitions.
     /// </summary>
     public IList<ChatTool> Definitions => _definitions;
+
+    /// <summary>
+    /// Determines if the tools can be filtered using the EmbeddingsClient.
+    /// </summary>
+    public bool CanFilterTools => _client != null;
 
     /// <summary>
     /// Implicitly converts a <see cref="ChatTools"/> to <see cref="ChatCompletionOptions"/>.
@@ -90,7 +100,7 @@ public class ChatTools
     /// <param name="client">The McpClient.</param>
     /// <exception cref="ArgumentNullException">Thrown when toolDefinitions is null</exception>
     /// <exception cref="JsonException">Thrown when JSON parsing fails</exception>
-    internal void Add(BinaryData toolDefinitions, McpClient client)
+    internal async Task Add(BinaryData toolDefinitions, McpClient client)
     {
         using var document = JsonDocument.Parse(toolDefinitions);
         if (!document.RootElement.TryGetProperty("tools", out JsonElement toolsElement))
@@ -101,6 +111,8 @@ public class ChatTools
         var tools = toolsElement.EnumerateArray();
         // the replacement is to deal with OpenAI's tool name regex validation.
         var serverKey = client.ServerEndpoint.Host + client.ServerEndpoint.Port.ToString();
+
+        List<ChatTool> ToolsToVectorize = new();
 
         foreach (var tool in tools)
         {
@@ -119,9 +131,12 @@ public class ChatTools
                 BinaryData.FromString(inputSchema));
 
             _definitions.Add(chatTool);
+            ToolsToVectorize.Add(chatTool);
 
             _mcpMethods[name] = client.CallToolAsync;
         }
+
+        await AddToolsToVectorBaseAsync(ToolsToVectorize).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -207,12 +222,12 @@ public class ChatTools
     {
         if (_mcpMethods.TryGetValue(call.FunctionName, out Func<string, BinaryData, Task<BinaryData>>? method))
         {
-            #if !NETSTANDARD2_0
-                        var actualFunctionName = call.FunctionName.Split(_mcpToolSeparator, 2)[1];
-            #else
+#if !NETSTANDARD2_0
+            var actualFunctionName = call.FunctionName.Split(_mcpToolSeparator, 2)[1];
+#else
                         var index = call.FunctionName.IndexOf(_mcpToolSeparator);
                         var actualFunctionName = call.FunctionName.Substring(index + _mcpToolSeparator.Length);
-            #endif
+#endif
             var result = await method(actualFunctionName, call.FunctionArguments).ConfigureAwait(false);
             return result.ToString();
         }
@@ -282,6 +297,36 @@ public class ChatTools
             options.Tools.Add(tool);
         }
         return options;
+    }
+
+    /// <summary>
+    /// Converts the <see cref="ChatTools"/> to a <see cref="ChatCompletionOptions"/> using the current prompt to filter the related tools via embeddings.
+    /// </summary>
+    /// <param name="prompt">The prompt to use for filtering the related tools.</param>
+    /// <param name="options">Optional options to refine how the related tools are found.</param>
+    /// <returns></returns>
+    public ChatCompletionOptions ToOptions(string prompt, ToolFindOptions? options = null)
+    {
+        if (!CanFilterTools)
+        {
+            return ToOptions();
+        }
+
+        ChatCompletionOptions completionOptions = new();
+        var related = Find(prompt, options ?? new ToolFindOptions { MaxEntries = 5 });
+        foreach (VectorbaseEntry entry in related)
+        {
+            ChatTool tool = ParseToolDefinition(entry.Data);
+            completionOptions.Tools.Add(tool);
+        }
+        // TODO: Add this to logging when we have a logger.
+        // Uncomment the following lines to see the related tools found.
+        // Console.WriteLine($"Found {related.Count()} related tools for prompt '{prompt}'.");
+        // foreach (ChatTool tool in completionOptions.Tools)
+        // {
+        //     Console.WriteLine($"\tTool: {tool.FunctionName}");
+        // }
+        return completionOptions;
     }
 
     private static string MethodInfoToDescription(MethodInfo function)
@@ -372,5 +417,113 @@ public class ChatTools
         writer.Flush();
         stream.Position = 0;
         return BinaryData.FromStream(stream);
+    }
+
+    private static BinaryData SerializeChatTool(ChatTool tool)
+    {
+        using var stream = new MemoryStream();
+        using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = true });
+
+        writer.WriteStartObject();
+
+        writer.WriteString("name", tool.FunctionName);
+        writer.WriteString("description", tool.FunctionDescription);
+
+        // Write the inputSchema by parsing the existing BinaryData
+        writer.WritePropertyName("inputSchema");
+        using (var inputSchemaDoc = JsonDocument.Parse(tool.FunctionParameters))
+        {
+            inputSchemaDoc.RootElement.WriteTo(writer);
+        }
+
+        writer.WriteEndObject();
+        writer.Flush();
+        stream.Position = 0;
+
+        return BinaryData.FromStream(stream);
+    }
+
+    private ChatTool ParseToolDefinition(BinaryData toolDefinition)
+    {
+        using var document = JsonDocument.Parse(toolDefinition);
+        var root = document.RootElement;
+
+        var name = root.GetProperty("name").GetString()!;
+        var description = root.GetProperty("description").GetString()!;
+        var inputSchema = BinaryData.FromString(root.GetProperty("inputSchema").GetRawText());
+
+        return ChatTool.CreateFunctionTool(
+            name,
+            description,
+            inputSchema);
+    }
+
+    private async Task AddToolsToVectorBaseAsync(List<ChatTool> tools)
+    {
+        if (!CanFilterTools)
+            return;
+
+        OpenAIEmbeddingCollection embeddings = await _client!.GenerateEmbeddingsAsync(tools.Select(t => t.FunctionDescription)).ConfigureAwait(false);
+
+        Console.WriteLine($"Adding {embeddings.Count} tools to vectorbase.");
+
+        foreach (OpenAIEmbedding embedding in embeddings)
+        {
+            ReadOnlyMemory<float> vector = embedding.ToFloats();
+            ChatTool item = tools[embedding.Index];
+            BinaryData toolDefinition = SerializeChatTool(item);
+            _entries.Add(new VectorbaseEntry(vector, toolDefinition));
+        }
+    }
+
+    internal IEnumerable<VectorbaseEntry> Find(string prompt, ToolFindOptions options)
+    {
+        ReadOnlyMemory<float> vector = GetEmbedding(prompt);
+        lock (_entries)
+        {
+            var distances = new List<(float Distance, int Index)>(_entries.Count);
+            for (int index = 0; index < _entries.Count; index++)
+            {
+                VectorbaseEntry entry = _entries[index];
+                ReadOnlyMemory<float> dbVector = entry.Vector;
+                float distance = 1.0f - EmbeddingsStore.CosineSimilarity(dbVector.Span, vector.Span);
+                distances.Add((distance, index));
+            }
+            distances.Sort(((float D1, int I1) v1, (float D2, int I2) v2) => v1.D1.CompareTo(v2.D2));
+
+            List<VectorbaseEntry> results = new(options.MaxEntries);
+            int top = Math.Min(options.MaxEntries, distances.Count);
+            for (int i = 0; i < top; i++)
+            {
+                float distance = distances[i].Distance;
+                if (distance > options.Threshold)
+                    break;
+                int index = distances[i].Index;
+                results.Add(_entries[index]);
+            }
+            return results;
+        }
+    }
+
+    private ReadOnlyMemory<float> GetEmbedding(string fact)
+    {
+        OpenAIEmbedding embedding = _client!.GenerateEmbedding(fact);
+        return embedding.ToFloats();
+    }
+
+    /// <summary>
+    /// The options for finding entries in the vectorbase.
+    /// </summary>
+    public class ToolFindOptions
+    {
+        /// <summary>
+        /// The maximum number of entries to return.
+        /// </summary>
+        public int MaxEntries { get; set; } = 3;
+
+        /// <summary>
+        /// The threshold for the cosine similarity.
+        /// </summary>
+        public float Threshold { get; set; } = 0.29f;
     }
 }
