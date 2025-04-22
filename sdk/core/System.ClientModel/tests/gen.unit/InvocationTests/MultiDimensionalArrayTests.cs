@@ -14,24 +14,32 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         protected override string InitializeObject => "new {0} {{ }}";
 
-        private void AssertMultiDimensionalArray(string type, Action<TypeRef> modelValidator, Dictionary<string, TypeBuilderSpec> dict)
+        private void AssertMultiDimensionalArray(ModelExpectation expectation, bool invocationDuped, Dictionary<string, TypeBuilderSpec> dict)
         {
-            Assert.IsTrue(dict.ContainsKey($"{type}[,]"));
-            var arrayJsonModel = dict[$"{type}[,]"];
-            Assert.AreEqual($"{type}[,]", arrayJsonModel.Type.Name);
-            if (type == JsonModel)
-            {
-                Assert.AreEqual("TestProject", arrayJsonModel.Type.Namespace);
-            }
-            else
-            {
-                Assert.AreEqual("System.ClientModel.Tests.Client.Models.ResourceManager.Compute", arrayJsonModel.Type.Namespace);
-            }
-            Assert.IsNotNull(arrayJsonModel.Type.ItemType);
-            Assert.AreEqual(TypeBuilderKind.MultiDimensionalArray, arrayJsonModel.Kind);
+            TypeBuilderSpec arrayModel = ValidateBuilder(expectation.Namespace, expectation, dict);
 
-            var genericArgument = arrayJsonModel.Type.ItemType!;
-            modelValidator(genericArgument);
+            if (invocationDuped)
+            {
+                var dupedArrayModel = ValidateBuilder("TestProject1", expectation, dict);
+            }
+
+            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}", out var itemModel));
+            Assert.AreEqual(itemModel!.Type, arrayModel.Type.ItemType);
+            expectation.ModelValidation(itemModel);
+        }
+
+        private static TypeBuilderSpec ValidateBuilder(string lookupName, ModelExpectation expectation, Dictionary<string, TypeBuilderSpec> dict)
+        {
+            Assert.IsTrue(dict.TryGetValue($"{lookupName}.{expectation.TypeName}[,]", out var arrayModel));
+            Assert.AreEqual($"{expectation.TypeName}[,]", arrayModel!.Type.Name);
+            Assert.AreEqual(lookupName, arrayModel.Type.Namespace);
+            Assert.IsNotNull(arrayModel.Type.ItemType);
+            Assert.AreEqual(TypeBuilderKind.MultiDimensionalArray, arrayModel.Kind);
+            Assert.AreEqual(2, arrayModel.Type.ArrayRank);
+            Assert.AreEqual($"{expectation.TypeName}_Array_d1_", arrayModel.Type.TypeCaseName);
+            Assert.AreEqual($"{char.ToLower(expectation.TypeName[0])}{expectation.TypeName.Substring(1)}_Array_d1_", arrayModel.Type.CamelCaseName);
+            Assert.AreEqual(expectation.Context, arrayModel.ContextType);
+            return arrayModel;
         }
     }
 }

@@ -1,5 +1,17 @@
 # Release History
 
+## 7.20.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Fixed a bug where the custom port associated with a local emulator endpoint was reset by the `ServiceBusAdministrationClient`.
+
+### Other Changes
+
 ## 7.19.0 (2025-04-08)
 
 ### Features Added

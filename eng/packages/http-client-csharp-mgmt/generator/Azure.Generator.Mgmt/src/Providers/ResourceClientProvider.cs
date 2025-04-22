@@ -31,29 +31,29 @@ namespace Azure.Generator.Management.Providers
     /// </summary>
     internal class ResourceClientProvider : TypeProvider
     {
-        private IReadOnlyCollection<InputOperation> _resourceOperations;
-        private ClientProvider _clientProvider;
+        private IReadOnlyCollection<InputServiceMethod> _resourceServiceMethods;
         private readonly IReadOnlyList<string> _contextualParameters;
         private bool _isSingleton;
 
         private FieldProvider _dataField;
-        private FieldProvider _clientDiagonosticsField;
-        private FieldProvider _restClientField;
         private FieldProvider _resourcetypeField;
+        protected ClientProvider _clientProvider;
+        protected FieldProvider _clientDiagonosticsField;
+        protected FieldProvider _restClientField;
 
         public ResourceClientProvider(InputClient inputClient)
         {
             var resourceMetadata = inputClient.Decorators.Single(d => d.Name.Equals(KnownDecorators.ResourceMetadata));
             var codeModelId = resourceMetadata.Arguments?[KnownDecorators.ResourceModel].ToObjectFromJson<string>()!;
-            _isSingleton = _isSingleton = resourceMetadata.Arguments?.TryGetValue("isSingleton", out var isSingleton) == true ? isSingleton.ToObjectFromJson<string>() == "true" : false;
+            _isSingleton = resourceMetadata.Arguments?.TryGetValue("isSingleton", out var isSingleton) == true ? isSingleton.ToObjectFromJson<string>() == "true" : false;
             var resourceType = resourceMetadata.Arguments?[KnownDecorators.ResourceType].ToObjectFromJson<string>()!;
             _resourcetypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resourceType));
             var resourceModel = ManagementClientGenerator.Instance.InputLibrary.GetModelByCrossLanguageDefinitionId(codeModelId)!;
             SpecName = resourceModel.Name;
 
             // We should be able to assume that all operations in the resource client are for the same resource
-            var requestPath = new RequestPath(inputClient.Operations.First().Path);
-            _resourceOperations = inputClient.Operations;
+            var requestPath = new RequestPath(inputClient.Methods.First().Operation.Path);
+            _resourceServiceMethods = inputClient.Methods;
             ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(resourceModel)!;
             _clientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
 
@@ -144,7 +144,7 @@ namespace Azure.Generator.Management.Providers
             return new ConstructorProvider(signature, bodyStatements, this);
         }
 
-        private ConstructorProvider BuildInitializationConstructor()
+        protected ConstructorProvider BuildInitializationConstructor()
         {
             var idParameter = new ParameterProvider("id", $"The identifier of the resource that is the target of operations.", typeof(ResourceIdentifier));
             var parameters = new List<ParameterProvider>
@@ -164,7 +164,7 @@ namespace Azure.Generator.Management.Providers
 
             var bodyStatements = new MethodBodyStatement[]
             {
-                _clientDiagonosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourcetypeField.Property(nameof(ResourceType.Namespace)), This.Property("Diagnostics"))).Terminate(),
+                _clientDiagonosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), ResourceTypeExpression.Property(nameof(ResourceType.Namespace)), This.Property("Diagnostics"))).Terminate(),
                 TryGetApiVersion(out var apiVersion).Terminate(),
                 _restClientField.Assign(New.Instance(_clientProvider.Type, This.Property("Pipeline"), This.Property("Endpoint"), apiVersion)).Terminate(),
                 Static(Type).Invoke(ValidateResourceIdMethodName, idParameter).Terminate()
@@ -174,7 +174,7 @@ namespace Azure.Generator.Management.Providers
         }
 
         private const string ValidateResourceIdMethodName = "ValidateResourceId";
-        private MethodProvider BuildValidateResourceIdMethod()
+        protected MethodProvider BuildValidateResourceIdMethod()
         {
             var idParameter = new ParameterProvider("id", $"", typeof(ResourceIdentifier));
             var signature = new MethodSignature(
@@ -187,48 +187,52 @@ namespace Azure.Generator.Management.Providers
                     idParameter
                 ],
                 [new AttributeStatement(typeof(ConditionalAttribute), Literal("DEBUG"))]);
-            var bodyStatements = new IfStatement(idParameter.NotEqual(_resourcetypeField))
+            var bodyStatements = new IfStatement(idParameter.NotEqual(ExpectedResourceTypeForValidation))
             {
-                Throw(New.ArgumentException(idParameter, StringSnippets.Format(Literal("Invalid resource type {0} expected {1}"), idParameter.Property(nameof(ResourceIdentifier.ResourceType)), _resourcetypeField), false))
+                Throw(New.ArgumentException(idParameter, StringSnippets.Format(Literal("Invalid resource type {0} expected {1}"), idParameter.Property(nameof(ResourceIdentifier.ResourceType)), ResourceTypeExpression), false))
             };
             return new MethodProvider(signature, bodyStatements, this);
         }
+
+        protected virtual ValueExpression ResourceTypeExpression => _resourcetypeField;
+
+        protected virtual ValueExpression ExpectedResourceTypeForValidation => _resourcetypeField;
 
         protected override CSharpType[] BuildImplements() => [typeof(ArmResource)];
 
         protected override MethodProvider[] BuildMethods()
         {
             var operationMethods = new List<MethodProvider>();
-            foreach (var operation in _resourceOperations)
+            foreach (var method in _resourceServiceMethods)
             {
-                var convenienceMethod = GetCorrespondingConvenienceMethod(operation, false);
+                var convenienceMethod = GetCorrespondingConvenienceMethod(method.Operation, false);
                 // exclude the List operations for resource, they will be in ResourceCollection
                 var returnType = convenienceMethod.Signature.ReturnType!;
-                if ((returnType.IsFrameworkType && returnType.IsList) || operation.Paging?.ItemPropertySegments.Any() == true)
+                if ((returnType.IsFrameworkType && returnType.IsList) || (method is InputPagingServiceMethod pagingMethod && pagingMethod.PagingMetadata.ItemPropertySegments.Any() == true))
                 {
                     continue;
                 }
 
                 // only update for non-singleton resource
-                var isUpdateOnly = operation.HttpMethod == HttpMethod.Put.ToString() && !_isSingleton;
-                operationMethods.Add(BuildOperationMethod(operation, convenienceMethod, false, isUpdateOnly));
-                var asyncConvenienceMethod = GetCorrespondingConvenienceMethod(operation, true);
-                operationMethods.Add(BuildOperationMethod(operation, asyncConvenienceMethod, true, isUpdateOnly));
+                var isUpdateOnly = method.Operation.HttpMethod == HttpMethod.Put.ToString() && !_isSingleton;
+                operationMethods.Add(BuildOperationMethod(method, convenienceMethod, false, isUpdateOnly));
+                var asyncConvenienceMethod = GetCorrespondingConvenienceMethod(method.Operation, true);
+                operationMethods.Add(BuildOperationMethod(method, asyncConvenienceMethod, true, isUpdateOnly));
             }
 
             return [BuildValidateResourceIdMethod(), .. operationMethods];
         }
 
-        private MethodProvider BuildOperationMethod(InputOperation operation, MethodProvider convenienceMethod, bool isAsync, bool isUpdateOnly = false)
+        private MethodProvider BuildOperationMethod(InputServiceMethod method, MethodProvider convenienceMethod, bool isAsync, bool isUpdateOnly = false)
         {
-            var isLongRunning = operation.LongRunning != null;
+            var operation = method.Operation;
             var signature = new MethodSignature(
                 isUpdateOnly ? (isAsync ? "UpdateAsync" : "Update") : convenienceMethod.Signature.Name,
                 isUpdateOnly ? $"Update a {SpecName}" : convenienceMethod.Signature.Description,
                 convenienceMethod.Signature.Modifiers,
-                GetOperationMethodReturnType(isAsync, isLongRunning, operation.Responses, out var isGeneric),
+                GetOperationMethodReturnType(isAsync, method is InputLongRunningServiceMethod || method is InputLongRunningPagingServiceMethod, operation.Responses, out var isGeneric),
                 convenienceMethod.Signature.ReturnDescription,
-                GetOperationMethodParameters(convenienceMethod, isLongRunning),
+                GetOperationMethodParameters(convenienceMethod, method is InputLongRunningServiceMethod),
                 convenienceMethod.Signature.Attributes,
                 convenienceMethod.Signature.GenericArguments,
                 convenienceMethod.Signature.GenericParameterConstraints,
@@ -240,13 +244,13 @@ namespace Azure.Generator.Management.Providers
                     UsingDeclare("scope", typeof(DiagnosticScope), _clientDiagonosticsField.Invoke(nameof(ClientDiagnostics.CreateScope), [Literal($"{Type.Namespace}.{operation.Name}")]), out var scopeVariable),
                     scopeVariable.Invoke(nameof(DiagnosticScope.Start)).Terminate(),
                     new TryCatchFinallyStatement
-                    (BuildOperationMethodTryStatement(convenienceMethod, isAsync, isLongRunning, operation, isGeneric), Catch(Declare<Exception>("e", out var exceptionVarialble), [scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVarialble).Terminate(), Throw()]))
+                    (BuildOperationMethodTryStatement(convenienceMethod, isAsync, method, isGeneric), Catch(Declare<Exception>("e", out var exceptionVarialble), [scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVarialble).Terminate(), Throw()]))
                 };
 
             return new MethodProvider(signature, bodyStatements, this);
         }
 
-        private IReadOnlyList<ParameterProvider> GetOperationMethodParameters(MethodProvider convenienceMethod, bool isLongRunning)
+        protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters(MethodProvider convenienceMethod, bool isLongRunning)
         {
             var result = new List<ParameterProvider>();
             if (isLongRunning)
@@ -263,7 +267,7 @@ namespace Azure.Generator.Management.Providers
             return result;
         }
 
-        private CSharpType GetOperationMethodReturnType(bool isAsync, bool isLongRunningOperation, IReadOnlyList<InputOperationResponse> operationResponses, out bool isGeneric)
+        protected CSharpType GetOperationMethodReturnType(bool isAsync, bool isLongRunningOperation, IReadOnlyList<InputOperationResponse> operationResponses, out bool isGeneric)
         {
             isGeneric = false;
             if (isLongRunningOperation)
@@ -283,8 +287,9 @@ namespace Azure.Generator.Management.Providers
             return isAsync ? new CSharpType(typeof(Task<>), new CSharpType(typeof(Response<>), Type)) : new CSharpType(typeof(Response<>), Type);
         }
 
-        private TryStatement BuildOperationMethodTryStatement(MethodProvider convenienceMethod, bool isAsync, bool isLongRunning, InputOperation operation, bool isGeneric)
+        private TryStatement BuildOperationMethodTryStatement(MethodProvider convenienceMethod, bool isAsync, InputServiceMethod method, bool isGeneric)
         {
+            var operation = method.Operation;
             var cancellationToken = convenienceMethod.Signature.Parameters.Single(p => p.Type.Equals(typeof(CancellationToken)));
             var tryStatement = new TryStatement();
             var contextDeclaration = Declare("context", typeof(RequestContext), New.Instance(typeof(RequestContext), new Dictionary<ValueExpression, ValueExpression> { { Identifier(nameof(RequestContext.CancellationToken)), cancellationToken } }), out var contextVariable);
@@ -307,10 +312,20 @@ namespace Azure.Generator.Management.Providers
                 tryStatement.Add(responseDeclaration);
             }
 
-            if (isLongRunning)
+            if (method is InputLongRunningServiceMethod || method is InputLongRunningPagingServiceMethod)
             {
+                OperationFinalStateVia finalStateVia = OperationFinalStateVia.Location;
+                if (method is InputLongRunningServiceMethod lroMethod)
+                {
+                    finalStateVia = (OperationFinalStateVia)lroMethod.LongRunningServiceMetadata.FinalStateVia;
+                }
+                else if (method is InputLongRunningPagingServiceMethod lroPagingMethod)
+                {
+                    finalStateVia = (OperationFinalStateVia)lroPagingMethod.LongRunningServiceMetadata.FinalStateVia;
+                }
+
                 var armOperationType = !isGeneric ? ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type : ManagementClientGenerator.Instance.OutputLibrary.GenericArmOperation.Type.MakeGenericType([Type]);
-                ValueExpression[] armOperationArguments = [_clientDiagonosticsField, This.Property("Pipeline"), messageVariable.Property("Request"), isGeneric ? responseVariable.Invoke("GetRawResponse") : responseVariable, Static(typeof(OperationFinalStateVia)).Property(((OperationFinalStateVia)operation.LongRunning!.FinalStateVia).ToString())];
+                ValueExpression[] armOperationArguments = [_clientDiagonosticsField, This.Property("Pipeline"), messageVariable.Property("Request"), isGeneric ? responseVariable.Invoke("GetRawResponse") : responseVariable, Static(typeof(OperationFinalStateVia)).Property(finalStateVia.ToString())];
                 var operationDeclaration = Declare("operation", armOperationType, New.Instance(armOperationType, isGeneric ? [New.Instance(Source.Type, This.Property("Client")), .. armOperationArguments] : armOperationArguments), out var operationVariable);
 
                 tryStatement.Add(operationDeclaration);
@@ -372,7 +387,7 @@ namespace Azure.Generator.Management.Providers
         }
 
         // TODO: get clean name of operation Name
-        private MethodProvider GetCorrespondingConvenienceMethod(InputOperation operation, bool isAsync)
+        protected MethodProvider GetCorrespondingConvenienceMethod(InputOperation operation, bool isAsync)
             => _clientProvider.CanonicalView.Methods.Single(m => m.Signature.Name.Equals(isAsync ? $"{operation.Name}Async" : operation.Name, StringComparison.OrdinalIgnoreCase) && m.Signature.Parameters.Any(p => p.Type.Equals(typeof(CancellationToken))));
 
         private MethodProvider GetCorrespondingRequestMethod(InputOperation operation)
@@ -382,7 +397,7 @@ namespace Azure.Generator.Management.Providers
         {
             var apiVersionDeclaration = new VariableExpression(typeof(string), $"{SpecName.ToLower()}ApiVersion");
             apiVersion = apiVersionDeclaration.As<string>();
-            var invocation = new InvokeMethodExpression(This, "TryGetApiVersion", [_resourcetypeField, new DeclarationExpression(apiVersionDeclaration, true)]);
+            var invocation = new InvokeMethodExpression(This, "TryGetApiVersion", [ResourceTypeExpression, new DeclarationExpression(apiVersionDeclaration, true)]);
             return invocation.As<bool>();
         }
     }

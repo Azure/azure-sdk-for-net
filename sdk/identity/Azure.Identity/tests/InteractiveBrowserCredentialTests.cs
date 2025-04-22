@@ -310,6 +310,29 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public void FailsWithCredentialUnavailableExceptionWhenChainedInBrokerMode()
+        {
+            bool beforeBuildClientInvoked = false;
+
+            var cancelSource = new CancellationTokenSource(2000);
+
+            var options = new ExtendedInteractiveBrowserCredentialOptions(builder =>
+            {
+                Assert.NotNull(builder);
+                beforeBuildClientInvoked = true;
+                cancelSource.Cancel();
+            });
+            options.UseDefaultBrokerAccount = true;
+            options.IsChainedCredential = true;
+
+            var credential = InstrumentClient(new InteractiveBrowserCredential(options));
+
+            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token));
+
+            Assert.True(beforeBuildClientInvoked);
+        }
+
+        [Test]
         public async Task BrowserCustomizationsHtmlMessage([Values(null, "<p> Login Successfully.</p>")] string htmlMessageSuccess, [Values(null, "<p> An error occured: {0}. Details {1}</p>")] string htmlMessageError)
         {
             var mockMsalClient = new MockMsalPublicClient

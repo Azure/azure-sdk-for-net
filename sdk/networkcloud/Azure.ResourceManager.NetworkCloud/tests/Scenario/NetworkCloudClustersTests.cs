@@ -198,10 +198,22 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             catch (Exception ex)
             {
                 // special case: if the cluster was never deployed, version update (CUVA) is not allowed
-                // once the API bug is resolved this can be used. Until then, will compare 2 strings instead
-                // StringAssert.Contains($"cluster conditions do not pass validation for cluster {clusterName}: ClusterDeployedCondition is not True", ex.Message);
-                StringAssert.Contains("cluster conditions do not pass validation for cluster", ex.Message);
-                StringAssert.Contains("ClusterDeployedCondition is not True", ex.Message);
+                StringAssert.Contains($"cluster conditions do not pass validation for cluster {clusterName}: ClusterDeployedCondition is not True", ex.Message);
+            }
+
+             // Continue Cluster Update Version
+            try
+            {
+                ClusterContinueUpdateVersionContent continueUpdateContent = new ClusterContinueUpdateVersionContent
+                {
+                    MachineGroupTargetingMode = ClusterContinueUpdateVersionMachineGroupTargetingMode.AlphaByRack
+                };
+                var updatedClusterResult = await clusterResource.ContinueUpdateVersionAsync(WaitUntil.Completed, continueUpdateContent);
+            }
+            catch (Exception ex)
+            {
+                // special case: if the cluster was never deployed, version update (CUVA) is not allowed
+                StringAssert.Contains($"cluster {clusterName} does not have suitable conditions to continue to update", ex.Message);
             }
 
             // Delete

@@ -36,27 +36,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
             if (Optional.IsDefined(Href))
             {
-                if (Href != null)
-                {
-                    writer.WritePropertyName("href"u8);
-                    writer.WriteStringValue(Href.AbsoluteUri);
-                }
-                else
-                {
-                    writer.WriteNull("href");
-                }
+                writer.WritePropertyName("href"u8);
+                writer.WriteStringValue(Href.AbsoluteUri);
             }
             if (Optional.IsDefined(Label))
             {
-                if (Label != null)
-                {
-                    writer.WritePropertyName("label"u8);
-                    writer.WriteStringValue(Label);
-                }
-                else
-                {
-                    writer.WriteNull("label");
-                }
+                writer.WritePropertyName("label"u8);
+                writer.WriteStringValue(Label);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +91,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        href = null;
                         continue;
                     }
                     href = new Uri(property.Value.GetString());
@@ -113,11 +98,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
                 if (property.NameEquals("label"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        label = null;
-                        continue;
-                    }
                     label = property.Value.GetString();
                     continue;
                 }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
@@ -17,6 +18,12 @@ namespace Azure.Storage.DataMovement
         /// For mocking.
         /// </summary>
         protected StorageResourceContainer() { }
+
+        /// <summary>
+        /// Properties of the Storage Resource Container.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected internal StorageResourceContainerProperties ResourceProperties { get; set; }
 
         /// <summary>
         /// Lists all the child storage resources in the path.
@@ -50,6 +57,26 @@ namespace Azure.Storage.DataMovement
         /// <returns></returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal abstract StorageResourceContainer GetChildStorageResourceContainer(string path);
+
+        /// <summary>
+        /// Get properties of the resource container.
+        ///
+        /// See <see cref="StorageResourceContainerProperties"/>.
+        /// </summary>
+        /// <returns>Returns the properties of the Storage Resource Container. See <see cref="StorageResourceContainerProperties"/></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected internal virtual Task<StorageResourceContainerProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+            => throw new NotImplementedException();
+
+        /// <summary>
+        /// Creates storage resource container using the source's properties if it does not already exists.
+        /// </summary>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected internal virtual Task CreateIfNotExistsAsync(
+            StorageResourceContainerProperties sourceProperties,
+            CancellationToken cancellationToken = default)
+            => CreateIfNotExistsAsync(cancellationToken);
 
         /// <summary>
         /// Storage Resource is a container.
