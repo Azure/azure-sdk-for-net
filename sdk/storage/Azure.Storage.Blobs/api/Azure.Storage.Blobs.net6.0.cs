@@ -1378,6 +1378,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Storage.Blobs.Models.BlobImmutabilityPolicy ImmutabilityPolicy { get { throw null; } set { } }
         public bool? LegalHold { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier? PremiumPageBlobAccessTier { get { throw null; } set { } }
         public long? SequenceNumber { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
     }
@@ -1449,6 +1450,33 @@ namespace Azure.Storage.Blobs.Models
     {
         Legacy = 0,
         Posix = 1,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PremiumPageBlobAccessTier : System.IEquatable<Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PremiumPageBlobAccessTier(string value) { throw null; }
+        public static Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier P10 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier P15 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier P20 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier P30 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier P4 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier P40 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier P50 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier P6 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier P60 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier P70 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier P80 { get { throw null; } }
+        public bool Equals(Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier left, Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier right) { throw null; }
+        public static implicit operator Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier (string value) { throw null; }
+        public static bool operator !=(Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier left, Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public enum PublicAccessType
     {
