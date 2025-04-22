@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Payload.JsonMergePatch.Models
+namespace Payload.JsonMergePatch
 {
     public partial class Resource : IJsonModel<Resource>
     {

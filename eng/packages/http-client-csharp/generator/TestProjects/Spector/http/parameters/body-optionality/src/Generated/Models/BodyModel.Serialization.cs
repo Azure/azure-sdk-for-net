@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Parameters.BodyOptionality.Models
+namespace Parameters.BodyOptionality
 {
     public partial class BodyModel : IJsonModel<BodyModel>
     {
