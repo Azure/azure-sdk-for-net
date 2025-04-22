@@ -34,22 +34,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ClusterRecoveryPointCollection"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ClusterRecoveryPointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
-        {
-            _clusterRecoveryPointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ClusterRecoveryPointResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ClusterRecoveryPointResource.ResourceType, out string clusterRecoveryPointApiVersion);
-            _clusterRecoveryPointRestClient = new ClusterRecoveryPointRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, clusterRecoveryPointApiVersion);
-            _clusterRecoveryPointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ClusterRecoveryPointResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ClusterRecoveryPointResource.ResourceType, out string clusterRecoveryPointApiVersion);
-            _clusterRecoveryPointRestClient = new ClusterRecoveryPointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, clusterRecoveryPointApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource.ResourceType)
@@ -144,66 +128,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// The list of cluster recovery points.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionClusters/{replicationProtectionClusterName}/recoveryPoints</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ClusterRecoveryPoints_ListByReplicationProtectionCluster</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ClusterRecoveryPointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ClusterRecoveryPointResource> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterRecoveryPointRestClient.CreateListByReplicationProtectionClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterRecoveryPointRestClient.CreateListByReplicationProtectionClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ClusterRecoveryPointResource(Client, ClusterRecoveryPointData.DeserializeClusterRecoveryPointData(e)), _clusterRecoveryPointClientDiagnostics, Pipeline, "ClusterRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// The list of cluster recovery points.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionClusters/{replicationProtectionClusterName}/recoveryPoints</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ClusterRecoveryPoints_ListByReplicationProtectionCluster</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ClusterRecoveryPointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ClusterRecoveryPointResource> GetAll(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterRecoveryPointRestClient.CreateListByReplicationProtectionClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterRecoveryPointRestClient.CreateListByReplicationProtectionClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ClusterRecoveryPointResource(Client, ClusterRecoveryPointData.DeserializeClusterRecoveryPointData(e)), _clusterRecoveryPointClientDiagnostics, Pipeline, "ClusterRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
