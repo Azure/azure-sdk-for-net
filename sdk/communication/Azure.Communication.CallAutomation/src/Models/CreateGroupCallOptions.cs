@@ -62,11 +62,6 @@ namespace Azure.Communication.CallAutomation
         public CallIntelligenceOptions CallIntelligenceOptions { get; set; }
 
         /// <summary>
-        /// The Custom Context which contains SIP and voip headers.
-        /// </summary>
-        public CustomCallingContext CustomCallingContext { get; }
-
-        /// <summary>
         /// Overrides default client source by a MicrosoftTeamsAppIdentifier type source.
         /// Required for creating call with Teams resource account ID.
         /// This is per-operation setting and does not change the client's default source.
