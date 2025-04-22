@@ -53,16 +53,16 @@ namespace Azure.ResourceManager.StorageActions
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The managed service identity of the resource. </param>
         /// <param name="properties"> Properties of the storage task. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="identity"/> or <paramref name="properties"/> is null. </exception>
-        public StorageTaskData(AzureLocation location, ManagedServiceIdentity identity, StorageTaskProperties properties) : base(location)
+        /// <param name="identity"> The managed service identity of the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> or <paramref name="identity"/> is null. </exception>
+        public StorageTaskData(AzureLocation location, StorageTaskProperties properties, ManagedServiceIdentity identity) : base(location)
         {
-            Argument.AssertNotNull(identity, nameof(identity));
             Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(identity, nameof(identity));
 
-            Identity = identity;
             Properties = properties;
+            Identity = identity;
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskData"/>. </summary>
@@ -72,13 +72,13 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The managed service identity of the resource. </param>
         /// <param name="properties"> Properties of the storage task. </param>
+        /// <param name="identity"> The managed service identity of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, StorageTaskProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal StorageTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StorageTaskProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Identity = identity;
             Properties = properties;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.StorageActions
         {
         }
 
-        /// <summary> The managed service identity of the resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Properties of the storage task. </summary>
         public StorageTaskProperties Properties { get; set; }
+        /// <summary> The managed service identity of the resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

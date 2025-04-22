@@ -16,6 +16,28 @@ namespace Azure.ResourceManager.StorageActions.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmStorageActionsModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.StorageTaskPreviewBlobProperties"/>. </summary>
+        /// <param name="name"> Name of test blob. </param>
+        /// <param name="properties"> properties key value pairs to be tested for a match against the provided condition. </param>
+        /// <param name="metadata"> metadata key value pairs to be tested for a match against the provided condition. </param>
+        /// <param name="tags"> tags key value pairs to be tested for a match against the provided condition. </param>
+        /// <param name="matchedBlock"> Represents the condition block name that matched blob properties. </param>
+        /// <returns> A new <see cref="Models.StorageTaskPreviewBlobProperties"/> instance for mocking. </returns>
+        public static StorageTaskPreviewBlobProperties StorageTaskPreviewBlobProperties(string name = null, IEnumerable<StorageTaskPreviewKeyValueProperties> properties = null, IEnumerable<StorageTaskPreviewKeyValueProperties> metadata = null, IEnumerable<StorageTaskPreviewKeyValueProperties> tags = null, MatchedBlockName? matchedBlock = null)
+        {
+            properties ??= new List<StorageTaskPreviewKeyValueProperties>();
+            metadata ??= new List<StorageTaskPreviewKeyValueProperties>();
+            tags ??= new List<StorageTaskPreviewKeyValueProperties>();
+
+            return new StorageTaskPreviewBlobProperties(
+                name,
+                properties?.ToList(),
+                metadata?.ToList(),
+                tags?.ToList(),
+                matchedBlock,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="StorageActions.StorageTaskData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -23,10 +45,10 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The managed service identity of the resource. </param>
         /// <param name="properties"> Properties of the storage task. </param>
+        /// <param name="identity"> The managed service identity of the resource. </param>
         /// <returns> A new <see cref="StorageActions.StorageTaskData"/> instance for mocking. </returns>
-        public static StorageTaskData StorageTaskData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, StorageTaskProperties properties = null)
+        public static StorageTaskData StorageTaskData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, StorageTaskProperties properties = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -37,8 +59,8 @@ namespace Azure.ResourceManager.StorageActions.Models
                 systemData,
                 tags,
                 location,
-                identity,
                 properties,
+                identity,
                 serializedAdditionalRawData: null);
         }
 
@@ -113,28 +135,6 @@ namespace Azure.ResourceManager.StorageActions.Models
                 taskId,
                 taskVersion,
                 runResult,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.StorageTaskPreviewBlobProperties"/>. </summary>
-        /// <param name="name"> Name of test blob. </param>
-        /// <param name="properties"> properties key value pairs to be tested for a match against the provided condition. </param>
-        /// <param name="metadata"> metadata key value pairs to be tested for a match against the provided condition. </param>
-        /// <param name="tags"> tags key value pairs to be tested for a match against the provided condition. </param>
-        /// <param name="matchedBlock"> Represents the condition block name that matched blob properties. </param>
-        /// <returns> A new <see cref="Models.StorageTaskPreviewBlobProperties"/> instance for mocking. </returns>
-        public static StorageTaskPreviewBlobProperties StorageTaskPreviewBlobProperties(string name = null, IEnumerable<StorageTaskPreviewKeyValueProperties> properties = null, IEnumerable<StorageTaskPreviewKeyValueProperties> metadata = null, IEnumerable<StorageTaskPreviewKeyValueProperties> tags = null, MatchedBlockName? matchedBlock = null)
-        {
-            properties ??= new List<StorageTaskPreviewKeyValueProperties>();
-            metadata ??= new List<StorageTaskPreviewKeyValueProperties>();
-            tags ??= new List<StorageTaskPreviewKeyValueProperties>();
-
-            return new StorageTaskPreviewBlobProperties(
-                name,
-                properties?.ToList(),
-                metadata?.ToList(),
-                tags?.ToList(),
-                matchedBlock,
                 serializedAdditionalRawData: null);
         }
     }

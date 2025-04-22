@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.StorageActions
             }
 
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             writer.WritePropertyName("identity"u8);
             var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
             JsonSerializer.Serialize(writer, Identity, serializeOptions);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
         }
 
         StorageTaskData IJsonModel<StorageTaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.StorageActions
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
             StorageTaskProperties properties = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -76,15 +76,15 @@ namespace Azure.ResourceManager.StorageActions
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = StorageTaskProperties.DeserializeStorageTaskProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("identity"u8))
                 {
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    properties = StorageTaskProperties.DeserializeStorageTaskProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.StorageActions
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                identity,
                 properties,
+                identity,
                 serializedAdditionalRawData);
         }
 

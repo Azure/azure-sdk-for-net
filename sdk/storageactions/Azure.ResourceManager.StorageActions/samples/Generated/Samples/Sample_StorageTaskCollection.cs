@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StorageActions.Samples
 
             // invoke the operation
             string storageTaskName = "mytask1";
-            StorageTaskData data = new StorageTaskData(new AzureLocation("westus"), new ManagedServiceIdentity("SystemAssigned"), new StorageTaskProperties(true, "My Storage task", new StorageTaskAction(new StorageTaskIfCondition("[[equals(AccessTier, 'Cool')]]", new StorageTaskOperationInfo[]
+            StorageTaskData data = new StorageTaskData(new AzureLocation("westus"), new StorageTaskProperties(true, "My Storage task", new StorageTaskAction(new StorageTaskIfCondition("[[equals(AccessTier, 'Cool')]]", new StorageTaskOperationInfo[]
             {
 new StorageTaskOperationInfo(StorageTaskOperationName.SetBlobTier)
 {
@@ -60,7 +60,7 @@ OnFailure = OnFailureAction.Break,
 OnSuccess = OnSuccessAction.Continue,
 OnFailure = OnFailureAction.Break,
 }},
-            }));
+            }), new ManagedServiceIdentity("SystemAssigned"));
             ArmOperation<StorageTaskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, storageTaskName, data);
             StorageTaskResource result = lro.Value;
 
