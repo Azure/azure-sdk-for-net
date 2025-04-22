@@ -148,7 +148,7 @@
 /sdk/attestation/Azure.Security.Attestation                        @anilba06 @gkostal @Azure/azure-sdk-write-attestation
 
 # PRLabel: %Arize AI
-/sdk/liftrarize/Azure.ResourceManager.*/                           @aggarwalsw
+/sdk/arizeaiobservabilityeval/Azure.ResourceManager.*/             @aggarwalsw
 
 # ServiceLabel: %Arize AI %Mgmt
 # ServiceOwners:                                                   @aggarwalsw
