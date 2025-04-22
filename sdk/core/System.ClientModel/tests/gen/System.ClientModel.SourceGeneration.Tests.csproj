@@ -37,6 +37,8 @@
     <Compile Include="..\ModelReaderWriterTests\Models\AvailabilitySetDataTests.cs" LinkBase="SharedTests" />
     <Compile Include="..\ModelReaderWriterTests\Models\BaseModels\ListTests.cs" LinkBase="SharedTests\BaseModels" />
     <Compile Include="..\ModelReaderWriterTests\Models\BaseModels\ModelInstances.cs" LinkBase="SharedTests\BaseModels" />
+    <Compile Include="..\ModelReaderWriterTests\Models\BaseModelTests.cs" LinkBase="SharedTests\BaseModels" />
+    <Compile Include="..\ModelReaderWriterTests\Models\UnknownBaseModelTests.cs" LinkBase="SharedTests\BaseModels" />
     <Compile Include="..\ModelReaderWriterTests\Models\ModelJsonTests.cs" LinkBase="SharedTests" />
     <Compile Include="..\ModelReaderWriterTests\MrwModelTests.cs" LinkBase="SharedTests" />
     <Compile Include="..\ModelReaderWriterTests\MrwCollectionTests.cs" LinkBase="SharedTests" />
