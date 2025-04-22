@@ -63,7 +63,6 @@
     <Compile Include="Shared\FixedDelayWithNoJitterStrategy.cs" />
     <Compile Include="Shared\HashCodeBuilder.cs" />
     <Compile Include="Shared\HttpMessageSanitizer.cs" />
-    <Compile Include="Shared\IOperationSourceAotSafe.cs" />
     <Compile Include="Shared\IOperationSource.cs" />
     <Compile Include="Shared\InitializationConstructorAttribute.cs" />
     <Compile Include="Shared\Multipart\MemoryResponse.cs" />
