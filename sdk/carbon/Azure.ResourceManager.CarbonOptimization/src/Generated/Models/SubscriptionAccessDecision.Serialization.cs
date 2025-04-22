@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
-    internal partial class SubscriptionAccessDecision : IUtf8JsonSerializable, IJsonModel<SubscriptionAccessDecision>
+    public partial class SubscriptionAccessDecision : IUtf8JsonSerializable, IJsonModel<SubscriptionAccessDecision>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionAccessDecision>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

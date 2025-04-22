@@ -47,12 +47,11 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// <param name="queryParameters"> Query parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="queryParameters"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CarbonEmission"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CarbonEmission> QueryCarbonEmissionReportsCarbonServicesAsync(this TenantResource tenantResource, QueryFilter queryParameters, CancellationToken cancellationToken = default)
+        public static async Task<Response<CarbonEmissionDataListResult>> QueryCarbonEmissionReportsCarbonServicesAsync(this TenantResource tenantResource, QueryFilter queryParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableCarbonOptimizationTenantResource(tenantResource).QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters, cancellationToken);
+            return await GetMockableCarbonOptimizationTenantResource(tenantResource).QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -80,8 +79,7 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// <param name="queryParameters"> Query parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="queryParameters"/> is null. </exception>
-        /// <returns> A collection of <see cref="CarbonEmission"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CarbonEmission> QueryCarbonEmissionReportsCarbonServices(this TenantResource tenantResource, QueryFilter queryParameters, CancellationToken cancellationToken = default)
+        public static Response<CarbonEmissionDataListResult> QueryCarbonEmissionReportsCarbonServices(this TenantResource tenantResource, QueryFilter queryParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
