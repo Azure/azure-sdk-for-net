@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Describes the credential parameters for accessing the source registry. </summary>
-        internal SourceRegistryCredentials SourceRegistry { get; set; }
-
+        [WirePath("sourceRegistry")]
+        public SourceRegistryCredentials SourceRegistry { get; set; }
         /// <summary>
         /// Describes the credential parameters for accessing other custom registries. The key
         /// for the dictionary item will be the registry login server (myregistry.azurecr.io) and
