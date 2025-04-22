@@ -399,6 +399,8 @@ namespace Azure.AI.Assistants
         public virtual Azure.Response<Azure.AI.Assistants.AssistantThread> GetThread(string threadId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetThreadAsync(string threadId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Assistants.AssistantThread>> GetThreadAsync(string threadId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Assistants.PageableList<Azure.AI.Assistants.AssistantThread>> GetThreads(int? limit = default(int?), Azure.AI.Assistants.ListSortOrder? order = default(Azure.AI.Assistants.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Assistants.PageableList<Azure.AI.Assistants.AssistantThread>>> GetThreadsAsync(int? limit = default(int?), Azure.AI.Assistants.ListSortOrder? order = default(Azure.AI.Assistants.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetVectorStore(string vectorStoreId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.AI.Assistants.VectorStore> GetVectorStore(string vectorStoreId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetVectorStoreAsync(string vectorStoreId, Azure.RequestContext context) { throw null; }
@@ -486,6 +488,7 @@ namespace Azure.AI.Assistants
         public static Azure.AI.Assistants.AssistantsNamedToolChoiceType BingCustomSearch { get { throw null; } }
         public static Azure.AI.Assistants.AssistantsNamedToolChoiceType BingGrounding { get { throw null; } }
         public static Azure.AI.Assistants.AssistantsNamedToolChoiceType CodeInterpreter { get { throw null; } }
+        public static Azure.AI.Assistants.AssistantsNamedToolChoiceType ConnectedAgent { get { throw null; } }
         public static Azure.AI.Assistants.AssistantsNamedToolChoiceType FileSearch { get { throw null; } }
         public static Azure.AI.Assistants.AssistantsNamedToolChoiceType Function { get { throw null; } }
         public static Azure.AI.Assistants.AssistantsNamedToolChoiceType MicrosoftFabric { get { throw null; } }
@@ -728,6 +731,30 @@ namespace Azure.AI.Assistants
         Azure.AI.Assistants.CodeInterpreterToolResource System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.CodeInterpreterToolResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.CodeInterpreterToolResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.CodeInterpreterToolResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ConnectedAgentDetails : System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.ConnectedAgentDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.ConnectedAgentDetails>
+    {
+        public ConnectedAgentDetails(string id, string name, string description) { }
+        public string Description { get { throw null; } set { } }
+        public string Id { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Assistants.ConnectedAgentDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.ConnectedAgentDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.ConnectedAgentDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Assistants.ConnectedAgentDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.ConnectedAgentDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.ConnectedAgentDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.ConnectedAgentDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ConnectedAgentToolDefinition : Azure.AI.Assistants.ToolDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.ConnectedAgentToolDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.ConnectedAgentToolDefinition>
+    {
+        public ConnectedAgentToolDefinition(Azure.AI.Assistants.ConnectedAgentDetails connectedAgent) { }
+        public Azure.AI.Assistants.ConnectedAgentDetails ConnectedAgent { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Assistants.ConnectedAgentToolDefinition System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.ConnectedAgentToolDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Assistants.ConnectedAgentToolDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Assistants.ConnectedAgentToolDefinition System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.ConnectedAgentToolDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.ConnectedAgentToolDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Assistants.ConnectedAgentToolDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DoneEvent : System.IEquatable<Azure.AI.Assistants.DoneEvent>

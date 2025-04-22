@@ -30,6 +30,7 @@ namespace Azure.AI.Assistants
         private const string SharepointValue = "sharepoint_grounding";
         private const string AzureAISearchValue = "azure_ai_search";
         private const string BingCustomSearchValue = "bing_custom_search";
+        private const string ConnectedAgentValue = "connected_agent";
 
         /// <summary> Tool type `function`. </summary>
         public static AssistantsNamedToolChoiceType Function { get; } = new AssistantsNamedToolChoiceType(FunctionValue);
@@ -47,6 +48,8 @@ namespace Azure.AI.Assistants
         public static AssistantsNamedToolChoiceType AzureAISearch { get; } = new AssistantsNamedToolChoiceType(AzureAISearchValue);
         /// <summary> Tool type `bing_custom_search`. </summary>
         public static AssistantsNamedToolChoiceType BingCustomSearch { get; } = new AssistantsNamedToolChoiceType(BingCustomSearchValue);
+        /// <summary> Tool type `connected_agent`. </summary>
+        public static AssistantsNamedToolChoiceType ConnectedAgent { get; } = new AssistantsNamedToolChoiceType(ConnectedAgentValue);
         /// <summary> Determines if two <see cref="AssistantsNamedToolChoiceType"/> values are the same. </summary>
         public static bool operator ==(AssistantsNamedToolChoiceType left, AssistantsNamedToolChoiceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AssistantsNamedToolChoiceType"/> values are not the same. </summary>
