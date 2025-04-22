@@ -1,6 +1,8 @@
 # Microsoft Azure PineconeVectorDB management client library for .NET
 
-**[Describe the service briefly first.]**
+ Pinecone provides long-term memory for AI, allowing you to securely connect private data to Large Language Models (LLMs). This ensures you receive relevant and accurate responses from search or generative AI applications. With Pinecone on Azure, you can leverage the robust infrastructure of Microsoft's cloud computing platform, to enhance your AI applications.
+
+This library supports managing Microsoft Azure PineconeVectorDB resources.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
