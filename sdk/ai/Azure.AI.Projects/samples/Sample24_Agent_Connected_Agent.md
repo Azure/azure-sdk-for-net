@@ -54,7 +54,7 @@ Agent agent = await agentClient.CreateAgentAsync(
    tools: [ connectedAgentDefinition ]);
 ```
 
-4. Now we will create the thread, add the message , containing a question for agent and start the run.
+4. Now we will create the thread, add the message, containing a question for agent and start the run.
 
 Synchronous sample:
 ```C# Snippet:ConnectedAgent_CreateThreadMessage
