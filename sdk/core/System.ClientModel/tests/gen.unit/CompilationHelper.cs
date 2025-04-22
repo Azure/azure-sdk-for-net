@@ -17,7 +17,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
     {
         private static readonly CSharpParseOptions s_defaultParseOptions = CreateParseOptions();
 
-        private static readonly HashSet<string> s_noWarn = ["CS1701", "CS8019", "CS0311"];
+        private static readonly HashSet<string> s_noWarn = ["CS1701", "CS8019", "CS0311", "CS1702"];
 
         public record GeneratorResult
         {
