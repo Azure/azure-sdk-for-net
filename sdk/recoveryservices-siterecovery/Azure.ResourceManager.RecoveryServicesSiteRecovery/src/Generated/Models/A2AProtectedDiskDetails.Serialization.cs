@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType);
             }
-            if (Optional.IsDefined(IsResyncRequired))
+            if (Optional.IsDefined(ResyncRequired))
             {
                 writer.WritePropertyName("resyncRequired"u8);
-                writer.WriteBooleanValue(IsResyncRequired.Value);
+                writer.WriteBooleanValue(ResyncRequired.Value);
             }
             if (Optional.IsDefined(MonitoringPercentageCompletion))
             {

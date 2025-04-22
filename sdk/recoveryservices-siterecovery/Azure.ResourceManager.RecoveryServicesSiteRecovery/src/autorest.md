@@ -257,7 +257,7 @@ rename-mapping:
   RunAsAccount: SiteRecoveryRunAsAccount
   ServiceError: SiteRecoveryServiceError
   Severity: SiteRecoveryErrorSeverity
-  SiteRecoveryHealthError.innerHealthErrors: SiteRecoveryInnerHealthErrors
+  SiteRecoveryHealthError.innerHealthErrors: SiteRecoveryInnerHealthErrorsList
   SqlServerLicenseType: SiteRecoverySqlServerLicenseType
   StorageClassificationCollection: StorageClassificationListResult
   StorageClassificationProperties: StorageClassificationProperties

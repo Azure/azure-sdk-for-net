@@ -129,11 +129,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("diskState"u8);
                 writer.WriteStringValue(DiskState);
             }
-            if (Optional.IsCollectionDefined(AllowedDiskLevelOperation))
+            if (Optional.IsCollectionDefined(SiteRecoveryAllowedDiskLevelOperation))
             {
                 writer.WritePropertyName("allowedDiskLevelOperation"u8);
                 writer.WriteStartArray();
-                foreach (var item in AllowedDiskLevelOperation)
+                foreach (var item in SiteRecoveryAllowedDiskLevelOperation)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             double? dataPendingInStagingStorageAccountInMB = default;
             double? dataPendingAtSourceAgentInMB = default;
             string diskState = default;
-            IReadOnlyList<string> allowedDiskLevelOperation = default;
+            IList<string> allowedDiskLevelOperation = default;
             bool? isDiskEncrypted = default;
             string secretIdentifier = default;
             ResourceIdentifier dekKeyVaultArmId = default;

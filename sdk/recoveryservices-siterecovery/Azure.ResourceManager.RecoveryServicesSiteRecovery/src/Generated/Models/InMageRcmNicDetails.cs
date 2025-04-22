@@ -66,8 +66,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="testSubnetName"> Test subnet name. </param>
         /// <param name="testIPAddress"> The test IP address. </param>
         /// <param name="testIPAddressType"> The test IP address type. </param>
+        /// <param name="targetNicName"> The target NIC name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InMageRcmNicDetails(string nicId, string isPrimaryNic, string isSelectedForFailover, IPAddress sourceIPAddress, SiteRecoveryEthernetAddressType? sourceIPAddressType, ResourceIdentifier sourceNetworkId, string sourceSubnetName, IPAddress targetIPAddress, SiteRecoveryEthernetAddressType? targetIPAddressType, string targetSubnetName, string testSubnetName, IPAddress testIPAddress, SiteRecoveryEthernetAddressType? testIPAddressType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InMageRcmNicDetails(string nicId, string isPrimaryNic, string isSelectedForFailover, IPAddress sourceIPAddress, SiteRecoveryEthernetAddressType? sourceIPAddressType, ResourceIdentifier sourceNetworkId, string sourceSubnetName, IPAddress targetIPAddress, SiteRecoveryEthernetAddressType? targetIPAddressType, string targetSubnetName, string testSubnetName, IPAddress testIPAddress, SiteRecoveryEthernetAddressType? testIPAddressType, string targetNicName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NicId = nicId;
             IsPrimaryNic = isPrimaryNic;
@@ -82,6 +83,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TestSubnetName = testSubnetName;
             TestIPAddress = testIPAddress;
             TestIPAddressType = testIPAddressType;
+            TargetNicName = targetNicName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -111,5 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public IPAddress TestIPAddress { get; }
         /// <summary> The test IP address type. </summary>
         public SiteRecoveryEthernetAddressType? TestIPAddressType { get; }
+        /// <summary> The target NIC name. </summary>
+        public string TargetNicName { get; }
     }
 }
