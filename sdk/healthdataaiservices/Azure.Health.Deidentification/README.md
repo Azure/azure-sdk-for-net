@@ -135,7 +135,7 @@ additional questions or comments.
 <!-- LINKS -->
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [product_documentation]: https://learn.microsoft.com/azure/healthcare-apis/deidentification/
-[docs]: https://learn.microsoft.com/en-us/dotnet/api/azure.health.deidentification
+[docs]: https://learn.microsoft.com/dotnet/api/azure.health.deidentification
 [deid_nuget]: https://www.nuget.org/packages/Azure.Health.Deidentification
 [deid_redaction_format]: https://learn.microsoft.com/azure/healthcare-apis/deidentification/redaction-format
 [azure_subscription]: https://azure.microsoft.com/free/
