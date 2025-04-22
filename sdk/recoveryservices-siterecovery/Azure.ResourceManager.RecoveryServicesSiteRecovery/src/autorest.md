@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: RecoveryServicesSiteRecovery
 namespace: Azure.ResourceManager.RecoveryServicesSiteRecovery
-require: https://github.com/Azure/azure-rest-api-specs/blob/39608b2c1c7b7dc06cb99abb9d733665cfce9a75/specification/recoveryservicessiterecovery/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/84eef1839d5db0edaf791fd0915b38a50b3b64b5/specification/recoveryservicessiterecovery/resource-manager/readme.md
 #tag: package-2023-08
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -40,7 +40,7 @@ rename-mapping:
   ASRTask: AsrTask
   A2ACrossClusterMigrationReplicationDetails.primaryFabricLocation: -|azure-location
   A2AVmManagedDiskInputDetails: A2AVmManagedDiskDetails
-  A2AProtectedDiskDetails.resyncRequired: IsResyncRequired
+  A2AProtectedManagedDiskDetails.allowedDiskLevelOperation: SiteRecoveryAllowedDiskLevelOperation
   A2AProtectedManagedDiskDetails.recoveryTargetDiskId: -|arm-id
   A2AProtectedManagedDiskDetails.recoveryReplicaDiskId: -|arm-id
   A2AProtectedManagedDiskDetails.recoveryOrignalTargetDiskId: -|arm-id
@@ -257,6 +257,7 @@ rename-mapping:
   RunAsAccount: SiteRecoveryRunAsAccount
   ServiceError: SiteRecoveryServiceError
   Severity: SiteRecoveryErrorSeverity
+  SiteRecoveryHealthError.innerHealthErrors: SiteRecoveryInnerHealthErrors
   SqlServerLicenseType: SiteRecoverySqlServerLicenseType
   StorageClassificationCollection: StorageClassificationListResult
   StorageClassificationProperties: StorageClassificationProperties
