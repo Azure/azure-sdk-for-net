@@ -12,15 +12,15 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.EventGrid
 {
-    internal class CloudEventRequestContent : RequestContent
+    internal class CloudEventsRequestContent : RequestContent
     {
         private readonly IEnumerable<CloudEvent> _cloudEvents;
         private const string TraceParentHeaderName = "traceparent";
         private const string TraceStateHeaderName = "tracestate";
         private readonly bool _isDistributedTracingEnabled;
-        private byte[] _data;
+        private RequestContent _data;
 
-        public CloudEventRequestContent(IEnumerable<CloudEvent> cloudEvents, bool isDistributedTracingEnabled)
+        public CloudEventsRequestContent(IEnumerable<CloudEvent> cloudEvents, bool isDistributedTracingEnabled)
         {
             _cloudEvents = cloudEvents;
             _isDistributedTracingEnabled = isDistributedTracingEnabled;
@@ -33,20 +33,19 @@ namespace Azure.Messaging.EventGrid
         public override bool TryComputeLength(out long length)
         {
             EnsureSerialized();
-            length = _data.Length;
-            return true;
+            return _data.TryComputeLength(out length);
         }
 
         public override void WriteTo(Stream stream, CancellationToken cancellationToken)
         {
             EnsureSerialized();
-            stream.Write(_data, 0, _data.Length);
+            _data.WriteTo(stream, cancellationToken);
         }
 
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
         {
             EnsureSerialized();
-            await stream.WriteAsync(_data, 0, _data.Length, cancellationToken).ConfigureAwait(false);
+            await _data.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
         }
 
         private void EnsureSerialized()
@@ -70,8 +69,8 @@ namespace Azure.Messaging.EventGrid
                 foreach (CloudEvent cloudEvent in _cloudEvents)
                 {
                     if (currentActivityId != null &&
-                        !cloudEvent.ExtensionAttributes.ContainsKey(TraceParentHeaderName) &&
-                        !cloudEvent.ExtensionAttributes.ContainsKey(TraceStateHeaderName))
+                            !cloudEvent.ExtensionAttributes.ContainsKey(TraceParentHeaderName) &&
+                            !cloudEvent.ExtensionAttributes.ContainsKey(TraceStateHeaderName))
                     {
                         cloudEvent.ExtensionAttributes.Add(TraceParentHeaderName, currentActivityId);
                         if (traceState != null)
@@ -81,7 +80,7 @@ namespace Azure.Messaging.EventGrid
                     }
                 }
             }
-            _data = JsonSerializer.SerializeToUtf8Bytes(_cloudEvents, typeof(IEnumerable<CloudEvent>));
+            _data = RequestContent.Create(_cloudEvents);
         }
     }
 }
