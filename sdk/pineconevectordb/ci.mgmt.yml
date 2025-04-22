@@ -10,13 +10,13 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/liftrpinecone/ci.mgmt.yml
-    - sdk/liftrpinecone/Azure.ResourceManager.PineconeVectorDB/
+    - sdk/pineconevectordb/ci.mgmt.yml
+    - sdk/pineconevectordb/Azure.ResourceManager.PineconeVectorDB/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: liftrpinecone
+    ServiceDirectory: pineconevectordb
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.PineconeVectorDB

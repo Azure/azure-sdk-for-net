@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.PineconeVectorDB
 
         OrganizationResource IOperationSource<OrganizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = OrganizationResourceData.DeserializeOrganizationResourceData(document.RootElement);
+            var data = ModelReaderWriter.Read<OrganizationResourceData>(response.Content);
             return new OrganizationResource(_client, data);
         }
 
         async ValueTask<OrganizationResource> IOperationSource<OrganizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = OrganizationResourceData.DeserializeOrganizationResourceData(document.RootElement);
-            return new OrganizationResource(_client, data);
+            var data = ModelReaderWriter.Read<OrganizationResourceData>(response.Content);
+            return await Task.FromResult(new OrganizationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

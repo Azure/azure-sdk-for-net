@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.PineconeVectorDB.Tests
 {
-    public class liftrpineconeManagementTestEnvironment : TestEnvironment
+    public class PineconeVectorDBManagementTestEnvironment : TestEnvironment
     {
     }
 }

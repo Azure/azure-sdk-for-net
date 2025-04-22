@@ -1,8 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
@@ -10,17 +12,17 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.PineconeVectorDB.Tests
 {
-    public class liftrpineconeManagementTestBase : ManagementRecordedTestBase<liftrpineconeManagementTestEnvironment>
+    public class PineconeVectorDBManagementTestBase : ManagementRecordedTestBase<PineconeVectorDBManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
-        protected liftrpineconeManagementTestBase(bool isAsync, RecordedTestMode mode)
+        protected PineconeVectorDBManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
         }
 
-        protected liftrpineconeManagementTestBase(bool isAsync)
+        protected PineconeVectorDBManagementTestBase(bool isAsync)
             : base(isAsync)
         {
         }

@@ -46,15 +46,12 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MarketplaceDetails"/>. </summary>
-        /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="offerDetails"/> is null. </exception>
-        public MarketplaceDetails(string subscriptionId, OfferDetails offerDetails)
+        /// <exception cref="ArgumentNullException"> <paramref name="offerDetails"/> is null. </exception>
+        public MarketplaceDetails(OfferDetails offerDetails)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(offerDetails, nameof(offerDetails));
 
-            SubscriptionId = subscriptionId;
             OfferDetails = offerDetails;
         }
 

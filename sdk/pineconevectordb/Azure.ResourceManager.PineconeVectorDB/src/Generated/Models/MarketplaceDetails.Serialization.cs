@@ -34,8 +34,11 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                 throw new FormatException($"The model {nameof(MarketplaceDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("subscriptionId"u8);
-            writer.WriteStringValue(SubscriptionId);
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                writer.WritePropertyName("subscriptionId"u8);
+                writer.WriteStringValue(SubscriptionId);
+            }
             if (options.Format != "W" && Optional.IsDefined(SubscriptionStatus))
             {
                 writer.WritePropertyName("subscriptionStatus"u8);
@@ -51,7 +54,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -136,7 +139,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMarketplaceDetails(document.RootElement, options);
                     }
                 default:

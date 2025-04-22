@@ -46,19 +46,8 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="UserDetails"/>. </summary>
-        /// <param name="firstName"> First name of the user. </param>
-        /// <param name="lastName"> Last name of the user. </param>
-        /// <param name="emailAddress"> Email address of the user. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="firstName"/>, <paramref name="lastName"/> or <paramref name="emailAddress"/> is null. </exception>
-        public UserDetails(string firstName, string lastName, string emailAddress)
+        public UserDetails()
         {
-            Argument.AssertNotNull(firstName, nameof(firstName));
-            Argument.AssertNotNull(lastName, nameof(lastName));
-            Argument.AssertNotNull(emailAddress, nameof(emailAddress));
-
-            FirstName = firstName;
-            LastName = lastName;
-            EmailAddress = emailAddress;
         }
 
         /// <summary> Initializes a new instance of <see cref="UserDetails"/>. </summary>
@@ -76,11 +65,6 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
             Upn = upn;
             PhoneNumber = phoneNumber;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UserDetails"/> for deserialization. </summary>
-        internal UserDetails()
-        {
         }
 
         /// <summary> First name of the user. </summary>

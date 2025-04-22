@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
     }
     public partial class MarketplaceDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PineconeVectorDB.Models.MarketplaceDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PineconeVectorDB.Models.MarketplaceDetails>
     {
-        public MarketplaceDetails(string subscriptionId, Azure.ResourceManager.PineconeVectorDB.Models.OfferDetails offerDetails) { }
+        public MarketplaceDetails(Azure.ResourceManager.PineconeVectorDB.Models.OfferDetails offerDetails) { }
         public Azure.ResourceManager.PineconeVectorDB.Models.OfferDetails OfferDetails { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
         public Azure.ResourceManager.PineconeVectorDB.Models.MarketplaceSubscriptionStatus? SubscriptionStatus { get { throw null; } }
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
     }
     public partial class UserDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PineconeVectorDB.Models.UserDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PineconeVectorDB.Models.UserDetails>
     {
-        public UserDetails(string firstName, string lastName, string emailAddress) { }
+        public UserDetails() { }
         public string EmailAddress { get { throw null; } set { } }
         public string FirstName { get { throw null; } set { } }
         public string LastName { get { throw null; } set { } }

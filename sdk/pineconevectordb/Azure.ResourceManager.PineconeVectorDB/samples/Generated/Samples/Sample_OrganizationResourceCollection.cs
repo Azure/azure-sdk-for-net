@@ -44,13 +44,19 @@ namespace Azure.ResourceManager.PineconeVectorDB.Samples
             string organizationname = "example-organization-name";
             OrganizationResourceData data = new OrganizationResourceData(new AzureLocation("us-east"))
             {
-                Properties = new OrganizationProperties(new MarketplaceDetails("76a38ef6-c8c1-4f0d-bfe0-00ec782c8077", new OfferDetails("4d194daf-fa20-46a8-bfb4-5b7d96cae009", "013124d0-bf05-4eab-a6bb-01fa83870642", "62dda065-5acd-4ac5-b418-8610beed92a2")
+                Properties = new OrganizationProperties(new MarketplaceDetails(new OfferDetails("4d194daf-fa20-46a8-bfb4-5b7d96cae009", "013124d0-bf05-4eab-a6bb-01fa83870642", "62dda065-5acd-4ac5-b418-8610beed92a2")
                 {
                     PlanName = "Freemium",
                     TermUnit = "der",
                     TermId = "a2b7ce01-f06d-4874-9f77-6ea4a4875c16",
-                }), new UserDetails("Jimmy", "McExample", "example.user@example.com")
+                })
                 {
+                    SubscriptionId = "76a38ef6-c8c1-4f0d-bfe0-00ec782c8077",
+                }, new UserDetails
+                {
+                    FirstName = "Jimmy",
+                    LastName = "McExample",
+                    EmailAddress = "example.user@example.com",
                     Upn = "example.user@example.com",
                     PhoneNumber = "555-555-5555",
                 })

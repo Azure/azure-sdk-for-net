@@ -687,12 +687,6 @@
 # PRLabel: %Mixed Reality
 /sdk/objectanchors/                                                @crtreasu @rgarcia
 
-# PRLabel: %Pinecone
-/sdk/liftrpinecone/Azure.ResourceManager.*/                        @aggarwalsw
-
-# ServiceLabel: %Pinecone %Mgmt
-# ServiceOwners:                                                   @aggarwalsw
-
 # PRLabel: %Remote Rendering
 /sdk/remoterendering/                                              @FlorianBorn71 @MichaelZp0 @ChristopherManthei
 
@@ -1057,6 +1051,12 @@
 
 # ServiceLabel: %Operator Nexus - Network Cloud %Mgmt
 # ServiceOwners:                                                   @Azure/azure-sdk-write-networkcloud
+
+# PRLabel: %Pinecone
+/sdk/pineconevectordb/Azure.ResourceManager.*/                     @aggarwalsw
+
+# ServiceLabel: %Pinecone %Mgmt
+# ServiceOwners:                                                   @aggarwalsw
 
 # PRLabel: %Quota
 /sdk/quota/Azure.ResourceManager.*/                                @tejasm-microsoft
