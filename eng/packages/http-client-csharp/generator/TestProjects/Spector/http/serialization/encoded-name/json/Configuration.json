@@ -1,5 +1,4 @@
 {
-  "output-folder": ".",
   "package-name": "Serialization.EncodedName.Json",
   "license": {
     "name": "MIT License",

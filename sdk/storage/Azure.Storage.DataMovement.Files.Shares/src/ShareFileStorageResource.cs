@@ -80,7 +80,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
             ShareFileHttpHeaders httpHeaders = _options?.GetShareFileHttpHeaders(properties?.RawProperties);
             IDictionary<string, string> metadata = _options?.GetFileMetadata(properties?.RawProperties);
-            string filePermission = _options?.GetFilePermission(properties?.RawProperties);
+            string filePermission = _options?.GetFilePermission(properties);
             FileSmbProperties smbProperties = _options?.GetFileSmbProperties(properties, _destinationPermissionKey);
             FilePosixProperties posixProperties = _options?.GetFilePosixProperties(properties);
 
@@ -119,8 +119,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
             StorageResourceItemProperties sourceProperties = completeTransferOptions?.SourceProperties;
-            FileSmbProperties smbProperties = _options?.GetFileSmbProperties(sourceProperties);
-            FilePosixProperties posixProperties = _options?.GetFilePosixProperties(sourceProperties);
+            FileSmbProperties smbProperties = _options?.GetFileSmbProperties(sourceProperties, _destinationPermissionKey);
             // Call Set Properties
             // if transfer is not empty and original File Attribute contains ReadOnly
             // or if FileChangedOn is to be preserved or manually set
@@ -132,7 +131,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 {
                     HttpHeaders = httpHeaders,
                     SmbProperties = smbProperties,
-                    PosixProperties = posixProperties
                 },
                 cancellationToken: cancellationToken).ConfigureAwait(false);
             }
@@ -274,11 +272,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
             StorageResourceItemProperties sourceProperties,
             CancellationToken cancellationToken = default)
         {
+            // Copy transfer
             if (sourceResource is ShareFileStorageResource)
             {
-                if (_options?.FilePermissions ?? false)
+                ShareFileStorageResource sourceShareFile = (ShareFileStorageResource)sourceResource;
+                // destination must be SMB and destination FilePermission option must be set.
+                if ((!_options?.IsNfs ?? true) && (_options?.FilePermissions ?? false))
                 {
-                    ShareFileStorageResource sourceShareFile = (ShareFileStorageResource)sourceResource;
                     string permissionsValue = sourceProperties?.RawProperties?.GetPermission();
                     string destinationPermissionKey = sourceProperties?.RawProperties?.GetDestinationPermissionKey();
                     // Get / Set the permission key if preserve is set to true,
