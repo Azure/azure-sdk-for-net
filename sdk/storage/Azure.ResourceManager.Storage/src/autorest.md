@@ -86,7 +86,6 @@ prepend-rp-prefix:
     - DnsEndpointType
     - ListKeyExpand
     - MinimumTlsVersion
-    - ProvisioningState
     - PermissionScope
     - SshPublicKey
     - PublicNetworkAccess
@@ -240,6 +239,7 @@ rename-mapping:
     ListEncryptionScopesInclude: EncryptionScopesIncludeType
     StorageAccount.properties.accountMigrationInProgress: IsAccountMigrationInProgress
     StorageAccount.properties.enableExtendedGroups: IsExtendedGroupEnabled
+    StorageAccount.properties.provisioningState: StorageAccountProvisioningState
     StorageAccountCreateParameters.properties.enableExtendedGroups: IsExtendedGroupEnabled
     StorageAccountUpdateParameters.properties.enableExtendedGroups: IsExtendedGroupEnabled
     LocalUser.properties.allowAclAuthorization: IsAclAuthorizationAllowed
@@ -256,7 +256,9 @@ rename-mapping:
     Severity: NetworkSecurityPerimeterProvisioningIssueSeverity
     StorageTaskAssignmentUpdateProperties: StorageTaskAssignmentPatchProperties
     StorageTaskAssignmentUpdateProperties.enabled: IsEnabled
+    StorageTaskAssignmentUpdateProperties.provisioningState: StorageTaskAssignmentProvisioningState?
     StorageTaskAssignmentProperties.enabled: IsEnabled
+    StorageTaskAssignmentProperties.provisioningState: StorageTaskAssignmentProvisioningState?
     StorageTaskReportProperties.startTime: StartedOn|date-time
     StorageTaskReportProperties.finishTime: FinishedOn|date-time
     TriggerParameters: ExecutionTriggerParameters
@@ -367,4 +369,23 @@ directive:
       transform: >
           $['type'] = "integer";
           $['format'] = "int32";
+    # Fix ProvisioningState
+    - from: storage.json
+      where: $.definitions
+      transform: >
+          $.StorageAccountProperties.properties.provisioningState['x-ms-enum'] = {
+              "name": "StorageAccountProvisioningState",
+              "modelAsString": true
+            }
+    - from: storageTaskAssignments.json
+      where: $.definitions
+      transform: >
+          $.StorageTaskAssignmentProperties.properties.provisioningState['x-ms-enum'] = {
+              "name": "StorageTaskAssignmentProvisioningState",
+              "modelAsString": true
+            };
+          $.StorageTaskAssignmentUpdateProperties.properties.provisioningState['x-ms-enum'] = {
+              "name": "StorageTaskAssignmentProvisioningState",
+              "modelAsString": true
+            };
 ```

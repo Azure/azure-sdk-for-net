@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.Storage.Models
             StorageProvisioningState.Succeeded => "Succeeded",
             StorageProvisioningState.ValidateSubscriptionQuotaBegin => "ValidateSubscriptionQuotaBegin",
             StorageProvisioningState.ValidateSubscriptionQuotaEnd => "ValidateSubscriptionQuotaEnd",
-            StorageProvisioningState.Accepted => "Accepted",
             StorageProvisioningState.Deleting => "Deleting",
             StorageProvisioningState.Canceled => "Canceled",
             StorageProvisioningState.Failed => "Failed",
@@ -32,7 +31,6 @@ namespace Azure.ResourceManager.Storage.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return StorageProvisioningState.Succeeded;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidateSubscriptionQuotaBegin")) return StorageProvisioningState.ValidateSubscriptionQuotaBegin;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidateSubscriptionQuotaEnd")) return StorageProvisioningState.ValidateSubscriptionQuotaEnd;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Accepted")) return StorageProvisioningState.Accepted;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting")) return StorageProvisioningState.Deleting;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Canceled")) return StorageProvisioningState.Canceled;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return StorageProvisioningState.Failed;
