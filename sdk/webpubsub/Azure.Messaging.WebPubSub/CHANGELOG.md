@@ -3,18 +3,12 @@
 ## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added method `serviceClient.ListConnectionsInGroup` and `serviceClient.ListConnectionsInGroupAsync`.`
 
 ## 1.5.0 (2025-02-27)
 
 ### Features Added
 - Added support for SocketIO when generating ClientAccessURI
-- Added method `serviceClient.ListConnectionsInGroup` and `serviceClient.ListConnectionsInGroupAsync`.`
 
 ## 1.4.0 (2024-07-31)
 
