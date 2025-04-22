@@ -500,7 +500,6 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 }
                 finally
                 {
-                    Console.WriteLine(functionId);
                     Response deleteResult = await Client.DeleteUserDefinedFunctionAsync(functionId);
                     Assert.AreEqual((int)HttpStatusCode.NoContent, deleteResult.Status);
                 }
