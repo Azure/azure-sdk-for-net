@@ -9,6 +9,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Files.Shares.Models;
@@ -6922,7 +6923,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             Assert.AreNotEqual(default, getSymLinkResponse.Value.ETag);
             Assert.AreNotEqual(default, getSymLinkResponse.Value.LastModified);
-            Assert.AreEqual(source.Uri.ToString(), getSymLinkResponse.Value.LinkText);
+            Assert.AreEqual(WebUtility.UrlEncode(source.Uri.ToString()), getSymLinkResponse.Value.LinkText);
         }
 
         [RecordedTest]
