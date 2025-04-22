@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using NUnit.Framework;
 
