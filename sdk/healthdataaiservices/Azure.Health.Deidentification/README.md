@@ -101,7 +101,7 @@ All client instance methods are thread-safe and independent of each other ([guid
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
-## Samples
+## Examples
 
 For sample code snippets illustrating common patterns used in the de-identification service, see the [samples][samples].
 
