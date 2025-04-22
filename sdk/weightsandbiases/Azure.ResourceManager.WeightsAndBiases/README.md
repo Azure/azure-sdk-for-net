@@ -1,6 +1,8 @@
 # Microsoft Azure liftrweightsandbiases management client library for .NET
 
-**[Describe the service briefly first.]**
+Weights&Biases(W&B) is designed to help you track, visualize, and optimize your models. With W&B on Azure, you can leverage the robust infrastructure of Microsoft's cloud computing platform to enhance your machine learning projects.
+
+This library supports managing Microsoft Azure Weights&Biases resources.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
