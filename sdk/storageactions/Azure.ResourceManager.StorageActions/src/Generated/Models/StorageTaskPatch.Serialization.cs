@@ -52,11 +52,39 @@ namespace Azure.ResourceManager.StorageActions.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Properties))
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(TaskVersion))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WritePropertyName("taskVersion"u8);
+                writer.WriteNumberValue(TaskVersion.Value);
             }
+            if (Optional.IsDefined(Enabled))
+            {
+                writer.WritePropertyName("enabled"u8);
+                writer.WriteBooleanValue(Enabled.Value);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(Action))
+            {
+                writer.WritePropertyName("action"u8);
+                writer.WriteObjectValue(Action, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreationTimeInUtc))
+            {
+                writer.WritePropertyName("creationTimeInUtc"u8);
+                writer.WriteStringValue(CreationTimeInUtc.Value, "O");
+            }
+            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -96,7 +124,12 @@ namespace Azure.ResourceManager.StorageActions.Models
             }
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
-            StorageTaskProperties properties = default;
+            long? taskVersion = default;
+            bool? enabled = default;
+            string description = default;
+            StorageTaskAction action = default;
+            ProvisioningState? provisioningState = default;
+            DateTimeOffset? creationTimeInUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,9 +162,62 @@ namespace Azure.ResourceManager.StorageActions.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = StorageTaskProperties.DeserializeStorageTaskProperties(property.Value, options);
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("taskVersion"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            taskVersion = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("enabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("description"u8))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("action"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            action = StorageTaskAction.DeserializeStorageTaskAction(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("creationTimeInUtc"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            creationTimeInUtc = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                    }
                     continue;
                 }
                 if (options.Format != "W")
@@ -140,7 +226,16 @@ namespace Azure.ResourceManager.StorageActions.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StorageTaskPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
+            return new StorageTaskPatch(
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                taskVersion,
+                enabled,
+                description,
+                action,
+                provisioningState,
+                creationTimeInUtc,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageTaskPatch>.Write(ModelReaderWriterOptions options)

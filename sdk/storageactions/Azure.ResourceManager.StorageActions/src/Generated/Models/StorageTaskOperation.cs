@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.StorageActions.Models
 {
     /// <summary> Represents an operation to be performed on the object. </summary>
-    public partial class StorageTaskOperationInfo
+    public partial class StorageTaskOperation
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,21 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StorageTaskOperationInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageTaskOperation"/>. </summary>
         /// <param name="name"> The operation to be performed on the object. </param>
-        public StorageTaskOperationInfo(StorageTaskOperationName name)
+        public StorageTaskOperation(StorageTaskOperationName name)
         {
             Name = name;
             Parameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageTaskOperationInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageTaskOperation"/>. </summary>
         /// <param name="name"> The operation to be performed on the object. </param>
         /// <param name="parameters"> Key-value parameters for the operation. </param>
         /// <param name="onSuccess"> Action to be taken when the operation is successful for a object. </param>
         /// <param name="onFailure"> Action to be taken when the operation fails for a object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskOperationInfo(StorageTaskOperationName name, IDictionary<string, string> parameters, OnSuccessAction? onSuccess, OnFailureAction? onFailure, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageTaskOperation(StorageTaskOperationName name, IDictionary<string, string> parameters, OnSuccess? onSuccess, OnFailure? onFailure, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Parameters = parameters;
@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.StorageActions.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageTaskOperationInfo"/> for deserialization. </summary>
-        internal StorageTaskOperationInfo()
+        /// <summary> Initializes a new instance of <see cref="StorageTaskOperation"/> for deserialization. </summary>
+        internal StorageTaskOperation()
         {
         }
 
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <summary> Key-value parameters for the operation. </summary>
         public IDictionary<string, string> Parameters { get; }
         /// <summary> Action to be taken when the operation is successful for a object. </summary>
-        public OnSuccessAction? OnSuccess { get; set; }
+        public OnSuccess? OnSuccess { get; set; }
         /// <summary> Action to be taken when the operation fails for a object. </summary>
-        public OnFailureAction? OnFailure { get; set; }
+        public OnFailure? OnFailure { get; set; }
     }
 }

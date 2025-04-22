@@ -35,7 +35,19 @@ namespace Azure.ResourceManager.StorageActions.Models
             }
 
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            writer.WriteStartObject();
+            writer.WritePropertyName("container"u8);
+            writer.WriteObjectValue(Container, options);
+            writer.WritePropertyName("blobs"u8);
+            writer.WriteStartArray();
+            foreach (var item in Blobs)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("action"u8);
+            writer.WriteObjectValue(Action, options);
+            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -73,14 +85,43 @@ namespace Azure.ResourceManager.StorageActions.Models
             {
                 return null;
             }
-            StorageTaskPreviewActionProperties properties = default;
+            StorageTaskPreviewContainerProperties container = default;
+            IList<StorageTaskPreviewBlobProperties> blobs = default;
+            StorageTaskPreviewActionCondition action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = StorageTaskPreviewActionProperties.DeserializeStorageTaskPreviewActionProperties(property.Value, options);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("container"u8))
+                        {
+                            container = StorageTaskPreviewContainerProperties.DeserializeStorageTaskPreviewContainerProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("blobs"u8))
+                        {
+                            List<StorageTaskPreviewBlobProperties> array = new List<StorageTaskPreviewBlobProperties>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(StorageTaskPreviewBlobProperties.DeserializeStorageTaskPreviewBlobProperties(item, options));
+                            }
+                            blobs = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("action"u8))
+                        {
+                            action = StorageTaskPreviewActionCondition.DeserializeStorageTaskPreviewActionCondition(property0.Value, options);
+                            continue;
+                        }
+                    }
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +130,7 @@ namespace Azure.ResourceManager.StorageActions.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StorageTaskPreviewAction(properties, serializedAdditionalRawData);
+            return new StorageTaskPreviewAction(container, blobs, action, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageTaskPreviewAction>.Write(ModelReaderWriterOptions options)

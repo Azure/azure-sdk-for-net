@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageTasks_Create</description>
+        /// <description>StorageTask_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="storageTaskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageTaskName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<StorageTaskResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string storageTaskName, StorageTaskData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, string storageTaskName, StorageTaskData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageTaskName, nameof(storageTaskName));
             Argument.AssertNotNull(data, nameof(data));
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.StorageActions
             try
             {
                 var response = await _storageTaskRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, storageTaskName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageActionsArmOperation<StorageTaskResource>(new StorageTaskOperationSource(Client), _storageTaskClientDiagnostics, Pipeline, _storageTaskRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, storageTaskName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageActionsArmOperation(_storageTaskClientDiagnostics, Pipeline, _storageTaskRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, storageTaskName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageTasks_Create</description>
+        /// <description>StorageTask_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="storageTaskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageTaskName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<StorageTaskResource> CreateOrUpdate(WaitUntil waitUntil, string storageTaskName, StorageTaskData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, string storageTaskName, StorageTaskData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageTaskName, nameof(storageTaskName));
             Argument.AssertNotNull(data, nameof(data));
@@ -138,9 +138,9 @@ namespace Azure.ResourceManager.StorageActions
             try
             {
                 var response = _storageTaskRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, storageTaskName, data, cancellationToken);
-                var operation = new StorageActionsArmOperation<StorageTaskResource>(new StorageTaskOperationSource(Client), _storageTaskClientDiagnostics, Pipeline, _storageTaskRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, storageTaskName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageActionsArmOperation(_storageTaskClientDiagnostics, Pipeline, _storageTaskRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, storageTaskName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageTasks_Get</description>
+        /// <description>StorageTask_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageTasks_Get</description>
+        /// <description>StorageTask_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageTasks_ListByResourceGroup</description>
+        /// <description>StorageTask_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageTasks_ListByResourceGroup</description>
+        /// <description>StorageTask_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageTasks_Get</description>
+        /// <description>StorageTask_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageTasks_Get</description>
+        /// <description>StorageTask_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageTasks_Get</description>
+        /// <description>StorageTask_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageTasks_Get</description>
+        /// <description>StorageTask_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

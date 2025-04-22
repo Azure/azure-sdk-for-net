@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <summary> Initializes a new instance of <see cref="StorageTaskAction"/>. </summary>
         /// <param name="if"> The if block of storage task operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="if"/> is null. </exception>
-        public StorageTaskAction(StorageTaskIfCondition @if)
+        public StorageTaskAction(IfCondition @if)
         {
             Argument.AssertNotNull(@if, nameof(@if));
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <param name="if"> The if block of storage task operation. </param>
         /// <param name="else"> The else block of storage task operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskAction(StorageTaskIfCondition @if, StorageTaskElseCondition @else, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageTaskAction(IfCondition @if, ElseCondition @else, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             If = @if;
             Else = @else;
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.StorageActions.Models
         }
 
         /// <summary> The if block of storage task operation. </summary>
-        public StorageTaskIfCondition If { get; set; }
+        public IfCondition If { get; set; }
         /// <summary> The else block of storage task operation. </summary>
-        internal StorageTaskElseCondition Else { get; set; }
+        internal ElseCondition Else { get; set; }
         /// <summary> List of operations to execute in the else block. </summary>
-        public IList<StorageTaskOperationInfo> ElseOperations
+        public IList<StorageTaskOperation> ElseOperations
         {
             get => Else is null ? default : Else.Operations;
-            set => Else = new StorageTaskElseCondition(value);
+            set => Else = new ElseCondition(value);
         }
     }
 }

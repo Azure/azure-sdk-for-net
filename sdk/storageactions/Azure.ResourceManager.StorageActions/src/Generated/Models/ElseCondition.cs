@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.StorageActions.Models
 {
     /// <summary> The else block of storage task operation. </summary>
-    internal partial class StorageTaskElseCondition
+    internal partial class ElseCondition
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,31 +46,31 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StorageTaskElseCondition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElseCondition"/>. </summary>
         /// <param name="operations"> List of operations to execute in the else block. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operations"/> is null. </exception>
-        public StorageTaskElseCondition(IEnumerable<StorageTaskOperationInfo> operations)
+        public ElseCondition(IEnumerable<StorageTaskOperation> operations)
         {
             Argument.AssertNotNull(operations, nameof(operations));
 
             Operations = operations.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageTaskElseCondition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElseCondition"/>. </summary>
         /// <param name="operations"> List of operations to execute in the else block. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskElseCondition(IList<StorageTaskOperationInfo> operations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElseCondition(IList<StorageTaskOperation> operations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Operations = operations;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageTaskElseCondition"/> for deserialization. </summary>
-        internal StorageTaskElseCondition()
+        /// <summary> Initializes a new instance of <see cref="ElseCondition"/> for deserialization. </summary>
+        internal ElseCondition()
         {
         }
 
         /// <summary> List of operations to execute in the else block. </summary>
-        public IList<StorageTaskOperationInfo> Operations { get; }
+        public IList<StorageTaskOperation> Operations { get; }
     }
 }

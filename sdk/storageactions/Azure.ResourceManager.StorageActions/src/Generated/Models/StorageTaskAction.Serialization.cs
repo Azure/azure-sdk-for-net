@@ -78,15 +78,15 @@ namespace Azure.ResourceManager.StorageActions.Models
             {
                 return null;
             }
-            StorageTaskIfCondition @if = default;
-            StorageTaskElseCondition @else = default;
+            IfCondition @if = default;
+            ElseCondition @else = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("if"u8))
                 {
-                    @if = StorageTaskIfCondition.DeserializeStorageTaskIfCondition(property.Value, options);
+                    @if = IfCondition.DeserializeIfCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("else"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StorageActions.Models
                     {
                         continue;
                     }
-                    @else = StorageTaskElseCondition.DeserializeStorageTaskElseCondition(property.Value, options);
+                    @else = ElseCondition.DeserializeElseCondition(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

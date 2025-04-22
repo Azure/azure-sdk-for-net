@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskReportProperties"/>. </summary>
-        public StorageTaskReportProperties()
+        internal StorageTaskReportProperties()
         {
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <param name="taskVersion"> Storage Task Version. </param>
         /// <param name="runResult"> Represents the overall result of the execution for the run instance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskReportProperties(ResourceIdentifier taskAssignmentId, ResourceIdentifier storageAccountId, string startTime, string finishTime, string objectsTargetedCount, string objectsOperatedOnCount, string objectFailedCount, string objectsSucceededCount, string runStatusError, StorageTaskRunStatus? runStatusEnum, string summaryReportPath, ResourceIdentifier taskId, string taskVersion, StorageTaskRunResult? runResult, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageTaskReportProperties(ResourceIdentifier taskAssignmentId, ResourceIdentifier storageAccountId, string startTime, string finishTime, string objectsTargetedCount, string objectsOperatedOnCount, string objectFailedCount, string objectsSucceededCount, string runStatusError, RunStatusEnum? runStatusEnum, string summaryReportPath, ResourceIdentifier taskId, string taskVersion, RunResult? runResult, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TaskAssignmentId = taskAssignmentId;
             StorageAccountId = storageAccountId;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <summary> Well known Azure Storage error code that represents the error encountered during execution of the run instance. </summary>
         public string RunStatusError { get; }
         /// <summary> Represents the status of the execution. </summary>
-        public StorageTaskRunStatus? RunStatusEnum { get; }
+        public RunStatusEnum? RunStatusEnum { get; }
         /// <summary> Full path to the verbose report stored in the reporting container as specified in the assignment execution context for the storage account. </summary>
         public string SummaryReportPath { get; }
         /// <summary> Resource ID of the Storage Task applied during this run. </summary>
@@ -113,6 +113,6 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <summary> Storage Task Version. </summary>
         public string TaskVersion { get; }
         /// <summary> Represents the overall result of the execution for the run instance. </summary>
-        public StorageTaskRunResult? RunResult { get; }
+        public RunResult? RunResult { get; }
     }
 }

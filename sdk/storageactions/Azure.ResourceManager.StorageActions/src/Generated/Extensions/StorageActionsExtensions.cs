@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageTasks_Get</description>
+        /// <description>StorageTask_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageTasks_Get</description>
+        /// <description>StorageTask_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -146,80 +146,6 @@ namespace Azure.ResourceManager.StorageActions
         }
 
         /// <summary>
-        /// Runs the input conditions against input object metadata properties and designates matched objects in response.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageActions/locations/{location}/previewActions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageTasks_PreviewActions</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageTaskResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableStorageActionsSubscriptionResource.PreviewActions(AzureLocation,StorageTaskPreviewAction,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="storageTaskPreviewAction"> The parameters to preview action condition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="storageTaskPreviewAction"/> is null. </exception>
-        public static async Task<Response<StorageTaskPreviewAction>> PreviewActionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, StorageTaskPreviewAction storageTaskPreviewAction, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableStorageActionsSubscriptionResource(subscriptionResource).PreviewActionsAsync(location, storageTaskPreviewAction, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Runs the input conditions against input object metadata properties and designates matched objects in response.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageActions/locations/{location}/previewActions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageTasks_PreviewActions</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageTaskResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableStorageActionsSubscriptionResource.PreviewActions(AzureLocation,StorageTaskPreviewAction,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="storageTaskPreviewAction"> The parameters to preview action condition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="storageTaskPreviewAction"/> is null. </exception>
-        public static Response<StorageTaskPreviewAction> PreviewActions(this SubscriptionResource subscriptionResource, AzureLocation location, StorageTaskPreviewAction storageTaskPreviewAction, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableStorageActionsSubscriptionResource(subscriptionResource).PreviewActions(location, storageTaskPreviewAction, cancellationToken);
-        }
-
-        /// <summary>
         /// Lists all the storage tasks available under the subscription.
         /// <list type="bullet">
         /// <item>
@@ -228,7 +154,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageTasks_ListBySubscription</description>
+        /// <description>StorageTask_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -264,7 +190,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageTasks_ListBySubscription</description>
+        /// <description>StorageTask_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -289,6 +215,74 @@ namespace Azure.ResourceManager.StorageActions
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStorageActionsSubscriptionResource(subscriptionResource).GetStorageTasks(cancellationToken);
+        }
+
+        /// <summary>
+        /// Runs the input conditions against input object metadata properties and designates matched objects in response.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageActions/locations/{location}/previewActions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageTasksOperationGroup_PreviewActions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageActionsSubscriptionResource.PreviewActionsStorageTasksOperationGroup(string,StorageTaskPreviewAction,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="storageTaskPreviewAction"> The parameters to preview action condition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="location"/> or <paramref name="storageTaskPreviewAction"/> is null. </exception>
+        public static async Task<Response<StorageTaskPreviewAction>> PreviewActionsStorageTasksOperationGroupAsync(this SubscriptionResource subscriptionResource, string location, StorageTaskPreviewAction storageTaskPreviewAction, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableStorageActionsSubscriptionResource(subscriptionResource).PreviewActionsStorageTasksOperationGroupAsync(location, storageTaskPreviewAction, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Runs the input conditions against input object metadata properties and designates matched objects in response.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StorageActions/locations/{location}/previewActions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageTasksOperationGroup_PreviewActions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageActionsSubscriptionResource.PreviewActionsStorageTasksOperationGroup(string,StorageTaskPreviewAction,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="storageTaskPreviewAction"> The parameters to preview action condition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="location"/> or <paramref name="storageTaskPreviewAction"/> is null. </exception>
+        public static Response<StorageTaskPreviewAction> PreviewActionsStorageTasksOperationGroup(this SubscriptionResource subscriptionResource, string location, StorageTaskPreviewAction storageTaskPreviewAction, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStorageActionsSubscriptionResource(subscriptionResource).PreviewActionsStorageTasksOperationGroup(location, storageTaskPreviewAction, cancellationToken);
         }
     }
 }
