@@ -147,12 +147,6 @@
 # PRLabel: %Attestation
 /sdk/attestation/Azure.Security.Attestation                        @anilba06 @gkostal @Azure/azure-sdk-write-attestation
 
-# PRLabel: %Arize AI
-/sdk/arizeaiobservabilityeval/Azure.ResourceManager.*/             @aggarwalsw
-
-# ServiceLabel: %Arize AI %Mgmt
-# ServiceOwners:                                                   @aggarwalsw
-
 # ServiceLabel: %Attestation
 # ServiceOwners:                                                   @anilba06 @gkostal
 
@@ -970,6 +964,12 @@
 
 # ServiceLabel: %Astronomer %Mgmt
 # ServiceOwners:                                                   @banggaurav
+
+# PRLabel: %Arize AI
+/sdk/arizeaiobservabilityeval/Azure.ResourceManager.*/             @aggarwalsw
+
+# ServiceLabel: %Arize AI %Mgmt
+# ServiceOwners:                                                   @aggarwalsw
 
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @ArcturusZhang @ArthurMa1978
