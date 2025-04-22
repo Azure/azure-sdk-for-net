@@ -934,12 +934,6 @@
 # ServiceLabel: %WebPubSub
 # ServiceOwners:                                                   @vicancy @JialinXin
 
-# PRLabel: %Weights & Biases
-/sdk/liftrweightsandbiases/Azure.ResourceManager.*/                @aggarwalsw
-
-# ServiceLabel: %Weights & Biases %Mgmt
-# ServiceOwners:                                                   @aggarwalsw
-
 # ######## Management Plane ########
 
 # PRLabel: %Mgmt
@@ -1102,6 +1096,12 @@
 
 # ServiceLabel: %%Migration Assessment %Mgmt
 # ServiceOwners:                                                   @srilipta-swain
+
+# PRLabel: %Weights & Biases
+/sdk/weightsandbiases/Azure.ResourceManager.*/                     @aggarwalsw
+
+# ServiceLabel: %Weights & Biases %Mgmt
+# ServiceOwners:                                                   @aggarwalsw
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
