@@ -4,11 +4,9 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version tag from 'package-preview-2024-06' to 'package-preview-2024-07'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/3db6867b8e524ea6d1bc7a3bbb989fe50dd2f184/specification/elasticsan/resource-manager/readme.md.
+- Supported soft delete for ElasticSan.
+- Supported prebackup and prerestore for ElasticSan.
 
 ## 1.2.0-beta.1 (2024-10-21)
 
