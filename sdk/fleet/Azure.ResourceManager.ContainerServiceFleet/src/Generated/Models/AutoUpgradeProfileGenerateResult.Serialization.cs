@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    public partial class GenerateResult : IUtf8JsonSerializable, IJsonModel<GenerateResult>
+    public partial class AutoUpgradeProfileGenerateResult : IUtf8JsonSerializable, IJsonModel<AutoUpgradeProfileGenerateResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GenerateResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoUpgradeProfileGenerateResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<GenerateResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AutoUpgradeProfileGenerateResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GenerateResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutoUpgradeProfileGenerateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenerateResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoUpgradeProfileGenerateResult)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W")
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
         }
 
-        GenerateResult IJsonModel<GenerateResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AutoUpgradeProfileGenerateResult IJsonModel<AutoUpgradeProfileGenerateResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GenerateResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutoUpgradeProfileGenerateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenerateResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoUpgradeProfileGenerateResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGenerateResult(document.RootElement, options);
+            return DeserializeAutoUpgradeProfileGenerateResult(document.RootElement, options);
         }
 
-        internal static GenerateResult DeserializeGenerateResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AutoUpgradeProfileGenerateResult DeserializeAutoUpgradeProfileGenerateResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -92,38 +92,38 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GenerateResult(id, serializedAdditionalRawData);
+            return new AutoUpgradeProfileGenerateResult(id, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<GenerateResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AutoUpgradeProfileGenerateResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GenerateResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutoUpgradeProfileGenerateResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GenerateResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoUpgradeProfileGenerateResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        GenerateResult IPersistableModel<GenerateResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AutoUpgradeProfileGenerateResult IPersistableModel<AutoUpgradeProfileGenerateResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GenerateResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutoUpgradeProfileGenerateResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeGenerateResult(document.RootElement, options);
+                        return DeserializeAutoUpgradeProfileGenerateResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GenerateResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoUpgradeProfileGenerateResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<GenerateResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AutoUpgradeProfileGenerateResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

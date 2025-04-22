@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> Status information for the fleet. </summary>
-    public partial class FleetStatus
+    public partial class ContainerServiceFleetStatus
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FleetStatus"/>. </summary>
-        internal FleetStatus()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetStatus"/>. </summary>
+        internal ContainerServiceFleetStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FleetStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetStatus"/>. </summary>
         /// <param name="lastOperationId"> The last operation ID for the fleet. </param>
         /// <param name="lastOperationError"> The last operation error for the fleet. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FleetStatus(string lastOperationId, ResponseError lastOperationError, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerServiceFleetStatus(string lastOperationId, ResponseError lastOperationError, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LastOperationId = lastOperationId;
             LastOperationError = lastOperationError;

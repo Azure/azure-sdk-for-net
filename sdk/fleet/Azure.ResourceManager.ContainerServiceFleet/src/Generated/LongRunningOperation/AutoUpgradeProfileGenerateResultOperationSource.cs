@@ -13,18 +13,18 @@ using Azure.ResourceManager.ContainerServiceFleet.Models;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
-    internal class GenerateResultOperationSource : IOperationSource<GenerateResult>
+    internal class AutoUpgradeProfileGenerateResultOperationSource : IOperationSource<AutoUpgradeProfileGenerateResult>
     {
-        GenerateResult IOperationSource<GenerateResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        AutoUpgradeProfileGenerateResult IOperationSource<AutoUpgradeProfileGenerateResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return GenerateResult.DeserializeGenerateResult(document.RootElement);
+            return AutoUpgradeProfileGenerateResult.DeserializeAutoUpgradeProfileGenerateResult(document.RootElement);
         }
 
-        async ValueTask<GenerateResult> IOperationSource<GenerateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AutoUpgradeProfileGenerateResult> IOperationSource<AutoUpgradeProfileGenerateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return GenerateResult.DeserializeGenerateResult(document.RootElement);
+            return AutoUpgradeProfileGenerateResult.DeserializeAutoUpgradeProfileGenerateResult(document.RootElement);
         }
     }
 }

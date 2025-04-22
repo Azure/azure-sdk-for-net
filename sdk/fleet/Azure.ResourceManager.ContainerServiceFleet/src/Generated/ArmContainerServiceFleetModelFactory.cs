@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="hubProfile"> The FleetHubProfile configures the Fleet's hub. </param>
         /// <param name="status"> Status information for the fleet. </param>
         /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetData"/> instance for mocking. </returns>
-        public static ContainerServiceFleetData ContainerServiceFleetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? eTag = null, ManagedServiceIdentity identity = null, FleetProvisioningState? provisioningState = null, FleetHubProfile hubProfile = null, FleetStatus status = null)
+        public static ContainerServiceFleetData ContainerServiceFleetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? eTag = null, ManagedServiceIdentity identity = null, FleetProvisioningState? provisioningState = null, FleetHubProfile hubProfile = null, ContainerServiceFleetStatus status = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -69,13 +69,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FleetStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerServiceFleetStatus"/>. </summary>
         /// <param name="lastOperationId"> The last operation ID for the fleet. </param>
         /// <param name="lastOperationError"> The last operation error for the fleet. </param>
-        /// <returns> A new <see cref="Models.FleetStatus"/> instance for mocking. </returns>
-        public static FleetStatus FleetStatus(string lastOperationId = null, ResponseError lastOperationError = null)
+        /// <returns> A new <see cref="Models.ContainerServiceFleetStatus"/> instance for mocking. </returns>
+        public static ContainerServiceFleetStatus ContainerServiceFleetStatus(string lastOperationId = null, ResponseError lastOperationError = null)
         {
-            return new FleetStatus(lastOperationId, lastOperationError, serializedAdditionalRawData: null);
+            return new ContainerServiceFleetStatus(lastOperationId, lastOperationError, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.AutoUpgradeProfileData"/>. </summary>
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new AutoUpgradeProfileStatus(lastTriggeredOn, lastTriggerStatus, lastTriggerError, lastTriggerUpgradeVersions?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GenerateResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AutoUpgradeProfileGenerateResult"/>. </summary>
         /// <param name="id"> The ARM resource id of the generated UpdateRun. e.g.: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}'. </param>
-        /// <returns> A new <see cref="Models.GenerateResult"/> instance for mocking. </returns>
-        public static GenerateResult GenerateResult(string id = null)
+        /// <returns> A new <see cref="Models.AutoUpgradeProfileGenerateResult"/> instance for mocking. </returns>
+        public static AutoUpgradeProfileGenerateResult AutoUpgradeProfileGenerateResult(string id = null)
         {
-            return new GenerateResult(id, serializedAdditionalRawData: null);
+            return new AutoUpgradeProfileGenerateResult(id, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FleetCredentialResults"/>. </summary>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="status"> Status information of the last operation for fleet member. </param>
         /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetMemberData"/> instance for mocking. </returns>
-        public static ContainerServiceFleetMemberData ContainerServiceFleetMemberData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? eTag = null, ResourceIdentifier clusterResourceId = null, string group = null, FleetMemberProvisioningState? provisioningState = null, FleetMemberStatus status = null)
+        public static ContainerServiceFleetMemberData ContainerServiceFleetMemberData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? eTag = null, ResourceIdentifier clusterResourceId = null, string group = null, FleetMemberProvisioningState? provisioningState = null, ContainerServiceFleetMemberStatus status = null)
         {
             return new ContainerServiceFleetMemberData(
                 id,
@@ -179,13 +179,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FleetMemberStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerServiceFleetMemberStatus"/>. </summary>
         /// <param name="lastOperationId"> The last operation ID for the fleet member. </param>
         /// <param name="lastOperationError"> The last operation error of the fleet member. </param>
-        /// <returns> A new <see cref="Models.FleetMemberStatus"/> instance for mocking. </returns>
-        public static FleetMemberStatus FleetMemberStatus(string lastOperationId = null, ResponseError lastOperationError = null)
+        /// <returns> A new <see cref="Models.ContainerServiceFleetMemberStatus"/> instance for mocking. </returns>
+        public static ContainerServiceFleetMemberStatus ContainerServiceFleetMemberStatus(string lastOperationId = null, ResponseError lastOperationError = null)
         {
-            return new FleetMemberStatus(lastOperationId, lastOperationError, serializedAdditionalRawData: null);
+            return new ContainerServiceFleetMemberStatus(lastOperationId, lastOperationError, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.ContainerServiceFleetUpdateRunData"/>. </summary>

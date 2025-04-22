@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    public partial class FleetStatus : IUtf8JsonSerializable, IJsonModel<FleetStatus>
+    public partial class ContainerServiceFleetStatus : IUtf8JsonSerializable, IJsonModel<ContainerServiceFleetStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FleetStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceFleetStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<FleetStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerServiceFleetStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FleetStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FleetStatus)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetStatus)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(LastOperationId))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
         }
 
-        FleetStatus IJsonModel<FleetStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerServiceFleetStatus IJsonModel<ContainerServiceFleetStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FleetStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FleetStatus)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFleetStatus(document.RootElement, options);
+            return DeserializeContainerServiceFleetStatus(document.RootElement, options);
         }
 
-        internal static FleetStatus DeserializeFleetStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContainerServiceFleetStatus DeserializeContainerServiceFleetStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -107,38 +107,38 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FleetStatus(lastOperationId, lastOperationError, serializedAdditionalRawData);
+            return new ContainerServiceFleetStatus(lastOperationId, lastOperationError, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<FleetStatus>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerServiceFleetStatus>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FleetStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetStatus>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FleetStatus)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
-        FleetStatus IPersistableModel<FleetStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerServiceFleetStatus IPersistableModel<ContainerServiceFleetStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FleetStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetStatus>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFleetStatus(document.RootElement, options);
+                        return DeserializeContainerServiceFleetStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FleetStatus)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetStatus)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FleetStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerServiceFleetStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

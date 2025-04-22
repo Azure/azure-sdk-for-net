@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             ResourceIdentifier clusterResourceId = default;
             string group = default;
             FleetMemberProvisioningState? provisioningState = default;
-            FleetMemberStatus status = default;
+            ContainerServiceFleetMemberStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                             {
                                 continue;
                             }
-                            status = FleetMemberStatus.DeserializeFleetMemberStatus(property0.Value, options);
+                            status = ContainerServiceFleetMemberStatus.DeserializeContainerServiceFleetMemberStatus(property0.Value, options);
                             continue;
                         }
                     }

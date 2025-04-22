@@ -160,8 +160,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             // GenerateUpdateRun
             getAutoUpgradeProfileResult = await autoUpgradeProfileCollection.GetAsync(autoUpgradeProfileName);
             Debug.Assert(getAutoUpgradeProfileResult.HasData, "GetAsync AutoUpgradeProfile data was not valid");
-            ArmOperation<GenerateResult> generateUpdateRunLRO = await getAutoUpgradeProfileResult.GenerateUpdateRunAutoUpgradeProfileOperationAsync(WaitUntil.Completed);
-            GenerateResult generateResult = generateUpdateRunLRO.Value;
+            ArmOperation<AutoUpgradeProfileGenerateResult> generateUpdateRunLRO = await getAutoUpgradeProfileResult.GenerateUpdateRunAsync(WaitUntil.Completed);
+            AutoUpgradeProfileGenerateResult generateResult = generateUpdateRunLRO.Value;
             Console.WriteLine($"GenerateUpdateRun Succeeded: {generateResult.Id}");
 
             // Verify and Delete the Generated UpdateRun

@@ -8,6 +8,7 @@ csharp: true
 library-name: ContainerServiceFleet
 namespace: Azure.ResourceManager.ContainerServiceFleet
 require: https://github.com/Azure/azure-rest-api-specs/blob/fb5c8fa550e9dd280236a93a974a2262000ab0b6/specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/readme.md
+#tag: package-2025-03-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -31,7 +32,9 @@ rename-mapping:
   SkipTarget: ContainerServiceFleetSkipTarget
   TargetType: ContainerServiceFleetTargetType
   UpgradeChannel: ContainerServiceFleetUpgradeChannel
-  GenerateResponse: GenerateResult
+  GenerateResponse: AutoUpgradeProfileGenerateResult
+  FleetMemberStatus: ContainerServiceFleetMemberStatus
+  FleetStatus: ContainerServiceFleetStatus
 
 prepend-rp-prefix:
   - AgentProfile
@@ -70,6 +73,9 @@ operations-to-lro-api-version-override:
   UpdateRuns_Delete: "2016-03-30"
   FleetUpdateStrategies_CreateOrUpdate: "2016-03-30"
   FleetUpdateStrategies_Delete: "2016-03-30"
+
+override-operation-name:
+  AutoUpgradeProfileOperations_GenerateUpdateRun: GenerateUpdateRun
 
 acronym-mapping:
   CPU: Cpu

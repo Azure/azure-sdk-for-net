@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="status"> Status information of the last operation for fleet member. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, ResourceIdentifier clusterResourceId, string group, FleetMemberProvisioningState? provisioningState, FleetMemberStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ContainerServiceFleetMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, ResourceIdentifier clusterResourceId, string group, FleetMemberProvisioningState? provisioningState, ContainerServiceFleetMemberStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = eTag;
             ClusterResourceId = clusterResourceId;
@@ -86,6 +86,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <summary> The status of the last operation. </summary>
         public FleetMemberProvisioningState? ProvisioningState { get; }
         /// <summary> Status information of the last operation for fleet member. </summary>
-        public FleetMemberStatus Status { get; }
+        public ContainerServiceFleetMemberStatus Status { get; }
     }
 }

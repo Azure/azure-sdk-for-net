@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    /// <summary> Status information for the fleet member. </summary>
-    public partial class FleetMemberStatus
+    /// <summary> GenerateResponse is the response of a generate request. </summary>
+    public partial class AutoUpgradeProfileGenerateResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,28 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FleetMemberStatus"/>. </summary>
-        internal FleetMemberStatus()
+        /// <summary> Initializes a new instance of <see cref="AutoUpgradeProfileGenerateResult"/>. </summary>
+        /// <param name="id"> The ARM resource id of the generated UpdateRun. e.g.: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}'. </param>
+        internal AutoUpgradeProfileGenerateResult(string id)
         {
+            Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FleetMemberStatus"/>. </summary>
-        /// <param name="lastOperationId"> The last operation ID for the fleet member. </param>
-        /// <param name="lastOperationError"> The last operation error of the fleet member. </param>
+        /// <summary> Initializes a new instance of <see cref="AutoUpgradeProfileGenerateResult"/>. </summary>
+        /// <param name="id"> The ARM resource id of the generated UpdateRun. e.g.: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FleetMemberStatus(string lastOperationId, ResponseError lastOperationError, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutoUpgradeProfileGenerateResult(string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            LastOperationId = lastOperationId;
-            LastOperationError = lastOperationError;
+            Id = id;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The last operation ID for the fleet member. </summary>
-        public string LastOperationId { get; }
-        /// <summary> The last operation error of the fleet member. </summary>
-        public ResponseError LastOperationError { get; }
+        /// <summary> Initializes a new instance of <see cref="AutoUpgradeProfileGenerateResult"/> for deserialization. </summary>
+        internal AutoUpgradeProfileGenerateResult()
+        {
+        }
+
+        /// <summary> The ARM resource id of the generated UpdateRun. e.g.: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}'. </summary>
+        public string Id { get; }
     }
 }

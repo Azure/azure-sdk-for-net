@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="hubProfile"> The FleetHubProfile configures the Fleet's hub. </param>
         /// <param name="status"> Status information for the fleet. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? eTag, ManagedServiceIdentity identity, FleetProvisioningState? provisioningState, FleetHubProfile hubProfile, FleetStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerServiceFleetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? eTag, ManagedServiceIdentity identity, FleetProvisioningState? provisioningState, FleetHubProfile hubProfile, ContainerServiceFleetStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = eTag;
             Identity = identity;
@@ -94,6 +94,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <summary> The FleetHubProfile configures the Fleet's hub. </summary>
         public FleetHubProfile HubProfile { get; set; }
         /// <summary> Status information for the fleet. </summary>
-        public FleetStatus Status { get; }
+        public ContainerServiceFleetStatus Status { get; }
     }
 }

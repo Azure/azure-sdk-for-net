@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GenerateUpdateRunAutoUpgradeProfileOperation_AutoUpgradeProfileOperationsGenerateUpdateRunMaximumSet()
+        public async Task GenerateUpdateRun_AutoUpgradeProfileOperationsGenerateUpdateRunMaximumSet()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2025-03-01/examples/AutoUpgradeProfileOperations_GenerateUpdateRun_MaximumSet_Gen.json
             // this example is just showing the usage of "AutoUpgradeProfileOperations_GenerateUpdateRun" operation, for the dependent resources, they will have to be created separately.
@@ -233,8 +233,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             AutoUpgradeProfileResource autoUpgradeProfile = client.GetAutoUpgradeProfileResource(autoUpgradeProfileResourceId);
 
             // invoke the operation
-            ArmOperation<GenerateResult> lro = await autoUpgradeProfile.GenerateUpdateRunAutoUpgradeProfileOperationAsync(WaitUntil.Completed);
-            GenerateResult result = lro.Value;
+            ArmOperation<AutoUpgradeProfileGenerateResult> lro = await autoUpgradeProfile.GenerateUpdateRunAsync(WaitUntil.Completed);
+            AutoUpgradeProfileGenerateResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

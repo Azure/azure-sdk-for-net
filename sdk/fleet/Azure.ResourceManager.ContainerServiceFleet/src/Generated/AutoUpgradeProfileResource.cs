@@ -374,14 +374,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<GenerateResult>> GenerateUpdateRunAutoUpgradeProfileOperationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AutoUpgradeProfileGenerateResult>> GenerateUpdateRunAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _autoUpgradeProfileOperationsClientDiagnostics.CreateScope("AutoUpgradeProfileResource.GenerateUpdateRunAutoUpgradeProfileOperation");
+            using var scope = _autoUpgradeProfileOperationsClientDiagnostics.CreateScope("AutoUpgradeProfileResource.GenerateUpdateRun");
             scope.Start();
             try
             {
                 var response = await _autoUpgradeProfileOperationsRestClient.GenerateUpdateRunAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceFleetArmOperation<GenerateResult>(new GenerateResultOperationSource(), _autoUpgradeProfileOperationsClientDiagnostics, Pipeline, _autoUpgradeProfileOperationsRestClient.CreateGenerateUpdateRunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ContainerServiceFleetArmOperation<AutoUpgradeProfileGenerateResult>(new AutoUpgradeProfileGenerateResultOperationSource(), _autoUpgradeProfileOperationsClientDiagnostics, Pipeline, _autoUpgradeProfileOperationsRestClient.CreateGenerateUpdateRunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -412,14 +412,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<GenerateResult> GenerateUpdateRunAutoUpgradeProfileOperation(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AutoUpgradeProfileGenerateResult> GenerateUpdateRun(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _autoUpgradeProfileOperationsClientDiagnostics.CreateScope("AutoUpgradeProfileResource.GenerateUpdateRunAutoUpgradeProfileOperation");
+            using var scope = _autoUpgradeProfileOperationsClientDiagnostics.CreateScope("AutoUpgradeProfileResource.GenerateUpdateRun");
             scope.Start();
             try
             {
                 var response = _autoUpgradeProfileOperationsRestClient.GenerateUpdateRun(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ContainerServiceFleetArmOperation<GenerateResult>(new GenerateResultOperationSource(), _autoUpgradeProfileOperationsClientDiagnostics, Pipeline, _autoUpgradeProfileOperationsRestClient.CreateGenerateUpdateRunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ContainerServiceFleetArmOperation<AutoUpgradeProfileGenerateResult>(new AutoUpgradeProfileGenerateResultOperationSource(), _autoUpgradeProfileOperationsClientDiagnostics, Pipeline, _autoUpgradeProfileOperationsRestClient.CreateGenerateUpdateRunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

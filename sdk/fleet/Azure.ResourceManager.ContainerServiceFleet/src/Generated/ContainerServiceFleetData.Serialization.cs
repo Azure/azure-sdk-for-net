@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             SystemData systemData = default;
             FleetProvisioningState? provisioningState = default;
             FleetHubProfile hubProfile = default;
-            FleetStatus status = default;
+            ContainerServiceFleetStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                             {
                                 continue;
                             }
-                            status = FleetStatus.DeserializeFleetStatus(property0.Value, options);
+                            status = ContainerServiceFleetStatus.DeserializeContainerServiceFleetStatus(property0.Value, options);
                             continue;
                         }
                     }
