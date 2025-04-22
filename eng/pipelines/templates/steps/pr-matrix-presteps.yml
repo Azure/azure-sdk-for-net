@@ -38,6 +38,18 @@ steps:
       ArtifactPath: '$(Build.ArtifactStagingDirectory)/PackageInfoPublishing'
 
   - pwsh: |
+      # if Azure.Core is in the list of packages we want to always keep it around for validation regardless of whether or not it is a direct package
+      Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfo" -Filter "Azure.Core.json" -Recurse |
+        ForEach-Object {
+          $json = Get-Content $_.FullName | ConvertFrom-Json
+
+          if ($json.IncludedForValidation -eq $true) {
+            Write-Host "Azure.Core is indirectly included, setting it to direct so that we build and analyze it."
+            $json.IncludedForValidation = $false
+            $json | ConvertTo-Json -Depth 100 | Set-Content $_.FullName
+          }
+        }
+
       $packageInfos = Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfo" -Filter "*.json" -Recurse `
         | ForEach-Object { Get-Content $_.FullName | ConvertFrom-Json }
 
@@ -65,4 +77,3 @@ steps:
         }
     displayName: Only target direct packages for build and test
     condition: and(succeededOrFailed(), eq(${{ parameters.ForceDirect }}, true))
-
