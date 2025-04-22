@@ -3,15 +3,15 @@
 
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
-using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
 {
     public class ImmutableDictionaryTests : MrwCollectionTests<ImmutableDictionary<string, AvailabilitySetData>, AvailabilitySetData>
     {
         protected override ModelReaderWriterContext Context => new LocalContext();
+
+        protected override string CollectionTypeName => "ImmutableDictionary<String, AvailabilitySetData>";
 
         protected override void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, string format)
             => AvailabilitySetDataTests.CompareAvailabilitySetData(model, model2, format);
@@ -51,8 +51,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 protected override Type BuilderType => typeof(ImmutableDictionary<string, AvailabilitySetData>.Builder);
 
                 protected override Type ItemType => typeof(AvailabilitySetData);
-
-                protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => ImmutableDictionary<string, AvailabilitySetData>.Empty.ToBuilder();
 

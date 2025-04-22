@@ -6,12 +6,15 @@ import { DecoratorInfo } from "@azure-tools/typespec-client-generator-core";
 
 import {
   CodeModel,
-  CSharpEmitterOptions,
+  InputClient,
   InputModelType,
   setSDKContextOptions
 } from "@typespec/http-client-csharp";
 
-import { $onEmit as $onAzureEmit } from "@azure-typespec/http-client-csharp";
+import {
+  $onEmit as $onAzureEmit,
+  AzureEmitterOptions
+} from "@azure-typespec/http-client-csharp";
 import { azureSDKContextOptions } from "./sdk-context-options.js";
 import { calculateResourceTypeFromPath } from "./resource-type.js";
 
@@ -22,7 +25,7 @@ const armResourceCreateOrUpdate =
 const singleton = "Azure.ResourceManager.@singleton";
 const resourceMetadata = "Azure.ClientGenerator.Core.@resourceSchema";
 
-export async function $onEmit(context: EmitContext<CSharpEmitterOptions>) {
+export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
   context.options["generator-name"] ??= "ManagementClientGenerator";
   context.options["update-code-model"] = updateCodeModel;
   context.options["emitter-extension-path"] ??= import.meta.url;
@@ -33,10 +36,14 @@ export async function $onEmit(context: EmitContext<CSharpEmitterOptions>) {
 
 function updateCodeModel(codeModel: CodeModel): CodeModel {
   for (const client of codeModel.clients) {
+    updateClient(client);
+  }
+
+  function updateClient(client: InputClient) {
     // TODO: we can implement this decorator in TCGC until we meet the corner case
     // if the client has resourceMetadata decorator, it is a resource client and we don't need to add it again
     if (client.decorators?.some((d) => d.name == resourceMetadata)) {
-      continue;
+      return;
     }
 
     // TODO: Once we have the ability to get resource hierarchy from TCGC directly, we can remove this implementation
@@ -88,6 +95,12 @@ function updateCodeModel(codeModel: CodeModel): CodeModel {
         isSingleton.toString();
       resourceMetadataDecorator.arguments["resourceType"] = resourceType;
       client.decorators.push(resourceMetadataDecorator);
+    }
+
+    if (client.children) {
+      for (const child of client.children) {
+        updateClient(child as InputClient);
+      }
     }
   }
   return codeModel;
