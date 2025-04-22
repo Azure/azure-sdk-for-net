@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.StorageActions.Models
             {
                 return null;
             }
-            IList<StorageTaskOperation> operations = default;
+            IList<StorageTaskOperationInfo> operations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operations"u8))
                 {
-                    List<StorageTaskOperation> array = new List<StorageTaskOperation>();
+                    List<StorageTaskOperationInfo> array = new List<StorageTaskOperationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageTaskOperation.DeserializeStorageTaskOperation(item, options));
+                        array.Add(StorageTaskOperationInfo.DeserializeStorageTaskOperationInfo(item, options));
                     }
                     operations = array;
                     continue;

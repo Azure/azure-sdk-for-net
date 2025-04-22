@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageActions.Models
 {
-    public partial class StorageTaskOperation : IUtf8JsonSerializable, IJsonModel<StorageTaskOperation>
+    public partial class StorageTaskOperationInfo : IUtf8JsonSerializable, IJsonModel<StorageTaskOperationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageTaskOperation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageTaskOperationInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<StorageTaskOperation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StorageTaskOperationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskOperation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskOperationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageTaskOperation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageTaskOperationInfo)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("name"u8);
@@ -74,19 +74,19 @@ namespace Azure.ResourceManager.StorageActions.Models
             }
         }
 
-        StorageTaskOperation IJsonModel<StorageTaskOperation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        StorageTaskOperationInfo IJsonModel<StorageTaskOperationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskOperation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskOperationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageTaskOperation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageTaskOperationInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStorageTaskOperation(document.RootElement, options);
+            return DeserializeStorageTaskOperationInfo(document.RootElement, options);
         }
 
-        internal static StorageTaskOperation DeserializeStorageTaskOperation(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static StorageTaskOperationInfo DeserializeStorageTaskOperationInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -145,38 +145,38 @@ namespace Azure.ResourceManager.StorageActions.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StorageTaskOperation(name, parameters ?? new ChangeTrackingDictionary<string, string>(), onSuccess, onFailure, serializedAdditionalRawData);
+            return new StorageTaskOperationInfo(name, parameters ?? new ChangeTrackingDictionary<string, string>(), onSuccess, onFailure, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<StorageTaskOperation>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<StorageTaskOperationInfo>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskOperation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskOperationInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageTaskOperation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageTaskOperationInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
-        StorageTaskOperation IPersistableModel<StorageTaskOperation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        StorageTaskOperationInfo IPersistableModel<StorageTaskOperationInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskOperation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskOperationInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeStorageTaskOperation(document.RootElement, options);
+                        return DeserializeStorageTaskOperationInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageTaskOperation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageTaskOperationInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<StorageTaskOperation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StorageTaskOperationInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

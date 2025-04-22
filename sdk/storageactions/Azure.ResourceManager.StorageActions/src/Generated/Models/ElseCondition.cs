@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <summary> Initializes a new instance of <see cref="ElseCondition"/>. </summary>
         /// <param name="operations"> List of operations to execute in the else block. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operations"/> is null. </exception>
-        public ElseCondition(IEnumerable<StorageTaskOperation> operations)
+        public ElseCondition(IEnumerable<StorageTaskOperationInfo> operations)
         {
             Argument.AssertNotNull(operations, nameof(operations));
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <summary> Initializes a new instance of <see cref="ElseCondition"/>. </summary>
         /// <param name="operations"> List of operations to execute in the else block. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElseCondition(IList<StorageTaskOperation> operations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElseCondition(IList<StorageTaskOperationInfo> operations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Operations = operations;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.StorageActions.Models
         }
 
         /// <summary> List of operations to execute in the else block. </summary>
-        public IList<StorageTaskOperation> Operations { get; }
+        public IList<StorageTaskOperationInfo> Operations { get; }
     }
 }

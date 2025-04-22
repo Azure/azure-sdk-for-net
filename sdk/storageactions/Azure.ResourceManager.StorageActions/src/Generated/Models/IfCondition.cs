@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <param name="condition"> Condition predicate to evaluate each object. See https://aka.ms/storagetaskconditions for valid properties and operators. </param>
         /// <param name="operations"> List of operations to execute when the condition predicate satisfies. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="condition"/> or <paramref name="operations"/> is null. </exception>
-        public IfCondition(string condition, IEnumerable<StorageTaskOperation> operations)
+        public IfCondition(string condition, IEnumerable<StorageTaskOperationInfo> operations)
         {
             Argument.AssertNotNull(condition, nameof(condition));
             Argument.AssertNotNull(operations, nameof(operations));
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <param name="condition"> Condition predicate to evaluate each object. See https://aka.ms/storagetaskconditions for valid properties and operators. </param>
         /// <param name="operations"> List of operations to execute when the condition predicate satisfies. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IfCondition(string condition, IList<StorageTaskOperation> operations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IfCondition(string condition, IList<StorageTaskOperationInfo> operations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Condition = condition;
             Operations = operations;
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <summary> Condition predicate to evaluate each object. See https://aka.ms/storagetaskconditions for valid properties and operators. </summary>
         public string Condition { get; set; }
         /// <summary> List of operations to execute when the condition predicate satisfies. </summary>
-        public IList<StorageTaskOperation> Operations { get; }
+        public IList<StorageTaskOperationInfo> Operations { get; }
     }
 }
