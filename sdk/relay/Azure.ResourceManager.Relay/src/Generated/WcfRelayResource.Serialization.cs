@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Relay
 
         WcfRelayData IJsonModel<WcfRelayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WcfRelayData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WcfRelayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WcfRelayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WcfRelayData>(Data, options, AzureResourceManagerRelayContext.Default);
 
-        WcfRelayData IPersistableModel<WcfRelayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WcfRelayData>(data, options);
+        WcfRelayData IPersistableModel<WcfRelayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WcfRelayData>(data, options, AzureResourceManagerRelayContext.Default);
 
         string IPersistableModel<WcfRelayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WcfRelayData>)Data).GetFormatFromOptions(options);
     }

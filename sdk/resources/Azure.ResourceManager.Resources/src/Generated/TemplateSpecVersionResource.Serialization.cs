@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Resources
 
         TemplateSpecVersionData IJsonModel<TemplateSpecVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TemplateSpecVersionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TemplateSpecVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<TemplateSpecVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TemplateSpecVersionData>(Data, options, AzureResourceManagerResourcesContext.Default);
 
-        TemplateSpecVersionData IPersistableModel<TemplateSpecVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TemplateSpecVersionData>(data, options);
+        TemplateSpecVersionData IPersistableModel<TemplateSpecVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TemplateSpecVersionData>(data, options, AzureResourceManagerResourcesContext.Default);
 
         string IPersistableModel<TemplateSpecVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TemplateSpecVersionData>)Data).GetFormatFromOptions(options);
     }

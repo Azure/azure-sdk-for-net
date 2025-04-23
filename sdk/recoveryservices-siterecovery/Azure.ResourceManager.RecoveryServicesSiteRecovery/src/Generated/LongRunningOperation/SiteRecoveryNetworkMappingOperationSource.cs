@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         SiteRecoveryNetworkMappingResource IOperationSource<SiteRecoveryNetworkMappingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SiteRecoveryNetworkMappingData>(response.Content);
+            var data = ModelReaderWriter.Read<SiteRecoveryNetworkMappingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
             return new SiteRecoveryNetworkMappingResource(_client, data);
         }
 
         async ValueTask<SiteRecoveryNetworkMappingResource> IOperationSource<SiteRecoveryNetworkMappingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SiteRecoveryNetworkMappingData>(response.Content);
+            var data = ModelReaderWriter.Read<SiteRecoveryNetworkMappingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
             return await Task.FromResult(new SiteRecoveryNetworkMappingResource(_client, data)).ConfigureAwait(false);
         }
     }

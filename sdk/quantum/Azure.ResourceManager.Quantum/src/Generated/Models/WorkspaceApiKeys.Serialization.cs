@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Quantum.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQuantumContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WorkspaceApiKeys)} does not support writing '{options.Format}' format.");
             }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Relay
 
         RelayAuthorizationRuleData IJsonModel<RelayAuthorizationRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RelayAuthorizationRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RelayAuthorizationRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RelayAuthorizationRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RelayAuthorizationRuleData>(Data, options, AzureResourceManagerRelayContext.Default);
 
-        RelayAuthorizationRuleData IPersistableModel<RelayAuthorizationRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelayAuthorizationRuleData>(data, options);
+        RelayAuthorizationRuleData IPersistableModel<RelayAuthorizationRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelayAuthorizationRuleData>(data, options, AzureResourceManagerRelayContext.Default);
 
         string IPersistableModel<RelayAuthorizationRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RelayAuthorizationRuleData>)Data).GetFormatFromOptions(options);
     }
