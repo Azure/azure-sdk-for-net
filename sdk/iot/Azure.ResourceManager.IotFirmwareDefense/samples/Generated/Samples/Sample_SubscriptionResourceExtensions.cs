@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetFirmwareAnalysisWorkspaces_WorkspacesListBySubscriptionMaximumSetGen()
+        public async Task GetFirmwareAnalysisWorkspaces_WorkspacesListBySubscriptionMaximumSetGenGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Workspaces_ListBySubscription_MaximumSet_Gen.json
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2025-04-01-preview/examples/Workspaces_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "Workspaces_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "5443A01A-5242-4950-AC1A-2DD362180254";
+            string subscriptionId = "5C707B5F-6130-4F71-819E-953A28942E88";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetFirmwareAnalysisWorkspaces_WorkspacesListBySubscriptionMinimumSetGen()
+        public async Task GetFirmwareAnalysisWorkspaces_WorkspacesListBySubscriptionMaximumSetGenGeneratedByMinimumSetRule()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Workspaces_ListBySubscription_MinimumSet_Gen.json
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2025-04-01-preview/examples/Workspaces_ListBySubscription_MinimumSet_Gen.json
             // this example is just showing the usage of "Workspaces_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "5443A01A-5242-4950-AC1A-2DD362180254";
+            string subscriptionId = "5C707B5F-6130-4F71-819E-953A28942E88";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

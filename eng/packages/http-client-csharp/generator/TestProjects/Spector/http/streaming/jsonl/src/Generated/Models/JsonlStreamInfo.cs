@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Streaming.Jsonl.Models
+namespace TypeSpec.Http.Streams
 {
     public partial class JsonlStreamInfo
     {

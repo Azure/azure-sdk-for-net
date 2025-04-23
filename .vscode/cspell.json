@@ -1629,13 +1629,14 @@
     {
       "filename": "**/sdk/iot/Azure.ResourceManager.IotFirmwareDefense/**/*.cs",
       "words": [
-        "RELRO",
-        "Relro",
         "relro",
-        "Rpath",
         "rpath",
         "runpath",
-        "Cves"
+        "cves",
+        "ocsp",
+        "sbom",
+        "diffie",
+        "iotfirmwaredefense"
       ]
     },
     {

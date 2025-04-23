@@ -8,7 +8,7 @@
    "$id": "2",
    "kind": "model",
    "name": "User",
-   "namespace": "Parameters.Basic.ExplicitBody",
+   "namespace": "Parameters.Basic",
    "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.User",
    "usage": "Input,Json",
    "doc": "This is a simple model.",
@@ -46,7 +46,7 @@
    "$id": "7",
    "kind": "model",
    "name": "SimpleRequest",
-   "namespace": "Parameters.Basic.ImplicitBody",
+   "namespace": "Parameters.Basic",
    "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.Request.anonymous",
    "usage": "Spread,Json",
    "decorators": [],
@@ -128,7 +128,7 @@
      "$id": "17",
      "kind": "client",
      "name": "ExplicitBody",
-     "namespace": "Parameters.Basic.ExplicitBody",
+     "namespace": "Parameters.Basic",
      "methods": [
       {
        "$id": "18",
@@ -299,7 +299,7 @@
      "$id": "32",
      "kind": "client",
      "name": "ImplicitBody",
-     "namespace": "Parameters.Basic.ImplicitBody",
+     "namespace": "Parameters.Basic",
      "methods": [
       {
        "$id": "33",

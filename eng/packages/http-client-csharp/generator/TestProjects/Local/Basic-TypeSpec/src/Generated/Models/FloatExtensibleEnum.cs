@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace BasicTypeSpec.Models
+namespace BasicTypeSpec
 {
     /// <summary> Float based extensible enum. </summary>
     public readonly partial struct FloatExtensibleEnum : IEquatable<FloatExtensibleEnum>
