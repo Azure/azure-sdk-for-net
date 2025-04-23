@@ -7,8 +7,6 @@ Project("{37791A51-5A07-4271-B105-B1E2B71CE7D5}") = "Azure.ResourceManager.Oracl
 EndProject
 Project("{37791A51-5A07-4271-B105-B1E2B71CE7D5}") = "Azure.ResourceManager.OracleDatabase.Tests", "tests\Azure.ResourceManager.OracleDatabase.Tests.csproj", "{FAFEDDB6-164D-4F82-A55A-C2672F831BA0}"
 EndProject
-Project("{37791A51-5A07-4271-B105-B1E2B71CE7D5}") = "Azure.ResourceManager.OracleDatabase.Samples", "samples\Azure.ResourceManager.OracleDatabase.Samples.csproj", "{70B8F25D-D868-4C33-9F2D-33F215386C3A}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,17 +47,5 @@ Global
 		{FAFEDDB6-164D-4F82-A55A-C2672F831BA0}.Release|x64.Build.0 = Release|Any CPU
 		{FAFEDDB6-164D-4F82-A55A-C2672F831BA0}.Release|x86.ActiveCfg = Release|Any CPU
 		{FAFEDDB6-164D-4F82-A55A-C2672F831BA0}.Release|x86.Build.0 = Release|Any CPU
-		{70B8F25D-D868-4C33-9F2D-33F215386C3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{70B8F25D-D868-4C33-9F2D-33F215386C3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{70B8F25D-D868-4C33-9F2D-33F215386C3A}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{70B8F25D-D868-4C33-9F2D-33F215386C3A}.Debug|x64.Build.0 = Debug|Any CPU
-		{70B8F25D-D868-4C33-9F2D-33F215386C3A}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{70B8F25D-D868-4C33-9F2D-33F215386C3A}.Debug|x86.Build.0 = Debug|Any CPU
-		{70B8F25D-D868-4C33-9F2D-33F215386C3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{70B8F25D-D868-4C33-9F2D-33F215386C3A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{70B8F25D-D868-4C33-9F2D-33F215386C3A}.Release|x64.ActiveCfg = Release|Any CPU
-		{70B8F25D-D868-4C33-9F2D-33F215386C3A}.Release|x64.Build.0 = Release|Any CPU
-		{70B8F25D-D868-4C33-9F2D-33F215386C3A}.Release|x86.ActiveCfg = Release|Any CPU
-		{70B8F25D-D868-4C33-9F2D-33F215386C3A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
