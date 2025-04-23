@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         ContainerRegistryArchiveResource IOperationSource<ContainerRegistryArchiveResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerRegistryArchiveData>(response.Content);
+            var data = ModelReaderWriter.Read<ContainerRegistryArchiveData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerRegistryContext.Default);
             return new ContainerRegistryArchiveResource(_client, data);
         }
 
         async ValueTask<ContainerRegistryArchiveResource> IOperationSource<ContainerRegistryArchiveResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerRegistryArchiveData>(response.Content);
+            var data = ModelReaderWriter.Read<ContainerRegistryArchiveData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerRegistryContext.Default);
             return await Task.FromResult(new ContainerRegistryArchiveResource(_client, data)).ConfigureAwait(false);
         }
     }

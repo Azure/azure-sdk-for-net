@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Compute
 
         CloudServiceRoleData IJsonModel<CloudServiceRoleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudServiceRoleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CloudServiceRoleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CloudServiceRoleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CloudServiceRoleData>(Data, options, AzureResourceManagerComputeContext.Default);
 
-        CloudServiceRoleData IPersistableModel<CloudServiceRoleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudServiceRoleData>(data, options);
+        CloudServiceRoleData IPersistableModel<CloudServiceRoleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudServiceRoleData>(data, options, AzureResourceManagerComputeContext.Default);
 
         string IPersistableModel<CloudServiceRoleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudServiceRoleData>)Data).GetFormatFromOptions(options);
     }

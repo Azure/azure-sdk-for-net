@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Consumption.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConsumptionContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionChargeSummary)} does not support writing '{options.Format}' format.");
             }

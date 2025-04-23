@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         ContainerRegistryExportPipelineData IJsonModel<ContainerRegistryExportPipelineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerRegistryExportPipelineData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContainerRegistryExportPipelineData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ContainerRegistryExportPipelineData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerRegistryExportPipelineData>(Data, options, AzureResourceManagerContainerRegistryContext.Default);
 
-        ContainerRegistryExportPipelineData IPersistableModel<ContainerRegistryExportPipelineData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerRegistryExportPipelineData>(data, options);
+        ContainerRegistryExportPipelineData IPersistableModel<ContainerRegistryExportPipelineData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerRegistryExportPipelineData>(data, options, AzureResourceManagerContainerRegistryContext.Default);
 
         string IPersistableModel<ContainerRegistryExportPipelineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerRegistryExportPipelineData>)Data).GetFormatFromOptions(options);
     }
