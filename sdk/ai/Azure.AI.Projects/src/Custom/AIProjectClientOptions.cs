@@ -9,6 +9,6 @@ namespace Azure.AI.Projects
     public partial class AIProjectClientOptions : ClientOptions
     {
         /// <summary> The size of the client cache. </summary>
-        public int ClientCacheSize { get; set; }
+        public int ClientCacheSize { get; set; } = 100;
     }
 }

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace BasicTypeSpec.Models
+namespace BasicTypeSpec
 {
     /// <summary> this is a model with a client name. </summary>
     public partial class RenamedModel
