@@ -14,7 +14,7 @@ namespace Azure.Messaging.WebPubSub
     public partial class WebPubSubGroupMember
     {
         public WebPubSubGroupMember(string connectionId) { }
-        public string ConnectionId { get { throw null; } set { } }
+        public string ConnectionId { get { throw null; } }
         public string? UserId { get { throw null; } set { } }
     }
     public enum WebPubSubPermission

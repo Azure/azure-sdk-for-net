@@ -19,7 +19,7 @@ public class WebPubSubGroupMember(string connectionId)
     /// <summary>
     /// The connection id.
     /// </summary>
-    public string ConnectionId { get; set; } = connectionId;
+    public string ConnectionId { get; } = connectionId;
     /// <summary>
     /// The user id.
     /// </summary>
