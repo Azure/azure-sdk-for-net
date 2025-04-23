@@ -64,7 +64,8 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
     /// <inheritdoc/>
     public override bool CanConvert(Type typeToConvert)
     {
-        return !Attribute.IsDefined(typeToConvert, typeof(JsonConverterAttribute));
+        return typeof(IJsonModel<object>).IsAssignableFrom(typeToConvert) &&
+            !Attribute.IsDefined(typeToConvert, typeof(JsonConverterAttribute));
     }
 
     /// <inheritdoc/>

@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Streaming.Jsonl.Models
+namespace TypeSpec.Http.Streams
 {
     public partial class JsonlStreamInfo : IJsonModel<JsonlStreamInfo>
     {
