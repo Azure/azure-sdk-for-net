@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.8 (2025-04-22)
+## 1.0.0-beta.8 (2025-04-23)
 
 ### Sample Updates
 * New sample added for connected agent tool.
