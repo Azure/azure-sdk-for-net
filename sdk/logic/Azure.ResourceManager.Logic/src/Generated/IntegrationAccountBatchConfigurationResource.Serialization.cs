@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Logic
 
         IntegrationAccountBatchConfigurationData IJsonModel<IntegrationAccountBatchConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IntegrationAccountBatchConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IntegrationAccountBatchConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<IntegrationAccountBatchConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IntegrationAccountBatchConfigurationData>(Data, options, AzureResourceManagerLogicContext.Default);
 
-        IntegrationAccountBatchConfigurationData IPersistableModel<IntegrationAccountBatchConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IntegrationAccountBatchConfigurationData>(data, options);
+        IntegrationAccountBatchConfigurationData IPersistableModel<IntegrationAccountBatchConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IntegrationAccountBatchConfigurationData>(data, options, AzureResourceManagerLogicContext.Default);
 
         string IPersistableModel<IntegrationAccountBatchConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IntegrationAccountBatchConfigurationData>)Data).GetFormatFromOptions(options);
     }

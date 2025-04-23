@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMigrationAssessmentContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AvsAssessedDisk)} does not support writing '{options.Format}' format.");
             }

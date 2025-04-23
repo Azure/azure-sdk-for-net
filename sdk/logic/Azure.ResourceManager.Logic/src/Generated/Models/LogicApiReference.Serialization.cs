@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Logic.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLogicContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(LogicApiReference)} does not support writing '{options.Format}' format.");
             }

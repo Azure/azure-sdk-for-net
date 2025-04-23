@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.LabServices
 
         LabServicesScheduleData IJsonModel<LabServicesScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LabServicesScheduleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LabServicesScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<LabServicesScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LabServicesScheduleData>(Data, options, AzureResourceManagerLabServicesContext.Default);
 
-        LabServicesScheduleData IPersistableModel<LabServicesScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LabServicesScheduleData>(data, options);
+        LabServicesScheduleData IPersistableModel<LabServicesScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LabServicesScheduleData>(data, options, AzureResourceManagerLabServicesContext.Default);
 
         string IPersistableModel<LabServicesScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LabServicesScheduleData>)Data).GetFormatFromOptions(options);
     }
