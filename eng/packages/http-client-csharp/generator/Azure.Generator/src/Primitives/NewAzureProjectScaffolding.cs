@@ -46,7 +46,7 @@ namespace Azure.Generator.Primitives
             bool hasLongRunningOperation = false;
             foreach (var client in AzureClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
             {
-                TraverseInput(client, out hasOperation, out hasLongRunningOperation);
+                TraverseInput(client, ref hasOperation, ref hasLongRunningOperation);
             }
 
             if (hasOperation)
@@ -87,7 +87,7 @@ namespace Azure.Generator.Primitives
             "VoidValue.cs"
         ];
 
-        private static void TraverseInput(InputClient rootClient, out bool hasOperation, out bool hasLongRunningOperation)
+        private static void TraverseInput(InputClient rootClient, ref bool hasOperation, ref bool hasLongRunningOperation)
         {
             hasOperation = false;
             hasLongRunningOperation = false;
@@ -102,7 +102,7 @@ namespace Azure.Generator.Primitives
             }
             foreach (var inputClient in rootClient.Children)
             {
-                TraverseInput(inputClient, out hasOperation, out hasLongRunningOperation);
+                TraverseInput(inputClient, ref hasOperation, ref hasLongRunningOperation);
             }
         }
 

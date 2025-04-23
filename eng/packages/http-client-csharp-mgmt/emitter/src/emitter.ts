@@ -29,6 +29,7 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
   context.options["update-code-model"] = updateCodeModel;
   context.options["emitter-extension-path"] ??= import.meta.url;
   context.options["sdk-context-options"] ??= azureSDKContextOptions;
+  context.options["model-namespace"] = true; 
   await $onAzureEmit(context);
 }
 
