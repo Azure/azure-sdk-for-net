@@ -1,14 +1,11 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.4.1 (2025-04-24)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added "Accepted" to StorageTaskAssignment properties ProvisioningState.
+- Updated doc link in API description.
 
 ## 1.4.0 (2025-02-18)
 
