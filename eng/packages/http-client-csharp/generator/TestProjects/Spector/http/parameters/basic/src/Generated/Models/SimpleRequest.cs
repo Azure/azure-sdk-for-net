@@ -7,27 +7,21 @@
 
 using System;
 using System.Collections.Generic;
-using Parameters.Basic;
 
 namespace Parameters.Basic.Models
 {
-    /// <summary> This is a simple model. </summary>
-    public partial class User
+    /// <summary> The SimpleRequest. </summary>
+    internal partial class SimpleRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="User"/>. </summary>
-        /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public User(string name)
+        internal SimpleRequest(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-
             Name = name;
         }
 
-        internal User(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SimpleRequest(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

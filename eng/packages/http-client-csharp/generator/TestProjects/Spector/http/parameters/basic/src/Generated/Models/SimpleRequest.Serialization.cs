@@ -16,13 +16,13 @@ using Parameters.Basic;
 namespace Parameters.Basic.Models
 {
     /// <summary></summary>
-    public partial class User : IJsonModel<User>
+    internal partial class SimpleRequest : IJsonModel<SimpleRequest>
     {
-        internal User()
+        internal SimpleRequest()
         {
         }
 
-        void IJsonModel<User>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SimpleRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace Parameters.Basic.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<User>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SimpleRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(User)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SimpleRequest)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -57,22 +57,22 @@ namespace Parameters.Basic.Models
             }
         }
 
-        User IJsonModel<User>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SimpleRequest IJsonModel<SimpleRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual User JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SimpleRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<User>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SimpleRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(User)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SimpleRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUser(document.RootElement, options);
+            return DeserializeSimpleRequest(document.RootElement, options);
         }
 
-        internal static User DeserializeUser(JsonElement element, ModelReaderWriterOptions options)
+        internal static SimpleRequest DeserializeSimpleRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -92,63 +92,63 @@ namespace Parameters.Basic.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new User(name, additionalBinaryDataProperties);
+            return new SimpleRequest(name, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<User>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SimpleRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<User>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SimpleRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(User)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SimpleRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
-        User IPersistableModel<User>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SimpleRequest IPersistableModel<SimpleRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual User PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SimpleRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<User>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SimpleRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeUser(document.RootElement, options);
+                        return DeserializeSimpleRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(User)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SimpleRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<User>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SimpleRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="user"> The <see cref="User"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(User user)
+        /// <param name="simpleRequest"> The <see cref="SimpleRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(SimpleRequest simpleRequest)
         {
-            if (user == null)
+            if (simpleRequest == null)
             {
                 return null;
             }
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(user, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(simpleRequest, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="User"/> from. </param>
-        public static explicit operator User(Response result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="SimpleRequest"/> from. </param>
+        public static explicit operator SimpleRequest(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeUser(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeSimpleRequest(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

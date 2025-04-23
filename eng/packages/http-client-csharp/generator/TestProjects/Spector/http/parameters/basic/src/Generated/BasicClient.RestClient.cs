@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Parameters.Basic
 {
-    /// <summary> Client options for <see cref="BasicClient"/>. </summary>
-    public partial class BasicClientOptions : ClientOptions
+    /// <summary></summary>
+    public partial class BasicClient
     {
     }
 }
