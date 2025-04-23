@@ -22,25 +22,25 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string EastusValue = "eastus";
-        private const string CentralusValue = "centralus";
-        private const string WestusValue = "westus";
-        private const string WesteuropeValue = "westeurope";
-        private const string JapaneastValue = "japaneast";
-        private const string KoreacentralValue = "koreacentral";
+        private const string EastUSValue = "eastus";
+        private const string CentralUSValue = "centralus";
+        private const string WestUSValue = "westus";
+        private const string WestEuropeValue = "westeurope";
+        private const string JapanEastValue = "japaneast";
+        private const string KoreaCentralValue = "koreacentral";
 
         /// <summary> Region: East US. </summary>
-        public static WeightsAndBiasesRegion Eastus { get; } = new WeightsAndBiasesRegion(EastusValue);
+        public static WeightsAndBiasesRegion EastUS { get; } = new WeightsAndBiasesRegion(EastUSValue);
         /// <summary> Region: Central US. </summary>
-        public static WeightsAndBiasesRegion Centralus { get; } = new WeightsAndBiasesRegion(CentralusValue);
+        public static WeightsAndBiasesRegion CentralUS { get; } = new WeightsAndBiasesRegion(CentralUSValue);
         /// <summary> Region: West US. </summary>
-        public static WeightsAndBiasesRegion Westus { get; } = new WeightsAndBiasesRegion(WestusValue);
+        public static WeightsAndBiasesRegion WestUS { get; } = new WeightsAndBiasesRegion(WestUSValue);
         /// <summary> Region: West Europe. </summary>
-        public static WeightsAndBiasesRegion Westeurope { get; } = new WeightsAndBiasesRegion(WesteuropeValue);
+        public static WeightsAndBiasesRegion WestEurope { get; } = new WeightsAndBiasesRegion(WestEuropeValue);
         /// <summary> Region: Japan East. </summary>
-        public static WeightsAndBiasesRegion Japaneast { get; } = new WeightsAndBiasesRegion(JapaneastValue);
+        public static WeightsAndBiasesRegion JapanEast { get; } = new WeightsAndBiasesRegion(JapanEastValue);
         /// <summary> Region: Korea Central. </summary>
-        public static WeightsAndBiasesRegion Koreacentral { get; } = new WeightsAndBiasesRegion(KoreacentralValue);
+        public static WeightsAndBiasesRegion KoreaCentral { get; } = new WeightsAndBiasesRegion(KoreaCentralValue);
         /// <summary> Determines if two <see cref="WeightsAndBiasesRegion"/> values are the same. </summary>
         public static bool operator ==(WeightsAndBiasesRegion left, WeightsAndBiasesRegion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WeightsAndBiasesRegion"/> values are not the same. </summary>

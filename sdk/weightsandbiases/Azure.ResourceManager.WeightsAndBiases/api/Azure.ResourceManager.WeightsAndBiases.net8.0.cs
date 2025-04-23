@@ -206,12 +206,12 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public WeightsAndBiasesRegion(string value) { throw null; }
-        public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion Centralus { get { throw null; } }
-        public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion Eastus { get { throw null; } }
-        public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion Japaneast { get { throw null; } }
-        public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion Koreacentral { get { throw null; } }
-        public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion Westeurope { get { throw null; } }
-        public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion Westus { get { throw null; } }
+        public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion CentralUS { get { throw null; } }
+        public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion EastUS { get { throw null; } }
+        public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion JapanEast { get { throw null; } }
+        public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion KoreaCentral { get { throw null; } }
+        public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion WestEurope { get { throw null; } }
+        public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion WestUS { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

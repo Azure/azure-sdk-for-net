@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Samples
                     PhoneNumber = "cogmqmuwfcpstkwbzgkgo",
                 })
                 {
-                    PartnerProperties = new WeightsAndBiasesPartnerProperties(WeightsAndBiasesRegion.Eastus, "xkecokwnwtkwnkxfgucmzybzzb"),
+                    PartnerProperties = new WeightsAndBiasesPartnerProperties(WeightsAndBiasesRegion.EastUS, "xkecokwnwtkwnkxfgucmzybzzb"),
                     SingleSignOnProperties = new WeightsAndBiasesSingleSignOnPropertiesV2(WeightsAndBiasesSingleSignOnType.Saml)
                     {
                         State = WeightsAndBiasesSingleSignOnState.Initial,
