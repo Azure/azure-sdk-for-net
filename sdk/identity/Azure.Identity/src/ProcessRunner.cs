@@ -18,6 +18,7 @@ namespace Azure.Identity
         private readonly TaskCompletionSource<ICollection<string>> _errorTcs;
         private readonly ICollection<string> _outputData;
         private readonly ICollection<string> _errorData;
+        private readonly bool _redirectStandardInput;
 
         private readonly CancellationToken _cancellationToken;
         private readonly CancellationTokenSource _timeoutCts;
@@ -25,11 +26,12 @@ namespace Azure.Identity
         private bool _logPII;
         public int ExitCode => _process.ExitCode;
 
-        public ProcessRunner(IProcess process, TimeSpan timeout, bool logPII, CancellationToken cancellationToken)
+        public ProcessRunner(IProcess process, TimeSpan timeout, bool logPII, bool redirectStandardInput = false, CancellationToken cancellationToken)
         {
             _logPII = logPII;
             _process = process;
             _timeout = timeout;
+            _redirectStandardInput = redirectStandardInput;
 
             if (_logPII)
             {
@@ -77,6 +79,7 @@ namespace Azure.Identity
             _process.StartInfo.UseShellExecute = false;
             _process.StartInfo.RedirectStandardOutput = true;
             _process.StartInfo.RedirectStandardError = true;
+            _process.StartInfo.RedirectStandardInput = _redirectStandardInput;
 
             _process.OutputDataReceived += (sender, args) => OnDataReceived(args, _outputData, _outputTcs);
             _process.ErrorDataReceived += (sender, args) => OnDataReceived(args, _errorData, _errorTcs);
