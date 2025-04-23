@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace _Type.Model.Inheritance.NestedDiscriminator.Models
+namespace _Type.Model.Inheritance.NestedDiscriminator
 {
     public abstract partial class Fish
     {

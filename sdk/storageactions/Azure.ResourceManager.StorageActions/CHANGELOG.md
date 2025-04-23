@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.3 (2025-04-24)
+
+### Features Added
+
+- Added "Accepted" to StorageTask properties ProvisioningState
 
 ## 1.0.0-beta.2 (2025-03-11)
 
