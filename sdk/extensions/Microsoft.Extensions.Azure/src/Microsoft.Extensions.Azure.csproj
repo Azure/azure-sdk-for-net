@@ -20,12 +20,16 @@
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" VersionOverride="8.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Options" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" />
+
+    <!-- Override removal tracked by #48425-->
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" VersionOverride="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" VersionOverride="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" VersionOverride="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" VersionOverride="8.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging" VersionOverride="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" VersionOverride="8.0.3" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" VersionOverride="8.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Options" VersionOverride="8.0.2" />
   </ItemGroup>
 
   <ItemGroup>

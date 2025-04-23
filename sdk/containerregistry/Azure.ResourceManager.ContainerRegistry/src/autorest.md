@@ -7,8 +7,7 @@ azure-arm: true
 csharp: true
 library-name: ContainerRegistry
 namespace: Azure.ResourceManager.ContainerRegistry
-require: https://github.com/Azure/azure-rest-api-specs/blob/0a27976a58c16279e827bda36004d1b74b3d922a/specification/containerregistry/resource-manager/readme.md
-#tag: package-2024-11-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/cb262725d128f6dfec4622cca03bc9e04e2d0f1f/specification/containerregistry/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -265,6 +264,7 @@ rename-mapping:
   ImportSource.registryUri: RegistryAddress
   AzureADAuthenticationAsArmPolicyStatus: AadAuthenticationAsArmPolicyStatus
   PackageSourceType: ArchivePackageSourceType
+  RoleAssignmentMode: ContainerRegistryRoleAssignmentMode
 
 override-operation-name:
   Schedules_ScheduleRun: ScheduleRun

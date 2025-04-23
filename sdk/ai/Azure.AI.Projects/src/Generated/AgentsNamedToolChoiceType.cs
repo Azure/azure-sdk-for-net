@@ -26,9 +26,11 @@ namespace Azure.AI.Projects
         private const string CodeInterpreterValue = "code_interpreter";
         private const string FileSearchValue = "file_search";
         private const string BingGroundingValue = "bing_grounding";
-        private const string MicrosoftFabricValue = "fabric_aiskill";
+        private const string MicrosoftFabricValue = "fabric_dataagent";
         private const string SharepointValue = "sharepoint_grounding";
         private const string AzureAISearchValue = "azure_ai_search";
+        private const string BingCustomSearchValue = "bing_custom_search";
+        private const string ConnectedAgentValue = "connected_agent";
 
         /// <summary> Tool type `function`. </summary>
         public static AgentsNamedToolChoiceType Function { get; } = new AgentsNamedToolChoiceType(FunctionValue);
@@ -38,12 +40,16 @@ namespace Azure.AI.Projects
         public static AgentsNamedToolChoiceType FileSearch { get; } = new AgentsNamedToolChoiceType(FileSearchValue);
         /// <summary> Tool type `bing_grounding`. </summary>
         public static AgentsNamedToolChoiceType BingGrounding { get; } = new AgentsNamedToolChoiceType(BingGroundingValue);
-        /// <summary> Tool type `fabric_aiskill`. </summary>
+        /// <summary> Tool type `fabric_dataagent`. </summary>
         public static AgentsNamedToolChoiceType MicrosoftFabric { get; } = new AgentsNamedToolChoiceType(MicrosoftFabricValue);
         /// <summary> Tool type `sharepoint_grounding`. </summary>
         public static AgentsNamedToolChoiceType Sharepoint { get; } = new AgentsNamedToolChoiceType(SharepointValue);
         /// <summary> Tool type `azure_ai_search`. </summary>
         public static AgentsNamedToolChoiceType AzureAISearch { get; } = new AgentsNamedToolChoiceType(AzureAISearchValue);
+        /// <summary> Tool type `bing_custom_search`. </summary>
+        public static AgentsNamedToolChoiceType BingCustomSearch { get; } = new AgentsNamedToolChoiceType(BingCustomSearchValue);
+        /// <summary> Tool type `connected_agent`. </summary>
+        public static AgentsNamedToolChoiceType ConnectedAgent { get; } = new AgentsNamedToolChoiceType(ConnectedAgentValue);
         /// <summary> Determines if two <see cref="AgentsNamedToolChoiceType"/> values are the same. </summary>
         public static bool operator ==(AgentsNamedToolChoiceType left, AgentsNamedToolChoiceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgentsNamedToolChoiceType"/> values are not the same. </summary>

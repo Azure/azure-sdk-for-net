@@ -63,9 +63,9 @@ $publishOutput = dotnet publish aotcompatibility.csproj -nodeReuse:false /p:UseS
 
 if ($LASTEXITCODE -ne 0)
 {
-    Write-Host "Publish failed."
+    Write-Host "Publish failed." -ForegroundColor Red
 
-    Write-Host $publishOutput
+    Write-Host ($publishOutput -join "`n")
 
     Write-Host "Deleting test app files."
 
@@ -80,7 +80,7 @@ $actualWarningCount = 0
 
 foreach ($line in $($publishOutput -split "`r`n"))
 {
-    if ($line -like "*analysis warning IL*")
+    if ($line -like "*warning IL*")
     {
         $actualWarningCount += 1
     }
@@ -104,9 +104,9 @@ if (Test-Path $expectedWarningsFullPath -PathType Leaf) {
     $numWarnings = $warnings.Count
 
     if ($numWarnings -gt 0) {
-      Write-Host "Found $numWarnings additional warnings that were not expected:"
+      Write-Host "Found $numWarnings additional warnings that were not expected:" -ForegroundColor Red
       foreach ($warning in $warnings) {
-        Write-Host $warning
+        Write-Host $warning -ForegroundColor Yellow
       }
     }
 
@@ -129,9 +129,9 @@ Write-Host "Checking against the list of expected warnings. There are $numExpect
 $warnings = $publishOutput -split "`n" | select-string -pattern 'IL\d+' | select-string -pattern '##' -notmatch | select-string -pattern $expectedWarnings -notmatch
 $numWarnings = $warnings.Count
 if ($numWarnings -gt 0) {
-  Write-Host "Found $numWarnings additional warnings that were not expected:"
+  Write-Host "Found $numWarnings additional warnings that were not expected:" -ForegroundColor Red
   foreach ($warning in $warnings) {
-    Write-Host $warning
+    Write-Host $warning -ForegroundColor Yellow
   }
 }
 

@@ -7,10 +7,12 @@
 
 using System;
 
-namespace Payload.ContentNegotiation.Models
+namespace Payload.ContentNegotiation._DifferentBody
 {
     public partial class PngImageAsJson
     {
+        public PngImageAsJsonContentType ContentType => throw null;
+
         public BinaryData Content => throw null;
     }
 }

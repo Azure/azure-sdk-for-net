@@ -1,9 +1,9 @@
 {
  "$id": "1",
- "Name": "Type.Model.Inheritance.Recursive",
- "ApiVersions": [],
- "Enums": [],
- "Models": [
+ "name": "Type.Model.Inheritance.Recursive",
+ "apiVersions": [],
+ "enums": [],
+ "models": [
   {
    "$id": "2",
    "kind": "model",
@@ -87,185 +87,270 @@
    "$ref": "3"
   }
  ],
- "Clients": [
+ "clients": [
   {
    "$id": "12",
-   "Name": "RecursiveClient",
-   "Namespace": "Type.Model.Inheritance.Recursive",
-   "Doc": "Illustrates inheritance recursion",
-   "Operations": [
+   "kind": "client",
+   "name": "RecursiveClient",
+   "namespace": "Type.Model.Inheritance.Recursive",
+   "doc": "Illustrates inheritance recursion",
+   "methods": [
     {
      "$id": "13",
-     "Name": "put",
-     "ResourceName": "Recursive",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "14",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Doc": "Body parameter's content type. Known values are application/json",
-       "Type": {
+     "kind": "basic",
+     "name": "put",
+     "accessibility": "public",
+     "apiVersions": [],
+     "operation": {
+      "$id": "14",
+      "name": "put",
+      "resourceName": "Recursive",
+      "accessibility": "public",
+      "parameters": [
+       {
         "$id": "15",
-        "kind": "constant",
-        "valueType": {
+        "name": "contentType",
+        "nameInRequest": "Content-Type",
+        "doc": "Body parameter's content type. Known values are application/json",
+        "type": {
          "$id": "16",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
+         "kind": "constant",
+         "valueType": {
+          "$id": "17",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "value": "application/json",
          "decorators": []
         },
-        "value": "application/json",
-        "decorators": []
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": true,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Constant",
+        "decorators": [],
+        "skipUrlEncoding": false
        },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": true,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      },
-      {
-       "$id": "17",
-       "Name": "input",
-       "NameInRequest": "input",
-       "Type": {
-        "$ref": "2"
-       },
-       "Location": "Body",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Method",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "18",
-       "StatusCodes": [
-        204
-       ],
-       "Headers": [],
-       "IsErrorResponse": false
-      }
-     ],
-     "HttpMethod": "PUT",
-     "Uri": "{endpoint}",
-     "Path": "/type/model/inheritance/recursive",
-     "RequestMediaTypes": [
-      "application/json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.put",
-     "Decorators": []
-    },
-    {
-     "$id": "19",
-     "Name": "get",
-     "ResourceName": "Recursive",
-     "Accessibility": "public",
-     "Parameters": [
+       {
+        "$id": "18",
+        "name": "input",
+        "nameInRequest": "input",
+        "type": {
+         "$ref": "2"
+        },
+        "location": "Body",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       }
+      ],
+      "responses": [
+       {
+        "$id": "19",
+        "statusCodes": [
+         204
+        ],
+        "headers": [],
+        "isErrorResponse": false
+       }
+      ],
+      "httpMethod": "PUT",
+      "uri": "{endpoint}",
+      "path": "/type/model/inheritance/recursive",
+      "requestMediaTypes": [
+       "application/json"
+      ],
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.put",
+      "decorators": []
+     },
+     "parameters": [
       {
        "$id": "20",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "21",
-        "kind": "constant",
-        "valueType": {
-         "$id": "22",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "23",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
+       "name": "input",
+       "nameInRequest": "input",
+       "type": {
         "$ref": "2"
        },
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
+       "location": "Body",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
+      {
+       "$id": "21",
+       "name": "contentType",
+       "nameInRequest": "contentType",
+       "doc": "Body parameter's content type. Known values are application/json",
+       "type": {
+        "$ref": "16"
+       },
+       "location": "Header",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Constant",
+       "decorators": [],
+       "skipUrlEncoding": false
       }
      ],
-     "HttpMethod": "GET",
-     "Uri": "{endpoint}",
-     "Path": "/type/model/inheritance/recursive",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.get",
-     "Decorators": []
+     "response": {
+      "$id": "22"
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.put"
+    },
+    {
+     "$id": "23",
+     "kind": "basic",
+     "name": "get",
+     "accessibility": "public",
+     "apiVersions": [],
+     "operation": {
+      "$id": "24",
+      "name": "get",
+      "resourceName": "Recursive",
+      "accessibility": "public",
+      "parameters": [
+       {
+        "$id": "25",
+        "name": "accept",
+        "nameInRequest": "Accept",
+        "type": {
+         "$id": "26",
+         "kind": "constant",
+         "valueType": {
+          "$id": "27",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "value": "application/json",
+         "decorators": []
+        },
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Constant",
+        "decorators": [],
+        "skipUrlEncoding": false
+       }
+      ],
+      "responses": [
+       {
+        "$id": "28",
+        "statusCodes": [
+         200
+        ],
+        "bodyType": {
+         "$ref": "2"
+        },
+        "headers": [],
+        "isErrorResponse": false,
+        "contentTypes": [
+         "application/json"
+        ]
+       }
+      ],
+      "httpMethod": "GET",
+      "uri": "{endpoint}",
+      "path": "/type/model/inheritance/recursive",
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.get",
+      "decorators": []
+     },
+     "parameters": [
+      {
+       "$id": "29",
+       "name": "accept",
+       "nameInRequest": "accept",
+       "type": {
+        "$ref": "26"
+       },
+       "location": "Header",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Constant",
+       "decorators": [],
+       "skipUrlEncoding": false
+      }
+     ],
+     "response": {
+      "$id": "30",
+      "type": {
+       "$ref": "2"
+      }
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.get"
     }
    ],
-   "Protocol": {
-    "$id": "24"
-   },
-   "Parameters": [
+   "parameters": [
     {
-     "$id": "25",
-     "Name": "endpoint",
-     "NameInRequest": "endpoint",
-     "Doc": "Service host",
-     "Type": {
-      "$id": "26",
+     "$id": "31",
+     "name": "endpoint",
+     "nameInRequest": "endpoint",
+     "doc": "Service host",
+     "type": {
+      "$id": "32",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
      },
-     "Location": "Uri",
-     "IsApiVersion": false,
-     "IsResourceParameter": false,
-     "IsContentType": false,
-     "IsRequired": true,
-     "IsEndpoint": true,
-     "SkipUrlEncoding": false,
-     "Explode": false,
-     "Kind": "Client",
-     "DefaultValue": {
-      "$id": "27",
-      "Type": {
-       "$id": "28",
+     "location": "Uri",
+     "isApiVersion": false,
+     "isContentType": false,
+     "isRequired": true,
+     "isEndpoint": true,
+     "skipUrlEncoding": false,
+     "explode": false,
+     "kind": "Client",
+     "defaultValue": {
+      "$id": "33",
+      "type": {
+       "$id": "34",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"
       },
-      "Value": "http://localhost:3000"
+      "value": "http://localhost:3000"
      }
     }
    ],
-   "Decorators": [],
-   "CrossLanguageDefinitionId": "Type.Model.Inheritance.Recursive"
+   "decorators": [],
+   "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive",
+   "apiVersions": []
   }
  ]
 }

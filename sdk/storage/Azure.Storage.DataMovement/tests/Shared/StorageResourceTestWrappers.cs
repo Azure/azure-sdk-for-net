@@ -37,7 +37,7 @@ public class StorageResourceItemFailureWrapper : StorageResourceItem
         : func();
 
     #region Passthru
-    public override Uri Uri => ThrowOr(_inner.Uri);
+    public override Uri Uri => _inner.Uri;
 
     public override string ProviderId => ThrowOr(_inner.ProviderId);
 
@@ -143,6 +143,9 @@ public class StorageResourceContainerFailureWrapper : StorageResourceContainer
             }
         }
     }
+
+    protected internal override Task<StorageResourceContainerProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        => ThrowOrDo(() => _inner.GetPropertiesAsync(cancellationToken));
 
     public override string ToString()
     {
