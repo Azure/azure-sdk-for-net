@@ -27,7 +27,7 @@ In addition to adhering to the [General Naming Conventions of .NET](https://lear
 
 **DO** Rename the property or parameter if its name ends with `Interval` or `Duration` and the value is not in ISO 8601 duration format (like P1DT2H59M59S) or ISO 8601 format (like 2.2:59:59.5000000).
 
-**DO** Consider renaming TTL properties or parameters to `TimetoLiveIn<Unit>`. 
+**DO** Consider renaming TTL properties or parameters to `TimeToLiveIn<Unit>`. 
 
 **DO** Avoid using single-word class names. Instead, use more descriptive names after consulting with the service development team.
 
