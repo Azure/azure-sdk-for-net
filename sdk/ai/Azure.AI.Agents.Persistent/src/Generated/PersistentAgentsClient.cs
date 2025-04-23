@@ -5222,7 +5222,7 @@ namespace Azure.AI.Agents.Persistent
             uri.AppendQuery("api-version", _apiVersion, true);
             if (runId != null)
             {
-                uri.AppendQuery("runId", runId, true);
+                uri.AppendQuery("run_id", runId, true);
             }
             if (limit != null)
             {
