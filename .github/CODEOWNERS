@@ -904,10 +904,10 @@
 # ServiceOwners:                                                   @yanjungao718
 
 # PRLabel: %Tables
-/sdk/tables/                                                       @christothes
+/sdk/tables/                                                       @christothes @jorgerangel-msft
 
 # ServiceLabel: %Tables
-# AzureSdkOwners:                                                  @christothes
+# AzureSdkOwners:                                                  @christothes @jorgerangel-msft
 # ServiceOwners:                                                   @sakash279 @sivethe @ThomasWeiss @PaulCheng
 
 # PRLabel: %TimeSeriesInsights
