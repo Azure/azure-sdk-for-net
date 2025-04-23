@@ -7,7 +7,7 @@ In addition to adhering to the [General Naming Conventions of .NET](https://lear
 
 **DO** Use Pascal case which capital case for the first letter only.
 
-**DO** 2 letter acronyms are special which uppercase all if not part of longer compound identifiers, but still have some except like `Vm`, `Id` and etc.  
+**DO** Two-letter acronyms are special and should be all-uppercased if it is not part of longer compound identifiers, but still have some exceptions like `Vm`, `Id` and etc. 
 
 **DO** Use a singular type name for an enumeration unless its values are bit fields. Use a plural type name for an enumeration with bit fields as values, also called flags enum. For more details, please check [here](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
 
