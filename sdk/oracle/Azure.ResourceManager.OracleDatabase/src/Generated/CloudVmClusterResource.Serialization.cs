@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.OracleDatabase
 
         CloudVmClusterData IJsonModel<CloudVmClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudVmClusterData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CloudVmClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CloudVmClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CloudVmClusterData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        CloudVmClusterData IPersistableModel<CloudVmClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudVmClusterData>(data, options);
+        CloudVmClusterData IPersistableModel<CloudVmClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudVmClusterData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
         string IPersistableModel<CloudVmClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudVmClusterData>)Data).GetFormatFromOptions(options);
     }

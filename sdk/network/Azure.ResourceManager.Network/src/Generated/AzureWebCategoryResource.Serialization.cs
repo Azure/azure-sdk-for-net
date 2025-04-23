@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         AzureWebCategoryData IJsonModel<AzureWebCategoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AzureWebCategoryData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AzureWebCategoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AzureWebCategoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AzureWebCategoryData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        AzureWebCategoryData IPersistableModel<AzureWebCategoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AzureWebCategoryData>(data, options);
+        AzureWebCategoryData IPersistableModel<AzureWebCategoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AzureWebCategoryData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<AzureWebCategoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AzureWebCategoryData>)Data).GetFormatFromOptions(options);
     }

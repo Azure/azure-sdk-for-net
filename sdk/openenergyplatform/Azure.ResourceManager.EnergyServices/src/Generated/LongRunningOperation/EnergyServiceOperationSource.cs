@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.EnergyServices
 
         EnergyServiceResource IOperationSource<EnergyServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EnergyServiceData>(response.Content);
+            var data = ModelReaderWriter.Read<EnergyServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEnergyServicesContext.Default);
             return new EnergyServiceResource(_client, data);
         }
 
         async ValueTask<EnergyServiceResource> IOperationSource<EnergyServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EnergyServiceData>(response.Content);
+            var data = ModelReaderWriter.Read<EnergyServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEnergyServicesContext.Default);
             return await Task.FromResult(new EnergyServiceResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         AzureFirewallData IJsonModel<AzureFirewallData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AzureFirewallData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AzureFirewallData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AzureFirewallData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AzureFirewallData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        AzureFirewallData IPersistableModel<AzureFirewallData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AzureFirewallData>(data, options);
+        AzureFirewallData IPersistableModel<AzureFirewallData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AzureFirewallData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<AzureFirewallData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AzureFirewallData>)Data).GetFormatFromOptions(options);
     }

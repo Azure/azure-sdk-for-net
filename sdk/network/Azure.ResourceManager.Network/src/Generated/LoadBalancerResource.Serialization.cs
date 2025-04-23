@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         LoadBalancerData IJsonModel<LoadBalancerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LoadBalancerData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LoadBalancerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<LoadBalancerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LoadBalancerData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        LoadBalancerData IPersistableModel<LoadBalancerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LoadBalancerData>(data, options);
+        LoadBalancerData IPersistableModel<LoadBalancerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LoadBalancerData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<LoadBalancerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LoadBalancerData>)Data).GetFormatFromOptions(options);
     }

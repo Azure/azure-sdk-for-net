@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         RoutingIntentResource IOperationSource<RoutingIntentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RoutingIntentData>(response.Content);
+            var data = ModelReaderWriter.Read<RoutingIntentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new RoutingIntentResource(_client, data);
         }
 
         async ValueTask<RoutingIntentResource> IOperationSource<RoutingIntentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RoutingIntentData>(response.Content);
+            var data = ModelReaderWriter.Read<RoutingIntentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new RoutingIntentResource(_client, data)).ConfigureAwait(false);
         }
     }

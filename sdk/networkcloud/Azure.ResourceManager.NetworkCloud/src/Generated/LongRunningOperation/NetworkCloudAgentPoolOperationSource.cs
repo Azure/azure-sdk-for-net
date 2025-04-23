@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.NetworkCloud
 
         NetworkCloudAgentPoolResource IOperationSource<NetworkCloudAgentPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudAgentPoolData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkCloudAgentPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
             return new NetworkCloudAgentPoolResource(_client, data);
         }
 
         async ValueTask<NetworkCloudAgentPoolResource> IOperationSource<NetworkCloudAgentPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudAgentPoolData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkCloudAgentPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
             return await Task.FromResult(new NetworkCloudAgentPoolResource(_client, data)).ConfigureAwait(false);
         }
     }

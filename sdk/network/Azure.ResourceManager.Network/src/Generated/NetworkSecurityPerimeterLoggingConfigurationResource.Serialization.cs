@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         NetworkSecurityPerimeterLoggingConfigurationData IJsonModel<NetworkSecurityPerimeterLoggingConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkSecurityPerimeterLoggingConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkSecurityPerimeterLoggingConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkSecurityPerimeterLoggingConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkSecurityPerimeterLoggingConfigurationData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        NetworkSecurityPerimeterLoggingConfigurationData IPersistableModel<NetworkSecurityPerimeterLoggingConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkSecurityPerimeterLoggingConfigurationData>(data, options);
+        NetworkSecurityPerimeterLoggingConfigurationData IPersistableModel<NetworkSecurityPerimeterLoggingConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkSecurityPerimeterLoggingConfigurationData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<NetworkSecurityPerimeterLoggingConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkSecurityPerimeterLoggingConfigurationData>)Data).GetFormatFromOptions(options);
     }
