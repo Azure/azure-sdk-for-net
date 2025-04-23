@@ -9,6 +9,7 @@ using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Health.Deidentification.Samples
