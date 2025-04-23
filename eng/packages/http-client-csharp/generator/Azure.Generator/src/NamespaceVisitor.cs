@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.IO;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
@@ -59,6 +60,9 @@ namespace Azure.Generator
                 type.Type.Update(
                     @namespace: AzureClientGenerator.Instance.TypeFactory.GetCleanNameSpace(
                         $"{AzureClientGenerator.Instance.TypeFactory.PrimaryNamespace}.Models"));
+
+                // Move into the Models folder
+                type.Update(relativeFilePath: Path.Combine("src", "Generated", "Models", $"{type.Name}.cs"));
             }
         }
     }
