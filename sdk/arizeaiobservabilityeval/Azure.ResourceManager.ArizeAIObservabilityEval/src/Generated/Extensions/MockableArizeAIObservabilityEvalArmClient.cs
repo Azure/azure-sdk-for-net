@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="OrganizationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OrganizationResource.CreateResourceIdentifier" /> to create an <see cref="OrganizationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="ArizeAIObservabilityEvalOrganizationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArizeAIObservabilityEvalOrganizationResource.CreateResourceIdentifier" /> to create an <see cref="ArizeAIObservabilityEvalOrganizationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OrganizationResource"/> object. </returns>
-        public virtual OrganizationResource GetOrganizationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ArizeAIObservabilityEvalOrganizationResource"/> object. </returns>
+        public virtual ArizeAIObservabilityEvalOrganizationResource GetArizeAIObservabilityEvalOrganizationResource(ResourceIdentifier id)
         {
-            OrganizationResource.ValidateResourceId(id);
-            return new OrganizationResource(Client, id);
+            ArizeAIObservabilityEvalOrganizationResource.ValidateResourceId(id);
+            return new ArizeAIObservabilityEvalOrganizationResource(Client, id);
         }
     }
 }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
 {
     /// <summary> Properties specific to Organization. </summary>
-    public partial class OrganizationProperties
+    public partial class ArizeAIObservabilityEvalOrganizationProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalOrganizationProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/> or <paramref name="user"/> is null. </exception>
-        public OrganizationProperties(MarketplaceDetails marketplace, UserDetails user)
+        public ArizeAIObservabilityEvalOrganizationProperties(ArizeAIObservabilityEvalMarketplaceDetails marketplace, ArizeAIObservabilityEvalUserDetails user)
         {
             Argument.AssertNotNull(marketplace, nameof(marketplace));
             Argument.AssertNotNull(user, nameof(user));
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
             User = user;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalOrganizationProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerProperties"> partner properties. </param>
         /// <param name="singleSignOnProperties"> Single sign-on properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OrganizationProperties(MarketplaceDetails marketplace, UserDetails user, ResourceProvisioningState? provisioningState, PartnerProperties partnerProperties, SingleSignOnPropertiesV2 singleSignOnProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArizeAIObservabilityEvalOrganizationProperties(ArizeAIObservabilityEvalMarketplaceDetails marketplace, ArizeAIObservabilityEvalUserDetails user, ArizeAIObservabilityEvalOfferProvisioningState? provisioningState, ArizeAIObservabilityEvalOfferPartnerProperties partnerProperties, ArizeAIObservabilityEvalSingleSignOnPropertiesV2 singleSignOnProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Marketplace = marketplace;
             User = user;
@@ -75,27 +75,27 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationProperties"/> for deserialization. </summary>
-        internal OrganizationProperties()
+        /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalOrganizationProperties"/> for deserialization. </summary>
+        internal ArizeAIObservabilityEvalOrganizationProperties()
         {
         }
 
         /// <summary> Marketplace details of the resource. </summary>
-        public MarketplaceDetails Marketplace { get; set; }
+        public ArizeAIObservabilityEvalMarketplaceDetails Marketplace { get; set; }
         /// <summary> Details of the user. </summary>
-        public UserDetails User { get; set; }
+        public ArizeAIObservabilityEvalUserDetails User { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ResourceProvisioningState? ProvisioningState { get; }
+        public ArizeAIObservabilityEvalOfferProvisioningState? ProvisioningState { get; }
         /// <summary> partner properties. </summary>
-        internal PartnerProperties PartnerProperties { get; set; }
+        internal ArizeAIObservabilityEvalOfferPartnerProperties PartnerProperties { get; set; }
         /// <summary> Description of the Organization's purpose. </summary>
         public string PartnerDescription
         {
             get => PartnerProperties is null ? default : PartnerProperties.Description;
-            set => PartnerProperties = new PartnerProperties(value);
+            set => PartnerProperties = new ArizeAIObservabilityEvalOfferPartnerProperties(value);
         }
 
         /// <summary> Single sign-on properties. </summary>
-        public SingleSignOnPropertiesV2 SingleSignOnProperties { get; set; }
+        public ArizeAIObservabilityEvalSingleSignOnPropertiesV2 SingleSignOnProperties { get; set; }
     }
 }

@@ -33,39 +33,39 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="OrganizationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OrganizationResource.CreateResourceIdentifier" /> to create an <see cref="OrganizationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ArizeAIObservabilityEvalOrganizationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArizeAIObservabilityEvalOrganizationResource.CreateResourceIdentifier" /> to create an <see cref="ArizeAIObservabilityEvalOrganizationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableArizeAIObservabilityEvalArmClient.GetOrganizationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArizeAIObservabilityEvalArmClient.GetArizeAIObservabilityEvalOrganizationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="OrganizationResource"/> object. </returns>
-        public static OrganizationResource GetOrganizationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ArizeAIObservabilityEvalOrganizationResource"/> object. </returns>
+        public static ArizeAIObservabilityEvalOrganizationResource GetArizeAIObservabilityEvalOrganizationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableArizeAIObservabilityEvalArmClient(client).GetOrganizationResource(id);
+            return GetMockableArizeAIObservabilityEvalArmClient(client).GetArizeAIObservabilityEvalOrganizationResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of OrganizationResources in the ResourceGroupResource.
+        /// Gets a collection of ArizeAIObservabilityEvalOrganizationResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableArizeAIObservabilityEvalResourceGroupResource.GetOrganizationResources()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArizeAIObservabilityEvalResourceGroupResource.GetArizeAIObservabilityEvalOrganizations()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of OrganizationResources and their operations over a OrganizationResource. </returns>
-        public static OrganizationResourceCollection GetOrganizationResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ArizeAIObservabilityEvalOrganizationResources and their operations over a ArizeAIObservabilityEvalOrganizationResource. </returns>
+        public static ArizeAIObservabilityEvalOrganizationCollection GetArizeAIObservabilityEvalOrganizations(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableArizeAIObservabilityEvalResourceGroupResource(resourceGroupResource).GetOrganizationResources();
+            return GetMockableArizeAIObservabilityEvalResourceGroupResource(resourceGroupResource).GetArizeAIObservabilityEvalOrganizations();
         }
 
         /// <summary>
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="ArizeAIObservabilityEvalOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableArizeAIObservabilityEvalResourceGroupResource.GetOrganizationResourceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArizeAIObservabilityEvalResourceGroupResource.GetArizeAIObservabilityEvalOrganizationAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="organizationname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<OrganizationResource>> GetOrganizationResourceAsync(this ResourceGroupResource resourceGroupResource, string organizationname, CancellationToken cancellationToken = default)
+        public static async Task<Response<ArizeAIObservabilityEvalOrganizationResource>> GetArizeAIObservabilityEvalOrganizationAsync(this ResourceGroupResource resourceGroupResource, string organizationname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableArizeAIObservabilityEvalResourceGroupResource(resourceGroupResource).GetOrganizationResourceAsync(organizationname, cancellationToken).ConfigureAwait(false);
+            return await GetMockableArizeAIObservabilityEvalResourceGroupResource(resourceGroupResource).GetArizeAIObservabilityEvalOrganizationAsync(organizationname, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="ArizeAIObservabilityEvalOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableArizeAIObservabilityEvalResourceGroupResource.GetOrganizationResource(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArizeAIObservabilityEvalResourceGroupResource.GetArizeAIObservabilityEvalOrganization(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="organizationname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<OrganizationResource> GetOrganizationResource(this ResourceGroupResource resourceGroupResource, string organizationname, CancellationToken cancellationToken = default)
+        public static Response<ArizeAIObservabilityEvalOrganizationResource> GetArizeAIObservabilityEvalOrganization(this ResourceGroupResource resourceGroupResource, string organizationname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableArizeAIObservabilityEvalResourceGroupResource(resourceGroupResource).GetOrganizationResource(organizationname, cancellationToken);
+            return GetMockableArizeAIObservabilityEvalResourceGroupResource(resourceGroupResource).GetArizeAIObservabilityEvalOrganization(organizationname, cancellationToken);
         }
 
         /// <summary>
@@ -161,23 +161,23 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="ArizeAIObservabilityEvalOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableArizeAIObservabilityEvalSubscriptionResource.GetOrganizationResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArizeAIObservabilityEvalSubscriptionResource.GetArizeAIObservabilityEvalOrganizations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="OrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OrganizationResource> GetOrganizationResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ArizeAIObservabilityEvalOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ArizeAIObservabilityEvalOrganizationResource> GetArizeAIObservabilityEvalOrganizationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableArizeAIObservabilityEvalSubscriptionResource(subscriptionResource).GetOrganizationResourcesAsync(cancellationToken);
+            return GetMockableArizeAIObservabilityEvalSubscriptionResource(subscriptionResource).GetArizeAIObservabilityEvalOrganizationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -197,23 +197,23 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="ArizeAIObservabilityEvalOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableArizeAIObservabilityEvalSubscriptionResource.GetOrganizationResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArizeAIObservabilityEvalSubscriptionResource.GetArizeAIObservabilityEvalOrganizations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="OrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OrganizationResource> GetOrganizationResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ArizeAIObservabilityEvalOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ArizeAIObservabilityEvalOrganizationResource> GetArizeAIObservabilityEvalOrganizations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableArizeAIObservabilityEvalSubscriptionResource(subscriptionResource).GetOrganizationResources(cancellationToken);
+            return GetMockableArizeAIObservabilityEvalSubscriptionResource(subscriptionResource).GetArizeAIObservabilityEvalOrganizations(cancellationToken);
         }
     }
 }

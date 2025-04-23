@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
 {
-    public partial class OfferDetails : IUtf8JsonSerializable, IJsonModel<OfferDetails>
+    public partial class ArizeAIObservabilityEvalOfferDetails : IUtf8JsonSerializable, IJsonModel<ArizeAIObservabilityEvalOfferDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OfferDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArizeAIObservabilityEvalOfferDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<OfferDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ArizeAIObservabilityEvalOfferDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OfferDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArizeAIObservabilityEvalOfferDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OfferDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ArizeAIObservabilityEvalOfferDetails)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("publisherId"u8);
@@ -72,19 +72,19 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
             }
         }
 
-        OfferDetails IJsonModel<OfferDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ArizeAIObservabilityEvalOfferDetails IJsonModel<ArizeAIObservabilityEvalOfferDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OfferDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArizeAIObservabilityEvalOfferDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OfferDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ArizeAIObservabilityEvalOfferDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOfferDetails(document.RootElement, options);
+            return DeserializeArizeAIObservabilityEvalOfferDetails(document.RootElement, options);
         }
 
-        internal static OfferDetails DeserializeOfferDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ArizeAIObservabilityEvalOfferDetails DeserializeArizeAIObservabilityEvalOfferDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OfferDetails(
+            return new ArizeAIObservabilityEvalOfferDetails(
                 publisherId,
                 offerId,
                 planId,
@@ -148,35 +148,35 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<OfferDetails>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ArizeAIObservabilityEvalOfferDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OfferDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArizeAIObservabilityEvalOfferDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OfferDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArizeAIObservabilityEvalOfferDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        OfferDetails IPersistableModel<OfferDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ArizeAIObservabilityEvalOfferDetails IPersistableModel<ArizeAIObservabilityEvalOfferDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OfferDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArizeAIObservabilityEvalOfferDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeOfferDetails(document.RootElement, options);
+                        return DeserializeArizeAIObservabilityEvalOfferDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OfferDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArizeAIObservabilityEvalOfferDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<OfferDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ArizeAIObservabilityEvalOfferDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
 {
-    /// <summary> The type used for update operations of the Organization Resource. </summary>
-    public partial class OrganizationResourcePatch
+    /// <summary> User details for an organization. </summary>
+    public partial class ArizeAIObservabilityEvalUserDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,26 +45,37 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationResourcePatch"/>. </summary>
-        public OrganizationResourcePatch()
+        /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalUserDetails"/>. </summary>
+        public ArizeAIObservabilityEvalUserDetails()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationResourcePatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalUserDetails"/>. </summary>
+        /// <param name="firstName"> First name of the user. </param>
+        /// <param name="lastName"> Last name of the user. </param>
+        /// <param name="emailAddress"> Email address of the user. </param>
+        /// <param name="upn"> User's principal name. </param>
+        /// <param name="phoneNumber"> User's phone number. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OrganizationResourcePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArizeAIObservabilityEvalUserDetails(string firstName, string lastName, string emailAddress, string upn, string phoneNumber, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
-            Identity = identity;
+            FirstName = firstName;
+            LastName = lastName;
+            EmailAddress = emailAddress;
+            Upn = upn;
+            PhoneNumber = phoneNumber;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-        /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> First name of the user. </summary>
+        public string FirstName { get; set; }
+        /// <summary> Last name of the user. </summary>
+        public string LastName { get; set; }
+        /// <summary> Email address of the user. </summary>
+        public string EmailAddress { get; set; }
+        /// <summary> User's principal name. </summary>
+        public string Upn { get; set; }
+        /// <summary> User's phone number. </summary>
+        public string PhoneNumber { get; set; }
     }
 }

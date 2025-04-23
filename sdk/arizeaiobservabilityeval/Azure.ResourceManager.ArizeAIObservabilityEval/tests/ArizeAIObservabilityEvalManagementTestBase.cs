@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.ArizeAIObservabilityEval.Tests
 {
-    public class liftrarizeManagementTestBase : ManagementRecordedTestBase<liftrarizeManagementTestEnvironment>
+    public class ArizeAIObservabilityEvalManagementTestBase : ManagementRecordedTestBase<ArizeAIObservabilityEvalManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
-        protected liftrarizeManagementTestBase(bool isAsync, RecordedTestMode mode)
+        protected ArizeAIObservabilityEvalManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
         }
 
-        protected liftrarizeManagementTestBase(bool isAsync)
+        protected ArizeAIObservabilityEvalManagementTestBase(bool isAsync)
             : base(isAsync)
         {
         }

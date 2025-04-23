@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmArizeAIObservabilityEvalModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEval.OrganizationResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEval.ArizeAIObservabilityEvalOrganizationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="ArizeAIObservabilityEval.OrganizationResourceData"/> instance for mocking. </returns>
-        public static OrganizationResourceData OrganizationResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, OrganizationProperties properties = null, ManagedServiceIdentity identity = null)
+        /// <returns> A new <see cref="ArizeAIObservabilityEval.ArizeAIObservabilityEvalOrganizationData"/> instance for mocking. </returns>
+        public static ArizeAIObservabilityEvalOrganizationData ArizeAIObservabilityEvalOrganizationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ArizeAIObservabilityEvalOrganizationProperties properties = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new OrganizationResourceData(
+            return new ArizeAIObservabilityEvalOrganizationData(
                 id,
                 name,
                 resourceType,
@@ -42,32 +42,32 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OrganizationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArizeAIObservabilityEvalOrganizationProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerDescription"> partner properties. </param>
         /// <param name="singleSignOnProperties"> Single sign-on properties. </param>
-        /// <returns> A new <see cref="Models.OrganizationProperties"/> instance for mocking. </returns>
-        public static OrganizationProperties OrganizationProperties(MarketplaceDetails marketplace = null, UserDetails user = null, ResourceProvisioningState? provisioningState = null, string partnerDescription = null, SingleSignOnPropertiesV2 singleSignOnProperties = null)
+        /// <returns> A new <see cref="Models.ArizeAIObservabilityEvalOrganizationProperties"/> instance for mocking. </returns>
+        public static ArizeAIObservabilityEvalOrganizationProperties ArizeAIObservabilityEvalOrganizationProperties(ArizeAIObservabilityEvalMarketplaceDetails marketplace = null, ArizeAIObservabilityEvalUserDetails user = null, ArizeAIObservabilityEvalOfferProvisioningState? provisioningState = null, string partnerDescription = null, ArizeAIObservabilityEvalSingleSignOnPropertiesV2 singleSignOnProperties = null)
         {
-            return new OrganizationProperties(
+            return new ArizeAIObservabilityEvalOrganizationProperties(
                 marketplace,
                 user,
                 provisioningState,
-                partnerDescription != null ? new PartnerProperties(partnerDescription, serializedAdditionalRawData: null) : null,
+                partnerDescription != null ? new ArizeAIObservabilityEvalOfferPartnerProperties(partnerDescription, serializedAdditionalRawData: null) : null,
                 singleSignOnProperties,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MarketplaceDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArizeAIObservabilityEvalMarketplaceDetails"/>. </summary>
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
-        /// <returns> A new <see cref="Models.MarketplaceDetails"/> instance for mocking. </returns>
-        public static MarketplaceDetails MarketplaceDetails(string subscriptionId = null, MarketplaceSubscriptionStatus? subscriptionStatus = null, OfferDetails offerDetails = null)
+        /// <returns> A new <see cref="Models.ArizeAIObservabilityEvalMarketplaceDetails"/> instance for mocking. </returns>
+        public static ArizeAIObservabilityEvalMarketplaceDetails ArizeAIObservabilityEvalMarketplaceDetails(string subscriptionId = null, ArizeAIObservabilityEvalMarketplaceSubscriptionStatus? subscriptionStatus = null, ArizeAIObservabilityEvalOfferDetails offerDetails = null)
         {
-            return new MarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, serializedAdditionalRawData: null);
+            return new ArizeAIObservabilityEvalMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, serializedAdditionalRawData: null);
         }
     }
 }

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
 {
-    public partial class UserDetails : IUtf8JsonSerializable, IJsonModel<UserDetails>
+    public partial class ArizeAIObservabilityEvalUserDetails : IUtf8JsonSerializable, IJsonModel<ArizeAIObservabilityEvalUserDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArizeAIObservabilityEvalUserDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<UserDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ArizeAIObservabilityEvalUserDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArizeAIObservabilityEvalUserDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ArizeAIObservabilityEvalUserDetails)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(FirstName))
@@ -76,19 +76,19 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
             }
         }
 
-        UserDetails IJsonModel<UserDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ArizeAIObservabilityEvalUserDetails IJsonModel<ArizeAIObservabilityEvalUserDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArizeAIObservabilityEvalUserDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ArizeAIObservabilityEvalUserDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUserDetails(document.RootElement, options);
+            return DeserializeArizeAIObservabilityEvalUserDetails(document.RootElement, options);
         }
 
-        internal static UserDetails DeserializeUserDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ArizeAIObservabilityEvalUserDetails DeserializeArizeAIObservabilityEvalUserDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UserDetails(
+            return new ArizeAIObservabilityEvalUserDetails(
                 firstName,
                 lastName,
                 emailAddress,
@@ -145,35 +145,35 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<UserDetails>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ArizeAIObservabilityEvalUserDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArizeAIObservabilityEvalUserDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UserDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArizeAIObservabilityEvalUserDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        UserDetails IPersistableModel<UserDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ArizeAIObservabilityEvalUserDetails IPersistableModel<ArizeAIObservabilityEvalUserDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArizeAIObservabilityEvalUserDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeUserDetails(document.RootElement, options);
+                        return DeserializeArizeAIObservabilityEvalUserDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArizeAIObservabilityEvalUserDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<UserDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ArizeAIObservabilityEvalUserDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

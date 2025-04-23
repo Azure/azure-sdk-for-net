@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
 {
-    /// <summary> User details for an organization. </summary>
-    public partial class UserDetails
+    /// <summary> Partner's specific Properties. </summary>
+    internal partial class ArizeAIObservabilityEvalOfferPartnerProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,37 +45,31 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="UserDetails"/>. </summary>
-        public UserDetails()
+        /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalOfferPartnerProperties"/>. </summary>
+        /// <param name="description"> Description of the Organization's purpose. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="description"/> is null. </exception>
+        public ArizeAIObservabilityEvalOfferPartnerProperties(string description)
         {
+            Argument.AssertNotNull(description, nameof(description));
+
+            Description = description;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UserDetails"/>. </summary>
-        /// <param name="firstName"> First name of the user. </param>
-        /// <param name="lastName"> Last name of the user. </param>
-        /// <param name="emailAddress"> Email address of the user. </param>
-        /// <param name="upn"> User's principal name. </param>
-        /// <param name="phoneNumber"> User's phone number. </param>
+        /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalOfferPartnerProperties"/>. </summary>
+        /// <param name="description"> Description of the Organization's purpose. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UserDetails(string firstName, string lastName, string emailAddress, string upn, string phoneNumber, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArizeAIObservabilityEvalOfferPartnerProperties(string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            FirstName = firstName;
-            LastName = lastName;
-            EmailAddress = emailAddress;
-            Upn = upn;
-            PhoneNumber = phoneNumber;
+            Description = description;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> First name of the user. </summary>
-        public string FirstName { get; set; }
-        /// <summary> Last name of the user. </summary>
-        public string LastName { get; set; }
-        /// <summary> Email address of the user. </summary>
-        public string EmailAddress { get; set; }
-        /// <summary> User's principal name. </summary>
-        public string Upn { get; set; }
-        /// <summary> User's phone number. </summary>
-        public string PhoneNumber { get; set; }
+        /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalOfferPartnerProperties"/> for deserialization. </summary>
+        internal ArizeAIObservabilityEvalOfferPartnerProperties()
+        {
+        }
+
+        /// <summary> Description of the Organization's purpose. </summary>
+        public string Description { get; set; }
     }
 }

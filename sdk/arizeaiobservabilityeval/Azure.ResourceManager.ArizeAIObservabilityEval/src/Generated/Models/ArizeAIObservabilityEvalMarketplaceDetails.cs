@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
 {
     /// <summary> Marketplace details for an organization. </summary>
-    public partial class MarketplaceDetails
+    public partial class ArizeAIObservabilityEvalMarketplaceDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,22 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalMarketplaceDetails"/>. </summary>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offerDetails"/> is null. </exception>
-        public MarketplaceDetails(OfferDetails offerDetails)
+        public ArizeAIObservabilityEvalMarketplaceDetails(ArizeAIObservabilityEvalOfferDetails offerDetails)
         {
             Argument.AssertNotNull(offerDetails, nameof(offerDetails));
 
             OfferDetails = offerDetails;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalMarketplaceDetails"/>. </summary>
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceDetails(string subscriptionId, MarketplaceSubscriptionStatus? subscriptionStatus, OfferDetails offerDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArizeAIObservabilityEvalMarketplaceDetails(string subscriptionId, ArizeAIObservabilityEvalMarketplaceSubscriptionStatus? subscriptionStatus, ArizeAIObservabilityEvalOfferDetails offerDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubscriptionId = subscriptionId;
             SubscriptionStatus = subscriptionStatus;
@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceDetails"/> for deserialization. </summary>
-        internal MarketplaceDetails()
+        /// <summary> Initializes a new instance of <see cref="ArizeAIObservabilityEvalMarketplaceDetails"/> for deserialization. </summary>
+        internal ArizeAIObservabilityEvalMarketplaceDetails()
         {
         }
 
         /// <summary> Azure subscription id for the the marketplace offer is purchased from. </summary>
         public string SubscriptionId { get; set; }
         /// <summary> Marketplace subscription status. </summary>
-        public MarketplaceSubscriptionStatus? SubscriptionStatus { get; }
+        public ArizeAIObservabilityEvalMarketplaceSubscriptionStatus? SubscriptionStatus { get; }
         /// <summary> Offer details for the marketplace that is selected by the user. </summary>
-        public OfferDetails OfferDetails { get; set; }
+        public ArizeAIObservabilityEvalOfferDetails OfferDetails { get; set; }
     }
 }

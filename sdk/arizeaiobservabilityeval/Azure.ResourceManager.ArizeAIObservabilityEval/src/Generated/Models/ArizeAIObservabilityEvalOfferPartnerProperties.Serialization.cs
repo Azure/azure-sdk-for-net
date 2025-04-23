@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
 {
-    internal partial class PartnerProperties : IUtf8JsonSerializable, IJsonModel<PartnerProperties>
+    internal partial class ArizeAIObservabilityEvalOfferPartnerProperties : IUtf8JsonSerializable, IJsonModel<ArizeAIObservabilityEvalOfferPartnerProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArizeAIObservabilityEvalOfferPartnerProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PartnerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ArizeAIObservabilityEvalOfferPartnerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArizeAIObservabilityEvalOfferPartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ArizeAIObservabilityEvalOfferPartnerProperties)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("description"u8);
@@ -53,19 +53,19 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
             }
         }
 
-        PartnerProperties IJsonModel<PartnerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ArizeAIObservabilityEvalOfferPartnerProperties IJsonModel<ArizeAIObservabilityEvalOfferPartnerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArizeAIObservabilityEvalOfferPartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ArizeAIObservabilityEvalOfferPartnerProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePartnerProperties(document.RootElement, options);
+            return DeserializeArizeAIObservabilityEvalOfferPartnerProperties(document.RootElement, options);
         }
 
-        internal static PartnerProperties DeserializePartnerProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ArizeAIObservabilityEvalOfferPartnerProperties DeserializeArizeAIObservabilityEvalOfferPartnerProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -89,38 +89,38 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PartnerProperties(description, serializedAdditionalRawData);
+            return new ArizeAIObservabilityEvalOfferPartnerProperties(description, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PartnerProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ArizeAIObservabilityEvalOfferPartnerProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArizeAIObservabilityEvalOfferPartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PartnerProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArizeAIObservabilityEvalOfferPartnerProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PartnerProperties IPersistableModel<PartnerProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ArizeAIObservabilityEvalOfferPartnerProperties IPersistableModel<ArizeAIObservabilityEvalOfferPartnerProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArizeAIObservabilityEvalOfferPartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePartnerProperties(document.RootElement, options);
+                        return DeserializeArizeAIObservabilityEvalOfferPartnerProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PartnerProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArizeAIObservabilityEvalOfferPartnerProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PartnerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ArizeAIObservabilityEvalOfferPartnerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

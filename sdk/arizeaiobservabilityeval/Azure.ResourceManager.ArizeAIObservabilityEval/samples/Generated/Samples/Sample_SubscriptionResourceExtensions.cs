@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetOrganizationResources_OrganizationsListBySubscriptionGeneratedByMaximumSetRule()
+        public async Task GetArizeAIObservabilityEvalOrganizations_OrganizationsListBySubscriptionGeneratedByMaximumSetRule()
         {
             // Generated from example definition: 2024-10-01-preview/Organizations_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "OrganizationResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (OrganizationResource item in subscriptionResource.GetOrganizationResourcesAsync())
+            await foreach (ArizeAIObservabilityEvalOrganizationResource item in subscriptionResource.GetArizeAIObservabilityEvalOrganizationsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                OrganizationResourceData resourceData = item.Data;
+                ArizeAIObservabilityEvalOrganizationData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

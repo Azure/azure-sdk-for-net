@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableArizeAIObservabilityEvalSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _organizationResourceOrganizationsClientDiagnostics;
-        private OrganizationsRestOperations _organizationResourceOrganizationsRestClient;
+        private ClientDiagnostics _arizeAIObservabilityEvalOrganizationOrganizationsClientDiagnostics;
+        private OrganizationsRestOperations _arizeAIObservabilityEvalOrganizationOrganizationsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableArizeAIObservabilityEvalSubscriptionResource"/> class for mocking. </summary>
         protected MockableArizeAIObservabilityEvalSubscriptionResource()
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Mocking
         {
         }
 
-        private ClientDiagnostics OrganizationResourceOrganizationsClientDiagnostics => _organizationResourceOrganizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ArizeAIObservabilityEval", OrganizationResource.ResourceType.Namespace, Diagnostics);
-        private OrganizationsRestOperations OrganizationResourceOrganizationsRestClient => _organizationResourceOrganizationsRestClient ??= new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(OrganizationResource.ResourceType));
+        private ClientDiagnostics ArizeAIObservabilityEvalOrganizationOrganizationsClientDiagnostics => _arizeAIObservabilityEvalOrganizationOrganizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ArizeAIObservabilityEval", ArizeAIObservabilityEvalOrganizationResource.ResourceType.Namespace, Diagnostics);
+        private OrganizationsRestOperations ArizeAIObservabilityEvalOrganizationOrganizationsRestClient => _arizeAIObservabilityEvalOrganizationOrganizationsRestClient ??= new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ArizeAIObservabilityEvalOrganizationResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="ArizeAIObservabilityEvalOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OrganizationResource> GetOrganizationResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ArizeAIObservabilityEvalOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ArizeAIObservabilityEvalOrganizationResource> GetArizeAIObservabilityEvalOrganizationsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OrganizationResourceOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrganizationResourceOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OrganizationResource(Client, OrganizationResourceData.DeserializeOrganizationResourceData(e)), OrganizationResourceOrganizationsClientDiagnostics, Pipeline, "MockableArizeAIObservabilityEvalSubscriptionResource.GetOrganizationResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ArizeAIObservabilityEvalOrganizationOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ArizeAIObservabilityEvalOrganizationOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArizeAIObservabilityEvalOrganizationResource(Client, ArizeAIObservabilityEvalOrganizationData.DeserializeArizeAIObservabilityEvalOrganizationData(e)), ArizeAIObservabilityEvalOrganizationOrganizationsClientDiagnostics, Pipeline, "MockableArizeAIObservabilityEvalSubscriptionResource.GetArizeAIObservabilityEvalOrganizations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="ArizeAIObservabilityEvalOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OrganizationResource> GetOrganizationResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ArizeAIObservabilityEvalOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ArizeAIObservabilityEvalOrganizationResource> GetArizeAIObservabilityEvalOrganizations(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OrganizationResourceOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrganizationResourceOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OrganizationResource(Client, OrganizationResourceData.DeserializeOrganizationResourceData(e)), OrganizationResourceOrganizationsClientDiagnostics, Pipeline, "MockableArizeAIObservabilityEvalSubscriptionResource.GetOrganizationResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ArizeAIObservabilityEvalOrganizationOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ArizeAIObservabilityEvalOrganizationOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArizeAIObservabilityEvalOrganizationResource(Client, ArizeAIObservabilityEvalOrganizationData.DeserializeArizeAIObservabilityEvalOrganizationData(e)), ArizeAIObservabilityEvalOrganizationOrganizationsClientDiagnostics, Pipeline, "MockableArizeAIObservabilityEvalSubscriptionResource.GetArizeAIObservabilityEvalOrganizations", "value", "nextLink", cancellationToken);
         }
     }
 }

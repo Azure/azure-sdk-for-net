@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.ArizeAIObservabilityEval.Tests
 {
-    public class liftrarizeManagementTestEnvironment : TestEnvironment
+    public class ArizeAIObservabilityEvalManagementTestEnvironment : TestEnvironment
     {
     }
 }

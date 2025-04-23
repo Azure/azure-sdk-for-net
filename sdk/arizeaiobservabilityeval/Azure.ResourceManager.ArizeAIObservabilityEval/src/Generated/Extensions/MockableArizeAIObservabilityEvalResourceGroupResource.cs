@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of OrganizationResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of OrganizationResources and their operations over a OrganizationResource. </returns>
-        public virtual OrganizationResourceCollection GetOrganizationResources()
+        /// <summary> Gets a collection of ArizeAIObservabilityEvalOrganizationResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ArizeAIObservabilityEvalOrganizationResources and their operations over a ArizeAIObservabilityEvalOrganizationResource. </returns>
+        public virtual ArizeAIObservabilityEvalOrganizationCollection GetArizeAIObservabilityEvalOrganizations()
         {
-            return GetCachedClient(client => new OrganizationResourceCollection(client, Id));
+            return GetCachedClient(client => new ArizeAIObservabilityEvalOrganizationCollection(client, Id));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="ArizeAIObservabilityEvalOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<OrganizationResource>> GetOrganizationResourceAsync(string organizationname, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArizeAIObservabilityEvalOrganizationResource>> GetArizeAIObservabilityEvalOrganizationAsync(string organizationname, CancellationToken cancellationToken = default)
         {
-            return await GetOrganizationResources().GetAsync(organizationname, cancellationToken).ConfigureAwait(false);
+            return await GetArizeAIObservabilityEvalOrganizations().GetAsync(organizationname, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="ArizeAIObservabilityEvalOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<OrganizationResource> GetOrganizationResource(string organizationname, CancellationToken cancellationToken = default)
+        public virtual Response<ArizeAIObservabilityEvalOrganizationResource> GetArizeAIObservabilityEvalOrganization(string organizationname, CancellationToken cancellationToken = default)
         {
-            return GetOrganizationResources().Get(organizationname, cancellationToken);
+            return GetArizeAIObservabilityEvalOrganizations().Get(organizationname, cancellationToken);
         }
     }
 }
