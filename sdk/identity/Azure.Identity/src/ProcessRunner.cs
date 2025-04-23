@@ -26,7 +26,13 @@ namespace Azure.Identity
         private bool _logPII;
         public int ExitCode => _process.ExitCode;
 
-        public ProcessRunner(IProcess process, TimeSpan timeout, bool logPII, bool redirectStandardInput = false, CancellationToken cancellationToken)
+        public ProcessRunner(IProcess process, TimeSpan timeout, bool logPII, CancellationToken cancellationToken)
+            : this(process, timeout, logPII, false, cancellationToken)
+        {
+            // This constructor delegates to the main one with default redirectStandardInput = false
+        }
+
+        public ProcessRunner(IProcess process, TimeSpan timeout, bool logPII, bool redirectStandardInput, CancellationToken cancellationToken)
         {
             _logPII = logPII;
             _process = process;
