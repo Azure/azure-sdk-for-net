@@ -11,7 +11,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <!-- Should be swapped back to package reference after Azure.Core 1.46 goes live -->
+    <!--<PackageReference Include="Azure.Core" />-->
+    <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
     <PackageReference Include="Microsoft.CSharp" />
   </ItemGroup>
 
