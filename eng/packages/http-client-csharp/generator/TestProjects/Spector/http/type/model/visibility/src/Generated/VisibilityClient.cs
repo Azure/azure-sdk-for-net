@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using _Type.Model.Visibility.Models;
 
 namespace _Type.Model.Visibility
 {
@@ -27,17 +26,17 @@ namespace _Type.Model.Visibility
 
         public virtual Task<Response> GetModelAsync(int queryProp, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<VisibilityModel> GetModel(int queryProp, VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<VisibilityModel> GetModel(VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<VisibilityModel>> GetModelAsync(int queryProp, VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response<VisibilityModel>> GetModelAsync(VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response HeadModel(int queryProp, RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> HeadModelAsync(int queryProp, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response HeadModel(int queryProp, VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response HeadModel(VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> HeadModelAsync(int queryProp, VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> HeadModelAsync(VisibilityModel input, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response PutModel(RequestContent content, RequestContext context = null) => throw null;
 

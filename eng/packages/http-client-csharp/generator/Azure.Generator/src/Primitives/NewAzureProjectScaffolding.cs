@@ -92,10 +92,10 @@ namespace Azure.Generator.Primitives
             // Check each client for operations
             foreach (var inputClient in allClients)
             {
-                foreach (var operation in inputClient.Operations)
+                foreach (var method in inputClient.Methods)
                 {
                     hasOperation = true;
-                    if (operation.LongRunning != null)
+                    if (method is InputLongRunningServiceMethod || method is InputLongRunningPagingServiceMethod)
                     {
                         hasLongRunningOperation = true;
                         return; // Exit early if a long-running operation is found

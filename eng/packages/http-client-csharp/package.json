@@ -1,6 +1,17 @@
 {
   "name": "@azure-typespec/http-client-csharp",
   "version": "1.0.0",
+  "author": "Microsoft Corporation",
+  "description": "TypeSpec library for emitting Azure libraries for C#.",
+  "readme": "https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp/README.md",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/azure-sdk/azure-sdk-for-net.git"
+  },
+  "bugs": {
+    "url": "https://github.com/azure-sdk/azure-sdk-for-net/issues"
+  },
   "type": "module",
   "main": "dist/emitter/index.js",
   "exports": {
@@ -26,7 +37,7 @@
     "dist/**"
   ],
   "dependencies": {
-    "@typespec/http-client-csharp": "1.0.0-alpha.20250407.1"
+    "@typespec/http-client-csharp": "1.0.0-alpha.20250421.4"
   },
   "devDependencies": {
     "@azure-tools/azure-http-specs": "0.1.0-alpha.13",
@@ -63,6 +74,8 @@
   },
   "azure-sdk/emitter-package-json-pinning": [
     "@azure-tools/typespec-azure-core",
+    "@azure-tools/typespec-azure-resource-manager",
+    "@azure-tools/typespec-azure-rulesets",
     "@azure-tools/typespec-client-generator-core",
     "@typespec/compiler",
     "@typespec/http",

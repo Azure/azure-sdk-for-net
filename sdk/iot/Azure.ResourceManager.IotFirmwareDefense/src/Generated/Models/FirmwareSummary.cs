@@ -10,26 +10,57 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> Properties for high level summary of firmware analysis results. </summary>
+    /// <summary>
+    /// Properties for high level summary of firmware analysis results.
+    /// Serialized Name: FirmwareSummary
+    /// </summary>
     public partial class FirmwareSummary : FirmwareAnalysisSummaryProperties
     {
         /// <summary> Initializes a new instance of <see cref="FirmwareSummary"/>. </summary>
-        internal FirmwareSummary()
+        public FirmwareSummary()
         {
             SummaryType = FirmwareAnalysisSummaryType.Firmware;
         }
 
         /// <summary> Initializes a new instance of <see cref="FirmwareSummary"/>. </summary>
-        /// <param name="summaryType"> Describes the type of summary. </param>
+        /// <param name="summaryType">
+        /// The type of summary.
+        /// Serialized Name: SummaryResourceProperties.summaryType
+        /// </param>
+        /// <param name="provisioningState">
+        /// The status of the last operation.
+        /// Serialized Name: SummaryResourceProperties.provisioningState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="extractedSize"> Total extracted size of the firmware in bytes. </param>
-        /// <param name="fileSize"> Firmware file size in bytes. </param>
-        /// <param name="extractedFileCount"> Extracted file count. </param>
-        /// <param name="componentCount"> Components count. </param>
-        /// <param name="binaryCount"> Binary count. </param>
-        /// <param name="analysisTimeSeconds"> Time used for analysis. </param>
-        /// <param name="rootFileSystems"> The number of root file systems found. </param>
-        internal FirmwareSummary(FirmwareAnalysisSummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData, long? extractedSize, long? fileSize, long? extractedFileCount, long? componentCount, long? binaryCount, long? analysisTimeSeconds, long? rootFileSystems) : base(summaryType, serializedAdditionalRawData)
+        /// <param name="extractedSize">
+        /// Total extracted size of the firmware in bytes.
+        /// Serialized Name: FirmwareSummary.extractedSize
+        /// </param>
+        /// <param name="fileSize">
+        /// Firmware file size in bytes.
+        /// Serialized Name: FirmwareSummary.fileSize
+        /// </param>
+        /// <param name="extractedFileCount">
+        /// Extracted file count.
+        /// Serialized Name: FirmwareSummary.extractedFileCount
+        /// </param>
+        /// <param name="componentCount">
+        /// Components count.
+        /// Serialized Name: FirmwareSummary.componentCount
+        /// </param>
+        /// <param name="binaryCount">
+        /// Binary count
+        /// Serialized Name: FirmwareSummary.binaryCount
+        /// </param>
+        /// <param name="analysisTimeSeconds">
+        /// Time used for analysis
+        /// Serialized Name: FirmwareSummary.analysisTimeSeconds
+        /// </param>
+        /// <param name="rootFileSystems">
+        /// The number of root file systems found.
+        /// Serialized Name: FirmwareSummary.rootFileSystems
+        /// </param>
+        internal FirmwareSummary(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, long? extractedSize, long? fileSize, long? extractedFileCount, long? componentCount, long? binaryCount, long? analysisTimeSeconds, long? rootFileSystems) : base(summaryType, provisioningState, serializedAdditionalRawData)
         {
             ExtractedSize = extractedSize;
             FileSize = fileSize;
@@ -41,19 +72,40 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             SummaryType = summaryType;
         }
 
-        /// <summary> Total extracted size of the firmware in bytes. </summary>
-        public long? ExtractedSize { get; }
-        /// <summary> Firmware file size in bytes. </summary>
-        public long? FileSize { get; }
-        /// <summary> Extracted file count. </summary>
-        public long? ExtractedFileCount { get; }
-        /// <summary> Components count. </summary>
-        public long? ComponentCount { get; }
-        /// <summary> Binary count. </summary>
-        public long? BinaryCount { get; }
-        /// <summary> Time used for analysis. </summary>
-        public long? AnalysisTimeSeconds { get; }
-        /// <summary> The number of root file systems found. </summary>
-        public long? RootFileSystems { get; }
+        /// <summary>
+        /// Total extracted size of the firmware in bytes.
+        /// Serialized Name: FirmwareSummary.extractedSize
+        /// </summary>
+        public long? ExtractedSize { get; set; }
+        /// <summary>
+        /// Firmware file size in bytes.
+        /// Serialized Name: FirmwareSummary.fileSize
+        /// </summary>
+        public long? FileSize { get; set; }
+        /// <summary>
+        /// Extracted file count.
+        /// Serialized Name: FirmwareSummary.extractedFileCount
+        /// </summary>
+        public long? ExtractedFileCount { get; set; }
+        /// <summary>
+        /// Components count.
+        /// Serialized Name: FirmwareSummary.componentCount
+        /// </summary>
+        public long? ComponentCount { get; set; }
+        /// <summary>
+        /// Binary count
+        /// Serialized Name: FirmwareSummary.binaryCount
+        /// </summary>
+        public long? BinaryCount { get; set; }
+        /// <summary>
+        /// Time used for analysis
+        /// Serialized Name: FirmwareSummary.analysisTimeSeconds
+        /// </summary>
+        public long? AnalysisTimeSeconds { get; set; }
+        /// <summary>
+        /// The number of root file systems found.
+        /// Serialized Name: FirmwareSummary.rootFileSystems
+        /// </summary>
+        public long? RootFileSystems { get; set; }
     }
 }
