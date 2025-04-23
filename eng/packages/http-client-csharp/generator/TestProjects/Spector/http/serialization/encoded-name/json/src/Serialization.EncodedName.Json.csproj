@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../../sdk/core/Azure.Core/src/Shared/RawRequestUriBuilder.cs" LinkBase="Shared/Core" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
 </Project>
