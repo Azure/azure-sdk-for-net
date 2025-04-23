@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.DevTestLabs
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevTestLabsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DevTestLabArmTemplateData)} does not support writing '{options.Format}' format.");
             }
