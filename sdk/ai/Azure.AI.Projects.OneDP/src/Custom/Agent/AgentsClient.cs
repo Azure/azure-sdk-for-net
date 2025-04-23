@@ -91,7 +91,7 @@ namespace Azure.AI.Projects
         public virtual async Task<Response<Run>> RunAsync(string modelId, string instructions, string message, CancellationToken cancellationToken = default)
         {
             // Create AgentConfigurationOptions
-            var agentConfigurationOptions = new AgentConfigurationOptions
+            var agentConfigurationOptions = new AgentConfigurationOptions(displayName: "")
             {
                 AgentModel = new AzureAgentModel(modelId),
                 Instructions = instructions

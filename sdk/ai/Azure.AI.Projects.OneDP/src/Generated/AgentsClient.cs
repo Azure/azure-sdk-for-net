@@ -875,7 +875,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Retrieves an existing run by its ID.
-        /// @route("/agents/runs/{run_id}")
+        /// @route("/conversations/runs/{run_id}")
         /// </summary>
         /// <param name="runId"> Unique identifier for this run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -893,7 +893,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Retrieves an existing run by its ID.
-        /// @route("/agents/runs/{run_id}")
+        /// @route("/conversations/runs/{run_id}")
         /// </summary>
         /// <param name="runId"> Unique identifier for this run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -911,7 +911,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// [Protocol Method] Retrieves an existing run by its ID.
-        /// @route("/agents/runs/{run_id}")
+        /// @route("/conversations/runs/{run_id}")
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -952,7 +952,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// [Protocol Method] Retrieves an existing run by its ID.
-        /// @route("/agents/runs/{run_id}")
+        /// @route("/conversations/runs/{run_id}")
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -982,6 +982,116 @@ namespace Azure.AI.Projects
             try
             {
                 using HttpMessage message = CreateGetRunRequest(runId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists the inputs for a specific run by its ID. </summary>
+        /// <param name="runId"> The ID of the run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='GetRunInputsAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<RunInputs>> GetRunInputsAsync(string runId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetRunInputsAsync(runId, context).ConfigureAwait(false);
+            return Response.FromValue(RunInputs.FromResponse(response), response);
+        }
+
+        /// <summary> Lists the inputs for a specific run by its ID. </summary>
+        /// <param name="runId"> The ID of the run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='GetRunInputs(string,CancellationToken)']/*" />
+        public virtual Response<RunInputs> GetRunInputs(string runId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetRunInputs(runId, context);
+            return Response.FromValue(RunInputs.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists the inputs for a specific run by its ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetRunInputsAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="runId"> The ID of the run. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='GetRunInputsAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetRunInputsAsync(string runId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            using var scope = ClientDiagnostics.CreateScope("AgentsClient.GetRunInputs");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetRunInputsRequest(runId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists the inputs for a specific run by its ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetRunInputs(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="runId"> The ID of the run. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/AgentsClient.xml" path="doc/members/member[@name='GetRunInputs(string,RequestContext)']/*" />
+        public virtual Response GetRunInputs(string runId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            using var scope = ClientDiagnostics.CreateScope("AgentsClient.GetRunInputs");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetRunInputsRequest(runId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1157,7 +1267,7 @@ namespace Azure.AI.Projects
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/agents/runs/run", false);
+            uri.AppendPath("/conversations/runs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1173,7 +1283,7 @@ namespace Azure.AI.Projects
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/agents/runs/stream", false);
+            uri.AppendPath("/conversations/runs/stream", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1205,6 +1315,22 @@ namespace Azure.AI.Projects
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/runs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetRunInputsRequest(string runId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/conversations/runs/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendPath("/listInputs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
