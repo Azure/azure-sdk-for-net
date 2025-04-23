@@ -21,7 +21,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Memory" />
-    <PackageReference Include="Microsoft.Identity.Client" VersionOverride="4.71.1-preview" />
+    <PackageReference Include="Microsoft.Identity.Client" />
     <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" />
   </ItemGroup>
   <ItemGroup>
