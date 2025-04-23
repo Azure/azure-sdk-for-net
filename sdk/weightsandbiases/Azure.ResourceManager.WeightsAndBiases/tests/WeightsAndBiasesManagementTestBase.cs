@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.WeightsAndBiases.Tests
 {
-    public class liftrweightsandbiasesManagementTestBase : ManagementRecordedTestBase<liftrweightsandbiasesManagementTestEnvironment>
+    public class WeightsAndBiasesManagementTestBase : ManagementRecordedTestBase<WeightsAndBiasesManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
-        protected liftrweightsandbiasesManagementTestBase(bool isAsync, RecordedTestMode mode)
+        protected WeightsAndBiasesManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
         }
 
-        protected liftrweightsandbiasesManagementTestBase(bool isAsync)
+        protected WeightsAndBiasesManagementTestBase(bool isAsync)
             : base(isAsync)
         {
         }

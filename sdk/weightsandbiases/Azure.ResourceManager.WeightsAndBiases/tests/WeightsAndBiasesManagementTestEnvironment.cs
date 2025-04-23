@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.WeightsAndBiases.Tests
 {
-    public class liftrweightsandbiasesManagementTestEnvironment : TestEnvironment
+    public class WeightsAndBiasesManagementTestEnvironment : TestEnvironment
     {
     }
 }
