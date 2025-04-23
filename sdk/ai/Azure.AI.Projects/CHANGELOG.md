@@ -2,7 +2,8 @@
 
 ## 1.0.0-beta.8 (Unreleased)
 
-### Features Added
+### Sample Updates
+* New sample added for connected agent tool.
 
 ### Breaking Changes
 
