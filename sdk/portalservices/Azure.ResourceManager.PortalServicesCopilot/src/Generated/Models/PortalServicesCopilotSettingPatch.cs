@@ -7,17 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.PortalServicesCopilot.Models;
 
-namespace Azure.ResourceManager.PortalServicesCopilot
+namespace Azure.ResourceManager.PortalServicesCopilot.Models
 {
-    /// <summary>
-    /// A class representing the CopilotSettingsResource data model.
-    /// The copilot settings tenant resource definition.
-    /// </summary>
-    public partial class CopilotSettingsResourceData : ResourceData
+    /// <summary> The type used for update operations of the CopilotSettingsResource. </summary>
+    public partial class PortalServicesCopilotSettingPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +45,32 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CopilotSettingsResourceData"/>. </summary>
-        public CopilotSettingsResourceData()
+        /// <summary> Initializes a new instance of <see cref="PortalServicesCopilotSettingPatch"/>. </summary>
+        public PortalServicesCopilotSettingPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CopilotSettingsResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Initializes a new instance of <see cref="PortalServicesCopilotSettingPatch"/>. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CopilotSettingsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CopilotSettingsProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PortalServicesCopilotSettingPatch(CopilotSettingsResourceUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public CopilotSettingsProperties Properties { get; set; }
+        internal CopilotSettingsResourceUpdateProperties Properties { get; set; }
+        /// <summary> Boolean indicating if role-based access control is enabled for copilot in this tenant. </summary>
+        public bool? AccessControlEnabled
+        {
+            get => Properties is null ? default : Properties.AccessControlEnabled;
+            set
+            {
+                if (Properties is null)
+                    Properties = new CopilotSettingsResourceUpdateProperties();
+                Properties.AccessControlEnabled = value;
+            }
+        }
     }
 }

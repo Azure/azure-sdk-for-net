@@ -7,11 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PortalServicesCopilot.Models;
 
-namespace Azure.ResourceManager.PortalServicesCopilot.Models
+namespace Azure.ResourceManager.PortalServicesCopilot
 {
-    /// <summary> The Copilot Settings properties. </summary>
-    public partial class CopilotSettingsProperties
+    /// <summary>
+    /// A class representing the PortalServicesCopilotSetting data model.
+    /// The copilot settings tenant resource definition.
+    /// </summary>
+    public partial class PortalServicesCopilotSettingData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +51,25 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CopilotSettingsProperties"/>. </summary>
-        /// <param name="accessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
-        public CopilotSettingsProperties(bool accessControlEnabled)
+        /// <summary> Initializes a new instance of <see cref="PortalServicesCopilotSettingData"/>. </summary>
+        public PortalServicesCopilotSettingData()
         {
-            AccessControlEnabled = accessControlEnabled;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CopilotSettingsProperties"/>. </summary>
-        /// <param name="accessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
-        /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
+        /// <summary> Initializes a new instance of <see cref="PortalServicesCopilotSettingData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CopilotSettingsProperties(bool accessControlEnabled, PortalServiceResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PortalServicesCopilotSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PortalServicesCopilotSettingsProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            AccessControlEnabled = accessControlEnabled;
-            ProvisioningState = provisioningState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CopilotSettingsProperties"/> for deserialization. </summary>
-        internal CopilotSettingsProperties()
-        {
-        }
-
-        /// <summary> Boolean indicating if role-based access control is enabled for copilot in this tenant. </summary>
-        public bool AccessControlEnabled { get; set; }
-        /// <summary> The status of the last provisioning operation performed on the resource. </summary>
-        public PortalServiceResourceProvisioningState? ProvisioningState { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public PortalServicesCopilotSettingsProperties Properties { get; set; }
     }
 }

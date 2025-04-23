@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
 
         /// <summary> Get a CopilotSettingsResource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CopilotSettingsResourceData>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<PortalServicesCopilotSettingData>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.PortalServicesCopilot
             {
                 case 200:
                     {
-                        CopilotSettingsResourceData value = default;
+                        PortalServicesCopilotSettingData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = CopilotSettingsResourceData.DeserializeCopilotSettingsResourceData(document.RootElement);
+                        value = PortalServicesCopilotSettingData.DeserializePortalServicesCopilotSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CopilotSettingsResourceData)null, message.Response);
+                    return Response.FromValue((PortalServicesCopilotSettingData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
 
         /// <summary> Get a CopilotSettingsResource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CopilotSettingsResourceData> Get(CancellationToken cancellationToken = default)
+        public Response<PortalServicesCopilotSettingData> Get(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest();
             _pipeline.Send(message, cancellationToken);
@@ -92,19 +92,19 @@ namespace Azure.ResourceManager.PortalServicesCopilot
             {
                 case 200:
                     {
-                        CopilotSettingsResourceData value = default;
+                        PortalServicesCopilotSettingData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = CopilotSettingsResourceData.DeserializeCopilotSettingsResourceData(document.RootElement);
+                        value = PortalServicesCopilotSettingData.DeserializePortalServicesCopilotSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CopilotSettingsResourceData)null, message.Response);
+                    return Response.FromValue((PortalServicesCopilotSettingData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(CopilotSettingsResourceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(PortalServicesCopilotSettingData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(CopilotSettingsResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(PortalServicesCopilotSettingData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public async Task<Response<CopilotSettingsResourceData>> CreateOrUpdateAsync(CopilotSettingsResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<PortalServicesCopilotSettingData>> CreateOrUpdateAsync(PortalServicesCopilotSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -147,9 +147,9 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                 case 200:
                 case 201:
                     {
-                        CopilotSettingsResourceData value = default;
+                        PortalServicesCopilotSettingData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = CopilotSettingsResourceData.DeserializeCopilotSettingsResourceData(document.RootElement);
+                        value = PortalServicesCopilotSettingData.DeserializePortalServicesCopilotSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public Response<CopilotSettingsResourceData> CreateOrUpdate(CopilotSettingsResourceData data, CancellationToken cancellationToken = default)
+        public Response<PortalServicesCopilotSettingData> CreateOrUpdate(PortalServicesCopilotSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -172,9 +172,9 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                 case 200:
                 case 201:
                     {
-                        CopilotSettingsResourceData value = default;
+                        PortalServicesCopilotSettingData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = CopilotSettingsResourceData.DeserializeCopilotSettingsResourceData(document.RootElement);
+                        value = PortalServicesCopilotSettingData.DeserializePortalServicesCopilotSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(CopilotSettingsResourcePatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(PortalServicesCopilotSettingPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(CopilotSettingsResourcePatch patch)
+        internal HttpMessage CreateUpdateRequest(PortalServicesCopilotSettingPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public async Task<Response<CopilotSettingsResourceData>> UpdateAsync(CopilotSettingsResourcePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<PortalServicesCopilotSettingData>> UpdateAsync(PortalServicesCopilotSettingPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -224,9 +224,9 @@ namespace Azure.ResourceManager.PortalServicesCopilot
             {
                 case 200:
                     {
-                        CopilotSettingsResourceData value = default;
+                        PortalServicesCopilotSettingData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = CopilotSettingsResourceData.DeserializeCopilotSettingsResourceData(document.RootElement);
+                        value = PortalServicesCopilotSettingData.DeserializePortalServicesCopilotSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public Response<CopilotSettingsResourceData> Update(CopilotSettingsResourcePatch patch, CancellationToken cancellationToken = default)
+        public Response<PortalServicesCopilotSettingData> Update(PortalServicesCopilotSettingPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -248,9 +248,9 @@ namespace Azure.ResourceManager.PortalServicesCopilot
             {
                 case 200:
                     {
-                        CopilotSettingsResourceData value = default;
+                        PortalServicesCopilotSettingData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = CopilotSettingsResourceData.DeserializeCopilotSettingsResourceData(document.RootElement);
+                        value = PortalServicesCopilotSettingData.DeserializePortalServicesCopilotSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

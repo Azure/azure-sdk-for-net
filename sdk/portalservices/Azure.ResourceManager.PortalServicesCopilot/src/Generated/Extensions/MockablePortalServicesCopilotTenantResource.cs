@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets an object representing a CopilotSettingsResource along with the instance operations that can be performed on it in the TenantResource. </summary>
-        /// <returns> Returns a <see cref="CopilotSettingsResource"/> object. </returns>
-        public virtual CopilotSettingsResource GetCopilotSettingsResource()
+        /// <summary> Gets an object representing a PortalServicesCopilotSettingResource along with the instance operations that can be performed on it in the TenantResource. </summary>
+        /// <returns> Returns a <see cref="PortalServicesCopilotSettingResource"/> object. </returns>
+        public virtual PortalServicesCopilotSettingResource GetPortalServicesCopilotSetting()
         {
-            return new CopilotSettingsResource(Client, Id.AppendProviderResource("Microsoft.PortalServices", "copilotSettings", "default"));
+            return new PortalServicesCopilotSettingResource(Client, Id.AppendProviderResource("Microsoft.PortalServices", "copilotSettings", "default"));
         }
     }
 }

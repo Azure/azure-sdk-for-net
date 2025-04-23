@@ -26,39 +26,39 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CopilotSettingsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CopilotSettingsResource.CreateResourceIdentifier" /> to create a <see cref="CopilotSettingsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PortalServicesCopilotSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PortalServicesCopilotSettingResource.CreateResourceIdentifier" /> to create a <see cref="PortalServicesCopilotSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePortalServicesCopilotArmClient.GetCopilotSettingsResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePortalServicesCopilotArmClient.GetPortalServicesCopilotSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CopilotSettingsResource"/> object. </returns>
-        public static CopilotSettingsResource GetCopilotSettingsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PortalServicesCopilotSettingResource"/> object. </returns>
+        public static PortalServicesCopilotSettingResource GetPortalServicesCopilotSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockablePortalServicesCopilotArmClient(client).GetCopilotSettingsResource(id);
+            return GetMockablePortalServicesCopilotArmClient(client).GetPortalServicesCopilotSettingResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a CopilotSettingsResource along with the instance operations that can be performed on it in the TenantResource.
+        /// Gets an object representing a PortalServicesCopilotSettingResource along with the instance operations that can be performed on it in the TenantResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePortalServicesCopilotTenantResource.GetCopilotSettingsResource()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePortalServicesCopilotTenantResource.GetPortalServicesCopilotSetting()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> Returns a <see cref="CopilotSettingsResource"/> object. </returns>
-        public static CopilotSettingsResource GetCopilotSettingsResource(this TenantResource tenantResource)
+        /// <returns> Returns a <see cref="PortalServicesCopilotSettingResource"/> object. </returns>
+        public static PortalServicesCopilotSettingResource GetPortalServicesCopilotSetting(this TenantResource tenantResource)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockablePortalServicesCopilotTenantResource(tenantResource).GetCopilotSettingsResource();
+            return GetMockablePortalServicesCopilotTenantResource(tenantResource).GetPortalServicesCopilotSetting();
         }
     }
 }

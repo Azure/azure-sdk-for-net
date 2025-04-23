@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmPortalServicesCopilotModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="PortalServicesCopilot.CopilotSettingsResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PortalServicesCopilot.PortalServicesCopilotSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="PortalServicesCopilot.CopilotSettingsResourceData"/> instance for mocking. </returns>
-        public static CopilotSettingsResourceData CopilotSettingsResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CopilotSettingsProperties properties = null)
+        /// <returns> A new <see cref="PortalServicesCopilot.PortalServicesCopilotSettingData"/> instance for mocking. </returns>
+        public static PortalServicesCopilotSettingData PortalServicesCopilotSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PortalServicesCopilotSettingsProperties properties = null)
         {
-            return new CopilotSettingsResourceData(
+            return new PortalServicesCopilotSettingData(
                 id,
                 name,
                 resourceType,
@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CopilotSettingsProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PortalServicesCopilotSettingsProperties"/>. </summary>
         /// <param name="accessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
         /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
-        /// <returns> A new <see cref="Models.CopilotSettingsProperties"/> instance for mocking. </returns>
-        public static CopilotSettingsProperties CopilotSettingsProperties(bool accessControlEnabled = default, PortalServiceResourceProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.PortalServicesCopilotSettingsProperties"/> instance for mocking. </returns>
+        public static PortalServicesCopilotSettingsProperties PortalServicesCopilotSettingsProperties(bool accessControlEnabled = default, PortalServicesResourceProvisioningState? provisioningState = null)
         {
-            return new CopilotSettingsProperties(accessControlEnabled, provisioningState, serializedAdditionalRawData: null);
+            return new PortalServicesCopilotSettingsProperties(accessControlEnabled, provisioningState, serializedAdditionalRawData: null);
         }
     }
 }

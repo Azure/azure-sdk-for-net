@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PortalServicesCopilot.Models
 {
-    public partial class CopilotSettingsProperties : IUtf8JsonSerializable, IJsonModel<CopilotSettingsProperties>
+    public partial class PortalServicesCopilotSettingsProperties : IUtf8JsonSerializable, IJsonModel<PortalServicesCopilotSettingsProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopilotSettingsProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PortalServicesCopilotSettingsProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CopilotSettingsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PortalServicesCopilotSettingsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CopilotSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PortalServicesCopilotSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CopilotSettingsProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PortalServicesCopilotSettingsProperties)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("accessControlEnabled"u8);
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
             }
         }
 
-        CopilotSettingsProperties IJsonModel<CopilotSettingsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PortalServicesCopilotSettingsProperties IJsonModel<PortalServicesCopilotSettingsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CopilotSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PortalServicesCopilotSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CopilotSettingsProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PortalServicesCopilotSettingsProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCopilotSettingsProperties(document.RootElement, options);
+            return DeserializePortalServicesCopilotSettingsProperties(document.RootElement, options);
         }
 
-        internal static CopilotSettingsProperties DeserializeCopilotSettingsProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PortalServicesCopilotSettingsProperties DeserializePortalServicesCopilotSettingsProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
                 return null;
             }
             bool accessControlEnabled = default;
-            PortalServiceResourceProvisioningState? provisioningState = default;
+            PortalServicesResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
                     {
                         continue;
                     }
-                    provisioningState = new PortalServiceResourceProvisioningState(property.Value.GetString());
+                    provisioningState = new PortalServicesResourceProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,38 +104,38 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CopilotSettingsProperties(accessControlEnabled, provisioningState, serializedAdditionalRawData);
+            return new PortalServicesCopilotSettingsProperties(accessControlEnabled, provisioningState, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CopilotSettingsProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PortalServicesCopilotSettingsProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CopilotSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PortalServicesCopilotSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CopilotSettingsProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PortalServicesCopilotSettingsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CopilotSettingsProperties IPersistableModel<CopilotSettingsProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PortalServicesCopilotSettingsProperties IPersistableModel<PortalServicesCopilotSettingsProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CopilotSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PortalServicesCopilotSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCopilotSettingsProperties(document.RootElement, options);
+                        return DeserializePortalServicesCopilotSettingsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CopilotSettingsProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PortalServicesCopilotSettingsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CopilotSettingsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PortalServicesCopilotSettingsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
