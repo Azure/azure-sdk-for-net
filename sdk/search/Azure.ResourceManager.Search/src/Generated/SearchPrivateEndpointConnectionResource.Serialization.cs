@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Search
 
         SearchPrivateEndpointConnectionData IJsonModel<SearchPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SearchPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SearchPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SearchPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SearchPrivateEndpointConnectionData>(Data, options, AzureResourceManagerSearchContext.Default);
 
-        SearchPrivateEndpointConnectionData IPersistableModel<SearchPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SearchPrivateEndpointConnectionData>(data, options);
+        SearchPrivateEndpointConnectionData IPersistableModel<SearchPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SearchPrivateEndpointConnectionData>(data, options, AzureResourceManagerSearchContext.Default);
 
         string IPersistableModel<SearchPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SearchPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

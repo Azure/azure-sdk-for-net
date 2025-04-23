@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         EndpointCertificateData IJsonModel<EndpointCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EndpointCertificateData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EndpointCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<EndpointCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EndpointCertificateData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        EndpointCertificateData IPersistableModel<EndpointCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EndpointCertificateData>(data, options);
+        EndpointCertificateData IPersistableModel<EndpointCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EndpointCertificateData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<EndpointCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EndpointCertificateData>)Data).GetFormatFromOptions(options);
     }

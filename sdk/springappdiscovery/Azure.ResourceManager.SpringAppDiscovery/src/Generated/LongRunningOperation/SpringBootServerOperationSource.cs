@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.SpringAppDiscovery
 
         SpringBootServerResource IOperationSource<SpringBootServerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SpringBootServerData>(response.Content);
+            var data = ModelReaderWriter.Read<SpringBootServerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSpringAppDiscoveryContext.Default);
             return new SpringBootServerResource(_client, data);
         }
 
         async ValueTask<SpringBootServerResource> IOperationSource<SpringBootServerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SpringBootServerData>(response.Content);
+            var data = ModelReaderWriter.Read<SpringBootServerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSpringAppDiscoveryContext.Default);
             return await Task.FromResult(new SpringBootServerResource(_client, data)).ConfigureAwait(false);
         }
     }

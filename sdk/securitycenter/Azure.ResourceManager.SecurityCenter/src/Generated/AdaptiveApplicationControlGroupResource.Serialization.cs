@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         AdaptiveApplicationControlGroupData IJsonModel<AdaptiveApplicationControlGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AdaptiveApplicationControlGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AdaptiveApplicationControlGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AdaptiveApplicationControlGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AdaptiveApplicationControlGroupData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        AdaptiveApplicationControlGroupData IPersistableModel<AdaptiveApplicationControlGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AdaptiveApplicationControlGroupData>(data, options);
+        AdaptiveApplicationControlGroupData IPersistableModel<AdaptiveApplicationControlGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AdaptiveApplicationControlGroupData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         string IPersistableModel<AdaptiveApplicationControlGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AdaptiveApplicationControlGroupData>)Data).GetFormatFromOptions(options);
     }

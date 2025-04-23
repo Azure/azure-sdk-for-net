@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         SensitivitySettingData IJsonModel<SensitivitySettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SensitivitySettingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SensitivitySettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SensitivitySettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SensitivitySettingData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        SensitivitySettingData IPersistableModel<SensitivitySettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SensitivitySettingData>(data, options);
+        SensitivitySettingData IPersistableModel<SensitivitySettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SensitivitySettingData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         string IPersistableModel<SensitivitySettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SensitivitySettingData>)Data).GetFormatFromOptions(options);
     }

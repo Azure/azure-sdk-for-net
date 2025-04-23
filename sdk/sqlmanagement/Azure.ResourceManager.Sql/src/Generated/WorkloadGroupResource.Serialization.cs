@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         WorkloadGroupData IJsonModel<WorkloadGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WorkloadGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WorkloadGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadGroupData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        WorkloadGroupData IPersistableModel<WorkloadGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadGroupData>(data, options);
+        WorkloadGroupData IPersistableModel<WorkloadGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadGroupData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<WorkloadGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadGroupData>)Data).GetFormatFromOptions(options);
     }

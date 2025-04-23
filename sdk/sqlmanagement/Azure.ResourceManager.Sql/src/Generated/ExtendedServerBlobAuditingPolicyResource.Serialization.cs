@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         ExtendedServerBlobAuditingPolicyData IJsonModel<ExtendedServerBlobAuditingPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExtendedServerBlobAuditingPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ExtendedServerBlobAuditingPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ExtendedServerBlobAuditingPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExtendedServerBlobAuditingPolicyData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        ExtendedServerBlobAuditingPolicyData IPersistableModel<ExtendedServerBlobAuditingPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExtendedServerBlobAuditingPolicyData>(data, options);
+        ExtendedServerBlobAuditingPolicyData IPersistableModel<ExtendedServerBlobAuditingPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExtendedServerBlobAuditingPolicyData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<ExtendedServerBlobAuditingPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExtendedServerBlobAuditingPolicyData>)Data).GetFormatFromOptions(options);
     }

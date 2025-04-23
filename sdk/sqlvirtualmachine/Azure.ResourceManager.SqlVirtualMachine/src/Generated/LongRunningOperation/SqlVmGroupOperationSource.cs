@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         SqlVmGroupResource IOperationSource<SqlVmGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlVmGroupData>(response.Content);
+            var data = ModelReaderWriter.Read<SqlVmGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlVirtualMachineContext.Default);
             return new SqlVmGroupResource(_client, data);
         }
 
         async ValueTask<SqlVmGroupResource> IOperationSource<SqlVmGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlVmGroupData>(response.Content);
+            var data = ModelReaderWriter.Read<SqlVmGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlVirtualMachineContext.Default);
             return await Task.FromResult(new SqlVmGroupResource(_client, data)).ConfigureAwait(false);
         }
     }

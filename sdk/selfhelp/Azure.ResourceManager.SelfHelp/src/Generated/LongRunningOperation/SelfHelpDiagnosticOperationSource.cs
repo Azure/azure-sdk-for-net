@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.SelfHelp
 
         SelfHelpDiagnosticResource IOperationSource<SelfHelpDiagnosticResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SelfHelpDiagnosticData>(response.Content);
+            var data = ModelReaderWriter.Read<SelfHelpDiagnosticData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSelfHelpContext.Default);
             return new SelfHelpDiagnosticResource(_client, data);
         }
 
         async ValueTask<SelfHelpDiagnosticResource> IOperationSource<SelfHelpDiagnosticResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SelfHelpDiagnosticData>(response.Content);
+            var data = ModelReaderWriter.Read<SelfHelpDiagnosticData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSelfHelpContext.Default);
             return await Task.FromResult(new SelfHelpDiagnosticResource(_client, data)).ConfigureAwait(false);
         }
     }
