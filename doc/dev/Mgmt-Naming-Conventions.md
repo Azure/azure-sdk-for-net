@@ -37,7 +37,7 @@ In addition to adhering to the [General Naming Conventions of .NET](https://lear
 
   - The parameter / response model name should be `[Resource/RP name]NameAvailabilityXXX`.
 
-  - If there is a `Reason` property which is used to represent the unavailable reason code, and its type is an Enum then the name of this Enum should be `[Resource/RP name]NameUnavailableReason`.
+  - If there is a `Reason` property which is used to represent the unavailable reason code, and its type is an `enum` then the name of this `enum` should be `[Resource/RP name]NameUnavailableReason`.
 
 **DO NOT** Duplicate names across different RPs. Additionally, ensure that the data plane is covered (if applicable).
 
