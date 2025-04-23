@@ -10,7 +10,7 @@ DeidentificationJob job = new()
 {
     SourceLocation = new SourceStorageLocation(new Uri(storageAccountUrl), "folder1/"),
     TargetLocation = new TargetStorageLocation(new Uri(storageAccountUrl), "output_folder1/"),
-    Operation = DeidentificationOperationType.Redact,
+    OperationType = DeidentificationOperationType.Redact,
 };
 
 job = (await client.DeidentifyDocumentsAsync(WaitUntil.Completed, "my-job-1", job)).Value;
