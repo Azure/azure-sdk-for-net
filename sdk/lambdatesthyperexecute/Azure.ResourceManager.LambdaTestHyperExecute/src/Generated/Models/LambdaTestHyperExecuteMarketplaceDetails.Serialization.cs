@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                 return null;
             }
             string subscriptionId = default;
-            MarketplaceSubscriptionStatus? subscriptionStatus = default;
+            LambdaTestHyperExecuteMarketplaceSubscriptionStatus? subscriptionStatus = default;
             LambdaTestHyperExecuteOfferDetails offerDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                     {
                         continue;
                     }
-                    subscriptionStatus = new MarketplaceSubscriptionStatus(property.Value.GetString());
+                    subscriptionStatus = new LambdaTestHyperExecuteMarketplaceSubscriptionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("offerDetails"u8))

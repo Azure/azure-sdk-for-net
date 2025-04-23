@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
 {
     public static partial class ArmLambdaTestHyperExecuteModelFactory
     {
-        public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails LambdaTestHyperExecuteMarketplaceDetails(string subscriptionId = null, Azure.ResourceManager.LambdaTestHyperExecute.Models.MarketplaceSubscriptionStatus? subscriptionStatus = default(Azure.ResourceManager.LambdaTestHyperExecute.Models.MarketplaceSubscriptionStatus?), Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferDetails offerDetails = null) { throw null; }
+        public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails LambdaTestHyperExecuteMarketplaceDetails(string subscriptionId = null, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus? subscriptionStatus = default(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus?), Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferDetails offerDetails = null) { throw null; }
         public static Azure.ResourceManager.LambdaTestHyperExecute.LambdaTestHyperExecuteOrganizationData LambdaTestHyperExecuteOrganizationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationProperties LambdaTestHyperExecuteOrganizationProperties(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails marketplace = null, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteUserDetails user = null, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferProvisioningState? provisioningState = default(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferProvisioningState?), int? partnerLicensesSubscribed = default(int?), Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnPropertiesV2 singleSignOnProperties = null) { throw null; }
     }
@@ -98,13 +98,33 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         public LambdaTestHyperExecuteMarketplaceDetails(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferDetails offerDetails) { }
         public Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferDetails OfferDetails { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
-        public Azure.ResourceManager.LambdaTestHyperExecute.Models.MarketplaceSubscriptionStatus? SubscriptionStatus { get { throw null; } }
+        public Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus? SubscriptionStatus { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LambdaTestHyperExecuteMarketplaceSubscriptionStatus : System.IEquatable<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LambdaTestHyperExecuteMarketplaceSubscriptionStatus(string value) { throw null; }
+        public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus PendingFulfillmentStart { get { throw null; } }
+        public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus Subscribed { get { throw null; } }
+        public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus Suspended { get { throw null; } }
+        public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus Unsubscribed { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus left, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus left, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class LambdaTestHyperExecuteOfferDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferDetails>
     {
@@ -245,25 +265,5 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteUserDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteUserDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteUserDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteUserDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MarketplaceSubscriptionStatus : System.IEquatable<Azure.ResourceManager.LambdaTestHyperExecute.Models.MarketplaceSubscriptionStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MarketplaceSubscriptionStatus(string value) { throw null; }
-        public static Azure.ResourceManager.LambdaTestHyperExecute.Models.MarketplaceSubscriptionStatus PendingFulfillmentStart { get { throw null; } }
-        public static Azure.ResourceManager.LambdaTestHyperExecute.Models.MarketplaceSubscriptionStatus Subscribed { get { throw null; } }
-        public static Azure.ResourceManager.LambdaTestHyperExecute.Models.MarketplaceSubscriptionStatus Suspended { get { throw null; } }
-        public static Azure.ResourceManager.LambdaTestHyperExecute.Models.MarketplaceSubscriptionStatus Unsubscribed { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.LambdaTestHyperExecute.Models.MarketplaceSubscriptionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.LambdaTestHyperExecute.Models.MarketplaceSubscriptionStatus left, Azure.ResourceManager.LambdaTestHyperExecute.Models.MarketplaceSubscriptionStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.LambdaTestHyperExecute.Models.MarketplaceSubscriptionStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.LambdaTestHyperExecute.Models.MarketplaceSubscriptionStatus left, Azure.ResourceManager.LambdaTestHyperExecute.Models.MarketplaceSubscriptionStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
 }

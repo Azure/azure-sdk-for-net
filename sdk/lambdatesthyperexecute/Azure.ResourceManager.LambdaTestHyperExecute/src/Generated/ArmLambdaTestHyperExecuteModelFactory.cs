@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
         /// <returns> A new <see cref="Models.LambdaTestHyperExecuteMarketplaceDetails"/> instance for mocking. </returns>
-        public static LambdaTestHyperExecuteMarketplaceDetails LambdaTestHyperExecuteMarketplaceDetails(string subscriptionId = null, MarketplaceSubscriptionStatus? subscriptionStatus = null, LambdaTestHyperExecuteOfferDetails offerDetails = null)
+        public static LambdaTestHyperExecuteMarketplaceDetails LambdaTestHyperExecuteMarketplaceDetails(string subscriptionId = null, LambdaTestHyperExecuteMarketplaceSubscriptionStatus? subscriptionStatus = null, LambdaTestHyperExecuteOfferDetails offerDetails = null)
         {
             return new LambdaTestHyperExecuteMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, serializedAdditionalRawData: null);
         }

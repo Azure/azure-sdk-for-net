@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LambdaTestHyperExecuteMarketplaceDetails(string subscriptionId, MarketplaceSubscriptionStatus? subscriptionStatus, LambdaTestHyperExecuteOfferDetails offerDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LambdaTestHyperExecuteMarketplaceDetails(string subscriptionId, LambdaTestHyperExecuteMarketplaceSubscriptionStatus? subscriptionStatus, LambdaTestHyperExecuteOfferDetails offerDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubscriptionId = subscriptionId;
             SubscriptionStatus = subscriptionStatus;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         /// <summary> Azure subscription id for the the marketplace offer is purchased from. </summary>
         public string SubscriptionId { get; set; }
         /// <summary> Marketplace subscription status. </summary>
-        public MarketplaceSubscriptionStatus? SubscriptionStatus { get; }
+        public LambdaTestHyperExecuteMarketplaceSubscriptionStatus? SubscriptionStatus { get; }
         /// <summary> Offer details for the marketplace that is selected by the user. </summary>
         public LambdaTestHyperExecuteOfferDetails OfferDetails { get; set; }
     }
