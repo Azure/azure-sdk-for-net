@@ -15,15 +15,13 @@ In the API specifications, many properties and parameters are defined as string 
 
 - The data type of a property might be `AzureLocation` if its name is end with `location` / `locations` .
 
-- `Binary` / `String` property might change to `BinaryData` type.
-
 - (Optional) Pay attention to models similar to common type models and confirm whether they really can't be replaced by the common types from ResourceManager. 
 
 # Guidelines for Operation Changes
 
 - Put / patch operation, optional body parameter should be changed to required.
 
-- All `ListOperations` method should be removed because it's not useful in SDK and the SDK itself can show all the available operations in it through public APIs. 
+- All `ListOperations` and `GetOperationStatus` method should be removed because it's not useful in SDK and the SDK itself can show all the available operations in it through public APIs. 
 
 # Configuration for Generating SDK from TypeSpec Specifications
 For SDKs generated from TypeSpec specifications, we can update the `client.tsp` file located in the same folder as the `main.tsp` to address APIView review comments in the .NET SDK.
