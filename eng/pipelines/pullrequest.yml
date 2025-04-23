@@ -17,6 +17,14 @@ parameters:
   - name: Service
     type: string
     default: auto
+  # Switch to canary to test canary 1es branch. 1es template validation will set this parameter
+  # to canary on run.
+  - name: oneESTemplateTag
+    type: string
+    default: release
+    values:
+      - release
+      - canary
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -24,5 +32,4 @@ extends:
     ServiceDirectory: ${{ parameters.Service }}
     CheckAOTCompat: true
     BuildSnippets: true
-    ExcludePaths:
-      - eng/packages/http-client-csharp/
+    oneESTemplateTag: ${{ parameters.oneESTemplateTag }}
