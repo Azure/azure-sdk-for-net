@@ -5,12 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Text.Json;
+using Azure;
+using Azure.Core;
+
 namespace Parameters.Spread.Models
 {
-    public partial class BodyParameter
+    public partial class BodyParameter : IJsonModel<BodyParameter>
     {
-        public BodyParameter(string name) => throw null;
+        void IJsonModel<BodyParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        public string Name => throw null;
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+
+        BodyParameter IJsonModel<BodyParameter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BodyParameter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<BodyParameter>.Write(ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BodyParameter IPersistableModel<BodyParameter>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BodyParameter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<BodyParameter>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="bodyParameter"> The <see cref="BodyParameter"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(BodyParameter bodyParameter) => throw null;
+
+        public static explicit operator BodyParameter(Response result) => throw null;
     }
 }
