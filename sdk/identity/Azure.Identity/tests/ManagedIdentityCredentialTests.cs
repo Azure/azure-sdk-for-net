@@ -273,7 +273,6 @@ namespace Azure.Identity.Tests
 
             var mockTransport = new MockTransport(req =>
             {
-                Assert.Fail("transport");
                 return CreateMockResponse(200, ExpectedToken);
             });
             var options = new TokenCredentialOptions { Transport = mockTransport };
@@ -283,8 +282,7 @@ namespace Azure.Identity.Tests
             {
                 (Item1: null, Item2: true) => new ManagedIdentityClientOptions() { ManagedIdentityId = ManagedIdentityId.FromUserAssignedResourceId(new ResourceIdentifier(_expectedResourceId)), Pipeline = pipeline, IsForceRefreshEnabled = true },
                 (Item1: not null, Item2: false) => new ManagedIdentityClientOptions() { ManagedIdentityId = ManagedIdentityId.FromUserAssignedClientId(clientId), Pipeline = pipeline, IsForceRefreshEnabled = true },
-                _ => null // TODO: remove null logic and uncomment the following line once MSAL is able to take a custom transport for Service Fabric MI source
-                //_ => new ManagedIdentityClientOptions() { ClientId = null, ResourceIdentifier = null, Pipeline = pipeline, Options = options, PreserveTransport = true, IsForceRefreshEnabled = true }
+                _ => new ManagedIdentityClientOptions() { Pipeline = pipeline, Options = options, PreserveTransport = true, IsForceRefreshEnabled = true }
             };
             if (clientOptions == null)
             {
