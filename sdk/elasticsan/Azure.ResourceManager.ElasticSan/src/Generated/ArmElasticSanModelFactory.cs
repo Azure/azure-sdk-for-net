@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="publicNetworkAccess"> Allow or disallow public network access to ElasticSan. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="scaleUpProperties"> Auto Scale Properties for Elastic San Appliance. </param>
         /// <returns> A new <see cref="ElasticSan.ElasticSanData"/> instance for mocking. </returns>
-        public static ElasticSanData ElasticSanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ElasticSanSku sku = null, IEnumerable<string> availabilityZones = null, ElasticSanProvisioningState? provisioningState = null, long baseSizeTiB = default, long extendedCapacitySizeTiB = default, long? totalVolumeSizeGiB = null, long? volumeGroupCount = null, long? totalIops = null, long? totalMbps = null, long? totalSizeTiB = null, IEnumerable<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = null, ElasticSanPublicNetworkAccess? publicNetworkAccess = null, ScaleUpProperties scaleUpProperties = null)
+        public static ElasticSanData ElasticSanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ElasticSanSku sku = null, IEnumerable<string> availabilityZones = null, ElasticSanProvisioningState? provisioningState = null, long baseSizeTiB = default, long extendedCapacitySizeTiB = default, long? totalVolumeSizeGiB = null, long? volumeGroupCount = null, long? totalIops = null, long? totalMbps = null, long? totalSizeTiB = null, IEnumerable<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = null, ElasticSanPublicNetworkAccess? publicNetworkAccess = null, ElasticSanScaleUpProperties scaleUpProperties = null)
         {
             tags ??= new Dictionary<string, string>();
             availabilityZones ??= new List<string>();
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 protocolType,
                 encryption,
                 encryptionProperties,
-                virtualNetworkRules != null ? new NetworkRuleSet(virtualNetworkRules?.ToList(), serializedAdditionalRawData: null) : null,
+                virtualNetworkRules != null ? new ElasticSanNetworkRuleSet(virtualNetworkRules?.ToList(), serializedAdditionalRawData: null) : null,
                 privateEndpointConnections?.ToList(),
                 enforceDataIntegrityCheckForIscsi,
                 deleteRetentionPolicy,
@@ -289,12 +289,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PreValidationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PreValidationResult"/>. </summary>
         /// <param name="validationStatus"> a status value indicating success or failure of validation. </param>
-        /// <returns> A new <see cref="Models.PreValidationResponse"/> instance for mocking. </returns>
-        public static PreValidationResponse PreValidationResponse(string validationStatus = null)
+        /// <returns> A new <see cref="Models.PreValidationResult"/> instance for mocking. </returns>
+        public static PreValidationResult PreValidationResult(string validationStatus = null)
         {
-            return new PreValidationResponse(validationStatus, serializedAdditionalRawData: null);
+            return new PreValidationResult(validationStatus, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ElasticSan.ElasticSanData" />. </summary>

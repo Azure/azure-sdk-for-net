@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: ElasticSan
 namespace: Azure.ResourceManager.ElasticSan
-# default tag is a preview version
 require: https://github.com/Azure/azure-rest-api-specs/blob/3db6867b8e524ea6d1bc7a3bbb989fe50dd2f184/specification/elasticsan/resource-manager/readme.md
+#tag: package-2024-07-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -19,6 +19,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -70,6 +73,11 @@ prepend-rp-prefix:
   - EncryptionProperties
   - PublicNetworkAccess
   - StorageTargetType
+  - DeleteType
+  - VirtualNetworkRule
+  - EncryptionIdentity
+  - NetworkRuleSet
+  - ScaleUpProperties
 
 rename-mapping:
   Volume.properties.volumeId: -|uuid
@@ -81,8 +89,14 @@ rename-mapping:
   State: ElasticSanVirtualNetworkRuleState
   SKUCapability: ElasticSanSkuCapability
   SourceCreationData: ElasticSanVolumeDataSourceInfo
-  VirtualNetworkRule: ElasticSanVirtualNetworkRule
   SnapshotCreationData: SnapshotCreationInfo
+  DiskSnapshotList: DiskSnapshotListContent
+  PolicyState: DeleteRetentionPolicyState
+  PreValidationResponse: PreValidationResult
+  VolumeNameList: VolumeNameListContent
+  XMsDeleteSnapshots: DeleteSnapshotsUnderVolume
+  XMsAccessSoftDeletedResources: AccessSoftDeletedVolume
+  XMsForceDelete: ForceDeleteVolume
 
 directive:
 - from: elasticsan.json
@@ -94,4 +108,20 @@ directive:
 - from: elasticsan.json
   where: $.definitions.ManagedByInfo.properties.resourceId
   transform: $["x-ms-format"] = "arm-id";
+- from: elasticsan.json
+  where: $.paths..parameters[?(@.name=='x-ms-force-delete')]
+  transform: >
+    $.name = 'ForceDelete';
+- from: elasticsan.json
+  where: $.paths..parameters[?(@.name=='x-ms-access-soft-deleted-resources')]
+  transform: >
+    $.name = 'AccessSoftDeletedResources';
+- from: elasticsan.json
+  where: $.paths..parameters[?(@.name=='x-ms-access-soft-deleted-resources')]
+  transform: >
+    $.name = 'AccessSoftDeletedResources';
+- from: elasticsan.json
+  where: $.paths..parameters[?(@.name=='x-ms-delete-snapshots')]
+  transform: >
+    $.name = 'DeleteSnapshots';
 ```

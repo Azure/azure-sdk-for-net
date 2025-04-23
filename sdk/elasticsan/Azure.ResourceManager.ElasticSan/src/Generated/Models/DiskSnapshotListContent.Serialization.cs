@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class DiskSnapshotList : IUtf8JsonSerializable, IJsonModel<DiskSnapshotList>
+    public partial class DiskSnapshotListContent : IUtf8JsonSerializable, IJsonModel<DiskSnapshotListContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskSnapshotList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskSnapshotListContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DiskSnapshotList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DiskSnapshotListContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiskSnapshotList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiskSnapshotListContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskSnapshotList)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskSnapshotListContent)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("diskSnapshotIds"u8);
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
         }
 
-        DiskSnapshotList IJsonModel<DiskSnapshotList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DiskSnapshotListContent IJsonModel<DiskSnapshotListContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiskSnapshotList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiskSnapshotListContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskSnapshotList)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskSnapshotListContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDiskSnapshotList(document.RootElement, options);
+            return DeserializeDiskSnapshotListContent(document.RootElement, options);
         }
 
-        internal static DiskSnapshotList DeserializeDiskSnapshotList(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DiskSnapshotListContent DeserializeDiskSnapshotListContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DiskSnapshotList(diskSnapshotIds, serializedAdditionalRawData);
+            return new DiskSnapshotListContent(diskSnapshotIds, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DiskSnapshotList>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DiskSnapshotListContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiskSnapshotList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiskSnapshotListContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiskSnapshotList)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskSnapshotListContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DiskSnapshotList IPersistableModel<DiskSnapshotList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DiskSnapshotListContent IPersistableModel<DiskSnapshotListContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiskSnapshotList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiskSnapshotListContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDiskSnapshotList(document.RootElement, options);
+                        return DeserializeDiskSnapshotListContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskSnapshotList)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskSnapshotListContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DiskSnapshotList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DiskSnapshotListContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

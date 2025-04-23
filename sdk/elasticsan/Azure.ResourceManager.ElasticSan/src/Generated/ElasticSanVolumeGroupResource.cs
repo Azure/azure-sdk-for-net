@@ -510,19 +510,19 @@ namespace Azure.ResourceManager.ElasticSan
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="volumeNameList"> Volume Name List (currently only one volume name in the list is supported. Server would return error if list is bigger). </param>
+        /// <param name="content"> Volume Name List (currently only one volume name in the list is supported. Server would return error if list is bigger). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeNameList"/> is null. </exception>
-        public virtual async Task<ArmOperation<PreValidationResponse>> PreBackupVolumeAsync(WaitUntil waitUntil, VolumeNameList volumeNameList, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<PreValidationResult>> PreBackupVolumeAsync(WaitUntil waitUntil, VolumeNameListContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(volumeNameList, nameof(volumeNameList));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _elasticSanVolumeVolumesClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.PreBackupVolume");
             scope.Start();
             try
             {
-                var response = await _elasticSanVolumeVolumesRestClient.PreBackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeNameList, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticSanArmOperation<PreValidationResponse>(new PreValidationResponseOperationSource(), _elasticSanVolumeVolumesClientDiagnostics, Pipeline, _elasticSanVolumeVolumesRestClient.CreatePreBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeNameList).Request, response, OperationFinalStateVia.Location);
+                var response = await _elasticSanVolumeVolumesRestClient.PreBackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ElasticSanArmOperation<PreValidationResult>(new PreValidationResultOperationSource(), _elasticSanVolumeVolumesClientDiagnostics, Pipeline, _elasticSanVolumeVolumesRestClient.CreatePreBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -556,19 +556,19 @@ namespace Azure.ResourceManager.ElasticSan
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="volumeNameList"> Volume Name List (currently only one volume name in the list is supported. Server would return error if list is bigger). </param>
+        /// <param name="content"> Volume Name List (currently only one volume name in the list is supported. Server would return error if list is bigger). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeNameList"/> is null. </exception>
-        public virtual ArmOperation<PreValidationResponse> PreBackupVolume(WaitUntil waitUntil, VolumeNameList volumeNameList, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<PreValidationResult> PreBackupVolume(WaitUntil waitUntil, VolumeNameListContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(volumeNameList, nameof(volumeNameList));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _elasticSanVolumeVolumesClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.PreBackupVolume");
             scope.Start();
             try
             {
-                var response = _elasticSanVolumeVolumesRestClient.PreBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeNameList, cancellationToken);
-                var operation = new ElasticSanArmOperation<PreValidationResponse>(new PreValidationResponseOperationSource(), _elasticSanVolumeVolumesClientDiagnostics, Pipeline, _elasticSanVolumeVolumesRestClient.CreatePreBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeNameList).Request, response, OperationFinalStateVia.Location);
+                var response = _elasticSanVolumeVolumesRestClient.PreBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new ElasticSanArmOperation<PreValidationResult>(new PreValidationResultOperationSource(), _elasticSanVolumeVolumesClientDiagnostics, Pipeline, _elasticSanVolumeVolumesRestClient.CreatePreBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -602,19 +602,19 @@ namespace Azure.ResourceManager.ElasticSan
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="diskSnapshotList"> Disk Snapshot List (currently only one Disk Snapshot in the list is supported and that the Disk Snapshot must be in same azure region as the ElasticSan. Server would return error if list is bigger). </param>
+        /// <param name="content"> Disk Snapshot List (currently only one Disk Snapshot in the list is supported and that the Disk Snapshot must be in same azure region as the ElasticSan. Server would return error if list is bigger). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskSnapshotList"/> is null. </exception>
-        public virtual async Task<ArmOperation<PreValidationResponse>> PreRestoreVolumeAsync(WaitUntil waitUntil, DiskSnapshotList diskSnapshotList, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<PreValidationResult>> PreRestoreVolumeAsync(WaitUntil waitUntil, DiskSnapshotListContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(diskSnapshotList, nameof(diskSnapshotList));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _elasticSanVolumeVolumesClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.PreRestoreVolume");
             scope.Start();
             try
             {
-                var response = await _elasticSanVolumeVolumesRestClient.PreRestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diskSnapshotList, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticSanArmOperation<PreValidationResponse>(new PreValidationResponseOperationSource(), _elasticSanVolumeVolumesClientDiagnostics, Pipeline, _elasticSanVolumeVolumesRestClient.CreatePreRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diskSnapshotList).Request, response, OperationFinalStateVia.Location);
+                var response = await _elasticSanVolumeVolumesRestClient.PreRestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ElasticSanArmOperation<PreValidationResult>(new PreValidationResultOperationSource(), _elasticSanVolumeVolumesClientDiagnostics, Pipeline, _elasticSanVolumeVolumesRestClient.CreatePreRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -648,19 +648,19 @@ namespace Azure.ResourceManager.ElasticSan
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="diskSnapshotList"> Disk Snapshot List (currently only one Disk Snapshot in the list is supported and that the Disk Snapshot must be in same azure region as the ElasticSan. Server would return error if list is bigger). </param>
+        /// <param name="content"> Disk Snapshot List (currently only one Disk Snapshot in the list is supported and that the Disk Snapshot must be in same azure region as the ElasticSan. Server would return error if list is bigger). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskSnapshotList"/> is null. </exception>
-        public virtual ArmOperation<PreValidationResponse> PreRestoreVolume(WaitUntil waitUntil, DiskSnapshotList diskSnapshotList, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<PreValidationResult> PreRestoreVolume(WaitUntil waitUntil, DiskSnapshotListContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(diskSnapshotList, nameof(diskSnapshotList));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _elasticSanVolumeVolumesClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.PreRestoreVolume");
             scope.Start();
             try
             {
-                var response = _elasticSanVolumeVolumesRestClient.PreRestore(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diskSnapshotList, cancellationToken);
-                var operation = new ElasticSanArmOperation<PreValidationResponse>(new PreValidationResponseOperationSource(), _elasticSanVolumeVolumesClientDiagnostics, Pipeline, _elasticSanVolumeVolumesRestClient.CreatePreRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diskSnapshotList).Request, response, OperationFinalStateVia.Location);
+                var response = _elasticSanVolumeVolumesRestClient.PreRestore(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new ElasticSanArmOperation<PreValidationResult>(new PreValidationResultOperationSource(), _elasticSanVolumeVolumesClientDiagnostics, Pipeline, _elasticSanVolumeVolumesRestClient.CreatePreRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

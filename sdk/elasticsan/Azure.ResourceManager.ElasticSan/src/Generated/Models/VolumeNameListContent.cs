@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using System.Linq;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    /// <summary> Data source used when creating the volume. </summary>
-    public partial class ElasticSanVolumeDataSourceInfo
+    /// <summary> object to hold array of volume names. </summary>
+    public partial class VolumeNameListContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,25 +46,31 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeDataSourceInfo"/>. </summary>
-        public ElasticSanVolumeDataSourceInfo()
+        /// <summary> Initializes a new instance of <see cref="VolumeNameListContent"/>. </summary>
+        /// <param name="volumeNames"> array of volume names. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="volumeNames"/> is null. </exception>
+        public VolumeNameListContent(IEnumerable<string> volumeNames)
         {
+            Argument.AssertNotNull(volumeNames, nameof(volumeNames));
+
+            VolumeNames = volumeNames.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeDataSourceInfo"/>. </summary>
-        /// <param name="createSource"> This enumerates the possible sources of a volume creation. </param>
-        /// <param name="sourceId"> Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}". </param>
+        /// <summary> Initializes a new instance of <see cref="VolumeNameListContent"/>. </summary>
+        /// <param name="volumeNames"> array of volume names. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSanVolumeDataSourceInfo(ElasticSanVolumeCreateOption? createSource, ResourceIdentifier sourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VolumeNameListContent(IList<string> volumeNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            CreateSource = createSource;
-            SourceId = sourceId;
+            VolumeNames = volumeNames;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> This enumerates the possible sources of a volume creation. </summary>
-        public ElasticSanVolumeCreateOption? CreateSource { get; set; }
-        /// <summary> Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}". </summary>
-        public ResourceIdentifier SourceId { get; set; }
+        /// <summary> Initializes a new instance of <see cref="VolumeNameListContent"/> for deserialization. </summary>
+        internal VolumeNameListContent()
+        {
+        }
+
+        /// <summary> array of volume names. </summary>
+        public IList<string> VolumeNames { get; }
     }
 }

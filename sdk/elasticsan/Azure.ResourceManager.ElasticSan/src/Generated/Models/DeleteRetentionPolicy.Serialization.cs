@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            PolicyState? policyState = default;
+            DeleteRetentionPolicyState? policyState = default;
             int? retentionPeriodDays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     {
                         continue;
                     }
-                    policyState = new PolicyState(property.Value.GetString());
+                    policyState = new DeleteRetentionPolicyState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("retentionPeriodDays"u8))

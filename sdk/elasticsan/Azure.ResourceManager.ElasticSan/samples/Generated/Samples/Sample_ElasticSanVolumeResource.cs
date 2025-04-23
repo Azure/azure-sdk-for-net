@@ -103,10 +103,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             ElasticSanVolumeResource elasticSanVolume = client.GetElasticSanVolumeResource(elasticSanVolumeResourceId);
 
             // invoke the operation
-            XmsDeleteSnapshot? xmsDeleteSnapshots = XmsDeleteSnapshot.True;
-            XmsForceDelete? xmsForceDelete = XmsForceDelete.True;
-            DeleteType? deleteType = DeleteType.Permanent;
-            await elasticSanVolume.DeleteAsync(WaitUntil.Completed, xmsDeleteSnapshots: xmsDeleteSnapshots, xmsForceDelete: xmsForceDelete, deleteType: deleteType);
+            ElasticSanDeleteType? deleteType = ElasticSanDeleteType.Permanent;
+            await elasticSanVolume.DeleteAsync(WaitUntil.Completed, deleteType: deleteType);
 
             Console.WriteLine("Succeeded");
         }
@@ -134,7 +132,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             ElasticSanVolumeResource elasticSanVolume = client.GetElasticSanVolumeResource(elasticSanVolumeResourceId);
 
             // invoke the operation
-            DeleteType? deleteType = DeleteType.Permanent;
+            ElasticSanDeleteType? deleteType = ElasticSanDeleteType.Permanent;
             await elasticSanVolume.DeleteAsync(WaitUntil.Completed, deleteType: deleteType);
 
             Console.WriteLine("Succeeded");

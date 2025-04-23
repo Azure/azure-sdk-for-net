@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    /// <summary> object to hold array of volume names. </summary>
-    public partial class VolumeNameList
+    /// <summary> Encryption identity for the volume group. </summary>
+    internal partial class ElasticSanEncryptionIdentity
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,31 +46,21 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VolumeNameList"/>. </summary>
-        /// <param name="volumeNames"> array of volume names. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeNames"/> is null. </exception>
-        public VolumeNameList(IEnumerable<string> volumeNames)
+        /// <summary> Initializes a new instance of <see cref="ElasticSanEncryptionIdentity"/>. </summary>
+        public ElasticSanEncryptionIdentity()
         {
-            Argument.AssertNotNull(volumeNames, nameof(volumeNames));
-
-            VolumeNames = volumeNames.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VolumeNameList"/>. </summary>
-        /// <param name="volumeNames"> array of volume names. </param>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanEncryptionIdentity"/>. </summary>
+        /// <param name="encryptionUserAssignedIdentity"> Resource identifier of the UserAssigned identity to be associated with server-side encryption on the volume group. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeNameList(IList<string> volumeNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticSanEncryptionIdentity(ResourceIdentifier encryptionUserAssignedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            VolumeNames = volumeNames;
+            EncryptionUserAssignedIdentity = encryptionUserAssignedIdentity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VolumeNameList"/> for deserialization. </summary>
-        internal VolumeNameList()
-        {
-        }
-
-        /// <summary> array of volume names. </summary>
-        public IList<string> VolumeNames { get; }
+        /// <summary> Resource identifier of the UserAssigned identity to be associated with server-side encryption on the volume group. </summary>
+        public ResourceIdentifier EncryptionUserAssignedIdentity { get; set; }
     }
 }

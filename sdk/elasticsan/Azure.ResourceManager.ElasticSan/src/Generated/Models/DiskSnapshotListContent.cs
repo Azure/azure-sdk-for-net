@@ -7,12 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    /// <summary> Encryption identity for the volume group. </summary>
-    internal partial class EncryptionIdentity
+    /// <summary> object to hold array of Disk Snapshot ARM IDs. </summary>
+    public partial class DiskSnapshotListContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,21 +47,31 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="EncryptionIdentity"/>. </summary>
-        public EncryptionIdentity()
+        /// <summary> Initializes a new instance of <see cref="DiskSnapshotListContent"/>. </summary>
+        /// <param name="diskSnapshotIds"> array of DiskSnapshot ARM IDs. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskSnapshotIds"/> is null. </exception>
+        public DiskSnapshotListContent(IEnumerable<ResourceIdentifier> diskSnapshotIds)
         {
+            Argument.AssertNotNull(diskSnapshotIds, nameof(diskSnapshotIds));
+
+            DiskSnapshotIds = diskSnapshotIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EncryptionIdentity"/>. </summary>
-        /// <param name="encryptionUserAssignedIdentity"> Resource identifier of the UserAssigned identity to be associated with server-side encryption on the volume group. </param>
+        /// <summary> Initializes a new instance of <see cref="DiskSnapshotListContent"/>. </summary>
+        /// <param name="diskSnapshotIds"> array of DiskSnapshot ARM IDs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionIdentity(ResourceIdentifier encryptionUserAssignedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiskSnapshotListContent(IList<ResourceIdentifier> diskSnapshotIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            EncryptionUserAssignedIdentity = encryptionUserAssignedIdentity;
+            DiskSnapshotIds = diskSnapshotIds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource identifier of the UserAssigned identity to be associated with server-side encryption on the volume group. </summary>
-        public ResourceIdentifier EncryptionUserAssignedIdentity { get; set; }
+        /// <summary> Initializes a new instance of <see cref="DiskSnapshotListContent"/> for deserialization. </summary>
+        internal DiskSnapshotListContent()
+        {
+        }
+
+        /// <summary> array of DiskSnapshot ARM IDs. </summary>
+        public IList<ResourceIdentifier> DiskSnapshotIds { get; }
     }
 }

@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             ElasticSanStorageTargetType? protocolType = default;
             ElasticSanEncryptionType? encryption = default;
             ElasticSanEncryptionProperties encryptionProperties = default;
-            NetworkRuleSet networkAcls = default;
+            ElasticSanNetworkRuleSet networkAcls = default;
             bool? enforceDataIntegrityCheckForIscsi = default;
             DeleteRetentionPolicy deleteRetentionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                             {
                                 continue;
                             }
-                            networkAcls = NetworkRuleSet.DeserializeNetworkRuleSet(property0.Value, options);
+                            networkAcls = ElasticSanNetworkRuleSet.DeserializeElasticSanNetworkRuleSet(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enforceDataIntegrityCheckForIscsi"u8))

@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
                 BaseSizeTiB = 13L,
                 ExtendedCapacitySizeTiB = 29L,
                 PublicNetworkAccess = ElasticSanPublicNetworkAccess.Enabled,
-                ScaleUpProperties = new ScaleUpProperties
+                ScaleUpProperties = new ElasticSanScaleUpProperties
                 {
                     UnusedSizeTiB = 24L,
                     IncreaseCapacityUnitByTiB = 4L,

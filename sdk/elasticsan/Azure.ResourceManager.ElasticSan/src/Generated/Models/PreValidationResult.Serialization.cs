@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class VolumeNameList : IUtf8JsonSerializable, IJsonModel<VolumeNameList>
+    public partial class PreValidationResult : IUtf8JsonSerializable, IJsonModel<PreValidationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VolumeNameList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PreValidationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<VolumeNameList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PreValidationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,19 +28,17 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VolumeNameList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PreValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VolumeNameList)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PreValidationResult)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("volumeNames"u8);
-            writer.WriteStartArray();
-            foreach (var item in VolumeNames)
+            if (Optional.IsDefined(ValidationStatus))
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("validationStatus"u8);
+                writer.WriteStringValue(ValidationStatus);
             }
-            writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -58,19 +56,19 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
         }
 
-        VolumeNameList IJsonModel<VolumeNameList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PreValidationResult IJsonModel<PreValidationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VolumeNameList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PreValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VolumeNameList)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PreValidationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVolumeNameList(document.RootElement, options);
+            return DeserializePreValidationResult(document.RootElement, options);
         }
 
-        internal static VolumeNameList DeserializeVolumeNameList(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PreValidationResult DeserializePreValidationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -78,19 +76,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            IList<string> volumeNames = default;
+            string validationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("volumeNames"u8))
+                if (property.NameEquals("validationStatus"u8))
                 {
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    volumeNames = array;
+                    validationStatus = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -99,38 +92,38 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VolumeNameList(volumeNames, serializedAdditionalRawData);
+            return new PreValidationResult(validationStatus, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<VolumeNameList>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PreValidationResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VolumeNameList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PreValidationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VolumeNameList)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PreValidationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        VolumeNameList IPersistableModel<VolumeNameList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PreValidationResult IPersistableModel<PreValidationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VolumeNameList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PreValidationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVolumeNameList(document.RootElement, options);
+                        return DeserializePreValidationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VolumeNameList)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PreValidationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<VolumeNameList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PreValidationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> A set of rules governing the network accessibility. </summary>
-    internal partial class NetworkRuleSet
+    internal partial class ElasticSanNetworkRuleSet
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkRuleSet"/>. </summary>
-        public NetworkRuleSet()
+        /// <summary> Initializes a new instance of <see cref="ElasticSanNetworkRuleSet"/>. </summary>
+        public ElasticSanNetworkRuleSet()
         {
             VirtualNetworkRules = new ChangeTrackingList<ElasticSanVirtualNetworkRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkRuleSet"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanNetworkRuleSet"/>. </summary>
         /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkRuleSet(IList<ElasticSanVirtualNetworkRule> virtualNetworkRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticSanNetworkRuleSet(IList<ElasticSanVirtualNetworkRule> virtualNetworkRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VirtualNetworkRules = virtualNetworkRules;
             _serializedAdditionalRawData = serializedAdditionalRawData;

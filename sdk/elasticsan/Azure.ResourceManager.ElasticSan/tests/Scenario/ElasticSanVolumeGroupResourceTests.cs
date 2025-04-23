@@ -86,13 +86,13 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             {
                 DeleteRetentionPolicy = new DeleteRetentionPolicy()
                 {
-                    PolicyState = PolicyState.Enabled,
+                    PolicyState = DeleteRetentionPolicyState.Enabled,
                     RetentionPeriodDays = 1
                 }
             };
             ElasticSanVolumeGroupResource volumeGroupSoftDelete = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeGroupSoftDeleteName, volumeGroupSoftDeleteData)).Value;
             Assert.AreEqual(volumeGroupSoftDelete.Id.Name, volumeGroupSoftDeleteName);
-            Assert.AreEqual(volumeGroupSoftDelete.Data.DeleteRetentionPolicy.PolicyState, PolicyState.Enabled);
+            Assert.AreEqual(volumeGroupSoftDelete.Data.DeleteRetentionPolicy.PolicyState, DeleteRetentionPolicyState.Enabled);
             Assert.AreEqual(volumeGroupSoftDelete.Data.DeleteRetentionPolicy.RetentionPeriodDays, 1);
             await volumeGroupSoftDelete.DeleteAsync(WaitUntil.Completed);
             int count = 0;
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             ElasticSanVolumeData data = new ElasticSanVolumeData(100);
             ElasticSanVolumeResource volume1 = (await _volumeCollection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, data)).Value;
 
-            var volumeNameList = new VolumeNameList(new string[] { volumeName });
+            var volumeNameList = new VolumeNameListContent(new string[] { volumeName });
             var preBackup = (await volumeGroup.PreBackupVolumeAsync(WaitUntil.Completed, volumeNameList)).Value;
             Assert.AreEqual(preBackup.ValidationStatus, "Success");
 
             // Require a real disk snapshot id for live test
-            DiskSnapshotList diskSnapshotList = new DiskSnapshotList(
+            DiskSnapshotListContent diskSnapshotList = new DiskSnapshotListContent(
                 new ResourceIdentifier[] {
                     new ResourceIdentifier(
                         "/subscriptions/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/resourceGroups/resourcegroup/providers/Microsoft.Compute/snapshots/disksnapshotid") });

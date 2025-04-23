@@ -261,13 +261,13 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="xmsAccessSoftDeletedResources"> Optional, returns only soft deleted volumes if set to true. If set to false or if not specified, returns only active volumes. </param>
+        /// <param name="accessSoftDeletedResources"> Optional, returns only soft deleted volumes if set to true. If set to false or if not specified, returns only active volumes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ElasticSanVolumeResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ElasticSanVolumeResource> GetAllAsync(XmsAccessSoftDeletedResource? xmsAccessSoftDeletedResources = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ElasticSanVolumeResource> GetAllAsync(AccessSoftDeletedVolume? accessSoftDeletedResources = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanVolumeVolumesRestClient.CreateListByVolumeGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, xmsAccessSoftDeletedResources);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanVolumeVolumesRestClient.CreateListByVolumeGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, xmsAccessSoftDeletedResources);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanVolumeVolumesRestClient.CreateListByVolumeGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessSoftDeletedResources);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanVolumeVolumesRestClient.CreateListByVolumeGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessSoftDeletedResources);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticSanVolumeResource(Client, ElasticSanVolumeData.DeserializeElasticSanVolumeData(e)), _elasticSanVolumeVolumesClientDiagnostics, Pipeline, "ElasticSanVolumeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -292,13 +292,13 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="xmsAccessSoftDeletedResources"> Optional, returns only soft deleted volumes if set to true. If set to false or if not specified, returns only active volumes. </param>
+        /// <param name="accessSoftDeletedResources"> Optional, returns only soft deleted volumes if set to true. If set to false or if not specified, returns only active volumes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ElasticSanVolumeResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ElasticSanVolumeResource> GetAll(XmsAccessSoftDeletedResource? xmsAccessSoftDeletedResources = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ElasticSanVolumeResource> GetAll(AccessSoftDeletedVolume? accessSoftDeletedResources = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanVolumeVolumesRestClient.CreateListByVolumeGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, xmsAccessSoftDeletedResources);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanVolumeVolumesRestClient.CreateListByVolumeGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, xmsAccessSoftDeletedResources);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanVolumeVolumesRestClient.CreateListByVolumeGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessSoftDeletedResources);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanVolumeVolumesRestClient.CreateListByVolumeGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessSoftDeletedResources);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticSanVolumeResource(Client, ElasticSanVolumeData.DeserializeElasticSanVolumeData(e)), _elasticSanVolumeVolumesClientDiagnostics, Pipeline, "ElasticSanVolumeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 

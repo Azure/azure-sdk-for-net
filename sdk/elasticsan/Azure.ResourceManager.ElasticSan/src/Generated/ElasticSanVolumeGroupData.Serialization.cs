@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ElasticSan
             ElasticSanStorageTargetType? protocolType = default;
             ElasticSanEncryptionType? encryption = default;
             ElasticSanEncryptionProperties encryptionProperties = default;
-            NetworkRuleSet networkAcls = default;
+            ElasticSanNetworkRuleSet networkAcls = default;
             IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = default;
             bool? enforceDataIntegrityCheckForIscsi = default;
             DeleteRetentionPolicy deleteRetentionPolicy = default;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            networkAcls = NetworkRuleSet.DeserializeNetworkRuleSet(property0.Value, options);
+                            networkAcls = ElasticSanNetworkRuleSet.DeserializeElasticSanNetworkRuleSet(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))

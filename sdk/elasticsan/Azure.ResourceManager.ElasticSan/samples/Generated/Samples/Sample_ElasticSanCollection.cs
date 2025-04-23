@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             {
                 AvailabilityZones = { "1" },
                 PublicNetworkAccess = ElasticSanPublicNetworkAccess.Enabled,
-                ScaleUpProperties = new ScaleUpProperties
+                ScaleUpProperties = new ElasticSanScaleUpProperties
                 {
                     UnusedSizeTiB = 24L,
                     IncreaseCapacityUnitByTiB = 4L,

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ElasticSan
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ElasticSan.ElasticSanPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.ElasticSan.Models.ElasticSanProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ElasticSan.Models.ElasticSanPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.ElasticSan.Models.ScaleUpProperties ScaleUpProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.ElasticSan.Models.ElasticSanScaleUpProperties ScaleUpProperties { get { throw null; } set { } }
         public Azure.ResourceManager.ElasticSan.Models.ElasticSanSku Sku { get { throw null; } set { } }
         public long? TotalIops { get { throw null; } }
         public long? TotalMbps { get { throw null; } }
@@ -196,9 +196,9 @@ namespace Azure.ResourceManager.ElasticSan
         public virtual Azure.Response<bool> Exists(string volumeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string volumeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ElasticSan.ElasticSanVolumeResource> Get(string volumeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.ElasticSan.ElasticSanVolumeResource> GetAll(Azure.ResourceManager.ElasticSan.Models.XmsAccessSoftDeletedResource? xmsAccessSoftDeletedResources = default(Azure.ResourceManager.ElasticSan.Models.XmsAccessSoftDeletedResource?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ElasticSan.ElasticSanVolumeResource> GetAll(Azure.ResourceManager.ElasticSan.Models.AccessSoftDeletedVolume? accessSoftDeletedResources = default(Azure.ResourceManager.ElasticSan.Models.AccessSoftDeletedVolume?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ElasticSan.ElasticSanVolumeResource> GetAll(System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.ElasticSan.ElasticSanVolumeResource> GetAllAsync(Azure.ResourceManager.ElasticSan.Models.XmsAccessSoftDeletedResource? xmsAccessSoftDeletedResources = default(Azure.ResourceManager.ElasticSan.Models.XmsAccessSoftDeletedResource?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ElasticSan.ElasticSanVolumeResource> GetAllAsync(Azure.ResourceManager.ElasticSan.Models.AccessSoftDeletedVolume? accessSoftDeletedResources = default(Azure.ResourceManager.ElasticSan.Models.AccessSoftDeletedVolume?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ElasticSan.ElasticSanVolumeResource> GetAllAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ElasticSan.ElasticSanVolumeResource>> GetAsync(string volumeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.ElasticSan.ElasticSanVolumeResource> GetIfExists(string volumeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -231,9 +231,9 @@ namespace Azure.ResourceManager.ElasticSan
         public virtual Azure.Response<bool> Exists(string volumeGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string volumeGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ElasticSan.ElasticSanVolumeGroupResource> Get(string volumeGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.ElasticSan.ElasticSanVolumeGroupResource> GetAll(Azure.ResourceManager.ElasticSan.Models.XmsAccessSoftDeletedResource? xmsAccessSoftDeletedResources = default(Azure.ResourceManager.ElasticSan.Models.XmsAccessSoftDeletedResource?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ElasticSan.ElasticSanVolumeGroupResource> GetAll(Azure.ResourceManager.ElasticSan.Models.AccessSoftDeletedVolume? accessSoftDeletedResources = default(Azure.ResourceManager.ElasticSan.Models.AccessSoftDeletedVolume?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ElasticSan.ElasticSanVolumeGroupResource> GetAll(System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.ElasticSan.ElasticSanVolumeGroupResource> GetAllAsync(Azure.ResourceManager.ElasticSan.Models.XmsAccessSoftDeletedResource? xmsAccessSoftDeletedResources = default(Azure.ResourceManager.ElasticSan.Models.XmsAccessSoftDeletedResource?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ElasticSan.ElasticSanVolumeGroupResource> GetAllAsync(Azure.ResourceManager.ElasticSan.Models.AccessSoftDeletedVolume? accessSoftDeletedResources = default(Azure.ResourceManager.ElasticSan.Models.AccessSoftDeletedVolume?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ElasticSan.ElasticSanVolumeGroupResource> GetAllAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ElasticSan.ElasticSanVolumeGroupResource>> GetAsync(string volumeGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.ElasticSan.ElasticSanVolumeGroupResource> GetIfExists(string volumeGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -278,10 +278,10 @@ namespace Azure.ResourceManager.ElasticSan
         public virtual Azure.Response<Azure.ResourceManager.ElasticSan.ElasticSanVolumeResource> GetElasticSanVolume(string volumeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ElasticSan.ElasticSanVolumeResource>> GetElasticSanVolumeAsync(string volumeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ElasticSan.ElasticSanVolumeCollection GetElasticSanVolumes() { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ElasticSan.Models.PreValidationResponse> PreBackupVolume(Azure.WaitUntil waitUntil, Azure.ResourceManager.ElasticSan.Models.VolumeNameList volumeNameList, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ElasticSan.Models.PreValidationResponse>> PreBackupVolumeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ElasticSan.Models.VolumeNameList volumeNameList, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ElasticSan.Models.PreValidationResponse> PreRestoreVolume(Azure.WaitUntil waitUntil, Azure.ResourceManager.ElasticSan.Models.DiskSnapshotList diskSnapshotList, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ElasticSan.Models.PreValidationResponse>> PreRestoreVolumeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ElasticSan.Models.DiskSnapshotList diskSnapshotList, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ElasticSan.Models.PreValidationResult> PreBackupVolume(Azure.WaitUntil waitUntil, Azure.ResourceManager.ElasticSan.Models.VolumeNameListContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ElasticSan.Models.PreValidationResult>> PreBackupVolumeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ElasticSan.Models.VolumeNameListContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ElasticSan.Models.PreValidationResult> PreRestoreVolume(Azure.WaitUntil waitUntil, Azure.ResourceManager.ElasticSan.Models.DiskSnapshotListContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ElasticSan.Models.PreValidationResult>> PreRestoreVolumeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ElasticSan.Models.DiskSnapshotListContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.ElasticSan.ElasticSanVolumeGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.ElasticSanVolumeGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.ElasticSanVolumeGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ElasticSan.ElasticSanVolumeGroupData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.ElasticSanVolumeGroupData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -297,9 +297,9 @@ namespace Azure.ResourceManager.ElasticSan
         public virtual Azure.ResourceManager.ElasticSan.ElasticSanVolumeData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string volumeName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, Azure.ResourceManager.ElasticSan.Models.XmsDeleteSnapshot? xmsDeleteSnapshots = default(Azure.ResourceManager.ElasticSan.Models.XmsDeleteSnapshot?), Azure.ResourceManager.ElasticSan.Models.XmsForceDelete? xmsForceDelete = default(Azure.ResourceManager.ElasticSan.Models.XmsForceDelete?), Azure.ResourceManager.ElasticSan.Models.DeleteType? deleteType = default(Azure.ResourceManager.ElasticSan.Models.DeleteType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, Azure.ResourceManager.ElasticSan.Models.DeleteSnapshotsUnderVolume? deleteSnapshots = default(Azure.ResourceManager.ElasticSan.Models.DeleteSnapshotsUnderVolume?), Azure.ResourceManager.ElasticSan.Models.ForceDeleteVolume? forceDelete = default(Azure.ResourceManager.ElasticSan.Models.ForceDeleteVolume?), Azure.ResourceManager.ElasticSan.Models.ElasticSanDeleteType? deleteType = default(Azure.ResourceManager.ElasticSan.Models.ElasticSanDeleteType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, Azure.ResourceManager.ElasticSan.Models.XmsDeleteSnapshot? xmsDeleteSnapshots, Azure.ResourceManager.ElasticSan.Models.XmsForceDelete? xmsForceDelete, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ElasticSan.Models.XmsDeleteSnapshot? xmsDeleteSnapshots = default(Azure.ResourceManager.ElasticSan.Models.XmsDeleteSnapshot?), Azure.ResourceManager.ElasticSan.Models.XmsForceDelete? xmsForceDelete = default(Azure.ResourceManager.ElasticSan.Models.XmsForceDelete?), Azure.ResourceManager.ElasticSan.Models.DeleteType? deleteType = default(Azure.ResourceManager.ElasticSan.Models.DeleteType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ElasticSan.Models.DeleteSnapshotsUnderVolume? deleteSnapshots = default(Azure.ResourceManager.ElasticSan.Models.DeleteSnapshotsUnderVolume?), Azure.ResourceManager.ElasticSan.Models.ForceDeleteVolume? forceDelete = default(Azure.ResourceManager.ElasticSan.Models.ForceDeleteVolume?), Azure.ResourceManager.ElasticSan.Models.ElasticSanDeleteType? deleteType = default(Azure.ResourceManager.ElasticSan.Models.ElasticSanDeleteType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ElasticSan.Models.XmsDeleteSnapshot? xmsDeleteSnapshots, Azure.ResourceManager.ElasticSan.Models.XmsForceDelete? xmsForceDelete, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ElasticSan.ElasticSanVolumeResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ElasticSan.ElasticSanVolumeResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -343,11 +343,29 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
 }
 namespace Azure.ResourceManager.ElasticSan.Models
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AccessSoftDeletedVolume : System.IEquatable<Azure.ResourceManager.ElasticSan.Models.AccessSoftDeletedVolume>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AccessSoftDeletedVolume(string value) { throw null; }
+        public static Azure.ResourceManager.ElasticSan.Models.AccessSoftDeletedVolume False { get { throw null; } }
+        public static Azure.ResourceManager.ElasticSan.Models.AccessSoftDeletedVolume True { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ElasticSan.Models.AccessSoftDeletedVolume other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ElasticSan.Models.AccessSoftDeletedVolume left, Azure.ResourceManager.ElasticSan.Models.AccessSoftDeletedVolume right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ElasticSan.Models.AccessSoftDeletedVolume (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ElasticSan.Models.AccessSoftDeletedVolume left, Azure.ResourceManager.ElasticSan.Models.AccessSoftDeletedVolume right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public static partial class ArmElasticSanModelFactory
     {
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ElasticSan.ElasticSanData ElasticSanData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.ElasticSan.Models.ElasticSanSku sku, System.Collections.Generic.IEnumerable<string> availabilityZones, Azure.ResourceManager.ElasticSan.Models.ElasticSanProvisioningState? provisioningState, long baseSizeTiB, long extendedCapacitySizeTiB, long? totalVolumeSizeGiB, long? volumeGroupCount, long? totalIops, long? totalMbps, long? totalSizeTiB, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ElasticSan.ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.ElasticSan.Models.ElasticSanPublicNetworkAccess? publicNetworkAccess) { throw null; }
-        public static Azure.ResourceManager.ElasticSan.ElasticSanData ElasticSanData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ElasticSan.Models.ElasticSanSku sku = null, System.Collections.Generic.IEnumerable<string> availabilityZones = null, Azure.ResourceManager.ElasticSan.Models.ElasticSanProvisioningState? provisioningState = default(Azure.ResourceManager.ElasticSan.Models.ElasticSanProvisioningState?), long baseSizeTiB = (long)0, long extendedCapacitySizeTiB = (long)0, long? totalVolumeSizeGiB = default(long?), long? volumeGroupCount = default(long?), long? totalIops = default(long?), long? totalMbps = default(long?), long? totalSizeTiB = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ElasticSan.ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.ElasticSan.Models.ElasticSanPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.ElasticSan.Models.ElasticSanPublicNetworkAccess?), Azure.ResourceManager.ElasticSan.Models.ScaleUpProperties scaleUpProperties = null) { throw null; }
+        public static Azure.ResourceManager.ElasticSan.ElasticSanData ElasticSanData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ElasticSan.Models.ElasticSanSku sku = null, System.Collections.Generic.IEnumerable<string> availabilityZones = null, Azure.ResourceManager.ElasticSan.Models.ElasticSanProvisioningState? provisioningState = default(Azure.ResourceManager.ElasticSan.Models.ElasticSanProvisioningState?), long baseSizeTiB = (long)0, long extendedCapacitySizeTiB = (long)0, long? totalVolumeSizeGiB = default(long?), long? volumeGroupCount = default(long?), long? totalIops = default(long?), long? totalMbps = default(long?), long? totalSizeTiB = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ElasticSan.ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.ElasticSan.Models.ElasticSanPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.ElasticSan.Models.ElasticSanPublicNetworkAccess?), Azure.ResourceManager.ElasticSan.Models.ElasticSanScaleUpProperties scaleUpProperties = null) { throw null; }
         public static Azure.ResourceManager.ElasticSan.Models.ElasticSanKeyVaultProperties ElasticSanKeyVaultProperties(string keyName = null, string keyVersion = null, System.Uri keyVaultUri = null, string currentVersionedKeyIdentifier = null, System.DateTimeOffset? lastKeyRotationTimestamp = default(System.DateTimeOffset?), System.DateTimeOffset? currentVersionedKeyExpirationTimestamp = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.ElasticSan.ElasticSanPrivateEndpointConnectionData ElasticSanPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ElasticSan.Models.ElasticSanProvisioningState? provisioningState = default(Azure.ResourceManager.ElasticSan.Models.ElasticSanProvisioningState?), Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.ElasticSan.Models.ElasticSanPrivateLinkServiceConnectionState connectionState = null, System.Collections.Generic.IEnumerable<string> groupIds = null) { throw null; }
         public static Azure.ResourceManager.ElasticSan.Models.ElasticSanPrivateLinkResource ElasticSanPrivateLinkResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
@@ -362,7 +380,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public static Azure.ResourceManager.ElasticSan.ElasticSanVolumeGroupData ElasticSanVolumeGroupData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.ElasticSan.Models.ElasticSanProvisioningState? provisioningState, Azure.ResourceManager.ElasticSan.Models.ElasticSanStorageTargetType? protocolType, Azure.ResourceManager.ElasticSan.Models.ElasticSanEncryptionType? encryption, Azure.ResourceManager.ElasticSan.Models.ElasticSanEncryptionProperties encryptionProperties, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ElasticSan.Models.ElasticSanVirtualNetworkRule> virtualNetworkRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ElasticSan.ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, bool? enforceDataIntegrityCheckForIscsi) { throw null; }
         public static Azure.ResourceManager.ElasticSan.ElasticSanVolumeGroupData ElasticSanVolumeGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.ElasticSan.Models.ElasticSanProvisioningState? provisioningState = default(Azure.ResourceManager.ElasticSan.Models.ElasticSanProvisioningState?), Azure.ResourceManager.ElasticSan.Models.ElasticSanStorageTargetType? protocolType = default(Azure.ResourceManager.ElasticSan.Models.ElasticSanStorageTargetType?), Azure.ResourceManager.ElasticSan.Models.ElasticSanEncryptionType? encryption = default(Azure.ResourceManager.ElasticSan.Models.ElasticSanEncryptionType?), Azure.ResourceManager.ElasticSan.Models.ElasticSanEncryptionProperties encryptionProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ElasticSan.Models.ElasticSanVirtualNetworkRule> virtualNetworkRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ElasticSan.ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = null, bool? enforceDataIntegrityCheckForIscsi = default(bool?), Azure.ResourceManager.ElasticSan.Models.DeleteRetentionPolicy deleteRetentionPolicy = null) { throw null; }
         public static Azure.ResourceManager.ElasticSan.Models.IscsiTargetInfo IscsiTargetInfo(string targetIqn = null, string targetPortalHostname = null, int? targetPortalPort = default(int?), Azure.ResourceManager.ElasticSan.Models.ElasticSanProvisioningState? provisioningState = default(Azure.ResourceManager.ElasticSan.Models.ElasticSanProvisioningState?), Azure.ResourceManager.ElasticSan.Models.ResourceOperationalStatus? status = default(Azure.ResourceManager.ElasticSan.Models.ResourceOperationalStatus?)) { throw null; }
-        public static Azure.ResourceManager.ElasticSan.Models.PreValidationResponse PreValidationResponse(string validationStatus = null) { throw null; }
+        public static Azure.ResourceManager.ElasticSan.Models.PreValidationResult PreValidationResult(string validationStatus = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AutoScalePolicyEnforcement : System.IEquatable<Azure.ResourceManager.ElasticSan.Models.AutoScalePolicyEnforcement>
@@ -386,7 +404,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
     public partial class DeleteRetentionPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.DeleteRetentionPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.DeleteRetentionPolicy>
     {
         public DeleteRetentionPolicy() { }
-        public Azure.ResourceManager.ElasticSan.Models.PolicyState? PolicyState { get { throw null; } set { } }
+        public Azure.ResourceManager.ElasticSan.Models.DeleteRetentionPolicyState? PolicyState { get { throw null; } set { } }
         public int? RetentionPeriodDays { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ElasticSan.Models.DeleteRetentionPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.DeleteRetentionPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -396,32 +414,68 @@ namespace Azure.ResourceManager.ElasticSan.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.DeleteRetentionPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DeleteType : System.IEquatable<Azure.ResourceManager.ElasticSan.Models.DeleteType>
+    public readonly partial struct DeleteRetentionPolicyState : System.IEquatable<Azure.ResourceManager.ElasticSan.Models.DeleteRetentionPolicyState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public DeleteType(string value) { throw null; }
-        public static Azure.ResourceManager.ElasticSan.Models.DeleteType Permanent { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ElasticSan.Models.DeleteType other) { throw null; }
+        public DeleteRetentionPolicyState(string value) { throw null; }
+        public static Azure.ResourceManager.ElasticSan.Models.DeleteRetentionPolicyState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.ElasticSan.Models.DeleteRetentionPolicyState Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ElasticSan.Models.DeleteRetentionPolicyState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ElasticSan.Models.DeleteType left, Azure.ResourceManager.ElasticSan.Models.DeleteType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ElasticSan.Models.DeleteType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ElasticSan.Models.DeleteType left, Azure.ResourceManager.ElasticSan.Models.DeleteType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ElasticSan.Models.DeleteRetentionPolicyState left, Azure.ResourceManager.ElasticSan.Models.DeleteRetentionPolicyState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ElasticSan.Models.DeleteRetentionPolicyState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ElasticSan.Models.DeleteRetentionPolicyState left, Azure.ResourceManager.ElasticSan.Models.DeleteRetentionPolicyState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DiskSnapshotList : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.DiskSnapshotList>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.DiskSnapshotList>
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DeleteSnapshotsUnderVolume : System.IEquatable<Azure.ResourceManager.ElasticSan.Models.DeleteSnapshotsUnderVolume>
     {
-        public DiskSnapshotList(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> diskSnapshotIds) { }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DeleteSnapshotsUnderVolume(string value) { throw null; }
+        public static Azure.ResourceManager.ElasticSan.Models.DeleteSnapshotsUnderVolume False { get { throw null; } }
+        public static Azure.ResourceManager.ElasticSan.Models.DeleteSnapshotsUnderVolume True { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ElasticSan.Models.DeleteSnapshotsUnderVolume other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ElasticSan.Models.DeleteSnapshotsUnderVolume left, Azure.ResourceManager.ElasticSan.Models.DeleteSnapshotsUnderVolume right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ElasticSan.Models.DeleteSnapshotsUnderVolume (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ElasticSan.Models.DeleteSnapshotsUnderVolume left, Azure.ResourceManager.ElasticSan.Models.DeleteSnapshotsUnderVolume right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DiskSnapshotListContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.DiskSnapshotListContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.DiskSnapshotListContent>
+    {
+        public DiskSnapshotListContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> diskSnapshotIds) { }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> DiskSnapshotIds { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ElasticSan.Models.DiskSnapshotList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.DiskSnapshotList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.DiskSnapshotList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ElasticSan.Models.DiskSnapshotList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.DiskSnapshotList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.DiskSnapshotList>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.DiskSnapshotList>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ElasticSan.Models.DiskSnapshotListContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.DiskSnapshotListContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.DiskSnapshotListContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ElasticSan.Models.DiskSnapshotListContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.DiskSnapshotListContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.DiskSnapshotListContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.DiskSnapshotListContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ElasticSanDeleteType : System.IEquatable<Azure.ResourceManager.ElasticSan.Models.ElasticSanDeleteType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ElasticSanDeleteType(string value) { throw null; }
+        public static Azure.ResourceManager.ElasticSan.Models.ElasticSanDeleteType Permanent { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ElasticSan.Models.ElasticSanDeleteType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ElasticSan.Models.ElasticSanDeleteType left, Azure.ResourceManager.ElasticSan.Models.ElasticSanDeleteType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ElasticSan.Models.ElasticSanDeleteType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ElasticSan.Models.ElasticSanDeleteType left, Azure.ResourceManager.ElasticSan.Models.ElasticSanDeleteType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ElasticSanEncryptionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.ElasticSanEncryptionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.ElasticSanEncryptionProperties>
     {
@@ -475,7 +529,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public long? BaseSizeTiB { get { throw null; } set { } }
         public long? ExtendedCapacitySizeTiB { get { throw null; } set { } }
         public Azure.ResourceManager.ElasticSan.Models.ElasticSanPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.ElasticSan.Models.ScaleUpProperties ScaleUpProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.ElasticSan.Models.ElasticSanScaleUpProperties ScaleUpProperties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ElasticSan.Models.ElasticSanPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.ElasticSanPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -574,6 +628,20 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public static implicit operator Azure.ResourceManager.ElasticSan.Models.ElasticSanPublicNetworkAccess (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ElasticSan.Models.ElasticSanPublicNetworkAccess left, Azure.ResourceManager.ElasticSan.Models.ElasticSanPublicNetworkAccess right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ElasticSanScaleUpProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.ElasticSanScaleUpProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.ElasticSanScaleUpProperties>
+    {
+        public ElasticSanScaleUpProperties() { }
+        public Azure.ResourceManager.ElasticSan.Models.AutoScalePolicyEnforcement? AutoScalePolicyEnforcement { get { throw null; } set { } }
+        public long? CapacityUnitScaleUpLimitTiB { get { throw null; } set { } }
+        public long? IncreaseCapacityUnitByTiB { get { throw null; } set { } }
+        public long? UnusedSizeTiB { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ElasticSan.Models.ElasticSanScaleUpProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.ElasticSanScaleUpProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.ElasticSanScaleUpProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ElasticSan.Models.ElasticSanScaleUpProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.ElasticSanScaleUpProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.ElasticSanScaleUpProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.ElasticSanScaleUpProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ElasticSanSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.ElasticSanSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.ElasticSanSku>
     {
@@ -771,6 +839,24 @@ namespace Azure.ResourceManager.ElasticSan.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.ElasticSanVolumePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.ElasticSanVolumePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ForceDeleteVolume : System.IEquatable<Azure.ResourceManager.ElasticSan.Models.ForceDeleteVolume>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ForceDeleteVolume(string value) { throw null; }
+        public static Azure.ResourceManager.ElasticSan.Models.ForceDeleteVolume False { get { throw null; } }
+        public static Azure.ResourceManager.ElasticSan.Models.ForceDeleteVolume True { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ElasticSan.Models.ForceDeleteVolume other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ElasticSan.Models.ForceDeleteVolume left, Azure.ResourceManager.ElasticSan.Models.ForceDeleteVolume right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ElasticSan.Models.ForceDeleteVolume (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ElasticSan.Models.ForceDeleteVolume left, Azure.ResourceManager.ElasticSan.Models.ForceDeleteVolume right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class IscsiTargetInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.IscsiTargetInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.IscsiTargetInfo>
     {
         internal IscsiTargetInfo() { }
@@ -786,34 +872,16 @@ namespace Azure.ResourceManager.ElasticSan.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.IscsiTargetInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.IscsiTargetInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PolicyState : System.IEquatable<Azure.ResourceManager.ElasticSan.Models.PolicyState>
+    public partial class PreValidationResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.PreValidationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.PreValidationResult>
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PolicyState(string value) { throw null; }
-        public static Azure.ResourceManager.ElasticSan.Models.PolicyState Disabled { get { throw null; } }
-        public static Azure.ResourceManager.ElasticSan.Models.PolicyState Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ElasticSan.Models.PolicyState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ElasticSan.Models.PolicyState left, Azure.ResourceManager.ElasticSan.Models.PolicyState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ElasticSan.Models.PolicyState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ElasticSan.Models.PolicyState left, Azure.ResourceManager.ElasticSan.Models.PolicyState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class PreValidationResponse : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.PreValidationResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.PreValidationResponse>
-    {
-        internal PreValidationResponse() { }
+        internal PreValidationResult() { }
         public string ValidationStatus { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ElasticSan.Models.PreValidationResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.PreValidationResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.PreValidationResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ElasticSan.Models.PreValidationResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.PreValidationResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.PreValidationResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.PreValidationResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ElasticSan.Models.PreValidationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.PreValidationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.PreValidationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ElasticSan.Models.PreValidationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.PreValidationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.PreValidationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.PreValidationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResourceOperationalStatus : System.IEquatable<Azure.ResourceManager.ElasticSan.Models.ResourceOperationalStatus>
@@ -839,20 +907,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public static bool operator !=(Azure.ResourceManager.ElasticSan.Models.ResourceOperationalStatus left, Azure.ResourceManager.ElasticSan.Models.ResourceOperationalStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ScaleUpProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.ScaleUpProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.ScaleUpProperties>
-    {
-        public ScaleUpProperties() { }
-        public Azure.ResourceManager.ElasticSan.Models.AutoScalePolicyEnforcement? AutoScalePolicyEnforcement { get { throw null; } set { } }
-        public long? CapacityUnitScaleUpLimitTiB { get { throw null; } set { } }
-        public long? IncreaseCapacityUnitByTiB { get { throw null; } set { } }
-        public long? UnusedSizeTiB { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ElasticSan.Models.ScaleUpProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.ScaleUpProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.ScaleUpProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ElasticSan.Models.ScaleUpProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.ScaleUpProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.ScaleUpProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.ScaleUpProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class SnapshotCreationInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.SnapshotCreationInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.SnapshotCreationInfo>
     {
         public SnapshotCreationInfo(Azure.Core.ResourceIdentifier sourceId) { }
@@ -864,34 +918,16 @@ namespace Azure.ResourceManager.ElasticSan.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.SnapshotCreationInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.SnapshotCreationInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VolumeNameList : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.VolumeNameList>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.VolumeNameList>
+    public partial class VolumeNameListContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.VolumeNameListContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.VolumeNameListContent>
     {
-        public VolumeNameList(System.Collections.Generic.IEnumerable<string> volumeNames) { }
+        public VolumeNameListContent(System.Collections.Generic.IEnumerable<string> volumeNames) { }
         public System.Collections.Generic.IList<string> VolumeNames { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ElasticSan.Models.VolumeNameList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.VolumeNameList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.VolumeNameList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ElasticSan.Models.VolumeNameList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.VolumeNameList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.VolumeNameList>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.VolumeNameList>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct XmsAccessSoftDeletedResource : System.IEquatable<Azure.ResourceManager.ElasticSan.Models.XmsAccessSoftDeletedResource>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public XmsAccessSoftDeletedResource(string value) { throw null; }
-        public static Azure.ResourceManager.ElasticSan.Models.XmsAccessSoftDeletedResource False { get { throw null; } }
-        public static Azure.ResourceManager.ElasticSan.Models.XmsAccessSoftDeletedResource True { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ElasticSan.Models.XmsAccessSoftDeletedResource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ElasticSan.Models.XmsAccessSoftDeletedResource left, Azure.ResourceManager.ElasticSan.Models.XmsAccessSoftDeletedResource right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ElasticSan.Models.XmsAccessSoftDeletedResource (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ElasticSan.Models.XmsAccessSoftDeletedResource left, Azure.ResourceManager.ElasticSan.Models.XmsAccessSoftDeletedResource right) { throw null; }
-        public override string ToString() { throw null; }
+        Azure.ResourceManager.ElasticSan.Models.VolumeNameListContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.VolumeNameListContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.VolumeNameListContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ElasticSan.Models.VolumeNameListContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.VolumeNameListContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.VolumeNameListContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.VolumeNameListContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct XmsDeleteSnapshot : System.IEquatable<Azure.ResourceManager.ElasticSan.Models.XmsDeleteSnapshot>

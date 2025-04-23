@@ -183,7 +183,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
                 EnforceDataIntegrityCheckForIscsi = true,
                 DeleteRetentionPolicy = new DeleteRetentionPolicy
                 {
-                    PolicyState = PolicyState.Enabled,
+                    PolicyState = DeleteRetentionPolicyState.Enabled,
                     RetentionPeriodDays = 14,
                 },
             };
@@ -252,9 +252,9 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
             ElasticSanVolumeGroupResource elasticSanVolumeGroup = client.GetElasticSanVolumeGroupResource(elasticSanVolumeGroupResourceId);
 
             // invoke the operation
-            VolumeNameList volumeNameList = new VolumeNameList(new string[] { "volumename" });
-            ArmOperation<PreValidationResponse> lro = await elasticSanVolumeGroup.PreBackupVolumeAsync(WaitUntil.Completed, volumeNameList);
-            PreValidationResponse result = lro.Value;
+            VolumeNameListContent content = new VolumeNameListContent(new string[] { "volumename" });
+            ArmOperation<PreValidationResult> lro = await elasticSanVolumeGroup.PreBackupVolumeAsync(WaitUntil.Completed, content);
+            PreValidationResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -281,9 +281,9 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
             ElasticSanVolumeGroupResource elasticSanVolumeGroup = client.GetElasticSanVolumeGroupResource(elasticSanVolumeGroupResourceId);
 
             // invoke the operation
-            DiskSnapshotList diskSnapshotList = new DiskSnapshotList(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/{subscriptionid}/resourceGroups/{resourcegroupname}/providers/Microsoft.Compute/snapshots/disksnapshot1") });
-            ArmOperation<PreValidationResponse> lro = await elasticSanVolumeGroup.PreRestoreVolumeAsync(WaitUntil.Completed, diskSnapshotList);
-            PreValidationResponse result = lro.Value;
+            DiskSnapshotListContent content = new DiskSnapshotListContent(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/{subscriptionid}/resourceGroups/{resourcegroupname}/providers/Microsoft.Compute/snapshots/disksnapshot1") });
+            ArmOperation<PreValidationResult> lro = await elasticSanVolumeGroup.PreRestoreVolumeAsync(WaitUntil.Completed, content);
+            PreValidationResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

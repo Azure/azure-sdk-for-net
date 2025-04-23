@@ -13,18 +13,18 @@ using Azure.ResourceManager.ElasticSan.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    internal class PreValidationResponseOperationSource : IOperationSource<PreValidationResponse>
+    internal class PreValidationResultOperationSource : IOperationSource<PreValidationResult>
     {
-        PreValidationResponse IOperationSource<PreValidationResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        PreValidationResult IOperationSource<PreValidationResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return PreValidationResponse.DeserializePreValidationResponse(document.RootElement);
+            return PreValidationResult.DeserializePreValidationResult(document.RootElement);
         }
 
-        async ValueTask<PreValidationResponse> IOperationSource<PreValidationResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PreValidationResult> IOperationSource<PreValidationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return PreValidationResponse.DeserializePreValidationResponse(document.RootElement);
+            return PreValidationResult.DeserializePreValidationResult(document.RootElement);
         }
     }
 }

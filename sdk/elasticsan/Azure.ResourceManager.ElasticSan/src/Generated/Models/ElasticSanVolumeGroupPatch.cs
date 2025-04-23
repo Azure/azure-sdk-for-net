@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="enforceDataIntegrityCheckForIscsi"> A boolean indicating whether or not Data Integrity Check is enabled. </param>
         /// <param name="deleteRetentionPolicy"> The retention policy for the soft deleted volume group and its associated resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSanVolumeGroupPatch(ManagedServiceIdentity identity, ElasticSanStorageTargetType? protocolType, ElasticSanEncryptionType? encryption, ElasticSanEncryptionProperties encryptionProperties, NetworkRuleSet networkAcls, bool? enforceDataIntegrityCheckForIscsi, DeleteRetentionPolicy deleteRetentionPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticSanVolumeGroupPatch(ManagedServiceIdentity identity, ElasticSanStorageTargetType? protocolType, ElasticSanEncryptionType? encryption, ElasticSanEncryptionProperties encryptionProperties, ElasticSanNetworkRuleSet networkAcls, bool? enforceDataIntegrityCheckForIscsi, DeleteRetentionPolicy deleteRetentionPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identity = identity;
             ProtocolType = protocolType;
@@ -81,14 +81,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Encryption Properties describing Key Vault and Identity information. </summary>
         public ElasticSanEncryptionProperties EncryptionProperties { get; set; }
         /// <summary> A collection of rules governing the accessibility from specific network locations. </summary>
-        internal NetworkRuleSet NetworkAcls { get; set; }
+        internal ElasticSanNetworkRuleSet NetworkAcls { get; set; }
         /// <summary> The list of virtual network rules. </summary>
         public IList<ElasticSanVirtualNetworkRule> VirtualNetworkRules
         {
             get
             {
                 if (NetworkAcls is null)
-                    NetworkAcls = new NetworkRuleSet();
+                    NetworkAcls = new ElasticSanNetworkRuleSet();
                 return NetworkAcls.VirtualNetworkRules;
             }
         }

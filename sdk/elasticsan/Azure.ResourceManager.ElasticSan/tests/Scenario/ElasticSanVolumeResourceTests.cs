@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             ElasticSanVolumeResource volume3 = (await volume1.UpdateAsync(WaitUntil.Completed, patch)).Value;
             Assert.AreEqual(200, volume3.Data.SizeGiB);
 
-            await volume1.DeleteAsync(WaitUntil.Completed, XmsDeleteSnapshot.True, XmsForceDelete.True);
+            await volume1.DeleteAsync(WaitUntil.Completed, DeleteSnapshotsUnderVolume.True, ForceDeleteVolume.True);
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             {
                 DeleteRetentionPolicy = new DeleteRetentionPolicy()
                 {
-                    PolicyState = PolicyState.Enabled,
+                    PolicyState = DeleteRetentionPolicyState.Enabled,
                     RetentionPeriodDays = 1
                 }
             };
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
 
             ElasticSanVolumeResource softdeletedVolume = null;
             int count = 0;
-            await foreach (ElasticSanVolumeResource _ in _collection.GetAllAsync(XmsAccessSoftDeletedResource.True))
+            await foreach (ElasticSanVolumeResource _ in _collection.GetAllAsync(AccessSoftDeletedVolume.True))
             {
                 softdeletedVolume = _;
                 count++;
@@ -103,16 +103,16 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
 
             await volume1.DeleteAsync(WaitUntil.Completed);
             count = 0;
-            await foreach (ElasticSanVolumeResource _ in _collection.GetAllAsync(XmsAccessSoftDeletedResource.True))
+            await foreach (ElasticSanVolumeResource _ in _collection.GetAllAsync(AccessSoftDeletedVolume.True))
             {
                 softdeletedVolume = _;
                 count++;
             }
             Assert.GreaterOrEqual(count, 1);
-            await softdeletedVolume.DeleteAsync(WaitUntil.Completed, deleteType: DeleteType.Permanent);
+            await softdeletedVolume.DeleteAsync(WaitUntil.Completed, deleteType: ElasticSanDeleteType.Permanent);
 
             count = 0;
-            await foreach (ElasticSanVolumeResource _ in _collection.GetAllAsync(XmsAccessSoftDeletedResource.True))
+            await foreach (ElasticSanVolumeResource _ in _collection.GetAllAsync(AccessSoftDeletedVolume.True))
             {
                 count++;
             }
