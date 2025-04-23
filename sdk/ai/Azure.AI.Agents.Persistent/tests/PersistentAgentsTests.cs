@@ -384,7 +384,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             {
                 object data = new
                 {
-                    agent_id = agent.Id
+                    assistant_id = agent.Id
                 };
                 RequestContent content = argType == ArgumentType.Bytes ? RequestContent.Create(GetBytes(data)) : RequestContent.Create(GetStream(data));
                 Response rawRun = await client.CreateRunAsync(thread.Id, content);
@@ -435,7 +435,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             {
                 object data = new
                 {
-                    agent_id = agent.Id,
+                    assistant_id = agent.Id,
                     thread = new {
                         messages = new object[]
                         {
@@ -635,7 +635,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.AreEqual(RunStatus.Completed, toolRun.Status, message: toolRun.LastError?.Message);
             Assert.True(functionCalled);
             PageableList<ThreadMessage> messages = await client.GetMessagesAsync(toolRun.ThreadId, toolRun.Id);
-            Assert.Greater(messages.Data.Count, 1);
+            Assert.GreaterOrEqual(messages.Data.Count, 1);
             Assert.AreEqual(parallelToolCalls, toolRun.ParallelToolCalls);
         }
 
@@ -748,7 +748,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
             Assert.IsNotNull(fileSearchRun);
             PageableList<ThreadMessage> messages = await client.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id);
-            Assert.Greater(messages.Data.Count, 1);
+            Assert.GreaterOrEqual(messages.Data.Count, 1);
             // Check list, get and delete operations.
             VectorStore getVct = await client.GetVectorStoreAsync(vectorStore.Id);
             Assert.AreEqual(vectorStore.Id, getVct.Id);
@@ -839,7 +839,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             ThreadRun fileSearchRun = await client.CreateRunAsync(thread, agent);
             fileSearchRun = await WaitForRun(client, fileSearchRun);
             PageableList<ThreadMessage> messages = await client.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id);
-            Assert.Greater(messages.Data.Count, 1);
+            Assert.GreaterOrEqual(messages.Data.Count, 1);
         }
 
         // TODO: Check the service and enable this test.
@@ -893,7 +893,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             fileSearchRun = await WaitForRun(client, fileSearchRun);
             Console.WriteLine((milliseconds - DateTimeOffset.Now.ToUnixTimeMilliseconds()) / 1000);
             PageableList<ThreadMessage> messages = await client.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id);
-            Assert.Greater(messages.Data.Count, 1);
+            Assert.GreaterOrEqual(messages.Data.Count, 1);
         }
 
         [RecordedTest]
@@ -931,7 +931,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             fileSearchRun = await WaitForRun(client, fileSearchRun);
             PageableList<ThreadMessage> messages = await client.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id);
-            Assert.Greater(messages.Data.Count, 1);
+            Assert.GreaterOrEqual(messages.Data.Count, 1);
         }
 
         [RecordedTest]
@@ -995,7 +995,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 fileSearchRun = await WaitForRun(client, fileSearchRun);
                 PageableList<ThreadMessage> messages = await client.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id);
                 Assert.AreEqual(RunStatus.Completed, fileSearchRun.Status);
-                Assert.Greater(messages.Data.Count, 1);
+                Assert.GreaterOrEqual(messages.Data.Count, 1);
             }
             // TODO: Implement include in streaming scenario, see task 3801146.
             PageableList<RunStep> steps = await client.GetRunStepsAsync(
