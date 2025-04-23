@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
 {
     /// <summary> Marketplace details for an organization. </summary>
-    public partial class MarketplaceDetails
+    public partial class LambdaTestHyperExecuteMarketplaceDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,22 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteMarketplaceDetails"/>. </summary>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offerDetails"/> is null. </exception>
-        public MarketplaceDetails(OfferDetails offerDetails)
+        public LambdaTestHyperExecuteMarketplaceDetails(LambdaTestHyperExecuteOfferDetails offerDetails)
         {
             Argument.AssertNotNull(offerDetails, nameof(offerDetails));
 
             OfferDetails = offerDetails;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteMarketplaceDetails"/>. </summary>
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceDetails(string subscriptionId, MarketplaceSubscriptionStatus? subscriptionStatus, OfferDetails offerDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LambdaTestHyperExecuteMarketplaceDetails(string subscriptionId, MarketplaceSubscriptionStatus? subscriptionStatus, LambdaTestHyperExecuteOfferDetails offerDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubscriptionId = subscriptionId;
             SubscriptionStatus = subscriptionStatus;
@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceDetails"/> for deserialization. </summary>
-        internal MarketplaceDetails()
+        /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteMarketplaceDetails"/> for deserialization. </summary>
+        internal LambdaTestHyperExecuteMarketplaceDetails()
         {
         }
 
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         /// <summary> Marketplace subscription status. </summary>
         public MarketplaceSubscriptionStatus? SubscriptionStatus { get; }
         /// <summary> Offer details for the marketplace that is selected by the user. </summary>
-        public OfferDetails OfferDetails { get; set; }
+        public LambdaTestHyperExecuteOfferDetails OfferDetails { get; set; }
     }
 }

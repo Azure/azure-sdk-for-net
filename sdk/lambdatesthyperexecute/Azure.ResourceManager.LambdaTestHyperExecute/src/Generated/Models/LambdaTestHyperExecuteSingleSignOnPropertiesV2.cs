@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
 {
     /// <summary> Properties specific to Single Sign On Resource. </summary>
-    public partial class SingleSignOnPropertiesV2
+    public partial class LambdaTestHyperExecuteSingleSignOnPropertiesV2
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,22 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SingleSignOnPropertiesV2"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteSingleSignOnPropertiesV2"/>. </summary>
         /// <param name="type"> Type of Single Sign-On mechanism being used. </param>
-        public SingleSignOnPropertiesV2(SingleSignOnType type)
+        public LambdaTestHyperExecuteSingleSignOnPropertiesV2(LambdaTestHyperExecuteSingleSignOnType type)
         {
             Type = type;
             AadDomains = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SingleSignOnPropertiesV2"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteSingleSignOnPropertiesV2"/>. </summary>
         /// <param name="type"> Type of Single Sign-On mechanism being used. </param>
         /// <param name="state"> State of the Single Sign On for the resource. </param>
         /// <param name="enterpriseAppId"> AAD enterprise application Id used to setup SSO. </param>
         /// <param name="uri"> URL for SSO to be used by the partner to redirect the user to their system. </param>
         /// <param name="aadDomains"> List of AAD domains fetched from Microsoft Graph for user. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SingleSignOnPropertiesV2(SingleSignOnType type, SingleSignOnState? state, string enterpriseAppId, string uri, IList<string> aadDomains, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LambdaTestHyperExecuteSingleSignOnPropertiesV2(LambdaTestHyperExecuteSingleSignOnType type, LambdaTestHyperExecuteSingleSignOnState? state, string enterpriseAppId, string uri, IList<string> aadDomains, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             State = state;
@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SingleSignOnPropertiesV2"/> for deserialization. </summary>
-        internal SingleSignOnPropertiesV2()
+        /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteSingleSignOnPropertiesV2"/> for deserialization. </summary>
+        internal LambdaTestHyperExecuteSingleSignOnPropertiesV2()
         {
         }
 
         /// <summary> Type of Single Sign-On mechanism being used. </summary>
-        public SingleSignOnType Type { get; set; }
+        public LambdaTestHyperExecuteSingleSignOnType Type { get; set; }
         /// <summary> State of the Single Sign On for the resource. </summary>
-        public SingleSignOnState? State { get; set; }
+        public LambdaTestHyperExecuteSingleSignOnState? State { get; set; }
         /// <summary> AAD enterprise application Id used to setup SSO. </summary>
         public string EnterpriseAppId { get; set; }
         /// <summary> URL for SSO to be used by the partner to redirect the user to their system. </summary>

@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.LambdaTestHyperExecute.Samples
 {
-    public partial class Sample_OrganizationResource
+    public partial class Sample_LambdaTestHyperExecuteOrganizationResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -29,20 +29,20 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this OrganizationResource created on azure
-            // for more information of creating OrganizationResource, please refer to the document of OrganizationResource
+            // this example assumes you already have this LambdaTestHyperExecuteOrganizationResource created on azure
+            // for more information of creating LambdaTestHyperExecuteOrganizationResource, please refer to the document of LambdaTestHyperExecuteOrganizationResource
             string subscriptionId = "171E7A75-341B-4472-BC4C-7603C5AB9F32";
             string resourceGroupName = "rgopenapi";
             string organizationname = "testorg";
-            ResourceIdentifier organizationResourceId = OrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationname);
-            OrganizationResource organizationResource = client.GetOrganizationResource(organizationResourceId);
+            ResourceIdentifier lambdaTestHyperExecuteOrganizationResourceId = LambdaTestHyperExecuteOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationname);
+            LambdaTestHyperExecuteOrganizationResource lambdaTestHyperExecuteOrganization = client.GetLambdaTestHyperExecuteOrganizationResource(lambdaTestHyperExecuteOrganizationResourceId);
 
             // invoke the operation
-            OrganizationResource result = await organizationResource.GetAsync();
+            LambdaTestHyperExecuteOrganizationResource result = await lambdaTestHyperExecuteOrganization.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            OrganizationResourceData resourceData = result.Data;
+            LambdaTestHyperExecuteOrganizationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -59,16 +59,16 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this OrganizationResource created on azure
-            // for more information of creating OrganizationResource, please refer to the document of OrganizationResource
+            // this example assumes you already have this LambdaTestHyperExecuteOrganizationResource created on azure
+            // for more information of creating LambdaTestHyperExecuteOrganizationResource, please refer to the document of LambdaTestHyperExecuteOrganizationResource
             string subscriptionId = "171E7A75-341B-4472-BC4C-7603C5AB9F32";
             string resourceGroupName = "rgopenapi";
             string organizationname = "testorg";
-            ResourceIdentifier organizationResourceId = OrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationname);
-            OrganizationResource organizationResource = client.GetOrganizationResource(organizationResourceId);
+            ResourceIdentifier lambdaTestHyperExecuteOrganizationResourceId = LambdaTestHyperExecuteOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationname);
+            LambdaTestHyperExecuteOrganizationResource lambdaTestHyperExecuteOrganization = client.GetLambdaTestHyperExecuteOrganizationResource(lambdaTestHyperExecuteOrganizationResourceId);
 
             // invoke the operation
-            await organizationResource.DeleteAsync(WaitUntil.Completed);
+            await lambdaTestHyperExecuteOrganization.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -85,16 +85,16 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this OrganizationResource created on azure
-            // for more information of creating OrganizationResource, please refer to the document of OrganizationResource
+            // this example assumes you already have this LambdaTestHyperExecuteOrganizationResource created on azure
+            // for more information of creating LambdaTestHyperExecuteOrganizationResource, please refer to the document of LambdaTestHyperExecuteOrganizationResource
             string subscriptionId = "171E7A75-341B-4472-BC4C-7603C5AB9F32";
             string resourceGroupName = "rgopenapi";
             string organizationname = "testorg";
-            ResourceIdentifier organizationResourceId = OrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationname);
-            OrganizationResource organizationResource = client.GetOrganizationResource(organizationResourceId);
+            ResourceIdentifier lambdaTestHyperExecuteOrganizationResourceId = LambdaTestHyperExecuteOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationname);
+            LambdaTestHyperExecuteOrganizationResource lambdaTestHyperExecuteOrganization = client.GetLambdaTestHyperExecuteOrganizationResource(lambdaTestHyperExecuteOrganizationResourceId);
 
             // invoke the operation
-            OrganizationResourcePatch patch = new OrganizationResourcePatch
+            LambdaTestHyperExecuteOrganizationPatch patch = new LambdaTestHyperExecuteOrganizationPatch
             {
                 Tags = { },
                 Identity = new ManagedServiceIdentity("None")
@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Samples
                     UserAssignedIdentities = { },
                 },
             };
-            OrganizationResource result = await organizationResource.UpdateAsync(patch);
+            LambdaTestHyperExecuteOrganizationResource result = await lambdaTestHyperExecuteOrganization.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            OrganizationResourceData resourceData = result.Data;
+            LambdaTestHyperExecuteOrganizationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

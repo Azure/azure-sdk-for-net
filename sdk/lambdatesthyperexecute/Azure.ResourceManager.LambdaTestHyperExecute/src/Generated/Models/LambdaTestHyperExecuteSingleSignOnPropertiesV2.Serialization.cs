@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
 {
-    public partial class SingleSignOnPropertiesV2 : IUtf8JsonSerializable, IJsonModel<SingleSignOnPropertiesV2>
+    public partial class LambdaTestHyperExecuteSingleSignOnPropertiesV2 : IUtf8JsonSerializable, IJsonModel<LambdaTestHyperExecuteSingleSignOnPropertiesV2>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SingleSignOnPropertiesV2>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LambdaTestHyperExecuteSingleSignOnPropertiesV2>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SingleSignOnPropertiesV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LambdaTestHyperExecuteSingleSignOnPropertiesV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteSingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SingleSignOnPropertiesV2)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LambdaTestHyperExecuteSingleSignOnPropertiesV2)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("type"u8);
@@ -78,19 +78,19 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
             }
         }
 
-        SingleSignOnPropertiesV2 IJsonModel<SingleSignOnPropertiesV2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LambdaTestHyperExecuteSingleSignOnPropertiesV2 IJsonModel<LambdaTestHyperExecuteSingleSignOnPropertiesV2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteSingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SingleSignOnPropertiesV2)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LambdaTestHyperExecuteSingleSignOnPropertiesV2)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSingleSignOnPropertiesV2(document.RootElement, options);
+            return DeserializeLambdaTestHyperExecuteSingleSignOnPropertiesV2(document.RootElement, options);
         }
 
-        internal static SingleSignOnPropertiesV2 DeserializeSingleSignOnPropertiesV2(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static LambdaTestHyperExecuteSingleSignOnPropertiesV2 DeserializeLambdaTestHyperExecuteSingleSignOnPropertiesV2(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
             {
                 return null;
             }
-            SingleSignOnType type = default;
-            SingleSignOnState? state = default;
+            LambdaTestHyperExecuteSingleSignOnType type = default;
+            LambdaTestHyperExecuteSingleSignOnState? state = default;
             string enterpriseAppId = default;
             string url = default;
             IList<string> aadDomains = default;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new SingleSignOnType(property.Value.GetString());
+                    type = new LambdaTestHyperExecuteSingleSignOnType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                     {
                         continue;
                     }
-                    state = new SingleSignOnState(property.Value.GetString());
+                    state = new LambdaTestHyperExecuteSingleSignOnState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("enterpriseAppId"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SingleSignOnPropertiesV2(
+            return new LambdaTestHyperExecuteSingleSignOnPropertiesV2(
                 type,
                 state,
                 enterpriseAppId,
@@ -160,35 +160,35 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SingleSignOnPropertiesV2>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<LambdaTestHyperExecuteSingleSignOnPropertiesV2>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteSingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SingleSignOnPropertiesV2)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LambdaTestHyperExecuteSingleSignOnPropertiesV2)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SingleSignOnPropertiesV2 IPersistableModel<SingleSignOnPropertiesV2>.Create(BinaryData data, ModelReaderWriterOptions options)
+        LambdaTestHyperExecuteSingleSignOnPropertiesV2 IPersistableModel<LambdaTestHyperExecuteSingleSignOnPropertiesV2>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteSingleSignOnPropertiesV2>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSingleSignOnPropertiesV2(document.RootElement, options);
+                        return DeserializeLambdaTestHyperExecuteSingleSignOnPropertiesV2(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SingleSignOnPropertiesV2)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LambdaTestHyperExecuteSingleSignOnPropertiesV2)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SingleSignOnPropertiesV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LambdaTestHyperExecuteSingleSignOnPropertiesV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

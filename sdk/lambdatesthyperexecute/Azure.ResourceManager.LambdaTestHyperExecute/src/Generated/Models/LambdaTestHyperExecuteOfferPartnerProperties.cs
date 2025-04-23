@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
 {
     /// <summary> Partner's specific Properties. </summary>
-    public partial class PartnerProperties
+    public partial class LambdaTestHyperExecuteOfferPartnerProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,24 +45,24 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PartnerProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteOfferPartnerProperties"/>. </summary>
         /// <param name="licensesSubscribed"> The number of licenses subscribed. </param>
-        public PartnerProperties(int licensesSubscribed)
+        public LambdaTestHyperExecuteOfferPartnerProperties(int licensesSubscribed)
         {
             LicensesSubscribed = licensesSubscribed;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PartnerProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteOfferPartnerProperties"/>. </summary>
         /// <param name="licensesSubscribed"> The number of licenses subscribed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PartnerProperties(int licensesSubscribed, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LambdaTestHyperExecuteOfferPartnerProperties(int licensesSubscribed, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LicensesSubscribed = licensesSubscribed;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PartnerProperties"/> for deserialization. </summary>
-        internal PartnerProperties()
+        /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteOfferPartnerProperties"/> for deserialization. </summary>
+        internal LambdaTestHyperExecuteOfferPartnerProperties()
         {
         }
 

@@ -7,12 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.LambdaTestHyperExecute.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
+namespace Azure.ResourceManager.LambdaTestHyperExecute
 {
-    /// <summary> The type used for update operations of the Organization Resource. </summary>
-    public partial class OrganizationResourcePatch
+    /// <summary>
+    /// A class representing the LambdaTestHyperExecuteOrganization data model.
+    /// Concrete tracked resource types can be created by aliasing this type using a specific property type.
+    /// </summary>
+    public partial class LambdaTestHyperExecuteOrganizationData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,25 +51,36 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationResourcePatch"/>. </summary>
-        public OrganizationResourcePatch()
+        /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteOrganizationData"/>. </summary>
+        /// <param name="location"> The location. </param>
+        public LambdaTestHyperExecuteOrganizationData(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationResourcePatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
+        /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteOrganizationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OrganizationResourcePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LambdaTestHyperExecuteOrganizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, LambdaTestHyperExecuteOrganizationProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Tags = tags;
+            Properties = properties;
             Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteOrganizationData"/> for deserialization. </summary>
+        internal LambdaTestHyperExecuteOrganizationData()
+        {
+        }
+
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public LambdaTestHyperExecuteOrganizationProperties Properties { get; set; }
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }

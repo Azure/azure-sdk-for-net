@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmLambdaTestHyperExecuteModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecute.OrganizationResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecute.LambdaTestHyperExecuteOrganizationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="LambdaTestHyperExecute.OrganizationResourceData"/> instance for mocking. </returns>
-        public static OrganizationResourceData OrganizationResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, OrganizationProperties properties = null, ManagedServiceIdentity identity = null)
+        /// <returns> A new <see cref="LambdaTestHyperExecute.LambdaTestHyperExecuteOrganizationData"/> instance for mocking. </returns>
+        public static LambdaTestHyperExecuteOrganizationData LambdaTestHyperExecuteOrganizationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, LambdaTestHyperExecuteOrganizationProperties properties = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new OrganizationResourceData(
+            return new LambdaTestHyperExecuteOrganizationData(
                 id,
                 name,
                 resourceType,
@@ -42,32 +42,32 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OrganizationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LambdaTestHyperExecuteOrganizationProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerLicensesSubscribed"> partner properties. </param>
         /// <param name="singleSignOnProperties"> Single sign-on properties. </param>
-        /// <returns> A new <see cref="Models.OrganizationProperties"/> instance for mocking. </returns>
-        public static OrganizationProperties OrganizationProperties(MarketplaceDetails marketplace = null, UserDetails user = null, ResourceProvisioningState? provisioningState = null, int? partnerLicensesSubscribed = null, SingleSignOnPropertiesV2 singleSignOnProperties = null)
+        /// <returns> A new <see cref="Models.LambdaTestHyperExecuteOrganizationProperties"/> instance for mocking. </returns>
+        public static LambdaTestHyperExecuteOrganizationProperties LambdaTestHyperExecuteOrganizationProperties(LambdaTestHyperExecuteMarketplaceDetails marketplace = null, LambdaTestHyperExecuteUserDetails user = null, LambdaTestHyperExecuteOfferProvisioningState? provisioningState = null, int? partnerLicensesSubscribed = null, LambdaTestHyperExecuteSingleSignOnPropertiesV2 singleSignOnProperties = null)
         {
-            return new OrganizationProperties(
+            return new LambdaTestHyperExecuteOrganizationProperties(
                 marketplace,
                 user,
                 provisioningState,
-                partnerLicensesSubscribed.HasValue ? new PartnerProperties(partnerLicensesSubscribed.Value, serializedAdditionalRawData: null) : null,
+                partnerLicensesSubscribed.HasValue ? new LambdaTestHyperExecuteOfferPartnerProperties(partnerLicensesSubscribed.Value, serializedAdditionalRawData: null) : null,
                 singleSignOnProperties,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MarketplaceDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LambdaTestHyperExecuteMarketplaceDetails"/>. </summary>
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
-        /// <returns> A new <see cref="Models.MarketplaceDetails"/> instance for mocking. </returns>
-        public static MarketplaceDetails MarketplaceDetails(string subscriptionId = null, MarketplaceSubscriptionStatus? subscriptionStatus = null, OfferDetails offerDetails = null)
+        /// <returns> A new <see cref="Models.LambdaTestHyperExecuteMarketplaceDetails"/> instance for mocking. </returns>
+        public static LambdaTestHyperExecuteMarketplaceDetails LambdaTestHyperExecuteMarketplaceDetails(string subscriptionId = null, MarketplaceSubscriptionStatus? subscriptionStatus = null, LambdaTestHyperExecuteOfferDetails offerDetails = null)
         {
-            return new MarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, serializedAdditionalRawData: null);
+            return new LambdaTestHyperExecuteMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, serializedAdditionalRawData: null);
         }
     }
 }

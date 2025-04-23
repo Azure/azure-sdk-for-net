@@ -33,39 +33,39 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="OrganizationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OrganizationResource.CreateResourceIdentifier" /> to create an <see cref="OrganizationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LambdaTestHyperExecuteOrganizationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LambdaTestHyperExecuteOrganizationResource.CreateResourceIdentifier" /> to create a <see cref="LambdaTestHyperExecuteOrganizationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableLambdaTestHyperExecuteArmClient.GetOrganizationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLambdaTestHyperExecuteArmClient.GetLambdaTestHyperExecuteOrganizationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="OrganizationResource"/> object. </returns>
-        public static OrganizationResource GetOrganizationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LambdaTestHyperExecuteOrganizationResource"/> object. </returns>
+        public static LambdaTestHyperExecuteOrganizationResource GetLambdaTestHyperExecuteOrganizationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableLambdaTestHyperExecuteArmClient(client).GetOrganizationResource(id);
+            return GetMockableLambdaTestHyperExecuteArmClient(client).GetLambdaTestHyperExecuteOrganizationResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of OrganizationResources in the ResourceGroupResource.
+        /// Gets a collection of LambdaTestHyperExecuteOrganizationResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableLambdaTestHyperExecuteResourceGroupResource.GetOrganizationResources()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLambdaTestHyperExecuteResourceGroupResource.GetLambdaTestHyperExecuteOrganizations()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of OrganizationResources and their operations over a OrganizationResource. </returns>
-        public static OrganizationResourceCollection GetOrganizationResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of LambdaTestHyperExecuteOrganizationResources and their operations over a LambdaTestHyperExecuteOrganizationResource. </returns>
+        public static LambdaTestHyperExecuteOrganizationCollection GetLambdaTestHyperExecuteOrganizations(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableLambdaTestHyperExecuteResourceGroupResource(resourceGroupResource).GetOrganizationResources();
+            return GetMockableLambdaTestHyperExecuteResourceGroupResource(resourceGroupResource).GetLambdaTestHyperExecuteOrganizations();
         }
 
         /// <summary>
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="LambdaTestHyperExecuteOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableLambdaTestHyperExecuteResourceGroupResource.GetOrganizationResourceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLambdaTestHyperExecuteResourceGroupResource.GetLambdaTestHyperExecuteOrganizationAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="organizationname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<OrganizationResource>> GetOrganizationResourceAsync(this ResourceGroupResource resourceGroupResource, string organizationname, CancellationToken cancellationToken = default)
+        public static async Task<Response<LambdaTestHyperExecuteOrganizationResource>> GetLambdaTestHyperExecuteOrganizationAsync(this ResourceGroupResource resourceGroupResource, string organizationname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableLambdaTestHyperExecuteResourceGroupResource(resourceGroupResource).GetOrganizationResourceAsync(organizationname, cancellationToken).ConfigureAwait(false);
+            return await GetMockableLambdaTestHyperExecuteResourceGroupResource(resourceGroupResource).GetLambdaTestHyperExecuteOrganizationAsync(organizationname, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="LambdaTestHyperExecuteOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableLambdaTestHyperExecuteResourceGroupResource.GetOrganizationResource(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLambdaTestHyperExecuteResourceGroupResource.GetLambdaTestHyperExecuteOrganization(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="organizationname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<OrganizationResource> GetOrganizationResource(this ResourceGroupResource resourceGroupResource, string organizationname, CancellationToken cancellationToken = default)
+        public static Response<LambdaTestHyperExecuteOrganizationResource> GetLambdaTestHyperExecuteOrganization(this ResourceGroupResource resourceGroupResource, string organizationname, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableLambdaTestHyperExecuteResourceGroupResource(resourceGroupResource).GetOrganizationResource(organizationname, cancellationToken);
+            return GetMockableLambdaTestHyperExecuteResourceGroupResource(resourceGroupResource).GetLambdaTestHyperExecuteOrganization(organizationname, cancellationToken);
         }
 
         /// <summary>
@@ -161,23 +161,23 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="LambdaTestHyperExecuteOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableLambdaTestHyperExecuteSubscriptionResource.GetOrganizationResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLambdaTestHyperExecuteSubscriptionResource.GetLambdaTestHyperExecuteOrganizations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="OrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OrganizationResource> GetOrganizationResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="LambdaTestHyperExecuteOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<LambdaTestHyperExecuteOrganizationResource> GetLambdaTestHyperExecuteOrganizationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableLambdaTestHyperExecuteSubscriptionResource(subscriptionResource).GetOrganizationResourcesAsync(cancellationToken);
+            return GetMockableLambdaTestHyperExecuteSubscriptionResource(subscriptionResource).GetLambdaTestHyperExecuteOrganizationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -197,23 +197,23 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="LambdaTestHyperExecuteOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableLambdaTestHyperExecuteSubscriptionResource.GetOrganizationResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLambdaTestHyperExecuteSubscriptionResource.GetLambdaTestHyperExecuteOrganizations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="OrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OrganizationResource> GetOrganizationResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LambdaTestHyperExecuteOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<LambdaTestHyperExecuteOrganizationResource> GetLambdaTestHyperExecuteOrganizations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableLambdaTestHyperExecuteSubscriptionResource(subscriptionResource).GetOrganizationResources(cancellationToken);
+            return GetMockableLambdaTestHyperExecuteSubscriptionResource(subscriptionResource).GetLambdaTestHyperExecuteOrganizations(cancellationToken);
         }
     }
 }

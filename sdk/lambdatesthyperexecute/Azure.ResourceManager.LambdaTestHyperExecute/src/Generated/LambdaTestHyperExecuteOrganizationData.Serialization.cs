@@ -15,11 +15,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LambdaTestHyperExecute
 {
-    public partial class OrganizationResourceData : IUtf8JsonSerializable, IJsonModel<OrganizationResourceData>
+    public partial class LambdaTestHyperExecuteOrganizationData : IUtf8JsonSerializable, IJsonModel<LambdaTestHyperExecuteOrganizationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrganizationResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LambdaTestHyperExecuteOrganizationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<OrganizationResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LambdaTestHyperExecuteOrganizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OrganizationResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrganizationResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LambdaTestHyperExecuteOrganizationData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -50,19 +50,19 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
             }
         }
 
-        OrganizationResourceData IJsonModel<OrganizationResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LambdaTestHyperExecuteOrganizationData IJsonModel<LambdaTestHyperExecuteOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OrganizationResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrganizationResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LambdaTestHyperExecuteOrganizationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOrganizationResourceData(document.RootElement, options);
+            return DeserializeLambdaTestHyperExecuteOrganizationData(document.RootElement, options);
         }
 
-        internal static OrganizationResourceData DeserializeOrganizationResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static LambdaTestHyperExecuteOrganizationData DeserializeLambdaTestHyperExecuteOrganizationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
             {
                 return null;
             }
-            OrganizationProperties properties = default;
+            LambdaTestHyperExecuteOrganizationProperties properties = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
                     {
                         continue;
                     }
-                    properties = OrganizationProperties.DeserializeOrganizationProperties(property.Value, options);
+                    properties = LambdaTestHyperExecuteOrganizationProperties.DeserializeLambdaTestHyperExecuteOrganizationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OrganizationResourceData(
+            return new LambdaTestHyperExecuteOrganizationData(
                 id,
                 name,
                 type,
@@ -162,35 +162,35 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<OrganizationResourceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<LambdaTestHyperExecuteOrganizationData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OrganizationResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OrganizationResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LambdaTestHyperExecuteOrganizationData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        OrganizationResourceData IPersistableModel<OrganizationResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        LambdaTestHyperExecuteOrganizationData IPersistableModel<LambdaTestHyperExecuteOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OrganizationResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeOrganizationResourceData(document.RootElement, options);
+                        return DeserializeLambdaTestHyperExecuteOrganizationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OrganizationResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LambdaTestHyperExecuteOrganizationData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<OrganizationResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LambdaTestHyperExecuteOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

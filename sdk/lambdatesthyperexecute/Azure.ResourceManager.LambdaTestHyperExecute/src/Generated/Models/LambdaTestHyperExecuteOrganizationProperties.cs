@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
 {
     /// <summary> Properties specific to Organization. </summary>
-    public partial class OrganizationProperties
+    public partial class LambdaTestHyperExecuteOrganizationProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteOrganizationProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <param name="partnerProperties"> partner properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/>, <paramref name="user"/> or <paramref name="partnerProperties"/> is null. </exception>
-        public OrganizationProperties(MarketplaceDetails marketplace, UserDetails user, PartnerProperties partnerProperties)
+        public LambdaTestHyperExecuteOrganizationProperties(LambdaTestHyperExecuteMarketplaceDetails marketplace, LambdaTestHyperExecuteUserDetails user, LambdaTestHyperExecuteOfferPartnerProperties partnerProperties)
         {
             Argument.AssertNotNull(marketplace, nameof(marketplace));
             Argument.AssertNotNull(user, nameof(user));
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
             PartnerProperties = partnerProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteOrganizationProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerProperties"> partner properties. </param>
         /// <param name="singleSignOnProperties"> Single sign-on properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OrganizationProperties(MarketplaceDetails marketplace, UserDetails user, ResourceProvisioningState? provisioningState, PartnerProperties partnerProperties, SingleSignOnPropertiesV2 singleSignOnProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LambdaTestHyperExecuteOrganizationProperties(LambdaTestHyperExecuteMarketplaceDetails marketplace, LambdaTestHyperExecuteUserDetails user, LambdaTestHyperExecuteOfferProvisioningState? provisioningState, LambdaTestHyperExecuteOfferPartnerProperties partnerProperties, LambdaTestHyperExecuteSingleSignOnPropertiesV2 singleSignOnProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Marketplace = marketplace;
             User = user;
@@ -78,30 +78,30 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationProperties"/> for deserialization. </summary>
-        internal OrganizationProperties()
+        /// <summary> Initializes a new instance of <see cref="LambdaTestHyperExecuteOrganizationProperties"/> for deserialization. </summary>
+        internal LambdaTestHyperExecuteOrganizationProperties()
         {
         }
 
         /// <summary> Marketplace details of the resource. </summary>
-        public MarketplaceDetails Marketplace { get; set; }
+        public LambdaTestHyperExecuteMarketplaceDetails Marketplace { get; set; }
         /// <summary> Details of the user. </summary>
-        public UserDetails User { get; set; }
+        public LambdaTestHyperExecuteUserDetails User { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ResourceProvisioningState? ProvisioningState { get; }
+        public LambdaTestHyperExecuteOfferProvisioningState? ProvisioningState { get; }
         /// <summary> partner properties. </summary>
-        internal PartnerProperties PartnerProperties { get; set; }
+        internal LambdaTestHyperExecuteOfferPartnerProperties PartnerProperties { get; set; }
         /// <summary> The number of licenses subscribed. </summary>
         public int? PartnerLicensesSubscribed
         {
             get => PartnerProperties is null ? default(int?) : PartnerProperties.LicensesSubscribed;
             set
             {
-                PartnerProperties = value.HasValue ? new PartnerProperties(value.Value) : null;
+                PartnerProperties = value.HasValue ? new LambdaTestHyperExecuteOfferPartnerProperties(value.Value) : null;
             }
         }
 
         /// <summary> Single sign-on properties. </summary>
-        public SingleSignOnPropertiesV2 SingleSignOnProperties { get; set; }
+        public LambdaTestHyperExecuteSingleSignOnPropertiesV2 SingleSignOnProperties { get; set; }
     }
 }

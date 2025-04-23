@@ -18,14 +18,14 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.LambdaTestHyperExecute
 {
     /// <summary>
-    /// A Class representing an OrganizationResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="OrganizationResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetOrganizationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetOrganizationResource method.
+    /// A Class representing a LambdaTestHyperExecuteOrganization along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LambdaTestHyperExecuteOrganizationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLambdaTestHyperExecuteOrganizationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetLambdaTestHyperExecuteOrganization method.
     /// </summary>
-    public partial class OrganizationResource : ArmResource
+    public partial class LambdaTestHyperExecuteOrganizationResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="OrganizationResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="LambdaTestHyperExecuteOrganizationResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="organizationname"> The organizationname. </param>
@@ -35,35 +35,35 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _organizationResourceOrganizationsClientDiagnostics;
-        private readonly OrganizationsRestOperations _organizationResourceOrganizationsRestClient;
-        private readonly OrganizationResourceData _data;
+        private readonly ClientDiagnostics _lambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics;
+        private readonly OrganizationsRestOperations _lambdaTestHyperExecuteOrganizationOrganizationsRestClient;
+        private readonly LambdaTestHyperExecuteOrganizationData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "LambdaTest.HyperExecute/organizations";
 
-        /// <summary> Initializes a new instance of the <see cref="OrganizationResource"/> class for mocking. </summary>
-        protected OrganizationResource()
+        /// <summary> Initializes a new instance of the <see cref="LambdaTestHyperExecuteOrganizationResource"/> class for mocking. </summary>
+        protected LambdaTestHyperExecuteOrganizationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="OrganizationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LambdaTestHyperExecuteOrganizationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal OrganizationResource(ArmClient client, OrganizationResourceData data) : this(client, data.Id)
+        internal LambdaTestHyperExecuteOrganizationResource(ArmClient client, LambdaTestHyperExecuteOrganizationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="OrganizationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LambdaTestHyperExecuteOrganizationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal OrganizationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal LambdaTestHyperExecuteOrganizationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _organizationResourceOrganizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LambdaTestHyperExecute", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string organizationResourceOrganizationsApiVersion);
-            _organizationResourceOrganizationsRestClient = new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, organizationResourceOrganizationsApiVersion);
+            _lambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LambdaTestHyperExecute", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string lambdaTestHyperExecuteOrganizationOrganizationsApiVersion);
+            _lambdaTestHyperExecuteOrganizationOrganizationsRestClient = new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, lambdaTestHyperExecuteOrganizationOrganizationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual OrganizationResourceData Data
+        public virtual LambdaTestHyperExecuteOrganizationData Data
         {
             get
             {
@@ -107,21 +107,21 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="LambdaTestHyperExecuteOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OrganizationResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LambdaTestHyperExecuteOrganizationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _organizationResourceOrganizationsClientDiagnostics.CreateScope("OrganizationResource.Get");
+            using var scope = _lambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics.CreateScope("LambdaTestHyperExecuteOrganizationResource.Get");
             scope.Start();
             try
             {
-                var response = await _organizationResourceOrganizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _lambdaTestHyperExecuteOrganizationOrganizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OrganizationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LambdaTestHyperExecuteOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,21 +147,21 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="LambdaTestHyperExecuteOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OrganizationResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<LambdaTestHyperExecuteOrganizationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _organizationResourceOrganizationsClientDiagnostics.CreateScope("OrganizationResource.Get");
+            using var scope = _lambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics.CreateScope("LambdaTestHyperExecuteOrganizationResource.Get");
             scope.Start();
             try
             {
-                var response = _organizationResourceOrganizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _lambdaTestHyperExecuteOrganizationOrganizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OrganizationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LambdaTestHyperExecuteOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="LambdaTestHyperExecuteOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,12 +195,12 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _organizationResourceOrganizationsClientDiagnostics.CreateScope("OrganizationResource.Delete");
+            using var scope = _lambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics.CreateScope("LambdaTestHyperExecuteOrganizationResource.Delete");
             scope.Start();
             try
             {
-                var response = await _organizationResourceOrganizationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new LambdaTestHyperExecuteArmOperation(_organizationResourceOrganizationsClientDiagnostics, Pipeline, _organizationResourceOrganizationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _lambdaTestHyperExecuteOrganizationOrganizationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new LambdaTestHyperExecuteArmOperation(_lambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics, Pipeline, _lambdaTestHyperExecuteOrganizationOrganizationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="LambdaTestHyperExecuteOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,12 +237,12 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _organizationResourceOrganizationsClientDiagnostics.CreateScope("OrganizationResource.Delete");
+            using var scope = _lambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics.CreateScope("LambdaTestHyperExecuteOrganizationResource.Delete");
             scope.Start();
             try
             {
-                var response = _organizationResourceOrganizationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new LambdaTestHyperExecuteArmOperation(_organizationResourceOrganizationsClientDiagnostics, Pipeline, _organizationResourceOrganizationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _lambdaTestHyperExecuteOrganizationOrganizationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new LambdaTestHyperExecuteArmOperation(_lambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics, Pipeline, _lambdaTestHyperExecuteOrganizationOrganizationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -271,23 +271,23 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="LambdaTestHyperExecuteOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<OrganizationResource>> UpdateAsync(OrganizationResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LambdaTestHyperExecuteOrganizationResource>> UpdateAsync(LambdaTestHyperExecuteOrganizationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _organizationResourceOrganizationsClientDiagnostics.CreateScope("OrganizationResource.Update");
+            using var scope = _lambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics.CreateScope("LambdaTestHyperExecuteOrganizationResource.Update");
             scope.Start();
             try
             {
-                var response = await _organizationResourceOrganizationsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new OrganizationResource(Client, response.Value), response.GetRawResponse());
+                var response = await _lambdaTestHyperExecuteOrganizationOrganizationsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new LambdaTestHyperExecuteOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -313,23 +313,23 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="LambdaTestHyperExecuteOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<OrganizationResource> Update(OrganizationResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<LambdaTestHyperExecuteOrganizationResource> Update(LambdaTestHyperExecuteOrganizationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _organizationResourceOrganizationsClientDiagnostics.CreateScope("OrganizationResource.Update");
+            using var scope = _lambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics.CreateScope("LambdaTestHyperExecuteOrganizationResource.Update");
             scope.Start();
             try
             {
-                var response = _organizationResourceOrganizationsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new OrganizationResource(Client, response.Value), response.GetRawResponse());
+                var response = _lambdaTestHyperExecuteOrganizationOrganizationsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new LambdaTestHyperExecuteOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="LambdaTestHyperExecuteOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -363,12 +363,12 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<OrganizationResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LambdaTestHyperExecuteOrganizationResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _organizationResourceOrganizationsClientDiagnostics.CreateScope("OrganizationResource.AddTag");
+            using var scope = _lambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics.CreateScope("LambdaTestHyperExecuteOrganizationResource.AddTag");
             scope.Start();
             try
             {
@@ -377,13 +377,13 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _organizationResourceOrganizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new OrganizationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _lambdaTestHyperExecuteOrganizationOrganizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new LambdaTestHyperExecuteOrganizationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new OrganizationResourcePatch();
+                    var patch = new LambdaTestHyperExecuteOrganizationPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="LambdaTestHyperExecuteOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -425,12 +425,12 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<OrganizationResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<LambdaTestHyperExecuteOrganizationResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _organizationResourceOrganizationsClientDiagnostics.CreateScope("OrganizationResource.AddTag");
+            using var scope = _lambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics.CreateScope("LambdaTestHyperExecuteOrganizationResource.AddTag");
             scope.Start();
             try
             {
@@ -439,13 +439,13 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _organizationResourceOrganizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new OrganizationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _lambdaTestHyperExecuteOrganizationOrganizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new LambdaTestHyperExecuteOrganizationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new OrganizationResourcePatch();
+                    var patch = new LambdaTestHyperExecuteOrganizationPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -479,18 +479,18 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="LambdaTestHyperExecuteOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<OrganizationResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LambdaTestHyperExecuteOrganizationResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _organizationResourceOrganizationsClientDiagnostics.CreateScope("OrganizationResource.SetTags");
+            using var scope = _lambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics.CreateScope("LambdaTestHyperExecuteOrganizationResource.SetTags");
             scope.Start();
             try
             {
@@ -500,13 +500,13 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _organizationResourceOrganizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new OrganizationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _lambdaTestHyperExecuteOrganizationOrganizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new LambdaTestHyperExecuteOrganizationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new OrganizationResourcePatch();
+                    var patch = new LambdaTestHyperExecuteOrganizationPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -536,18 +536,18 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="LambdaTestHyperExecuteOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<OrganizationResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<LambdaTestHyperExecuteOrganizationResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _organizationResourceOrganizationsClientDiagnostics.CreateScope("OrganizationResource.SetTags");
+            using var scope = _lambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics.CreateScope("LambdaTestHyperExecuteOrganizationResource.SetTags");
             scope.Start();
             try
             {
@@ -557,13 +557,13 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _organizationResourceOrganizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new OrganizationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _lambdaTestHyperExecuteOrganizationOrganizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new LambdaTestHyperExecuteOrganizationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new OrganizationResourcePatch();
+                    var patch = new LambdaTestHyperExecuteOrganizationPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -593,18 +593,18 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="LambdaTestHyperExecuteOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<OrganizationResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LambdaTestHyperExecuteOrganizationResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _organizationResourceOrganizationsClientDiagnostics.CreateScope("OrganizationResource.RemoveTag");
+            using var scope = _lambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics.CreateScope("LambdaTestHyperExecuteOrganizationResource.RemoveTag");
             scope.Start();
             try
             {
@@ -613,13 +613,13 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _organizationResourceOrganizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new OrganizationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _lambdaTestHyperExecuteOrganizationOrganizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new LambdaTestHyperExecuteOrganizationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new OrganizationResourcePatch();
+                    var patch = new LambdaTestHyperExecuteOrganizationPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -653,18 +653,18 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="LambdaTestHyperExecuteOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<OrganizationResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<LambdaTestHyperExecuteOrganizationResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _organizationResourceOrganizationsClientDiagnostics.CreateScope("OrganizationResource.RemoveTag");
+            using var scope = _lambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics.CreateScope("LambdaTestHyperExecuteOrganizationResource.RemoveTag");
             scope.Start();
             try
             {
@@ -673,13 +673,13 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _organizationResourceOrganizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new OrganizationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _lambdaTestHyperExecuteOrganizationOrganizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new LambdaTestHyperExecuteOrganizationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new OrganizationResourcePatch();
+                    var patch = new LambdaTestHyperExecuteOrganizationPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

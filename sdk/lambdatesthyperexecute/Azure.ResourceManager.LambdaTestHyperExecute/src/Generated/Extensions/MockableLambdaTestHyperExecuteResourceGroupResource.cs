@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of OrganizationResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of OrganizationResources and their operations over a OrganizationResource. </returns>
-        public virtual OrganizationResourceCollection GetOrganizationResources()
+        /// <summary> Gets a collection of LambdaTestHyperExecuteOrganizationResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of LambdaTestHyperExecuteOrganizationResources and their operations over a LambdaTestHyperExecuteOrganizationResource. </returns>
+        public virtual LambdaTestHyperExecuteOrganizationCollection GetLambdaTestHyperExecuteOrganizations()
         {
-            return GetCachedClient(client => new OrganizationResourceCollection(client, Id));
+            return GetCachedClient(client => new LambdaTestHyperExecuteOrganizationCollection(client, Id));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="LambdaTestHyperExecuteOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<OrganizationResource>> GetOrganizationResourceAsync(string organizationname, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LambdaTestHyperExecuteOrganizationResource>> GetLambdaTestHyperExecuteOrganizationAsync(string organizationname, CancellationToken cancellationToken = default)
         {
-            return await GetOrganizationResources().GetAsync(organizationname, cancellationToken).ConfigureAwait(false);
+            return await GetLambdaTestHyperExecuteOrganizations().GetAsync(organizationname, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="LambdaTestHyperExecuteOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<OrganizationResource> GetOrganizationResource(string organizationname, CancellationToken cancellationToken = default)
+        public virtual Response<LambdaTestHyperExecuteOrganizationResource> GetLambdaTestHyperExecuteOrganization(string organizationname, CancellationToken cancellationToken = default)
         {
-            return GetOrganizationResources().Get(organizationname, cancellationToken);
+            return GetLambdaTestHyperExecuteOrganizations().Get(organizationname, cancellationToken);
         }
     }
 }

@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableLambdaTestHyperExecuteSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _organizationResourceOrganizationsClientDiagnostics;
-        private OrganizationsRestOperations _organizationResourceOrganizationsRestClient;
+        private ClientDiagnostics _lambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics;
+        private OrganizationsRestOperations _lambdaTestHyperExecuteOrganizationOrganizationsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableLambdaTestHyperExecuteSubscriptionResource"/> class for mocking. </summary>
         protected MockableLambdaTestHyperExecuteSubscriptionResource()
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Mocking
         {
         }
 
-        private ClientDiagnostics OrganizationResourceOrganizationsClientDiagnostics => _organizationResourceOrganizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LambdaTestHyperExecute", OrganizationResource.ResourceType.Namespace, Diagnostics);
-        private OrganizationsRestOperations OrganizationResourceOrganizationsRestClient => _organizationResourceOrganizationsRestClient ??= new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(OrganizationResource.ResourceType));
+        private ClientDiagnostics LambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics => _lambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LambdaTestHyperExecute", LambdaTestHyperExecuteOrganizationResource.ResourceType.Namespace, Diagnostics);
+        private OrganizationsRestOperations LambdaTestHyperExecuteOrganizationOrganizationsRestClient => _lambdaTestHyperExecuteOrganizationOrganizationsRestClient ??= new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LambdaTestHyperExecuteOrganizationResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="LambdaTestHyperExecuteOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OrganizationResource> GetOrganizationResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="LambdaTestHyperExecuteOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LambdaTestHyperExecuteOrganizationResource> GetLambdaTestHyperExecuteOrganizationsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OrganizationResourceOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrganizationResourceOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OrganizationResource(Client, OrganizationResourceData.DeserializeOrganizationResourceData(e)), OrganizationResourceOrganizationsClientDiagnostics, Pipeline, "MockableLambdaTestHyperExecuteSubscriptionResource.GetOrganizationResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LambdaTestHyperExecuteOrganizationOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LambdaTestHyperExecuteOrganizationOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LambdaTestHyperExecuteOrganizationResource(Client, LambdaTestHyperExecuteOrganizationData.DeserializeLambdaTestHyperExecuteOrganizationData(e)), LambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics, Pipeline, "MockableLambdaTestHyperExecuteSubscriptionResource.GetLambdaTestHyperExecuteOrganizations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="LambdaTestHyperExecuteOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OrganizationResource> GetOrganizationResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LambdaTestHyperExecuteOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LambdaTestHyperExecuteOrganizationResource> GetLambdaTestHyperExecuteOrganizations(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OrganizationResourceOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrganizationResourceOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OrganizationResource(Client, OrganizationResourceData.DeserializeOrganizationResourceData(e)), OrganizationResourceOrganizationsClientDiagnostics, Pipeline, "MockableLambdaTestHyperExecuteSubscriptionResource.GetOrganizationResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LambdaTestHyperExecuteOrganizationOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LambdaTestHyperExecuteOrganizationOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LambdaTestHyperExecuteOrganizationResource(Client, LambdaTestHyperExecuteOrganizationData.DeserializeLambdaTestHyperExecuteOrganizationData(e)), LambdaTestHyperExecuteOrganizationOrganizationsClientDiagnostics, Pipeline, "MockableLambdaTestHyperExecuteSubscriptionResource.GetLambdaTestHyperExecuteOrganizations", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
 {
-    public partial class PartnerProperties : IUtf8JsonSerializable, IJsonModel<PartnerProperties>
+    public partial class LambdaTestHyperExecuteOfferPartnerProperties : IUtf8JsonSerializable, IJsonModel<LambdaTestHyperExecuteOfferPartnerProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LambdaTestHyperExecuteOfferPartnerProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PartnerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LambdaTestHyperExecuteOfferPartnerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteOfferPartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LambdaTestHyperExecuteOfferPartnerProperties)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("licensesSubscribed"u8);
@@ -53,19 +53,19 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
             }
         }
 
-        PartnerProperties IJsonModel<PartnerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LambdaTestHyperExecuteOfferPartnerProperties IJsonModel<LambdaTestHyperExecuteOfferPartnerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteOfferPartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LambdaTestHyperExecuteOfferPartnerProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePartnerProperties(document.RootElement, options);
+            return DeserializeLambdaTestHyperExecuteOfferPartnerProperties(document.RootElement, options);
         }
 
-        internal static PartnerProperties DeserializePartnerProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static LambdaTestHyperExecuteOfferPartnerProperties DeserializeLambdaTestHyperExecuteOfferPartnerProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -89,38 +89,38 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PartnerProperties(licensesSubscribed, serializedAdditionalRawData);
+            return new LambdaTestHyperExecuteOfferPartnerProperties(licensesSubscribed, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PartnerProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<LambdaTestHyperExecuteOfferPartnerProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteOfferPartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PartnerProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LambdaTestHyperExecuteOfferPartnerProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PartnerProperties IPersistableModel<PartnerProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        LambdaTestHyperExecuteOfferPartnerProperties IPersistableModel<LambdaTestHyperExecuteOfferPartnerProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteOfferPartnerProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePartnerProperties(document.RootElement, options);
+                        return DeserializeLambdaTestHyperExecuteOfferPartnerProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PartnerProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LambdaTestHyperExecuteOfferPartnerProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PartnerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LambdaTestHyperExecuteOfferPartnerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
 {
-    public partial class MarketplaceDetails : IUtf8JsonSerializable, IJsonModel<MarketplaceDetails>
+    public partial class LambdaTestHyperExecuteMarketplaceDetails : IUtf8JsonSerializable, IJsonModel<LambdaTestHyperExecuteMarketplaceDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MarketplaceDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LambdaTestHyperExecuteMarketplaceDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MarketplaceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LambdaTestHyperExecuteMarketplaceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LambdaTestHyperExecuteMarketplaceDetails)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(SubscriptionId))
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
             }
         }
 
-        MarketplaceDetails IJsonModel<MarketplaceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LambdaTestHyperExecuteMarketplaceDetails IJsonModel<LambdaTestHyperExecuteMarketplaceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LambdaTestHyperExecuteMarketplaceDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMarketplaceDetails(document.RootElement, options);
+            return DeserializeLambdaTestHyperExecuteMarketplaceDetails(document.RootElement, options);
         }
 
-        internal static MarketplaceDetails DeserializeMarketplaceDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static LambdaTestHyperExecuteMarketplaceDetails DeserializeLambdaTestHyperExecuteMarketplaceDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
             }
             string subscriptionId = default;
             MarketplaceSubscriptionStatus? subscriptionStatus = default;
-            OfferDetails offerDetails = default;
+            LambdaTestHyperExecuteOfferDetails offerDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                 }
                 if (property.NameEquals("offerDetails"u8))
                 {
-                    offerDetails = OfferDetails.DeserializeOfferDetails(property.Value, options);
+                    offerDetails = LambdaTestHyperExecuteOfferDetails.DeserializeLambdaTestHyperExecuteOfferDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -115,38 +115,38 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, serializedAdditionalRawData);
+            return new LambdaTestHyperExecuteMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MarketplaceDetails>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<LambdaTestHyperExecuteMarketplaceDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LambdaTestHyperExecuteMarketplaceDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MarketplaceDetails IPersistableModel<MarketplaceDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        LambdaTestHyperExecuteMarketplaceDetails IPersistableModel<LambdaTestHyperExecuteMarketplaceDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMarketplaceDetails(document.RootElement, options);
+                        return DeserializeLambdaTestHyperExecuteMarketplaceDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LambdaTestHyperExecuteMarketplaceDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MarketplaceDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LambdaTestHyperExecuteMarketplaceDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

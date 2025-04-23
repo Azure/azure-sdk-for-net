@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.LambdaTestHyperExecute.Samples
 {
-    public partial class Sample_OrganizationResourceCollection
+    public partial class Sample_LambdaTestHyperExecuteOrganizationCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this OrganizationResource
-            OrganizationResourceCollection collection = resourceGroupResource.GetOrganizationResources();
+            // get the collection of this LambdaTestHyperExecuteOrganizationResource
+            LambdaTestHyperExecuteOrganizationCollection collection = resourceGroupResource.GetLambdaTestHyperExecuteOrganizations();
 
             // invoke the operation
             string organizationname = "testorg";
-            OrganizationResourceData data = new OrganizationResourceData(new AzureLocation("cvymsrlt"))
+            LambdaTestHyperExecuteOrganizationData data = new LambdaTestHyperExecuteOrganizationData(new AzureLocation("cvymsrlt"))
             {
-                Properties = new OrganizationProperties(new MarketplaceDetails(new OfferDetails("ufwwpzit", "fmljkvoivqmfdiwsu", "ssjlabxexw")
+                Properties = new LambdaTestHyperExecuteOrganizationProperties(new LambdaTestHyperExecuteMarketplaceDetails(new LambdaTestHyperExecuteOfferDetails("ufwwpzit", "fmljkvoivqmfdiwsu", "ssjlabxexw")
                 {
                     PlanName = "mrguqu",
                     TermUnit = "acvhavsffebfivyaxhxxsaqzt",
@@ -52,18 +52,18 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Samples
                 })
                 {
                     SubscriptionId = "zetdxwryjgcsnosezfpovkpvgvim",
-                }, new UserDetails
+                }, new LambdaTestHyperExecuteUserDetails
                 {
                     FirstName = "ssnzyujsrszbptndzeoqzrmbufrhgp",
                     LastName = "nsfylyvdyrtfzfeehmji",
                     EmailAddress = "joe@example.com",
                     Upn = "tfqolz",
                     PhoneNumber = "jkevskjaaylbwjzofkzmxdysejsoir",
-                }, new PartnerProperties(7))
+                }, new LambdaTestHyperExecuteOfferPartnerProperties(7))
                 {
-                    SingleSignOnProperties = new SingleSignOnPropertiesV2(SingleSignOnType.Saml)
+                    SingleSignOnProperties = new LambdaTestHyperExecuteSingleSignOnPropertiesV2(LambdaTestHyperExecuteSingleSignOnType.Saml)
                     {
-                        State = SingleSignOnState.Initial,
+                        State = LambdaTestHyperExecuteSingleSignOnState.Initial,
                         EnterpriseAppId = "sonpowym",
                         Uri = "qlshnxrfcdpjcpkxxisrn",
                         AadDomains = { "hrgguokssgyrfdzliyjmovtelfu" },
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Samples
                 },
                 Tags = { },
             };
-            ArmOperation<OrganizationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, organizationname, data);
-            OrganizationResource result = lro.Value;
+            ArmOperation<LambdaTestHyperExecuteOrganizationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, organizationname, data);
+            LambdaTestHyperExecuteOrganizationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            OrganizationResourceData resourceData = result.Data;
+            LambdaTestHyperExecuteOrganizationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -104,16 +104,16 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this OrganizationResource
-            OrganizationResourceCollection collection = resourceGroupResource.GetOrganizationResources();
+            // get the collection of this LambdaTestHyperExecuteOrganizationResource
+            LambdaTestHyperExecuteOrganizationCollection collection = resourceGroupResource.GetLambdaTestHyperExecuteOrganizations();
 
             // invoke the operation
             string organizationname = "testorg";
-            OrganizationResource result = await collection.GetAsync(organizationname);
+            LambdaTestHyperExecuteOrganizationResource result = await collection.GetAsync(organizationname);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            OrganizationResourceData resourceData = result.Data;
+            LambdaTestHyperExecuteOrganizationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -137,15 +137,15 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this OrganizationResource
-            OrganizationResourceCollection collection = resourceGroupResource.GetOrganizationResources();
+            // get the collection of this LambdaTestHyperExecuteOrganizationResource
+            LambdaTestHyperExecuteOrganizationCollection collection = resourceGroupResource.GetLambdaTestHyperExecuteOrganizations();
 
             // invoke the operation and iterate over the result
-            await foreach (OrganizationResource item in collection.GetAllAsync())
+            await foreach (LambdaTestHyperExecuteOrganizationResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                OrganizationResourceData resourceData = item.Data;
+                LambdaTestHyperExecuteOrganizationData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -172,15 +172,15 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this OrganizationResource
-            OrganizationResourceCollection collection = resourceGroupResource.GetOrganizationResources();
+            // get the collection of this LambdaTestHyperExecuteOrganizationResource
+            LambdaTestHyperExecuteOrganizationCollection collection = resourceGroupResource.GetLambdaTestHyperExecuteOrganizations();
 
             // invoke the operation and iterate over the result
-            await foreach (OrganizationResource item in collection.GetAllAsync())
+            await foreach (LambdaTestHyperExecuteOrganizationResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                OrganizationResourceData resourceData = item.Data;
+                LambdaTestHyperExecuteOrganizationData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -207,8 +207,8 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this OrganizationResource
-            OrganizationResourceCollection collection = resourceGroupResource.GetOrganizationResources();
+            // get the collection of this LambdaTestHyperExecuteOrganizationResource
+            LambdaTestHyperExecuteOrganizationCollection collection = resourceGroupResource.GetLambdaTestHyperExecuteOrganizations();
 
             // invoke the operation
             string organizationname = "testorg";
@@ -236,13 +236,13 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this OrganizationResource
-            OrganizationResourceCollection collection = resourceGroupResource.GetOrganizationResources();
+            // get the collection of this LambdaTestHyperExecuteOrganizationResource
+            LambdaTestHyperExecuteOrganizationCollection collection = resourceGroupResource.GetLambdaTestHyperExecuteOrganizations();
 
             // invoke the operation
             string organizationname = "testorg";
-            NullableResponse<OrganizationResource> response = await collection.GetIfExistsAsync(organizationname);
-            OrganizationResource result = response.HasValue ? response.Value : null;
+            NullableResponse<LambdaTestHyperExecuteOrganizationResource> response = await collection.GetIfExistsAsync(organizationname);
+            LambdaTestHyperExecuteOrganizationResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                OrganizationResourceData resourceData = result.Data;
+                LambdaTestHyperExecuteOrganizationData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

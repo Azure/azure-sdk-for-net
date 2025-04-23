@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
             {
                 return null;
             }
-            IReadOnlyList<OrganizationResourceData> value = default;
+            IReadOnlyList<LambdaTestHyperExecuteOrganizationData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<OrganizationResourceData> array = new List<OrganizationResourceData>();
+                    List<LambdaTestHyperExecuteOrganizationData> array = new List<LambdaTestHyperExecuteOrganizationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OrganizationResourceData.DeserializeOrganizationResourceData(item, options));
+                        array.Add(LambdaTestHyperExecuteOrganizationData.DeserializeLambdaTestHyperExecuteOrganizationData(item, options));
                     }
                     value = array;
                     continue;
