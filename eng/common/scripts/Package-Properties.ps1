@@ -415,10 +415,12 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
                     $directory = [System.IO.Path]::GetDirectoryName($ciYml).Replace("`\", "/")
 
                     # we should only continue with this check if the file being changed is "in the service directory"
-                    # files that are directly included in triggerPaths will kept in full form, but otherwise we pre-process the targetedFiles to the
-                    # directory containing the change. Given that pre-process, we should check both direct equality (when not triggeringPath) and parent directory
-                    # for the case where the full form of the file has been left behind (because it was a triggeringPath)
-                    $serviceDirectoryChange = (Split-Path $filePath -Parent).Replace("`\", "/") -eq $directory -or $filePath.Replace("`\", "/") -eq $directory
+                    # files that are directly included in triggerPaths will kept in full form, so owning ci.yml files will be present in their full form
+                    # and not as a directory. We need to check the parent directory if the file is a file and not a directory, but otherwise
+                    # we just need to check if the file is in the service directory
+                    $normalizedFilePath = $filePath.Replace("`\", "/")
+                    $parent = if ($normalizedFilePath -match '\.[^\\/]+$') { Split-Path $normalizedFilePath -Parent } else { $normalizedFilePath }
+                    $serviceDirectoryChange = $parent -eq $directory
                     if (!$serviceDirectoryChange) {
                         break
                     }
