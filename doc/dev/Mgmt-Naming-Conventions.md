@@ -67,9 +67,9 @@ We should avoid using the following suffixes for any models or classes.
 
 - Resource:  
         
-  - For a resource name (under src/Generated and you'll have `XXResourceData`, `XXResourceCollection`), if removing the word `Resource` leaves a descriptive enough noun, then remove it. Only keep `Resource` if removing it makes the noun no longer descriptive enough (e.g., `GenericResource` would become `Generic`). 
+  - For a resource name (under `src/Generated` and you'll have `XXResourceData`, `XXResourceCollection`), if removing the word `Resource` leaves a descriptive enough noun, then remove it. Only keep `Resource` if removing it makes the noun no longer descriptive enough (e.g., `GenericResource` would become `Generic`). 
 
-  - For a model name (under src/Generated/Models), if removing the `Resource` suffix makes it no longer descriptive or reduces it to a single word, append `Data` if it inherits from `ResourceData` or `TrackedResourceData`, otherwise append `Info`. 
+  - For a model name (under `src/Generated/Models`), if removing the `Resource` suffix makes it no longer descriptive or reduces it to a single word, append `Data` if it inherits from `ResourceData` or `TrackedResourceData`, otherwise append `Info`. 
         
   - Entity names that still have `Resource` suffix: `GenericResource`, `PrivateLinkServiceResource`.
 
@@ -84,7 +84,7 @@ We should avoid using the following suffixes for any models or classes.
 
 - Operation
 
-  Remote it unless the model derives from `Operation<T>` or `Operation`.  Append `Data` or `Info` suffix if it's hard to rename with other words.
+  Remove it unless the model derives from `Operation<T>` or `Operation`.  Append `Data` or `Info` suffix if it's hard to rename with other words.
 
 ## Guidelines for Expanding Acronyms
 

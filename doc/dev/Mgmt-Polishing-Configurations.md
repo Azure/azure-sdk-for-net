@@ -6,18 +6,18 @@ To ensure the quality of the Azure SDK for .NET and adherence to the [naming con
 
 In the API specifications, many properties and parameters are defined as string types but have special formats in .NET. We need to correct these types in the Azure .NET SDK.
 
-- The data type of a property should be `uuid` if its name is end of `Id` / `Guid` and value is really a uuid.
+- The data type of a property should be `Guid` if its name is end of `Id` / `Guid` and value is really a uuid.
 
-- The data type of a property should be `ResourceIdentifier` if its name is end of `Id` and value is really a ResourceIdentifier.
+- The data type of a property should be `ResourceIdentifier` if its name is end of `Id` and value is really an ARM resource identifier.
 
-- The data type of a property should be `ResourceType` if its name is `ResourceType` or end with `Type` and the value is really a ResourceType('Microsoft.xxxxx/xxxx').
-- The data type of a property should be `ETag` if its name is `etag` and the value is really a ETag. The property name  should be `ETag`(Optional).
+- The data type of a property should be `ResourceType` if its name is `ResourceType` or end with `Type` and the value is really an ARM resource type (for example `Microsoft.xxxxx/xxxx`).
+- The data type of a property should be `ETag` if its name is `etag` and the value is really a ETag. The property name should be `ETag` if possible.
 
 - The data type of a property might be `AzureLocation` if its name is end with `location` / `locations` .
 
 - `Binary` / `String` property might change to `BinaryData` type.
 
-- Pay attention to models similar to common type models and confirm whether they really can't be replaced by the common types from ResourceManager(Optional). 
+- (Optional) Pay attention to models similar to common type models and confirm whether they really can't be replaced by the common types from ResourceManager. 
 
 # Guidelines for Operation Changes
 
@@ -26,17 +26,16 @@ In the API specifications, many properties and parameters are defined as string 
 - All `ListOperations` method should be removed because it's not useful in SDK and the SDK itself can show all the available operations in it through public APIs. 
 
 # Configuration for Generating SDK from TypeSpec Specifications
-For SDKs generated from TypeSpec specifications, we can update the client.tsp file located in the same folder as the main.tsp to address APIView review comments in the .NET SDK.
+For SDKs generated from TypeSpec specifications, we can update the `client.tsp` file located in the same folder as the `main.tsp` to address APIView review comments in the .NET SDK.
 
 ## Using the correct namespace
 
-Before starting, please ensure that the correct namespace is used at the beginning of the client.tsp file, as shown below:
+Before starting, please ensure that the correct namespace is used at the beginning of the `client.tsp` file, as shown below:
 
-```js
+```tsp
 using Microsoft.DeviceRegistry;
-```
 
-You can typically find the namespace in the main.tsp file.
+You can typically find the namespace in the `main.tsp` file.
 
 ## Rename models
 
