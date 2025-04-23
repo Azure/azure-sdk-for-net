@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.LambdaTestHyperExecute.Tests
 {
-    public class liftrhyperexecuteManagementTestEnvironment : TestEnvironment
+    public class LambdaTestHyperExecuteManagementTestEnvironment : TestEnvironment
     {
     }
 }

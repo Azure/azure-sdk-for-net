@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.LambdaTestHyperExecute.Tests
 {
-    public class liftrhyperexecuteManagementTestBase : ManagementRecordedTestBase<liftrhyperexecuteManagementTestEnvironment>
+    public class LambdaTestHyperExecuteManagementTestBase : ManagementRecordedTestBase<LambdaTestHyperExecuteManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
-        protected liftrhyperexecuteManagementTestBase(bool isAsync, RecordedTestMode mode)
+        protected LambdaTestHyperExecuteManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
         }
 
-        protected liftrhyperexecuteManagementTestBase(bool isAsync)
+        protected LambdaTestHyperExecuteManagementTestBase(bool isAsync)
             : base(isAsync)
         {
         }
