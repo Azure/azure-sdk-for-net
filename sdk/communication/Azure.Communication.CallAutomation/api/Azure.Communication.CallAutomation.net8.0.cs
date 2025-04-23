@@ -1405,9 +1405,10 @@ namespace Azure.Communication.CallAutomation
     public partial class PostProcessingOptions
     {
         public PostProcessingOptions(Azure.Communication.CallAutomation.TranscriptionSettings transcription) { }
+        public PostProcessingOptions(string cognitiveServicesEndpoint, Azure.Communication.CallAutomation.SummarizationSettings summarization = null, Azure.Communication.CallAutomation.TranscriptionSettings transcription = null) { }
         public string CognitiveServicesEndpoint { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.SummarizationSettings Summarization { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.TranscriptionSettings Transcription { get { throw null; } }
+        public void setSummarizationSettings(bool enableSummarization) { }
+        public void setTranscriptionSettings(bool enableTranscription) { }
     }
     public partial class PowerVirtualAgentsDialog : Azure.Communication.CallAutomation.BaseDialog
     {

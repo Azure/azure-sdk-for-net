@@ -35,15 +35,5 @@ namespace Azure.Communication.CallAutomation
             Transcription = transcription;
             Summarization = summarization;
         }
-
-        /// <summary>
-        /// The identifier of the Cognitive Service resource assigned to the post recording processing.
-        /// The Cognitive Service resource will be used by the summarization feature.
-        /// </summary>
-        public string CognitiveServicesEndpoint { get; set; }
-        /// <summary> Define options of the transcription for the post recording processing. </summary>
-        public TranscriptionSettings Transcription { get; }
-        /// <summary> Define options of the summarization for the post recording processing. </summary>
-        public SummarizationSettings Summarization { get; set; }
     }
 }
