@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,6 +47,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="xmsDeleteSnapshots"> Optional, used to delete snapshots under volume. Allowed value are only true or false. Default value is false. </param>
         /// <param name="xmsForceDelete"> Optional, used to delete volume if active sessions present. Allowed value are only true or false. Default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [Obsolete("This method is obsolete and will be removed in a future release", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, XmsDeleteSnapshot? xmsDeleteSnapshots, XmsForceDelete? xmsForceDelete, CancellationToken cancellationToken)
             => await DeleteAsync(waitUntil, xmsDeleteSnapshots.ToString(), xmsForceDelete.ToString(), null, cancellationToken).ConfigureAwait(false);
 
@@ -74,6 +77,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="xmsDeleteSnapshots"> Optional, used to delete snapshots under volume. Allowed value are only true or false. Default value is false. </param>
         /// <param name="xmsForceDelete"> Optional, used to delete volume if active sessions present. Allowed value are only true or false. Default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [Obsolete("This struct is obsolete and will be removed in a future release", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Delete(WaitUntil waitUntil, XmsDeleteSnapshot? xmsDeleteSnapshots, XmsForceDelete? xmsForceDelete, CancellationToken cancellationToken)
             => Delete(waitUntil, xmsDeleteSnapshots.ToString(), xmsForceDelete.ToString(), null, cancellationToken);
     }

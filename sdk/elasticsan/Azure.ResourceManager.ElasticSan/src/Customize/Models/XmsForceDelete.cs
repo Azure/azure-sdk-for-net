@@ -9,6 +9,8 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> The XmsForceDelete. </summary>
+    [Obsolete("This struct is obsolete and will be removed in a future release", false)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public readonly partial struct XmsForceDelete : IEquatable<XmsForceDelete>
     {
         private readonly string _value;
