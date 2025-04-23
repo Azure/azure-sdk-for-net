@@ -8,7 +8,7 @@
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> The minimum desired capabilities for the browse operation request. </summary>
-    public partial class PhoneNumberBrowseCapabilitiesRequest
+    internal partial class PhoneNumberBrowseCapabilitiesRequest
     {
         /// <summary> Initializes a new instance of <see cref="PhoneNumberBrowseCapabilitiesRequest"/>. </summary>
         public PhoneNumberBrowseCapabilitiesRequest()
@@ -23,10 +23,5 @@ namespace Azure.Communication.PhoneNumbers
             Calling = calling;
             Sms = sms;
         }
-
-        /// <summary> Capability value for calling. </summary>
-        public PhoneNumberCapabilityType? Calling { get; set; }
-        /// <summary> Capability value for SMS. </summary>
-        public PhoneNumberCapabilityType? Sms { get; set; }
     }
 }

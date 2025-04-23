@@ -14,18 +14,10 @@ namespace Azure.Communication.PhoneNumbers
     {
         /// <summary> Initializes a new instance of <see cref="PhoneNumbersBrowseRequest"/>. </summary>
         /// <param name="phoneNumberType"> Represents the number type of the offering. </param>
-        public PhoneNumbersBrowseRequest(PhoneNumberType phoneNumberType)
-        {
-            PhoneNumberType = phoneNumberType;
-            PhoneNumberPrefixes = new ChangeTrackingList<string>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PhoneNumbersBrowseRequest"/>. </summary>
-        /// <param name="phoneNumberType"> Represents the number type of the offering. </param>
         /// <param name="capabilities"> The minimum desired capabilities for the browse operation request. </param>
         /// <param name="assignmentType"> Represents the assignment type of the offering. Also known as the use case. </param>
         /// <param name="phoneNumberPrefixes"> The phone number prefix to match. If specified, the search will be limited to phone numbers that start with the any of the given prefixes. </param>
-        internal PhoneNumbersBrowseRequest(PhoneNumberType phoneNumberType, PhoneNumberBrowseCapabilitiesRequest capabilities, PhoneNumberAssignmentType? assignmentType, IList<string> phoneNumberPrefixes)
+        internal PhoneNumbersBrowseRequest(PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType? assignmentType, IList<string> phoneNumberPrefixes)
         {
             PhoneNumberType = phoneNumberType;
             Capabilities = capabilities;
@@ -35,11 +27,7 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Represents the number type of the offering. </summary>
         public PhoneNumberType PhoneNumberType { get; }
-        /// <summary> The minimum desired capabilities for the browse operation request. </summary>
-        public PhoneNumberBrowseCapabilitiesRequest Capabilities { get; set; }
         /// <summary> Represents the assignment type of the offering. Also known as the use case. </summary>
         public PhoneNumberAssignmentType? AssignmentType { get; set; }
-        /// <summary> The phone number prefix to match. If specified, the search will be limited to phone numbers that start with the any of the given prefixes. </summary>
-        public IList<string> PhoneNumberPrefixes { get; }
     }
 }

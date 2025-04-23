@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    public partial class PhoneNumberBrowseCapabilitiesRequest : IUtf8JsonSerializable
+    internal partial class PhoneNumberBrowseCapabilitiesRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

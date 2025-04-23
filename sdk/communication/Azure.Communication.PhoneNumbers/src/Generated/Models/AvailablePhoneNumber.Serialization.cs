@@ -38,7 +38,7 @@ namespace Azure.Communication.PhoneNumbers
             PhoneNumberCapabilities capabilities = default;
             PhoneNumberType phoneNumberType = default;
             PhoneNumberAssignmentType assignmentType = default;
-            AvailablePhoneNumberCost cost = default;
+            PhoneNumberCost cost = default;
             AvailablePhoneNumberStatus? status = default;
             bool? isAgreementToNotResellRequired = default;
             AvailablePhoneNumberError error = default;
@@ -80,7 +80,7 @@ namespace Azure.Communication.PhoneNumbers
                     {
                         continue;
                     }
-                    cost = AvailablePhoneNumberCost.DeserializeAvailablePhoneNumberCost(property.Value);
+                    cost = PhoneNumberCost.DeserializePhoneNumberCost(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

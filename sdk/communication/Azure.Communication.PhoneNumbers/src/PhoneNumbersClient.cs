@@ -3,9 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using Azure.Communication.PhoneNumbers.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -800,17 +802,17 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary>
         /// Browse available phone numbers.
         /// </summary>
-        /// <param name="countryCode"></param>
         /// <param name="phoneNumbersBrowseRequest"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<PhoneNumbersBrowseResult>> BrowseAvailableNumbersAsync(string countryCode, PhoneNumbersBrowseRequest phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<AvailablePhoneNumber>>> BrowseAvailableNumbersAsync(PhoneNumbersBrowseRequest phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(BrowseAvailableNumbers)}");
             scope.Start();
             try
             {
-                return await InternalClient.BrowseAvailableNumbersAsync(countryCode, phoneNumbersBrowseRequest, cancellationToken).ConfigureAwait(false);
+                var response = await InternalClient.BrowseAvailableNumbersAsync(phoneNumbersBrowseRequest.CountryCode, phoneNumbersBrowseRequest, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value.PhoneNumbers, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -822,17 +824,17 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary>
         /// Browse available phone numbers.
         /// </summary>
-        /// <param name="countryCode"></param>
         /// <param name="phoneNumbersBrowseRequest"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<PhoneNumbersBrowseResult> BrowseAvailableNumbers(string countryCode, PhoneNumbersBrowseRequest phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<AvailablePhoneNumber>> BrowseAvailableNumbers(PhoneNumbersBrowseRequest phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(BrowseAvailableNumbers)}");
             scope.Start();
             try
             {
-                return InternalClient.BrowseAvailableNumbers(countryCode, phoneNumbersBrowseRequest, cancellationToken);
+                var response =  InternalClient.BrowseAvailableNumbers(phoneNumbersBrowseRequest.CountryCode, phoneNumbersBrowseRequest, cancellationToken);
+                return Response.FromValue(response.Value.PhoneNumbers, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -960,18 +962,35 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary>
-        /// Create or update a phone numbers reservation.
+        /// Update a phone numbers reservation.
         /// </summary>
-        /// <param name="reservation"></param>
+        /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<PhoneNumbersReservation>> CreateOrUpdateReservationAsync(PhoneNumbersReservation reservation, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PhoneNumbersReservation>> CreateOrUpdateReservationAsync(CreateOrUpdateReservationOptions request, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(CreateOrUpdateReservation)}");
             scope.Start();
             try
             {
-                return await InternalClient.CreateOrUpdateReservationAsync(reservation.Id, reservation.PhoneNumbers, cancellationToken).ConfigureAwait(false);
+                Guid id = request.Id ?? Guid.NewGuid();
+                var numbersDictionary = new Dictionary<string, AvailablePhoneNumber>();
+                if (request.PhoneNumbersToAdd != null)
+                {
+                    foreach (var number in request.PhoneNumbersToAdd)
+                    {
+                        numbersDictionary[number.Id] = number;
+                    }
+                }
+                if (request.PhoneNumbersToRemove != null)
+                {
+                    foreach (var number in request.PhoneNumbersToRemove)
+                    {
+                        numbersDictionary[number] = null;
+                    }
+                }
+
+                return await InternalClient.CreateOrUpdateReservationAsync(id, numbersDictionary, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -981,18 +1000,35 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary>
-        /// Create or update a phone numbers reservation.
+        /// Update a phone numbers reservation.
         /// </summary>
-        /// <param name="reservation"></param>
+        /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<PhoneNumbersReservation> CreateOrUpdateReservation(PhoneNumbersReservation reservation, CancellationToken cancellationToken = default)
+        public virtual Response<PhoneNumbersReservation> CreateOrUpdateReservation(CreateOrUpdateReservationOptions request, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(CreateOrUpdateReservation)}");
             scope.Start();
             try
             {
-                return InternalClient.CreateOrUpdateReservation(reservation.Id, reservation.PhoneNumbers, cancellationToken);
+                Guid id = request.Id ?? Guid.NewGuid();
+                var numbersDictionary = new Dictionary<string, AvailablePhoneNumber>();
+                if (request.PhoneNumbersToAdd != null)
+                {
+                    foreach (var number in request.PhoneNumbersToAdd)
+                    {
+                        numbersDictionary[number.Id] = number;
+                    }
+                }
+                if (request.PhoneNumbersToRemove != null)
+                {
+                    foreach (var number in request.PhoneNumbersToRemove)
+                    {
+                        numbersDictionary[number] = null;
+                    }
+                }
+
+                return InternalClient.CreateOrUpdateReservation(id, numbersDictionary, cancellationToken);
             }
             catch (Exception e)
             {

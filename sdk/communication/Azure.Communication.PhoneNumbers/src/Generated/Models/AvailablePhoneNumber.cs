@@ -40,7 +40,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="status"> Represents the status of the phone number. Possible values include: 'available', 'reserved', 'expired', 'error', 'purchased'. </param>
         /// <param name="isAgreementToNotResellRequired"> Indicates if do not resell agreement is required. If true, the phone number cannot be acquired unless the customer provides explicit agreement to not resell it. </param>
         /// <param name="error"> Contains error details in case of failure when reserving, releasing or purchasing the phone number. Note that this is ignored by the service when present in requests. </param>
-        internal AvailablePhoneNumber(string id, string countryCode, string phoneNumber, PhoneNumberCapabilities capabilities, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, AvailablePhoneNumberCost cost, AvailablePhoneNumberStatus? status, bool? isAgreementToNotResellRequired, AvailablePhoneNumberError error)
+        internal AvailablePhoneNumber(string id, string countryCode, string phoneNumber, PhoneNumberCapabilities capabilities, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCost cost, AvailablePhoneNumberStatus? status, bool? isAgreementToNotResellRequired, AvailablePhoneNumberError error)
         {
             Id = id;
             CountryCode = countryCode;
@@ -67,7 +67,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Represents the assignment type of the offering. Also known as the use case. </summary>
         public PhoneNumberAssignmentType AssignmentType { get; set; }
         /// <summary> The incurred cost for this phone number. </summary>
-        public AvailablePhoneNumberCost Cost { get; }
+        public PhoneNumberCost Cost { get; }
         /// <summary> Represents the status of the phone number. Possible values include: 'available', 'reserved', 'expired', 'error', 'purchased'. </summary>
         public AvailablePhoneNumberStatus? Status { get; }
         /// <summary> Indicates if do not resell agreement is required. If true, the phone number cannot be acquired unless the customer provides explicit agreement to not resell it. </summary>

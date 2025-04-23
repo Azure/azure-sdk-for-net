@@ -41,16 +41,6 @@ namespace Azure.Communication.PhoneNumbers
             return new PhoneNumberCountry(localizedName, countryCode);
         }
 
-        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PhoneNumbersBrowseResult"/>. </summary>
-        /// <param name="phoneNumbers"> The phone numbers that are available for purchase. </param>
-        /// <returns> A new <see cref="PhoneNumbers.PhoneNumbersBrowseResult"/> instance for mocking. </returns>
-        public static PhoneNumbersBrowseResult PhoneNumbersBrowseResult(IEnumerable<AvailablePhoneNumber> phoneNumbers = null)
-        {
-            phoneNumbers ??= new List<AvailablePhoneNumber>();
-
-            return new PhoneNumbersBrowseResult(phoneNumbers?.ToList());
-        }
-
         /// <summary> Initializes a new instance of <see cref="PhoneNumbers.AvailablePhoneNumber"/>. </summary>
         /// <param name="id"> The id of the phone number. </param>
         /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
@@ -63,7 +53,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="isAgreementToNotResellRequired"> Indicates if do not resell agreement is required. If true, the phone number cannot be acquired unless the customer provides explicit agreement to not resell it. </param>
         /// <param name="error"> Contains error details in case of failure when reserving, releasing or purchasing the phone number. Note that this is ignored by the service when present in requests. </param>
         /// <returns> A new <see cref="PhoneNumbers.AvailablePhoneNumber"/> instance for mocking. </returns>
-        public static AvailablePhoneNumber AvailablePhoneNumber(string id = null, string countryCode = null, string phoneNumber = null, PhoneNumberCapabilities capabilities = null, PhoneNumberType phoneNumberType = default, PhoneNumberAssignmentType assignmentType = default, AvailablePhoneNumberCost cost = null, AvailablePhoneNumberStatus? status = null, bool? isAgreementToNotResellRequired = null, AvailablePhoneNumberError error = null)
+        public static AvailablePhoneNumber AvailablePhoneNumber(string id = null, string countryCode = null, string phoneNumber = null, PhoneNumberCapabilities capabilities = null, PhoneNumberType phoneNumberType = default, PhoneNumberAssignmentType assignmentType = default, PhoneNumberCost cost = null, AvailablePhoneNumberStatus? status = null, bool? isAgreementToNotResellRequired = null, AvailablePhoneNumberError error = null)
         {
             return new AvailablePhoneNumber(
                 id,
@@ -76,22 +66,6 @@ namespace Azure.Communication.PhoneNumbers
                 status,
                 isAgreementToNotResellRequired,
                 error);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.AvailablePhoneNumberCost"/>. </summary>
-        /// <param name="amount"> The cost amount. </param>
-        /// <param name="isoCurrencySymbol"> The ISO 4217 currency code for the cost amount, e.g. USD. </param>
-        /// <param name="billingFrequency"> The frequency with which the cost gets billed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="isoCurrencySymbol"/> is null. </exception>
-        /// <returns> A new <see cref="PhoneNumbers.AvailablePhoneNumberCost"/> instance for mocking. </returns>
-        public static AvailablePhoneNumberCost AvailablePhoneNumberCost(double amount = default, string isoCurrencySymbol = null, BillingFrequency billingFrequency = default)
-        {
-            if (isoCurrencySymbol == null)
-            {
-                throw new ArgumentNullException(nameof(isoCurrencySymbol));
-            }
-
-            return new AvailablePhoneNumberCost(amount, isoCurrencySymbol, billingFrequency);
         }
 
         /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PhoneNumberCost"/>. </summary>

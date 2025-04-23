@@ -13,19 +13,6 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary>
         /// Initializes a new instance of <see cref="PhoneNumbersReservation"/>.
         /// </summary>
-        /// <param name="id"></param>
-        public PhoneNumbersReservation(Guid id)
-        {
-            Id = id;
-
-            // This needs to be initialized to an empty dictionary to ensure that the dictionary is never null when serializing to JSON.
-            IDictionary<string, AvailablePhoneNumber> dict = new Dictionary<string, AvailablePhoneNumber>();
-            PhoneNumbers = new ChangeTrackingDictionary<string, AvailablePhoneNumber>(dict);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of <see cref="PhoneNumbersReservation"/>.
-        /// </summary>
         /// <remarks>
         /// The PhoneNumbers dictionary will be initialized to an empty dictionary.
         /// </remarks>
@@ -37,25 +24,6 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> The id of the reservation. </summary>
-        [CodeGenMember("Id")]
-        public Guid Id { get; }
-
-        /// <summary>
-        /// Adds a phone number to the reservation.
-        /// </summary>
-        /// <param name="phoneNumber"></param>
-        public void AddPhoneNumber(AvailablePhoneNumber phoneNumber)
-        {
-            PhoneNumbers[phoneNumber.Id] = phoneNumber;
-        }
-
-        /// <summary>
-        /// Removes a phone number from the reservation.
-        /// </summary>
-        /// <param name="phoneNumberId"></param>
-        public void RemovePhoneNumber(string phoneNumberId)
-        {
-            PhoneNumbers[phoneNumberId] = null;
-        }
+        public Guid Id { get; set; }
     }
 }

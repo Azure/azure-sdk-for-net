@@ -20,7 +20,7 @@ namespace Azure.Communication.PhoneNumbers
             if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
-                writer.WriteObjectValue(Capabilities);
+                writer.WriteObjectValue<PhoneNumberCapabilities>(Capabilities);
             }
             if (Optional.IsDefined(AssignmentType))
             {

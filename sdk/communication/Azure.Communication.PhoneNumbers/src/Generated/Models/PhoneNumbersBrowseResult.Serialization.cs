@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    public partial class PhoneNumbersBrowseResult
+    internal partial class PhoneNumbersBrowseResult
     {
         internal static PhoneNumbersBrowseResult DeserializePhoneNumbersBrowseResult(JsonElement element)
         {

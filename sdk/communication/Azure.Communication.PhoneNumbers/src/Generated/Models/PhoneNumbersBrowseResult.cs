@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> The result of a phone number browse operation. </summary>
-    public partial class PhoneNumbersBrowseResult
+    internal partial class PhoneNumbersBrowseResult
     {
         /// <summary> Initializes a new instance of <see cref="PhoneNumbersBrowseResult"/>. </summary>
         /// <param name="phoneNumbers"> The phone numbers that are available for purchase. </param>
