@@ -36,6 +36,7 @@ namespace Azure.Identity
                 get => _process.StartInfo;
                 set => _process.StartInfo = value;
             }
+            public StreamWriter StandardInput => _process.StandardInput;
 
             public event EventHandler Exited
             {
@@ -60,6 +61,7 @@ namespace Azure.Identity
             public void BeginOutputReadLine() => _process.BeginOutputReadLine();
             public void BeginErrorReadLine() => _process.BeginErrorReadLine();
             public void Dispose() => _process.Dispose();
+            public void CloseStandardInput() => _process.StandardInput.Close();
         }
     }
 }
