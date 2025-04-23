@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ScVmm
 
         ScVmmVirtualNetworkResource IOperationSource<ScVmmVirtualNetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ScVmmVirtualNetworkData>(response.Content);
+            var data = ModelReaderWriter.Read<ScVmmVirtualNetworkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerScVmmContext.Default);
             return new ScVmmVirtualNetworkResource(_client, data);
         }
 
         async ValueTask<ScVmmVirtualNetworkResource> IOperationSource<ScVmmVirtualNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ScVmmVirtualNetworkData>(response.Content);
+            var data = ModelReaderWriter.Read<ScVmmVirtualNetworkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerScVmmContext.Default);
             return await Task.FromResult(new ScVmmVirtualNetworkResource(_client, data)).ConfigureAwait(false);
         }
     }

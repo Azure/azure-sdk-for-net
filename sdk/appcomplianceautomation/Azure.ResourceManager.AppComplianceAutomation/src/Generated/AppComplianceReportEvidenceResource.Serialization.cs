@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         AppComplianceReportEvidenceData IJsonModel<AppComplianceReportEvidenceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppComplianceReportEvidenceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppComplianceReportEvidenceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AppComplianceReportEvidenceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppComplianceReportEvidenceData>(Data, options, AzureResourceManagerAppComplianceAutomationContext.Default);
 
-        AppComplianceReportEvidenceData IPersistableModel<AppComplianceReportEvidenceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppComplianceReportEvidenceData>(data, options);
+        AppComplianceReportEvidenceData IPersistableModel<AppComplianceReportEvidenceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppComplianceReportEvidenceData>(data, options, AzureResourceManagerAppComplianceAutomationContext.Default);
 
         string IPersistableModel<AppComplianceReportEvidenceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppComplianceReportEvidenceData>)Data).GetFormatFromOptions(options);
     }

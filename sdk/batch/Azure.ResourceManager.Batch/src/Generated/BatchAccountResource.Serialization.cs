@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Batch
 
         BatchAccountData IJsonModel<BatchAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BatchAccountData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BatchAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BatchAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BatchAccountData>(Data, options, AzureResourceManagerBatchContext.Default);
 
-        BatchAccountData IPersistableModel<BatchAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BatchAccountData>(data, options);
+        BatchAccountData IPersistableModel<BatchAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BatchAccountData>(data, options, AzureResourceManagerBatchContext.Default);
 
         string IPersistableModel<BatchAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BatchAccountData>)Data).GetFormatFromOptions(options);
     }

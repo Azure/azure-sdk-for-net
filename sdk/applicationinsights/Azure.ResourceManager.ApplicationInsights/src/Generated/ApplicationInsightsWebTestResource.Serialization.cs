@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ApplicationInsights
 
         ApplicationInsightsWebTestData IJsonModel<ApplicationInsightsWebTestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationInsightsWebTestData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApplicationInsightsWebTestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApplicationInsightsWebTestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApplicationInsightsWebTestData>(Data, options, AzureResourceManagerApplicationInsightsContext.Default);
 
-        ApplicationInsightsWebTestData IPersistableModel<ApplicationInsightsWebTestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApplicationInsightsWebTestData>(data, options);
+        ApplicationInsightsWebTestData IPersistableModel<ApplicationInsightsWebTestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApplicationInsightsWebTestData>(data, options, AzureResourceManagerApplicationInsightsContext.Default);
 
         string IPersistableModel<ApplicationInsightsWebTestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApplicationInsightsWebTestData>)Data).GetFormatFromOptions(options);
     }

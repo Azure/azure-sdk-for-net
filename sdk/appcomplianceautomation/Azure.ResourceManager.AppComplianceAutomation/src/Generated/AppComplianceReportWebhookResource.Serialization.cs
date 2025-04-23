@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         AppComplianceReportWebhookData IJsonModel<AppComplianceReportWebhookData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppComplianceReportWebhookData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppComplianceReportWebhookData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AppComplianceReportWebhookData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppComplianceReportWebhookData>(Data, options, AzureResourceManagerAppComplianceAutomationContext.Default);
 
-        AppComplianceReportWebhookData IPersistableModel<AppComplianceReportWebhookData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppComplianceReportWebhookData>(data, options);
+        AppComplianceReportWebhookData IPersistableModel<AppComplianceReportWebhookData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppComplianceReportWebhookData>(data, options, AzureResourceManagerAppComplianceAutomationContext.Default);
 
         string IPersistableModel<AppComplianceReportWebhookData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppComplianceReportWebhookData>)Data).GetFormatFromOptions(options);
     }

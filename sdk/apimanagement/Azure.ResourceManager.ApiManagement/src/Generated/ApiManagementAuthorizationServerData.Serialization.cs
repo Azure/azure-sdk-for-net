@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ApiManagement
             SystemData systemData = default;
             string description = default;
             IList<AuthorizationMethod> authorizationMethods = default;
-            IList<ClientAuthenticationMethod> clientAuthenticationMethod = default;
+            IList<Models.ClientAuthenticationMethod> clientAuthenticationMethod = default;
             IList<TokenBodyParameterContract> tokenBodyParameters = default;
             string tokenEndpoint = default;
             bool? supportState = default;
@@ -263,10 +263,10 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            List<ClientAuthenticationMethod> array = new List<ClientAuthenticationMethod>();
+                            List<Models.ClientAuthenticationMethod> array = new List<Models.ClientAuthenticationMethod>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new ClientAuthenticationMethod(item.GetString()));
+                                array.Add(new Models.ClientAuthenticationMethod(item.GetString()));
                             }
                             clientAuthenticationMethod = array;
                             continue;
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.ApiManagement
                 systemData,
                 description,
                 authorizationMethods ?? new ChangeTrackingList<AuthorizationMethod>(),
-                clientAuthenticationMethod ?? new ChangeTrackingList<ClientAuthenticationMethod>(),
+                clientAuthenticationMethod ?? new ChangeTrackingList<Models.ClientAuthenticationMethod>(),
                 tokenBodyParameters ?? new ChangeTrackingList<TokenBodyParameterContract>(),
                 tokenEndpoint,
                 supportState,
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.ApiManagement
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

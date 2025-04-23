@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ScVmm
 
         ScVmmInventoryItemData IJsonModel<ScVmmInventoryItemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmInventoryItemData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ScVmmInventoryItemData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ScVmmInventoryItemData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScVmmInventoryItemData>(Data, options, AzureResourceManagerScVmmContext.Default);
 
-        ScVmmInventoryItemData IPersistableModel<ScVmmInventoryItemData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScVmmInventoryItemData>(data, options);
+        ScVmmInventoryItemData IPersistableModel<ScVmmInventoryItemData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScVmmInventoryItemData>(data, options, AzureResourceManagerScVmmContext.Default);
 
         string IPersistableModel<ScVmmInventoryItemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScVmmInventoryItemData>)Data).GetFormatFromOptions(options);
     }

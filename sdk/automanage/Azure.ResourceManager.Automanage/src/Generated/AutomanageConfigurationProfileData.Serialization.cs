@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Automanage
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomanageContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AutomanageConfigurationProfileData)} does not support writing '{options.Format}' format.");
             }
