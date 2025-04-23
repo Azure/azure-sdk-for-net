@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
         /// <param name="accessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
         /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CopilotSettingsProperties(bool accessControlEnabled, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CopilotSettingsProperties(bool accessControlEnabled, PortalServiceResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccessControlEnabled = accessControlEnabled;
             ProvisioningState = provisioningState;
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
         /// <summary> Boolean indicating if role-based access control is enabled for copilot in this tenant. </summary>
         public bool AccessControlEnabled { get; set; }
         /// <summary> The status of the last provisioning operation performed on the resource. </summary>
-        public ResourceProvisioningState? ProvisioningState { get; }
+        public PortalServiceResourceProvisioningState? ProvisioningState { get; }
     }
 }

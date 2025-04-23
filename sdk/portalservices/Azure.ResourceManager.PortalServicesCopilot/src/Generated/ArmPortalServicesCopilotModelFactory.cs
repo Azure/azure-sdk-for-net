@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
         /// <param name="accessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
         /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
         /// <returns> A new <see cref="Models.CopilotSettingsProperties"/> instance for mocking. </returns>
-        public static CopilotSettingsProperties CopilotSettingsProperties(bool accessControlEnabled = default, ResourceProvisioningState? provisioningState = null)
+        public static CopilotSettingsProperties CopilotSettingsProperties(bool accessControlEnabled = default, PortalServiceResourceProvisioningState? provisioningState = null)
         {
             return new CopilotSettingsProperties(accessControlEnabled, provisioningState, serializedAdditionalRawData: null);
         }

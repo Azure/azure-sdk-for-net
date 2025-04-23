@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
                 return null;
             }
             bool accessControlEnabled = default;
-            ResourceProvisioningState? provisioningState = default;
+            PortalServiceResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
                     {
                         continue;
                     }
-                    provisioningState = new ResourceProvisioningState(property.Value.GetString());
+                    provisioningState = new PortalServiceResourceProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
