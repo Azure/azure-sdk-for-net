@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The Summarization. </summary>
-    public abstract partial class SummarizationSettings
+    public partial class SummarizationSettings
     {
         /// <summary> Initializes a new instance of <see cref="SummarizationSettings"/>. </summary>
         /// <param name="enableSummarization"> Determine if the summarization should be enabled for the post recording processing. </param>

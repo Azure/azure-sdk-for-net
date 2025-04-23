@@ -10,7 +10,7 @@ using System;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The PostProcessingOptions. </summary>
-    public abstract partial class PostProcessingOptions
+    public partial class PostProcessingOptions
     {
         /// <summary> Initializes a new instance of <see cref="PostProcessingOptions"/>. </summary>
         /// <param name="transcription"> Define options of the transcription for the post recording processing. </param>

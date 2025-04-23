@@ -8,10 +8,10 @@ using System;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Summarization base class
+    /// Transcription base class
     /// </summary>
-    [CodeGenModel("Summarization")]
-    public abstract partial class SummarizationSettings
+    [CodeGenModel("Transcription")]
+    public partial class TranscriptionSettings
     {
     }
 }

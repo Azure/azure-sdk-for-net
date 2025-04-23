@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The Transcription. </summary>
-    public abstract partial class TranscriptionSettings
+    public partial class TranscriptionSettings
     {
         /// <summary> Initializes a new instance of <see cref="TranscriptionSettings"/>. </summary>
         /// <param name="enableTranscription"> Determine if the Transcription should be enabled for the post recording processing. </param>

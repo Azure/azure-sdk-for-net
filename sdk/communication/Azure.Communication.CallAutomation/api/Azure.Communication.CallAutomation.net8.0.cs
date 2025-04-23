@@ -1402,7 +1402,7 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.PlaySource> PlaySources { get { throw null; } }
     }
-    public abstract partial class PostProcessingOptions
+    public partial class PostProcessingOptions
     {
         public PostProcessingOptions(Azure.Communication.CallAutomation.TranscriptionSettings transcription) { }
         public string CognitiveServicesEndpoint { get { throw null; } set { } }
@@ -1860,7 +1860,7 @@ namespace Azure.Communication.CallAutomation
         TranscriptionData = 2,
         TranscriptionMetadata = 3,
     }
-    public abstract partial class SummarizationSettings
+    public partial class SummarizationSettings
     {
         public SummarizationSettings(bool enableSummarization) { }
         public bool EnableSummarization { get { throw null; } }
@@ -1946,7 +1946,7 @@ namespace Azure.Communication.CallAutomation
         public static bool operator !=(Azure.Communication.CallAutomation.TranscriptionResultState left, Azure.Communication.CallAutomation.TranscriptionResultState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class TranscriptionSettings
+    public partial class TranscriptionSettings
     {
         public TranscriptionSettings(bool enableTranscription) { }
         public bool EnableTranscription { get { throw null; } }
