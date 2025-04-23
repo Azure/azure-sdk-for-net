@@ -482,6 +482,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     TagConditions = options?.DestinationConditions?.TagConditions,
                     LeaseId = options?.DestinationConditions?.LeaseId,
                 },
+                PremiumPageBlobAccessTier = options?.AccessTier,
             };
         }
 
