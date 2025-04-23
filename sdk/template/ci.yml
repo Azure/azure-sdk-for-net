@@ -37,7 +37,6 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: template
-    oneESTemplateTag: ${{ parameters.oneESTemplateTag }}
     ArtifactName: packages
     Artifacts:
     - name: Azure.Template
