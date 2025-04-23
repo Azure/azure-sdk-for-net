@@ -14,11 +14,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.WeightsAndBiases.Models
 {
-    public partial class InstanceResourcePatch : IUtf8JsonSerializable, IJsonModel<InstanceResourcePatch>
+    public partial class WeightsAndBiasesInstancePatch : IUtf8JsonSerializable, IJsonModel<WeightsAndBiasesInstancePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InstanceResourcePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WeightsAndBiasesInstancePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<InstanceResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<WeightsAndBiasesInstancePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InstanceResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InstanceResourcePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(WeightsAndBiasesInstancePatch)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(Tags))
@@ -69,19 +69,19 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             }
         }
 
-        InstanceResourcePatch IJsonModel<InstanceResourcePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WeightsAndBiasesInstancePatch IJsonModel<WeightsAndBiasesInstancePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InstanceResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InstanceResourcePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(WeightsAndBiasesInstancePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInstanceResourcePatch(document.RootElement, options);
+            return DeserializeWeightsAndBiasesInstancePatch(document.RootElement, options);
         }
 
-        internal static InstanceResourcePatch DeserializeInstanceResourcePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static WeightsAndBiasesInstancePatch DeserializeWeightsAndBiasesInstancePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -125,38 +125,38 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new InstanceResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, serializedAdditionalRawData);
+            return new WeightsAndBiasesInstancePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<InstanceResourcePatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<WeightsAndBiasesInstancePatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InstanceResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InstanceResourcePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WeightsAndBiasesInstancePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        InstanceResourcePatch IPersistableModel<InstanceResourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        WeightsAndBiasesInstancePatch IPersistableModel<WeightsAndBiasesInstancePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InstanceResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeInstanceResourcePatch(document.RootElement, options);
+                        return DeserializeWeightsAndBiasesInstancePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InstanceResourcePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WeightsAndBiasesInstancePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<InstanceResourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WeightsAndBiasesInstancePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="InstanceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InstanceResource.CreateResourceIdentifier" /> to create an <see cref="InstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="WeightsAndBiasesInstanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WeightsAndBiasesInstanceResource.CreateResourceIdentifier" /> to create a <see cref="WeightsAndBiasesInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InstanceResource"/> object. </returns>
-        public virtual InstanceResource GetInstanceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WeightsAndBiasesInstanceResource"/> object. </returns>
+        public virtual WeightsAndBiasesInstanceResource GetWeightsAndBiasesInstanceResource(ResourceIdentifier id)
         {
-            InstanceResource.ValidateResourceId(id);
-            return new InstanceResource(Client, id);
+            WeightsAndBiasesInstanceResource.ValidateResourceId(id);
+            return new WeightsAndBiasesInstanceResource(Client, id);
         }
     }
 }

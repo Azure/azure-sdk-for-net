@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmWeightsAndBiasesModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="WeightsAndBiases.InstanceResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WeightsAndBiases.WeightsAndBiasesInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="WeightsAndBiases.InstanceResourceData"/> instance for mocking. </returns>
-        public static InstanceResourceData InstanceResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, InstanceProperties properties = null, ManagedServiceIdentity identity = null)
+        /// <returns> A new <see cref="WeightsAndBiases.WeightsAndBiasesInstanceData"/> instance for mocking. </returns>
+        public static WeightsAndBiasesInstanceData WeightsAndBiasesInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WeightsAndBiasesInstanceProperties properties = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new InstanceResourceData(
+            return new WeightsAndBiasesInstanceData(
                 id,
                 name,
                 resourceType,
@@ -42,16 +42,16 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.InstanceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WeightsAndBiasesInstanceProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerProperties"> partner properties. </param>
         /// <param name="singleSignOnProperties"> Single sign-on properties. </param>
-        /// <returns> A new <see cref="Models.InstanceProperties"/> instance for mocking. </returns>
-        public static InstanceProperties InstanceProperties(MarketplaceDetails marketplace = null, UserDetails user = null, ResourceProvisioningState? provisioningState = null, PartnerProperties partnerProperties = null, SingleSignOnPropertiesV2 singleSignOnProperties = null)
+        /// <returns> A new <see cref="Models.WeightsAndBiasesInstanceProperties"/> instance for mocking. </returns>
+        public static WeightsAndBiasesInstanceProperties WeightsAndBiasesInstanceProperties(WeightsAndBiasesMarketplaceDetails marketplace = null, WeightsAndBiasesUserDetails user = null, WeightsAndBiasesProvisioningState? provisioningState = null, WeightsAndBiasesPartnerProperties partnerProperties = null, WeightsAndBiasesSingleSignOnPropertiesV2 singleSignOnProperties = null)
         {
-            return new InstanceProperties(
+            return new WeightsAndBiasesInstanceProperties(
                 marketplace,
                 user,
                 provisioningState,
@@ -60,14 +60,14 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MarketplaceDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WeightsAndBiasesMarketplaceDetails"/>. </summary>
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
-        /// <returns> A new <see cref="Models.MarketplaceDetails"/> instance for mocking. </returns>
-        public static MarketplaceDetails MarketplaceDetails(string subscriptionId = null, MarketplaceSubscriptionStatus? subscriptionStatus = null, OfferDetails offerDetails = null)
+        /// <returns> A new <see cref="Models.WeightsAndBiasesMarketplaceDetails"/> instance for mocking. </returns>
+        public static WeightsAndBiasesMarketplaceDetails WeightsAndBiasesMarketplaceDetails(string subscriptionId = null, WeightsAndBiasesMarketplaceSubscriptionStatus? subscriptionStatus = null, WeightsAndBiasesOfferDetails offerDetails = null)
         {
-            return new MarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, serializedAdditionalRawData: null);
+            return new WeightsAndBiasesMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, serializedAdditionalRawData: null);
         }
     }
 }

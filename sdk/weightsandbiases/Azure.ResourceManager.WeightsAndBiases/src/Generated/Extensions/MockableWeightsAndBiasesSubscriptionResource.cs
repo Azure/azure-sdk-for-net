@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableWeightsAndBiasesSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _instanceResourceInstancesClientDiagnostics;
-        private InstancesRestOperations _instanceResourceInstancesRestClient;
+        private ClientDiagnostics _weightsAndBiasesInstanceInstancesClientDiagnostics;
+        private InstancesRestOperations _weightsAndBiasesInstanceInstancesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableWeightsAndBiasesSubscriptionResource"/> class for mocking. </summary>
         protected MockableWeightsAndBiasesSubscriptionResource()
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
         {
         }
 
-        private ClientDiagnostics InstanceResourceInstancesClientDiagnostics => _instanceResourceInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WeightsAndBiases", InstanceResource.ResourceType.Namespace, Diagnostics);
-        private InstancesRestOperations InstanceResourceInstancesRestClient => _instanceResourceInstancesRestClient ??= new InstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(InstanceResource.ResourceType));
+        private ClientDiagnostics WeightsAndBiasesInstanceInstancesClientDiagnostics => _weightsAndBiasesInstanceInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WeightsAndBiases", WeightsAndBiasesInstanceResource.ResourceType.Namespace, Diagnostics);
+        private InstancesRestOperations WeightsAndBiasesInstanceInstancesRestClient => _weightsAndBiasesInstanceInstancesRestClient ??= new InstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(WeightsAndBiasesInstanceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="InstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<InstanceResource> GetInstanceResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="WeightsAndBiasesInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WeightsAndBiasesInstanceResource> GetWeightsAndBiasesInstancesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => InstanceResourceInstancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InstanceResourceInstancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new InstanceResource(Client, InstanceResourceData.DeserializeInstanceResourceData(e)), InstanceResourceInstancesClientDiagnostics, Pipeline, "MockableWeightsAndBiasesSubscriptionResource.GetInstanceResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => WeightsAndBiasesInstanceInstancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WeightsAndBiasesInstanceInstancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WeightsAndBiasesInstanceResource(Client, WeightsAndBiasesInstanceData.DeserializeWeightsAndBiasesInstanceData(e)), WeightsAndBiasesInstanceInstancesClientDiagnostics, Pipeline, "MockableWeightsAndBiasesSubscriptionResource.GetWeightsAndBiasesInstances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="InstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<InstanceResource> GetInstanceResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WeightsAndBiasesInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WeightsAndBiasesInstanceResource> GetWeightsAndBiasesInstances(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => InstanceResourceInstancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InstanceResourceInstancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new InstanceResource(Client, InstanceResourceData.DeserializeInstanceResourceData(e)), InstanceResourceInstancesClientDiagnostics, Pipeline, "MockableWeightsAndBiasesSubscriptionResource.GetInstanceResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => WeightsAndBiasesInstanceInstancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WeightsAndBiasesInstanceInstancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WeightsAndBiasesInstanceResource(Client, WeightsAndBiasesInstanceData.DeserializeWeightsAndBiasesInstanceData(e)), WeightsAndBiasesInstanceInstancesClientDiagnostics, Pipeline, "MockableWeightsAndBiasesSubscriptionResource.GetWeightsAndBiasesInstances", "value", "nextLink", cancellationToken);
         }
     }
 }

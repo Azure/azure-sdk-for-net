@@ -7,17 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.WeightsAndBiases.Models;
 
-namespace Azure.ResourceManager.WeightsAndBiases
+namespace Azure.ResourceManager.WeightsAndBiases.Models
 {
-    /// <summary>
-    /// A class representing the InstanceResource data model.
-    /// Concrete tracked resource types can be created by aliasing this type using a specific property type.
-    /// </summary>
-    public partial class InstanceResourceData : TrackedResourceData
+    /// <summary> The type used for update operations of the Instance Resource. </summary>
+    public partial class WeightsAndBiasesInstancePatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,36 +46,25 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="InstanceResourceData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public InstanceResourceData(AzureLocation location) : base(location)
+        /// <summary> Initializes a new instance of <see cref="WeightsAndBiasesInstancePatch"/>. </summary>
+        public WeightsAndBiasesInstancePatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InstanceResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="WeightsAndBiasesInstancePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InstanceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, InstanceProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal WeightsAndBiasesInstancePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            Tags = tags;
             Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InstanceResourceData"/> for deserialization. </summary>
-        internal InstanceResourceData()
-        {
-        }
-
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public InstanceProperties Properties { get; set; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }

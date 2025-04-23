@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.WeightsAndBiases.Models
 {
     /// <summary> Offer details for the marketplace that is selected by the user. </summary>
-    public partial class OfferDetails
+    public partial class WeightsAndBiasesOfferDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OfferDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WeightsAndBiasesOfferDetails"/>. </summary>
         /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
         /// <param name="offerId"> Offer Id for the marketplace offer. </param>
         /// <param name="planId"> Plan Id for the marketplace offer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is null. </exception>
-        public OfferDetails(string publisherId, string offerId, string planId)
+        public WeightsAndBiasesOfferDetails(string publisherId, string offerId, string planId)
         {
             Argument.AssertNotNull(publisherId, nameof(publisherId));
             Argument.AssertNotNull(offerId, nameof(offerId));
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             PlanId = planId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OfferDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WeightsAndBiasesOfferDetails"/>. </summary>
         /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
         /// <param name="offerId"> Offer Id for the marketplace offer. </param>
         /// <param name="planId"> Plan Id for the marketplace offer. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         /// <param name="termUnit"> Plan Display Name for the marketplace offer. </param>
         /// <param name="termId"> Plan Display Name for the marketplace offer. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OfferDetails(string publisherId, string offerId, string planId, string planName, string termUnit, string termId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WeightsAndBiasesOfferDetails(string publisherId, string offerId, string planId, string planName, string termUnit, string termId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PublisherId = publisherId;
             OfferId = offerId;
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OfferDetails"/> for deserialization. </summary>
-        internal OfferDetails()
+        /// <summary> Initializes a new instance of <see cref="WeightsAndBiasesOfferDetails"/> for deserialization. </summary>
+        internal WeightsAndBiasesOfferDetails()
         {
         }
 

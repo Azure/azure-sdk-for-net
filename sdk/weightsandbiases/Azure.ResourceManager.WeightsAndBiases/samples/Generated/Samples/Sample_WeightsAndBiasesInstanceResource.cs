@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.WeightsAndBiases.Samples
 {
-    public partial class Sample_InstanceResource
+    public partial class Sample_WeightsAndBiasesInstanceResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -29,20 +29,20 @@ namespace Azure.ResourceManager.WeightsAndBiases.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this InstanceResource created on azure
-            // for more information of creating InstanceResource, please refer to the document of InstanceResource
+            // this example assumes you already have this WeightsAndBiasesInstanceResource created on azure
+            // for more information of creating WeightsAndBiasesInstanceResource, please refer to the document of WeightsAndBiasesInstanceResource
             string subscriptionId = "0BCB047F-CB71-4DFE-B0BD-88519F411C2F";
             string resourceGroupName = "rgopenapi";
             string instancename = "myinstance";
-            ResourceIdentifier instanceResourceId = InstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, instancename);
-            InstanceResource instanceResource = client.GetInstanceResource(instanceResourceId);
+            ResourceIdentifier weightsAndBiasesInstanceResourceId = WeightsAndBiasesInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, instancename);
+            WeightsAndBiasesInstanceResource weightsAndBiasesInstance = client.GetWeightsAndBiasesInstanceResource(weightsAndBiasesInstanceResourceId);
 
             // invoke the operation
-            InstanceResource result = await instanceResource.GetAsync();
+            WeightsAndBiasesInstanceResource result = await weightsAndBiasesInstance.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            InstanceResourceData resourceData = result.Data;
+            WeightsAndBiasesInstanceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -59,16 +59,16 @@ namespace Azure.ResourceManager.WeightsAndBiases.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this InstanceResource created on azure
-            // for more information of creating InstanceResource, please refer to the document of InstanceResource
+            // this example assumes you already have this WeightsAndBiasesInstanceResource created on azure
+            // for more information of creating WeightsAndBiasesInstanceResource, please refer to the document of WeightsAndBiasesInstanceResource
             string subscriptionId = "0BCB047F-CB71-4DFE-B0BD-88519F411C2F";
             string resourceGroupName = "rgopenapi";
             string instancename = "myinstance";
-            ResourceIdentifier instanceResourceId = InstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, instancename);
-            InstanceResource instanceResource = client.GetInstanceResource(instanceResourceId);
+            ResourceIdentifier weightsAndBiasesInstanceResourceId = WeightsAndBiasesInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, instancename);
+            WeightsAndBiasesInstanceResource weightsAndBiasesInstance = client.GetWeightsAndBiasesInstanceResource(weightsAndBiasesInstanceResourceId);
 
             // invoke the operation
-            await instanceResource.DeleteAsync(WaitUntil.Completed);
+            await weightsAndBiasesInstance.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -85,16 +85,16 @@ namespace Azure.ResourceManager.WeightsAndBiases.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this InstanceResource created on azure
-            // for more information of creating InstanceResource, please refer to the document of InstanceResource
+            // this example assumes you already have this WeightsAndBiasesInstanceResource created on azure
+            // for more information of creating WeightsAndBiasesInstanceResource, please refer to the document of WeightsAndBiasesInstanceResource
             string subscriptionId = "0BCB047F-CB71-4DFE-B0BD-88519F411C2F";
             string resourceGroupName = "rgopenapi";
             string instancename = "myinstance";
-            ResourceIdentifier instanceResourceId = InstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, instancename);
-            InstanceResource instanceResource = client.GetInstanceResource(instanceResourceId);
+            ResourceIdentifier weightsAndBiasesInstanceResourceId = WeightsAndBiasesInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, instancename);
+            WeightsAndBiasesInstanceResource weightsAndBiasesInstance = client.GetWeightsAndBiasesInstanceResource(weightsAndBiasesInstanceResourceId);
 
             // invoke the operation
-            InstanceResourcePatch patch = new InstanceResourcePatch
+            WeightsAndBiasesInstancePatch patch = new WeightsAndBiasesInstancePatch
             {
                 Tags = { },
                 Identity = new ManagedServiceIdentity("None")
@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.WeightsAndBiases.Samples
                     UserAssignedIdentities = { },
                 },
             };
-            InstanceResource result = await instanceResource.UpdateAsync(patch);
+            WeightsAndBiasesInstanceResource result = await weightsAndBiasesInstance.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            InstanceResourceData resourceData = result.Data;
+            WeightsAndBiasesInstanceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

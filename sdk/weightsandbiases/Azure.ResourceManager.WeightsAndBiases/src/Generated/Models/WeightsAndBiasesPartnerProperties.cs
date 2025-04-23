@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.WeightsAndBiases.Models
 {
     /// <summary> Partner's specific Properties. </summary>
-    public partial class PartnerProperties
+    public partial class WeightsAndBiasesPartnerProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PartnerProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WeightsAndBiasesPartnerProperties"/>. </summary>
         /// <param name="region"> The region of the instance. </param>
         /// <param name="subdomain"> The subdomain of the instance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subdomain"/> is null. </exception>
-        public PartnerProperties(Region region, string subdomain)
+        public WeightsAndBiasesPartnerProperties(WeightsAndBiasesRegion region, string subdomain)
         {
             Argument.AssertNotNull(subdomain, nameof(subdomain));
 
@@ -57,24 +57,24 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             Subdomain = subdomain;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PartnerProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WeightsAndBiasesPartnerProperties"/>. </summary>
         /// <param name="region"> The region of the instance. </param>
         /// <param name="subdomain"> The subdomain of the instance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PartnerProperties(Region region, string subdomain, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WeightsAndBiasesPartnerProperties(WeightsAndBiasesRegion region, string subdomain, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Region = region;
             Subdomain = subdomain;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PartnerProperties"/> for deserialization. </summary>
-        internal PartnerProperties()
+        /// <summary> Initializes a new instance of <see cref="WeightsAndBiasesPartnerProperties"/> for deserialization. </summary>
+        internal WeightsAndBiasesPartnerProperties()
         {
         }
 
         /// <summary> The region of the instance. </summary>
-        public Region Region { get; set; }
+        public WeightsAndBiasesRegion Region { get; set; }
         /// <summary> The subdomain of the instance. </summary>
         public string Subdomain { get; set; }
     }

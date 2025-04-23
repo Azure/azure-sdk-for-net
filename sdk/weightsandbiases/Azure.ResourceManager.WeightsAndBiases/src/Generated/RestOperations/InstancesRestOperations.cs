@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<InstanceResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string instancename, CancellationToken cancellationToken = default)
+        public async Task<Response<WeightsAndBiasesInstanceData>> GetAsync(string subscriptionId, string resourceGroupName, string instancename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -89,13 +89,13 @@ namespace Azure.ResourceManager.WeightsAndBiases
             {
                 case 200:
                     {
-                        InstanceResourceData value = default;
+                        WeightsAndBiasesInstanceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = InstanceResourceData.DeserializeInstanceResourceData(document.RootElement);
+                        value = WeightsAndBiasesInstanceData.DeserializeWeightsAndBiasesInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((InstanceResourceData)null, message.Response);
+                    return Response.FromValue((WeightsAndBiasesInstanceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<InstanceResourceData> Get(string subscriptionId, string resourceGroupName, string instancename, CancellationToken cancellationToken = default)
+        public Response<WeightsAndBiasesInstanceData> Get(string subscriptionId, string resourceGroupName, string instancename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,19 +120,19 @@ namespace Azure.ResourceManager.WeightsAndBiases
             {
                 case 200:
                     {
-                        InstanceResourceData value = default;
+                        WeightsAndBiasesInstanceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = InstanceResourceData.DeserializeInstanceResourceData(document.RootElement);
+                        value = WeightsAndBiasesInstanceData.DeserializeWeightsAndBiasesInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((InstanceResourceData)null, message.Response);
+                    return Response.FromValue((WeightsAndBiasesInstanceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string instancename, InstanceResourceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string instancename, WeightsAndBiasesInstanceData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string instancename, InstanceResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string instancename, WeightsAndBiasesInstanceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instancename"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string instancename, InstanceResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string instancename, WeightsAndBiasesInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instancename"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string instancename, InstanceResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string instancename, WeightsAndBiasesInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string instancename, InstanceResourcePatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string instancename, WeightsAndBiasesInstancePatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string instancename, InstanceResourcePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string instancename, WeightsAndBiasesInstancePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instancename"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<InstanceResourceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string instancename, InstanceResourcePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<WeightsAndBiasesInstanceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string instancename, WeightsAndBiasesInstancePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -283,9 +283,9 @@ namespace Azure.ResourceManager.WeightsAndBiases
             {
                 case 200:
                     {
-                        InstanceResourceData value = default;
+                        WeightsAndBiasesInstanceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = InstanceResourceData.DeserializeInstanceResourceData(document.RootElement);
+                        value = WeightsAndBiasesInstanceData.DeserializeWeightsAndBiasesInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instancename"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<InstanceResourceData> Update(string subscriptionId, string resourceGroupName, string instancename, InstanceResourcePatch patch, CancellationToken cancellationToken = default)
+        public Response<WeightsAndBiasesInstanceData> Update(string subscriptionId, string resourceGroupName, string instancename, WeightsAndBiasesInstancePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -314,9 +314,9 @@ namespace Azure.ResourceManager.WeightsAndBiases
             {
                 case 200:
                     {
-                        InstanceResourceData value = default;
+                        WeightsAndBiasesInstanceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = InstanceResourceData.DeserializeInstanceResourceData(document.RootElement);
+                        value = WeightsAndBiasesInstanceData.DeserializeWeightsAndBiasesInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

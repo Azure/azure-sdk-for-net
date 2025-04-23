@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.WeightsAndBiases.Models
 {
     /// <summary> Properties specific to Instance. </summary>
-    public partial class InstanceProperties
+    public partial class WeightsAndBiasesInstanceProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="InstanceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WeightsAndBiasesInstanceProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/> or <paramref name="user"/> is null. </exception>
-        public InstanceProperties(MarketplaceDetails marketplace, UserDetails user)
+        public WeightsAndBiasesInstanceProperties(WeightsAndBiasesMarketplaceDetails marketplace, WeightsAndBiasesUserDetails user)
         {
             Argument.AssertNotNull(marketplace, nameof(marketplace));
             Argument.AssertNotNull(user, nameof(user));
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             User = user;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InstanceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WeightsAndBiasesInstanceProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerProperties"> partner properties. </param>
         /// <param name="singleSignOnProperties"> Single sign-on properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InstanceProperties(MarketplaceDetails marketplace, UserDetails user, ResourceProvisioningState? provisioningState, PartnerProperties partnerProperties, SingleSignOnPropertiesV2 singleSignOnProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WeightsAndBiasesInstanceProperties(WeightsAndBiasesMarketplaceDetails marketplace, WeightsAndBiasesUserDetails user, WeightsAndBiasesProvisioningState? provisioningState, WeightsAndBiasesPartnerProperties partnerProperties, WeightsAndBiasesSingleSignOnPropertiesV2 singleSignOnProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Marketplace = marketplace;
             User = user;
@@ -75,20 +75,20 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InstanceProperties"/> for deserialization. </summary>
-        internal InstanceProperties()
+        /// <summary> Initializes a new instance of <see cref="WeightsAndBiasesInstanceProperties"/> for deserialization. </summary>
+        internal WeightsAndBiasesInstanceProperties()
         {
         }
 
         /// <summary> Marketplace details of the resource. </summary>
-        public MarketplaceDetails Marketplace { get; set; }
+        public WeightsAndBiasesMarketplaceDetails Marketplace { get; set; }
         /// <summary> Details of the user. </summary>
-        public UserDetails User { get; set; }
+        public WeightsAndBiasesUserDetails User { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ResourceProvisioningState? ProvisioningState { get; }
+        public WeightsAndBiasesProvisioningState? ProvisioningState { get; }
         /// <summary> partner properties. </summary>
-        public PartnerProperties PartnerProperties { get; set; }
+        public WeightsAndBiasesPartnerProperties PartnerProperties { get; set; }
         /// <summary> Single sign-on properties. </summary>
-        public SingleSignOnPropertiesV2 SingleSignOnProperties { get; set; }
+        public WeightsAndBiasesSingleSignOnPropertiesV2 SingleSignOnProperties { get; set; }
     }
 }

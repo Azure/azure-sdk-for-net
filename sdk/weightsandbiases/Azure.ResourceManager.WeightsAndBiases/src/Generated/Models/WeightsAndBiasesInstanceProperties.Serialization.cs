@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WeightsAndBiases.Models
 {
-    public partial class InstanceProperties : IUtf8JsonSerializable, IJsonModel<InstanceProperties>
+    public partial class WeightsAndBiasesInstanceProperties : IUtf8JsonSerializable, IJsonModel<WeightsAndBiasesInstanceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InstanceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WeightsAndBiasesInstanceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<InstanceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<WeightsAndBiasesInstanceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InstanceProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(WeightsAndBiasesInstanceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("marketplace"u8);
@@ -70,19 +70,19 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             }
         }
 
-        InstanceProperties IJsonModel<InstanceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WeightsAndBiasesInstanceProperties IJsonModel<WeightsAndBiasesInstanceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InstanceProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(WeightsAndBiasesInstanceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInstanceProperties(document.RootElement, options);
+            return DeserializeWeightsAndBiasesInstanceProperties(document.RootElement, options);
         }
 
-        internal static InstanceProperties DeserializeInstanceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static WeightsAndBiasesInstanceProperties DeserializeWeightsAndBiasesInstanceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -90,23 +90,23 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             {
                 return null;
             }
-            MarketplaceDetails marketplace = default;
-            UserDetails user = default;
-            ResourceProvisioningState? provisioningState = default;
-            PartnerProperties partnerProperties = default;
-            SingleSignOnPropertiesV2 singleSignOnProperties = default;
+            WeightsAndBiasesMarketplaceDetails marketplace = default;
+            WeightsAndBiasesUserDetails user = default;
+            WeightsAndBiasesProvisioningState? provisioningState = default;
+            WeightsAndBiasesPartnerProperties partnerProperties = default;
+            WeightsAndBiasesSingleSignOnPropertiesV2 singleSignOnProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("marketplace"u8))
                 {
-                    marketplace = MarketplaceDetails.DeserializeMarketplaceDetails(property.Value, options);
+                    marketplace = WeightsAndBiasesMarketplaceDetails.DeserializeWeightsAndBiasesMarketplaceDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("user"u8))
                 {
-                    user = UserDetails.DeserializeUserDetails(property.Value, options);
+                    user = WeightsAndBiasesUserDetails.DeserializeWeightsAndBiasesUserDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
                     {
                         continue;
                     }
-                    provisioningState = new ResourceProvisioningState(property.Value.GetString());
+                    provisioningState = new WeightsAndBiasesProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("partnerProperties"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
                     {
                         continue;
                     }
-                    partnerProperties = PartnerProperties.DeserializePartnerProperties(property.Value, options);
+                    partnerProperties = WeightsAndBiasesPartnerProperties.DeserializeWeightsAndBiasesPartnerProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("singleSignOnProperties"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
                     {
                         continue;
                     }
-                    singleSignOnProperties = SingleSignOnPropertiesV2.DeserializeSingleSignOnPropertiesV2(property.Value, options);
+                    singleSignOnProperties = WeightsAndBiasesSingleSignOnPropertiesV2.DeserializeWeightsAndBiasesSingleSignOnPropertiesV2(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new InstanceProperties(
+            return new WeightsAndBiasesInstanceProperties(
                 marketplace,
                 user,
                 provisioningState,
@@ -151,35 +151,35 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<InstanceProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<WeightsAndBiasesInstanceProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InstanceProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WeightsAndBiasesInstanceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        InstanceProperties IPersistableModel<InstanceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        WeightsAndBiasesInstanceProperties IPersistableModel<WeightsAndBiasesInstanceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WeightsAndBiasesInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeInstanceProperties(document.RootElement, options);
+                        return DeserializeWeightsAndBiasesInstanceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InstanceProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WeightsAndBiasesInstanceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<InstanceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WeightsAndBiasesInstanceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

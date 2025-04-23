@@ -33,39 +33,39 @@ namespace Azure.ResourceManager.WeightsAndBiases
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="InstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InstanceResource.CreateResourceIdentifier" /> to create an <see cref="InstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WeightsAndBiasesInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WeightsAndBiasesInstanceResource.CreateResourceIdentifier" /> to create a <see cref="WeightsAndBiasesInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWeightsAndBiasesArmClient.GetInstanceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWeightsAndBiasesArmClient.GetWeightsAndBiasesInstanceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="InstanceResource"/> object. </returns>
-        public static InstanceResource GetInstanceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WeightsAndBiasesInstanceResource"/> object. </returns>
+        public static WeightsAndBiasesInstanceResource GetWeightsAndBiasesInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWeightsAndBiasesArmClient(client).GetInstanceResource(id);
+            return GetMockableWeightsAndBiasesArmClient(client).GetWeightsAndBiasesInstanceResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of InstanceResources in the ResourceGroupResource.
+        /// Gets a collection of WeightsAndBiasesInstanceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWeightsAndBiasesResourceGroupResource.GetInstanceResources()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWeightsAndBiasesResourceGroupResource.GetWeightsAndBiasesInstances()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of InstanceResources and their operations over a InstanceResource. </returns>
-        public static InstanceResourceCollection GetInstanceResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of WeightsAndBiasesInstanceResources and their operations over a WeightsAndBiasesInstanceResource. </returns>
+        public static WeightsAndBiasesInstanceCollection GetWeightsAndBiasesInstances(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableWeightsAndBiasesResourceGroupResource(resourceGroupResource).GetInstanceResources();
+            return GetMockableWeightsAndBiasesResourceGroupResource(resourceGroupResource).GetWeightsAndBiasesInstances();
         }
 
         /// <summary>
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWeightsAndBiasesResourceGroupResource.GetInstanceResourceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWeightsAndBiasesResourceGroupResource.GetWeightsAndBiasesInstanceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="instancename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<InstanceResource>> GetInstanceResourceAsync(this ResourceGroupResource resourceGroupResource, string instancename, CancellationToken cancellationToken = default)
+        public static async Task<Response<WeightsAndBiasesInstanceResource>> GetWeightsAndBiasesInstanceAsync(this ResourceGroupResource resourceGroupResource, string instancename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableWeightsAndBiasesResourceGroupResource(resourceGroupResource).GetInstanceResourceAsync(instancename, cancellationToken).ConfigureAwait(false);
+            return await GetMockableWeightsAndBiasesResourceGroupResource(resourceGroupResource).GetWeightsAndBiasesInstanceAsync(instancename, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWeightsAndBiasesResourceGroupResource.GetInstanceResource(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWeightsAndBiasesResourceGroupResource.GetWeightsAndBiasesInstance(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="instancename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<InstanceResource> GetInstanceResource(this ResourceGroupResource resourceGroupResource, string instancename, CancellationToken cancellationToken = default)
+        public static Response<WeightsAndBiasesInstanceResource> GetWeightsAndBiasesInstance(this ResourceGroupResource resourceGroupResource, string instancename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableWeightsAndBiasesResourceGroupResource(resourceGroupResource).GetInstanceResource(instancename, cancellationToken);
+            return GetMockableWeightsAndBiasesResourceGroupResource(resourceGroupResource).GetWeightsAndBiasesInstance(instancename, cancellationToken);
         }
 
         /// <summary>
@@ -161,23 +161,23 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWeightsAndBiasesSubscriptionResource.GetInstanceResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWeightsAndBiasesSubscriptionResource.GetWeightsAndBiasesInstances(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="InstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<InstanceResource> GetInstanceResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="WeightsAndBiasesInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<WeightsAndBiasesInstanceResource> GetWeightsAndBiasesInstancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableWeightsAndBiasesSubscriptionResource(subscriptionResource).GetInstanceResourcesAsync(cancellationToken);
+            return GetMockableWeightsAndBiasesSubscriptionResource(subscriptionResource).GetWeightsAndBiasesInstancesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -197,23 +197,23 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWeightsAndBiasesSubscriptionResource.GetInstanceResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWeightsAndBiasesSubscriptionResource.GetWeightsAndBiasesInstances(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="InstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<InstanceResource> GetInstanceResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WeightsAndBiasesInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<WeightsAndBiasesInstanceResource> GetWeightsAndBiasesInstances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableWeightsAndBiasesSubscriptionResource(subscriptionResource).GetInstanceResources(cancellationToken);
+            return GetMockableWeightsAndBiasesSubscriptionResource(subscriptionResource).GetWeightsAndBiasesInstances(cancellationToken);
         }
     }
 }

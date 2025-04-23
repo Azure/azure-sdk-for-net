@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             {
                 return null;
             }
-            IReadOnlyList<InstanceResourceData> value = default;
+            IReadOnlyList<WeightsAndBiasesInstanceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<InstanceResourceData> array = new List<InstanceResourceData>();
+                    List<WeightsAndBiasesInstanceData> array = new List<WeightsAndBiasesInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstanceResourceData.DeserializeInstanceResourceData(item, options));
+                        array.Add(WeightsAndBiasesInstanceData.DeserializeWeightsAndBiasesInstanceData(item, options));
                     }
                     value = array;
                     continue;

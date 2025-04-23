@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.WeightsAndBiases.Samples
 {
-    public partial class Sample_InstanceResourceCollection
+    public partial class Sample_WeightsAndBiasesInstanceCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.WeightsAndBiases.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this InstanceResource
-            InstanceResourceCollection collection = resourceGroupResource.GetInstanceResources();
+            // get the collection of this WeightsAndBiasesInstanceResource
+            WeightsAndBiasesInstanceCollection collection = resourceGroupResource.GetWeightsAndBiasesInstances();
 
             // invoke the operation
             string instancename = "myinstance";
-            InstanceResourceData data = new InstanceResourceData(new AzureLocation("pudewmshbcvbt"))
+            WeightsAndBiasesInstanceData data = new WeightsAndBiasesInstanceData(new AzureLocation("pudewmshbcvbt"))
             {
-                Properties = new InstanceProperties(new MarketplaceDetails(new OfferDetails("kf", "rfgoevxeke", "ufopn")
+                Properties = new WeightsAndBiasesInstanceProperties(new WeightsAndBiasesMarketplaceDetails(new WeightsAndBiasesOfferDetails("kf", "rfgoevxeke", "ufopn")
                 {
                     PlanName = "adysakgqlryufffz",
                     TermUnit = "dgrkojow",
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Samples
                 })
                 {
                     SubscriptionId = "00000000-0000-0000-0000-000000000000",
-                }, new UserDetails
+                }, new WeightsAndBiasesUserDetails
                 {
                     FirstName = "kiiehcojcldrlndoid",
                     LastName = "zhkvsfqvthwkfkvgxcruyud",
@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.WeightsAndBiases.Samples
                     PhoneNumber = "cogmqmuwfcpstkwbzgkgo",
                 })
                 {
-                    PartnerProperties = new PartnerProperties(Region.Eastus, "xkecokwnwtkwnkxfgucmzybzzb"),
-                    SingleSignOnProperties = new SingleSignOnPropertiesV2(SingleSignOnType.Saml)
+                    PartnerProperties = new WeightsAndBiasesPartnerProperties(WeightsAndBiasesRegion.Eastus, "xkecokwnwtkwnkxfgucmzybzzb"),
+                    SingleSignOnProperties = new WeightsAndBiasesSingleSignOnPropertiesV2(WeightsAndBiasesSingleSignOnType.Saml)
                     {
-                        State = SingleSignOnState.Initial,
+                        State = WeightsAndBiasesSingleSignOnState.Initial,
                         EnterpriseAppId = "hkxtmpv",
                         Uri = "iqlemoksqdygqyxpp",
                         AadDomains = { "mxnw" },
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.WeightsAndBiases.Samples
                 },
                 Tags = { },
             };
-            ArmOperation<InstanceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, instancename, data);
-            InstanceResource result = lro.Value;
+            ArmOperation<WeightsAndBiasesInstanceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, instancename, data);
+            WeightsAndBiasesInstanceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            InstanceResourceData resourceData = result.Data;
+            WeightsAndBiasesInstanceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -105,16 +105,16 @@ namespace Azure.ResourceManager.WeightsAndBiases.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this InstanceResource
-            InstanceResourceCollection collection = resourceGroupResource.GetInstanceResources();
+            // get the collection of this WeightsAndBiasesInstanceResource
+            WeightsAndBiasesInstanceCollection collection = resourceGroupResource.GetWeightsAndBiasesInstances();
 
             // invoke the operation
             string instancename = "myinstance";
-            InstanceResource result = await collection.GetAsync(instancename);
+            WeightsAndBiasesInstanceResource result = await collection.GetAsync(instancename);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            InstanceResourceData resourceData = result.Data;
+            WeightsAndBiasesInstanceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -138,15 +138,15 @@ namespace Azure.ResourceManager.WeightsAndBiases.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this InstanceResource
-            InstanceResourceCollection collection = resourceGroupResource.GetInstanceResources();
+            // get the collection of this WeightsAndBiasesInstanceResource
+            WeightsAndBiasesInstanceCollection collection = resourceGroupResource.GetWeightsAndBiasesInstances();
 
             // invoke the operation and iterate over the result
-            await foreach (InstanceResource item in collection.GetAllAsync())
+            await foreach (WeightsAndBiasesInstanceResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                InstanceResourceData resourceData = item.Data;
+                WeightsAndBiasesInstanceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -173,15 +173,15 @@ namespace Azure.ResourceManager.WeightsAndBiases.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this InstanceResource
-            InstanceResourceCollection collection = resourceGroupResource.GetInstanceResources();
+            // get the collection of this WeightsAndBiasesInstanceResource
+            WeightsAndBiasesInstanceCollection collection = resourceGroupResource.GetWeightsAndBiasesInstances();
 
             // invoke the operation and iterate over the result
-            await foreach (InstanceResource item in collection.GetAllAsync())
+            await foreach (WeightsAndBiasesInstanceResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                InstanceResourceData resourceData = item.Data;
+                WeightsAndBiasesInstanceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -208,8 +208,8 @@ namespace Azure.ResourceManager.WeightsAndBiases.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this InstanceResource
-            InstanceResourceCollection collection = resourceGroupResource.GetInstanceResources();
+            // get the collection of this WeightsAndBiasesInstanceResource
+            WeightsAndBiasesInstanceCollection collection = resourceGroupResource.GetWeightsAndBiasesInstances();
 
             // invoke the operation
             string instancename = "myinstance";
@@ -237,13 +237,13 @@ namespace Azure.ResourceManager.WeightsAndBiases.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this InstanceResource
-            InstanceResourceCollection collection = resourceGroupResource.GetInstanceResources();
+            // get the collection of this WeightsAndBiasesInstanceResource
+            WeightsAndBiasesInstanceCollection collection = resourceGroupResource.GetWeightsAndBiasesInstances();
 
             // invoke the operation
             string instancename = "myinstance";
-            NullableResponse<InstanceResource> response = await collection.GetIfExistsAsync(instancename);
-            InstanceResource result = response.HasValue ? response.Value : null;
+            NullableResponse<WeightsAndBiasesInstanceResource> response = await collection.GetIfExistsAsync(instancename);
+            WeightsAndBiasesInstanceResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                InstanceResourceData resourceData = result.Data;
+                WeightsAndBiasesInstanceData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

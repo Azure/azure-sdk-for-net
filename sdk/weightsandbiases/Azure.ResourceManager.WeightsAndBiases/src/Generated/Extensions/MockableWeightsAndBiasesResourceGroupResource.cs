@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of InstanceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of InstanceResources and their operations over a InstanceResource. </returns>
-        public virtual InstanceResourceCollection GetInstanceResources()
+        /// <summary> Gets a collection of WeightsAndBiasesInstanceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of WeightsAndBiasesInstanceResources and their operations over a WeightsAndBiasesInstanceResource. </returns>
+        public virtual WeightsAndBiasesInstanceCollection GetWeightsAndBiasesInstances()
         {
-            return GetCachedClient(client => new InstanceResourceCollection(client, Id));
+            return GetCachedClient(client => new WeightsAndBiasesInstanceCollection(client, Id));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="instancename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<InstanceResource>> GetInstanceResourceAsync(string instancename, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WeightsAndBiasesInstanceResource>> GetWeightsAndBiasesInstanceAsync(string instancename, CancellationToken cancellationToken = default)
         {
-            return await GetInstanceResources().GetAsync(instancename, cancellationToken).ConfigureAwait(false);
+            return await GetWeightsAndBiasesInstances().GetAsync(instancename, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="instancename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="instancename"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<InstanceResource> GetInstanceResource(string instancename, CancellationToken cancellationToken = default)
+        public virtual Response<WeightsAndBiasesInstanceResource> GetWeightsAndBiasesInstance(string instancename, CancellationToken cancellationToken = default)
         {
-            return GetInstanceResources().Get(instancename, cancellationToken);
+            return GetWeightsAndBiasesInstances().Get(instancename, cancellationToken);
         }
     }
 }

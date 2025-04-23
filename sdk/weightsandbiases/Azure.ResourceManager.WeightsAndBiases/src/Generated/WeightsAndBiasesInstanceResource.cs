@@ -18,14 +18,14 @@ using Azure.ResourceManager.WeightsAndBiases.Models;
 namespace Azure.ResourceManager.WeightsAndBiases
 {
     /// <summary>
-    /// A Class representing an InstanceResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="InstanceResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetInstanceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetInstanceResource method.
+    /// A Class representing a WeightsAndBiasesInstance along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WeightsAndBiasesInstanceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWeightsAndBiasesInstanceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetWeightsAndBiasesInstance method.
     /// </summary>
-    public partial class InstanceResource : ArmResource
+    public partial class WeightsAndBiasesInstanceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="InstanceResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="WeightsAndBiasesInstanceResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="instancename"> The instancename. </param>
@@ -35,35 +35,35 @@ namespace Azure.ResourceManager.WeightsAndBiases
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _instanceResourceInstancesClientDiagnostics;
-        private readonly InstancesRestOperations _instanceResourceInstancesRestClient;
-        private readonly InstanceResourceData _data;
+        private readonly ClientDiagnostics _weightsAndBiasesInstanceInstancesClientDiagnostics;
+        private readonly InstancesRestOperations _weightsAndBiasesInstanceInstancesRestClient;
+        private readonly WeightsAndBiasesInstanceData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.WeightsAndBiases/instances";
 
-        /// <summary> Initializes a new instance of the <see cref="InstanceResource"/> class for mocking. </summary>
-        protected InstanceResource()
+        /// <summary> Initializes a new instance of the <see cref="WeightsAndBiasesInstanceResource"/> class for mocking. </summary>
+        protected WeightsAndBiasesInstanceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="InstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WeightsAndBiasesInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal InstanceResource(ArmClient client, InstanceResourceData data) : this(client, data.Id)
+        internal WeightsAndBiasesInstanceResource(ArmClient client, WeightsAndBiasesInstanceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="InstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WeightsAndBiasesInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal InstanceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal WeightsAndBiasesInstanceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _instanceResourceInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WeightsAndBiases", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string instanceResourceInstancesApiVersion);
-            _instanceResourceInstancesRestClient = new InstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, instanceResourceInstancesApiVersion);
+            _weightsAndBiasesInstanceInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WeightsAndBiases", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string weightsAndBiasesInstanceInstancesApiVersion);
+            _weightsAndBiasesInstanceInstancesRestClient = new InstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, weightsAndBiasesInstanceInstancesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual InstanceResourceData Data
+        public virtual WeightsAndBiasesInstanceData Data
         {
             get
             {
@@ -107,21 +107,21 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<InstanceResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WeightsAndBiasesInstanceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _instanceResourceInstancesClientDiagnostics.CreateScope("InstanceResource.Get");
+            using var scope = _weightsAndBiasesInstanceInstancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceResource.Get");
             scope.Start();
             try
             {
-                var response = await _instanceResourceInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _weightsAndBiasesInstanceInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new InstanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WeightsAndBiasesInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,21 +147,21 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<InstanceResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<WeightsAndBiasesInstanceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _instanceResourceInstancesClientDiagnostics.CreateScope("InstanceResource.Get");
+            using var scope = _weightsAndBiasesInstanceInstancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceResource.Get");
             scope.Start();
             try
             {
-                var response = _instanceResourceInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _weightsAndBiasesInstanceInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new InstanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WeightsAndBiasesInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,12 +195,12 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _instanceResourceInstancesClientDiagnostics.CreateScope("InstanceResource.Delete");
+            using var scope = _weightsAndBiasesInstanceInstancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceResource.Delete");
             scope.Start();
             try
             {
-                var response = await _instanceResourceInstancesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WeightsAndBiasesArmOperation(_instanceResourceInstancesClientDiagnostics, Pipeline, _instanceResourceInstancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _weightsAndBiasesInstanceInstancesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new WeightsAndBiasesArmOperation(_weightsAndBiasesInstanceInstancesClientDiagnostics, Pipeline, _weightsAndBiasesInstanceInstancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,12 +237,12 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _instanceResourceInstancesClientDiagnostics.CreateScope("InstanceResource.Delete");
+            using var scope = _weightsAndBiasesInstanceInstancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceResource.Delete");
             scope.Start();
             try
             {
-                var response = _instanceResourceInstancesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new WeightsAndBiasesArmOperation(_instanceResourceInstancesClientDiagnostics, Pipeline, _instanceResourceInstancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _weightsAndBiasesInstanceInstancesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new WeightsAndBiasesArmOperation(_weightsAndBiasesInstanceInstancesClientDiagnostics, Pipeline, _weightsAndBiasesInstanceInstancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -271,23 +271,23 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<InstanceResource>> UpdateAsync(InstanceResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WeightsAndBiasesInstanceResource>> UpdateAsync(WeightsAndBiasesInstancePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _instanceResourceInstancesClientDiagnostics.CreateScope("InstanceResource.Update");
+            using var scope = _weightsAndBiasesInstanceInstancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceResource.Update");
             scope.Start();
             try
             {
-                var response = await _instanceResourceInstancesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new InstanceResource(Client, response.Value), response.GetRawResponse());
+                var response = await _weightsAndBiasesInstanceInstancesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new WeightsAndBiasesInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -313,23 +313,23 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<InstanceResource> Update(InstanceResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<WeightsAndBiasesInstanceResource> Update(WeightsAndBiasesInstancePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _instanceResourceInstancesClientDiagnostics.CreateScope("InstanceResource.Update");
+            using var scope = _weightsAndBiasesInstanceInstancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceResource.Update");
             scope.Start();
             try
             {
-                var response = _instanceResourceInstancesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new InstanceResource(Client, response.Value), response.GetRawResponse());
+                var response = _weightsAndBiasesInstanceInstancesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new WeightsAndBiasesInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -363,12 +363,12 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<InstanceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WeightsAndBiasesInstanceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _instanceResourceInstancesClientDiagnostics.CreateScope("InstanceResource.AddTag");
+            using var scope = _weightsAndBiasesInstanceInstancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceResource.AddTag");
             scope.Start();
             try
             {
@@ -377,13 +377,13 @@ namespace Azure.ResourceManager.WeightsAndBiases
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _instanceResourceInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new InstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _weightsAndBiasesInstanceInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new WeightsAndBiasesInstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new InstanceResourcePatch();
+                    var patch = new WeightsAndBiasesInstancePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -425,12 +425,12 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<InstanceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<WeightsAndBiasesInstanceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _instanceResourceInstancesClientDiagnostics.CreateScope("InstanceResource.AddTag");
+            using var scope = _weightsAndBiasesInstanceInstancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceResource.AddTag");
             scope.Start();
             try
             {
@@ -439,13 +439,13 @@ namespace Azure.ResourceManager.WeightsAndBiases
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _instanceResourceInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new InstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _weightsAndBiasesInstanceInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new WeightsAndBiasesInstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new InstanceResourcePatch();
+                    var patch = new WeightsAndBiasesInstancePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -479,18 +479,18 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<InstanceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WeightsAndBiasesInstanceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _instanceResourceInstancesClientDiagnostics.CreateScope("InstanceResource.SetTags");
+            using var scope = _weightsAndBiasesInstanceInstancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceResource.SetTags");
             scope.Start();
             try
             {
@@ -500,13 +500,13 @@ namespace Azure.ResourceManager.WeightsAndBiases
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _instanceResourceInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new InstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _weightsAndBiasesInstanceInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new WeightsAndBiasesInstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new InstanceResourcePatch();
+                    var patch = new WeightsAndBiasesInstancePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -536,18 +536,18 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<InstanceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<WeightsAndBiasesInstanceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _instanceResourceInstancesClientDiagnostics.CreateScope("InstanceResource.SetTags");
+            using var scope = _weightsAndBiasesInstanceInstancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceResource.SetTags");
             scope.Start();
             try
             {
@@ -557,13 +557,13 @@ namespace Azure.ResourceManager.WeightsAndBiases
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _instanceResourceInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new InstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _weightsAndBiasesInstanceInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new WeightsAndBiasesInstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new InstanceResourcePatch();
+                    var patch = new WeightsAndBiasesInstancePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -593,18 +593,18 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<InstanceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WeightsAndBiasesInstanceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _instanceResourceInstancesClientDiagnostics.CreateScope("InstanceResource.RemoveTag");
+            using var scope = _weightsAndBiasesInstanceInstancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceResource.RemoveTag");
             scope.Start();
             try
             {
@@ -613,13 +613,13 @@ namespace Azure.ResourceManager.WeightsAndBiases
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _instanceResourceInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new InstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _weightsAndBiasesInstanceInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new WeightsAndBiasesInstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new InstanceResourcePatch();
+                    var patch = new WeightsAndBiasesInstancePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -653,18 +653,18 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="WeightsAndBiasesInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<InstanceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<WeightsAndBiasesInstanceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _instanceResourceInstancesClientDiagnostics.CreateScope("InstanceResource.RemoveTag");
+            using var scope = _weightsAndBiasesInstanceInstancesClientDiagnostics.CreateScope("WeightsAndBiasesInstanceResource.RemoveTag");
             scope.Start();
             try
             {
@@ -673,13 +673,13 @@ namespace Azure.ResourceManager.WeightsAndBiases
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _instanceResourceInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new InstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _weightsAndBiasesInstanceInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new WeightsAndBiasesInstanceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new InstanceResourcePatch();
+                    var patch = new WeightsAndBiasesInstancePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         /// <summary> Initializes a new instance of <see cref="InstanceResourceListResult"/>. </summary>
         /// <param name="value"> The InstanceResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal InstanceResourceListResult(IEnumerable<InstanceResourceData> value)
+        internal InstanceResourceListResult(IEnumerable<WeightsAndBiasesInstanceData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         /// <param name="value"> The InstanceResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InstanceResourceListResult(IReadOnlyList<InstanceResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InstanceResourceListResult(IReadOnlyList<WeightsAndBiasesInstanceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         }
 
         /// <summary> The InstanceResource items on this page. </summary>
-        public IReadOnlyList<InstanceResourceData> Value { get; }
+        public IReadOnlyList<WeightsAndBiasesInstanceData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

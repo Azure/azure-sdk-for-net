@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetInstanceResources_InstancesListBySubscriptionGeneratedByMaximumSetRule()
+        public async Task GetWeightsAndBiasesInstances_InstancesListBySubscriptionGeneratedByMaximumSetRule()
         {
             // Generated from example definition: 2024-09-18-preview/Instances_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "InstanceResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.WeightsAndBiases.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (InstanceResource item in subscriptionResource.GetInstanceResourcesAsync())
+            await foreach (WeightsAndBiasesInstanceResource item in subscriptionResource.GetWeightsAndBiasesInstancesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                InstanceResourceData resourceData = item.Data;
+                WeightsAndBiasesInstanceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetInstanceResources_InstancesListBySubscriptionGeneratedByMinimumSetRule()
+        public async Task GetWeightsAndBiasesInstances_InstancesListBySubscriptionGeneratedByMinimumSetRule()
         {
             // Generated from example definition: 2024-09-18-preview/Instances_ListBySubscription_MinimumSet_Gen.json
             // this example is just showing the usage of "InstanceResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.WeightsAndBiases.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (InstanceResource item in subscriptionResource.GetInstanceResourcesAsync())
+            await foreach (WeightsAndBiasesInstanceResource item in subscriptionResource.GetWeightsAndBiasesInstancesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                InstanceResourceData resourceData = item.Data;
+                WeightsAndBiasesInstanceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
