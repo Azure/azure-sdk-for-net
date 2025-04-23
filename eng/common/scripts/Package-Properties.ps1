@@ -288,7 +288,11 @@ function Update-TargetedFilesForTriggerPaths([string[]]$TargetedFiles, [string[]
 
         for ($i = 0; $i -lt $Triggers.Count; $i++) {
             $triggerPath = $Triggers[$i]
-            if ($triggerPath -and $file -eq "$triggerPath") {
+            # targeted files comes from the `changedPaths` property of the diff, which is
+            # a list of relative file paths from root. Not starting with a /.
+            # However, the triggerPaths are absolute paths, so we need to resolve the targeted file
+            # to the same format
+            if ($triggerPath -and "/$file" -eq "$triggerPath") {
                 $isExistingTriggerPath = $true
                 break
             }
