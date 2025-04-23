@@ -1,5 +1,5 @@
 # Release History
-## 1.4.1-beta.2 (2025-04-01)
+## 1.4.1-beta.2 (2025-04-23)
 
 ### Features Added
 - Added user defined functions feature.
