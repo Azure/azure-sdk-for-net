@@ -1,6 +1,8 @@
 # Microsoft Azure liftrhyperexecute management client library for .NET
 
-**[Describe the service briefly first.]**
+LambdaTest HyperExecute is designed to provide scalable and secure test execution and orchestration at different points in your DevOps (CI/CD) lifecycle. With HyperExecute on Azure, you can leverage the robust infrastructure of Microsoft's cloud computing platform to optimize your testing processes.
+
+This library supports managing Microsoft Azure LambdaTestHyperExecute resources.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
