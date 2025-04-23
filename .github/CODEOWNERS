@@ -959,17 +959,17 @@
 # ServiceLabel: %ARM %Mgmt
 # ServiceOwners:                                                   @Azure/arm-sdk-owners
 
-# PRLabel: %Astronomer
-/sdk/astronomer/Azure.ResourceManager.Astro/                       @banggaurav
-
-# ServiceLabel: %Astronomer %Mgmt
-# ServiceOwners:                                                   @banggaurav
-
 # PRLabel: %Arize AI
 /sdk/arizeaiobservabilityeval/Azure.ResourceManager.*/             @aggarwalsw
 
 # ServiceLabel: %Arize AI %Mgmt
 # ServiceOwners:                                                   @aggarwalsw
+
+# PRLabel: %Astronomer
+/sdk/astronomer/Azure.ResourceManager.Astro/                       @banggaurav
+
+# ServiceLabel: %Astronomer %Mgmt
+# ServiceOwners:                                                   @banggaurav
 
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @ArcturusZhang @ArthurMa1978
