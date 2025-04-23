@@ -162,7 +162,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
         var typeGenerationSpecs = builders
             .Select(symbol =>
             {
-                if (symbol is not ITypeSymbol typeSymbol)
+                if (symbol is not ITypeSymbol typeSymbol || typeSymbol.DeclaredAccessibility == Accessibility.Private)
                     return null;
 
                 var type = data.SymbolToTypeRefCache.Get(typeSymbol, data.SymbolToKindCache);
