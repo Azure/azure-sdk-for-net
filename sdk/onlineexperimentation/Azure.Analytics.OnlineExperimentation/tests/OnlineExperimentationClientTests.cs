@@ -25,7 +25,7 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
         public void Setup()
         {
             var testEndpoint = new Uri(TestEnvironment.Endpoint);
-            var testClientOptions = InstrumentClientOptions(new OnlineExperimentationClientOptions());
+            OnlineExperimentationClientOptions testClientOptions = InstrumentClientOptions(new OnlineExperimentationClientOptions());
             var testClient = new OnlineExperimentationClient(testEndpoint, TestEnvironment.Credential, testClientOptions);
             _client = InstrumentClient(testClient);
         }
@@ -43,7 +43,7 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
                 DesiredDirection.Increase,
                 new EventCountMetricDefinition("TestEvent"));
 
-            Response<ExperimentMetric> response = await _client.CreateOrUpdateMetricAsync(metricId, metricDefinition);
+            Response<ExperimentMetric> response = await _client.CreateMetricAsync(metricId, metricDefinition);
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.Not.Null);
@@ -96,15 +96,13 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
 
             ExperimentMetric originalMetric = await SetupTestMetricAsync(metricId);
 
-            var updatedDefinition = new ExperimentMetric(
-                LifecycleStage.Active,
-                "Updated Metric",
-                "This metric has been updated",
-                ["Test", "Updated"],
-                DesiredDirection.Increase,
-                new EventCountMetricDefinition("UpdatedTestEvent"));
+            var updatedDefinition = new ExperimentMetricUpdate
+            {
+                DisplayName = "Updated Metric",
+                Description = "This metric has been updated",
+            };
 
-            Response<ExperimentMetric> response = await _client.CreateOrUpdateMetricAsync(metricId, updatedDefinition);
+            Response<ExperimentMetric> response = await _client.UpdateMetricAsync(metricId, updatedDefinition);
             ExperimentMetric updatedMetric = response.Value;
 
             Assert.That(updatedMetric, Is.Not.Null);
@@ -133,6 +131,7 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
             });
 
             Assert.That(exception.Status, Is.EqualTo(StatusCodes.Status400BadRequest));
+            Assert.That(exception.ErrorCode, Is.EqualTo("InvalidRequest"));
         }
 
         [RecordedTest]
@@ -142,15 +141,13 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
 
             ExperimentMetric originalMetric = await SetupTestMetricAsync(metricId);
 
-            var updatedDefinition = new ExperimentMetric(
-                LifecycleStage.Active,
-                "Updated With ETag",
-                "This metric has been updated with ETag condition",
-                ["Test", "Conditional"],
-                DesiredDirection.Increase,
-                new EventCountMetricDefinition("ConditionalUpdateEvent"));
+            var updatedDefinition = new ExperimentMetricUpdate
+            {
+                DisplayName = "Updated With ETag",
+                Description = "This metric has been updated with ETag condition"
+            };
 
-            Response<ExperimentMetric> response = await _client.CreateOrUpdateMetricAsync(
+            Response<ExperimentMetric> response = await _client.UpdateMetricAsync(
                 metricId,
                 updatedDefinition,
                 ifMatch: originalMetric.ETag);
@@ -170,17 +167,15 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
 
             await SetupTestMetricAsync(metricId);
 
-            var updatedDefinition = new ExperimentMetric(
-                LifecycleStage.Active,
-                "This Should Not Update",
-                "This update should fail due to ETag mismatch",
-                ["Test"],
-                DesiredDirection.Increase,
-                new EventCountMetricDefinition("TestEvent"));
+            var updatedDefinition = new ExperimentMetricUpdate
+            {
+                DisplayName = "This Should Not Update",
+                Description = "This update should fail due to ETag mismatch",
+            };
 
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                await _client.CreateOrUpdateMetricAsync(metricId, updatedDefinition, ifMatch: new ETag("incorrect-etag-value"));
+                await _client.UpdateMetricAsync(metricId, updatedDefinition, ifMatch: new ETag("incorrect-etag-value"));
             });
 
             Assert.That(exception.Status, Is.EqualTo(StatusCodes.Status412PreconditionFailed));
@@ -196,7 +191,7 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
                 await SetupTestMetricAsync($"test_metric_list_{i}");
             }
 
-            List<ExperimentMetric> metrics = new List<ExperimentMetric>();
+            List<ExperimentMetric> metrics = [];
             await foreach (ExperimentMetric metric in _client.GetMetricsAsync())
             {
                 metrics.Add(metric);
@@ -268,7 +263,7 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
 
             if (result.Diagnostics != null)
             {
-                foreach (var diagnostic in result.Diagnostics)
+                foreach (DiagnosticDetail diagnostic in result.Diagnostics)
                 {
                     Console.WriteLine($"- {diagnostic.Code}: {diagnostic.Message}");
                 }
@@ -412,7 +407,7 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
             string metricId = "test_metric_deactivate_etag";
 
             // Create an inactive metric and capture its ETag
-            var activeMetric = await SetupTestMetricAsync(metricId, LifecycleStage.Active);
+            ExperimentMetric activeMetric = await SetupTestMetricAsync(metricId, LifecycleStage.Active);
 
             // Activate the metric with ETag condition
             Response<ExperimentMetric> response = await _client.DeactivateMetricAsync(metricId, ifMatch: activeMetric.ETag);
@@ -428,7 +423,7 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
         public async Task DeactivateExperimentMetricPreconditionFailed()
         {
             string metricId = "test_metric_deactivate_etag_fail";
-            var activeMetric = await SetupTestMetricAsync(metricId, LifecycleStage.Active);
+            ExperimentMetric activeMetric = await SetupTestMetricAsync(metricId, LifecycleStage.Active);
 
             // Attempt to deactivate with incorrect ETag should fail
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -445,7 +440,7 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
             string metricId = "test_metric_activate_etag";
 
             // Create an inactive metric and capture its ETag
-            var inactiveMetric = await SetupTestMetricAsync(metricId, LifecycleStage.Inactive);
+            ExperimentMetric inactiveMetric = await SetupTestMetricAsync(metricId, LifecycleStage.Inactive);
 
             // Activate the metric with ETag condition
             Response<ExperimentMetric> response = await _client.ActivateMetricAsync(metricId, ifMatch: inactiveMetric.ETag);

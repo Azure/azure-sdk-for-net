@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://fd03a0aa-5843-4c83-8b89-0ddc18abf2df.eastus2.exp.azure.net/experiment-metrics/test_metric_activate?api-version=2025-05-31-preview",
+      "RequestUri": "https://a436c1d9-a21b-46b1-8ed5-483c07d02836.eastus2.exp.azure.net/experiment-metrics/test_metric_activate?api-version=2025-05-31-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "362",
         "Content-Type": "application/merge-patch+json",
-        "traceparent": "00-27a2a3ea5f50aa2d3fd7d2af453edd95-bfd025d5ab847317-00",
-        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250407.1 (.NET 8.0.14; Microsoft Windows 10.0.26100)",
+        "traceparent": "00-d6ac72dc28f7b774bc5d99b61a030119-d804e43b21197236-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250422.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -28,16 +28,17 @@
           }
         }
       },
-      "StatusCode": 200,
+      "StatusCode": 201,
       "ResponseHeaders": {
         "api-supported-versions": "2025-05-31-preview",
         "Connection": "keep-alive",
-        "Content-Length": "464",
+        "Content-Length": "469",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 08 Apr 2025 01:24:12 GMT",
+        "Date": "Wed, 23 Apr 2025 20:13:26 GMT",
         "ETag": "\"aiYncDQXIKg=\"",
-        "Last-Modified": "Tue, 08 Apr 2025 01:24:12 GMT",
-        "mise-correlation-id": "ab288f46-8d53-4170-b01c-916351711384",
+        "Last-Modified": "Wed, 23 Apr 2025 20:13:26 GMT",
+        "Location": "/workspaces/a436c1d9-a21b-46b1-8ed5-483c07d02836/experiment-metrics/test_metric_activate",
+        "mise-correlation-id": "11c36181-6dd0-4e8d-9672-7be6551ab53d",
         "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000",
@@ -46,7 +47,7 @@
           "nosniff"
         ],
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-request-id": "9e5d461b-d65b-463a-8cd3-416fe9c687c9",
+        "x-ms-request-id": "d6ad9f4b-def2-4b07-aefd-bbbe5f3bc70f",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -64,20 +65,20 @@
           },
           "type": "EventCount"
         },
-        "eTag": "aiYncDQXIKg=",
-        "lastModifiedAt": "2025-04-08T01:24:12.595995+00:00"
+        "eTag": "\"aiYncDQXIKg=\"",
+        "lastModifiedAt": "2025-04-23T20:13:26.2984581+00:00"
       }
     },
     {
-      "RequestUri": "https://fd03a0aa-5843-4c83-8b89-0ddc18abf2df.eastus2.exp.azure.net/experiment-metrics/test_metric_activate?api-version=2025-05-31-preview",
+      "RequestUri": "https://a436c1d9-a21b-46b1-8ed5-483c07d02836.eastus2.exp.azure.net/experiment-metrics/test_metric_activate?api-version=2025-05-31-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "22",
         "Content-Type": "application/merge-patch+json",
-        "traceparent": "00-05e7c439788ba5b617703af0866071e3-265c170b23c3ff0d-00",
-        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250407.1 (.NET 8.0.14; Microsoft Windows 10.0.26100)",
+        "traceparent": "00-89551f62b969dd8913cbf4feae68613b-48234f557d7a65bd-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250422.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -88,12 +89,12 @@
       "ResponseHeaders": {
         "api-supported-versions": "2025-05-31-preview",
         "Connection": "keep-alive",
-        "Content-Length": "463",
+        "Content-Length": "467",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 08 Apr 2025 01:24:12 GMT",
+        "Date": "Wed, 23 Apr 2025 20:13:26 GMT",
         "ETag": "\"s3lTmA/v+iw=\"",
-        "Last-Modified": "Tue, 08 Apr 2025 01:24:12 GMT",
-        "mise-correlation-id": "ea1e5ddd-a690-4ca8-bf17-ab504c142782",
+        "Last-Modified": "Wed, 23 Apr 2025 20:13:26 GMT",
+        "mise-correlation-id": "2503af8a-a93b-410b-b7a0-0d14b544e9fb",
         "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000",
@@ -102,7 +103,7 @@
           "nosniff"
         ],
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-request-id": "15ffa938-adc7-4913-9df3-2856ce55afb7",
+        "x-ms-request-id": "2f5a0fe8-d7a5-4a43-abfa-5df29923717c",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -120,13 +121,13 @@
           },
           "type": "EventCount"
         },
-        "eTag": "s3lTmA/v+iw=",
-        "lastModifiedAt": "2025-04-08T01:24:12.7446828+00:00"
+        "eTag": "\"s3lTmA/v+iw=\"",
+        "lastModifiedAt": "2025-04-23T20:13:26.5723924+00:00"
       }
     }
   ],
   "Variables": {
-    "ENDPOINT": "https://fd03a0aa-5843-4c83-8b89-0ddc18abf2df.eastus2.exp.azure.net",
-    "RandomSeed": "1675851623"
+    "ENDPOINT": "https://a436c1d9-a21b-46b1-8ed5-483c07d02836.eastus2.exp.azure.net",
+    "RandomSeed": "1120344331"
   }
 }

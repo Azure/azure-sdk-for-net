@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "177",
         "Content-Type": "application/merge-patch+json",
-        "traceparent": "00-9be60d9ee4bd675a1fc69baedd1659e7-31112561c8707df7-00",
-        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250407.1 (.NET 8.0.14; Microsoft Windows 10.0.26100)",
+        "traceparent": "00-3c8bb70fbf07d70ef0e01166346ae4d0-b1c769e4e5105adc-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250422.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -33,8 +33,8 @@
         "api-supported-versions": "2025-05-31-preview",
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 08 Apr 2025 01:24:26 GMT",
-        "mise-correlation-id": "200c836b-d6bf-4f66-ad44-f6df175e092f",
+        "Date": "Tue, 22 Apr 2025 19:49:26 GMT",
+        "mise-correlation-id": "62d9ffa0-357a-4357-bb8e-18970f869506",
         "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000",
@@ -45,7 +45,7 @@
         ],
         "x-ms-client-request-id": "Sanitized",
         "x-ms-error-code": "InvalidOrUnsupportedError",
-        "x-ms-request-id": "87a48d60-e26b-4fb5-9cdf-0b393421d24d",
+        "x-ms-request-id": "ec2b6608-aeee-4a6f-8602-f1ced754a242",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -69,6 +69,6 @@
   ],
   "Variables": {
     "ENDPOINT": "https://fd03a0aa-5843-4c83-8b89-0ddc18abf2df.eastus2.exp.azure.net",
-    "RandomSeed": "65172690"
+    "RandomSeed": "1503805808"
   }
 }
