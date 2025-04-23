@@ -384,7 +384,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
         }
 
         foreach ($file in $targetedFiles) {
-            $filePath = (Join-Path $RepoRoot $file)
+            $filePath = (Join-Path $RepoRoot $file).Replace("`\", "/")
 
             # handle direct changes to packages
             $shouldInclude = $filePath -eq $pkgDirectory -or $filePath -like (Join-Path "$pkgDirectory" "*")
@@ -394,9 +394,9 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
             if (-not $shouldInclude) {
                 # handle changes to files that are RELATED to each package
                 foreach($triggerPath in $triggeringPaths) {
-                    $resolvedRelativePath = (Join-Path $RepoRoot $triggerPath)
+                    $resolvedRelativePath = (Join-Path $RepoRoot $triggerPath).Replace("`\", "/")
                     # triggerPaths can be direct files, so we need to check both startswith and direct equality
-                    $includedForValidation = ($filePath -like (Join-Path "$resolvedRelativePath" "*") -or $filePath -eq $resolvedRelativePath)
+                    $includedForValidation = ($filePath -like ("$resolvedRelativePath/*") -or $filePath -eq $resolvedRelativePath)
                     $shouldInclude = $shouldInclude -or $includedForValidation
                     if ($includedForValidation) {
                         $pkg.IncludedForValidation = $false
@@ -422,9 +422,8 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
                     # files that are directly included in triggerPaths will kept in full form, so owning ci.yml files will be present in their full form
                     # and not as a directory. We need to check the parent directory if the file is a file and not a directory, but otherwise
                     # we just need to check if the file is in the service directory
-                    $normalizedFilePath = $filePath.Replace("`\", "/")
-                    $parent = if ($normalizedFilePath -match '\.[^\\/]+$') { Split-Path $normalizedFilePath -Parent } else { $normalizedFilePath }
-                    $serviceDirectoryChange = $parent -eq $directory
+
+                    $serviceDirectoryChange = $filePath.Replace($directory, "").Contains("/")
                     if (!$serviceDirectoryChange) {
                         break
                     }
@@ -439,7 +438,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
                         $directoryIndex[$directory] = $soleCIYml
                     }
 
-                    if ($soleCIYml -and $filePath.Replace("`\", "/").StartsWith($directory)) {
+                    if ($soleCIYml -and $filePath.StartsWith($directory)) {
                         if (-not $shouldInclude) {
                             $pkg.IncludedForValidation = $false
                             $shouldInclude = $true
