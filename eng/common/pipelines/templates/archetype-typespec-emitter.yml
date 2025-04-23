@@ -37,6 +37,11 @@ parameters:
   type: boolean
   default: true
 
+# Whether the built packages contain nuget packages. If true, the publish stage will publish the nuget packages to the internal nuget feed.
+- name: HasNugetPackages
+  type: boolean
+  default: false
+
 # Indicates if the Publish stage should depend on the Test stage
 - name: PublishDependsOnTest
   type: boolean
@@ -57,7 +62,7 @@ parameters:
   type: number
   default: 10
 
-# Indicates if regenration matrix should only contain folders with typespec files
+# Indicates if regeneration matrix should only contain folders with typespec files
 - name: OnlyGenerateTypespec
   type: boolean
   default: false
@@ -126,6 +131,7 @@ extends:
               -OutputDirectory "$(Build.ArtifactStagingDirectory)/packages"
               -TargetNpmJsFeed:$${{ parameters.PublishPublic }}
               -EmitterPackagePath:${{ parameters.EmitterPackagePath }}
+              -GeneratorVersion: $(initialize.emitterVersion)
 
         - pwsh: |
             $sourceBranch = '$(Build.SourceBranch)'
@@ -186,6 +192,16 @@ extends:
             displayName: Publish to DevOps feed
             workingDirectory: $(buildArtifactsPath)/packages
 
+          # Publish to https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
+          - ${{ if parameters.HasNugetPackages }}:
+            - task: 1ES.PublishNuget@1
+              displayName: Publish NuGet Packages to DevOps feed
+              inputs:
+                packagesToPush: $(buildArtifactsPath)/packages/*.nupkg;!$(buildArtifactsPath)/packages/*.symbols.nupkg
+                packageParentPath: $(buildArtifactsPath)/packages
+                publishVstsFeed: "29ec6040-b234-4e31-b139-33dc4287b756/fa8c16a3-dbe0-4de2-a297-03065ec1ba3f"
+                nuGetFeedType: internal
+
           - ${{ if parameters.PublishPublic }}:
             # publish to npmjs.org using ESRP
             - task: EsrpRelease@9
@@ -244,7 +260,7 @@ extends:
                 --overrides '$(buildArtifactsPath)/packages/overrides.json'
               } else {
                 Write-Host "No overrides.json found. Running tsp-client without overrides."
-                
+
                 tsp-client generate-config-files `
                 --package-json '$(buildArtifactsPath)/lock-files/package.json' `
                 --emitter-package-json-path '${{ parameters.EmitterPackageJsonOutputPath }}'

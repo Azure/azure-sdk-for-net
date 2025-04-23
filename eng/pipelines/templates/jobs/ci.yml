@@ -45,6 +45,9 @@ parameters:
   - name: LimitForPullRequest
     type: boolean
     default: false
+  - name: ExcludePaths
+    type: object
+    default: []
 
 jobs:
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
@@ -77,6 +80,7 @@ jobs:
               ServiceDirectory: ${{ parameters.ServiceDirectory }}
               PublishingArtifactName: BuildPackagesArtifact
               ForceDirect: true
+              ExcludePaths: ${{ parameters.ExcludePaths }}
 
   - ${{ else }}:
     - job: Build
@@ -186,6 +190,7 @@ jobs:
               parameters:
                 ServiceDirectory: ${{ parameters.ServiceDirectory }}
                 PublishingArtifactName: TestPackagesArtifact
+                ExcludePaths: ${{ parameters.ExcludePaths }}
 
         AdditionalParameters:
           SDKType: ${{ parameters.SDKType }}
