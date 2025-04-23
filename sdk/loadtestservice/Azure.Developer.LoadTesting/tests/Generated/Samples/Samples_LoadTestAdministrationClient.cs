@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -19,7 +18,37 @@ namespace Azure.Developer.LoadTesting.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Test_CreateOrUpdateTest_CreateOrUpdateALoadTest()
+        public void Example_CreateOrUpdateTest_ShortVersion()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new object());
+            Response response = client.CreateOrUpdateTest("<testId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdateTest_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateOrUpdateTestAsync("<testId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CreateOrUpdateTest_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -27,78 +56,127 @@ namespace Azure.Developer.LoadTesting.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                description = "sample description",
-                displayName = "Performance_LoadTest",
-                loadTestConfiguration = new
-                {
-                    engineInstances = 6,
-                    splitAllCSVs = true,
-                },
                 passFailCriteria = new
                 {
-                    passFailMetrics = new Dictionary<string, object>
+                    passFailMetrics = new
                     {
-                        ["fefd759d-7fe8-4f83-8b6d-aeebe0f491fe"] = new
+                        key = new
                         {
                             clientMetric = "response_time_ms",
-                            aggregate = "percentage",
-                            condition = ">",
-                            value = 20,
+                            aggregate = "count",
+                            condition = "<condition>",
+                            requestName = "<requestName>",
+                            value = 123.45,
                             action = "continue",
-                        }
+                        },
                     },
-                    passFailServerMetrics = new Dictionary<string, object>
-                    {
-                        ["fefd759d-7fe8-4f83-8b6d-aeebe0f491fe"] = new
-                        {
-                            resourceId = "/subscriptions/12345678-1234-1234-1234-123456789abc/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyVM",
-                            metricNamespace = "Microsoft.Compute/virtualMachines",
-                            metricName = "Percentage CPU",
-                            aggregation = "Average",
-                            condition = ">",
-                            value = 20,
-                            action = "continue",
-                        }
-                    },
-                },
-                autoStopCriteria = new
-                {
-                    autoStopDisabled = true,
-                    errorRate = 70F,
-                    errorRateTimeWindowInSeconds = 60,
                 },
                 secrets = new
                 {
-                    secret1 = new
+                    key = new
                     {
-                        value = "https://samplevault.vault.azure.net/secrets/samplesecret/f113f91fd4c44a368049849c164db827",
+                        value = "<value>",
                         type = "AKV_SECRET_URI",
                     },
                 },
+                certificate = new
+                {
+                    value = "<value>",
+                    type = "AKV_CERT_URI",
+                    name = "<name>",
+                },
                 environmentVariables = new
                 {
-                    envvar1 = "sampletext",
+                    key = "<environmentVariables>",
                 },
-                subnetId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplerg/providers/Microsoft.Network/virtualNetworks/samplenetworkresource/subnets/AAAAA0A0A0",
-                keyvaultReferenceIdentityType = "UserAssigned",
-                keyvaultReferenceIdentityId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplerg/providers/sampleprovider/sampleresourcetype/sampleresourcename",
-                metricsReferenceIdentityType = "UserAssigned",
-                metricsReferenceIdentityId = "/subscriptions/10000000-0000-0000-0000-000000000000/resourceGroups/samplerg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sampleresourcename",
-                engineBuiltInIdentityType = "UserAssigned",
-                engineBuiltInIdentityIds = new object[]
-            {
-"/subscriptions/10000000-0000-0000-0000-000000000000/resourceGroups/samplerg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sampleresourcename"
-            },
+                loadTestConfiguration = new
+                {
+                    engineInstances = 1234,
+                    splitAllCSVs = true,
+                    quickStartTest = true,
+                    optionalLoadTestConfig = new
+                    {
+                        endpointUrl = "<endpointUrl>",
+                        virtualUsers = 1234,
+                        rampUpTime = 1234,
+                        duration = 1234,
+                    },
+                },
+                description = "<description>",
+                displayName = "<displayName>",
+                subnetId = "<subnetId>",
+                keyvaultReferenceIdentityType = "<keyvaultReferenceIdentityType>",
+                keyvaultReferenceIdentityId = "<keyvaultReferenceIdentityId>",
             });
-            Response response = client.CreateOrUpdateTest("12345678-1234-1234-1234-123456789012", content);
+            Response response = client.CreateOrUpdateTest("<testId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("clientMetric").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("aggregate").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("condition").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("requestName").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("action").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("actualValue").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("result").ToString());
+            Console.WriteLine(result.GetProperty("secrets").GetProperty("<key>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("secrets").GetProperty("<key>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engineInstances").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationFailureDetails").ToString());
             Console.WriteLine(result.GetProperty("testId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("displayName").ToString());
+            Console.WriteLine(result.GetProperty("subnetId").ToString());
+            Console.WriteLine(result.GetProperty("keyvaultReferenceIdentityType").ToString());
+            Console.WriteLine(result.GetProperty("keyvaultReferenceIdentityId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Test_CreateOrUpdateTest_CreateOrUpdateALoadTest_Async()
+        public async Task Example_CreateOrUpdateTest_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -106,466 +184,473 @@ namespace Azure.Developer.LoadTesting.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                description = "sample description",
-                displayName = "Performance_LoadTest",
-                loadTestConfiguration = new
-                {
-                    engineInstances = 6,
-                    splitAllCSVs = true,
-                },
                 passFailCriteria = new
                 {
-                    passFailMetrics = new Dictionary<string, object>
+                    passFailMetrics = new
                     {
-                        ["fefd759d-7fe8-4f83-8b6d-aeebe0f491fe"] = new
+                        key = new
                         {
                             clientMetric = "response_time_ms",
-                            aggregate = "percentage",
-                            condition = ">",
-                            value = 20,
+                            aggregate = "count",
+                            condition = "<condition>",
+                            requestName = "<requestName>",
+                            value = 123.45,
                             action = "continue",
-                        }
+                        },
                     },
-                    passFailServerMetrics = new Dictionary<string, object>
-                    {
-                        ["fefd759d-7fe8-4f83-8b6d-aeebe0f491fe"] = new
-                        {
-                            resourceId = "/subscriptions/12345678-1234-1234-1234-123456789abc/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyVM",
-                            metricNamespace = "Microsoft.Compute/virtualMachines",
-                            metricName = "Percentage CPU",
-                            aggregation = "Average",
-                            condition = ">",
-                            value = 20,
-                            action = "continue",
-                        }
-                    },
-                },
-                autoStopCriteria = new
-                {
-                    autoStopDisabled = true,
-                    errorRate = 70F,
-                    errorRateTimeWindowInSeconds = 60,
                 },
                 secrets = new
                 {
-                    secret1 = new
+                    key = new
                     {
-                        value = "https://samplevault.vault.azure.net/secrets/samplesecret/f113f91fd4c44a368049849c164db827",
+                        value = "<value>",
                         type = "AKV_SECRET_URI",
                     },
                 },
+                certificate = new
+                {
+                    value = "<value>",
+                    type = "AKV_CERT_URI",
+                    name = "<name>",
+                },
                 environmentVariables = new
                 {
-                    envvar1 = "sampletext",
+                    key = "<environmentVariables>",
                 },
-                subnetId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplerg/providers/Microsoft.Network/virtualNetworks/samplenetworkresource/subnets/AAAAA0A0A0",
-                keyvaultReferenceIdentityType = "UserAssigned",
-                keyvaultReferenceIdentityId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplerg/providers/sampleprovider/sampleresourcetype/sampleresourcename",
-                metricsReferenceIdentityType = "UserAssigned",
-                metricsReferenceIdentityId = "/subscriptions/10000000-0000-0000-0000-000000000000/resourceGroups/samplerg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sampleresourcename",
-                engineBuiltInIdentityType = "UserAssigned",
-                engineBuiltInIdentityIds = new object[]
-            {
-"/subscriptions/10000000-0000-0000-0000-000000000000/resourceGroups/samplerg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sampleresourcename"
-            },
+                loadTestConfiguration = new
+                {
+                    engineInstances = 1234,
+                    splitAllCSVs = true,
+                    quickStartTest = true,
+                    optionalLoadTestConfig = new
+                    {
+                        endpointUrl = "<endpointUrl>",
+                        virtualUsers = 1234,
+                        rampUpTime = 1234,
+                        duration = 1234,
+                    },
+                },
+                description = "<description>",
+                displayName = "<displayName>",
+                subnetId = "<subnetId>",
+                keyvaultReferenceIdentityType = "<keyvaultReferenceIdentityType>",
+                keyvaultReferenceIdentityId = "<keyvaultReferenceIdentityId>",
             });
-            Response response = await client.CreateOrUpdateTestAsync("12345678-1234-1234-1234-123456789012", content);
+            Response response = await client.CreateOrUpdateTestAsync("<testId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("clientMetric").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("aggregate").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("condition").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("requestName").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("action").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("actualValue").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("result").ToString());
+            Console.WriteLine(result.GetProperty("secrets").GetProperty("<key>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("secrets").GetProperty("<key>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engineInstances").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationFailureDetails").ToString());
             Console.WriteLine(result.GetProperty("testId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("displayName").ToString());
+            Console.WriteLine(result.GetProperty("subnetId").ToString());
+            Console.WriteLine(result.GetProperty("keyvaultReferenceIdentityType").ToString());
+            Console.WriteLine(result.GetProperty("keyvaultReferenceIdentityId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AdministrationOperations_CreateOrUpdateAppComponents_AddOrUpdateAppComponentsToALoadTest()
+        public void Example_DeleteTest_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            using RequestContent content = RequestContent.Create(new
-            {
-                components = new Dictionary<string, object>
-                {
-                    ["/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplerg/providers/microsoft.insights/components/appcomponentresource"] = new
-                    {
-                        resourceType = "microsoft.insights/components",
-                        resourceName = "appcomponentresource",
-                        displayName = "Performance_LoadTest_Insights",
-                        kind = "web",
-                    }
-                },
-            });
-            Response response = client.CreateOrUpdateAppComponents("ee843bd9-a6d4-4364-a45c-427a03c39fa7", content);
+            Response response = client.DeleteTest("<testId>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteTest_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            Response response = await client.DeleteTestAsync("<testId>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteTest_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            Response response = client.DeleteTest("<testId>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DeleteTest_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            Response response = await client.DeleteTestAsync("<testId>");
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetTest_ShortVersion()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            Response response = client.GetTest("<testId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceName").ToString());
-            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceType").ToString());
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AdministrationOperations_CreateOrUpdateAppComponents_AddOrUpdateAppComponentsToALoadTest_Async()
+        public async Task Example_GetTest_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            using RequestContent content = RequestContent.Create(new
-            {
-                components = new Dictionary<string, object>
-                {
-                    ["/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplerg/providers/microsoft.insights/components/appcomponentresource"] = new
-                    {
-                        resourceType = "microsoft.insights/components",
-                        resourceName = "appcomponentresource",
-                        displayName = "Performance_LoadTest_Insights",
-                        kind = "web",
-                    }
-                },
-            });
-            Response response = await client.CreateOrUpdateAppComponentsAsync("ee843bd9-a6d4-4364-a45c-427a03c39fa7", content);
+            Response response = await client.GetTestAsync("<testId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceName").ToString());
-            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceType").ToString());
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AdministrationOperations_CreateOrUpdateServerMetricsConfig_AddOrUpdateServerMetricsConfigurationForALoadTest()
+        public void Example_GetTest_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            using RequestContent content = RequestContent.Create(new
-            {
-                metrics = new Dictionary<string, object>
-                {
-                    ["/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplerg/providers/microsoft.insights/components/appcomponentresource/providers/microsoft.insights/metricdefinitions/requests/duration"] = new
-                    {
-                        resourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplerg/providers/microsoft.insights/components/appcomponentresource",
-                        metricNamespace = "microsoft.insights/components",
-                        displayDescription = "sample description",
-                        name = "requests/duration",
-                        aggregation = "Average",
-                        resourceType = "microsoft.insights/components",
-                    }
-                },
-            });
-            Response response = client.CreateOrUpdateServerMetricsConfig("edc6e529-d009-4b99-b763-ca492e3a2823", content);
+            Response response = client.GetTest("<testId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("metricNamespace").ToString());
-            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("aggregation").ToString());
-            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceType").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AdministrationOperations_CreateOrUpdateServerMetricsConfig_AddOrUpdateServerMetricsConfigurationForALoadTest_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                metrics = new Dictionary<string, object>
-                {
-                    ["/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplerg/providers/microsoft.insights/components/appcomponentresource/providers/microsoft.insights/metricdefinitions/requests/duration"] = new
-                    {
-                        resourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplerg/providers/microsoft.insights/components/appcomponentresource",
-                        metricNamespace = "microsoft.insights/components",
-                        displayDescription = "sample description",
-                        name = "requests/duration",
-                        aggregation = "Average",
-                        resourceType = "microsoft.insights/components",
-                    }
-                },
-            });
-            Response response = await client.CreateOrUpdateServerMetricsConfigAsync("edc6e529-d009-4b99-b763-ca492e3a2823", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("metricNamespace").ToString());
-            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("aggregation").ToString());
-            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceType").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_AdministrationOperations_GetAppComponents_GetAssociatedAppComponentForTheGivenTest()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            Response response = client.GetAppComponents("ee843bd9-a6d4-4364-a45c-427a03c39fa7", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceName").ToString());
-            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceType").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AdministrationOperations_GetAppComponents_GetAssociatedAppComponentForTheGivenTest_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            Response response = await client.GetAppComponentsAsync("ee843bd9-a6d4-4364-a45c-427a03c39fa7", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceName").ToString());
-            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceType").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_AdministrationOperations_GetAppComponents_GetAssociatedAppComponentForTheGivenTest_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            Response<TestAppComponents> response = client.GetAppComponents("ee843bd9-a6d4-4364-a45c-427a03c39fa7");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AdministrationOperations_GetAppComponents_GetAssociatedAppComponentForTheGivenTest_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            Response<TestAppComponents> response = await client.GetAppComponentsAsync("ee843bd9-a6d4-4364-a45c-427a03c39fa7");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_AdministrationOperations_GetServerMetricsConfig_ListServerMetricsConfigurationForTheGivenTest()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            Response response = client.GetServerMetricsConfig("12345678-1234-1234-1234-123456789012", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("metricNamespace").ToString());
-            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("aggregation").ToString());
-            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceType").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AdministrationOperations_GetServerMetricsConfig_ListServerMetricsConfigurationForTheGivenTest_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            Response response = await client.GetServerMetricsConfigAsync("12345678-1234-1234-1234-123456789012", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceId").ToString());
-            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("metricNamespace").ToString());
-            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("aggregation").ToString());
-            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceType").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_AdministrationOperations_GetServerMetricsConfig_ListServerMetricsConfigurationForTheGivenTest_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            Response<TestServerMetricsConfiguration> response = client.GetServerMetricsConfig("12345678-1234-1234-1234-123456789012");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AdministrationOperations_GetServerMetricsConfig_ListServerMetricsConfigurationForTheGivenTest_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            Response<TestServerMetricsConfiguration> response = await client.GetServerMetricsConfigAsync("12345678-1234-1234-1234-123456789012");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Test_GetTest_GetALoadTest()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            Response response = client.GetTest("12345678-1234-1234-1234-123456789012", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("clientMetric").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("aggregate").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("condition").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("requestName").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("action").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("actualValue").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("result").ToString());
+            Console.WriteLine(result.GetProperty("secrets").GetProperty("<key>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("secrets").GetProperty("<key>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engineInstances").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationFailureDetails").ToString());
             Console.WriteLine(result.GetProperty("testId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("displayName").ToString());
+            Console.WriteLine(result.GetProperty("subnetId").ToString());
+            Console.WriteLine(result.GetProperty("keyvaultReferenceIdentityType").ToString());
+            Console.WriteLine(result.GetProperty("keyvaultReferenceIdentityId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Test_GetTest_GetALoadTest_Async()
+        public async Task Example_GetTest_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            Response response = await client.GetTestAsync("12345678-1234-1234-1234-123456789012", null);
+            Response response = await client.GetTestAsync("<testId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("clientMetric").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("aggregate").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("condition").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("requestName").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("action").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("actualValue").ToString());
+            Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("result").ToString());
+            Console.WriteLine(result.GetProperty("secrets").GetProperty("<key>").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("secrets").GetProperty("<key>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("value").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("certificate").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engineInstances").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("endpointUrl").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("virtualUsers").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("rampUpTime").ToString());
+            Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("optionalLoadTestConfig").GetProperty("duration").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("configFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("testScriptFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("userPropFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("inputArtifactsZipFileInfo").GetProperty("validationFailureDetails").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("url").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("inputArtifacts").GetProperty("additionalFileInfo")[0].GetProperty("validationFailureDetails").ToString());
             Console.WriteLine(result.GetProperty("testId").ToString());
+            Console.WriteLine(result.GetProperty("description").ToString());
+            Console.WriteLine(result.GetProperty("displayName").ToString());
+            Console.WriteLine(result.GetProperty("subnetId").ToString());
+            Console.WriteLine(result.GetProperty("keyvaultReferenceIdentityType").ToString());
+            Console.WriteLine(result.GetProperty("keyvaultReferenceIdentityId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Test_GetTest_GetALoadTest_Convenience()
+        public void Example_GetTestFile_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            Response<LoadTest> response = client.GetTest("12345678-1234-1234-1234-123456789012");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Test_GetTest_GetALoadTest_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            Response<LoadTest> response = await client.GetTestAsync("12345678-1234-1234-1234-123456789012");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TestFileInfo_GetTestFile_GetAFileFromALoadTest()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            Response response = client.GetTestFile("12345678-1234-1234-1234-123456789012", "sample.jmx", null);
+            Response response = client.GetTestFile("<testId>", "<fileName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetTestFile_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            Response response = await client.GetTestFileAsync("<testId>", "<fileName>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetTestFile_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            Response response = client.GetTestFile("<testId>", "<fileName>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("url").ToString());
             Console.WriteLine(result.GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TestFileInfo_GetTestFile_GetAFileFromALoadTest_Async()
+        public async Task Example_GetTestFile_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            Response response = await client.GetTestFileAsync("12345678-1234-1234-1234-123456789012", "sample.jmx", null);
+            Response response = await client.GetTestFileAsync("<testId>", "<fileName>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("url").ToString());
             Console.WriteLine(result.GetProperty("fileName").ToString());
+            Console.WriteLine(result.GetProperty("fileType").ToString());
+            Console.WriteLine(result.GetProperty("expireDateTime").ToString());
+            Console.WriteLine(result.GetProperty("validationStatus").ToString());
+            Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TestFileInfo_GetTestFile_GetAFileFromALoadTest_Convenience()
+        public void Example_DeleteTestFile_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            Response<TestFileInfo> response = client.GetTestFile("12345678-1234-1234-1234-123456789012", "sample.jmx");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TestFileInfo_GetTestFile_GetAFileFromALoadTest_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            Response<TestFileInfo> response = await client.GetTestFileAsync("12345678-1234-1234-1234-123456789012", "sample.jmx");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TestFileInfo_DeleteTestFile_DeleteAFileFromALoadTest()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            Response response = client.DeleteTestFile("12345678-1234-1234-1234-123456789012", "app.jmx");
+            Response response = client.DeleteTestFile("<testId>", "<fileName>");
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TestFileInfo_DeleteTestFile_DeleteAFileFromALoadTest_Async()
+        public async Task Example_DeleteTestFile_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            Response response = await client.DeleteTestFileAsync("12345678-1234-1234-1234-123456789012", "app.jmx");
+            Response response = await client.DeleteTestFileAsync("<testId>", "<fileName>");
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Test_DeleteTest_DeleteALoadTest()
+        public void Example_DeleteTestFile_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            Response response = client.DeleteTest("12345678-1234-1234-1234-123456789012");
+            Response response = client.DeleteTestFile("<testId>", "<fileName>");
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Test_DeleteTest_DeleteALoadTest_Async()
+        public async Task Example_DeleteTestFile_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            Response response = await client.DeleteTestAsync("12345678-1234-1234-1234-123456789012");
+            Response response = await client.DeleteTestFileAsync("<testId>", "<fileName>");
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TestProfile_CreateOrUpdateTestProfile_CreateOrUpdateATestProfile()
+        public void Example_CreateOrUpdateAppComponents_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -573,37 +658,79 @@ namespace Azure.Developer.LoadTesting.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                description = "sample description",
-                displayName = "Performance_TestProfile",
-                testId = "12346-abcd-6789",
-                targetResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplerg/providers/Microsoft.Web/sites/myfunctionapp",
-                targetResourceConfigurations = new
+                components = new
                 {
-                    kind = "FunctionsFlexConsumption",
-                    configurations = new
+                    key = new object(),
+                },
+            });
+            Response response = client.CreateOrUpdateAppComponents("<testId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdateAppComponents_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                components = new
+                {
+                    key = new object(),
+                },
+            });
+            Response response = await client.CreateOrUpdateAppComponentsAsync("<testId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CreateOrUpdateAppComponents_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                components = new
+                {
+                    key = new
                     {
-                        config1 = new
-                        {
-                            instanceMemoryMB = 2048L,
-                            httpConcurrency = 16L,
-                        },
-                        config2 = new
-                        {
-                            instanceMemoryMB = 4096L,
-                            httpConcurrency = 16L,
-                        },
+                        resourceName = "<resourceName>",
+                        resourceType = "<resourceType>",
+                        displayName = "<displayName>",
+                        kind = "<kind>",
                     },
                 },
             });
-            Response response = client.CreateOrUpdateTestProfile("12345678-1234-1234-1234-123456789012", content);
+            Response response = client.CreateOrUpdateAppComponents("<testId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("testProfileId").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceName").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceType").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("displayName").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceGroup").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("subscriptionId").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("testId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TestProfile_CreateOrUpdateTestProfile_CreateOrUpdateATestProfile_Async()
+        public async Task Example_CreateOrUpdateAppComponents_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -611,163 +738,373 @@ namespace Azure.Developer.LoadTesting.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                description = "sample description",
-                displayName = "Performance_TestProfile",
-                testId = "12346-abcd-6789",
-                targetResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplerg/providers/Microsoft.Web/sites/myfunctionapp",
-                targetResourceConfigurations = new
+                components = new
                 {
-                    kind = "FunctionsFlexConsumption",
-                    configurations = new
+                    key = new
                     {
-                        config1 = new
-                        {
-                            instanceMemoryMB = 2048L,
-                            httpConcurrency = 16L,
-                        },
-                        config2 = new
-                        {
-                            instanceMemoryMB = 4096L,
-                            httpConcurrency = 16L,
-                        },
+                        resourceName = "<resourceName>",
+                        resourceType = "<resourceType>",
+                        displayName = "<displayName>",
+                        kind = "<kind>",
                     },
                 },
             });
-            Response response = await client.CreateOrUpdateTestProfileAsync("12345678-1234-1234-1234-123456789012", content);
+            Response response = await client.CreateOrUpdateAppComponentsAsync("<testId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("testProfileId").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceName").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceType").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("displayName").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceGroup").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("subscriptionId").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("testId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TestProfile_DeleteTestProfile_DeleteATestProfile()
+        public void Example_GetAppComponents_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            Response response = client.DeleteTestProfile("12345678-1234-1234-1234-123456789012");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TestProfile_DeleteTestProfile_DeleteATestProfile_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            Response response = await client.DeleteTestProfileAsync("12345678-1234-1234-1234-123456789012");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TestProfile_GetTestProfile_GetATestProfile()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            Response response = client.GetTestProfile("12345678-1234-1234-1234-123456789012", null);
+            Response response = client.GetAppComponents("<testId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("testProfileId").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TestProfile_GetTestProfile_GetATestProfile_Async()
+        public async Task Example_GetAppComponents_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            Response response = await client.GetTestProfileAsync("12345678-1234-1234-1234-123456789012", null);
+            Response response = await client.GetAppComponentsAsync("<testId>");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("testProfileId").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TestProfile_GetTestProfile_GetATestProfile_Convenience()
+        public void Example_GetAppComponents_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            Response<TestProfile> response = client.GetTestProfile("12345678-1234-1234-1234-123456789012");
+            Response response = client.GetAppComponents("<testId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceName").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceType").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("displayName").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceGroup").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("subscriptionId").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("testId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TestProfile_GetTestProfile_GetATestProfile_Convenience_Async()
+        public async Task Example_GetAppComponents_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            Response<TestProfile> response = await client.GetTestProfileAsync("12345678-1234-1234-1234-123456789012");
+            Response response = await client.GetAppComponentsAsync("<testId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceName").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceType").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("displayName").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceGroup").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("subscriptionId").ToString());
+            Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("testId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TestFileInfo_GetTestFiles_GetAllTestFiles()
+        public void Example_CreateOrUpdateServerMetricsConfig_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetTestFiles("12345678-1234-1234-1234-123456789012", null))
+            using RequestContent content = RequestContent.Create(new object());
+            Response response = client.CreateOrUpdateServerMetricsConfig("<testId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdateServerMetricsConfig_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<testId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CreateOrUpdateServerMetricsConfig_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                metrics = new
+                {
+                    key = new
+                    {
+                        resourceId = "<resourceId>",
+                        metricNamespace = "<metricNamespace>",
+                        displayDescription = "<displayDescription>",
+                        name = "<name>",
+                        aggregation = "<aggregation>",
+                        unit = "<unit>",
+                        resourceType = "<resourceType>",
+                    },
+                },
+            });
+            Response response = client.CreateOrUpdateServerMetricsConfig("<testId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("testId").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("metricNamespace").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("displayDescription").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("aggregation").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceType").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdateServerMetricsConfig_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                metrics = new
+                {
+                    key = new
+                    {
+                        resourceId = "<resourceId>",
+                        metricNamespace = "<metricNamespace>",
+                        displayDescription = "<displayDescription>",
+                        name = "<name>",
+                        aggregation = "<aggregation>",
+                        unit = "<unit>",
+                        resourceType = "<resourceType>",
+                    },
+                },
+            });
+            Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<testId>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("testId").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("metricNamespace").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("displayDescription").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("aggregation").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceType").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetServerMetricsConfig_ShortVersion()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            Response response = client.GetServerMetricsConfig("<testId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetServerMetricsConfig_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            Response response = await client.GetServerMetricsConfigAsync("<testId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetServerMetricsConfig_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            Response response = client.GetServerMetricsConfig("<testId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("testId").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("metricNamespace").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("displayDescription").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("aggregation").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceType").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetServerMetricsConfig_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            Response response = await client.GetServerMetricsConfigAsync("<testId>");
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("testId").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("metricNamespace").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("displayDescription").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("aggregation").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceType").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("createdBy").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetTestFiles_ShortVersion()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            foreach (BinaryData item in client.GetTestFiles("<testId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("fileName").ToString());
+                Console.WriteLine(result.ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TestFileInfo_GetTestFiles_GetAllTestFiles_Async()
+        public async Task Example_GetTestFiles_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetTestFilesAsync("12345678-1234-1234-1234-123456789012", null))
+            await foreach (BinaryData item in client.GetTestFilesAsync("<testId>"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetTestFiles_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+            foreach (BinaryData item in client.GetTestFiles("<testId>"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("url").ToString());
                 Console.WriteLine(result.GetProperty("fileName").ToString());
+                Console.WriteLine(result.GetProperty("fileType").ToString());
+                Console.WriteLine(result.GetProperty("expireDateTime").ToString());
+                Console.WriteLine(result.GetProperty("validationStatus").ToString());
+                Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TestFileInfo_GetTestFiles_GetAllTestFiles_Convenience()
+        public async Task Example_GetTestFiles_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            foreach (TestFileInfo item in client.GetTestFiles("12345678-1234-1234-1234-123456789012"))
+            await foreach (BinaryData item in client.GetTestFilesAsync("<testId>"))
             {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TestFileInfo_GetTestFiles_GetAllTestFiles_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
-
-            await foreach (TestFileInfo item in client.GetTestFilesAsync("12345678-1234-1234-1234-123456789012"))
-            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("url").ToString());
+                Console.WriteLine(result.GetProperty("fileName").ToString());
+                Console.WriteLine(result.GetProperty("fileType").ToString());
+                Console.WriteLine(result.GetProperty("expireDateTime").ToString());
+                Console.WriteLine(result.GetProperty("validationStatus").ToString());
+                Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
             }
         }
     }
