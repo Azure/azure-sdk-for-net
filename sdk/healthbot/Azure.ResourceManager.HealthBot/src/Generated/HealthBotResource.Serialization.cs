@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HealthBot
 
         HealthBotData IJsonModel<HealthBotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthBotData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HealthBotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HealthBotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HealthBotData>(Data, options, AzureResourceManagerHealthBotContext.Default);
 
-        HealthBotData IPersistableModel<HealthBotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthBotData>(data, options);
+        HealthBotData IPersistableModel<HealthBotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthBotData>(data, options, AzureResourceManagerHealthBotContext.Default);
 
         string IPersistableModel<HealthBotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthBotData>)Data).GetFormatFromOptions(options);
     }

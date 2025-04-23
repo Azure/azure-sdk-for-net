@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HybridCompute
 
         ArcGatewayData IJsonModel<ArcGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ArcGatewayData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ArcGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ArcGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ArcGatewayData>(Data, options, AzureResourceManagerHybridComputeContext.Default);
 
-        ArcGatewayData IPersistableModel<ArcGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArcGatewayData>(data, options);
+        ArcGatewayData IPersistableModel<ArcGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArcGatewayData>(data, options, AzureResourceManagerHybridComputeContext.Default);
 
         string IPersistableModel<ArcGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ArcGatewayData>)Data).GetFormatFromOptions(options);
     }

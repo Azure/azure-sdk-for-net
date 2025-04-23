@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HealthcareApis
 
         HealthcareApisWorkspacePrivateEndpointConnectionResource IOperationSource<HealthcareApisWorkspacePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HealthcareApisPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<HealthcareApisPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthcareApisContext.Default);
             return new HealthcareApisWorkspacePrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<HealthcareApisWorkspacePrivateEndpointConnectionResource> IOperationSource<HealthcareApisWorkspacePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HealthcareApisPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<HealthcareApisPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthcareApisContext.Default);
             return await Task.FromResult(new HealthcareApisWorkspacePrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

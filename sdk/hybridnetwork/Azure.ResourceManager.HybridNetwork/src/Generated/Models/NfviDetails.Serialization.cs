@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NfviDetails)} does not support writing '{options.Format}' format.");
             }
