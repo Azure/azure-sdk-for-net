@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (options.Format != "W" && Optional.IsDefined(AssociatedOn))
             {
                 writer.WritePropertyName("associateDate"u8);
-                writer.WriteStringValue(AssociatedOn.Value, "R");
+                writer.WriteStringValue(AssociatedOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    associateDate = property.Value.GetDateTimeOffset("R");
+                    associateDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")

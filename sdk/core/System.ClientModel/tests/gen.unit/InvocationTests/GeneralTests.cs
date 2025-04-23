@@ -7,17 +7,15 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 {
     internal class GeneralTests
     {
-        [TestCase(true)]
-        [TestCase(false)]
-        public void ListOfListAndList(bool implicitContext)
+        public void ListOfListAndList()
             => InvocationTestBase.RunInvocationTest(
                 InvocationTestBase.JsonModel,
                 string.Empty,
-                implicitContext,
+                true,
                 Caller,
                 [ListOfListTests.AssertListOfList, ListTests.AssertList]);
 
-        private string Caller(string type, string invocation)
+        private string Caller(bool contextAdded, string type, string invocation)
         {
             return
 $$"""
