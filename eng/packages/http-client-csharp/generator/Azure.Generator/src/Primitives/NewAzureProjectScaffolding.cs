@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using System;
 using System.Collections.Generic;
@@ -84,7 +85,12 @@ namespace Azure.Generator.Primitives
         {
             hasOperation = false;
             hasLongRunningOperation = false;
-            foreach (var inputClient in AzureClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
+
+            // Find all InputClients, including their children
+            var allClients = FindAllClients(AzureClientGenerator.Instance.InputLibrary.InputNamespace.Clients);
+
+            // Check each client for operations
+            foreach (var inputClient in allClients)
             {
                 foreach (var operation in inputClient.Operations)
                 {
@@ -92,10 +98,27 @@ namespace Azure.Generator.Primitives
                     if (operation.LongRunning != null)
                     {
                         hasLongRunningOperation = true;
-                        return;
+                        return; // Exit early if a long-running operation is found
                     }
                 }
             }
+        }
+
+        private static List<InputClient> FindAllClients(IEnumerable<InputClient> clients)
+        {
+            var allClients = new List<InputClient>();
+
+            foreach (var client in clients)
+            {
+                allClients.Add(client);
+
+                if (client.Children != null && client.Children.Any())
+                {
+                    allClients.AddRange(FindAllClients(client.Children));
+                }
+            }
+
+            return allClients;
         }
 
         private static int GetPathSegmentCount()
