@@ -1,5 +1,4 @@
 {
-  "output-folder": ".",
   "package-name": "Payload.JsonMergePatch",
   "license": {
     "name": "MIT License",

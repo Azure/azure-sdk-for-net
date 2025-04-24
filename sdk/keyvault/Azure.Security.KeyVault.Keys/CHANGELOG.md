@@ -2,11 +2,19 @@
 
 ## 4.8.0-beta.2 (Unreleased)
 
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Key Vault client libraries better with their contributions to this release:
+
+- James Gould _([GitHub](https://github.com/james-gould))_
+
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Removed additional forward slash in `RestoreKeyBackup` and `RestoreKeyBackupAsync`.
 
 ### Other Changes
 

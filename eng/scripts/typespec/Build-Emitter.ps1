@@ -3,8 +3,14 @@
 param(
     [string] $OutputDirectory,
     [switch] $TargetNpmJsFeed,
-    [string] $emitterPackagePath
+    [string] $emitterPackagePath,
+    [string] $GeneratorVersion
 )
+
+if ([string]::IsNullOrEmpty($GeneratorVersion)) {
+    Write-Host "GeneratorVersion is required"
+    exit 1
+}
 
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version 3.0
@@ -58,6 +64,43 @@ function Build-Emitter {
     }
 }
 
+function Write-PackageInfo {
+    param(
+        [string] $packageName,
+        [string] $directoryPath,
+        [string] $version
+    )
+
+    $packageInfoPath = "$outputPath/PackageInfo"
+
+    if (!(Test-Path $packageInfoPath)) {
+        New-Item -ItemType Directory -Force -Path $packageInfoPath | Out-Null
+    }
+
+    @{
+        Name = $packageName
+        Version = $version
+        DirectoryPath = $directoryPath
+        SdkType = "client"
+        IsNewSdk = $true
+        ReleaseStatus = "Unreleased"
+    } | ConvertTo-Json | Set-Content -Path "$packageInfoPath/$packageName.json"
+}
+
+function Pack-And-Write-Info {
+    param(
+        [string] $package,
+        [string] $version,
+        [string] $outputPath
+    )
+
+    $versionOption = "/p:Version=$version"
+    $hasReleaseVersionOption = $version.Contains("alpha") ? "/p:HasReleaseVersion=false" : ""
+    Invoke-LoggedCommand "dotnet pack ./$package/src/$package.csproj $versionOption $hasReleaseVersionOption -c Release -o $outputPath"
+    Write-PackageInfo -packageName $package -directoryPath "eng/packages/http-client-csharp/generator/$package/src" -version $version
+}
+
+
 $overrides = @{}
 
 $outputPath = $OutputDirectory ? $OutputDirectory : (Join-Path $RepoRoot "artifacts" "emitters")
@@ -69,6 +112,23 @@ if ($emitterPackagePath.StartsWith("/")) {
 }
 $packageRoot = Join-Path $RepoRoot $emitterPackagePath
 Build-Emitter -packageRoot $packageRoot -outputPath $outputPath -overrides $overrides
+
+# Pack the generator
+Push-Location "$packageRoot/generator"
+try {
+    Write-Host "Working in $PWD"
+    Pack-And-Write-Info -package "Azure.Generator" -version $GeneratorVersion -outputPath $outputPath
+}
+finally
+{
+    Pop-Location
+}
+
+$packageMatrix = [ordered]@{
+    "azure.generator" = $generatorVersion
+}
+
+$packageMatrix | ConvertTo-Json | Set-Content "$outputPath/package-versions.json"
 
 Write-Host "Writing overrides to $outputPath/overrides.json"
 

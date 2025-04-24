@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.4 (Unreleased)
+## 1.4.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0-beta.5 (2025-04-23)
+
+### Features Added
+
+- Added additional supported scenarios to System.ClientModel.SourceGeneration.
+
+## 1.4.0-beta.4 (2025-04-21)
+
+### Features Added
+
+- Added additional supported scenarios to System.ClientModel.SourceGeneration.
 
 ## 1.4.0-beta.3 (2025-04-16)
 

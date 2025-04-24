@@ -64,10 +64,10 @@
 # AzureSdkOwners:                                                  @m-redding
 
 # PRLabel: %Azure.Identity
-/sdk/identity/                                                     @schaabs @christothes @Azure/azure-sdk-write-identity
+/sdk/identity/                                                     @schaabs @christothes @JonathanCrd @Azure/azure-sdk-write-identity
 
 # ServiceLabel: %Azure.Identity
-# AzureSdkOwners:                                                  @christothes
+# AzureSdkOwners:                                                  @christothes @JonathanCrd
 
 # PRLabel: %Extensions
 /sdk/extensions/                                                   @jsquire
@@ -590,10 +590,10 @@
 # ServiceOwners:                                                   @Tanmayeekamath
 
 # PRLabel: %Load Test Service
-/sdk/loadtestservice/                                              @abranj1219 @ninallam @christothes
+/sdk/loadtestservice/                                              @prativen @mitsha-microsoft @ninallam
 
 # ServiceLabel: %Load Test Service
-# ServiceOwners:                                                   @abranj1219 @ninallam
+# ServiceOwners:                                                   @prativen @mitsha-microsoft @ninallam
 
 # ServiceLabel: %Logic App
 # ServiceOwners:                                                   @Azure/azure-logicapps-team
@@ -904,10 +904,10 @@
 # ServiceOwners:                                                   @yanjungao718
 
 # PRLabel: %Tables
-/sdk/tables/                                                       @christothes @JonathanCrd
+/sdk/tables/                                                       @christothes @jorgerangel-msft
 
 # ServiceLabel: %Tables
-# AzureSdkOwners:                                                  @christothes @JonathanCrd
+# AzureSdkOwners:                                                  @christothes @jorgerangel-msft
 # ServiceOwners:                                                   @sakash279 @sivethe @ThomasWeiss @PaulCheng
 
 # PRLabel: %TimeSeriesInsights
@@ -1051,6 +1051,12 @@
 
 # ServiceLabel: %Operator Nexus - Network Cloud %Mgmt
 # ServiceOwners:                                                   @Azure/azure-sdk-write-networkcloud
+
+# PRLabel: %Pinecone
+/sdk/pineconevectordb/Azure.ResourceManager.*/                     @aggarwalsw
+
+# ServiceLabel: %Pinecone %Mgmt
+# ServiceOwners:                                                   @aggarwalsw
 
 # PRLabel: %Quota
 /sdk/quota/Azure.ResourceManager.*/                                @tejasm-microsoft
