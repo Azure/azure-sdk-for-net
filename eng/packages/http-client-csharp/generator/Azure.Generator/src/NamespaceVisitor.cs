@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
@@ -55,6 +54,11 @@ namespace Azure.Generator
 
         private static void UpdateModelsNamespace(TypeProvider type)
         {
+            if (type is SystemObjectTypeProvider)
+            {
+                return;
+            }
+
             if (AzureClientGenerator.Instance.Configuration.UseModelNamespace())
             {
                 type.Type.Update(
