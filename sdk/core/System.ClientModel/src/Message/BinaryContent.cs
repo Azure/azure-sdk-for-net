@@ -4,16 +4,10 @@
 using System.Buffers;
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
+using System.Globalization;
 using System.Net;
-using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net.Mime;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace System.ClientModel;
 
@@ -30,8 +24,8 @@ public abstract class BinaryContent : IDisposable
     /// </summary>
     public virtual string? ContentType { get; set; }
 
-    internal string? Name { get; set; }
-    internal string? Filename { get; set; }
+    //internal string? Name { get; set; }
+    //internal virtual string? Filename { get; set; }
 
     /// <summary>
     /// Creates an instance of <see cref="BinaryContent"/> that contains the
@@ -84,38 +78,230 @@ public abstract class BinaryContent : IDisposable
     /// Creates an instance of <see cref="BinaryContent"/>.
     /// </summary>
     /// <param name="name">The name of the part.</param>
-    /// <param name="value"></param>
-    /// <param name="filename">The filename of the part.</param>
+    /// <param name="stream"></param>
     /// <returns></returns>
-    public static BinaryContent CreatePart(string name, BinaryData value, string? filename = null)
+    public static BinaryContent CreateMultipartFormDataPart(string name, Stream stream)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
-        Argument.AssertNotNull(value, nameof(value));
+        Argument.AssertNotNull(stream, nameof(stream));
 
-        return new BinaryDataBinaryContent(value.ToMemory())
-        {
-            Name = name,
-            Filename = filename
-        };
+        return new MultipartFormDataPartBinaryContent(name, new StreamBinaryContent(stream));
     }
+
+    /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/>.
+    /// </summary>
+    /// <param name="name">The name of the part.</param>
+    /// <param name="content"></param>
+    /// <returns></returns>
+    public static BinaryContent CreateMultipartFormDataPart(string name, BinaryData content)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNull(content, nameof(content));
+
+        return new MultipartFormDataPartBinaryContent(name, new BinaryDataBinaryContent(content.ToMemory()));
+    }
+
+    /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/>.
+    /// </summary>
+    /// <param name="name">The name of the part.</param>
+    /// <param name="content"></param>
+    /// <returns></returns>
+    public static BinaryContent CreateMultipartFormDataPart(string name, string content)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNull(content, nameof(content));
+
+        return CreateMultipartFormDataPart(name, BinaryData.FromString(content));
+    }
+
+    /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/>.
+    /// </summary>
+    /// <param name="name">The name of the part.</param>
+    /// <param name="content"></param>
+    /// <returns></returns>
+    public static BinaryContent CreateMultipartFormDataPart(string name, int content)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNull(content, nameof(content));
+
+        string value = content.ToString("G", CultureInfo.InvariantCulture);
+        return CreateMultipartFormDataPart(name, BinaryData.FromString(value));
+    }
+
+    /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/>.
+    /// </summary>
+    /// <param name="name">The name of the part.</param>
+    /// <param name="content"></param>
+    /// <returns></returns>
+    public static BinaryContent CreateMultipartFormDataPart(string name, long content)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNull(content, nameof(content));
+
+        string value = content.ToString("G", CultureInfo.InvariantCulture);
+        return CreateMultipartFormDataPart(name, BinaryData.FromString(value));
+    }
+
+    /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/>.
+    /// </summary>
+    /// <param name="name">The name of the part.</param>
+    /// <param name="content"></param>
+    /// <returns></returns>
+    public static BinaryContent CreateMultipartFormDataPart(string name, float content)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNull(content, nameof(content));
+
+        string value = content.ToString("G", CultureInfo.InvariantCulture);
+        return CreateMultipartFormDataPart(name, BinaryData.FromString(value));
+    }
+
+    /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/>.
+    /// </summary>
+    /// <param name="name">The name of the part.</param>
+    /// <param name="content"></param>
+    /// <returns></returns>
+    public static BinaryContent CreateMultipartFormDataPart(string name, double content)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNull(content, nameof(content));
+
+        string value = content.ToString("G", CultureInfo.InvariantCulture);
+        return CreateMultipartFormDataPart(name, BinaryData.FromString(value));
+    }
+
+    /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/>.
+    /// </summary>
+    /// <param name="name">The name of the part.</param>
+    /// <param name="content"></param>
+    /// <returns></returns>
+    public static BinaryContent CreateMultipartFormDataPart(string name, decimal content)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNull(content, nameof(content));
+
+        string value = content.ToString("G", CultureInfo.InvariantCulture);
+        return CreateMultipartFormDataPart(name, BinaryData.FromString(value));
+    }
+
+    /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/>.
+    /// </summary>
+    /// <param name="name">The name of the part.</param>
+    /// <param name="content"></param>
+    /// <returns></returns>
+    public static BinaryContent CreateMultipartFormDataPart(string name, bool content)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNull(content, nameof(content));
+
+        string value = content ? "true" : "false";
+        return CreateMultipartFormDataPart(name, BinaryData.FromString(value));
+    }
+
+    /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/>.
+    /// </summary>
+    /// <param name="name">The name of the part.</param>
+    /// <param name="content"></param>
+    /// <returns></returns>
+    public static BinaryContent CreateMultipartFormDataPart(string name, byte[] content)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNull(content, nameof(content));
+
+        return CreateMultipartFormDataPart(name, BinaryData.FromBytes(content));
+    }
+
+    /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/>.
+    /// </summary>
+    /// <param name="name">The name of the part.</param>
+    /// <param name="content"></param>
+    /// <returns></returns>
+    public static BinaryContent CreateMultipartFormDataPart(string name, FileBinaryContent content)
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNull(content, nameof(content));
+
+        return new MultipartFormDataPartBinaryContent(name, content);
+    }
+
+    /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/> that contains the
+    /// bytes resulting from writing the value of the provided
+    /// <see cref="IPersistableModel{T}"/>.
+    /// </summary>
+    /// <param name="name">The name of the part.</param>
+    /// <param name="model">The <see cref="IPersistableModel{T}"/> to write.</param>
+    /// <param name="options">The <see cref="ModelReaderWriterOptions"/>, if any,
+    /// that indicates what format the <paramref name="model"/> will be written in.
+    /// </param>
+    /// <returns>An instance of <see cref="BinaryContent"/> that wraps a <see cref="IPersistableModel{T}"/>.</returns>
+    public static BinaryContent CreateMultipartFormDataPart<T>(
+        string name,
+        T model,
+        ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
+    {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNull(model, nameof(model));
+
+        return new MultipartFormDataPartBinaryContent(name, new ModelBinaryContent<T>(model, options ?? ModelWriteWireOptions));
+    }
+
+    ///// <summary>
+    ///// Creates an instance of <see cref="BinaryContent"/>.
+    ///// </summary>
+    ///// <param name="stream"></param>
+    ///// <param name="filename"></param>
+    ///// <returns></returns>
+    //public static BinaryContent CreateFromFile(Stream stream, string? filename = default)
+    //{
+    //    Argument.AssertNotNull(stream, nameof(stream));
+
+    //    return new FileBinaryContent(stream)
+    //    {
+    //        Filename = filename,
+    //        ContentType = "application/octet-stream"
+    //    };
+    //}
+
+    ///// <summary>
+    ///// Creates an instance of <see cref="BinaryContent"/>.
+    ///// </summary>
+    ///// <param name="content"></param>
+    ///// <param name="filename"></param>
+    ///// <returns></returns>
+    //public static BinaryContent CreateFromFile(BinaryData content, string? filename = default)
+    //{
+    //    Argument.AssertNotNull(content, nameof(content));
+
+    //    return new FileBinaryContent(content)
+    //    {
+    //        Filename = filename,
+    //        ContentType = "application/octet-stream"
+    //    };
+    //}
 
     /// <summary>
     /// Creates an instance of <see cref="BinaryContent"/> that contains the
     /// the provided <see cref="BinaryContent"/> as multi-part form data.
     /// </summary>
-    /// <param name="part"></param>
+    /// <param name="parts"></param>
     /// <returns></returns>
-    public static BinaryContent CreateMultiPartBinaryContent(BinaryContent part)
+    public static BinaryContent CreateMultipartFormDataContent(IEnumerable<BinaryContent> parts)
     {
-        Argument.AssertNotNull(part, nameof(part));
+        Argument.AssertNotNull(parts, nameof(parts));
 
-        return new MultiPartFormDataBinaryContent(part);
+        return new MultiPartFormDataBinaryContent(parts);
     }
-
-    //public static BinaryContent CreateFromFile(string name, Stream stream, string? filename = default)
-    //{
-
-    //}
 
     /// <summary>
     /// Attempts to compute the length of the underlying body content, if available.
@@ -329,12 +515,20 @@ public abstract class BinaryContent : IDisposable
         private const int BoundaryLength = 70;
         private const string BoundaryValues = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
 
-        public MultiPartFormDataBinaryContent(BinaryContent part)
+        public MultiPartFormDataBinaryContent(IEnumerable<BinaryContent> parts)
         {
-            Argument.AssertNotNull(part, nameof(part));
+            Argument.AssertNotNull(parts, nameof(parts));
 
             _multipartContent = new MultipartFormDataContent(CreateBoundary());
-            Add(part);
+
+            foreach (BinaryContent part in parts)
+            {
+                if (part is not MultipartFormDataPartBinaryContent partBinaryContent)
+                {
+                    throw new InvalidOperationException($"The type is not a valid part: '{part.GetType()}'.");
+                }
+                Add(partBinaryContent);
+            }
         }
 
         public override string? ContentType
@@ -347,7 +541,7 @@ public abstract class BinaryContent : IDisposable
             }
         }
 
-        public void Add(BinaryContent content)
+        public void Add(MultipartFormDataPartBinaryContent content)
         {
             Argument.AssertNotNull(content, nameof(content));
             Argument.AssertNotNull(content.Name, nameof(content.Name));
@@ -358,7 +552,8 @@ public abstract class BinaryContent : IDisposable
                 httpContent.Headers.ContentType = MediaTypeHeaderValue.Parse(content.ContentType);
             }
 
-            Add(httpContent, content.Name!, content.Filename);
+            string? filename = content.Content is FileBinaryContent fileContent ? fileContent.Filename : null;
+            Add(httpContent, content.Name!, filename);
         }
 
         private void Add(HttpContent content, string name, string? fileName = default)
@@ -472,5 +667,44 @@ public abstract class BinaryContent : IDisposable
                 => _content.WriteTo(stream, cancellationToken);
 #endif
         }
+    }
+
+    private sealed class MultipartFormDataPartBinaryContent : BinaryContent
+    {
+        private readonly BinaryContent _content;
+
+        public MultipartFormDataPartBinaryContent(string name, BinaryContent content)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            _content = content;
+            Name = name;
+        }
+
+        public override string? ContentType
+        {
+            get
+            {
+                return _content.ContentType;
+            }
+        }
+
+        internal string Name { get;  }
+        internal BinaryContent Content => _content;
+
+        public override void Dispose()
+        {
+            _content.Dispose();
+            GC.SuppressFinalize(this);
+        }
+
+        public override bool TryComputeLength(out long length)
+            => _content.TryComputeLength(out length);
+
+        public override void WriteTo(Stream stream, CancellationToken cancellationToken = default)
+            => _content.WriteTo(stream, cancellationToken);
+        public override Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)
+            => _content.WriteToAsync(stream, cancellationToken);
     }
 }

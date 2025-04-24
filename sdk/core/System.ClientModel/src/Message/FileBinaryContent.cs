@@ -2,16 +2,13 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace System.ClientModel;
 
 /// <summary>
 /// FileBinaryContent
 /// </summary>
-public partial class FileBinaryContent : BinaryContent
+public sealed partial class FileBinaryContent : BinaryContent
 {
     private readonly BinaryContent _content;
 
@@ -45,13 +42,11 @@ public partial class FileBinaryContent : BinaryContent
         _content = Create(fileStream);
     }
 
-    /// <summary>
-    /// The content type of the file.
-    /// </summary>
-    public string ContentType { get; set; } = "application/octet-stream";
+    /// <inheritdoc/>
+    public override string? ContentType { get; set; } = "application/octet-stream";
 
     /// <summary>
-    /// The filename.
+    /// The name of the file to be used when uploading this content.
     /// </summary>
     public string? Filename { get; set; }
 

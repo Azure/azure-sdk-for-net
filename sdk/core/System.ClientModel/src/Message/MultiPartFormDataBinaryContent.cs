@@ -9,7 +9,6 @@ using System.Net.Http;
 using System.Net;
 using System.Threading.Tasks;
 using System.Threading;
-using System;
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 
@@ -30,7 +29,7 @@ internal partial class MultiPartFormDataBinaryContent : BinaryContent
         _multipartContent = new MultipartFormDataContent(boundary);
     }
 
-    internal string ContentType
+    internal new string ContentType
     {
         get
         {

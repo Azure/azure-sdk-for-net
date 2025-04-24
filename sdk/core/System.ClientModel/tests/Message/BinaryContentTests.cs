@@ -167,13 +167,10 @@ internal class BinaryContentTests : SyncAsyncTestBase
         byte[] sourceArray = new byte[size];
         new Random(100).NextBytes(sourceArray);
         MemoryStream source = new(sourceArray);
-        using BinaryContent streamContent = BinaryContent.Create(source);
+        using BinaryContent streamContent = BinaryContent.CreateMultipartFormDataPart("bar", source);
+        using BinaryContent fooContent = BinaryContent.CreateMultipartFormDataPart("foo", foo);
 
         // create the mpfd content
-        using BinaryContent content = BinaryContent.Create(new BinaryContentPart[]
-        {
-            BinaryContent.Create(foo),
-            streamContent
-        });
+        using BinaryContent content = BinaryContent.CreateMultipartFormDataContent([streamContent, fooContent]);
     }
 }
