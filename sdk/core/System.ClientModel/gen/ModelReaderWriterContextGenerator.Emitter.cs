@@ -76,43 +76,40 @@ internal sealed partial class ModelReaderWriterContextGenerator
                 indent++;
                 foreach (var referencedContext in contextGenerationSpec.ReferencedContexts)
                 {
-                    builder.AppendLine(indent, $"{{ typeof({referencedContext.FullyQualifiedName}), new {referencedContext.FullyQualifiedName}() }},");
+                    builder.AppendLine(indent, $"{{ typeof({referencedContext.FullyQualifiedName}), {referencedContext.FullyQualifiedName}.Default }},");
                 }
                 indent--;
                 builder.AppendLine(indent, "};");
                 builder.AppendLine();
             }
 
-            if (contextGenerationSpec.TypeBuilders.Count > 0)
+            builder.AppendLine(indent, $"private static {contextName} _{contextName.ToCamelCase()};");
+            builder.AppendLine(indent, "/// <summary> Gets the default instance </summary>");
+            builder.AppendLine(indent, $"public static {contextName} Default => _{contextName.ToCamelCase()} ??= new();");
+            builder.AppendLine();
+
+            builder.AppendLine(indent, $"private {contextName}()");
+            builder.AppendLine(indent, "{");
+            indent++;
+            foreach (var modelInfo in contextGenerationSpec.TypeBuilders)
             {
-                builder.AppendLine(indent, $"private static {contextName} _{contextName.ToCamelCase()};");
-                builder.AppendLine(indent, "/// <summary> Gets the default instance </summary>");
-                builder.AppendLine(indent, $"public static {contextName} Default => _{contextName.ToCamelCase()} ??= new();");
-                builder.AppendLine();
-
-                builder.AppendLine(indent, $"private {contextName}()");
-                builder.AppendLine(indent, "{");
-                indent++;
-                foreach (var modelInfo in contextGenerationSpec.TypeBuilders)
+                builder.Append(indent, $"_typeBuilderFactories.Add(typeof({modelInfo.Type.FullyQualifiedName}), () => ");
+                if (ShouldGenerateAsLocal(contextGenerationSpec, modelInfo))
                 {
-                    builder.Append(indent, $"_typeBuilderFactories.Add(typeof({modelInfo.Type.FullyQualifiedName}), () => ");
-                    if (ShouldGenerateAsLocal(contextGenerationSpec, modelInfo))
-                    {
-                        builder.AppendLine($" new global::{modelInfo.Type.GetInnerItemType().Namespace}.{modelInfo.Type.TypeCaseName}Builder());");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" s_referenceContexts[typeof({modelInfo.ContextType.FullyQualifiedName})].GetTypeBuilder(typeof({modelInfo.Type.FullyQualifiedName})));");
-                    }
+                    builder.AppendLine($" new global::{modelInfo.Type.GetInnerItemType().Namespace}.{modelInfo.Type.TypeCaseName}Builder());");
                 }
-                builder.AppendLine();
-
-                builder.AppendLine(indent, "AddAdditionalFactories(_typeBuilderFactories);");
-
-                indent--;
-                builder.AppendLine(indent, "}");
-                builder.AppendLine();
+                else
+                {
+                    builder.AppendLine($" s_referenceContexts[typeof({modelInfo.ContextType.FullyQualifiedName})].GetTypeBuilder(typeof({modelInfo.Type.FullyQualifiedName})));");
+                }
             }
+            builder.AppendLine();
+
+            builder.AppendLine(indent, "AddAdditionalFactories(_typeBuilderFactories);");
+
+            indent--;
+            builder.AppendLine(indent, "}");
+            builder.AppendLine();
 
             builder.AppendLine(indent, "/// <inheritdoc/>");
             builder.Append(indent, "protected override bool TryGetTypeBuilderCore(");
@@ -305,7 +302,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
 
             builder.AppendLine(indent, "protected override object ToCollection(object builder)");
             indent++;
-            builder.AppendLine(indent, $"=> new {modelInfo.Type.Name}([.. (List<{elementType.Name}>)builder]);");
+            builder.AppendLine(indent, $"=> new {modelInfo.Type.Name}(((List<{elementType.Name}>)builder).ToArray());");
             indent--;
             builder.AppendLine();
 

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.TypeSpec.Generator.Input;
 
 namespace Azure.Generator.Tests.Common
@@ -237,7 +235,7 @@ namespace Azure.Generator.Tests.Common
         /// <returns></returns>
         public static InputModelType Model(
             string name,
-            string clientNamespace = "Sample.Models",
+            string clientNamespace = "Samples.Models",
             string access = "public",
             InputModelTypeUsage usage = InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
             IEnumerable<InputModelProperty>? properties = null,
@@ -331,6 +329,7 @@ namespace Azure.Generator.Tests.Common
         /// <param name="parameters"></param>
         /// <param name="response"></param>
         /// <param name="exception"></param>
+        /// <param name="pagingMetadata"></param>
         /// <returns></returns>
         public static InputPagingServiceMethod PagingServiceMethod(
            string name,
@@ -338,7 +337,8 @@ namespace Azure.Generator.Tests.Common
            string access = "public",
            IReadOnlyList<InputParameter>? parameters = null,
            InputServiceMethodResponse? response = null,
-           InputServiceMethodResponse? exception = null)
+           InputServiceMethodResponse? exception = null,
+           InputPagingServiceMetadata? pagingMetadata = null)
         {
             return new InputPagingServiceMethod(
                 name,
@@ -353,7 +353,20 @@ namespace Azure.Generator.Tests.Common
                 false,
                 true,
                 true,
-                string.Empty);
+                string.Empty,
+                pagingMetadata ?? PagingMetadata([], null, null));
+        }
+
+        /// <summary>
+        /// Construct paging metadata
+        /// </summary>
+        /// <param name="itemPropertySegments"></param>
+        /// <param name="nextLink"></param>
+        /// <param name="continuationToken"></param>
+        /// <returns></returns>
+        public static InputPagingServiceMetadata PagingMetadata(IReadOnlyList<string> itemPropertySegments, InputNextLink? nextLink, InputContinuationToken? continuationToken)
+        {
+            return new InputPagingServiceMetadata(itemPropertySegments, nextLink, continuationToken);
         }
 
         /// <summary>
@@ -379,7 +392,7 @@ namespace Azure.Generator.Tests.Common
             var operation = new InputOperation(
                 name,
                 null,
-                null,
+                "",
                 $"{name} description",
                 null,
                 access,
@@ -391,8 +404,6 @@ namespace Azure.Generator.Tests.Common
                 null,
                 requestMediaTypes is null ? null : [.. requestMediaTypes],
                 false,
-                null,
-                null,
                 true,
                 true,
                 name);

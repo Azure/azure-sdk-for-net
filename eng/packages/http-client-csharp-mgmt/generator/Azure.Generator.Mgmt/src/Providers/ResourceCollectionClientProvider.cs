@@ -20,7 +20,7 @@ namespace Azure.Generator.Management.Providers
     internal class ResourceCollectionClientProvider : ResourceClientProvider
     {
         private ResourceClientProvider _resource;
-        private InputOperation? _getAll;
+        private InputServiceMethod? _getAll;
         private InputOperation? _create;
         private InputOperation? _get;
 
@@ -35,7 +35,7 @@ namespace Azure.Generator.Management.Providers
                 {
                     if (operation.Name == "list")
                     {
-                        _getAll = operation;
+                        _getAll = method;
                     }
                     else if (operation.Name == "get")
                     {
@@ -105,8 +105,8 @@ namespace Azure.Generator.Management.Providers
 
         private MethodProvider BuildGetAllMethod(bool isAsync)
         {
-            var convenienceMethod = GetCorrespondingConvenienceMethod(_getAll!, isAsync);
-            var isLongRunning = _getAll?.LongRunning != null;
+            var convenienceMethod = GetCorrespondingConvenienceMethod(_getAll!.Operation, isAsync);
+            var isLongRunning = _getAll is InputLongRunningPagingServiceMethod;
             var signature = new MethodSignature(
                 isAsync ? "GetAllAsync" : "GetAll",
                 convenienceMethod.Signature.Description,

@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Projects
 {
     /// <summary> The response data for a requested list of items. </summary>
-    public partial class OpenAIPageableListOfAgentThread
+    internal partial class OpenAIPageableListOfAgentThread
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

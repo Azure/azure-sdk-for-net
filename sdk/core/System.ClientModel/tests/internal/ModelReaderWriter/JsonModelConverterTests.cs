@@ -155,6 +155,49 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             Assert.AreEqual("Either PersistableModel or the PersistableModelProxyAttribute defined needs to implement IJsonModel.", ex!.Message);
         }
 
+        [Test]
+        public void ConverterAddedWithNoJsonModel()
+        {
+            var data = new Person
+            {
+                Name = "John Doe"
+            };
+            var jsonOptions = new JsonSerializerOptions { Converters = { new JsonModelConverter() } };
+            string json = JsonSerializer.Serialize(data, jsonOptions);
+            Assert.AreEqual("{\"Name\":\"John Doe\"}", json);
+        }
+
+        private class Person
+        {
+            public string? Name { get; init; }
+        }
+
+        [Test]
+        public void ConverterAddedWithMixedJsonModel()
+        {
+            var data = new PersonMixed
+            {
+                Name = "John Doe",
+                Model = new ModelX()
+                {
+                    Name = "MyName",
+                }
+            };
+            var jsonOptions = new JsonSerializerOptions { Converters = { new JsonModelConverter() } };
+            string json = JsonSerializer.Serialize(data, jsonOptions);
+            Assert.AreEqual("{\"Name\":\"John Doe\",\"Model\":{\"kind\":\"X\",\"name\":\"MyName\",\"fields\":[],\"keyValuePairs\":{},\"xProperty\":0}}", json);
+
+            //without converter we should get PascalCase and different property order
+            string json2 = JsonSerializer.Serialize(data);
+            Assert.AreEqual("{\"Name\":\"John Doe\",\"Model\":{\"XProperty\":0,\"Fields\":[],\"KeyValuePairs\":{},\"Kind\":\"X\",\"Name\":\"MyName\"}}", json2);
+        }
+
+        private class PersonMixed
+        {
+            public string? Name { get; init; }
+            public ModelX? Model { get; init; }
+        }
+
         private static Dictionary<string, BinaryData> GetRawData(object model)
         {
             Type modelType = model.GetType();

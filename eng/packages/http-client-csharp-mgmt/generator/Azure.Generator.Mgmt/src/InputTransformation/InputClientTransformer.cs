@@ -37,7 +37,7 @@ namespace Azure.Generator.Management.InputTransformation
                 if (parameter.NameInRequest.Equals("subscriptionId", StringComparison.OrdinalIgnoreCase))
                 {
                     // Always set subscriptionId to method parameter
-                    parameter.Kind = InputParameterKind.Method;
+                    parameter.Update(InputParameterKind.Method);
                 }
             }
         }

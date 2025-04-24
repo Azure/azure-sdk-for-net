@@ -653,5 +653,137 @@ namespace TestProject
             Assert.AreEqual(1, result.Diagnostics.Length);
             Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.BuildableAttributeRequiresContext.Id, result.Diagnostics[0].Id);
         }
+
+        [Test]
+        public void ValidateDefaultExistsWithNoBuilders()
+        {
+            string source =
+$$"""
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text.Json;
+
+namespace TestProject
+{
+    public partial class LocalContext : ModelReaderWriterContext { }
+}
+""";
+
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
+
+            Assert.IsNotNull(result.GenerationSpec);
+            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
+            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
+            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+            Assert.AreEqual(0, result.GenerationSpec.TypeBuilders.Count);
+            Assert.AreEqual(0, result.Diagnostics.Length);
+
+            var localContextSymbol = newCompilation.GetTypeByMetadataName("TestProject.LocalContext");
+            Assert.IsNotNull(localContextSymbol);
+            var defaultProp = localContextSymbol!.GetMembers("Default")
+                .OfType<IPropertySymbol>()
+                .FirstOrDefault(p => p.IsStatic);
+
+            Assert.IsNotNull(defaultProp, "Default property should not be null.");
+
+            Assert.IsTrue(SymbolEqualityComparer.Default.Equals(defaultProp!.Type, localContextSymbol));
+
+            Assert.AreEqual(1, localContextSymbol.Constructors.Length);
+            var ctor = localContextSymbol.Constructors[0];
+            Assert.AreEqual(Accessibility.Private, ctor.DeclaredAccessibility);
+        }
+
+        [Test]
+        public void DepHasJsonModelAndContext()
+        {
+            string depSource =
+$$"""
+using System;
+using System.ClientModel.Primitives;
+using System.Text.Json;
+
+namespace TestDependency
+{
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        JsonModel IJsonModel<JsonModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+        JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+        string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        void IJsonModel<JsonModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+}
+""";
+
+            Compilation depCompilation = CompilationHelper.CreateCompilation(depSource, assemblyName: "TestDependency");
+            var depResult = CompilationHelper.RunSourceGenerator(depCompilation, out var newDepCompilation);
+
+            Assert.IsNotNull(depResult.GenerationSpec);
+            Assert.AreEqual("LocalContext", depResult.GenerationSpec!.Type.Name);
+            Assert.AreEqual("TestDependency", depResult.GenerationSpec.Type.Namespace);
+            Assert.AreEqual(0, depResult.Diagnostics.Length);
+            Assert.AreEqual("public", depResult.GenerationSpec!.Modifier);
+            Assert.AreEqual(1, depResult.GenerationSpec.TypeBuilders.Count);
+
+            string source =
+$$"""
+using System;
+using System.ClientModel.Primitives;
+using TestDependency;
+
+namespace TestProject
+{
+    public partial class MyLocalContext : ModelReaderWriterContext { }
+
+    public class Caller
+    {
+        public void Call()
+        {
+            ModelReaderWriter.Read<JsonModel>(BinaryData.Empty, ModelReaderWriterOptions.Json, MyLocalContext.Default);
+        }
+    }
+}
+""";
+
+            Compilation compilation = CompilationHelper.CreateCompilation(
+                source,
+                additionalReferences: [newDepCompilation.ToMetadataReference()],
+                contextName: "MyLocalContext");
+
+            var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
+
+            Assert.IsNotNull(result.GenerationSpec);
+            Assert.AreEqual("MyLocalContext", result.GenerationSpec!.Type.Name);
+            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
+            Assert.AreEqual(0, result.Diagnostics.Length);
+            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
+            Assert.AreEqual(1, result.GenerationSpec.TypeBuilders.Count);
+            Assert.AreEqual(1, result.GenerationSpec.ReferencedContexts.Count);
+
+            var myLocalContext = newCompilation.GetTypeByMetadataName("TestProject.MyLocalContext");
+            Assert.IsNotNull(myLocalContext, "MyLocalContext should not be null.");
+
+            var referenceContextFiled = myLocalContext!.GetMembers("s_referenceContexts")
+                .OfType<IFieldSymbol>()
+                .FirstOrDefault(f => f.IsStatic);
+            Assert.IsNotNull(referenceContextFiled, "s_referenceContexts field should not be null.");
+
+            //verify it has TestDependency.LocalContext.Default in its initializer somewhere
+            var foundInitializer = false;
+            foreach (var syntaxReference in referenceContextFiled!.DeclaringSyntaxReferences)
+            {
+                var syntax = syntaxReference.GetSyntax();
+                if (syntax.ToString().Contains("TestDependency.LocalContext.Default"))
+                {
+                    foundInitializer = true;
+                    break;
+                }
+            }
+            Assert.IsTrue(foundInitializer, "s_referenceContexts should be initialized with TestDependency.LocalContext.Default");
+        }
     }
 }

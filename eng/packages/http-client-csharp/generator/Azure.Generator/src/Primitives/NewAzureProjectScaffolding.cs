@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,13 @@ namespace Azure.Generator.Primitives
                 builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("AzureKeyCredentialPolicy.cs", pathSegmentCount), "Shared/Core"));
             }
 
-            TraverseInput(out bool hasOperation, out bool hasLongRunningOperation);
+            bool hasOperation = false;
+            bool hasLongRunningOperation = false;
+            foreach (var client in AzureClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
+            {
+                TraverseInput(client, ref hasOperation, ref hasLongRunningOperation);
+            }
+
             if (hasOperation)
             {
                 builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("RawRequestUriBuilder.cs", pathSegmentCount), "Shared/Core"));
@@ -80,21 +87,22 @@ namespace Azure.Generator.Primitives
             "VoidValue.cs"
         ];
 
-        private static void TraverseInput(out bool hasOperation, out bool hasLongRunningOperation)
+        private static void TraverseInput(InputClient rootClient, ref bool hasOperation, ref bool hasLongRunningOperation)
         {
             hasOperation = false;
             hasLongRunningOperation = false;
-            foreach (var inputClient in AzureClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
+            foreach (var method in rootClient.Methods)
             {
-                foreach (var method in inputClient.Methods)
+                hasOperation = true;
+                if (method is InputLongRunningServiceMethod || method is InputLongRunningPagingServiceMethod)
                 {
-                    hasOperation = true;
-                    if (method.Operation.LongRunning != null)
-                    {
-                        hasLongRunningOperation = true;
-                        return;
-                    }
+                    hasLongRunningOperation = true;
+                    return;
                 }
+            }
+            foreach (var inputClient in rootClient.Children)
+            {
+                TraverseInput(inputClient, ref hasOperation, ref hasLongRunningOperation);
             }
         }
 
