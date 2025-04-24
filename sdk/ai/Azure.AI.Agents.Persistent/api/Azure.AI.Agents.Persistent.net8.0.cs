@@ -1,5 +1,9 @@
 namespace Azure.AI.Agents.Persistent
 {
+    public static partial class AIAgentsPersistentExtensions
+    {
+        public static Azure.AI.Agents.Persistent.PersistentAgentsClient GetAgentsClient(this System.ClientModel.Primitives.ConnectionProvider provider) { throw null; }
+    }
     public static partial class AIAgentsPersistentModelFactory
     {
         public static Azure.AI.Agents.Persistent.AzureFunctionBinding AzureFunctionBinding(Azure.AI.Agents.Persistent.AzureFunctionBindingType type = default(Azure.AI.Agents.Persistent.AzureFunctionBindingType), Azure.AI.Agents.Persistent.AzureFunctionStorageQueue storageQueue = null) { throw null; }
