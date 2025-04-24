@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-03-01-preview";
+            _apiVersion = apiVersion ?? "2019-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -298,6 +298,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -325,6 +326,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:

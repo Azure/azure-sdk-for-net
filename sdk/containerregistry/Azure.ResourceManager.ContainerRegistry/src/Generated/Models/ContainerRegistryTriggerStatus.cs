@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    /// <summary> The current status of the source trigger. </summary>
+    /// <summary> The current status of trigger. </summary>
     public readonly partial struct ContainerRegistryTriggerStatus : IEquatable<ContainerRegistryTriggerStatus>
     {
         private readonly string _value;
@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
+        private const string EnabledValue = "Enabled";
 
-        /// <summary> Enabled. </summary>
-        public static ContainerRegistryTriggerStatus Enabled { get; } = new ContainerRegistryTriggerStatus(EnabledValue);
         /// <summary> Disabled. </summary>
         public static ContainerRegistryTriggerStatus Disabled { get; } = new ContainerRegistryTriggerStatus(DisabledValue);
+        /// <summary> Enabled. </summary>
+        public static ContainerRegistryTriggerStatus Enabled { get; } = new ContainerRegistryTriggerStatus(EnabledValue);
         /// <summary> Determines if two <see cref="ContainerRegistryTriggerStatus"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryTriggerStatus left, ContainerRegistryTriggerStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryTriggerStatus"/> values are not the same. </summary>
