@@ -22,7 +22,7 @@ parameters:
   type: stepList
   default: []
 
-# Indicates the build matrix to use for post-build autorest validation
+# Indicates the build matrix to use for post-build typespec validation
 - name: TestMatrix
   type: object
   default: {}
@@ -86,7 +86,7 @@ extends:
   parameters:
     stages:
     # Build stage
-    # Responsible for building the autorest generator and typespec emitter packages
+    # Responsible for building the TypeSpec generator and emitter packages
     # Produces the artifact `build_artifacts` which contains the following:
     #   package-versions.json: Contains a map of package name to version for the packages that were built
     #   overrides.json: Contains npm package version overrides for the emitter and generator
@@ -275,7 +275,7 @@ extends:
               BaseRepoOwner: azure-sdk
               TargetRepoName: $(Build.Repository.Name)
               BaseRepoBranch: $(branchName)
-              CommitMsg: Initialize repository for autorest build $(Build.BuildNumber)
+              CommitMsg: Regenerate repository SDK with TypeSpec build $(Build.BuildNumber)
               WorkingDirectory: $(Build.SourcesDirectory)
               ScriptDirectory: $(Build.SourcesDirectory)/eng/common/scripts
               # To accomodate scheduled runs and retries, we want to overwrite any existing changes on the branch
@@ -377,9 +377,9 @@ extends:
                 $prTitle = "Scheduled code regeneration test"
               } else {
                 if ($preRelease) {
-                  $prTitle = "Update typespec emitter version to prerelease $emitterVersion"
+                  $prTitle = "Update TypeSpec emitter version to prerelease $emitterVersion"
                 } else {
-                  $prTitle = "Update typespec emitter version to $emitterVersion"
+                  $prTitle = "Update TypeSpec emitter version to $emitterVersion"
                 }
 
                 if ($generateJobResult -ne 'Succeeded') {
