@@ -98,7 +98,7 @@
     <PackageReference Update="System.Security.Cryptography.Cose" Version="7.0.0" />
     <PackageReference Update="System.Threading.Channels" Version="6.0.0" />
     <PackageReference Update="System.Threading.Tasks.Extensions" Version="4.5.4" />
-    <PackageReference Update="System.Text.Json" Version="6.0.11" />
+    <PackageReference Update="System.Text.Json" Version="8.0.5" />
     <PackageReference Update="System.Text.Encodings.Web" Version="8.0.0" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
     <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" />
