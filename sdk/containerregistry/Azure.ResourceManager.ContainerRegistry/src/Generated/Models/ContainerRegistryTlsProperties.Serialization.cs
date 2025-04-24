@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ContainerRegistryTlsStatus? status = default;
-            TlsPropertiesCertificate certificate = default;
+            ContainerRegistryTlsCertificateProperties certificate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    certificate = TlsPropertiesCertificate.DeserializeTlsPropertiesCertificate(property.Value, options);
+                    certificate = ContainerRegistryTlsCertificateProperties.DeserializeContainerRegistryTlsCertificateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

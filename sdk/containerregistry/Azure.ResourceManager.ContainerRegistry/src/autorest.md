@@ -265,6 +265,8 @@ rename-mapping:
   AzureADAuthenticationAsArmPolicyStatus: AadAuthenticationAsArmPolicyStatus
   PackageSourceType: ArchivePackageSourceType
   RoleAssignmentMode: ContainerRegistryRoleAssignmentMode
+  ConnectedRegistry.properties.clientTokenIds: -|arm-id
+  ConnectedRegistryUpdateParameters.properties.clientTokenIds: -|arm-id
 
 override-operation-name:
   Schedules_ScheduleRun: ScheduleRun
@@ -272,6 +274,7 @@ override-operation-name:
   Builds_GetBuildSourceUploadUrl: GetBuildSourceUploadUrl
 
 directive:
+  # these two renames of operation would make the xml doc incorrect, but currently this is required because now the same operation would contain multiple api-versions if we do not rename.
   - rename-operation:
       from: Registries_GetBuildSourceUploadUrl
       to: Builds_GetBuildSourceUploadUrl
@@ -288,8 +291,16 @@ directive:
   - from: containerregistry.json
     where: $.definitions
     transform: >
-      $.ConnectedRegistryProperties.properties.clientTokenIds.items['x-ms-format'] = 'arm-id';
-      $.ConnectedRegistryUpdateProperties.properties.clientTokenIds.items['x-ms-format'] = 'arm-id';
+      $.LoginServerProperties.properties.tls = {
+          "$ref": "#/definitions/TlsProperties",
+          "description": "The TLS properties of the connected registry login server.",
+          "readOnly": true
+        };
+      $.TlsProperties.properties.certificate = {
+          "$ref": "#/definitions/TlsCertificateProperties",
+          "description": "The certificate used to configure HTTPS for the login server.",
+          "readOnly": true
+        };
   - from: swagger-document
     where: $.definitions..expiry
     transform: >

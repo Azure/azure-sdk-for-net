@@ -114,38 +114,20 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectedRegistryLoginServer"/>. </summary>
         /// <param name="host"> The host of the connected registry. Can be FQDN or IP. </param>
-        /// <param name="tls"></param>
+        /// <param name="tls"> The TLS properties of the connected registry login server. </param>
         /// <returns> A new <see cref="Models.ConnectedRegistryLoginServer"/> instance for mocking. </returns>
-        public static ConnectedRegistryLoginServer ConnectedRegistryLoginServer(string host = null, LoginServerPropertiesTls tls = null)
+        public static ConnectedRegistryLoginServer ConnectedRegistryLoginServer(string host = null, ContainerRegistryTlsProperties tls = null)
         {
             return new ConnectedRegistryLoginServer(host, tls, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LoginServerPropertiesTls"/>. </summary>
-        /// <param name="status"> Indicates whether HTTPS is enabled for the login server. </param>
-        /// <param name="certificate"></param>
-        /// <returns> A new <see cref="Models.LoginServerPropertiesTls"/> instance for mocking. </returns>
-        public static LoginServerPropertiesTls LoginServerPropertiesTls(ContainerRegistryTlsStatus? status = null, TlsPropertiesCertificate certificate = null)
-        {
-            return new LoginServerPropertiesTls(status, certificate, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryTlsProperties"/>. </summary>
         /// <param name="status"> Indicates whether HTTPS is enabled for the login server. </param>
-        /// <param name="certificate"></param>
+        /// <param name="certificate"> The certificate used to configure HTTPS for the login server. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryTlsProperties"/> instance for mocking. </returns>
-        public static ContainerRegistryTlsProperties ContainerRegistryTlsProperties(ContainerRegistryTlsStatus? status = null, TlsPropertiesCertificate certificate = null)
+        public static ContainerRegistryTlsProperties ContainerRegistryTlsProperties(ContainerRegistryTlsStatus? status = null, ContainerRegistryTlsCertificateProperties certificate = null)
         {
             return new ContainerRegistryTlsProperties(status, certificate, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TlsPropertiesCertificate"/>. </summary>
-        /// <param name="certificateType"> The type of certificate location. </param>
-        /// <param name="certificateLocation"> Indicates the location of the certificates. </param>
-        /// <returns> A new <see cref="Models.TlsPropertiesCertificate"/> instance for mocking. </returns>
-        public static TlsPropertiesCertificate TlsPropertiesCertificate(ContainerRegistryCertificateType? certificateType = null, string certificateLocation = null)
-        {
-            return new TlsPropertiesCertificate(certificateType, certificateLocation, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryTlsCertificateProperties"/>. </summary>
