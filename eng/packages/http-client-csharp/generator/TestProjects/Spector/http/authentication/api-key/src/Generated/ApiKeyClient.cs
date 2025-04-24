@@ -7,49 +7,18 @@
 
 using System;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Authentication.ApiKey
 {
-    /// <summary> Illustrates clients generated with ApiKey authentication. </summary>
     public partial class ApiKeyClient
     {
-        private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly AzureKeyCredential _keyCredential;
-        private const string AuthorizationHeader = "x-ms-api-key";
+        protected ApiKeyClient() => throw null;
 
-        /// <summary> Initializes a new instance of ApiKeyClient for mocking. </summary>
-        protected ApiKeyClient()
-        {
-        }
+        public ApiKeyClient(AzureKeyCredential keyCredential) : this(new Uri("http://localhost:3000"), keyCredential, new ApiKeyClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of ApiKeyClient. </summary>
-        /// <param name="keyCredential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyCredential"/> is null. </exception>
-        public ApiKeyClient(AzureKeyCredential keyCredential) : this(new Uri("http://localhost:3000"), keyCredential, new ApiKeyClientOptions())
-        {
-        }
+        public ApiKeyClient(Uri endpoint, AzureKeyCredential keyCredential, ApiKeyClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of ApiKeyClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="keyCredential"> A credential used to authenticate to the service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="keyCredential"/> is null. </exception>
-        public ApiKeyClient(Uri endpoint, AzureKeyCredential keyCredential, ApiKeyClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(keyCredential, nameof(keyCredential));
-
-            options ??= new ApiKeyClientOptions();
-
-            _endpoint = endpoint;
-            _keyCredential = keyCredential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) });
-        }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public HttpPipeline Pipeline { get; }
+        public HttpPipeline Pipeline => throw null;
     }
 }

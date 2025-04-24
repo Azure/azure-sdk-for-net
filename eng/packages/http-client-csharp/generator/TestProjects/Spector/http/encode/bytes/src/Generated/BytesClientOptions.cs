@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace Encode.Bytes
 {
+    /// <summary> Client options for <see cref="BytesClient"/>. </summary>
     public partial class BytesClientOptions : ClientOptions
     {
     }

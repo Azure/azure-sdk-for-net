@@ -5,10 +5,10 @@
 
 #nullable disable
 
-namespace Authentication.ApiKey
+namespace Encode.Bytes
 {
     /// <summary></summary>
-    public partial class ApiKeyClient
+    public partial class BytesClient
     {
     }
 }

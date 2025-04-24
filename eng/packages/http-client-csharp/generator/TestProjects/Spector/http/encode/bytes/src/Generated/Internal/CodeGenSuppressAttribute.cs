@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Authentication.ApiKey
+namespace Encode.Bytes
 {
     [AttributeUsage((AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct), AllowMultiple = true)]
     internal partial class CodeGenSuppressAttribute : Attribute

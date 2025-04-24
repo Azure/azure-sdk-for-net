@@ -6,26 +6,71 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using Azure.Core.Pipeline;
 
 namespace Encode.Bytes
 {
+    /// <summary> Test for encode decorator on bytes. </summary>
     public partial class BytesClient
     {
-        public BytesClient() : this(new Uri("http://localhost:3000"), new BytesClientOptions()) => throw null;
+        private readonly Uri _endpoint;
+        private Query _cachedQuery;
+        private Property _cachedProperty;
+        private Header _cachedHeader;
+        private RequestBody _cachedRequestBody;
+        private ResponseBody _cachedResponseBody;
 
-        public BytesClient(Uri endpoint, BytesClientOptions options) => throw null;
+        /// <summary> Initializes a new instance of BytesClient. </summary>
+        public BytesClient() : this(new Uri("http://localhost:3000"), new BytesClientOptions())
+        {
+        }
 
-        public HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of BytesClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public BytesClient(Uri endpoint, BytesClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-        public virtual Query GetQueryClient() => throw null;
+            options ??= new BytesClientOptions();
 
-        public virtual Property GetPropertyClient() => throw null;
+            _endpoint = endpoint;
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+        }
 
-        public virtual Header GetHeaderClient() => throw null;
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public HttpPipeline Pipeline { get; }
 
-        public virtual RequestBody GetRequestBodyClient() => throw null;
+        /// <summary> Initializes a new instance of Query. </summary>
+        public virtual Query GetQueryClient()
+        {
+            return Volatile.Read(ref _cachedQuery) ?? Interlocked.CompareExchange(ref _cachedQuery, new Query(Pipeline, _endpoint), null) ?? _cachedQuery;
+        }
 
-        public virtual ResponseBody GetResponseBodyClient() => throw null;
+        /// <summary> Initializes a new instance of Property. </summary>
+        public virtual Property GetPropertyClient()
+        {
+            return Volatile.Read(ref _cachedProperty) ?? Interlocked.CompareExchange(ref _cachedProperty, new Property(Pipeline, _endpoint), null) ?? _cachedProperty;
+        }
+
+        /// <summary> Initializes a new instance of Header. </summary>
+        public virtual Header GetHeaderClient()
+        {
+            return Volatile.Read(ref _cachedHeader) ?? Interlocked.CompareExchange(ref _cachedHeader, new Header(Pipeline, _endpoint), null) ?? _cachedHeader;
+        }
+
+        /// <summary> Initializes a new instance of RequestBody. </summary>
+        public virtual RequestBody GetRequestBodyClient()
+        {
+            return Volatile.Read(ref _cachedRequestBody) ?? Interlocked.CompareExchange(ref _cachedRequestBody, new RequestBody(Pipeline, _endpoint), null) ?? _cachedRequestBody;
+        }
+
+        /// <summary> Initializes a new instance of ResponseBody. </summary>
+        public virtual ResponseBody GetResponseBodyClient()
+        {
+            return Volatile.Read(ref _cachedResponseBody) ?? Interlocked.CompareExchange(ref _cachedResponseBody, new ResponseBody(Pipeline, _endpoint), null) ?? _cachedResponseBody;
+        }
     }
 }

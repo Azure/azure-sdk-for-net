@@ -9,7 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Authentication.ApiKey
+namespace Encode.Bytes
 {
     internal static partial class Argument
     {
