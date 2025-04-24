@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed an issue where Azure CLI credential could hang or delay due to I/O contention when standard input/output was shared with the host process ([#49582](https://github.com/Azure/azure-sdk-for-net/pull/49582)).
 
 ### Other Changes
 
