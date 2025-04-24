@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Chaos.Models;
 
 namespace Azure.ResourceManager.Chaos.Mocking
 {
@@ -20,8 +19,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
     {
         private ClientDiagnostics _chaosExperimentExperimentsClientDiagnostics;
         private ExperimentsRestOperations _chaosExperimentExperimentsRestClient;
-        private ClientDiagnostics _operationStatusesClientDiagnostics;
-        private OperationStatusesRestOperations _operationStatusesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableChaosSubscriptionResource"/> class for mocking. </summary>
         protected MockableChaosSubscriptionResource()
@@ -37,8 +34,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
 
         private ClientDiagnostics ChaosExperimentExperimentsClientDiagnostics => _chaosExperimentExperimentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosExperimentResource.ResourceType.Namespace, Diagnostics);
         private ExperimentsRestOperations ChaosExperimentExperimentsRestClient => _chaosExperimentExperimentsRestClient ??= new ExperimentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ChaosExperimentResource.ResourceType));
-        private ClientDiagnostics OperationStatusesClientDiagnostics => _operationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Chaos", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private OperationStatusesRestOperations OperationStatusesRestClient => _operationStatusesRestClient ??= new OperationStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -180,88 +175,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChaosExperimentExperimentsRestClient.CreateListAllRequest(Id.SubscriptionId, running, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChaosExperimentExperimentsRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId, running, continuationToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ChaosExperimentResource(Client, ChaosExperimentData.DeserializeChaosExperimentData(e)), ChaosExperimentExperimentsClientDiagnostics, Pipeline, "MockableChaosSubscriptionResource.GetChaosExperiments", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns the current status of an async operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/operationStatuses/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OperationStatuses_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<Response<OperationStatusResult>> GetOperationStatusAsync(string location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = OperationStatusesClientDiagnostics.CreateScope("MockableChaosSubscriptionResource.GetOperationStatus");
-            scope.Start();
-            try
-            {
-                var response = await OperationStatusesRestClient.GetAsync(Id.SubscriptionId, location, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Returns the current status of an async operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/operationStatuses/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OperationStatuses_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="operationId"/> is null. </exception>
-        public virtual Response<OperationStatusResult> GetOperationStatus(string location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = OperationStatusesClientDiagnostics.CreateScope("MockableChaosSubscriptionResource.GetOperationStatus");
-            scope.Start();
-            try
-            {
-                var response = OperationStatusesRestClient.Get(Id.SubscriptionId, location, operationId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }
