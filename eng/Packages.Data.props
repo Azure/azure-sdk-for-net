@@ -207,6 +207,7 @@
 
   <ItemGroup Condition="'$(IsGeneratorLibrary)' == 'true'">
     <PackageReference Update="Microsoft.TypeSpec.Generator.ClientModel" Version="1.0.0-alpha.20250422.2" />
+    <PackageReference Update="Azure.Generator" Version="1.0.0-alpha.20250423.3" />
     <PackageReference Update="System.ClientModel" Version="1.3.0" />
   </ItemGroup>
 

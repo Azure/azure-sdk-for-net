@@ -97,7 +97,7 @@ function Pack-And-Write-Info {
     $versionOption = "/p:Version=$version"
     $hasReleaseVersionOption = $version.Contains("alpha") ? "/p:HasReleaseVersion=false" : ""
     Invoke-LoggedCommand "dotnet pack ./$package/src/$package.csproj $versionOption $hasReleaseVersionOption -c Release -o $outputPath"
-    Write-PackageInfo -packageName $package -directoryPath "eng/packages/http-client-csharp/generator/$package/src" -version $version
+    Write-PackageInfo -packageName $package -directoryPath "$emitterPackagePath/generator/$package/src" -version $version
 }
 
 
@@ -115,9 +115,11 @@ Build-Emitter -packageRoot $packageRoot -outputPath $outputPath -overrides $over
 
 # Pack the generator
 Push-Location "$packageRoot/generator"
+$generatorSolutionFile = Get-ChildItem -Path . -Filter "*.sln" -File | Select-Object -First 1
+$generatorName = $generatorSolutionFile.BaseName
 try {
     Write-Host "Working in $PWD"
-    Pack-And-Write-Info -package "Azure.Generator" -version $GeneratorVersion -outputPath $outputPath
+    Pack-And-Write-Info -package $generatorName -version $GeneratorVersion -outputPath $outputPath
 }
 finally
 {
@@ -125,7 +127,7 @@ finally
 }
 
 $packageMatrix = [ordered]@{
-    "azure.generator" = $generatorVersion
+    $generatorName.ToLower() = $generatorVersion
 }
 
 $packageMatrix | ConvertTo-Json | Set-Content "$outputPath/package-versions.json"
