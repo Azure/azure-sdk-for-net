@@ -121,7 +121,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     if ($ciProps) {
       # CheckAOTCompat is opt _in_, so we should default to false if not specified
       $shouldAot = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "CheckAOTCompat")
-      if ($shouldAot) {
+      if ($null -ne $shouldAot) {
         $parsedBool = $null
         if ([bool]::TryParse($shouldAot, [ref]$parsedBool)) {
           $pkgProp.CIParameters["CheckAOTCompat"] = $parsedBool
@@ -150,6 +150,13 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       else {
         $pkgProp.CIParameters["BuildSnippets"] = $true
       }
+    }
+    # if the package isn't associated with a CI.yml, we still want to set the defaults values for these parameters
+    # so that when we are checking the package set for which need to "Build Snippets" or "Check AOT" we won't crash due to the property being null
+    else {
+      $pkgProp.CIParameters["CheckAOTCompat"] = $false
+      $pkgProp.CIParameters["AOTTestInputs"] = @()
+      $pkgProp.CIParameters["BuildSnippets"] = $true
     }
 
     $allPackageProps += $pkgProp

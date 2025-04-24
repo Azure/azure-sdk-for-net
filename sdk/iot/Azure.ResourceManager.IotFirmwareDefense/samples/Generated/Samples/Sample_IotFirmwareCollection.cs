@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_FirmwaresCreateMaximumSetGen()
+        public async Task CreateOrUpdate_FirmwaresCreateMaximumSetGenGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Create_MaximumSet_Gen.json
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2025-04-01-preview/examples/Firmwares_Create_MaximumSet_Gen.json
             // this example is just showing the usage of "Firmwares_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
 
             // this example assumes you already have this FirmwareAnalysisWorkspaceResource created on azure
             // for more information of creating FirmwareAnalysisWorkspaceResource, please refer to the document of FirmwareAnalysisWorkspaceResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
-            string resourceGroupName = "rgworkspaces-firmwares";
-            string workspaceName = "A7";
+            string subscriptionId = "5C707B5F-6130-4F71-819E-953A28942E88";
+            string resourceGroupName = "rgiotfirmwaredefense";
+            string workspaceName = "exampleWorkspaceName";
             ResourceIdentifier firmwareAnalysisWorkspaceResourceId = FirmwareAnalysisWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             FirmwareAnalysisWorkspaceResource firmwareAnalysisWorkspace = client.GetFirmwareAnalysisWorkspaceResource(firmwareAnalysisWorkspaceResourceId);
 
@@ -40,19 +40,20 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             IotFirmwareCollection collection = firmwareAnalysisWorkspace.GetIotFirmwares();
 
             // invoke the operation
-            string firmwareId = "umrkdttp";
+            string firmwareId = "00000000-0000-0000-0000-000000000000";
             IotFirmwareData data = new IotFirmwareData
             {
-                FileName = "wresexxulcdsdd",
-                Vendor = "vycmdhgtmepcptyoubztiuudpkcpd",
-                Model = "f",
-                Version = "s",
-                Description = "uz",
-                FileSize = 17L,
+                FileName = "dmnqhyxssutvnewntlb",
+                Vendor = "hymojocxpxqhtblioaavylnzyg",
+                Model = "wmyfbyjsggbvxcuin",
+                Version = "nhtxzslgcbtptu",
+                Description = "sqt",
+                FileSize = 30L,
                 Status = FirmwareAnalysisStatus.Pending,
                 StatusMessages = {new FirmwareAnalysisStatusMessage
 {
-Message = "ulvhmhokezathzzauiitu",
+ErrorCode = 20L,
+Message = "edtylkjvj",
 }},
             };
             ArmOperation<IotFirmwareResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, firmwareId, data);
@@ -69,7 +70,7 @@ Message = "ulvhmhokezathzzauiitu",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_FirmwaresCreateMinimumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Create_MinimumSet_Gen.json
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2025-04-01-preview/examples/Firmwares_Create_MinimumSet_Gen.json
             // this example is just showing the usage of "Firmwares_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -103,9 +104,9 @@ Message = "ulvhmhokezathzzauiitu",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_FirmwaresGetMaximumSetGen()
+        public async Task Get_FirmwaresGetMaximumSetGenGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2025-04-01-preview/examples/Firmwares_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Firmwares_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -115,9 +116,9 @@ Message = "ulvhmhokezathzzauiitu",
 
             // this example assumes you already have this FirmwareAnalysisWorkspaceResource created on azure
             // for more information of creating FirmwareAnalysisWorkspaceResource, please refer to the document of FirmwareAnalysisWorkspaceResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
-            string resourceGroupName = "rgworkspaces-firmwares";
-            string workspaceName = "A7";
+            string subscriptionId = "5C707B5F-6130-4F71-819E-953A28942E88";
+            string resourceGroupName = "rgiotfirmwaredefense";
+            string workspaceName = "exampleWorkspaceName";
             ResourceIdentifier firmwareAnalysisWorkspaceResourceId = FirmwareAnalysisWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             FirmwareAnalysisWorkspaceResource firmwareAnalysisWorkspace = client.GetFirmwareAnalysisWorkspaceResource(firmwareAnalysisWorkspaceResourceId);
 
@@ -125,7 +126,7 @@ Message = "ulvhmhokezathzzauiitu",
             IotFirmwareCollection collection = firmwareAnalysisWorkspace.GetIotFirmwares();
 
             // invoke the operation
-            string firmwareId = "umrkdttp";
+            string firmwareId = "00000000-0000-0000-0000-000000000000";
             IotFirmwareResource result = await collection.GetAsync(firmwareId);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -139,7 +140,7 @@ Message = "ulvhmhokezathzzauiitu",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_FirmwaresGetMinimumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2025-04-01-preview/examples/Firmwares_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "Firmwares_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -171,9 +172,9 @@ Message = "ulvhmhokezathzzauiitu",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_FirmwaresListByWorkspaceMaximumSetGen()
+        public async Task GetAll_FirmwaresListByWorkspaceMaximumSetGenGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_ListByWorkspace_MaximumSet_Gen.json
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2025-04-01-preview/examples/Firmwares_ListByWorkspace_MaximumSet_Gen.json
             // this example is just showing the usage of "Firmwares_ListByWorkspace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -183,9 +184,9 @@ Message = "ulvhmhokezathzzauiitu",
 
             // this example assumes you already have this FirmwareAnalysisWorkspaceResource created on azure
             // for more information of creating FirmwareAnalysisWorkspaceResource, please refer to the document of FirmwareAnalysisWorkspaceResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
-            string resourceGroupName = "rgworkspaces-firmwares";
-            string workspaceName = "A7";
+            string subscriptionId = "5C707B5F-6130-4F71-819E-953A28942E88";
+            string resourceGroupName = "rgiotfirmwaredefense";
+            string workspaceName = "exampleWorkspaceName";
             ResourceIdentifier firmwareAnalysisWorkspaceResourceId = FirmwareAnalysisWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             FirmwareAnalysisWorkspaceResource firmwareAnalysisWorkspace = client.GetFirmwareAnalysisWorkspaceResource(firmwareAnalysisWorkspaceResourceId);
 
@@ -209,7 +210,7 @@ Message = "ulvhmhokezathzzauiitu",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_FirmwaresListByWorkspaceMinimumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_ListByWorkspace_MinimumSet_Gen.json
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2025-04-01-preview/examples/Firmwares_ListByWorkspace_MinimumSet_Gen.json
             // this example is just showing the usage of "Firmwares_ListByWorkspace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -243,9 +244,9 @@ Message = "ulvhmhokezathzzauiitu",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_FirmwaresGetMaximumSetGen()
+        public async Task Exists_FirmwaresGetMaximumSetGenGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2025-04-01-preview/examples/Firmwares_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Firmwares_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -255,9 +256,9 @@ Message = "ulvhmhokezathzzauiitu",
 
             // this example assumes you already have this FirmwareAnalysisWorkspaceResource created on azure
             // for more information of creating FirmwareAnalysisWorkspaceResource, please refer to the document of FirmwareAnalysisWorkspaceResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
-            string resourceGroupName = "rgworkspaces-firmwares";
-            string workspaceName = "A7";
+            string subscriptionId = "5C707B5F-6130-4F71-819E-953A28942E88";
+            string resourceGroupName = "rgiotfirmwaredefense";
+            string workspaceName = "exampleWorkspaceName";
             ResourceIdentifier firmwareAnalysisWorkspaceResourceId = FirmwareAnalysisWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             FirmwareAnalysisWorkspaceResource firmwareAnalysisWorkspace = client.GetFirmwareAnalysisWorkspaceResource(firmwareAnalysisWorkspaceResourceId);
 
@@ -265,7 +266,7 @@ Message = "ulvhmhokezathzzauiitu",
             IotFirmwareCollection collection = firmwareAnalysisWorkspace.GetIotFirmwares();
 
             // invoke the operation
-            string firmwareId = "umrkdttp";
+            string firmwareId = "00000000-0000-0000-0000-000000000000";
             bool result = await collection.ExistsAsync(firmwareId);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -275,7 +276,7 @@ Message = "ulvhmhokezathzzauiitu",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_FirmwaresGetMinimumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2025-04-01-preview/examples/Firmwares_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "Firmwares_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -303,9 +304,9 @@ Message = "ulvhmhokezathzzauiitu",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_FirmwaresGetMaximumSetGen()
+        public async Task GetIfExists_FirmwaresGetMaximumSetGenGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2025-04-01-preview/examples/Firmwares_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Firmwares_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -315,9 +316,9 @@ Message = "ulvhmhokezathzzauiitu",
 
             // this example assumes you already have this FirmwareAnalysisWorkspaceResource created on azure
             // for more information of creating FirmwareAnalysisWorkspaceResource, please refer to the document of FirmwareAnalysisWorkspaceResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
-            string resourceGroupName = "rgworkspaces-firmwares";
-            string workspaceName = "A7";
+            string subscriptionId = "5C707B5F-6130-4F71-819E-953A28942E88";
+            string resourceGroupName = "rgiotfirmwaredefense";
+            string workspaceName = "exampleWorkspaceName";
             ResourceIdentifier firmwareAnalysisWorkspaceResourceId = FirmwareAnalysisWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             FirmwareAnalysisWorkspaceResource firmwareAnalysisWorkspace = client.GetFirmwareAnalysisWorkspaceResource(firmwareAnalysisWorkspaceResourceId);
 
@@ -325,7 +326,7 @@ Message = "ulvhmhokezathzzauiitu",
             IotFirmwareCollection collection = firmwareAnalysisWorkspace.GetIotFirmwares();
 
             // invoke the operation
-            string firmwareId = "umrkdttp";
+            string firmwareId = "00000000-0000-0000-0000-000000000000";
             NullableResponse<IotFirmwareResource> response = await collection.GetIfExistsAsync(firmwareId);
             IotFirmwareResource result = response.HasValue ? response.Value : null;
 
@@ -347,7 +348,7 @@ Message = "ulvhmhokezathzzauiitu",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_FirmwaresGetMinimumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/preview/2025-04-01-preview/examples/Firmwares_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "Firmwares_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -11,7 +11,6 @@ using System.Text;
 using Azure.Core;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.Azure
 {
