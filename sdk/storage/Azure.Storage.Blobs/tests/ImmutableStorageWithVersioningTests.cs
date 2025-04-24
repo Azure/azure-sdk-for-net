@@ -477,7 +477,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [RetryOnException(5, typeof(RequestFailedException))]
         public async Task SetImmutibilityPolicyAsync_IfModifiedSince_Failed()
         {
             // Arrange
@@ -485,7 +484,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
-                ExpiresOn = Recording.UtcNow.AddSeconds(1),
+                ExpiresOn = Recording.UtcNow.AddMinutes(5),
                 PolicyMode = BlobImmutabilityPolicyMode.Locked
             };
 
