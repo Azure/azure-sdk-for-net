@@ -41,7 +41,8 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
             string assemblyName = "TestAssembly",
             bool includeSTJ = true,
             CSharpParseOptions? parseOptions = null,
-            string contextName = "LocalContext")
+            string contextName = "LocalContext",
+            HashSet<string>? additionalSuppress = null)
         {
             List<MetadataReference> references =
             [
@@ -90,6 +91,9 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
                     diag.ToString().EndsWith($"error CS0117: '{contextName}' does not contain a definition for 'Default'", StringComparison.Ordinal))
                     continue;
 
+                if (additionalSuppress is not null && additionalSuppress.Contains(diag.Id))
+                    continue;
+
                 Assert.Fail($"Compilation Error: {diag}");
             }
 
@@ -99,7 +103,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
         public static GeneratorResult RunSourceGenerator(Compilation compilation, bool disableDiagnosticValidation = false)
             => RunSourceGenerator(compilation, out _, disableDiagnosticValidation);
 
-        public static GeneratorResult RunSourceGenerator(Compilation compilation, out Compilation newCompilation, bool disableDiagnosticValidation = false)
+        public static GeneratorResult RunSourceGenerator(Compilation compilation, out Compilation newCompilation, bool disableDiagnosticValidation = false, HashSet<string>? additionalSuppress = null)
         {
             ModelReaderWriterContextGenerationSpec? generatedSpecs = null;
             var generator = new ModelReaderWriterContextGenerator
@@ -131,6 +135,10 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
                         }
                     }
                 }
+
+                if (additionalSuppress is not null && additionalSuppress.Contains(diagnostic.Id))
+                    continue;
+
                 Assert.Fail($"Compilation Error: {diagnostic}");
             }
 
