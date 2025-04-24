@@ -10,21 +10,18 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class UpdateTranscriptionRequestInternal : IUtf8JsonSerializable
+    internal partial class MoveParticipantsRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Locale))
+            writer.WritePropertyName("targetParticipants"u8);
+            writer.WriteStartArray();
+            foreach (var item in TargetParticipants)
             {
-                writer.WritePropertyName("locale"u8);
-                writer.WriteStringValue(Locale);
+                writer.WriteObjectValue(item);
             }
-            if (Optional.IsDefined(SpeechModelEndpointId))
-            {
-                writer.WritePropertyName("speechModelEndpointId"u8);
-                writer.WriteStringValue(SpeechModelEndpointId);
-            }
+            writer.WriteEndArray();
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
@@ -35,6 +32,8 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("operationCallbackUri"u8);
                 writer.WriteStringValue(OperationCallbackUri);
             }
+            writer.WritePropertyName("fromCall"u8);
+            writer.WriteStringValue(FromCall);
             writer.WriteEndObject();
         }
 
