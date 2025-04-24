@@ -23,6 +23,7 @@ trigger:
     - sdk/applicationinsights/Azure.ResourceManager.ApplicationInsights
     - sdk/appplatform/Azure.ResourceManager.AppPlatform
     - sdk/arc-scvmm/Azure.ResourceManager.ScVmm
+    - sdk/arizeaiobservabilityeval/Azure.ResourceManager.ArizeAIObservabilityEval
     - sdk/astronomer/Azure.ResourceManager.Astro
     - sdk/attestation/Azure.ResourceManager.Attestation
     - sdk/authorization/Azure.ResourceManager.Authorization
@@ -234,6 +235,7 @@ pr:
     - sdk/applicationinsights/Azure.ResourceManager.ApplicationInsights
     - sdk/appplatform/Azure.ResourceManager.AppPlatform
     - sdk/arc-scvmm/Azure.ResourceManager.ScVmm
+    - sdk/arizeaiobservabilityeval/Azure.ResourceManager.ArizeAIObservabilityEval
     - sdk/astronomer/Azure.ResourceManager.Astro
     - sdk/attestation/Azure.ResourceManager.Attestation
     - sdk/authorization/Azure.ResourceManager.Authorization
