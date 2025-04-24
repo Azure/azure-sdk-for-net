@@ -59,18 +59,6 @@ namespace Azure.Identity
             {
                 _cancellationToken = cancellationToken;
             }
-
-            if (_redirectStandardInput)
-            {
-                try
-                {
-                    _process.StandardInput.Close();
-                }
-                catch (Exception ex)
-                {
-                    AzureIdentityEventSource.Singleton.ProcessRunnerError($"Failed to close StandardInput: {ex}");
-                }
-            }
         }
 
         public Task<string> RunAsync()
@@ -118,7 +106,7 @@ namespace Azure.Identity
             {
                 try
                 {
-                    _process..Close();
+                    _process.StandardInput.Close();
                 }
                 catch (Exception ex)
                 {
