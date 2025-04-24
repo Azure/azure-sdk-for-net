@@ -35,13 +35,13 @@ namespace Azure.Health.Deidentification
             }
 
             writer.WritePropertyName("successful"u8);
-            writer.WriteNumberValue(Successful);
+            writer.WriteNumberValue(SuccessfulCount);
             writer.WritePropertyName("failed"u8);
-            writer.WriteNumberValue(Failed);
+            writer.WriteNumberValue(FailedCount);
             writer.WritePropertyName("canceled"u8);
-            writer.WriteNumberValue(Canceled);
+            writer.WriteNumberValue(CanceledCount);
             writer.WritePropertyName("total"u8);
-            writer.WriteNumberValue(Total);
+            writer.WriteNumberValue(TotalCount);
             writer.WritePropertyName("bytesProcessed"u8);
             writer.WriteNumberValue(BytesProcessed);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -18,7 +18,7 @@ namespace MgmtTypeSpec.Models
         {
         }
 
-        internal FooData(ResourceIdentifier id, string name, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, FooProperties properties, ExtendedLocation extendedLocation) : base(id, name, @type, systemData, additionalBinaryDataProperties, tags, location)
+        internal FooData(ResourceIdentifier id, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, FooProperties properties, string name, ExtendedLocation extendedLocation) : base(id, name, @type, systemData, additionalBinaryDataProperties, tags, location)
         {
             Properties = properties;
             ExtendedLocation = extendedLocation;
@@ -26,6 +26,9 @@ namespace MgmtTypeSpec.Models
 
         /// <summary> The resource-specific properties for this resource. </summary>
         public FooProperties Properties { get; }
+
+        /// <summary> The name of the Foo. </summary>
+        public new string Name => _name ?? default;
 
         /// <summary> Gets the ExtendedLocation. </summary>
         public ExtendedLocation ExtendedLocation { get; }

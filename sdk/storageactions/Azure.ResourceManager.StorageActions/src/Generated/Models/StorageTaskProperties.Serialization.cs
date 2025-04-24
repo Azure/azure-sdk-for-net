@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StorageActions.Models
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(CreationTimeInUtc))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.StorageActions.Models
                     {
                         continue;
                     }
-                    provisioningState = property.Value.GetString().ToStorageTaskProvisioningState();
+                    provisioningState = new StorageTaskProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("creationTimeInUtc"u8))
