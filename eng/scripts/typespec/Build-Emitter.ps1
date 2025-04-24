@@ -115,7 +115,7 @@ Build-Emitter -packageRoot $packageRoot -outputPath $outputPath -overrides $over
 
 # Pack the generator
 Push-Location "$packageRoot/generator"
-$generatorSolutionFile = Get-ChildItem -Path .\generator -Filter "*.sln" -File | Select-Object -First 1
+$generatorSolutionFile = Get-ChildItem -Path . -Filter "*.sln" -File | Select-Object -First 1
 $generatorName = $generatorSolutionFile.BaseName
 try {
     Write-Host "Working in $PWD"
