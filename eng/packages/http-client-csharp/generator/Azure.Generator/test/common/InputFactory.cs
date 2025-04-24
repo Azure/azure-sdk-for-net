@@ -235,7 +235,7 @@ namespace Azure.Generator.Tests.Common
         /// <returns></returns>
         public static InputModelType Model(
             string name,
-            string clientNamespace = "Sample.Models",
+            string clientNamespace = "Samples.Models",
             string access = "public",
             InputModelTypeUsage usage = InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
             IEnumerable<InputModelProperty>? properties = null,
