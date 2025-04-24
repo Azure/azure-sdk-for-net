@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseSkuDetails"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
-        /// <param name="customerFacingSizeInGB"> The cache size in GB. </param>
+        /// <param name="sizeInGB"> The cache size in GB. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterpriseSkuDetails(string name, float? customerFacingSizeInGB, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisEnterpriseSkuDetails(string name, float? sizeInGB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
-            CustomerFacingSizeInGB = customerFacingSizeInGB;
+            SizeInGB = sizeInGB;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         [WirePath("name")]
         public string Name { get; }
         /// <summary> The cache size in GB. </summary>
-        [WirePath("customerFacingSizeInGB")]
-        public float? CustomerFacingSizeInGB { get; }
+        [WirePath("sizeInGB")]
+        public float? SizeInGB { get; }
     }
 }
