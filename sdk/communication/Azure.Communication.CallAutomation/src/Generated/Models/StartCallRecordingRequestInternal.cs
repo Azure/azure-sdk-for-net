@@ -40,7 +40,8 @@ namespace Azure.Communication.CallAutomation
         /// </param>
         /// <param name="pauseOnStart"> When set to true will start recording in Pause mode, which can be resumed. </param>
         /// <param name="externalStorage"> Optional property to specify location where recording will be stored. </param>
-        internal StartCallRecordingRequestInternal(CallLocatorInternal callLocator, string callConnectionId, string recordingStateCallbackUri, RecordingContent? recordingContentType, RecordingChannel? recordingChannelType, RecordingFormat? recordingFormatType, IList<CommunicationIdentifierModel> audioChannelParticipantOrdering, IList<ChannelAffinityInternal> channelAffinity, bool? pauseOnStart, RecordingStorageInternal externalStorage)
+        /// <param name="postProcessingOptions"> The post processing options for the recording. </param>
+        internal StartCallRecordingRequestInternal(CallLocatorInternal callLocator, string callConnectionId, string recordingStateCallbackUri, RecordingContent? recordingContentType, RecordingChannel? recordingChannelType, RecordingFormat? recordingFormatType, IList<CommunicationIdentifierModel> audioChannelParticipantOrdering, IList<ChannelAffinityInternal> channelAffinity, bool? pauseOnStart, RecordingStorageInternal externalStorage, PostProcessingOptions postProcessingOptions)
         {
             CallLocator = callLocator;
             CallConnectionId = callConnectionId;
@@ -52,6 +53,7 @@ namespace Azure.Communication.CallAutomation
             ChannelAffinity = channelAffinity;
             PauseOnStart = pauseOnStart;
             ExternalStorage = externalStorage;
+            PostProcessingOptions = postProcessingOptions;
         }
 
         /// <summary> The call locator. (Only one of callLocator or callConnectionId to be used). </summary>
@@ -84,5 +86,7 @@ namespace Azure.Communication.CallAutomation
         public bool? PauseOnStart { get; set; }
         /// <summary> Optional property to specify location where recording will be stored. </summary>
         public RecordingStorageInternal ExternalStorage { get; set; }
+        /// <summary> The post processing options for the recording. </summary>
+        public PostProcessingOptions PostProcessingOptions { get; set; }
     }
 }
