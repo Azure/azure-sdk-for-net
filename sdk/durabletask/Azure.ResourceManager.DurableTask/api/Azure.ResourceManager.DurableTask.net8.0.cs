@@ -3,13 +3,13 @@ namespace Azure.ResourceManager.DurableTask
     public static partial class DurableTaskExtensions
     {
         public static Azure.ResourceManager.DurableTask.DurableTaskHubResource GetDurableTaskHubResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyResource GetDurableTaskRetentionPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.DurableTask.DurableTaskSchedulerResource> GetDurableTaskScheduler(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string schedulerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DurableTask.DurableTaskSchedulerResource>> GetDurableTaskSchedulerAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string schedulerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DurableTask.DurableTaskSchedulerResource GetDurableTaskSchedulerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DurableTask.DurableTaskSchedulerCollection GetDurableTaskSchedulers(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.DurableTask.DurableTaskSchedulerResource> GetDurableTaskSchedulers(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.DurableTask.DurableTaskSchedulerResource> GetDurableTaskSchedulersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.DurableTask.RetentionPolicyResource GetRetentionPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class DurableTaskHubCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DurableTask.DurableTaskHubResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DurableTask.DurableTaskHubResource>, System.Collections.IEnumerable
     {
@@ -58,6 +58,38 @@ namespace Azure.ResourceManager.DurableTask
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DurableTask.DurableTaskHubResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DurableTask.DurableTaskHubData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DurableTask.DurableTaskHubResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DurableTask.DurableTaskHubData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class DurableTaskRetentionPolicyData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData>
+    {
+        public DurableTaskRetentionPolicyData() { }
+        public Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties Properties { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DurableTaskRetentionPolicyResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DurableTaskRetentionPolicyResource() { }
+        public virtual Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string schedulerName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class DurableTaskSchedulerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DurableTask.DurableTaskSchedulerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DurableTask.DurableTaskSchedulerResource>, System.Collections.IEnumerable
     {
         protected DurableTaskSchedulerCollection() { }
@@ -102,7 +134,7 @@ namespace Azure.ResourceManager.DurableTask
         public virtual Azure.Response<Azure.ResourceManager.DurableTask.DurableTaskHubResource> GetDurableTaskHub(string taskHubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DurableTask.DurableTaskHubResource>> GetDurableTaskHubAsync(string taskHubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DurableTask.DurableTaskHubCollection GetDurableTaskHubs() { throw null; }
-        public virtual Azure.ResourceManager.DurableTask.RetentionPolicyResource GetRetentionPolicy() { throw null; }
+        public virtual Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyResource GetDurableTaskRetentionPolicy() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DurableTask.DurableTaskSchedulerResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DurableTask.DurableTaskSchedulerResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DurableTask.DurableTaskSchedulerResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -115,38 +147,6 @@ namespace Azure.ResourceManager.DurableTask
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DurableTask.DurableTaskSchedulerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DurableTask.DurableTaskSchedulerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class RetentionPolicyData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.RetentionPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.RetentionPolicyData>
-    {
-        public RetentionPolicyData() { }
-        public Azure.ResourceManager.DurableTask.Models.RetentionPolicyProperties Properties { get { throw null; } set { } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DurableTask.RetentionPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.RetentionPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.RetentionPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DurableTask.RetentionPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.RetentionPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.RetentionPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.RetentionPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class RetentionPolicyResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.RetentionPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.RetentionPolicyData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected RetentionPolicyResource() { }
-        public virtual Azure.ResourceManager.DurableTask.RetentionPolicyData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DurableTask.RetentionPolicyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.DurableTask.RetentionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DurableTask.RetentionPolicyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DurableTask.RetentionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string schedulerName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DurableTask.RetentionPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DurableTask.RetentionPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.DurableTask.RetentionPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.RetentionPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.RetentionPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DurableTask.RetentionPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.RetentionPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.RetentionPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.RetentionPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DurableTask.RetentionPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DurableTask.RetentionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DurableTask.RetentionPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DurableTask.RetentionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
 }
 namespace Azure.ResourceManager.DurableTask.Mocking
 {
@@ -154,8 +154,8 @@ namespace Azure.ResourceManager.DurableTask.Mocking
     {
         protected MockableDurableTaskArmClient() { }
         public virtual Azure.ResourceManager.DurableTask.DurableTaskHubResource GetDurableTaskHubResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyResource GetDurableTaskRetentionPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DurableTask.DurableTaskSchedulerResource GetDurableTaskSchedulerResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.DurableTask.RetentionPolicyResource GetRetentionPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableDurableTaskResourceGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -177,13 +177,13 @@ namespace Azure.ResourceManager.DurableTask.Models
     {
         public static Azure.ResourceManager.DurableTask.DurableTaskHubData DurableTaskHubData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DurableTask.Models.DurableTaskHubProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DurableTask.Models.DurableTaskHubProperties DurableTaskHubProperties(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? provisioningState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState?), System.Uri dashboardUri = null) { throw null; }
+        public static Azure.ResourceManager.DurableTask.DurableTaskRetentionPolicyData DurableTaskRetentionPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties DurableTaskRetentionPolicyProperties(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? provisioningState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyDetails> retentionPolicies = null) { throw null; }
         public static Azure.ResourceManager.DurableTask.DurableTaskSchedulerData DurableTaskSchedulerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatchProperties DurableTaskSchedulerPatchProperties(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? provisioningState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState?), string endpoint = null, System.Collections.Generic.IEnumerable<string> ipAllowlist = null, Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuUpdate sku = null) { throw null; }
         public static Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerProperties DurableTaskSchedulerProperties(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? provisioningState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState?), string endpoint = null, System.Collections.Generic.IEnumerable<string> ipAllowlist = null, Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSku sku = null) { throw null; }
         public static Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSku DurableTaskSchedulerSku(string name = null, int? capacity = default(int?), Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState? redundancyState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState?)) { throw null; }
         public static Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuUpdate DurableTaskSchedulerSkuUpdate(string name = null, int? capacity = default(int?), Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState? redundancyState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskResourceRedundancyState?)) { throw null; }
-        public static Azure.ResourceManager.DurableTask.RetentionPolicyData RetentionPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DurableTask.Models.RetentionPolicyProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.DurableTask.Models.RetentionPolicyProperties RetentionPolicyProperties(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? provisioningState = default(Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyDetails> retentionPolicies = null) { throw null; }
     }
     public partial class DurableTaskHubProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskHubProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskHubProperties>
     {
@@ -270,6 +270,18 @@ namespace Azure.ResourceManager.DurableTask.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class DurableTaskRetentionPolicyProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties>
+    {
+        public DurableTaskRetentionPolicyProperties() { }
+        public Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyDetails> RetentionPolicies { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class DurableTaskSchedulerPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerPatch>
     {
         public DurableTaskSchedulerPatch() { }
@@ -335,17 +347,5 @@ namespace Azure.ResourceManager.DurableTask.Models
         Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class RetentionPolicyProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.RetentionPolicyProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.RetentionPolicyProperties>
-    {
-        public RetentionPolicyProperties() { }
-        public Azure.ResourceManager.DurableTask.Models.DurableTaskProvisioningState? ProvisioningState { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DurableTask.Models.DurableTaskRetentionPolicyDetails> RetentionPolicies { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DurableTask.Models.RetentionPolicyProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.RetentionPolicyProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DurableTask.Models.RetentionPolicyProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DurableTask.Models.RetentionPolicyProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.RetentionPolicyProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.RetentionPolicyProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DurableTask.Models.RetentionPolicyProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

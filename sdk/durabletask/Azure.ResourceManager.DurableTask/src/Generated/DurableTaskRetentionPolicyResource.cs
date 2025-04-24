@@ -15,14 +15,14 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.DurableTask
 {
     /// <summary>
-    /// A Class representing a RetentionPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RetentionPolicyResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetRetentionPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DurableTaskSchedulerResource"/> using the GetRetentionPolicy method.
+    /// A Class representing a DurableTaskRetentionPolicy along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DurableTaskRetentionPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDurableTaskRetentionPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DurableTaskSchedulerResource"/> using the GetDurableTaskRetentionPolicy method.
     /// </summary>
-    public partial class RetentionPolicyResource : ArmResource
+    public partial class DurableTaskRetentionPolicyResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="RetentionPolicyResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DurableTaskRetentionPolicyResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="schedulerName"> The schedulerName. </param>
@@ -32,35 +32,35 @@ namespace Azure.ResourceManager.DurableTask
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _retentionPolicyClientDiagnostics;
-        private readonly RetentionPoliciesRestOperations _retentionPolicyRestClient;
-        private readonly RetentionPolicyData _data;
+        private readonly ClientDiagnostics _durableTaskRetentionPolicyRetentionPoliciesClientDiagnostics;
+        private readonly RetentionPoliciesRestOperations _durableTaskRetentionPolicyRetentionPoliciesRestClient;
+        private readonly DurableTaskRetentionPolicyData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DurableTask/schedulers/retentionPolicies";
 
-        /// <summary> Initializes a new instance of the <see cref="RetentionPolicyResource"/> class for mocking. </summary>
-        protected RetentionPolicyResource()
+        /// <summary> Initializes a new instance of the <see cref="DurableTaskRetentionPolicyResource"/> class for mocking. </summary>
+        protected DurableTaskRetentionPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RetentionPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DurableTaskRetentionPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RetentionPolicyResource(ArmClient client, RetentionPolicyData data) : this(client, data.Id)
+        internal DurableTaskRetentionPolicyResource(ArmClient client, DurableTaskRetentionPolicyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RetentionPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DurableTaskRetentionPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RetentionPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DurableTaskRetentionPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _retentionPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string retentionPolicyApiVersion);
-            _retentionPolicyRestClient = new RetentionPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, retentionPolicyApiVersion);
+            _durableTaskRetentionPolicyRetentionPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string durableTaskRetentionPolicyRetentionPoliciesApiVersion);
+            _durableTaskRetentionPolicyRetentionPoliciesRestClient = new RetentionPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, durableTaskRetentionPolicyRetentionPoliciesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DurableTask
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual RetentionPolicyData Data
+        public virtual DurableTaskRetentionPolicyData Data
         {
             get
             {
@@ -104,21 +104,21 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RetentionPolicyResource"/></description>
+        /// <description><see cref="DurableTaskRetentionPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RetentionPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DurableTaskRetentionPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _retentionPolicyClientDiagnostics.CreateScope("RetentionPolicyResource.Get");
+            using var scope = _durableTaskRetentionPolicyRetentionPoliciesClientDiagnostics.CreateScope("DurableTaskRetentionPolicyResource.Get");
             scope.Start();
             try
             {
-                var response = await _retentionPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _durableTaskRetentionPolicyRetentionPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RetentionPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DurableTaskRetentionPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,21 +144,21 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RetentionPolicyResource"/></description>
+        /// <description><see cref="DurableTaskRetentionPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RetentionPolicyResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DurableTaskRetentionPolicyResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _retentionPolicyClientDiagnostics.CreateScope("RetentionPolicyResource.Get");
+            using var scope = _durableTaskRetentionPolicyRetentionPoliciesClientDiagnostics.CreateScope("DurableTaskRetentionPolicyResource.Get");
             scope.Start();
             try
             {
-                var response = _retentionPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _durableTaskRetentionPolicyRetentionPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RetentionPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DurableTaskRetentionPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RetentionPolicyResource"/></description>
+        /// <description><see cref="DurableTaskRetentionPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,12 +192,12 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _retentionPolicyClientDiagnostics.CreateScope("RetentionPolicyResource.Delete");
+            using var scope = _durableTaskRetentionPolicyRetentionPoliciesClientDiagnostics.CreateScope("DurableTaskRetentionPolicyResource.Delete");
             scope.Start();
             try
             {
-                var response = await _retentionPolicyRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DurableTaskArmOperation(_retentionPolicyClientDiagnostics, Pipeline, _retentionPolicyRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _durableTaskRetentionPolicyRetentionPoliciesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new DurableTaskArmOperation(_durableTaskRetentionPolicyRetentionPoliciesClientDiagnostics, Pipeline, _durableTaskRetentionPolicyRetentionPoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RetentionPolicyResource"/></description>
+        /// <description><see cref="DurableTaskRetentionPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,12 +234,12 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _retentionPolicyClientDiagnostics.CreateScope("RetentionPolicyResource.Delete");
+            using var scope = _durableTaskRetentionPolicyRetentionPoliciesClientDiagnostics.CreateScope("DurableTaskRetentionPolicyResource.Delete");
             scope.Start();
             try
             {
-                var response = _retentionPolicyRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
-                var operation = new DurableTaskArmOperation(_retentionPolicyClientDiagnostics, Pipeline, _retentionPolicyRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _durableTaskRetentionPolicyRetentionPoliciesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var operation = new DurableTaskArmOperation(_durableTaskRetentionPolicyRetentionPoliciesClientDiagnostics, Pipeline, _durableTaskRetentionPolicyRetentionPoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RetentionPolicyResource"/></description>
+        /// <description><see cref="DurableTaskRetentionPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,16 +276,16 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<RetentionPolicyResource>> UpdateAsync(WaitUntil waitUntil, RetentionPolicyData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DurableTaskRetentionPolicyResource>> UpdateAsync(WaitUntil waitUntil, DurableTaskRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _retentionPolicyClientDiagnostics.CreateScope("RetentionPolicyResource.Update");
+            using var scope = _durableTaskRetentionPolicyRetentionPoliciesClientDiagnostics.CreateScope("DurableTaskRetentionPolicyResource.Update");
             scope.Start();
             try
             {
-                var response = await _retentionPolicyRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DurableTaskArmOperation<RetentionPolicyResource>(new RetentionPolicyOperationSource(Client), _retentionPolicyClientDiagnostics, Pipeline, _retentionPolicyRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _durableTaskRetentionPolicyRetentionPoliciesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DurableTaskArmOperation<DurableTaskRetentionPolicyResource>(new DurableTaskRetentionPolicyOperationSource(Client), _durableTaskRetentionPolicyRetentionPoliciesClientDiagnostics, Pipeline, _durableTaskRetentionPolicyRetentionPoliciesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RetentionPolicyResource"/></description>
+        /// <description><see cref="DurableTaskRetentionPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,16 +322,16 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<RetentionPolicyResource> Update(WaitUntil waitUntil, RetentionPolicyData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DurableTaskRetentionPolicyResource> Update(WaitUntil waitUntil, DurableTaskRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _retentionPolicyClientDiagnostics.CreateScope("RetentionPolicyResource.Update");
+            using var scope = _durableTaskRetentionPolicyRetentionPoliciesClientDiagnostics.CreateScope("DurableTaskRetentionPolicyResource.Update");
             scope.Start();
             try
             {
-                var response = _retentionPolicyRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new DurableTaskArmOperation<RetentionPolicyResource>(new RetentionPolicyOperationSource(Client), _retentionPolicyClientDiagnostics, Pipeline, _retentionPolicyRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _durableTaskRetentionPolicyRetentionPoliciesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
+                var operation = new DurableTaskArmOperation<DurableTaskRetentionPolicyResource>(new DurableTaskRetentionPolicyOperationSource(Client), _durableTaskRetentionPolicyRetentionPoliciesClientDiagnostics, Pipeline, _durableTaskRetentionPolicyRetentionPoliciesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RetentionPolicyResource"/></description>
+        /// <description><see cref="DurableTaskRetentionPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -368,16 +368,16 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<RetentionPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, RetentionPolicyData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DurableTaskRetentionPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, DurableTaskRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _retentionPolicyClientDiagnostics.CreateScope("RetentionPolicyResource.CreateOrUpdate");
+            using var scope = _durableTaskRetentionPolicyRetentionPoliciesClientDiagnostics.CreateScope("DurableTaskRetentionPolicyResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _retentionPolicyRestClient.CreateOrReplaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DurableTaskArmOperation<RetentionPolicyResource>(new RetentionPolicyOperationSource(Client), _retentionPolicyClientDiagnostics, Pipeline, _retentionPolicyRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _durableTaskRetentionPolicyRetentionPoliciesRestClient.CreateOrReplaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DurableTaskArmOperation<DurableTaskRetentionPolicyResource>(new DurableTaskRetentionPolicyOperationSource(Client), _durableTaskRetentionPolicyRetentionPoliciesClientDiagnostics, Pipeline, _durableTaskRetentionPolicyRetentionPoliciesRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RetentionPolicyResource"/></description>
+        /// <description><see cref="DurableTaskRetentionPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -414,16 +414,16 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<RetentionPolicyResource> CreateOrUpdate(WaitUntil waitUntil, RetentionPolicyData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DurableTaskRetentionPolicyResource> CreateOrUpdate(WaitUntil waitUntil, DurableTaskRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _retentionPolicyClientDiagnostics.CreateScope("RetentionPolicyResource.CreateOrUpdate");
+            using var scope = _durableTaskRetentionPolicyRetentionPoliciesClientDiagnostics.CreateScope("DurableTaskRetentionPolicyResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _retentionPolicyRestClient.CreateOrReplace(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new DurableTaskArmOperation<RetentionPolicyResource>(new RetentionPolicyOperationSource(Client), _retentionPolicyClientDiagnostics, Pipeline, _retentionPolicyRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _durableTaskRetentionPolicyRetentionPoliciesRestClient.CreateOrReplace(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
+                var operation = new DurableTaskArmOperation<DurableTaskRetentionPolicyResource>(new DurableTaskRetentionPolicyOperationSource(Client), _durableTaskRetentionPolicyRetentionPoliciesClientDiagnostics, Pipeline, _durableTaskRetentionPolicyRetentionPoliciesRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

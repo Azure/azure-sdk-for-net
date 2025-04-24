@@ -113,16 +113,16 @@ namespace Azure.ResourceManager.DurableTask.Models
             return new DurableTaskHubProperties(provisioningState, dashboardUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DurableTask.RetentionPolicyData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DurableTask.DurableTaskRetentionPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="DurableTask.RetentionPolicyData"/> instance for mocking. </returns>
-        public static RetentionPolicyData RetentionPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RetentionPolicyProperties properties = null)
+        /// <returns> A new <see cref="DurableTask.DurableTaskRetentionPolicyData"/> instance for mocking. </returns>
+        public static DurableTaskRetentionPolicyData DurableTaskRetentionPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DurableTaskRetentionPolicyProperties properties = null)
         {
-            return new RetentionPolicyData(
+            return new DurableTaskRetentionPolicyData(
                 id,
                 name,
                 resourceType,
@@ -131,15 +131,15 @@ namespace Azure.ResourceManager.DurableTask.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RetentionPolicyProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DurableTaskRetentionPolicyProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="retentionPolicies"> The orchestration retention policies. </param>
-        /// <returns> A new <see cref="Models.RetentionPolicyProperties"/> instance for mocking. </returns>
-        public static RetentionPolicyProperties RetentionPolicyProperties(DurableTaskProvisioningState? provisioningState = null, IEnumerable<DurableTaskRetentionPolicyDetails> retentionPolicies = null)
+        /// <returns> A new <see cref="Models.DurableTaskRetentionPolicyProperties"/> instance for mocking. </returns>
+        public static DurableTaskRetentionPolicyProperties DurableTaskRetentionPolicyProperties(DurableTaskProvisioningState? provisioningState = null, IEnumerable<DurableTaskRetentionPolicyDetails> retentionPolicies = null)
         {
             retentionPolicies ??= new List<DurableTaskRetentionPolicyDetails>();
 
-            return new RetentionPolicyProperties(provisioningState, retentionPolicies?.ToList(), serializedAdditionalRawData: null);
+            return new DurableTaskRetentionPolicyProperties(provisioningState, retentionPolicies?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }

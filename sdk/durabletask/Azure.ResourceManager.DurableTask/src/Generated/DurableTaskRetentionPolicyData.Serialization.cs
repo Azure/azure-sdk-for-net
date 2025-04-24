@@ -15,11 +15,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DurableTask
 {
-    public partial class RetentionPolicyData : IUtf8JsonSerializable, IJsonModel<RetentionPolicyData>
+    public partial class DurableTaskRetentionPolicyData : IUtf8JsonSerializable, IJsonModel<DurableTaskRetentionPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RetentionPolicyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DurableTaskRetentionPolicyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RetentionPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DurableTaskRetentionPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RetentionPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DurableTaskRetentionPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RetentionPolicyData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DurableTaskRetentionPolicyData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.DurableTask
             }
         }
 
-        RetentionPolicyData IJsonModel<RetentionPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DurableTaskRetentionPolicyData IJsonModel<DurableTaskRetentionPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RetentionPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DurableTaskRetentionPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RetentionPolicyData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DurableTaskRetentionPolicyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRetentionPolicyData(document.RootElement, options);
+            return DeserializeDurableTaskRetentionPolicyData(document.RootElement, options);
         }
 
-        internal static RetentionPolicyData DeserializeRetentionPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DurableTaskRetentionPolicyData DeserializeDurableTaskRetentionPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DurableTask
             {
                 return null;
             }
-            RetentionPolicyProperties properties = default;
+            DurableTaskRetentionPolicyProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DurableTask
                     {
                         continue;
                     }
-                    properties = RetentionPolicyProperties.DeserializeRetentionPolicyProperties(property.Value, options);
+                    properties = DurableTaskRetentionPolicyProperties.DeserializeDurableTaskRetentionPolicyProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DurableTask
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RetentionPolicyData(
+            return new DurableTaskRetentionPolicyData(
                 id,
                 name,
                 type,
@@ -121,35 +121,35 @@ namespace Azure.ResourceManager.DurableTask
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<RetentionPolicyData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DurableTaskRetentionPolicyData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RetentionPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DurableTaskRetentionPolicyData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RetentionPolicyData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DurableTaskRetentionPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RetentionPolicyData IPersistableModel<RetentionPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DurableTaskRetentionPolicyData IPersistableModel<DurableTaskRetentionPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RetentionPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DurableTaskRetentionPolicyData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRetentionPolicyData(document.RootElement, options);
+                        return DeserializeDurableTaskRetentionPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RetentionPolicyData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DurableTaskRetentionPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RetentionPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DurableTaskRetentionPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

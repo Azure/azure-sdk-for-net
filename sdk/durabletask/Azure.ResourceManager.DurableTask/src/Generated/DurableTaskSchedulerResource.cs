@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.DurableTask
             return GetDurableTaskHubs().Get(taskHubName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a RetentionPolicyResource along with the instance operations that can be performed on it in the DurableTaskScheduler. </summary>
-        /// <returns> Returns a <see cref="RetentionPolicyResource"/> object. </returns>
-        public virtual RetentionPolicyResource GetRetentionPolicy()
+        /// <summary> Gets an object representing a DurableTaskRetentionPolicyResource along with the instance operations that can be performed on it in the DurableTaskScheduler. </summary>
+        /// <returns> Returns a <see cref="DurableTaskRetentionPolicyResource"/> object. </returns>
+        public virtual DurableTaskRetentionPolicyResource GetDurableTaskRetentionPolicy()
         {
-            return new RetentionPolicyResource(Client, Id.AppendChildResource("retentionPolicies", "default"));
+            return new DurableTaskRetentionPolicyResource(Client, Id.AppendChildResource("retentionPolicies", "default"));
         }
 
         /// <summary>

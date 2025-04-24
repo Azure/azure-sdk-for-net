@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.DurableTask.Samples
 {
-    public partial class Sample_RetentionPolicyResource
+    public partial class Sample_DurableTaskRetentionPolicyResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,20 +28,20 @@ namespace Azure.ResourceManager.DurableTask.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this RetentionPolicyResource created on azure
-            // for more information of creating RetentionPolicyResource, please refer to the document of RetentionPolicyResource
+            // this example assumes you already have this DurableTaskRetentionPolicyResource created on azure
+            // for more information of creating DurableTaskRetentionPolicyResource, please refer to the document of DurableTaskRetentionPolicyResource
             string subscriptionId = "194D3C1E-462F-4738-9025-092A628C06EB";
             string resourceGroupName = "rgdurabletask";
             string schedulerName = "testscheduler";
-            ResourceIdentifier retentionPolicyResourceId = RetentionPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, schedulerName);
-            RetentionPolicyResource retentionPolicy = client.GetRetentionPolicyResource(retentionPolicyResourceId);
+            ResourceIdentifier durableTaskRetentionPolicyResourceId = DurableTaskRetentionPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, schedulerName);
+            DurableTaskRetentionPolicyResource durableTaskRetentionPolicy = client.GetDurableTaskRetentionPolicyResource(durableTaskRetentionPolicyResourceId);
 
             // invoke the operation
-            RetentionPolicyResource result = await retentionPolicy.GetAsync();
+            DurableTaskRetentionPolicyResource result = await durableTaskRetentionPolicy.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RetentionPolicyData resourceData = result.Data;
+            DurableTaskRetentionPolicyData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -58,16 +58,16 @@ namespace Azure.ResourceManager.DurableTask.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this RetentionPolicyResource created on azure
-            // for more information of creating RetentionPolicyResource, please refer to the document of RetentionPolicyResource
+            // this example assumes you already have this DurableTaskRetentionPolicyResource created on azure
+            // for more information of creating DurableTaskRetentionPolicyResource, please refer to the document of DurableTaskRetentionPolicyResource
             string subscriptionId = "194D3C1E-462F-4738-9025-092A628C06EB";
             string resourceGroupName = "rgdurabletask";
             string schedulerName = "testcheduler";
-            ResourceIdentifier retentionPolicyResourceId = RetentionPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, schedulerName);
-            RetentionPolicyResource retentionPolicy = client.GetRetentionPolicyResource(retentionPolicyResourceId);
+            ResourceIdentifier durableTaskRetentionPolicyResourceId = DurableTaskRetentionPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, schedulerName);
+            DurableTaskRetentionPolicyResource durableTaskRetentionPolicy = client.GetDurableTaskRetentionPolicyResource(durableTaskRetentionPolicyResourceId);
 
             // invoke the operation
-            await retentionPolicy.DeleteAsync(WaitUntil.Completed);
+            await durableTaskRetentionPolicy.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -84,18 +84,18 @@ namespace Azure.ResourceManager.DurableTask.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this RetentionPolicyResource created on azure
-            // for more information of creating RetentionPolicyResource, please refer to the document of RetentionPolicyResource
+            // this example assumes you already have this DurableTaskRetentionPolicyResource created on azure
+            // for more information of creating DurableTaskRetentionPolicyResource, please refer to the document of DurableTaskRetentionPolicyResource
             string subscriptionId = "194D3C1E-462F-4738-9025-092A628C06EB";
             string resourceGroupName = "rgdurabletask";
             string schedulerName = "testscheduler";
-            ResourceIdentifier retentionPolicyResourceId = RetentionPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, schedulerName);
-            RetentionPolicyResource retentionPolicy = client.GetRetentionPolicyResource(retentionPolicyResourceId);
+            ResourceIdentifier durableTaskRetentionPolicyResourceId = DurableTaskRetentionPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, schedulerName);
+            DurableTaskRetentionPolicyResource durableTaskRetentionPolicy = client.GetDurableTaskRetentionPolicyResource(durableTaskRetentionPolicyResourceId);
 
             // invoke the operation
-            RetentionPolicyData data = new RetentionPolicyData
+            DurableTaskRetentionPolicyData data = new DurableTaskRetentionPolicyData
             {
-                Properties = new RetentionPolicyProperties
+                Properties = new DurableTaskRetentionPolicyProperties
                 {
                     RetentionPolicies = {new DurableTaskRetentionPolicyDetails(30), new DurableTaskRetentionPolicyDetails(10)
 {
@@ -106,12 +106,12 @@ OrchestrationState = DurableTaskPurgeableOrchestrationState.Completed,
 }},
                 },
             };
-            ArmOperation<RetentionPolicyResource> lro = await retentionPolicy.UpdateAsync(WaitUntil.Completed, data);
-            RetentionPolicyResource result = lro.Value;
+            ArmOperation<DurableTaskRetentionPolicyResource> lro = await durableTaskRetentionPolicy.UpdateAsync(WaitUntil.Completed, data);
+            DurableTaskRetentionPolicyResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RetentionPolicyData resourceData = result.Data;
+            DurableTaskRetentionPolicyData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -128,18 +128,18 @@ OrchestrationState = DurableTaskPurgeableOrchestrationState.Completed,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this RetentionPolicyResource created on azure
-            // for more information of creating RetentionPolicyResource, please refer to the document of RetentionPolicyResource
+            // this example assumes you already have this DurableTaskRetentionPolicyResource created on azure
+            // for more information of creating DurableTaskRetentionPolicyResource, please refer to the document of DurableTaskRetentionPolicyResource
             string subscriptionId = "194D3C1E-462F-4738-9025-092A628C06EB";
             string resourceGroupName = "rgdurabletask";
             string schedulerName = "testscheduler";
-            ResourceIdentifier retentionPolicyResourceId = RetentionPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, schedulerName);
-            RetentionPolicyResource retentionPolicy = client.GetRetentionPolicyResource(retentionPolicyResourceId);
+            ResourceIdentifier durableTaskRetentionPolicyResourceId = DurableTaskRetentionPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, schedulerName);
+            DurableTaskRetentionPolicyResource durableTaskRetentionPolicy = client.GetDurableTaskRetentionPolicyResource(durableTaskRetentionPolicyResourceId);
 
             // invoke the operation
-            RetentionPolicyData data = new RetentionPolicyData
+            DurableTaskRetentionPolicyData data = new DurableTaskRetentionPolicyData
             {
-                Properties = new RetentionPolicyProperties
+                Properties = new DurableTaskRetentionPolicyProperties
                 {
                     RetentionPolicies = {new DurableTaskRetentionPolicyDetails(30), new DurableTaskRetentionPolicyDetails(10)
 {
@@ -147,12 +147,12 @@ OrchestrationState = DurableTaskPurgeableOrchestrationState.Failed,
 }},
                 },
             };
-            ArmOperation<RetentionPolicyResource> lro = await retentionPolicy.CreateOrUpdateAsync(WaitUntil.Completed, data);
-            RetentionPolicyResource result = lro.Value;
+            ArmOperation<DurableTaskRetentionPolicyResource> lro = await durableTaskRetentionPolicy.CreateOrUpdateAsync(WaitUntil.Completed, data);
+            DurableTaskRetentionPolicyResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            RetentionPolicyData resourceData = result.Data;
+            DurableTaskRetentionPolicyData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

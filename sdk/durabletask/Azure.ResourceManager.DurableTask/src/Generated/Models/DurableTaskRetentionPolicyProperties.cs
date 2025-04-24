@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DurableTask.Models
 {
     /// <summary> The retention policy settings for the resource. </summary>
-    public partial class RetentionPolicyProperties
+    public partial class DurableTaskRetentionPolicyProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RetentionPolicyProperties"/>. </summary>
-        public RetentionPolicyProperties()
+        /// <summary> Initializes a new instance of <see cref="DurableTaskRetentionPolicyProperties"/>. </summary>
+        public DurableTaskRetentionPolicyProperties()
         {
             RetentionPolicies = new ChangeTrackingList<DurableTaskRetentionPolicyDetails>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RetentionPolicyProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DurableTaskRetentionPolicyProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="retentionPolicies"> The orchestration retention policies. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RetentionPolicyProperties(DurableTaskProvisioningState? provisioningState, IList<DurableTaskRetentionPolicyDetails> retentionPolicies, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DurableTaskRetentionPolicyProperties(DurableTaskProvisioningState? provisioningState, IList<DurableTaskRetentionPolicyDetails> retentionPolicies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             RetentionPolicies = retentionPolicies;
