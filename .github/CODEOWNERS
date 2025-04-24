@@ -959,6 +959,12 @@
 # ServiceLabel: %ARM %Mgmt
 # ServiceOwners:                                                   @Azure/arm-sdk-owners
 
+# PRLabel: %Arize AI
+/sdk/arizeaiobservabilityeval/Azure.ResourceManager.*/             @aggarwalsw
+
+# ServiceLabel: %Arize AI %Mgmt
+# ServiceOwners:                                                   @aggarwalsw
+
 # PRLabel: %Astronomer
 /sdk/astronomer/Azure.ResourceManager.Astro/                       @banggaurav
 
@@ -1009,6 +1015,12 @@
 
 # ServiceLabel: %HybridConnectivity %Mgmt
 # ServiceOwners:                                                   @alexmahonic @PriyankaHariharan @apmehrotra
+
+# PRLabel: %LambdaTest HyperExecute
+/sdk/lambdatesthyperexecute/Azure.ResourceManager.*/               @aggarwalsw
+
+# ServiceLabel: %LambdaTest HyperExecute %Mgmt
+# ServiceOwners:                                                   @aggarwalsw
 
 # PRLabel: %Large Instance
 /sdk/azurelargeinstance/Azure.ResourceManager.*/                   @8Gitbrix @ArcturusZhang @ArthurMa1978
@@ -1102,6 +1114,12 @@
 
 # ServiceLabel: %%Migration Assessment %Mgmt
 # ServiceOwners:                                                   @srilipta-swain
+
+# PRLabel: %Weights & Biases
+/sdk/weightsandbiases/Azure.ResourceManager.*/                     @aggarwalsw
+
+# ServiceLabel: %Weights & Biases %Mgmt
+# ServiceOwners:                                                   @aggarwalsw
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp

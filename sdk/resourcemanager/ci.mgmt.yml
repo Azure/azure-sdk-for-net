@@ -23,6 +23,7 @@ trigger:
     - sdk/applicationinsights/Azure.ResourceManager.ApplicationInsights
     - sdk/appplatform/Azure.ResourceManager.AppPlatform
     - sdk/arc-scvmm/Azure.ResourceManager.ScVmm
+    - sdk/arizeaiobservabilityeval/Azure.ResourceManager.ArizeAIObservabilityEval
     - sdk/astronomer/Azure.ResourceManager.Astro
     - sdk/attestation/Azure.ResourceManager.Attestation
     - sdk/authorization/Azure.ResourceManager.Authorization
@@ -114,6 +115,7 @@ trigger:
     - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration
     - sdk/kusto/Azure.ResourceManager.Kusto
     - sdk/labservices/Azure.ResourceManager.LabServices
+    - sdk/lambdatesthyperexecute/Azure.ResourceManager.LambdaTestHyperExecute
     - sdk/loadtestservice/Azure.ResourceManager.LoadTesting
     - sdk/logic/Azure.ResourceManager.Logic
     - sdk/machinelearningcompute/Azure.ResourceManager.MachineLearningCompute
@@ -153,6 +155,7 @@ trigger:
     - sdk/pineconevectordb/Azure.ResourceManager.PineconeVectorDB
     - sdk/playwrighttesting/Azure.ResourceManager.PlaywrightTesting
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
+    - sdk/portalservices/Azure.ResourceManager.PortalServicesCopilot
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
     - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
     - sdk/privatedns/Azure.ResourceManager.PrivateDns
@@ -206,6 +209,7 @@ trigger:
     - sdk/voiceservices/Azure.ResourceManager.VoiceServices
     - sdk/webpubsub/Azure.ResourceManager.WebPubSub
     - sdk/websites/Azure.ResourceManager.AppService
+    - sdk/weightsandbiases/Azure.ResourceManager.WeightsAndBiases
     - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
     - sdk/workloads/Azure.ResourceManager.Workloads
 
@@ -233,6 +237,7 @@ pr:
     - sdk/applicationinsights/Azure.ResourceManager.ApplicationInsights
     - sdk/appplatform/Azure.ResourceManager.AppPlatform
     - sdk/arc-scvmm/Azure.ResourceManager.ScVmm
+    - sdk/arizeaiobservabilityeval/Azure.ResourceManager.ArizeAIObservabilityEval
     - sdk/astronomer/Azure.ResourceManager.Astro
     - sdk/attestation/Azure.ResourceManager.Attestation
     - sdk/authorization/Azure.ResourceManager.Authorization
@@ -324,6 +329,7 @@ pr:
     - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration
     - sdk/kusto/Azure.ResourceManager.Kusto
     - sdk/labservices/Azure.ResourceManager.LabServices
+    - sdk/lambdatesthyperexecute/Azure.ResourceManager.LambdaTestHyperExecute
     - sdk/loadtestservice/Azure.ResourceManager.LoadTesting
     - sdk/logic/Azure.ResourceManager.Logic
     - sdk/machinelearningcompute/Azure.ResourceManager.MachineLearningCompute
@@ -363,6 +369,7 @@ pr:
     - sdk/pineconevectordb/Azure.ResourceManager.PineconeVectorDB
     - sdk/playwrighttesting/Azure.ResourceManager.PlaywrightTesting
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
+    - sdk/portalservices/Azure.ResourceManager.PortalServicesCopilot
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
     - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
     - sdk/privatedns/Azure.ResourceManager.PrivateDns
@@ -416,6 +423,7 @@ pr:
     - sdk/voiceservices/Azure.ResourceManager.VoiceServices
     - sdk/webpubsub/Azure.ResourceManager.WebPubSub
     - sdk/websites/Azure.ResourceManager.AppService
+    - sdk/weightsandbiases/Azure.ResourceManager.WeightsAndBiases
     - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
     - sdk/workloads/Azure.ResourceManager.Workloads
 
