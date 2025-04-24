@@ -42,7 +42,13 @@ namespace Azure.Generator.Primitives
                 builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("AzureKeyCredentialPolicy.cs", pathSegmentCount), "Shared/Core"));
             }
 
-            TraverseInput(out bool hasOperation, out bool hasLongRunningOperation);
+            bool hasOperation = false;
+            bool hasLongRunningOperation = false;
+            foreach (var client in AzureClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
+            {
+                TraverseInput(client, ref hasOperation, ref hasLongRunningOperation);
+            }
+
             if (hasOperation)
             {
                 builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("RawRequestUriBuilder.cs", pathSegmentCount), "Shared/Core"));
@@ -81,44 +87,23 @@ namespace Azure.Generator.Primitives
             "VoidValue.cs"
         ];
 
-        private static void TraverseInput(out bool hasOperation, out bool hasLongRunningOperation)
+        private static void TraverseInput(InputClient rootClient, ref bool hasOperation, ref bool hasLongRunningOperation)
         {
             hasOperation = false;
             hasLongRunningOperation = false;
-
-            // Find all InputClients, including their children
-            var allClients = FindAllClients(AzureClientGenerator.Instance.InputLibrary.InputNamespace.Clients);
-
-            // Check each client for operations
-            foreach (var inputClient in allClients)
+            foreach (var method in rootClient.Methods)
             {
-                foreach (var method in inputClient.Methods)
+                hasOperation = true;
+                if (method is InputLongRunningServiceMethod || method is InputLongRunningPagingServiceMethod)
                 {
-                    hasOperation = true;
-                    if (method is InputLongRunningServiceMethod || method is InputLongRunningPagingServiceMethod)
-                    {
-                        hasLongRunningOperation = true;
-                        return; // Exit early if a long-running operation is found
-                    }
+                    hasLongRunningOperation = true;
+                    return;
                 }
             }
-        }
-
-        private static List<InputClient> FindAllClients(IEnumerable<InputClient> clients)
-        {
-            var allClients = new List<InputClient>();
-
-            foreach (var client in clients)
+            foreach (var inputClient in rootClient.Children)
             {
-                allClients.Add(client);
-
-                if (client.Children != null && client.Children.Any())
-                {
-                    allClients.AddRange(FindAllClients(client.Children));
-                }
+                TraverseInput(inputClient, ref hasOperation, ref hasLongRunningOperation);
             }
-
-            return allClients;
         }
 
         private static int GetPathSegmentCount()

@@ -1,4 +1,5 @@
 {
+  "output-folder": ".",
   "package-name": "Authentication.ApiKey",
   "license": {
     "name": "MIT License",

@@ -5,7 +5,6 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Encode.Bytes;
-using Encode.Bytes.Models;
 using NUnit.Framework;
 
 namespace TestProjects.Spector.Tests.Http.Encode.Bytes

@@ -6,37 +6,50 @@
 #nullable disable
 
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Authentication.ApiKey
 {
+    /// <summary> Illustrates clients generated with ApiKey authentication. </summary>
     public partial class ApiKeyClient
     {
-        protected ApiKeyClient() => throw null;
+        private readonly Uri _endpoint;
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly AzureKeyCredential _keyCredential;
+        private const string AuthorizationHeader = "x-ms-api-key";
 
-        public ApiKeyClient(AzureKeyCredential keyCredential) : this(new Uri("http://localhost:3000"), keyCredential, new ApiKeyClientOptions()) => throw null;
+        /// <summary> Initializes a new instance of ApiKeyClient for mocking. </summary>
+        protected ApiKeyClient()
+        {
+        }
 
-        public ApiKeyClient(Uri endpoint, AzureKeyCredential keyCredential, ApiKeyClientOptions options) => throw null;
+        /// <summary> Initializes a new instance of ApiKeyClient. </summary>
+        /// <param name="keyCredential"> A credential used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyCredential"/> is null. </exception>
+        public ApiKeyClient(AzureKeyCredential keyCredential) : this(new Uri("http://localhost:3000"), keyCredential, new ApiKeyClientOptions())
+        {
+        }
 
-        public HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of ApiKeyClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="keyCredential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="keyCredential"/> is null. </exception>
+        public ApiKeyClient(Uri endpoint, AzureKeyCredential keyCredential, ApiKeyClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(keyCredential, nameof(keyCredential));
 
-        public virtual Response Valid(RequestContext context) => throw null;
+            options ??= new ApiKeyClientOptions();
 
-        public virtual Task<Response> ValidAsync(RequestContext context) => throw null;
+            _endpoint = endpoint;
+            _keyCredential = keyCredential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) });
+        }
 
-        public virtual Response Valid(CancellationToken cancellationToken = default) => throw null;
-
-        public virtual Task<Response> ValidAsync(CancellationToken cancellationToken = default) => throw null;
-
-        public virtual Response Invalid(RequestContext context) => throw null;
-
-        public virtual Task<Response> InvalidAsync(RequestContext context) => throw null;
-
-        public virtual Response Invalid(CancellationToken cancellationToken = default) => throw null;
-
-        public virtual Task<Response> InvalidAsync(CancellationToken cancellationToken = default) => throw null;
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public HttpPipeline Pipeline { get; }
     }
 }

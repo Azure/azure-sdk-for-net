@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Encode.Bytes
+namespace Authentication.ApiKey
 {
     [AttributeUsage((AttributeTargets.Property | AttributeTargets.Field))]
     internal partial class CodeGenMemberAttribute : CodeGenTypeAttribute
