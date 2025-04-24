@@ -114,6 +114,13 @@ namespace Azure.Messaging.EventGrid
         /// <returns> Whether or not the event is a system event.</returns>
         public bool TryGetSystemEventData(out object eventData)
         {
+            // the property can be set to null after the creation of the event.
+            if (Data == null)
+            {
+                eventData = null;
+                return false;
+            }
+
             try
             {
                 JsonDocument requestDocument = JsonDocument.Parse(Data.ToMemory());
@@ -155,7 +162,7 @@ namespace Azure.Messaging.EventGrid
                     egEvents[i++] = new EventGridEvent(EventGridEventInternal.DeserializeEventGridEventInternal(property));
                 }
             }
-            return egEvents ?? Array.Empty<EventGridEvent>();
+            return egEvents ?? [];
         }
 
         /// <summary>
@@ -171,19 +178,15 @@ namespace Azure.Messaging.EventGrid
         {
             Argument.AssertNotNull(json, nameof(json));
             EventGridEvent[] events = ParseMany(json);
-            if (events.Length == 0)
+            return events.Length switch
             {
-                return null;
-            }
-            if (events.Length > 1)
-            {
-                throw new ArgumentException(
+                0 => null,
+                > 1 => throw new ArgumentException(
                     "The BinaryData instance contains JSON from multiple event grid events. This method " +
-                    "should only be used with BinaryData containing a single event grid event. " +
-                    Environment.NewLine +
-                    $"To parse multiple events, use the {nameof(ParseMany)} overload.");
-            }
-            return events[0];
+                    "should only be used with BinaryData containing a single event grid event. " + Environment.NewLine +
+                    $"To parse multiple events, use the {nameof(ParseMany)} overload."),
+                _ => events[0]
+            };
         }
     }
 }

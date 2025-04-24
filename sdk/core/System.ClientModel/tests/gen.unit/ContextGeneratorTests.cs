@@ -653,5 +653,46 @@ namespace TestProject
             Assert.AreEqual(1, result.Diagnostics.Length);
             Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.BuildableAttributeRequiresContext.Id, result.Diagnostics[0].Id);
         }
+
+        [Test]
+        public void ValidateDefaultExistsWithNoBuilders()
+        {
+            string source =
+$$"""
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text.Json;
+
+namespace TestProject
+{
+    public partial class LocalContext : ModelReaderWriterContext { }
+}
+""";
+
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
+
+            Assert.IsNotNull(result.GenerationSpec);
+            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
+            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
+            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+            Assert.AreEqual(0, result.GenerationSpec.TypeBuilders.Count);
+            Assert.AreEqual(0, result.Diagnostics.Length);
+
+            var localContextSymbol = newCompilation.GetTypeByMetadataName("TestProject.LocalContext");
+            Assert.IsNotNull(localContextSymbol);
+            var defaultProp = localContextSymbol!.GetMembers("Default")
+                .OfType<IPropertySymbol>()
+                .FirstOrDefault(p => p.IsStatic);
+
+            Assert.IsNotNull(defaultProp, "Default property should not be null.");
+
+            Assert.IsTrue(SymbolEqualityComparer.Default.Equals(defaultProp!.Type, localContextSymbol));
+
+            Assert.AreEqual(1, localContextSymbol.Constructors.Length);
+            var ctor = localContextSymbol.Constructors[0];
+            Assert.AreEqual(Accessibility.Private, ctor.DeclaredAccessibility);
+        }
     }
 }

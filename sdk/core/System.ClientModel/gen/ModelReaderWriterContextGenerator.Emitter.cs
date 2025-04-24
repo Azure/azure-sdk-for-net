@@ -11,6 +11,9 @@ internal sealed partial class ModelReaderWriterContextGenerator
 {
     private sealed partial class Emitter
     {
+        private const string s_modelReaderWriterContext = "global::System.ClientModel.Primitives.ModelReaderWriterContext";
+        private const string s_modelReaderWriterTypeBuilder = "global::System.ClientModel.Primitives.ModelReaderWriterTypeBuilder";
+
         internal void Emit(ModelReaderWriterContextGenerationSpec contextGenerationSpec)
         {
             EmitContextClass(contextGenerationSpec);
@@ -34,136 +37,116 @@ internal sealed partial class ModelReaderWriterContextGenerator
             {
                 builder.AppendLine(indent, $"using {nameSpace};");
             }
-            foreach (var typeRef in contextGenerationSpec.GetAllTypeRefs())
-            {
-                if (typeRef.Alias is null || typeRef.ItemType is not null)
-                    continue;
-
-                builder.AppendLine(indent, $"using {typeRef.Alias} = {typeRef.Namespace}.{typeRef.TypeCaseName.Remove(typeRef.TypeCaseName.Length - 1)};");
-                if (contextGenerationSpec.Type.IsSameAssembly(typeRef))
-                {
-                    builder.AppendLine(indent, $"using {typeRef.Alias}_Builder = {typeRef.Namespace}.{typeRef.TypeCaseName}Builder;");
-                }
-            }
             builder.AppendLine();
 
             builder.AppendLine(indent, $"namespace {contextGenerationSpec.Type.Namespace};");
             builder.AppendLine();
 
-            builder.AppendLine(indent, $"{contextGenerationSpec.Modifier} partial class {contextName} : ModelReaderWriterContext");
+            builder.AppendLine(indent, $"{contextGenerationSpec.Modifier} partial class {contextName} : {s_modelReaderWriterContext}");
             builder.AppendLine(indent, "{");
             indent++;
 
-            builder.AppendLine(indent, "private readonly Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> _typeBuilderFactories = [];");
+            builder.Append(indent, "private readonly ");
+            builder.AppendType(typeof(Dictionary<,>));
+            builder.Append("<");
+            builder.AppendType(typeof(Type));
+            builder.Append(", ");
+            builder.AppendType(typeof(Func<>));
+            builder.Append("<");
+            builder.AppendLine($"{s_modelReaderWriterTypeBuilder}>> _typeBuilderFactories = new();");
+
+            builder.Append(indent, "private readonly ");
+            builder.AppendType(typeof(Dictionary<,>));
+            builder.Append("<");
+            builder.AppendType(typeof(Type));
+            builder.Append(", ");
+            builder.AppendLine($"{s_modelReaderWriterTypeBuilder}> _typeBuilders = new();");
             builder.AppendLine();
 
             if (contextGenerationSpec.ReferencedContexts.Count > 0)
             {
-                foreach (var referencedContext in contextGenerationSpec.ReferencedContexts)
-                {
-                    builder.AppendLine(indent, $"private static readonly {referencedContext.Name} s_{referencedContext.CamelCaseName}Library = new();");
-                }
-                builder.AppendLine();
-            }
-
-            if (contextGenerationSpec.TypeBuilders.Count > 0)
-            {
-                foreach (var modelInfo in contextGenerationSpec.TypeBuilders)
-                {
-                    builder.Append(indent, "private ");
-                    string typeCase;
-                    string camelCase;
-                    if (modelInfo.Type.Alias is not null)
-                    {
-                        typeCase = $"{modelInfo.Type.TypeCaseAlias}Builder";
-                        camelCase = $"_{modelInfo.Type.CamelCaseAlias}Builder";
-                    }
-                    else
-                    {
-                        typeCase = $"{modelInfo.Type.TypeCaseName}Builder";
-                        camelCase = $"_{modelInfo.Type.CamelCaseName}Builder";
-                    }
-
-                    if (ShouldGenerateAsLocal(contextGenerationSpec, modelInfo))
-                    {
-                        builder.Append(typeCase);
-                        builder.Append(" ");
-                    }
-                    else
-                    {
-                        builder.Append("ModelReaderWriterTypeBuilder ");
-                    }
-                    builder.Append(camelCase);
-                    builder.AppendLine(";");
-                }
-                builder.AppendLine();
-
-                builder.AppendLine(indent, $"private static {contextName} _{contextName.ToCamelCase()};");
-                builder.AppendLine(indent, "/// <summary> Gets the default instance </summary>");
-                builder.AppendLine(indent, $"public static {contextName} Default => _{contextName.ToCamelCase()} ??= new();");
-                builder.AppendLine();
-
-                builder.AppendLine(indent, $"private {contextName}()");
+                builder.Append(indent, "private static readonly ");
+                builder.AppendType(typeof(Dictionary<,>));
+                builder.Append("<");
+                builder.AppendType(typeof(Type));
+                builder.Append(", ");
+                builder.Append(s_modelReaderWriterContext);
+                builder.AppendLine("> s_referenceContexts = new()");
                 builder.AppendLine(indent, "{");
                 indent++;
-                foreach (var modelInfo in contextGenerationSpec.TypeBuilders)
+                foreach (var referencedContext in contextGenerationSpec.ReferencedContexts)
                 {
-                    string typeofName;
-                    string camelCase;
-                    if (modelInfo.Type.Alias is not null)
-                    {
-                        typeofName = modelInfo.Type.Alias;
-                        camelCase = $"_{modelInfo.Type.CamelCaseAlias}Builder";
-                    }
-                    else
-                    {
-                        typeofName = modelInfo.Type.Name;
-                        camelCase = $"_{modelInfo.Type.CamelCaseName}Builder";
-                    }
-
-                    builder.Append(indent, $"_typeBuilderFactories.Add(typeof({typeofName}), () => {camelCase} ??=");
-                    if (ShouldGenerateAsLocal(contextGenerationSpec, modelInfo))
-                    {
-                        builder.AppendLine(" new());");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" s_{modelInfo.ContextType.CamelCaseName}Library.GetTypeBuilder(typeof({typeofName})));");
-                    }
+                    builder.AppendLine(indent, $"{{ typeof({referencedContext.FullyQualifiedName}), new {referencedContext.FullyQualifiedName}() }},");
                 }
-                builder.AppendLine();
-
-                builder.AppendLine(indent, "AddAdditionalFactories(_typeBuilderFactories);");
-
                 indent--;
-                builder.AppendLine(indent, "}");
+                builder.AppendLine(indent, "};");
                 builder.AppendLine();
             }
 
-            builder.AppendLine(indent, "/// <inheritdoc/>");
-            builder.AppendLine(indent, "protected override bool TryGetTypeBuilderCore(Type type, out ModelReaderWriterTypeBuilder builder)");
+            builder.AppendLine(indent, $"private static {contextName} _{contextName.ToCamelCase()};");
+            builder.AppendLine(indent, "/// <summary> Gets the default instance </summary>");
+            builder.AppendLine(indent, $"public static {contextName} Default => _{contextName.ToCamelCase()} ??= new();");
+            builder.AppendLine();
+
+            builder.AppendLine(indent, $"private {contextName}()");
             builder.AppendLine(indent, "{");
             indent++;
+            foreach (var modelInfo in contextGenerationSpec.TypeBuilders)
+            {
+                builder.Append(indent, $"_typeBuilderFactories.Add(typeof({modelInfo.Type.FullyQualifiedName}), () => ");
+                if (ShouldGenerateAsLocal(contextGenerationSpec, modelInfo))
+                {
+                    builder.AppendLine($" new global::{modelInfo.Type.GetInnerItemType().Namespace}.{modelInfo.Type.TypeCaseName}Builder());");
+                }
+                else
+                {
+                    builder.AppendLine($" s_referenceContexts[typeof({modelInfo.ContextType.FullyQualifiedName})].GetTypeBuilder(typeof({modelInfo.Type.FullyQualifiedName})));");
+                }
+            }
+            builder.AppendLine();
+
+            builder.AppendLine(indent, "AddAdditionalFactories(_typeBuilderFactories);");
+
+            indent--;
+            builder.AppendLine(indent, "}");
+            builder.AppendLine();
+
+            builder.AppendLine(indent, "/// <inheritdoc/>");
+            builder.Append(indent, "protected override bool TryGetTypeBuilderCore(");
+            builder.AppendType(typeof(Type));
+            builder.AppendLine($" type, out {s_modelReaderWriterTypeBuilder} builder)");
+            builder.AppendLine(indent, "{");
+            indent++;
+            builder.AppendLine(indent, "if (_typeBuilders.TryGetValue(type, out builder))");
+            builder.AppendLine(indent, "{");
+            indent++;
+            builder.AppendLine(indent, "return true;");
+            indent--;
+            builder.AppendLine(indent, "}");
+            builder.AppendLine();
             builder.AppendLine(indent, "if (_typeBuilderFactories.TryGetValue(type, out var factory))");
             builder.AppendLine(indent, "{");
             indent++;
             builder.AppendLine(indent, "builder = factory();");
+            builder.AppendLine(indent, "_typeBuilders.Add(type, builder);");
             builder.AppendLine(indent, "return true;");
             indent--;
             builder.AppendLine(indent, "}");
             builder.AppendLine();
             if (contextGenerationSpec.ReferencedContexts.Count > 0)
             {
-                for (int i = 0; i < contextGenerationSpec.ReferencedContexts.Count; i++)
-                {
-                    var referencedContext = contextGenerationSpec.ReferencedContexts[i];
-                    builder.AppendLine(indent, $"if (s_{referencedContext.CamelCaseName}Library.TryGetTypeBuilder(type, out builder))");
-                    builder.AppendLine(indent, "{");
-                    indent++;
-                    builder.AppendLine(indent, "return true;");
-                    indent--;
-                    builder.AppendLine(indent, "}");
-                }
+                builder.AppendLine(indent, "foreach(var kvp in s_referenceContexts)");
+                builder.AppendLine(indent, "{");
+                indent++;
+                builder.AppendLine(indent, $"if (kvp.Value.TryGetTypeBuilder(type, out builder))");
+                builder.AppendLine(indent, "{");
+                indent++;
+                builder.AppendLine(indent, $"_typeBuilders.Add(type, builder);");
+                builder.AppendLine(indent, "return true;");
+                indent--;
+                builder.AppendLine(indent, "}");
+                indent--;
+                builder.AppendLine(indent, "}");
                 builder.AppendLine();
             }
             else
@@ -175,7 +158,15 @@ internal sealed partial class ModelReaderWriterContextGenerator
             builder.AppendLine(indent, "}");
             builder.AppendLine();
 
-            builder.AppendLine(indent, $"partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories);");
+            builder.Append(indent, "partial void AddAdditionalFactories(");
+            builder.AppendType(typeof(Dictionary<,>));
+            builder.Append("<");
+            builder.AppendType(typeof(Type));
+            builder.Append(", ");
+            builder.AppendType(typeof(Func<>));
+            builder.Append("<");
+            builder.Append(s_modelReaderWriterTypeBuilder);
+            builder.AppendLine(">> factories);");
 
             indent--;
             builder.AppendLine(indent, "}");
@@ -222,9 +213,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             builder.AppendLine(indent, $"namespace {innerItemType.Namespace};");
             builder.AppendLine();
 
-            var className = modelInfo.Type.ItemType is null || modelInfo.Type.Alias is null ? modelInfo.Type.TypeCaseName : modelInfo.Type.TypeCaseAlias;
-
-            builder.AppendLine(indent, $"internal class {className}Builder : ModelReaderWriterTypeBuilder");
+            builder.AppendLine(indent, $"internal class {modelInfo.Type.TypeCaseName}Builder : ModelReaderWriterTypeBuilder");
             builder.AppendLine(indent, "{");
             indent++;
 
