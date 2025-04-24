@@ -1,5 +1,10 @@
 # Release History
 
+## 1.13.3 (2025-04-29)
+
+### Bugs Fixed
+- Fixed an issue where Azure CLI credential could hang or delay due to I/O contention when standard input/output was shared with the host process ([#49582](https://github.com/Azure/azure-sdk-for-net/pull/49582)).
+
 ## 1.13.2 (2025-01-14)
 
 ### Bugs Fixed
