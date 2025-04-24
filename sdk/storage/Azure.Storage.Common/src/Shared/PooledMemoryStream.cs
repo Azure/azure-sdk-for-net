@@ -17,8 +17,6 @@ namespace Azure.Storage.Shared
     /// </summary>
     internal class PooledMemoryStream : Stream
     {
-        private const int DefaultMaxArrayPoolRentalSize = 128 * Constants.MB;
-
         private class BufferPartition
         {
             /// <summary>
@@ -35,7 +33,7 @@ namespace Azure.Storage.Shared
         /// <summary>
         /// Size to rent from MemoryPool.
         /// </summary>
-        public int MaxArraySize { get; }
+        private int _newBufferSize;
 
         /// <summary>
         /// The backing array pool.
@@ -49,175 +47,30 @@ namespace Azure.Storage.Shared
         /// </summary>
         private List<BufferPartition> BufferSet { get; } = new List<BufferPartition>();
 
-        public PooledMemoryStream(ArrayPool<byte> arrayPool, int maxArraySize)
+        /// <summary>
+        /// Creates a new, empty memory stream based on the given ArrayPool.
+        /// </summary>
+        /// <param name="arrayPool">
+        /// Pool to rent memory from.
+        /// </param>
+        /// <param name="bufferSize">
+        /// Rental size for the individual buffers that will make up the total stream.
+        /// </param>
+        /// <param name="initialBufferSize">
+        /// Size of an initial rental from the array pool. No initial buffer will be rented when default.
+        /// </param>
+        public PooledMemoryStream(ArrayPool<byte> arrayPool, int bufferSize, int? initialBufferSize = default)
         {
             ArrayPool = arrayPool;
-            MaxArraySize = maxArraySize;
-        }
-
-        /// <summary>
-        /// Parameterless constructor for mocking.
-        /// </summary>
-        public PooledMemoryStream() { }
-
-        /// <summary>
-        /// Buffers a portion of the given stream, starting at its current position,
-        /// returning the buffered stream partition. The provided stream position will
-        /// be incremented by the amount of bytes buffered.
-        /// </summary>
-        /// <param name="stream">
-        /// Stream to buffer from.
-        /// </param>
-        /// <param name="minCount">
-        /// Minimum number of bytes to buffer. This method will not return until at
-        /// least this many bytes have been read from <paramref name="stream"/> or the
-        /// stream completes.
-        /// </param>
-        /// <param name="maxCount">
-        /// Maximum number of bytes to buffer.
-        /// </param>
-        /// <param name="arrayPool">
-        /// Pool to rent buffer space from.
-        /// </param>
-        /// <param name="maxArrayPoolRentalSize">
-        /// Max size we can request from the array pool.
-        /// </param>
-        /// <param name="async">
-        /// Whether to perform this operation asynchronously.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The buffered stream partition with memory backed by an array pool.
-        /// </returns>
-        internal static async Task<PooledMemoryStream> BufferStreamPartitionInternal(
-            Stream stream,
-            long minCount,
-            long maxCount,
-            ArrayPool<byte> arrayPool,
-            int? maxArrayPoolRentalSize,
-            bool async,
-            CancellationToken cancellationToken)
-        {
-            long totalRead = 0;
-            var streamPartition = new PooledMemoryStream(arrayPool, maxArrayPoolRentalSize ?? DefaultMaxArrayPoolRentalSize);
-
-            // max count to write into a single array
-            int maxCountIndividualBuffer;
-            // min count to write into a single array
-            int minCountIndividualBuffer;
-            // the amount that was written into the current array
-            int readIndividualBuffer;
-            do
+            _newBufferSize = bufferSize;
+            if (initialBufferSize.HasValue)
             {
-                // buffer to write to
-                byte[] buffer;
-                // offset to start writing at
-                int offset;
-                BufferPartition latestBuffer = streamPartition.GetLatestBufferWithAvailableSpaceOrDefault();
-                // whether we got a brand new buffer to write into
-                bool newbuffer;
-                if (latestBuffer != default)
+                BufferSet.Add(new()
                 {
-                    buffer = latestBuffer.Buffer;
-                    offset = latestBuffer.DataLength;
-                    newbuffer = false;
-                }
-                else
-                {
-                    buffer = arrayPool.Rent((int)Math.Min(maxCount - totalRead, streamPartition.MaxArraySize));
-                    offset = 0;
-                    newbuffer = true;
-                }
-
-                // limit max and min count for this buffer by buffer length
-                maxCountIndividualBuffer = (int)Math.Min(maxCount - totalRead, buffer.Length - offset);
-                // definitionally limited by max; we won't ever have a swapped min/max range
-                minCountIndividualBuffer = (int)Math.Min(minCount - totalRead, maxCountIndividualBuffer);
-
-                readIndividualBuffer = await ReadLoopInternal(
-                    stream,
-                    buffer,
-                    offset: offset,
-                    minCountIndividualBuffer,
-                    maxCountIndividualBuffer,
-                    async,
-                    cancellationToken).ConfigureAwait(false);
-                // if nothing was placed in a brand new array
-                if (readIndividualBuffer == 0 && newbuffer)
-                {
-                    arrayPool.Return(buffer);
-                }
-                // if brand new array and we did place data in it
-                else if (newbuffer)
-                {
-                    streamPartition.BufferSet.Add(new BufferPartition
-                    {
-                        Buffer = buffer,
-                        DataLength = readIndividualBuffer
-                    });
-                }
-                // added to an existing array that was not entirely filled
-                else
-                {
-                    latestBuffer.DataLength += readIndividualBuffer;
-                }
-
-                totalRead += readIndividualBuffer;
-
-            /* If we filled the buffer this loop, then quitting on min count is pointless. The point of quitting
-             * on min count is when the source stream doesn't have available bytes and we've reached an amount worth
-             * sending instead of blocking on. If we filled the available array, we don't actually know whether more
-             * data is available yet, as we limited our read for reasons outside the stream state. We should therefore
-             * try another read regardless of whether we hit min count.
-             */
-            } while (
-                // stream is done if this value is zero; no other check matters
-                readIndividualBuffer != 0 &&
-                // stop filling the partition if we've hit the max size of the partition
-                totalRead < maxCount &&
-                // stop filling the partition if we've reached min count and we know we've hit at least a pause in the stream
-                (totalRead < minCount || readIndividualBuffer == maxCountIndividualBuffer));
-
-            return streamPartition;
-        }
-
-        /// <summary>
-        /// Loops Read() calls into buffer until minCount is reached or stream returns 0.
-        /// </summary>
-        /// <returns>Bytes read.</returns>
-        /// <remarks>
-        /// This method may have read bytes even if it has reached the confirmed end of stream. You will have to call
-        /// this method again and read zero bytes to get that confirmation.
-        /// </remarks>
-        private static async Task<int> ReadLoopInternal(Stream stream, byte[] buffer, int offset, int minCount, int maxCount, bool async, CancellationToken cancellationToken)
-        {
-            if (minCount > maxCount)
-            {
-                throw new ArgumentException($"{nameof(minCount)} cannot be greater than {nameof(maxCount)}.");
+                    Buffer = ArrayPool.Rent(initialBufferSize.Value),
+                    DataLength = 0,
+                });
             }
-            if (maxCount <= 0)
-            {
-                throw new ArgumentException("Cannot read a non-positive number of bytes.");
-            }
-
-            int totalRead = 0;
-            do
-            {
-                int read = async
-                    ? await stream.ReadAsync(buffer, offset + totalRead, maxCount - totalRead, cancellationToken).ConfigureAwait(false)
-                    : stream.Read(buffer, offset + totalRead, maxCount - totalRead);
-                // either we have read maxCount in total or the stream has ended
-                if (read == 0)
-                {
-                    break;
-                }
-                totalRead += read;
-            // we always request the number that will bring our total read to maxCount
-            // if the stream can only give us so much at the moment and we've at least hit minCount, we can exit
-            } while (totalRead < minCount);
-            return totalRead;
         }
 
         public override bool CanRead => true;
@@ -236,6 +89,20 @@ namespace Azure.Storage.Shared
         }
 
         public override int Read(byte[] buffer, int offset, int count)
+            => ReadImpl(new Span<byte>(buffer, offset, count));
+
+        public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+            => Task.FromResult(ReadImpl(new Span<byte>(buffer, offset, count)));
+
+#if NETCOREAPP3_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+        public override int Read(Span<byte> buffer)
+            => ReadImpl(buffer);
+
+        public override ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
+            => new(ReadImpl(buffer.Span));
+#endif
+
+        private int ReadImpl(Span<byte> destBuffer)
         {
             if (Position >= Length)
             {
@@ -243,15 +110,15 @@ namespace Azure.Storage.Shared
             }
 
             int read = 0;
-            while (read < count && Position < Length)
+            while (read < destBuffer.Length && Position < Length)
             {
                 (byte[] currentBuffer, int bufferCount, long offsetOfBuffer) = GetBufferFromPosition();
 
                 int toCopy = (int)Min(
                     Length - Position,
                     bufferCount - (Position - offsetOfBuffer),
-                    count - read);
-                Array.Copy(currentBuffer, Position - offsetOfBuffer, buffer, read, toCopy);
+                    destBuffer.Length - read);
+                new Span<byte>(currentBuffer, (int)(Position - offsetOfBuffer), toCopy).CopyTo(destBuffer.Slice(read));
                 read += toCopy;
                 Position += toCopy;
             }
@@ -328,14 +195,34 @@ namespace Azure.Storage.Shared
         }
 
         public override void Write(byte[] buffer, int offset, int count)
+            => WriteImpl(new ReadOnlySpan<byte>(buffer, offset, count));
+
+        public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
-            while (count > 0)
+            WriteImpl(new ReadOnlySpan<byte>(buffer, offset, count));
+            return Task.CompletedTask;
+        }
+
+#if NETCOREAPP3_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+        public override void Write(ReadOnlySpan<byte> buffer)
+            => WriteImpl(buffer);
+
+        public override ValueTask WriteAsync(ReadOnlyMemory<byte> buffer, CancellationToken cancellationToken = default)
+        {
+            WriteImpl(buffer.Span);
+            return new ValueTask(Task.CompletedTask);
+        }
+#endif
+
+        private void WriteImpl(ReadOnlySpan<byte> writeBuffer)
+        {
+            while (writeBuffer.Length > 0)
             {
                 BufferPartition currentBuffer = GetLatestBufferWithAvailableSpaceOrDefault();
 
                 if (currentBuffer == default)
                 {
-                    byte[] newBytes = ArrayPool.Rent(MaxArraySize);
+                    byte[] newBytes = ArrayPool.Rent(_newBufferSize);
                     currentBuffer = new BufferPartition
                     {
                         Buffer = newBytes,
@@ -344,12 +231,11 @@ namespace Azure.Storage.Shared
                     BufferSet.Add(currentBuffer);
                 }
 
-                int copied = Math.Min(currentBuffer.Buffer.Length - currentBuffer.DataLength, count);
-                Array.Copy(buffer, offset, currentBuffer.Buffer, currentBuffer.DataLength, copied);
+                int copied = Math.Min(currentBuffer.Buffer.Length - currentBuffer.DataLength, writeBuffer.Length);
+                writeBuffer.Slice(0, Math.Min(copied, writeBuffer.Length)).CopyTo(new Span<byte>(currentBuffer.Buffer, currentBuffer.DataLength, copied));
                 currentBuffer.DataLength += copied;
-                count -= copied;
-                offset += copied;
                 Position += copied;
+                writeBuffer = writeBuffer.Slice(copied);
             }
         }
 
