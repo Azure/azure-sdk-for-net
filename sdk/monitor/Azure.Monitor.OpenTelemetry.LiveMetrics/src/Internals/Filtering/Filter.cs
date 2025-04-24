@@ -447,6 +447,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
                             Type enumUnderlyingType = fieldType.GetTypeInfo().GetEnumUnderlyingType();
 
+                            // This block matches the case statements just above.
                             static Type GetNullableType(Type inputType) => inputType switch
                             {
                                 _ when inputType == typeof(sbyte) => typeof(sbyte?),
