@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    /// <summary> A set of rules governing the network accessibility. </summary>
-    internal partial class NetworkRuleSet
+    /// <summary> Response for Delete Retention Policy object. </summary>
+    public partial class ElasticSanDeleteRetentionPolicy
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,25 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkRuleSet"/>. </summary>
-        public NetworkRuleSet()
+        /// <summary> Initializes a new instance of <see cref="ElasticSanDeleteRetentionPolicy"/>. </summary>
+        public ElasticSanDeleteRetentionPolicy()
         {
-            VirtualNetworkRules = new ChangeTrackingList<ElasticSanVirtualNetworkRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkRuleSet"/>. </summary>
-        /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanDeleteRetentionPolicy"/>. </summary>
+        /// <param name="policyState"></param>
+        /// <param name="retentionPeriodDays"> The number of days to retain the resources after deletion. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkRuleSet(IList<ElasticSanVirtualNetworkRule> virtualNetworkRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticSanDeleteRetentionPolicy(ElasticSanDeleteRetentionPolicyState? policyState, int? retentionPeriodDays, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            VirtualNetworkRules = virtualNetworkRules;
+            PolicyState = policyState;
+            RetentionPeriodDays = retentionPeriodDays;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of virtual network rules. </summary>
-        public IList<ElasticSanVirtualNetworkRule> VirtualNetworkRules { get; }
+        /// <summary> Gets or sets the policy state. </summary>
+        public ElasticSanDeleteRetentionPolicyState? PolicyState { get; set; }
+        /// <summary> The number of days to retain the resources after deletion. </summary>
+        public int? RetentionPeriodDays { get; set; }
     }
 }
