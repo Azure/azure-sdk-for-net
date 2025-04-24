@@ -8,6 +8,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed bug where AccessTier for Premium Page Blobs were not being preserved.
 
 ### Other Changes
 
