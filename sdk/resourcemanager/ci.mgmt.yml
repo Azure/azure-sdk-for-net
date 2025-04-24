@@ -153,6 +153,7 @@ trigger:
     - sdk/pineconevectordb/Azure.ResourceManager.PineconeVectorDB
     - sdk/playwrighttesting/Azure.ResourceManager.PlaywrightTesting
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
+    - sdk/portalservices/Azure.ResourceManager.PortalServicesCopilot
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
     - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
     - sdk/privatedns/Azure.ResourceManager.PrivateDns
@@ -363,6 +364,7 @@ pr:
     - sdk/pineconevectordb/Azure.ResourceManager.PineconeVectorDB
     - sdk/playwrighttesting/Azure.ResourceManager.PlaywrightTesting
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
+    - sdk/portalservices/Azure.ResourceManager.PortalServicesCopilot
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
     - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
     - sdk/privatedns/Azure.ResourceManager.PrivateDns
