@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
@@ -20,5 +22,21 @@ namespace Authentication.ApiKey
         public ApiKeyClient(Uri endpoint, AzureKeyCredential keyCredential, ApiKeyClientOptions options) => throw null;
 
         public HttpPipeline Pipeline => throw null;
+
+        public virtual Response Valid(RequestContext context) => throw null;
+
+        public virtual Task<Response> ValidAsync(RequestContext context) => throw null;
+
+        public virtual Response Valid(CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response> ValidAsync(CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Response Invalid(RequestContext context) => throw null;
+
+        public virtual Task<Response> InvalidAsync(RequestContext context) => throw null;
+
+        public virtual Response Invalid(CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response> InvalidAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }
