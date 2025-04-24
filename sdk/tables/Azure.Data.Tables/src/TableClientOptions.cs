@@ -61,6 +61,12 @@ namespace Azure.Data.Tables
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
+        /// <summary>
+        /// Gets or sets the Audience to use for authentication with Microsoft Entra.
+        /// The audience is not considered when using a shared key or connection string.
+        /// </summary>
+        public TableAudience? Audience { get; set; }
+
         internal static TableClientOptions DefaultOptions => new()
         {
             Diagnostics =
