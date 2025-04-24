@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>1.14.0-beta.1</Version>
+    <Version>1.13.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.13.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager</PackageId>
