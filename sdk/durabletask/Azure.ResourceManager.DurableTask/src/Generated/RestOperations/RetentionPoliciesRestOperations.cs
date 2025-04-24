@@ -15,20 +15,20 @@ using Azure.ResourceManager.DurableTask.Models;
 
 namespace Azure.ResourceManager.DurableTask
 {
-    internal partial class SchedulersRestOperations
+    internal partial class RetentionPoliciesRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of SchedulersRestOperations. </summary>
+        /// <summary> Initializes a new instance of RetentionPoliciesRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service host. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public SchedulersRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public RetentionPoliciesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -46,6 +46,7 @@ namespace Azure.ResourceManager.DurableTask
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DurableTask/schedulers/", false);
             uri.AppendPath(schedulerName, true);
+            uri.AppendPath("/retentionPolicies/default", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
@@ -63,6 +64,7 @@ namespace Azure.ResourceManager.DurableTask
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DurableTask/schedulers/", false);
             uri.AppendPath(schedulerName, true);
+            uri.AppendPath("/retentionPolicies/default", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -70,14 +72,14 @@ namespace Azure.ResourceManager.DurableTask
             return message;
         }
 
-        /// <summary> Get a Scheduler. </summary>
+        /// <summary> Get a Retention Policy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="schedulerName"> The name of the Scheduler. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="schedulerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="schedulerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DurableTaskSchedulerData>> GetAsync(string subscriptionId, string resourceGroupName, string schedulerName, CancellationToken cancellationToken = default)
+        public async Task<Response<RetentionPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string schedulerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -89,26 +91,26 @@ namespace Azure.ResourceManager.DurableTask
             {
                 case 200:
                     {
-                        DurableTaskSchedulerData value = default;
+                        RetentionPolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DurableTaskSchedulerData.DeserializeDurableTaskSchedulerData(document.RootElement);
+                        value = RetentionPolicyData.DeserializeRetentionPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DurableTaskSchedulerData)null, message.Response);
+                    return Response.FromValue((RetentionPolicyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Get a Scheduler. </summary>
+        /// <summary> Get a Retention Policy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="schedulerName"> The name of the Scheduler. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="schedulerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="schedulerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DurableTaskSchedulerData> Get(string subscriptionId, string resourceGroupName, string schedulerName, CancellationToken cancellationToken = default)
+        public Response<RetentionPolicyData> Get(string subscriptionId, string resourceGroupName, string schedulerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,19 +122,19 @@ namespace Azure.ResourceManager.DurableTask
             {
                 case 200:
                     {
-                        DurableTaskSchedulerData value = default;
+                        RetentionPolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DurableTaskSchedulerData.DeserializeDurableTaskSchedulerData(document.RootElement);
+                        value = RetentionPolicyData.DeserializeRetentionPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DurableTaskSchedulerData)null, message.Response);
+                    return Response.FromValue((RetentionPolicyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string schedulerName, DurableTaskSchedulerData data)
+        internal RequestUriBuilder CreateCreateOrReplaceRequestUri(string subscriptionId, string resourceGroupName, string schedulerName, RetentionPolicyData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -142,11 +144,12 @@ namespace Azure.ResourceManager.DurableTask
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DurableTask/schedulers/", false);
             uri.AppendPath(schedulerName, true);
+            uri.AppendPath("/retentionPolicies/default", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string schedulerName, DurableTaskSchedulerData data)
+        internal HttpMessage CreateCreateOrReplaceRequest(string subscriptionId, string resourceGroupName, string schedulerName, RetentionPolicyData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -159,6 +162,7 @@ namespace Azure.ResourceManager.DurableTask
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DurableTask/schedulers/", false);
             uri.AppendPath(schedulerName, true);
+            uri.AppendPath("/retentionPolicies/default", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -170,7 +174,7 @@ namespace Azure.ResourceManager.DurableTask
             return message;
         }
 
-        /// <summary> Create or update a Scheduler. </summary>
+        /// <summary> Create or Update a Retention Policy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="schedulerName"> The name of the Scheduler. </param>
@@ -178,14 +182,14 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schedulerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="schedulerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string schedulerName, DurableTaskSchedulerData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrReplaceAsync(string subscriptionId, string resourceGroupName, string schedulerName, RetentionPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(schedulerName, nameof(schedulerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, schedulerName, data);
+            using var message = CreateCreateOrReplaceRequest(subscriptionId, resourceGroupName, schedulerName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -197,7 +201,7 @@ namespace Azure.ResourceManager.DurableTask
             }
         }
 
-        /// <summary> Create or update a Scheduler. </summary>
+        /// <summary> Create or Update a Retention Policy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="schedulerName"> The name of the Scheduler. </param>
@@ -205,14 +209,14 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schedulerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="schedulerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string schedulerName, DurableTaskSchedulerData data, CancellationToken cancellationToken = default)
+        public Response CreateOrReplace(string subscriptionId, string resourceGroupName, string schedulerName, RetentionPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(schedulerName, nameof(schedulerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, schedulerName, data);
+            using var message = CreateCreateOrReplaceRequest(subscriptionId, resourceGroupName, schedulerName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -224,7 +228,7 @@ namespace Azure.ResourceManager.DurableTask
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string schedulerName, DurableTaskSchedulerPatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string schedulerName, RetentionPolicyData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -234,11 +238,12 @@ namespace Azure.ResourceManager.DurableTask
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DurableTask/schedulers/", false);
             uri.AppendPath(schedulerName, true);
+            uri.AppendPath("/retentionPolicies/default", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string schedulerName, DurableTaskSchedulerPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string schedulerName, RetentionPolicyData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -251,33 +256,34 @@ namespace Azure.ResourceManager.DurableTask
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DurableTask/schedulers/", false);
             uri.AppendPath(schedulerName, true);
+            uri.AppendPath("/retentionPolicies/default", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Update a Scheduler. </summary>
+        /// <summary> Update a Retention Policy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="schedulerName"> The name of the Scheduler. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schedulerName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schedulerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="schedulerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string schedulerName, DurableTaskSchedulerPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string schedulerName, RetentionPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(schedulerName, nameof(schedulerName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, schedulerName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, schedulerName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -289,22 +295,22 @@ namespace Azure.ResourceManager.DurableTask
             }
         }
 
-        /// <summary> Update a Scheduler. </summary>
+        /// <summary> Update a Retention Policy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="schedulerName"> The name of the Scheduler. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schedulerName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="schedulerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="schedulerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string schedulerName, DurableTaskSchedulerPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string schedulerName, RetentionPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(schedulerName, nameof(schedulerName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, schedulerName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, schedulerName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -326,6 +332,7 @@ namespace Azure.ResourceManager.DurableTask
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DurableTask/schedulers/", false);
             uri.AppendPath(schedulerName, true);
+            uri.AppendPath("/retentionPolicies/default", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
@@ -343,6 +350,7 @@ namespace Azure.ResourceManager.DurableTask
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DurableTask/schedulers/", false);
             uri.AppendPath(schedulerName, true);
+            uri.AppendPath("/retentionPolicies/default", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -350,7 +358,7 @@ namespace Azure.ResourceManager.DurableTask
             return message;
         }
 
-        /// <summary> Delete a Scheduler. </summary>
+        /// <summary> Delete a Retention Policy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="schedulerName"> The name of the Scheduler. </param>
@@ -375,7 +383,7 @@ namespace Azure.ResourceManager.DurableTask
             }
         }
 
-        /// <summary> Delete a Scheduler. </summary>
+        /// <summary> Delete a Retention Policy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="schedulerName"> The name of the Scheduler. </param>
@@ -400,7 +408,7 @@ namespace Azure.ResourceManager.DurableTask
             }
         }
 
-        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        internal RequestUriBuilder CreateListBySchedulerRequestUri(string subscriptionId, string resourceGroupName, string schedulerName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -408,12 +416,14 @@ namespace Azure.ResourceManager.DurableTask
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DurableTask/schedulers", false);
+            uri.AppendPath("/providers/Microsoft.DurableTask/schedulers/", false);
+            uri.AppendPath(schedulerName, true);
+            uri.AppendPath("/retentionPolicies", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateListBySchedulerRequest(string subscriptionId, string resourceGroupName, string schedulerName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -424,7 +434,9 @@ namespace Azure.ResourceManager.DurableTask
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DurableTask/schedulers", false);
+            uri.AppendPath("/providers/Microsoft.DurableTask/schedulers/", false);
+            uri.AppendPath(schedulerName, true);
+            uri.AppendPath("/retentionPolicies", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -432,26 +444,28 @@ namespace Azure.ResourceManager.DurableTask
             return message;
         }
 
-        /// <summary> List Schedulers by resource group. </summary>
+        /// <summary> List Retention Policies. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="schedulerName"> The name of the Scheduler. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SchedulerListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="schedulerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="schedulerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<RetentionPolicyListResult>> ListBySchedulerAsync(string subscriptionId, string resourceGroupName, string schedulerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(schedulerName, nameof(schedulerName));
 
-            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
+            using var message = CreateListBySchedulerRequest(subscriptionId, resourceGroupName, schedulerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SchedulerListResult value = default;
+                        RetentionPolicyListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SchedulerListResult.DeserializeSchedulerListResult(document.RootElement);
+                        value = RetentionPolicyListResult.DeserializeRetentionPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -459,26 +473,28 @@ namespace Azure.ResourceManager.DurableTask
             }
         }
 
-        /// <summary> List Schedulers by resource group. </summary>
+        /// <summary> List Retention Policies. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="schedulerName"> The name of the Scheduler. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SchedulerListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="schedulerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="schedulerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<RetentionPolicyListResult> ListByScheduler(string subscriptionId, string resourceGroupName, string schedulerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(schedulerName, nameof(schedulerName));
 
-            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
+            using var message = CreateListBySchedulerRequest(subscriptionId, resourceGroupName, schedulerName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SchedulerListResult value = default;
+                        RetentionPolicyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SchedulerListResult.DeserializeSchedulerListResult(document.RootElement);
+                        value = RetentionPolicyListResult.DeserializeRetentionPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -486,85 +502,7 @@ namespace Azure.ResourceManager.DurableTask
             }
         }
 
-        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.DurableTask/schedulers", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.DurableTask/schedulers", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List Schedulers by subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SchedulerListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListBySubscriptionRequest(subscriptionId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SchedulerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SchedulerListResult.DeserializeSchedulerListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List Schedulers by subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SchedulerListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListBySubscriptionRequest(subscriptionId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SchedulerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SchedulerListResult.DeserializeSchedulerListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        internal RequestUriBuilder CreateListBySchedulerNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string schedulerName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -572,7 +510,7 @@ namespace Azure.ResourceManager.DurableTask
             return uri;
         }
 
-        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateListBySchedulerNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string schedulerName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -586,28 +524,30 @@ namespace Azure.ResourceManager.DurableTask
             return message;
         }
 
-        /// <summary> List Schedulers by resource group. </summary>
+        /// <summary> List Retention Policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="schedulerName"> The name of the Scheduler. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SchedulerListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="schedulerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="schedulerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<RetentionPolicyListResult>> ListBySchedulerNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string schedulerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(schedulerName, nameof(schedulerName));
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
+            using var message = CreateListBySchedulerNextPageRequest(nextLink, subscriptionId, resourceGroupName, schedulerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SchedulerListResult value = default;
+                        RetentionPolicyListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SchedulerListResult.DeserializeSchedulerListResult(document.RootElement);
+                        value = RetentionPolicyListResult.DeserializeRetentionPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -615,104 +555,30 @@ namespace Azure.ResourceManager.DurableTask
             }
         }
 
-        /// <summary> List Schedulers by resource group. </summary>
+        /// <summary> List Retention Policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="schedulerName"> The name of the Scheduler. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SchedulerListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="schedulerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="schedulerName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<RetentionPolicyListResult> ListBySchedulerNextPage(string nextLink, string subscriptionId, string resourceGroupName, string schedulerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(schedulerName, nameof(schedulerName));
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
+            using var message = CreateListBySchedulerNextPageRequest(nextLink, subscriptionId, resourceGroupName, schedulerName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SchedulerListResult value = default;
+                        RetentionPolicyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SchedulerListResult.DeserializeSchedulerListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List Schedulers by subscription. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SchedulerListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SchedulerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SchedulerListResult.DeserializeSchedulerListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List Schedulers by subscription. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SchedulerListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SchedulerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SchedulerListResult.DeserializeSchedulerListResult(document.RootElement);
+                        value = RetentionPolicyListResult.DeserializeRetentionPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

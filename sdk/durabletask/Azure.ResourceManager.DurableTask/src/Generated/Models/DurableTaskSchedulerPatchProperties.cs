@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.DurableTask.Models
 {
-    /// <summary> The response of a Scheduler list operation. </summary>
-    internal partial class SchedulerListResult
+    /// <summary> The Scheduler resource properties to be updated. </summary>
+    public partial class DurableTaskSchedulerPatchProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +45,34 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SchedulerListResult"/>. </summary>
-        /// <param name="value"> The Scheduler items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SchedulerListResult(IEnumerable<DurableTaskSchedulerData> value)
+        /// <summary> Initializes a new instance of <see cref="DurableTaskSchedulerPatchProperties"/>. </summary>
+        public DurableTaskSchedulerPatchProperties()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            IPAllowlist = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SchedulerListResult"/>. </summary>
-        /// <param name="value"> The Scheduler items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="DurableTaskSchedulerPatchProperties"/>. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="endpoint"> URL of the durable task scheduler. </param>
+        /// <param name="ipAllowlist"> IP allow list for durable task scheduler. Values can be IPv4, IPv6 or CIDR. </param>
+        /// <param name="sku"> SKU of the durable task scheduler. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SchedulerListResult(IReadOnlyList<DurableTaskSchedulerData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DurableTaskSchedulerPatchProperties(DurableTaskProvisioningState? provisioningState, string endpoint, IList<string> ipAllowlist, DurableTaskSchedulerSkuUpdate sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            ProvisioningState = provisioningState;
+            Endpoint = endpoint;
+            IPAllowlist = ipAllowlist;
+            Sku = sku;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SchedulerListResult"/> for deserialization. </summary>
-        internal SchedulerListResult()
-        {
-        }
-
-        /// <summary> The Scheduler items on this page. </summary>
-        public IReadOnlyList<DurableTaskSchedulerData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> The status of the last operation. </summary>
+        public DurableTaskProvisioningState? ProvisioningState { get; }
+        /// <summary> URL of the durable task scheduler. </summary>
+        public string Endpoint { get; }
+        /// <summary> IP allow list for durable task scheduler. Values can be IPv4, IPv6 or CIDR. </summary>
+        public IList<string> IPAllowlist { get; }
+        /// <summary> SKU of the durable task scheduler. </summary>
+        public DurableTaskSchedulerSkuUpdate Sku { get; set; }
     }
 }

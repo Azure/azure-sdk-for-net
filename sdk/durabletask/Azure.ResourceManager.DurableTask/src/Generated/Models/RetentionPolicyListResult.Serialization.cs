@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DurableTask.Models
 {
-    internal partial class SchedulerListResult : IUtf8JsonSerializable, IJsonModel<SchedulerListResult>
+    internal partial class RetentionPolicyListResult : IUtf8JsonSerializable, IJsonModel<RetentionPolicyListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SchedulerListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RetentionPolicyListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SchedulerListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RetentionPolicyListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SchedulerListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RetentionPolicyListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SchedulerListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RetentionPolicyListResult)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("value"u8);
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.DurableTask.Models
             }
         }
 
-        SchedulerListResult IJsonModel<SchedulerListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RetentionPolicyListResult IJsonModel<RetentionPolicyListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SchedulerListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RetentionPolicyListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SchedulerListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RetentionPolicyListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSchedulerListResult(document.RootElement, options);
+            return DeserializeRetentionPolicyListResult(document.RootElement, options);
         }
 
-        internal static SchedulerListResult DeserializeSchedulerListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RetentionPolicyListResult DeserializeRetentionPolicyListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DurableTask.Models
             {
                 return null;
             }
-            IReadOnlyList<DurableTaskSchedulerData> value = default;
+            IReadOnlyList<RetentionPolicyData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.DurableTask.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<DurableTaskSchedulerData> array = new List<DurableTaskSchedulerData>();
+                    List<RetentionPolicyData> array = new List<RetentionPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DurableTaskSchedulerData.DeserializeDurableTaskSchedulerData(item, options));
+                        array.Add(RetentionPolicyData.DeserializeRetentionPolicyData(item, options));
                     }
                     value = array;
                     continue;
@@ -114,38 +114,38 @@ namespace Azure.ResourceManager.DurableTask.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SchedulerListResult(value, nextLink, serializedAdditionalRawData);
+            return new RetentionPolicyListResult(value, nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SchedulerListResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RetentionPolicyListResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SchedulerListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RetentionPolicyListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SchedulerListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RetentionPolicyListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SchedulerListResult IPersistableModel<SchedulerListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RetentionPolicyListResult IPersistableModel<RetentionPolicyListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SchedulerListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RetentionPolicyListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSchedulerListResult(document.RootElement, options);
+                        return DeserializeRetentionPolicyListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SchedulerListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RetentionPolicyListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SchedulerListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RetentionPolicyListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

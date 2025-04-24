@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.ResourceManager.DurableTask.Models
 {
-    /// <summary> The response of a Scheduler list operation. </summary>
-    internal partial class SchedulerListResult
+    /// <summary> The response of a RetentionPolicy list operation. </summary>
+    internal partial class RetentionPolicyListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,34 +46,34 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SchedulerListResult"/>. </summary>
-        /// <param name="value"> The Scheduler items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="RetentionPolicyListResult"/>. </summary>
+        /// <param name="value"> The RetentionPolicy items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SchedulerListResult(IEnumerable<DurableTaskSchedulerData> value)
+        internal RetentionPolicyListResult(IEnumerable<RetentionPolicyData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SchedulerListResult"/>. </summary>
-        /// <param name="value"> The Scheduler items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="RetentionPolicyListResult"/>. </summary>
+        /// <param name="value"> The RetentionPolicy items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SchedulerListResult(IReadOnlyList<DurableTaskSchedulerData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RetentionPolicyListResult(IReadOnlyList<RetentionPolicyData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SchedulerListResult"/> for deserialization. </summary>
-        internal SchedulerListResult()
+        /// <summary> Initializes a new instance of <see cref="RetentionPolicyListResult"/> for deserialization. </summary>
+        internal RetentionPolicyListResult()
         {
         }
 
-        /// <summary> The Scheduler items on this page. </summary>
-        public IReadOnlyList<DurableTaskSchedulerData> Value { get; }
+        /// <summary> The RetentionPolicy items on this page. </summary>
+        public IReadOnlyList<RetentionPolicyData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
