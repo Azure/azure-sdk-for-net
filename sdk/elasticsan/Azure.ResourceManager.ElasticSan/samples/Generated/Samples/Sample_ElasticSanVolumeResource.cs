@@ -103,8 +103,10 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             ElasticSanVolumeResource elasticSanVolume = client.GetElasticSanVolumeResource(elasticSanVolumeResourceId);
 
             // invoke the operation
+            DeleteSnapshotsUnderVolume? deleteSnapshots = DeleteSnapshotsUnderVolume.True;
+            ForceDeleteVolume? forceDelete = ForceDeleteVolume.True;
             ElasticSanDeleteType? deleteType = ElasticSanDeleteType.Permanent;
-            await elasticSanVolume.DeleteAsync(WaitUntil.Completed, deleteType: deleteType);
+            await elasticSanVolume.DeleteAsync(WaitUntil.Completed, deleteSnapshots: deleteSnapshots, forceDelete: forceDelete, deleteType: deleteType);
 
             Console.WriteLine("Succeeded");
         }

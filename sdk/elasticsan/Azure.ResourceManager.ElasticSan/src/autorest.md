@@ -111,17 +111,13 @@ directive:
 - from: elasticsan.json
   where: $.paths..parameters[?(@.name=='x-ms-force-delete')]
   transform: >
-    $.name = 'ForceDelete';
+    $['x-ms-client-name'] = 'ForceDelete';
 - from: elasticsan.json
   where: $.paths..parameters[?(@.name=='x-ms-access-soft-deleted-resources')]
   transform: >
-    $.name = 'AccessSoftDeletedResources';
-- from: elasticsan.json
-  where: $.paths..parameters[?(@.name=='x-ms-access-soft-deleted-resources')]
-  transform: >
-    $.name = 'AccessSoftDeletedResources';
+    $['x-ms-client-name'] = 'AccessSoftDeletedResources';
 - from: elasticsan.json
   where: $.paths..parameters[?(@.name=='x-ms-delete-snapshots')]
   transform: >
-    $.name = 'DeleteSnapshots';
+    $['x-ms-client-name'] = 'DeleteSnapshots';
 ```

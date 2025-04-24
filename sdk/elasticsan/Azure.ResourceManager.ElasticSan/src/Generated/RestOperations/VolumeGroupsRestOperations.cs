@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ElasticSan
             request.Uri = uri;
             if (accessSoftDeletedResources != null)
             {
-                request.Headers.Add("AccessSoftDeletedResources", accessSoftDeletedResources.Value.ToString());
+                request.Headers.Add("x-ms-access-soft-deleted-resources", accessSoftDeletedResources.Value.ToString());
             }
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.ElasticSan
             request.Uri = uri;
             if (accessSoftDeletedResources != null)
             {
-                request.Headers.Add("AccessSoftDeletedResources", accessSoftDeletedResources.Value.ToString());
+                request.Headers.Add("x-ms-access-soft-deleted-resources", accessSoftDeletedResources.Value.ToString());
             }
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
