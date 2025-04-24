@@ -995,7 +995,7 @@
 # PRLabel: %Durable Task Scheduler %Mgmt
 /sdk/durabletask/Azure.ResourceManager.*/                          @berndverst @kaibocai @torosent @RyanLettieri @philliphoff @cgillum
 
-# ServiceLabel: %Durable Task Scheduler
+# ServiceLabel: %Durable Task Scheduler  %Mgmt
 # ServiceOwners:                                                   @berndverst @kaibocai @torosent @RyanLettieri @philliphoff @cgillum
 
 # PRLabel: %Elastic
