@@ -498,12 +498,6 @@
 # ServiceLabel: %Defender EASM
 # ServiceOwners:                                                   @thang-bit
 
-# PRLabel: %Durable Task Scheduler
-/sdk/durabletask/                                                  @berndverst @kaibocai @torosent @RyanLettieri @philliphoff @cgillum
-
-# ServiceLabel: %Durable Task Scheduler
-# ServiceOwners:                                                   @berndverst @kaibocai @torosent @RyanLettieri @philliphoff @cgillum
-
 # PRLabel: %Event Grid
 /sdk/eventgrid/                                                    @JoshLove-msft @jsquire @m-redding
 
@@ -997,6 +991,12 @@
 
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
+
+# PRLabel: %Durable Task Scheduler %Mgmt
+/sdk/durabletask/Azure.ResourceManager.*/                          @berndverst @kaibocai @torosent @RyanLettieri @philliphoff @cgillum
+
+# ServiceLabel: %Durable Task Scheduler
+# ServiceOwners:                                                   @berndverst @kaibocai @torosent @RyanLettieri @philliphoff @cgillum
 
 # PRLabel: %Elastic
 /sdk/elastic/Azure.ResourceManager.Elastic/                        @ArthurMa1978
