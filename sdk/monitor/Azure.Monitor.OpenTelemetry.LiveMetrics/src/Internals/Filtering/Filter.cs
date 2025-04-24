@@ -447,6 +447,21 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
                             Type enumUnderlyingType = fieldType.GetTypeInfo().GetEnumUnderlyingType();
 
+                            static Type GetNullableType(Type inputType) => inputType switch
+                            {
+                                _ when inputType == typeof(sbyte) => typeof(sbyte?),
+                                _ when inputType == typeof(short) => typeof(short?),
+                                _ when inputType == typeof(int) => typeof(int?),
+                                _ when inputType == typeof(long) => typeof(long?),
+                                _ when inputType == typeof(byte) => typeof(byte?),
+                                _ when inputType == typeof(ushort) => typeof(ushort?),
+                                _ when inputType == typeof(uint) => typeof(uint?),
+                                _ when inputType == typeof(ulong) => typeof(ulong?),
+                                _ when inputType == typeof(float) => typeof(float?),
+                                _ when inputType == typeof(double) => typeof(double?),
+                                _ => throw new ArgumentException($"Cannot create a nullable type for {inputType.FullName}."),
+                            };
+
                             switch (predicate)
                             {
                                 case Predicate.Equal:
@@ -672,31 +687,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             }
 
             return null;
-        }
-
-        // Helper method to determine the nullable type without using MakeGenericType
-        private static Type GetNullableType(Type type)
-        {
-            // Most common numeric types - handle these specifically instead of using MakeGenericType
-            if (type == typeof(byte)) return typeof(byte?);
-            if (type == typeof(sbyte)) return typeof(sbyte?);
-            if (type == typeof(short)) return typeof(short?);
-            if (type == typeof(ushort)) return typeof(ushort?);
-            if (type == typeof(int)) return typeof(int?);
-            if (type == typeof(uint)) return typeof(uint?);
-            if (type == typeof(long)) return typeof(long?);
-            if (type == typeof(ulong)) return typeof(ulong?);
-            if (type == typeof(float)) return typeof(float?);
-            if (type == typeof(double)) return typeof(double?);
-            if (type == typeof(decimal)) return typeof(decimal?);
-            if (type == typeof(bool)) return typeof(bool?);
-            if (type == typeof(char)) return typeof(char?);
-            if (type == typeof(TimeSpan)) return typeof(TimeSpan?);
-            if (type == typeof(DateTime)) return typeof(DateTime?);
-            if (type == typeof(DateTimeOffset)) return typeof(DateTimeOffset?);
-            if (type == typeof(Guid)) return typeof(Guid?);
-
-            throw new ArgumentException($"Cannot create a nullable type for {type.FullName}.");
         }
 
         private Expression ProduceComparatorExpressionForAnyFieldCondition(ParameterExpression documentExpression)
