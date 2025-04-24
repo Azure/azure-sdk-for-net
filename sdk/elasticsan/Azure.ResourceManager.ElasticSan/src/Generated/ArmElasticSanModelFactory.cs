@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="enforceDataIntegrityCheckForIscsi"> A boolean indicating whether or not Data Integrity Check is enabled. </param>
         /// <param name="deleteRetentionPolicy"> The retention policy for the soft deleted volume group and its associated resources. </param>
         /// <returns> A new <see cref="ElasticSan.ElasticSanVolumeGroupData"/> instance for mocking. </returns>
-        public static ElasticSanVolumeGroupData ElasticSanVolumeGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, ElasticSanProvisioningState? provisioningState = null, ElasticSanStorageTargetType? protocolType = null, ElasticSanEncryptionType? encryption = null, ElasticSanEncryptionProperties encryptionProperties = null, IEnumerable<ElasticSanVirtualNetworkRule> virtualNetworkRules = null, IEnumerable<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = null, bool? enforceDataIntegrityCheckForIscsi = null, DeleteRetentionPolicy deleteRetentionPolicy = null)
+        public static ElasticSanVolumeGroupData ElasticSanVolumeGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, ElasticSanProvisioningState? provisioningState = null, ElasticSanStorageTargetType? protocolType = null, ElasticSanEncryptionType? encryption = null, ElasticSanEncryptionProperties encryptionProperties = null, IEnumerable<ElasticSanVirtualNetworkRule> virtualNetworkRules = null, IEnumerable<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = null, bool? enforceDataIntegrityCheckForIscsi = null, ElasticSanDeleteRetentionPolicy deleteRetentionPolicy = null)
         {
             virtualNetworkRules ??= new List<ElasticSanVirtualNetworkRule>();
             privateEndpointConnections ??= new List<ElasticSanPrivateEndpointConnectionData>();
@@ -289,12 +289,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PreValidationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ElasticSanPreValidationResult"/>. </summary>
         /// <param name="validationStatus"> a status value indicating success or failure of validation. </param>
-        /// <returns> A new <see cref="Models.PreValidationResult"/> instance for mocking. </returns>
-        public static PreValidationResult PreValidationResult(string validationStatus = null)
+        /// <returns> A new <see cref="Models.ElasticSanPreValidationResult"/> instance for mocking. </returns>
+        public static ElasticSanPreValidationResult ElasticSanPreValidationResult(string validationStatus = null)
         {
-            return new PreValidationResult(validationStatus, serializedAdditionalRawData: null);
+            return new ElasticSanPreValidationResult(validationStatus, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ElasticSan.ElasticSanData" />. </summary>

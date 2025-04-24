@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> object to hold array of volume names. </summary>
-    public partial class VolumeNameListContent
+    public partial class ElasticSanVolumeNameListContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,27 +46,27 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VolumeNameListContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeNameListContent"/>. </summary>
         /// <param name="volumeNames"> array of volume names. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeNames"/> is null. </exception>
-        public VolumeNameListContent(IEnumerable<string> volumeNames)
+        public ElasticSanVolumeNameListContent(IEnumerable<string> volumeNames)
         {
             Argument.AssertNotNull(volumeNames, nameof(volumeNames));
 
             VolumeNames = volumeNames.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VolumeNameListContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeNameListContent"/>. </summary>
         /// <param name="volumeNames"> array of volume names. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeNameListContent(IList<string> volumeNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticSanVolumeNameListContent(IList<string> volumeNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VolumeNames = volumeNames;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VolumeNameListContent"/> for deserialization. </summary>
-        internal VolumeNameListContent()
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeNameListContent"/> for deserialization. </summary>
+        internal ElasticSanVolumeNameListContent()
         {
         }
 

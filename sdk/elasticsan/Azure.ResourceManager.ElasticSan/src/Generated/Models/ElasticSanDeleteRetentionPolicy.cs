@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Response for Delete Retention Policy object. </summary>
-    public partial class DeleteRetentionPolicy
+    public partial class ElasticSanDeleteRetentionPolicy
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DeleteRetentionPolicy"/>. </summary>
-        public DeleteRetentionPolicy()
+        /// <summary> Initializes a new instance of <see cref="ElasticSanDeleteRetentionPolicy"/>. </summary>
+        public ElasticSanDeleteRetentionPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeleteRetentionPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanDeleteRetentionPolicy"/>. </summary>
         /// <param name="policyState"></param>
         /// <param name="retentionPeriodDays"> The number of days to retain the resources after deletion. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeleteRetentionPolicy(DeleteRetentionPolicyState? policyState, int? retentionPeriodDays, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticSanDeleteRetentionPolicy(ElasticSanDeleteRetentionPolicyState? policyState, int? retentionPeriodDays, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PolicyState = policyState;
             RetentionPeriodDays = retentionPeriodDays;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         }
 
         /// <summary> Gets or sets the policy state. </summary>
-        public DeleteRetentionPolicyState? PolicyState { get; set; }
+        public ElasticSanDeleteRetentionPolicyState? PolicyState { get; set; }
         /// <summary> The number of days to retain the resources after deletion. </summary>
         public int? RetentionPeriodDays { get; set; }
     }

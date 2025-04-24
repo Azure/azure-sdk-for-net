@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ElasticSan
             }
         }
 
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string volumeName, DeleteSnapshotsUnderVolume? deleteSnapshots, ForceDeleteVolume? forceDelete, ElasticSanDeleteType? deleteType)
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string volumeName, ElasticSanDeleteSnapshotsUnderVolume? deleteSnapshots, ElasticSanForceDeleteVolume? forceDelete, ElasticSanDeleteType? deleteType)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.ElasticSan
             return uri;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string volumeName, DeleteSnapshotsUnderVolume? deleteSnapshots, ForceDeleteVolume? forceDelete, ElasticSanDeleteType? deleteType)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string volumeName, ElasticSanDeleteSnapshotsUnderVolume? deleteSnapshots, ElasticSanForceDeleteVolume? forceDelete, ElasticSanDeleteType? deleteType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/>, <paramref name="volumeGroupName"/> or <paramref name="volumeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/>, <paramref name="volumeGroupName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string volumeName, DeleteSnapshotsUnderVolume? deleteSnapshots = null, ForceDeleteVolume? forceDelete = null, ElasticSanDeleteType? deleteType = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string volumeName, ElasticSanDeleteSnapshotsUnderVolume? deleteSnapshots = null, ElasticSanForceDeleteVolume? forceDelete = null, ElasticSanDeleteType? deleteType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/>, <paramref name="volumeGroupName"/> or <paramref name="volumeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/>, <paramref name="volumeGroupName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string volumeName, DeleteSnapshotsUnderVolume? deleteSnapshots = null, ForceDeleteVolume? forceDelete = null, ElasticSanDeleteType? deleteType = null, CancellationToken cancellationToken = default)
+        public Response Delete(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string volumeName, ElasticSanDeleteSnapshotsUnderVolume? deleteSnapshots = null, ElasticSanForceDeleteVolume? forceDelete = null, ElasticSanDeleteType? deleteType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.ElasticSan
             }
         }
 
-        internal RequestUriBuilder CreateListByVolumeGroupRequestUri(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, AccessSoftDeletedVolume? accessSoftDeletedResources)
+        internal RequestUriBuilder CreateListByVolumeGroupRequestUri(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.ElasticSan
             return uri;
         }
 
-        internal HttpMessage CreateListByVolumeGroupRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, AccessSoftDeletedVolume? accessSoftDeletedResources)
+        internal HttpMessage CreateListByVolumeGroupRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/> or <paramref name="volumeGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/> or <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ElasticSanVolumeList>> ListByVolumeGroupAsync(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, AccessSoftDeletedVolume? accessSoftDeletedResources = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ElasticSanVolumeList>> ListByVolumeGroupAsync(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/> or <paramref name="volumeGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/> or <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ElasticSanVolumeList> ListByVolumeGroup(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, AccessSoftDeletedVolume? accessSoftDeletedResources = null, CancellationToken cancellationToken = default)
+        public Response<ElasticSanVolumeList> ListByVolumeGroup(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.ElasticSan
             }
         }
 
-        internal RequestUriBuilder CreatePreBackupRequestUri(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, VolumeNameListContent content)
+        internal RequestUriBuilder CreatePreBackupRequestUri(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, ElasticSanVolumeNameListContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.ElasticSan
             return uri;
         }
 
-        internal HttpMessage CreatePreBackupRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, VolumeNameListContent content)
+        internal HttpMessage CreatePreBackupRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, ElasticSanVolumeNameListContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/>, <paramref name="volumeGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/> or <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> PreBackupAsync(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, VolumeNameListContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> PreBackupAsync(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, ElasticSanVolumeNameListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/>, <paramref name="volumeGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/> or <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response PreBackup(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, VolumeNameListContent content, CancellationToken cancellationToken = default)
+        public Response PreBackup(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, ElasticSanVolumeNameListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.ElasticSan
             }
         }
 
-        internal RequestUriBuilder CreateListByVolumeGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, AccessSoftDeletedVolume? accessSoftDeletedResources)
+        internal RequestUriBuilder CreateListByVolumeGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -808,7 +808,7 @@ namespace Azure.ResourceManager.ElasticSan
             return uri;
         }
 
-        internal HttpMessage CreateListByVolumeGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, AccessSoftDeletedVolume? accessSoftDeletedResources)
+        internal HttpMessage CreateListByVolumeGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/> or <paramref name="volumeGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/> or <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ElasticSanVolumeList>> ListByVolumeGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, AccessSoftDeletedVolume? accessSoftDeletedResources = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ElasticSanVolumeList>> ListByVolumeGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -870,7 +870,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/> or <paramref name="volumeGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="elasticSanName"/> or <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ElasticSanVolumeList> ListByVolumeGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, AccessSoftDeletedVolume? accessSoftDeletedResources = null, CancellationToken cancellationToken = default)
+        public Response<ElasticSanVolumeList> ListByVolumeGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

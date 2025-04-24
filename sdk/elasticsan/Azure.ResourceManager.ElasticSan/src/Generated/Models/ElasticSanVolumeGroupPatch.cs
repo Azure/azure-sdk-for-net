@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="enforceDataIntegrityCheckForIscsi"> A boolean indicating whether or not Data Integrity Check is enabled. </param>
         /// <param name="deleteRetentionPolicy"> The retention policy for the soft deleted volume group and its associated resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSanVolumeGroupPatch(ManagedServiceIdentity identity, ElasticSanStorageTargetType? protocolType, ElasticSanEncryptionType? encryption, ElasticSanEncryptionProperties encryptionProperties, ElasticSanNetworkRuleSet networkAcls, bool? enforceDataIntegrityCheckForIscsi, DeleteRetentionPolicy deleteRetentionPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticSanVolumeGroupPatch(ManagedServiceIdentity identity, ElasticSanStorageTargetType? protocolType, ElasticSanEncryptionType? encryption, ElasticSanEncryptionProperties encryptionProperties, ElasticSanNetworkRuleSet networkAcls, bool? enforceDataIntegrityCheckForIscsi, ElasticSanDeleteRetentionPolicy deleteRetentionPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identity = identity;
             ProtocolType = protocolType;
@@ -96,6 +96,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> A boolean indicating whether or not Data Integrity Check is enabled. </summary>
         public bool? EnforceDataIntegrityCheckForIscsi { get; set; }
         /// <summary> The retention policy for the soft deleted volume group and its associated resources. </summary>
-        public DeleteRetentionPolicy DeleteRetentionPolicy { get; set; }
+        public ElasticSanDeleteRetentionPolicy DeleteRetentionPolicy { get; set; }
     }
 }

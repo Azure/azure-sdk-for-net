@@ -181,9 +181,9 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 Action = ElasticSanVirtualNetworkRuleAction.Allow,
 }},
                 EnforceDataIntegrityCheckForIscsi = true,
-                DeleteRetentionPolicy = new DeleteRetentionPolicy
+                DeleteRetentionPolicy = new ElasticSanDeleteRetentionPolicy
                 {
-                    PolicyState = DeleteRetentionPolicyState.Enabled,
+                    PolicyState = ElasticSanDeleteRetentionPolicyState.Enabled,
                     RetentionPeriodDays = 14,
                 },
             };
@@ -252,9 +252,9 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
             ElasticSanVolumeGroupResource elasticSanVolumeGroup = client.GetElasticSanVolumeGroupResource(elasticSanVolumeGroupResourceId);
 
             // invoke the operation
-            VolumeNameListContent content = new VolumeNameListContent(new string[] { "volumename" });
-            ArmOperation<PreValidationResult> lro = await elasticSanVolumeGroup.PreBackupVolumeAsync(WaitUntil.Completed, content);
-            PreValidationResult result = lro.Value;
+            ElasticSanVolumeNameListContent content = new ElasticSanVolumeNameListContent(new string[] { "volumename" });
+            ArmOperation<ElasticSanPreValidationResult> lro = await elasticSanVolumeGroup.PreBackupVolumeAsync(WaitUntil.Completed, content);
+            ElasticSanPreValidationResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -282,8 +282,8 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
 
             // invoke the operation
             DiskSnapshotListContent content = new DiskSnapshotListContent(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/{subscriptionid}/resourceGroups/{resourcegroupname}/providers/Microsoft.Compute/snapshots/disksnapshot1") });
-            ArmOperation<PreValidationResult> lro = await elasticSanVolumeGroup.PreRestoreVolumeAsync(WaitUntil.Completed, content);
-            PreValidationResult result = lro.Value;
+            ArmOperation<ElasticSanPreValidationResult> lro = await elasticSanVolumeGroup.PreRestoreVolumeAsync(WaitUntil.Completed, content);
+            ElasticSanPreValidationResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> response object for pre validation api. </summary>
-    public partial class PreValidationResult
+    public partial class ElasticSanPreValidationResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PreValidationResult"/>. </summary>
-        internal PreValidationResult()
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPreValidationResult"/>. </summary>
+        internal ElasticSanPreValidationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PreValidationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPreValidationResult"/>. </summary>
         /// <param name="validationStatus"> a status value indicating success or failure of validation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PreValidationResult(string validationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticSanPreValidationResult(string validationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ValidationStatus = validationStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;

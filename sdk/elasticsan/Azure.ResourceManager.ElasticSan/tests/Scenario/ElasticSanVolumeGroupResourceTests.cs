@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             string volumeGroupSoftDeleteName = Recording.GenerateAssetName("testvolumegroupsd-");
             ElasticSanVolumeGroupData volumeGroupSoftDeleteData = new ElasticSanVolumeGroupData()
             {
-                DeleteRetentionPolicy = new DeleteRetentionPolicy()
+                DeleteRetentionPolicy = new ElasticSanDeleteRetentionPolicy()
                 {
-                    PolicyState = DeleteRetentionPolicyState.Enabled,
+                    PolicyState = ElasticSanDeleteRetentionPolicyState.Enabled,
                     RetentionPeriodDays = 1
                 }
             };
             ElasticSanVolumeGroupResource volumeGroupSoftDelete = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeGroupSoftDeleteName, volumeGroupSoftDeleteData)).Value;
             Assert.AreEqual(volumeGroupSoftDelete.Id.Name, volumeGroupSoftDeleteName);
-            Assert.AreEqual(volumeGroupSoftDelete.Data.DeleteRetentionPolicy.PolicyState, DeleteRetentionPolicyState.Enabled);
+            Assert.AreEqual(volumeGroupSoftDelete.Data.DeleteRetentionPolicy.PolicyState, ElasticSanDeleteRetentionPolicyState.Enabled);
             Assert.AreEqual(volumeGroupSoftDelete.Data.DeleteRetentionPolicy.RetentionPeriodDays, 1);
             await volumeGroupSoftDelete.DeleteAsync(WaitUntil.Completed);
             int count = 0;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             ElasticSanVolumeData data = new ElasticSanVolumeData(100);
             ElasticSanVolumeResource volume1 = (await _volumeCollection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, data)).Value;
 
-            var volumeNameList = new VolumeNameListContent(new string[] { volumeName });
+            var volumeNameList = new ElasticSanVolumeNameListContent(new string[] { volumeName });
             var preBackup = (await volumeGroup.PreBackupVolumeAsync(WaitUntil.Completed, volumeNameList)).Value;
             Assert.AreEqual(preBackup.ValidationStatus, "Success");
 

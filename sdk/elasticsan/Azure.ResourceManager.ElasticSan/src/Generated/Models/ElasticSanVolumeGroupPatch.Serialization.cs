@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             ElasticSanEncryptionProperties encryptionProperties = default;
             ElasticSanNetworkRuleSet networkAcls = default;
             bool? enforceDataIntegrityCheckForIscsi = default;
-            DeleteRetentionPolicy deleteRetentionPolicy = default;
+            ElasticSanDeleteRetentionPolicy deleteRetentionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                             {
                                 continue;
                             }
-                            deleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value, options);
+                            deleteRetentionPolicy = ElasticSanDeleteRetentionPolicy.DeserializeElasticSanDeleteRetentionPolicy(property0.Value, options);
                             continue;
                         }
                     }

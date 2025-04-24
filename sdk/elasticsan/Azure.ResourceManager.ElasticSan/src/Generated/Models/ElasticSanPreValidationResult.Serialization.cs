@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class PreValidationResult : IUtf8JsonSerializable, IJsonModel<PreValidationResult>
+    public partial class ElasticSanPreValidationResult : IUtf8JsonSerializable, IJsonModel<ElasticSanPreValidationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PreValidationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanPreValidationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PreValidationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ElasticSanPreValidationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PreValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanPreValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PreValidationResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanPreValidationResult)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(ValidationStatus))
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
         }
 
-        PreValidationResult IJsonModel<PreValidationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ElasticSanPreValidationResult IJsonModel<ElasticSanPreValidationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PreValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanPreValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PreValidationResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanPreValidationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePreValidationResult(document.RootElement, options);
+            return DeserializeElasticSanPreValidationResult(document.RootElement, options);
         }
 
-        internal static PreValidationResult DeserializePreValidationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ElasticSanPreValidationResult DeserializeElasticSanPreValidationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -92,38 +92,38 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PreValidationResult(validationStatus, serializedAdditionalRawData);
+            return new ElasticSanPreValidationResult(validationStatus, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PreValidationResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ElasticSanPreValidationResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PreValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanPreValidationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PreValidationResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanPreValidationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PreValidationResult IPersistableModel<PreValidationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ElasticSanPreValidationResult IPersistableModel<ElasticSanPreValidationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PreValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanPreValidationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePreValidationResult(document.RootElement, options);
+                        return DeserializeElasticSanPreValidationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PreValidationResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanPreValidationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PreValidationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ElasticSanPreValidationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

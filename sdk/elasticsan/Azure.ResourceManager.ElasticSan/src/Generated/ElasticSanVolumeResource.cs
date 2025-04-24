@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="forceDelete"> Optional, used to delete volume if active sessions present. Allowed value are only true or false. Default value is false. </param>
         /// <param name="deleteType"> Optional. Specifies that the delete operation should be a permanent delete for the soft deleted volume. The value of deleteType can only be 'permanent'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, DeleteSnapshotsUnderVolume? deleteSnapshots = null, ForceDeleteVolume? forceDelete = null, ElasticSanDeleteType? deleteType = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ElasticSanDeleteSnapshotsUnderVolume? deleteSnapshots = null, ElasticSanForceDeleteVolume? forceDelete = null, ElasticSanDeleteType? deleteType = null, CancellationToken cancellationToken = default)
         {
             using var scope = _elasticSanVolumeVolumesClientDiagnostics.CreateScope("ElasticSanVolumeResource.Delete");
             scope.Start();
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="forceDelete"> Optional, used to delete volume if active sessions present. Allowed value are only true or false. Default value is false. </param>
         /// <param name="deleteType"> Optional. Specifies that the delete operation should be a permanent delete for the soft deleted volume. The value of deleteType can only be 'permanent'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, DeleteSnapshotsUnderVolume? deleteSnapshots = null, ForceDeleteVolume? forceDelete = null, ElasticSanDeleteType? deleteType = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, ElasticSanDeleteSnapshotsUnderVolume? deleteSnapshots = null, ElasticSanForceDeleteVolume? forceDelete = null, ElasticSanDeleteType? deleteType = null, CancellationToken cancellationToken = default)
         {
             using var scope = _elasticSanVolumeVolumesClientDiagnostics.CreateScope("ElasticSanVolumeResource.Delete");
             scope.Start();

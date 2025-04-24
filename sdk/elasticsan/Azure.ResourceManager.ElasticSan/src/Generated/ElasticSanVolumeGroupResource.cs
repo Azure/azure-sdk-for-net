@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="content"> Volume Name List (currently only one volume name in the list is supported. Server would return error if list is bigger). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<PreValidationResult>> PreBackupVolumeAsync(WaitUntil waitUntil, VolumeNameListContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ElasticSanPreValidationResult>> PreBackupVolumeAsync(WaitUntil waitUntil, ElasticSanVolumeNameListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.ElasticSan
             try
             {
                 var response = await _elasticSanVolumeVolumesRestClient.PreBackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticSanArmOperation<PreValidationResult>(new PreValidationResultOperationSource(), _elasticSanVolumeVolumesClientDiagnostics, Pipeline, _elasticSanVolumeVolumesRestClient.CreatePreBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ElasticSanArmOperation<ElasticSanPreValidationResult>(new ElasticSanPreValidationResultOperationSource(), _elasticSanVolumeVolumesClientDiagnostics, Pipeline, _elasticSanVolumeVolumesRestClient.CreatePreBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="content"> Volume Name List (currently only one volume name in the list is supported. Server would return error if list is bigger). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<PreValidationResult> PreBackupVolume(WaitUntil waitUntil, VolumeNameListContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ElasticSanPreValidationResult> PreBackupVolume(WaitUntil waitUntil, ElasticSanVolumeNameListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.ElasticSan
             try
             {
                 var response = _elasticSanVolumeVolumesRestClient.PreBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new ElasticSanArmOperation<PreValidationResult>(new PreValidationResultOperationSource(), _elasticSanVolumeVolumesClientDiagnostics, Pipeline, _elasticSanVolumeVolumesRestClient.CreatePreBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ElasticSanArmOperation<ElasticSanPreValidationResult>(new ElasticSanPreValidationResultOperationSource(), _elasticSanVolumeVolumesClientDiagnostics, Pipeline, _elasticSanVolumeVolumesRestClient.CreatePreBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="content"> Disk Snapshot List (currently only one Disk Snapshot in the list is supported and that the Disk Snapshot must be in same azure region as the ElasticSan. Server would return error if list is bigger). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<PreValidationResult>> PreRestoreVolumeAsync(WaitUntil waitUntil, DiskSnapshotListContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ElasticSanPreValidationResult>> PreRestoreVolumeAsync(WaitUntil waitUntil, DiskSnapshotListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.ElasticSan
             try
             {
                 var response = await _elasticSanVolumeVolumesRestClient.PreRestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticSanArmOperation<PreValidationResult>(new PreValidationResultOperationSource(), _elasticSanVolumeVolumesClientDiagnostics, Pipeline, _elasticSanVolumeVolumesRestClient.CreatePreRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ElasticSanArmOperation<ElasticSanPreValidationResult>(new ElasticSanPreValidationResultOperationSource(), _elasticSanVolumeVolumesClientDiagnostics, Pipeline, _elasticSanVolumeVolumesRestClient.CreatePreRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="content"> Disk Snapshot List (currently only one Disk Snapshot in the list is supported and that the Disk Snapshot must be in same azure region as the ElasticSan. Server would return error if list is bigger). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<PreValidationResult> PreRestoreVolume(WaitUntil waitUntil, DiskSnapshotListContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ElasticSanPreValidationResult> PreRestoreVolume(WaitUntil waitUntil, DiskSnapshotListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.ElasticSan
             try
             {
                 var response = _elasticSanVolumeVolumesRestClient.PreRestore(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new ElasticSanArmOperation<PreValidationResult>(new PreValidationResultOperationSource(), _elasticSanVolumeVolumesClientDiagnostics, Pipeline, _elasticSanVolumeVolumesRestClient.CreatePreRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ElasticSanArmOperation<ElasticSanPreValidationResult>(new ElasticSanPreValidationResultOperationSource(), _elasticSanVolumeVolumesClientDiagnostics, Pipeline, _elasticSanVolumeVolumesRestClient.CreatePreRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

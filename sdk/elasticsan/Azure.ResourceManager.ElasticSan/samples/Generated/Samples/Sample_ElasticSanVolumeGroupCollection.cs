@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 Action = ElasticSanVirtualNetworkRuleAction.Allow,
 }},
                 EnforceDataIntegrityCheckForIscsi = true,
-                DeleteRetentionPolicy = new DeleteRetentionPolicy
+                DeleteRetentionPolicy = new ElasticSanDeleteRetentionPolicy
                 {
-                    PolicyState = DeleteRetentionPolicyState.Enabled,
+                    PolicyState = ElasticSanDeleteRetentionPolicyState.Enabled,
                     RetentionPeriodDays = 14,
                 },
             };
@@ -212,7 +212,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
             ElasticSanVolumeGroupCollection collection = elasticSan.GetElasticSanVolumeGroups();
 
             // invoke the operation and iterate over the result
-            AccessSoftDeletedVolume? accessSoftDeletedResources = AccessSoftDeletedVolume.True;
+            ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources = ElasticSanAccessSoftDeletedVolume.True;
             await foreach (ElasticSanVolumeGroupResource item in collection.GetAllAsync(accessSoftDeletedResources: accessSoftDeletedResources))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
@@ -249,7 +249,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
             ElasticSanVolumeGroupCollection collection = elasticSan.GetElasticSanVolumeGroups();
 
             // invoke the operation and iterate over the result
-            AccessSoftDeletedVolume? accessSoftDeletedResources = AccessSoftDeletedVolume.True;
+            ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources = ElasticSanAccessSoftDeletedVolume.True;
             await foreach (ElasticSanVolumeGroupResource item in collection.GetAllAsync(accessSoftDeletedResources: accessSoftDeletedResources))
             {
                 // the variable item is a resource, you could call other operations on this instance as well

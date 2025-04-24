@@ -78,6 +78,7 @@ prepend-rp-prefix:
   - EncryptionIdentity
   - NetworkRuleSet
   - ScaleUpProperties
+  - DeleteRetentionPolicy
 
 rename-mapping:
   Volume.properties.volumeId: -|uuid
@@ -91,12 +92,12 @@ rename-mapping:
   SourceCreationData: ElasticSanVolumeDataSourceInfo
   SnapshotCreationData: SnapshotCreationInfo
   DiskSnapshotList: DiskSnapshotListContent
-  PolicyState: DeleteRetentionPolicyState
-  PreValidationResponse: PreValidationResult
-  VolumeNameList: VolumeNameListContent
-  XMsDeleteSnapshots: DeleteSnapshotsUnderVolume
-  XMsAccessSoftDeletedResources: AccessSoftDeletedVolume
-  XMsForceDelete: ForceDeleteVolume
+  PolicyState: ElasticSanDeleteRetentionPolicyState
+  PreValidationResponse: ElasticSanPreValidationResult
+  VolumeNameList: ElasticSanVolumeNameListContent
+  XMsDeleteSnapshots: ElasticSanDeleteSnapshotsUnderVolume
+  XMsAccessSoftDeletedResources: ElasticSanAccessSoftDeletedVolume
+  XMsForceDelete: ElasticSanForceDeleteVolume
 
 directive:
 - from: elasticsan.json

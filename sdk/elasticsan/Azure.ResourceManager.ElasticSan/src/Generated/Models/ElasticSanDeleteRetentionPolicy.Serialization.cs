@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class DeleteRetentionPolicy : IUtf8JsonSerializable, IJsonModel<DeleteRetentionPolicy>
+    public partial class ElasticSanDeleteRetentionPolicy : IUtf8JsonSerializable, IJsonModel<ElasticSanDeleteRetentionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeleteRetentionPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanDeleteRetentionPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DeleteRetentionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ElasticSanDeleteRetentionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeleteRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanDeleteRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeleteRetentionPolicy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanDeleteRetentionPolicy)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(PolicyState))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
         }
 
-        DeleteRetentionPolicy IJsonModel<DeleteRetentionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ElasticSanDeleteRetentionPolicy IJsonModel<ElasticSanDeleteRetentionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeleteRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanDeleteRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeleteRetentionPolicy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanDeleteRetentionPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeleteRetentionPolicy(document.RootElement, options);
+            return DeserializeElasticSanDeleteRetentionPolicy(document.RootElement, options);
         }
 
-        internal static DeleteRetentionPolicy DeserializeDeleteRetentionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ElasticSanDeleteRetentionPolicy DeserializeElasticSanDeleteRetentionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            DeleteRetentionPolicyState? policyState = default;
+            ElasticSanDeleteRetentionPolicyState? policyState = default;
             int? retentionPeriodDays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     {
                         continue;
                     }
-                    policyState = new DeleteRetentionPolicyState(property.Value.GetString());
+                    policyState = new ElasticSanDeleteRetentionPolicyState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("retentionPeriodDays"u8))
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DeleteRetentionPolicy(policyState, retentionPeriodDays, serializedAdditionalRawData);
+            return new ElasticSanDeleteRetentionPolicy(policyState, retentionPeriodDays, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DeleteRetentionPolicy>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ElasticSanDeleteRetentionPolicy>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeleteRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanDeleteRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeleteRetentionPolicy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanDeleteRetentionPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DeleteRetentionPolicy IPersistableModel<DeleteRetentionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ElasticSanDeleteRetentionPolicy IPersistableModel<ElasticSanDeleteRetentionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeleteRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanDeleteRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDeleteRetentionPolicy(document.RootElement, options);
+                        return DeserializeElasticSanDeleteRetentionPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeleteRetentionPolicy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanDeleteRetentionPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DeleteRetentionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ElasticSanDeleteRetentionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

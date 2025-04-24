@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class VolumeNameListContent : IUtf8JsonSerializable, IJsonModel<VolumeNameListContent>
+    public partial class ElasticSanVolumeNameListContent : IUtf8JsonSerializable, IJsonModel<ElasticSanVolumeNameListContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VolumeNameListContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanVolumeNameListContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<VolumeNameListContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ElasticSanVolumeNameListContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VolumeNameListContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVolumeNameListContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VolumeNameListContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanVolumeNameListContent)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("volumeNames"u8);
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
         }
 
-        VolumeNameListContent IJsonModel<VolumeNameListContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ElasticSanVolumeNameListContent IJsonModel<ElasticSanVolumeNameListContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VolumeNameListContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVolumeNameListContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VolumeNameListContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanVolumeNameListContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVolumeNameListContent(document.RootElement, options);
+            return DeserializeElasticSanVolumeNameListContent(document.RootElement, options);
         }
 
-        internal static VolumeNameListContent DeserializeVolumeNameListContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ElasticSanVolumeNameListContent DeserializeElasticSanVolumeNameListContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -99,38 +99,38 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VolumeNameListContent(volumeNames, serializedAdditionalRawData);
+            return new ElasticSanVolumeNameListContent(volumeNames, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<VolumeNameListContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ElasticSanVolumeNameListContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VolumeNameListContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVolumeNameListContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VolumeNameListContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanVolumeNameListContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        VolumeNameListContent IPersistableModel<VolumeNameListContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ElasticSanVolumeNameListContent IPersistableModel<ElasticSanVolumeNameListContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VolumeNameListContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVolumeNameListContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVolumeNameListContent(document.RootElement, options);
+                        return DeserializeElasticSanVolumeNameListContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VolumeNameListContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanVolumeNameListContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<VolumeNameListContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ElasticSanVolumeNameListContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

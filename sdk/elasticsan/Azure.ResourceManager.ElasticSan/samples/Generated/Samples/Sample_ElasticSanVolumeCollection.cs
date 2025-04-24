@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             ElasticSanVolumeCollection collection = elasticSanVolumeGroup.GetElasticSanVolumes();
 
             // invoke the operation and iterate over the result
-            AccessSoftDeletedVolume? accessSoftDeletedResources = AccessSoftDeletedVolume.True;
+            ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources = ElasticSanAccessSoftDeletedVolume.True;
             await foreach (ElasticSanVolumeResource item in collection.GetAllAsync(accessSoftDeletedResources: accessSoftDeletedResources))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             ElasticSanVolumeCollection collection = elasticSanVolumeGroup.GetElasticSanVolumes();
 
             // invoke the operation and iterate over the result
-            AccessSoftDeletedVolume? accessSoftDeletedResources = AccessSoftDeletedVolume.True;
+            ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources = ElasticSanAccessSoftDeletedVolume.True;
             await foreach (ElasticSanVolumeResource item in collection.GetAllAsync(accessSoftDeletedResources: accessSoftDeletedResources))
             {
                 // the variable item is a resource, you could call other operations on this instance as well

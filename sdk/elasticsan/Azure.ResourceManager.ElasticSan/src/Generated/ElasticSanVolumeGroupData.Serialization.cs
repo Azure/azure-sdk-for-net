@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ElasticSan
             ElasticSanNetworkRuleSet networkAcls = default;
             IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = default;
             bool? enforceDataIntegrityCheckForIscsi = default;
-            DeleteRetentionPolicy deleteRetentionPolicy = default;
+            ElasticSanDeleteRetentionPolicy deleteRetentionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            deleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value, options);
+                            deleteRetentionPolicy = ElasticSanDeleteRetentionPolicy.DeserializeElasticSanDeleteRetentionPolicy(property0.Value, options);
                             continue;
                         }
                     }
