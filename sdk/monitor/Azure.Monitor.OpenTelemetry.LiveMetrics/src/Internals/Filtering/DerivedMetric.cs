@@ -202,8 +202,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                             fieldExpression = Expression.Call(parseMethod!, fieldExpression);
                         }
 
-                        var totalMillisecondsProperty = typeof(TimeSpan).GetProperty("TotalMilliseconds");
-                        fieldExpression = Expression.Property(fieldExpression, totalMillisecondsProperty!);
+                        var totalMillisecondsProperty = typeof(TimeSpan).GetProperty(nameof(TimeSpan.TotalMilliseconds))!;
+                        fieldExpression = Expression.Property(fieldExpression, totalMillisecondsProperty);
                     }
                 }
 
