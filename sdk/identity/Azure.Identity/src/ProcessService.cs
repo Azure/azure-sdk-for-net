@@ -61,7 +61,6 @@ namespace Azure.Identity
             public void BeginOutputReadLine() => _process.BeginOutputReadLine();
             public void BeginErrorReadLine() => _process.BeginErrorReadLine();
             public void Dispose() => _process.Dispose();
-            public void CloseStandardInput() => _process.StandardInput.Close();
         }
     }
 }
