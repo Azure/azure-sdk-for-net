@@ -288,6 +288,9 @@ namespace Azure.Core
         {
             public ValueTask<OperationState<T>> UpdateStateAsync(bool async, CancellationToken cancellationToken)
                 => throw new NotSupportedException("The operation has already completed");
+
+            // Unreachable path. _operation.GetRehydrationToken() is never invoked.
+            public RehydrationToken? GetRehydrationToken() => null;
         }
     }
 
@@ -328,6 +331,11 @@ namespace Azure.Core
         /// </list>
         /// </returns>
         ValueTask<OperationState<T>> UpdateStateAsync(bool async, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Get a token that can be used to rehydrate the operation.
+        /// </summary>
+        RehydrationToken? GetRehydrationToken();
     }
 
     /// <summary>
