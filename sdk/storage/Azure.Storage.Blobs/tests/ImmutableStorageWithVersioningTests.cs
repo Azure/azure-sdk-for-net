@@ -18,6 +18,7 @@ using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
@@ -476,6 +477,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        [RetryOnException(5, typeof(RequestFailedException))]
         public async Task SetImmutibilityPolicyAsync_IfModifiedSince_Failed()
         {
             // Arrange
