@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Scale up properties on Elastic San Appliance. </summary>
-    public partial class ScaleUpProperties
+    public partial class ElasticSanScaleUpProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,18 +45,18 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ScaleUpProperties"/>. </summary>
-        public ScaleUpProperties()
+        /// <summary> Initializes a new instance of <see cref="ElasticSanScaleUpProperties"/>. </summary>
+        public ElasticSanScaleUpProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScaleUpProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanScaleUpProperties"/>. </summary>
         /// <param name="unusedSizeTiB"> Unused size on Elastic San appliance in TiB. </param>
         /// <param name="increaseCapacityUnitByTiB"> Unit to increase Capacity Unit on Elastic San appliance in TiB. </param>
         /// <param name="capacityUnitScaleUpLimitTiB"> Maximum scale up size on Elastic San appliance in TiB. </param>
         /// <param name="autoScalePolicyEnforcement"> Enable or Disable scale up setting on Elastic San Appliance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScaleUpProperties(long? unusedSizeTiB, long? increaseCapacityUnitByTiB, long? capacityUnitScaleUpLimitTiB, AutoScalePolicyEnforcement? autoScalePolicyEnforcement, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticSanScaleUpProperties(long? unusedSizeTiB, long? increaseCapacityUnitByTiB, long? capacityUnitScaleUpLimitTiB, AutoScalePolicyEnforcement? autoScalePolicyEnforcement, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UnusedSizeTiB = unusedSizeTiB;
             IncreaseCapacityUnitByTiB = increaseCapacityUnitByTiB;

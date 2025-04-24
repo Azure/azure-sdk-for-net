@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    internal partial class NetworkRuleSet : IUtf8JsonSerializable, IJsonModel<NetworkRuleSet>
+    internal partial class ElasticSanNetworkRuleSet : IUtf8JsonSerializable, IJsonModel<ElasticSanNetworkRuleSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkRuleSet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanNetworkRuleSet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NetworkRuleSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ElasticSanNetworkRuleSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkRuleSet)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanNetworkRuleSet)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(VirtualNetworkRules))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
         }
 
-        NetworkRuleSet IJsonModel<NetworkRuleSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ElasticSanNetworkRuleSet IJsonModel<ElasticSanNetworkRuleSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkRuleSet)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanNetworkRuleSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetworkRuleSet(document.RootElement, options);
+            return DeserializeElasticSanNetworkRuleSet(document.RootElement, options);
         }
 
-        internal static NetworkRuleSet DeserializeNetworkRuleSet(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ElasticSanNetworkRuleSet DeserializeElasticSanNetworkRuleSet(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -106,38 +106,38 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkRuleSet(virtualNetworkRules ?? new ChangeTrackingList<ElasticSanVirtualNetworkRule>(), serializedAdditionalRawData);
+            return new ElasticSanNetworkRuleSet(virtualNetworkRules ?? new ChangeTrackingList<ElasticSanVirtualNetworkRule>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NetworkRuleSet>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ElasticSanNetworkRuleSet>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkRuleSet)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanNetworkRuleSet)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NetworkRuleSet IPersistableModel<NetworkRuleSet>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ElasticSanNetworkRuleSet IPersistableModel<ElasticSanNetworkRuleSet>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetworkRuleSet(document.RootElement, options);
+                        return DeserializeElasticSanNetworkRuleSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkRuleSet)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanNetworkRuleSet)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NetworkRuleSet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ElasticSanNetworkRuleSet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    /// <summary> Encryption identity for the volume group. </summary>
-    internal partial class EncryptionIdentity
+    /// <summary> response object for pre validation api. </summary>
+    public partial class ElasticSanPreValidationResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,21 +45,21 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="EncryptionIdentity"/>. </summary>
-        public EncryptionIdentity()
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPreValidationResult"/>. </summary>
+        internal ElasticSanPreValidationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EncryptionIdentity"/>. </summary>
-        /// <param name="encryptionUserAssignedIdentity"> Resource identifier of the UserAssigned identity to be associated with server-side encryption on the volume group. </param>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPreValidationResult"/>. </summary>
+        /// <param name="validationStatus"> a status value indicating success or failure of validation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionIdentity(ResourceIdentifier encryptionUserAssignedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticSanPreValidationResult(string validationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            EncryptionUserAssignedIdentity = encryptionUserAssignedIdentity;
+            ValidationStatus = validationStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource identifier of the UserAssigned identity to be associated with server-side encryption on the volume group. </summary>
-        public ResourceIdentifier EncryptionUserAssignedIdentity { get; set; }
+        /// <summary> a status value indicating success or failure of validation. </summary>
+        public string ValidationStatus { get; }
     }
 }

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    internal partial class EncryptionIdentity : IUtf8JsonSerializable, IJsonModel<EncryptionIdentity>
+    internal partial class ElasticSanEncryptionIdentity : IUtf8JsonSerializable, IJsonModel<ElasticSanEncryptionIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EncryptionIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanEncryptionIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EncryptionIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ElasticSanEncryptionIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanEncryptionIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionIdentity)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanEncryptionIdentity)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(EncryptionUserAssignedIdentity))
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
         }
 
-        EncryptionIdentity IJsonModel<EncryptionIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ElasticSanEncryptionIdentity IJsonModel<ElasticSanEncryptionIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanEncryptionIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionIdentity)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanEncryptionIdentity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEncryptionIdentity(document.RootElement, options);
+            return DeserializeElasticSanEncryptionIdentity(document.RootElement, options);
         }
 
-        internal static EncryptionIdentity DeserializeEncryptionIdentity(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ElasticSanEncryptionIdentity DeserializeElasticSanEncryptionIdentity(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -96,38 +96,38 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EncryptionIdentity(userAssignedIdentity, serializedAdditionalRawData);
+            return new ElasticSanEncryptionIdentity(userAssignedIdentity, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<EncryptionIdentity>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ElasticSanEncryptionIdentity>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanEncryptionIdentity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionIdentity)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanEncryptionIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EncryptionIdentity IPersistableModel<EncryptionIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ElasticSanEncryptionIdentity IPersistableModel<ElasticSanEncryptionIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanEncryptionIdentity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEncryptionIdentity(document.RootElement, options);
+                        return DeserializeElasticSanEncryptionIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionIdentity)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanEncryptionIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EncryptionIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ElasticSanEncryptionIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
