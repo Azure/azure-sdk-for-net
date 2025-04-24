@@ -28,9 +28,7 @@ namespace Azure.Identity
 
         public ProcessRunner(IProcess process, TimeSpan timeout, bool logPII, CancellationToken cancellationToken)
             : this(process, timeout, logPII, false, cancellationToken)
-        {
-            // This constructor delegates to the main one with default redirectStandardInput = false
-        }
+        { }
 
         public ProcessRunner(IProcess process, TimeSpan timeout, bool logPII, bool redirectStandardInput, CancellationToken cancellationToken)
         {
@@ -110,7 +108,6 @@ namespace Azure.Identity
                 }
                 catch (Exception ex)
                 {
-                    // Log and continue: it's not critical if closing fails
                     if (_logPII)
                     {
                         AzureIdentityEventSource.Singleton.ProcessRunnerError($"Failed to close StandardInput: {ex}");
