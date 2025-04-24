@@ -1,6 +1,6 @@
 # Microsoft Azure Durable Task Scheduler management client library for .NET
 
-**Durable Task Scheduler is a high performance managed storage backend for Durable Functions and the Durable Task Framework.**
+The Durable Task Scheduler is a fully managed backend for Azure Durable Functions that enhances performance, reliability, and ease of monitoring of stateful orchestrations.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
