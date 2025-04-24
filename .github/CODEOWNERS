@@ -1109,6 +1109,12 @@
 # ServiceLabel: %%Migration Assessment %Mgmt
 # ServiceOwners:                                                   @srilipta-swain
 
+# PRLabel: %Weights & Biases
+/sdk/weightsandbiases/Azure.ResourceManager.*/                     @aggarwalsw
+
+# ServiceLabel: %Weights & Biases %Mgmt
+# ServiceOwners:                                                   @aggarwalsw
+
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
 /eng/common/                                                       @Azure/azure-sdk-eng
