@@ -1,4 +1,4 @@
-# Sample22: Deployments
+# Sample2: Using Deployments in Azure.AI.Projects.OneDP
 
 This sample demonstrates how to use the synchronous and asynchronous `.deployments` methods to enumerate AI models deployed to your AI Foundry Project.
 
@@ -12,8 +12,7 @@ This sample demonstrates how to use the synchronous and asynchronous `.deploymen
 
 ## Synchronous Sample
 
-```csharp
-#region Snippet:DeploymentExampleSync
+```csharp Snippet:DeploymentExampleSync
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var deploymentName = Environment.GetEnvironmentVariable("DEPLOYMENT_NAME");
 var modelPublisher = Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
@@ -36,13 +35,11 @@ foreach (var deployment in projectClient.Deployments.List(modelPublisher: modelP
 Console.WriteLine($"Get a single deployment named `{deploymentName}`:");
 var deploymentDetails = projectClient.Deployments.Get(deploymentName);
 Console.WriteLine(deploymentDetails);
-#endregion
 ```
 
 ## Asynchronous Sample
 
-```csharp
-#region Snippet:DeploymentExampleAsync
+```csharp Snippet:DeploymentExampleAsync
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var deploymentName = Environment.GetEnvironmentVariable("DEPLOYMENT_NAME");
 var modelPublisher = Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
@@ -65,5 +62,4 @@ await foreach (var deployment in projectClient.Deployments.ListAsync(modelPublis
 Console.WriteLine($"Get a single deployment named `{deploymentName}`:");
 var deploymentDetails = await projectClient.Deployments.GetAsync(deploymentName);
 Console.WriteLine(deploymentDetails);
-#endregion
 ```
