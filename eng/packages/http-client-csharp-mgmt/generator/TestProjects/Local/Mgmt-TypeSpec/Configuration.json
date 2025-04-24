@@ -1,6 +1,6 @@
 {
-  "output-folder": ".",
   "package-name": "MgmtTypeSpec",
+  "model-namespace": true,
   "license": {
     "name": "MIT License",
     "company": "Microsoft Corporation",

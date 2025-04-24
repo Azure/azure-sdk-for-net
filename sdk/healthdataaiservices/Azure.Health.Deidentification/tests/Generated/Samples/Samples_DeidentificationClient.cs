@@ -226,7 +226,7 @@ namespace Azure.Health.Deidentification.Samples
 
             DeidentificationContent content = new DeidentificationContent("Hello my name is John Smith.")
             {
-                Operation = DeidentificationOperationType.Redact,
+                OperationType = DeidentificationOperationType.Redact,
                 Customizations = new DeidentificationCustomizationOptions
                 {
                     RedactionFormat = "[{type}]",
@@ -245,7 +245,7 @@ namespace Azure.Health.Deidentification.Samples
 
             DeidentificationContent content = new DeidentificationContent("Hello my name is John Smith.")
             {
-                Operation = DeidentificationOperationType.Redact,
+                OperationType = DeidentificationOperationType.Redact,
                 Customizations = new DeidentificationCustomizationOptions
                 {
                     RedactionFormat = "[{type}]",
@@ -349,7 +349,7 @@ namespace Azure.Health.Deidentification.Samples
                 Overwrite = true,
             })
             {
-                Operation = DeidentificationOperationType.Redact,
+                OperationType = DeidentificationOperationType.Redact,
                 Customizations = new DeidentificationJobCustomizationOptions
                 {
                     RedactionFormat = "[{type}]",
@@ -372,7 +372,7 @@ namespace Azure.Health.Deidentification.Samples
                 Overwrite = true,
             })
             {
-                Operation = DeidentificationOperationType.Redact,
+                OperationType = DeidentificationOperationType.Redact,
                 Customizations = new DeidentificationJobCustomizationOptions
                 {
                     RedactionFormat = "[{type}]",
