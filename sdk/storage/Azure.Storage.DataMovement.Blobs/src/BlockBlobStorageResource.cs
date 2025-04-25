@@ -200,8 +200,17 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
+            // For empty blobs, just use Put Blob
+            if (completeLength == 0)
+            {
+                await BlobClient.UploadAsync(
+                    Stream.Null,
+                    DataMovementBlobsExtensions.GetBlobUploadOptionsForCopy(_options, overwrite, options?.SourceProperties),
+                    cancellationToken).ConfigureAwait(false);
+                return;
+            }
+
             // We use SyncUploadFromUri over SyncCopyUploadFromUri in this case because it accepts any blob type as the source.
-            // TODO: subject to change as we scale to support resource types outside of blobs.
             await BlobClient.SyncUploadFromUriAsync(
                 sourceResource.Uri,
                 DataMovementBlobsExtensions.GetSyncUploadFromUriOptions(

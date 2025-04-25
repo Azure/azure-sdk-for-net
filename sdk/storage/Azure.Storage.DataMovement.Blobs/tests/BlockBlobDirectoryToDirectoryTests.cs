@@ -4,13 +4,18 @@
 extern alias DMBlobs;
 extern alias BaseBlobs;
 
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.Storage.DataMovement.Tests;
 using BaseBlobs::Azure.Storage.Blobs;
 using BaseBlobs::Azure.Storage.Blobs.Models;
 using BaseBlobs::Azure.Storage.Blobs.Specialized;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
+using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -78,5 +83,84 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
         protected internal override BlockBlobClient GetSourceBlob(BlobContainerClient containerClient, string blobName)
             => containerClient.GetBlockBlobClient(blobName);
+
+        private async Task PopulateVirtualDirectoryContainer(
+            BlobContainerClient containerClient,
+            long objectLength)
+        {
+            byte[] data = GetRandomBuffer(objectLength);
+            Metadata folderMetadata = new Dictionary<string, string>()
+            {
+                { "hdi_isfolder", "true" }
+            };
+
+            // List of files to create, directories will be created automatically
+            string[] files = [
+                "rootFile0",
+                "rootFile1",
+                "rootFile2",
+                "nonEmptyDir/file0",
+                "nonEmptyDir/file1",
+                "nonEmptyDir/file2",
+                "recursiveDir/file0",
+                "recursiveDir/file1",
+                "recursiveDir/nonEmptySubDir/file0",
+                "recursiveDir/nonEmptySubDir/file1"
+            ];
+            foreach (string file in files)
+            {
+                using MemoryStream stream = new(data);
+                BlobClient blobClient = containerClient.GetBlobClient(file);
+                await blobClient.UploadAsync(stream);
+            }
+
+            // List of empty directories to be created
+            string[] emptyDirs = ["emptyDir", "recursiveDir/emptyDir"];
+            foreach (string dir in emptyDirs)
+            {
+                BlobClient blobClient = containerClient.GetBlobClient(dir);
+                await blobClient.UploadAsync(Stream.Null, new BlobUploadOptions()
+                {
+                    Metadata = folderMetadata
+                });
+            }
+        }
+
+        [RecordedTest]
+        public async Task DirectoryCopyWithVirtualDirectories()
+        {
+            BlobServiceClient serviceClient = SourceClientBuilder.GetServiceClientFromOauthConfig(
+                Tenants.TestConfigHierarchicalNamespace,
+                TestEnvironment.Credential);
+
+            await using DisposingBlobContainer sourceContainer = await SourceClientBuilder.GetTestContainerAsync(serviceClient);
+            await using DisposingBlobContainer destinationContainer = await DestinationClientBuilder.GetTestContainerAsync(serviceClient);
+
+            await PopulateVirtualDirectoryContainer(sourceContainer.Container, 1024);
+
+            TransferManager transferManager = new();
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
+
+            TransferOptions transferOptions = new()
+            {
+                CreationMode = StorageResourceCreationMode.OverwriteIfExists,
+            };
+            TestEventsRaised testEventsRaised = new(transferOptions);
+
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                await blobProvider.FromContainerAsync(sourceContainer.Container.Uri),
+                await blobProvider.FromContainerAsync(destinationContainer.Container.Uri),
+                transferOptions);
+
+            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                tokenSource.Token);
+
+            testEventsRaised.AssertUnexpectedFailureCheck();
+
+            // TODO: Validation, work without overwrite
+        }
     }
 }
