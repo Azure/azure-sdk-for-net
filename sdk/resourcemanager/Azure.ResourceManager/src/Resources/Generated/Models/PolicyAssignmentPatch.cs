@@ -56,7 +56,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Initializes a new instance of <see cref="PolicyAssignmentPatch"/>. </summary>
         /// <param name="location"> The location of the policy assignment. Only required when utilizing managed identity. </param>
-        /// <param name="identity"> The managed identity associated with the policy assignment. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="identity">
+        /// The managed identity associated with the policy assignment.
+        /// Current supported identity types: None, SystemAssigned, UserAssigned
+        /// </param>
         /// <param name="resourceSelectors"> The resource selector list to filter policies by resource properties. </param>
         /// <param name="overrides"> The policy property value override. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -72,7 +75,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The location of the policy assignment. Only required when utilizing managed identity. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; set; }
-        /// <summary> The managed identity associated with the policy assignment. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        /// <summary>
+        /// The managed identity associated with the policy assignment.
+        /// Current supported identity types: None, SystemAssigned, UserAssigned
+        /// </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The resource selector list to filter policies by resource properties. </summary>

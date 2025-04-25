@@ -23,7 +23,10 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Managed Identity information. Current supported identity types: SystemAssigned, None. </param>
+        /// <param name="identity">
+        /// Managed Identity information.
+        /// Current supported identity types: SystemAssigned, None
+        /// </param>
         /// <param name="providers"> List of Providers selected for this Workspace. </param>
         /// <param name="usable"> Whether the current workspace is ready to accept Jobs. </param>
         /// <param name="provisioningState"> Provisioning status field. </param>

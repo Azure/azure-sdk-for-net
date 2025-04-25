@@ -23,7 +23,10 @@ namespace Azure.ResourceManager.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The location of the policy assignment. Only required when utilizing managed identity. </param>
-        /// <param name="managedIdentity"> The managed identity associated with the policy assignment. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="managedIdentity">
+        /// The managed identity associated with the policy assignment.
+        /// Current supported identity types: None, SystemAssigned, UserAssigned
+        /// </param>
         /// <param name="displayName"> The display name of the policy assignment. </param>
         /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition being assigned. </param>
         /// <param name="scope"> The scope for the policy assignment. </param>

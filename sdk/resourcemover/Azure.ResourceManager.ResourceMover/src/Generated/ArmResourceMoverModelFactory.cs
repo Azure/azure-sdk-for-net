@@ -24,7 +24,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="etag"> The etag of the resource. </param>
-        /// <param name="identity"> Defines the MSI properties of the Move Collection. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="identity">
+        /// Defines the MSI properties of the Move Collection.
+        /// Current supported identity types: None, SystemAssigned, UserAssigned
+        /// </param>
         /// <param name="properties"> Defines the move collection properties. </param>
         /// <returns> A new <see cref="ResourceMover.MoverResourceSetData"/> instance for mocking. </returns>
         public static MoverResourceSetData MoverResourceSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, ManagedServiceIdentity identity = null, MoverResourceSetProperties properties = null)

@@ -23,7 +23,10 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned, None. </param>
+        /// <param name="identity">
+        /// Identity for the resource.
+        /// Current supported identity types: SystemAssigned, None
+        /// </param>
         /// <param name="distro"> Represents a supported Fabric/Infra. (AKSEdge etc...). </param>
         /// <param name="infrastructureConfigProvider"> Contains infrastructure information about the Appliance. </param>
         /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
