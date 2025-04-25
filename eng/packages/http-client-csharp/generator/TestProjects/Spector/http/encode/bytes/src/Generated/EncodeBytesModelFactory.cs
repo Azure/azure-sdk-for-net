@@ -7,48 +7,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Encode.Bytes
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class EncodeBytesModelFactory
     {
-        /// <summary> The DefaultBytesProperty. </summary>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="Bytes.DefaultBytesProperty"/> instance for mocking. </returns>
-        public static DefaultBytesProperty DefaultBytesProperty(BinaryData value = default)
-        {
+        public static DefaultBytesProperty DefaultBytesProperty(BinaryData value = default) => throw null;
 
-            return new DefaultBytesProperty(value, additionalBinaryDataProperties: null);
-        }
+        public static Base64BytesProperty Base64BytesProperty(BinaryData value = default) => throw null;
 
-        /// <summary> The Base64BytesProperty. </summary>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="Bytes.Base64BytesProperty"/> instance for mocking. </returns>
-        public static Base64BytesProperty Base64BytesProperty(BinaryData value = default)
-        {
+        public static Base64urlBytesProperty Base64urlBytesProperty(BinaryData value = default) => throw null;
 
-            return new Base64BytesProperty(value, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Base64urlBytesProperty. </summary>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="Bytes.Base64urlBytesProperty"/> instance for mocking. </returns>
-        public static Base64urlBytesProperty Base64urlBytesProperty(BinaryData value = default)
-        {
-
-            return new Base64urlBytesProperty(value, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Base64urlArrayBytesProperty. </summary>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="Bytes.Base64urlArrayBytesProperty"/> instance for mocking. </returns>
-        public static Base64urlArrayBytesProperty Base64urlArrayBytesProperty(IEnumerable<BinaryData> value = default)
-        {
-            value ??= new ChangeTrackingList<BinaryData>();
-
-            return new Base64urlArrayBytesProperty(value?.ToList(), additionalBinaryDataProperties: null);
-        }
+        public static Base64urlArrayBytesProperty Base64urlArrayBytesProperty(IEnumerable<BinaryData> value = default) => throw null;
     }
 }

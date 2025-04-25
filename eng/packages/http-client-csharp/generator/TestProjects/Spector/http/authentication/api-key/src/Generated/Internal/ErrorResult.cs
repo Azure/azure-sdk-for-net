@@ -7,7 +7,7 @@
 
 using Azure;
 
-namespace Encode.Bytes
+namespace Authentication.ApiKey
 {
     internal partial class ErrorResult<T> : Response<T>
     {

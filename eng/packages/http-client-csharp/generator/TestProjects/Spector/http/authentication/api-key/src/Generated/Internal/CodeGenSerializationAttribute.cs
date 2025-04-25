@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Encode.Bytes
+namespace Authentication.ApiKey
 {
     [AttributeUsage((AttributeTargets.Class | AttributeTargets.Struct), AllowMultiple = true, Inherited = true)]
     internal partial class CodeGenSerializationAttribute : Attribute

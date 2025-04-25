@@ -11,7 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Encode.Bytes
+namespace Authentication.ApiKey
 {
     internal static partial class ClientPipelineExtensions
     {

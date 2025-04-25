@@ -9,7 +9,7 @@ using System;
 using System.Threading;
 using Azure;
 
-namespace Encode.Bytes
+namespace Authentication.ApiKey
 {
     internal static partial class RequestContextExtensions
     {
