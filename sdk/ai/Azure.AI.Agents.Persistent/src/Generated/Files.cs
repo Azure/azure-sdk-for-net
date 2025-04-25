@@ -15,7 +15,7 @@ namespace Azure.AI.Agents.Persistent
 {
     // Data plane generated sub-client.
     /// <summary> A collection of file‐related operations under `/files`. </summary>
-    public partial class GetFiles
+    public partial class Files
     {
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
@@ -32,19 +32,19 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of GetFiles for mocking. </summary>
-        protected GetFiles()
+        /// <summary> Initializes a new instance of Files for mocking. </summary>
+        protected Files()
         {
         }
 
-        /// <summary> Initializes a new instance of GetFiles. </summary>
+        /// <summary> Initializes a new instance of Files. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal GetFiles(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal Files(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -95,7 +95,7 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> InternalListFilesAsync(string purpose, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("GetFiles.InternalListFiles");
+            using var scope = ClientDiagnostics.CreateScope("Files.InternalListFiles");
             scope.Start();
             try
             {
@@ -130,7 +130,7 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> The response returned from the service. </returns>
         internal virtual Response InternalListFiles(string purpose, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("GetFiles.InternalListFiles");
+            using var scope = ClientDiagnostics.CreateScope("Files.InternalListFiles");
             scope.Start();
             try
             {
@@ -197,7 +197,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("GetFiles.UploadFile");
+            using var scope = ClientDiagnostics.CreateScope("Files.UploadFile");
             scope.Start();
             try
             {
@@ -236,7 +236,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("GetFiles.UploadFile");
+            using var scope = ClientDiagnostics.CreateScope("Files.UploadFile");
             scope.Start();
             try
             {
@@ -303,7 +303,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("GetFiles.InternalDeleteFile");
+            using var scope = ClientDiagnostics.CreateScope("Files.InternalDeleteFile");
             scope.Start();
             try
             {
@@ -342,7 +342,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("GetFiles.InternalDeleteFile");
+            using var scope = ClientDiagnostics.CreateScope("Files.InternalDeleteFile");
             scope.Start();
             try
             {
@@ -409,7 +409,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("GetFiles.GetFile");
+            using var scope = ClientDiagnostics.CreateScope("Files.GetFile");
             scope.Start();
             try
             {
@@ -448,7 +448,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("GetFiles.GetFile");
+            using var scope = ClientDiagnostics.CreateScope("Files.GetFile");
             scope.Start();
             try
             {
@@ -515,7 +515,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("GetFiles.GetFileContent");
+            using var scope = ClientDiagnostics.CreateScope("Files.GetFileContent");
             scope.Start();
             try
             {
@@ -554,7 +554,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("GetFiles.GetFileContent");
+            using var scope = ClientDiagnostics.CreateScope("Files.GetFileContent");
             scope.Start();
             try
             {

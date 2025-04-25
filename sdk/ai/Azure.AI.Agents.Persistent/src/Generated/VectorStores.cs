@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,11 +16,8 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Agents.Persistent
 {
     // Data plane generated sub-client.
-    /// <summary>
-    /// A collection of vector-store file operations under
-    /// `/vector_stores/{vectorStoreId}/files`.
-    /// </summary>
-    public partial class GetVectorStoreFiles
+    /// <summary> A collection of vector-store operations under `/vector_stores`. </summary>
+    public partial class VectorStores
     {
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
@@ -36,19 +34,19 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of GetVectorStoreFiles for mocking. </summary>
-        protected GetVectorStoreFiles()
+        /// <summary> Initializes a new instance of VectorStores for mocking. </summary>
+        protected VectorStores()
         {
         }
 
-        /// <summary> Initializes a new instance of GetVectorStoreFiles. </summary>
+        /// <summary> Initializes a new instance of VectorStores. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal GetVectorStoreFiles(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal VectorStores(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -58,46 +56,34 @@ namespace Azure.AI.Agents.Persistent
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Returns a list of vector store files. </summary>
-        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
-        /// <param name="filter"> Filter by file status. </param>
+        /// <summary> Returns a list of vector stores. </summary>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<PersistentAgentPageableListOfVectorStoreFile>> InternalListFilesAsync(string vectorStoreId, VectorStoreFileStatusFilter? filter = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersistentAgentPageableListOfVectorStore>> GetVectorStoresAsync(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await InternalListFilesAsync(vectorStoreId, filter?.ToString(), limit, order?.ToString(), after, before, context).ConfigureAwait(false);
-            return Response.FromValue(PersistentAgentPageableListOfVectorStoreFile.FromResponse(response), response);
+            Response response = await GetVectorStoresAsync(limit, order?.ToString(), after, before, context).ConfigureAwait(false);
+            return Response.FromValue(PersistentAgentPageableListOfVectorStore.FromResponse(response), response);
         }
 
-        /// <summary> Returns a list of vector store files. </summary>
-        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
-        /// <param name="filter"> Filter by file status. </param>
+        /// <summary> Returns a list of vector stores. </summary>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<PersistentAgentPageableListOfVectorStoreFile> InternalListFiles(string vectorStoreId, VectorStoreFileStatusFilter? filter = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        public virtual Response<PersistentAgentPageableListOfVectorStore> GetVectorStores(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = InternalListFiles(vectorStoreId, filter?.ToString(), limit, order?.ToString(), after, before, context);
-            return Response.FromValue(PersistentAgentPageableListOfVectorStoreFile.FromResponse(response), response);
+            Response response = GetVectorStores(limit, order?.ToString(), after, before, context);
+            return Response.FromValue(PersistentAgentPageableListOfVectorStore.FromResponse(response), response);
         }
 
         /// <summary>
-        /// [Protocol Method] Returns a list of vector store files.
+        /// [Protocol Method] Returns a list of vector stores.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -106,31 +92,25 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="InternalListFilesAsync(string,VectorStoreFileStatusFilter?,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetVectorStoresAsync(int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
-        /// <param name="filter"> Filter by file status. Allowed values: "in_progress" | "completed" | "failed" | "cancelled". </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> InternalListFilesAsync(string vectorStoreId, string filter, int? limit, string order, string after, string before, RequestContext context)
+        public virtual async Task<Response> GetVectorStoresAsync(int? limit, string order, string after, string before, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-
-            using var scope = ClientDiagnostics.CreateScope("GetVectorStoreFiles.InternalListFiles");
+            using var scope = ClientDiagnostics.CreateScope("VectorStores.GetVectorStores");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateInternalListFilesRequest(vectorStoreId, filter, limit, order, after, before, context);
+                using HttpMessage message = CreateGetVectorStoresRequest(limit, order, after, before, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -141,7 +121,7 @@ namespace Azure.AI.Agents.Persistent
         }
 
         /// <summary>
-        /// [Protocol Method] Returns a list of vector store files.
+        /// [Protocol Method] Returns a list of vector stores.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -150,31 +130,25 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="InternalListFiles(string,VectorStoreFileStatusFilter?,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetVectorStores(int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
-        /// <param name="filter"> Filter by file status. Allowed values: "in_progress" | "completed" | "failed" | "cancelled". </param>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response InternalListFiles(string vectorStoreId, string filter, int? limit, string order, string after, string before, RequestContext context)
+        public virtual Response GetVectorStores(int? limit, string order, string after, string before, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-
-            using var scope = ClientDiagnostics.CreateScope("GetVectorStoreFiles.InternalListFiles");
+            using var scope = ClientDiagnostics.CreateScope("VectorStores.GetVectorStores");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateInternalListFilesRequest(vectorStoreId, filter, limit, order, after, before, context);
+                using HttpMessage message = CreateGetVectorStoresRequest(limit, order, after, before, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -184,44 +158,54 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
-        /// <summary> Create a vector store file by attaching a file to a vector store. </summary>
-        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
-        /// <param name="fileId"> Identifier of the file. </param>
-        /// <param name="dataSource"> Azure asset ID. </param>
-        /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file. If not set, uses the auto strategy. </param>
+        /// <summary> Creates a vector store. </summary>
+        /// <param name="fileIds"> A list of file IDs that the vector store should use. Useful for tools like `file_search` that can access files. </param>
+        /// <param name="name"> The name of the vector store. </param>
+        /// <param name="storeConfiguration"> The vector store configuration, used when vector store is created from Azure asset URIs. </param>
+        /// <param name="expiresAfter"> Details on when this vector store expires. </param>
+        /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. Only applicable if file_ids is non-empty. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<VectorStoreFile>> CreateVectorStoreFileAsync(string vectorStoreId, string fileId = null, VectorStoreDataSource dataSource = null, VectorStoreChunkingStrategyRequest chunkingStrategy = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VectorStore>> CreateVectorStoreAsync(IEnumerable<string> fileIds = null, string name = null, VectorStoreConfiguration storeConfiguration = null, VectorStoreExpirationPolicy expiresAfter = null, VectorStoreChunkingStrategyRequest chunkingStrategy = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-
-            CreateVectorStoreFileRequest createVectorStoreFileRequest = new CreateVectorStoreFileRequest(fileId, dataSource, chunkingStrategy, null);
+            CreateVectorStoreRequest createVectorStoreRequest = new CreateVectorStoreRequest(
+                fileIds?.ToList() as IReadOnlyList<string> ?? new ChangeTrackingList<string>(),
+                name,
+                storeConfiguration,
+                expiresAfter,
+                chunkingStrategy,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateVectorStoreFileAsync(vectorStoreId, createVectorStoreFileRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(VectorStoreFile.FromResponse(response), response);
+            Response response = await CreateVectorStoreAsync(createVectorStoreRequest.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(VectorStore.FromResponse(response), response);
         }
 
-        /// <summary> Create a vector store file by attaching a file to a vector store. </summary>
-        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
-        /// <param name="fileId"> Identifier of the file. </param>
-        /// <param name="dataSource"> Azure asset ID. </param>
-        /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file. If not set, uses the auto strategy. </param>
+        /// <summary> Creates a vector store. </summary>
+        /// <param name="fileIds"> A list of file IDs that the vector store should use. Useful for tools like `file_search` that can access files. </param>
+        /// <param name="name"> The name of the vector store. </param>
+        /// <param name="storeConfiguration"> The vector store configuration, used when vector store is created from Azure asset URIs. </param>
+        /// <param name="expiresAfter"> Details on when this vector store expires. </param>
+        /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. Only applicable if file_ids is non-empty. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<VectorStoreFile> CreateVectorStoreFile(string vectorStoreId, string fileId = null, VectorStoreDataSource dataSource = null, VectorStoreChunkingStrategyRequest chunkingStrategy = null, CancellationToken cancellationToken = default)
+        public virtual Response<VectorStore> CreateVectorStore(IEnumerable<string> fileIds = null, string name = null, VectorStoreConfiguration storeConfiguration = null, VectorStoreExpirationPolicy expiresAfter = null, VectorStoreChunkingStrategyRequest chunkingStrategy = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-
-            CreateVectorStoreFileRequest createVectorStoreFileRequest = new CreateVectorStoreFileRequest(fileId, dataSource, chunkingStrategy, null);
+            CreateVectorStoreRequest createVectorStoreRequest = new CreateVectorStoreRequest(
+                fileIds?.ToList() as IReadOnlyList<string> ?? new ChangeTrackingList<string>(),
+                name,
+                storeConfiguration,
+                expiresAfter,
+                chunkingStrategy,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateVectorStoreFile(vectorStoreId, createVectorStoreFileRequest.ToRequestContent(), context);
-            return Response.FromValue(VectorStoreFile.FromResponse(response), response);
+            Response response = CreateVectorStore(createVectorStoreRequest.ToRequestContent(), context);
+            return Response.FromValue(VectorStore.FromResponse(response), response);
         }
 
         /// <summary>
-        /// [Protocol Method] Create a vector store file by attaching a file to a vector store.
+        /// [Protocol Method] Creates a vector store.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -230,7 +214,225 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateVectorStoreFileAsync(string,string,VectorStoreDataSource,VectorStoreChunkingStrategyRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateVectorStoreAsync(IEnumerable{string},string,VectorStoreConfiguration,VectorStoreExpirationPolicy,VectorStoreChunkingStrategyRequest,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateVectorStoreAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("VectorStores.CreateVectorStore");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateVectorStoreRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a vector store.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateVectorStore(IEnumerable{string},string,VectorStoreConfiguration,VectorStoreExpirationPolicy,VectorStoreChunkingStrategyRequest,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateVectorStore(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("VectorStores.CreateVectorStore");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateVectorStoreRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Returns the vector store object matching the specified ID. </summary>
+        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<VectorStore>> GetVectorStoreAsync(string vectorStoreId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetVectorStoreAsync(vectorStoreId, context).ConfigureAwait(false);
+            return Response.FromValue(VectorStore.FromResponse(response), response);
+        }
+
+        /// <summary> Returns the vector store object matching the specified ID. </summary>
+        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<VectorStore> GetVectorStore(string vectorStoreId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetVectorStore(vectorStoreId, context);
+            return Response.FromValue(VectorStore.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns the vector store object matching the specified ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetVectorStoreAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetVectorStoreAsync(string vectorStoreId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+
+            using var scope = ClientDiagnostics.CreateScope("VectorStores.GetVectorStore");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetVectorStoreRequest(vectorStoreId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns the vector store object matching the specified ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetVectorStore(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetVectorStore(string vectorStoreId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+
+            using var scope = ClientDiagnostics.CreateScope("VectorStores.GetVectorStore");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetVectorStoreRequest(vectorStoreId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Modifies an existing vector store. </summary>
+        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
+        /// <param name="name"> The name of the vector store. </param>
+        /// <param name="expiresAfter"> Details on when this vector store expires. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<VectorStore>> ModifyVectorStoreAsync(string vectorStoreId, string name = null, VectorStoreExpirationPolicy expiresAfter = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+
+            ModifyVectorStoreRequest modifyVectorStoreRequest = new ModifyVectorStoreRequest(name, expiresAfter, metadata ?? new ChangeTrackingDictionary<string, string>(), null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await ModifyVectorStoreAsync(vectorStoreId, modifyVectorStoreRequest.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(VectorStore.FromResponse(response), response);
+        }
+
+        /// <summary> Modifies an existing vector store. </summary>
+        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
+        /// <param name="name"> The name of the vector store. </param>
+        /// <param name="expiresAfter"> Details on when this vector store expires. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<VectorStore> ModifyVectorStore(string vectorStoreId, string name = null, VectorStoreExpirationPolicy expiresAfter = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+
+            ModifyVectorStoreRequest modifyVectorStoreRequest = new ModifyVectorStoreRequest(name, expiresAfter, metadata ?? new ChangeTrackingDictionary<string, string>(), null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = ModifyVectorStore(vectorStoreId, modifyVectorStoreRequest.ToRequestContent(), context);
+            return Response.FromValue(VectorStore.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Modifies an existing vector store.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="ModifyVectorStoreAsync(string,string,VectorStoreExpirationPolicy,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -242,16 +444,16 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateVectorStoreFileAsync(string vectorStoreId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> ModifyVectorStoreAsync(string vectorStoreId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("GetVectorStoreFiles.CreateVectorStoreFile");
+            using var scope = ClientDiagnostics.CreateScope("VectorStores.ModifyVectorStore");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateVectorStoreFileRequest(vectorStoreId, content, context);
+                using HttpMessage message = CreateModifyVectorStoreRequest(vectorStoreId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -262,7 +464,7 @@ namespace Azure.AI.Agents.Persistent
         }
 
         /// <summary>
-        /// [Protocol Method] Create a vector store file by attaching a file to a vector store.
+        /// [Protocol Method] Modifies an existing vector store.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -271,7 +473,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateVectorStoreFile(string,string,VectorStoreDataSource,VectorStoreChunkingStrategyRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ModifyVectorStore(string,string,VectorStoreExpirationPolicy,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -283,16 +485,16 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CreateVectorStoreFile(string vectorStoreId, RequestContent content, RequestContext context = null)
+        public virtual Response ModifyVectorStore(string vectorStoreId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("GetVectorStoreFiles.CreateVectorStoreFile");
+            using var scope = ClientDiagnostics.CreateScope("VectorStores.ModifyVectorStore");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateVectorStoreFileRequest(vectorStoreId, content, context);
+                using HttpMessage message = CreateModifyVectorStoreRequest(vectorStoreId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -302,40 +504,36 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
-        /// <summary> Retrieves a vector store file. </summary>
+        /// <summary> Deletes the vector store object matching the specified ID. </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
-        /// <param name="fileId"> Identifier of the file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<VectorStoreFile>> GetVectorStoreFileAsync(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<VectorStoreDeletionStatus>> DeleteVectorStoreAsync(string vectorStoreId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetVectorStoreFileAsync(vectorStoreId, fileId, context).ConfigureAwait(false);
-            return Response.FromValue(VectorStoreFile.FromResponse(response), response);
+            Response response = await DeleteVectorStoreAsync(vectorStoreId, context).ConfigureAwait(false);
+            return Response.FromValue(VectorStoreDeletionStatus.FromResponse(response), response);
         }
 
-        /// <summary> Retrieves a vector store file. </summary>
+        /// <summary> Deletes the vector store object matching the specified ID. </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
-        /// <param name="fileId"> Identifier of the file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<VectorStoreFile> GetVectorStoreFile(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<VectorStoreDeletionStatus> DeleteVectorStore(string vectorStoreId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetVectorStoreFile(vectorStoreId, fileId, context);
-            return Response.FromValue(VectorStoreFile.FromResponse(response), response);
+            Response response = DeleteVectorStore(vectorStoreId, context);
+            return Response.FromValue(VectorStoreDeletionStatus.FromResponse(response), response);
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieves a vector store file.
+        /// [Protocol Method] Deletes the vector store object matching the specified ID.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -344,28 +542,26 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetVectorStoreFileAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DeleteVectorStoreAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
-        /// <param name="fileId"> Identifier of the file. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetVectorStoreFileAsync(string vectorStoreId, string fileId, RequestContext context)
+        public virtual async Task<Response> DeleteVectorStoreAsync(string vectorStoreId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("GetVectorStoreFiles.GetVectorStoreFile");
+            using var scope = ClientDiagnostics.CreateScope("VectorStores.DeleteVectorStore");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetVectorStoreFileRequest(vectorStoreId, fileId, context);
+                using HttpMessage message = CreateDeleteVectorStoreRequest(vectorStoreId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -376,7 +572,7 @@ namespace Azure.AI.Agents.Persistent
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieves a vector store file.
+        /// [Protocol Method] Deletes the vector store object matching the specified ID.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -385,28 +581,26 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetVectorStoreFile(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DeleteVectorStore(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
-        /// <param name="fileId"> Identifier of the file. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetVectorStoreFile(string vectorStoreId, string fileId, RequestContext context)
+        public virtual Response DeleteVectorStore(string vectorStoreId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("GetVectorStoreFiles.GetVectorStoreFile");
+            using var scope = ClientDiagnostics.CreateScope("VectorStores.DeleteVectorStore");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetVectorStoreFileRequest(vectorStoreId, fileId, context);
+                using HttpMessage message = CreateDeleteVectorStoreRequest(vectorStoreId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -416,135 +610,15 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
-        /// <summary> Deletes a vector store file. This removes the file‐to‐store link (does not delete the file itself). </summary>
-        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
-        /// <param name="fileId"> Identifier of the file. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<VectorStoreFileDeletionStatus>> DeleteVectorStoreFileAsync(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await DeleteVectorStoreFileAsync(vectorStoreId, fileId, context).ConfigureAwait(false);
-            return Response.FromValue(VectorStoreFileDeletionStatus.FromResponse(response), response);
-        }
-
-        /// <summary> Deletes a vector store file. This removes the file‐to‐store link (does not delete the file itself). </summary>
-        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
-        /// <param name="fileId"> Identifier of the file. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<VectorStoreFileDeletionStatus> DeleteVectorStoreFile(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = DeleteVectorStoreFile(vectorStoreId, fileId, context);
-            return Response.FromValue(VectorStoreFileDeletionStatus.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Deletes a vector store file. This removes the file‐to‐store link (does not delete the file itself).
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="DeleteVectorStoreFileAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
-        /// <param name="fileId"> Identifier of the file. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteVectorStoreFileAsync(string vectorStoreId, string fileId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-
-            using var scope = ClientDiagnostics.CreateScope("GetVectorStoreFiles.DeleteVectorStoreFile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteVectorStoreFileRequest(vectorStoreId, fileId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Deletes a vector store file. This removes the file‐to‐store link (does not delete the file itself).
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="DeleteVectorStoreFile(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
-        /// <param name="fileId"> Identifier of the file. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteVectorStoreFile(string vectorStoreId, string fileId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-
-            using var scope = ClientDiagnostics.CreateScope("GetVectorStoreFiles.DeleteVectorStoreFile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteVectorStoreFileRequest(vectorStoreId, fileId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        internal HttpMessage CreateInternalListFilesRequest(string vectorStoreId, string filter, int? limit, string order, string after, string before, RequestContext context)
+        internal HttpMessage CreateGetVectorStoresRequest(int? limit, string order, string after, string before, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/vector_stores/", false);
-            uri.AppendPath(vectorStoreId, true);
-            uri.AppendPath("/files", false);
+            uri.AppendPath("/vector_stores", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (filter != null)
-            {
-                uri.AppendQuery("filter", filter, true);
-            }
             if (limit != null)
             {
                 uri.AppendQuery("limit", limit.Value, true);
@@ -566,16 +640,14 @@ namespace Azure.AI.Agents.Persistent
             return message;
         }
 
-        internal HttpMessage CreateCreateVectorStoreFileRequest(string vectorStoreId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateVectorStoreRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/vector_stores/", false);
-            uri.AppendPath(vectorStoreId, true);
-            uri.AppendPath("/files", false);
+            uri.AppendPath("/vector_stores", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -584,7 +656,7 @@ namespace Azure.AI.Agents.Persistent
             return message;
         }
 
-        internal HttpMessage CreateGetVectorStoreFileRequest(string vectorStoreId, string fileId, RequestContext context)
+        internal HttpMessage CreateGetVectorStoreRequest(string vectorStoreId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -593,15 +665,30 @@ namespace Azure.AI.Agents.Persistent
             uri.Reset(_endpoint);
             uri.AppendPath("/vector_stores/", false);
             uri.AppendPath(vectorStoreId, true);
-            uri.AppendPath("/files/", false);
-            uri.AppendPath(fileId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateDeleteVectorStoreFileRequest(string vectorStoreId, string fileId, RequestContext context)
+        internal HttpMessage CreateModifyVectorStoreRequest(string vectorStoreId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/vector_stores/", false);
+            uri.AppendPath(vectorStoreId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteVectorStoreRequest(string vectorStoreId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -610,8 +697,6 @@ namespace Azure.AI.Agents.Persistent
             uri.Reset(_endpoint);
             uri.AppendPath("/vector_stores/", false);
             uri.AppendPath(vectorStoreId, true);
-            uri.AppendPath("/files/", false);
-            uri.AppendPath(fileId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

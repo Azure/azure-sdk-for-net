@@ -16,8 +16,8 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Agents.Persistent
 {
     // Data plane generated sub-client.
-    /// <summary> The GetAdministration sub-client. </summary>
-    public partial class GetAdministration
+    /// <summary> The Administration sub-client. </summary>
+    public partial class Administration
     {
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
@@ -34,19 +34,19 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of GetAdministration for mocking. </summary>
-        protected GetAdministration()
+        /// <summary> Initializes a new instance of Administration for mocking. </summary>
+        protected Administration()
         {
         }
 
-        /// <summary> Initializes a new instance of GetAdministration. </summary>
+        /// <summary> Initializes a new instance of Administration. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal GetAdministration(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal Administration(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -170,7 +170,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("GetAdministration.CreateAgent");
+            using var scope = ClientDiagnostics.CreateScope("Administration.CreateAgent");
             scope.Start();
             try
             {
@@ -208,7 +208,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("GetAdministration.CreateAgent");
+            using var scope = ClientDiagnostics.CreateScope("Administration.CreateAgent");
             scope.Start();
             try
             {
@@ -272,7 +272,7 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> InternalGetAgentsAsync(int? limit, string order, string after, string before, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("GetAdministration.InternalGetAgents");
+            using var scope = ClientDiagnostics.CreateScope("Administration.InternalGetAgents");
             scope.Start();
             try
             {
@@ -310,7 +310,7 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> The response returned from the service. </returns>
         internal virtual Response InternalGetAgents(int? limit, string order, string after, string before, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("GetAdministration.InternalGetAgents");
+            using var scope = ClientDiagnostics.CreateScope("Administration.InternalGetAgents");
             scope.Start();
             try
             {
@@ -377,7 +377,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
-            using var scope = ClientDiagnostics.CreateScope("GetAdministration.GetAgent");
+            using var scope = ClientDiagnostics.CreateScope("Administration.GetAgent");
             scope.Start();
             try
             {
@@ -416,7 +416,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
-            using var scope = ClientDiagnostics.CreateScope("GetAdministration.GetAgent");
+            using var scope = ClientDiagnostics.CreateScope("Administration.GetAgent");
             scope.Start();
             try
             {
@@ -551,7 +551,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("GetAdministration.UpdateAgent");
+            using var scope = ClientDiagnostics.CreateScope("Administration.UpdateAgent");
             scope.Start();
             try
             {
@@ -592,7 +592,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("GetAdministration.UpdateAgent");
+            using var scope = ClientDiagnostics.CreateScope("Administration.UpdateAgent");
             scope.Start();
             try
             {
@@ -659,7 +659,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
-            using var scope = ClientDiagnostics.CreateScope("GetAdministration.InternalDeleteAgent");
+            using var scope = ClientDiagnostics.CreateScope("Administration.InternalDeleteAgent");
             scope.Start();
             try
             {
@@ -698,7 +698,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
-            using var scope = ClientDiagnostics.CreateScope("GetAdministration.InternalDeleteAgent");
+            using var scope = ClientDiagnostics.CreateScope("Administration.InternalDeleteAgent");
             scope.Start();
             try
             {
