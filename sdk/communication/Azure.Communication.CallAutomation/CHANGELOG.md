@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added support for post-call processing options, including summarization and transcription.
+
 ### Breaking Changes
 
 ### Bugs Fixed
