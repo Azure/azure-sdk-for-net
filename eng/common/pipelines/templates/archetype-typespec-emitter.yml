@@ -22,7 +22,7 @@ parameters:
   type: stepList
   default: []
 
-# Indicates the build matrix to use for post-build typespec validation
+# Indicates the build matrix to use for post-build TypeSpec validation
 - name: TestMatrix
   type: object
   default: {}
