@@ -31,9 +31,9 @@ namespace Azure.Monitor.Query.Models
             writer.WritePropertyName("body"u8);
             writer.WriteObjectValue(Body);
             writer.WritePropertyName("path"u8);
-            writer.WriteStringValue(Path);
+            writer.WriteStringValue(Path.ToString());
             writer.WritePropertyName("method"u8);
-            writer.WriteStringValue(Method);
+            writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("workspace"u8);
             writer.WriteStringValue(Workspace);
             writer.WriteEndObject();
