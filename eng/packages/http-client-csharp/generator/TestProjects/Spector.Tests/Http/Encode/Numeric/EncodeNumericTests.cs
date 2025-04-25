@@ -3,7 +3,7 @@
 
 using System.Threading.Tasks;
 using Encode.Numeric;
-using Encode.Numeric.Models;
+using Encode.Numeric._Property;
 using NUnit.Framework;
 
 namespace TestProjects.Spector.Tests.Http.Encode.Numeric

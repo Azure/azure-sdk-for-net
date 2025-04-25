@@ -67,8 +67,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Describes the credential parameters for accessing the source registry. </summary>
-        [WirePath("sourceRegistry")]
-        public SourceRegistryCredentials SourceRegistry { get; set; }
+        internal SourceRegistryCredentials SourceRegistry { get; set; }
+        /// <summary>
+        /// The authentication mode which determines the source registry login scope. The credentials for the source registry
+        /// will be generated using the given scope. These credentials will be used to login to
+        /// the source registry during the run.
+        /// </summary>
+        [WirePath("sourceRegistry.loginMode")]
+        public SourceRegistryLoginMode? SourceRegistryLoginMode
+        {
+            get => SourceRegistry is null ? default : SourceRegistry.LoginMode;
+            set
+            {
+                if (SourceRegistry is null)
+                    SourceRegistry = new SourceRegistryCredentials();
+                SourceRegistry.LoginMode = value;
+            }
+        }
+
         /// <summary>
         /// Describes the credential parameters for accessing other custom registries. The key
         /// for the dictionary item will be the registry login server (myregistry.azurecr.io) and
