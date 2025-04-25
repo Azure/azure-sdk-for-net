@@ -276,41 +276,41 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource.CreateResourceIdentifier" /> to create a <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReplicationProtectionClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationProtectionClusterResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationProtectionClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetReplicationProtectionClusterResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource"/> object. </returns>
-        public static VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReplicationProtectionClusterResource"/> object. </returns>
+        public static ReplicationProtectionClusterResource GetReplicationProtectionClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource(id);
+            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetReplicationProtectionClusterResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource.CreateResourceIdentifier" /> to create a <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReplicationProtectionClusterOperationResultResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationProtectionClusterOperationResultResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationProtectionClusterOperationResultResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetReplicationProtectionClusterOperationResultResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource"/> object. </returns>
-        public static VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReplicationProtectionClusterOperationResultResource"/> object. </returns>
+        public static ReplicationProtectionClusterOperationResultResource GetReplicationProtectionClusterOperationResultResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource(id);
+            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetReplicationProtectionClusterOperationResultResource(id);
         }
 
         /// <summary>

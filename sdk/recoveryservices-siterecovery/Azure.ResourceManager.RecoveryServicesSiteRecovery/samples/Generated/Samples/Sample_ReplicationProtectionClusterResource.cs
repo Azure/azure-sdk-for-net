@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 {
-    public partial class Sample_VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource
+    public partial class Sample_ReplicationProtectionClusterResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,19 +28,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource created on azure
-            // for more information of creating VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource, please refer to the document of VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource
+            // this example assumes you already have this ReplicationProtectionClusterResource created on azure
+            // for more information of creating ReplicationProtectionClusterResource, please refer to the document of ReplicationProtectionClusterResource
             string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "eastus";
             string protectionContainerName = "eastus-container";
             string replicationProtectionClusterName = "cluster1";
-            ResourceIdentifier vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResourceId = VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicationProtectionClusterName);
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource vaultReplicationFabricReplicationProtectionContainerReplicationProtectionCluster = client.GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource(vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResourceId);
+            ResourceIdentifier replicationProtectionClusterResourceId = ReplicationProtectionClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicationProtectionClusterName);
+            ReplicationProtectionClusterResource replicationProtectionClusterResource = client.GetReplicationProtectionClusterResource(replicationProtectionClusterResourceId);
 
             // invoke the operation
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource result = await vaultReplicationFabricReplicationProtectionContainerReplicationProtectionCluster.GetAsync();
+            ReplicationProtectionClusterResource result = await replicationProtectionClusterResource.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource created on azure
-            // for more information of creating VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource, please refer to the document of VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource
+            // this example assumes you already have this ReplicationProtectionClusterResource created on azure
+            // for more information of creating ReplicationProtectionClusterResource, please refer to the document of ReplicationProtectionClusterResource
             string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "eastus";
             string protectionContainerName = "eastus-container";
             string replicationProtectionClusterName = "cluster1";
-            ResourceIdentifier vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResourceId = VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicationProtectionClusterName);
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource vaultReplicationFabricReplicationProtectionContainerReplicationProtectionCluster = client.GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource(vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResourceId);
+            ResourceIdentifier replicationProtectionClusterResourceId = ReplicationProtectionClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicationProtectionClusterName);
+            ReplicationProtectionClusterResource replicationProtectionClusterResource = client.GetReplicationProtectionClusterResource(replicationProtectionClusterResourceId);
 
             // invoke the operation
-            await vaultReplicationFabricReplicationProtectionContainerReplicationProtectionCluster.DeleteAsync(WaitUntil.Completed);
+            await replicationProtectionClusterResource.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -90,16 +90,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource created on azure
-            // for more information of creating VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource, please refer to the document of VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource
+            // this example assumes you already have this ReplicationProtectionClusterResource created on azure
+            // for more information of creating ReplicationProtectionClusterResource, please refer to the document of ReplicationProtectionClusterResource
             string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "eastus";
             string protectionContainerName = "eastus-container";
             string replicationProtectionClusterName = "cluster12";
-            ResourceIdentifier vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResourceId = VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicationProtectionClusterName);
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource vaultReplicationFabricReplicationProtectionContainerReplicationProtectionCluster = client.GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource(vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResourceId);
+            ResourceIdentifier replicationProtectionClusterResourceId = ReplicationProtectionClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicationProtectionClusterName);
+            ReplicationProtectionClusterResource replicationProtectionClusterResource = client.GetReplicationProtectionClusterResource(replicationProtectionClusterResourceId);
 
             // invoke the operation
             ReplicationProtectionClusterData data = new ReplicationProtectionClusterData
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
                     PolicyId = new ResourceIdentifier("/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationPolicies/24-hour-retention-policy"),
                 },
             };
-            ArmOperation<VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource> lro = await vaultReplicationFabricReplicationProtectionContainerReplicationProtectionCluster.UpdateAsync(WaitUntil.Completed, data);
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource result = lro.Value;
+            ArmOperation<ReplicationProtectionClusterResource> lro = await replicationProtectionClusterResource.UpdateAsync(WaitUntil.Completed, data);
+            ReplicationProtectionClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -133,16 +133,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource created on azure
-            // for more information of creating VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource, please refer to the document of VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource
+            // this example assumes you already have this ReplicationProtectionClusterResource created on azure
+            // for more information of creating ReplicationProtectionClusterResource, please refer to the document of ReplicationProtectionClusterResource
             string subscriptionId = "7c943c1b-5122-4097-90c8-861411bdd574";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "fabric-pri-eastus";
             string protectionContainerName = "pri-cloud-eastus";
             string replicationProtectionClusterName = "testcluster";
-            ResourceIdentifier vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResourceId = VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicationProtectionClusterName);
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource vaultReplicationFabricReplicationProtectionContainerReplicationProtectionCluster = client.GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource(vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResourceId);
+            ResourceIdentifier replicationProtectionClusterResourceId = ReplicationProtectionClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicationProtectionClusterName);
+            ReplicationProtectionClusterResource replicationProtectionClusterResource = client.GetReplicationProtectionClusterResource(replicationProtectionClusterResourceId);
 
             // invoke the operation
             ApplyClusterRecoveryPointContent content = new ApplyClusterRecoveryPointContent(new ApplyClusterRecoveryPointContentProperties(new A2AApplyClusterRecoveryPointContent())
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
                 ClusterRecoveryPointId = new ResourceIdentifier("/Subscriptions/7c943c1b-5122-4097-90c8-861411bdd574/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/shashankvaultpvt/replicationFabrics/fabric-pri-eastus/replicationProtectionContainers/pri-cloud-eastus/replicationProtectionClusters/testcluster/recoveryPoints/cc48b7f3-b267-432b-ad76-45528974dc62"),
                 IndividualNodeRecoveryPoints = { new ResourceIdentifier("/Subscriptions/7c943c1b-5122-4097-90c8-861411bdd574/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/shashankvaultpvt/replicationFabrics/fabric-pri-eastus/replicationProtectionContainers/pri-cloud-eastus/replicationProtectedItems/testVM/recoveryPoints/b5c2051b-79e3-41ad-9d25-244f6ef8ce7d") },
             });
-            ArmOperation<VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource> lro = await vaultReplicationFabricReplicationProtectionContainerReplicationProtectionCluster.ApplyRecoveryPointAsync(WaitUntil.Completed, content);
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource result = lro.Value;
+            ArmOperation<ReplicationProtectionClusterResource> lro = await replicationProtectionClusterResource.ApplyRecoveryPointAsync(WaitUntil.Completed, content);
+            ReplicationProtectionClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -172,20 +172,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource created on azure
-            // for more information of creating VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource, please refer to the document of VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource
+            // this example assumes you already have this ReplicationProtectionClusterResource created on azure
+            // for more information of creating ReplicationProtectionClusterResource, please refer to the document of ReplicationProtectionClusterResource
             string subscriptionId = "7c943c1b-5122-4097-90c8-861411bdd574";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "fabric-pri-eastus";
             string protectionContainerName = "pri-cloud-eastus";
             string replicationProtectionClusterName = "testcluster";
-            ResourceIdentifier vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResourceId = VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicationProtectionClusterName);
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource vaultReplicationFabricReplicationProtectionContainerReplicationProtectionCluster = client.GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource(vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResourceId);
+            ResourceIdentifier replicationProtectionClusterResourceId = ReplicationProtectionClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicationProtectionClusterName);
+            ReplicationProtectionClusterResource replicationProtectionClusterResource = client.GetReplicationProtectionClusterResource(replicationProtectionClusterResourceId);
 
             // invoke the operation
-            ArmOperation<VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource> lro = await vaultReplicationFabricReplicationProtectionContainerReplicationProtectionCluster.FailoverCommitAsync(WaitUntil.Completed);
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource result = lro.Value;
+            ArmOperation<ReplicationProtectionClusterResource> lro = await replicationProtectionClusterResource.FailoverCommitAsync(WaitUntil.Completed);
+            ReplicationProtectionClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -206,20 +206,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource created on azure
-            // for more information of creating VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource, please refer to the document of VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource
+            // this example assumes you already have this ReplicationProtectionClusterResource created on azure
+            // for more information of creating ReplicationProtectionClusterResource, please refer to the document of ReplicationProtectionClusterResource
             string subscriptionId = "c183865e-6077-46f2-a3b1-deb0f4f4650a";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "eastus";
             string protectionContainerName = "eastus-container";
             string replicationProtectionClusterName = "cluster12";
-            ResourceIdentifier vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResourceId = VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicationProtectionClusterName);
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource vaultReplicationFabricReplicationProtectionContainerReplicationProtectionCluster = client.GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource(vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResourceId);
+            ResourceIdentifier replicationProtectionClusterResourceId = ReplicationProtectionClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicationProtectionClusterName);
+            ReplicationProtectionClusterResource replicationProtectionClusterResource = client.GetReplicationProtectionClusterResource(replicationProtectionClusterResourceId);
 
             // invoke the operation
-            ArmOperation<VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource> lro = await vaultReplicationFabricReplicationProtectionContainerReplicationProtectionCluster.RepairReplicationAsync(WaitUntil.Completed);
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource result = lro.Value;
+            ArmOperation<ReplicationProtectionClusterResource> lro = await replicationProtectionClusterResource.RepairReplicationAsync(WaitUntil.Completed);
+            ReplicationProtectionClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -240,16 +240,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource created on azure
-            // for more information of creating VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource, please refer to the document of VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource
+            // this example assumes you already have this ReplicationProtectionClusterResource created on azure
+            // for more information of creating ReplicationProtectionClusterResource, please refer to the document of ReplicationProtectionClusterResource
             string subscriptionId = "7c943c1b-5122-4097-90c8-861411bdd574";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "fabric-pri-eastus";
             string protectionContainerName = "pri-cloud-eastus";
             string replicationProtectionClusterName = "testcluster";
-            ResourceIdentifier vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResourceId = VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicationProtectionClusterName);
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource vaultReplicationFabricReplicationProtectionContainerReplicationProtectionCluster = client.GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource(vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResourceId);
+            ResourceIdentifier replicationProtectionClusterResourceId = ReplicationProtectionClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicationProtectionClusterName);
+            ReplicationProtectionClusterResource replicationProtectionClusterResource = client.GetReplicationProtectionClusterResource(replicationProtectionClusterResourceId);
 
             // invoke the operation
             ClusterTestFailoverContent content = new ClusterTestFailoverContent(new ClusterTestFailoverContentProperties
@@ -263,8 +263,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
                     IndividualNodeRecoveryPoints = { "/Subscriptions/7c943c1b-5122-4097-90c8-861411bdd574/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationFabrics/fabric-pri-eastus/replicationProtectionContainers/pri-cloud-eastus/replicationProtectedItems/testVM/recoveryPoints/b5c2051b-79e3-41ad-9d25-244f6ef8ce7d" },
                 },
             });
-            ArmOperation<VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource> lro = await vaultReplicationFabricReplicationProtectionContainerReplicationProtectionCluster.TestFailoverAsync(WaitUntil.Completed, content);
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource result = lro.Value;
+            ArmOperation<ReplicationProtectionClusterResource> lro = await replicationProtectionClusterResource.TestFailoverAsync(WaitUntil.Completed, content);
+            ReplicationProtectionClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -285,24 +285,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource created on azure
-            // for more information of creating VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource, please refer to the document of VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource
+            // this example assumes you already have this ReplicationProtectionClusterResource created on azure
+            // for more information of creating ReplicationProtectionClusterResource, please refer to the document of ReplicationProtectionClusterResource
             string subscriptionId = "7c943c1b-5122-4097-90c8-861411bdd574";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "fabric-pri-eastus";
             string protectionContainerName = "pri-cloud-eastus";
             string replicationProtectionClusterName = "testcluster";
-            ResourceIdentifier vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResourceId = VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicationProtectionClusterName);
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource vaultReplicationFabricReplicationProtectionContainerReplicationProtectionCluster = client.GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource(vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResourceId);
+            ResourceIdentifier replicationProtectionClusterResourceId = ReplicationProtectionClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicationProtectionClusterName);
+            ReplicationProtectionClusterResource replicationProtectionClusterResource = client.GetReplicationProtectionClusterResource(replicationProtectionClusterResourceId);
 
             // invoke the operation
             ClusterTestFailoverCleanupContent content = new ClusterTestFailoverCleanupContent(new ClusterTestFailoverCleanupContentProperties
             {
                 Comments = "Test Failover Cleanup",
             });
-            ArmOperation<VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource> lro = await vaultReplicationFabricReplicationProtectionContainerReplicationProtectionCluster.TestFailoverCleanupAsync(WaitUntil.Completed, content);
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource result = lro.Value;
+            ArmOperation<ReplicationProtectionClusterResource> lro = await replicationProtectionClusterResource.TestFailoverCleanupAsync(WaitUntil.Completed, content);
+            ReplicationProtectionClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -323,16 +323,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource created on azure
-            // for more information of creating VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource, please refer to the document of VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource
+            // this example assumes you already have this ReplicationProtectionClusterResource created on azure
+            // for more information of creating ReplicationProtectionClusterResource, please refer to the document of ReplicationProtectionClusterResource
             string subscriptionId = "7c943c1b-5122-4097-90c8-861411bdd574";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
             string fabricName = "fabric-pri-eastus";
             string protectionContainerName = "pri-cloud-eastus";
             string replicationProtectionClusterName = "testcluster";
-            ResourceIdentifier vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResourceId = VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicationProtectionClusterName);
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource vaultReplicationFabricReplicationProtectionContainerReplicationProtectionCluster = client.GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource(vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResourceId);
+            ResourceIdentifier replicationProtectionClusterResourceId = ReplicationProtectionClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicationProtectionClusterName);
+            ReplicationProtectionClusterResource replicationProtectionClusterResource = client.GetReplicationProtectionClusterResource(replicationProtectionClusterResourceId);
 
             // invoke the operation
             ClusterUnplannedFailoverContent content = new ClusterUnplannedFailoverContent(new ClusterUnplannedFailoverContentProperties
@@ -345,8 +345,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
                     IndividualNodeRecoveryPoints = { "/Subscriptions/7c943c1b-5122-4097-90c8-861411bdd574/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationFabrics/fabric-pri-eastus/replicationProtectionContainers/pri-cloud-eastus/replicationProtectedItems/testVM/recoveryPoints/b5c2051b-79e3-41ad-9d25-244f6ef8ce7d" },
                 },
             });
-            ArmOperation<VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource> lro = await vaultReplicationFabricReplicationProtectionContainerReplicationProtectionCluster.UnplannedFailoverAsync(WaitUntil.Completed, content);
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource result = lro.Value;
+            ArmOperation<ReplicationProtectionClusterResource> lro = await replicationProtectionClusterResource.UnplannedFailoverAsync(WaitUntil.Completed, content);
+            ReplicationProtectionClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

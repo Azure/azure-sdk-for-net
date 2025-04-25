@@ -297,11 +297,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return GetReplicationProtectedItems().Get(replicatedProtectedItemName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResources in the SiteRecoveryProtectionContainer. </summary>
-        /// <returns> An object representing collection of VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResources and their operations over a VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource. </returns>
-        public virtual VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterCollection GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusters()
+        /// <summary> Gets a collection of ReplicationProtectionClusterResources in the SiteRecoveryProtectionContainer. </summary>
+        /// <returns> An object representing collection of ReplicationProtectionClusterResources and their operations over a ReplicationProtectionClusterResource. </returns>
+        public virtual ReplicationProtectionClusterResourceCollection GetReplicationProtectionClusterResources()
         {
-            return GetCachedClient(client => new VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterCollection(client, Id));
+            return GetCachedClient(client => new ReplicationProtectionClusterResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource"/></description>
+        /// <description><see cref="ReplicationProtectionClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,9 +330,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="replicationProtectionClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="replicationProtectionClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource>> GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterAsync(string replicationProtectionClusterName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReplicationProtectionClusterResource>> GetReplicationProtectionClusterResourceAsync(string replicationProtectionClusterName, CancellationToken cancellationToken = default)
         {
-            return await GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusters().GetAsync(replicationProtectionClusterName, cancellationToken).ConfigureAwait(false);
+            return await GetReplicationProtectionClusterResources().GetAsync(replicationProtectionClusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource"/></description>
+        /// <description><see cref="ReplicationProtectionClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -361,9 +361,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="replicationProtectionClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="replicationProtectionClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource> GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionCluster(string replicationProtectionClusterName, CancellationToken cancellationToken = default)
+        public virtual Response<ReplicationProtectionClusterResource> GetReplicationProtectionClusterResource(string replicationProtectionClusterName, CancellationToken cancellationToken = default)
         {
-            return GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusters().Get(replicationProtectionClusterName, cancellationToken);
+            return GetReplicationProtectionClusterResources().Get(replicationProtectionClusterName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ProtectionContainerMappingResources in the SiteRecoveryProtectionContainer. </summary>

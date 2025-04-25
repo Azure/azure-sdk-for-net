@@ -15,14 +15,14 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A Class representing a VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResult along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource"/> using the GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResult method.
+    /// A Class representing a ReplicationProtectionClusterOperationResultResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ReplicationProtectionClusterOperationResultResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetReplicationProtectionClusterOperationResultResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ReplicationProtectionClusterResource"/> using the GetReplicationProtectionClusterOperationResultResource method.
     /// </summary>
-    public partial class VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource : ArmResource
+    public partial class ReplicationProtectionClusterOperationResultResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ReplicationProtectionClusterOperationResultResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="resourceName"> The resourceName. </param>
@@ -36,35 +36,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultReplicationProtectionClustersClientDiagnostics;
-        private readonly ReplicationProtectionClustersRestOperations _vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultReplicationProtectionClustersRestClient;
+        private readonly ClientDiagnostics _replicationProtectionClusterOperationResultResourceReplicationProtectionClustersClientDiagnostics;
+        private readonly ReplicationProtectionClustersRestOperations _replicationProtectionClusterOperationResultResourceReplicationProtectionClustersRestClient;
         private readonly ReplicationProtectionClusterData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectionClusters/operationResults";
 
-        /// <summary> Initializes a new instance of the <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource"/> class for mocking. </summary>
-        protected VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource()
+        /// <summary> Initializes a new instance of the <see cref="ReplicationProtectionClusterOperationResultResource"/> class for mocking. </summary>
+        protected ReplicationProtectionClusterOperationResultResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ReplicationProtectionClusterOperationResultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource(ArmClient client, ReplicationProtectionClusterData data) : this(client, data.Id)
+        internal ReplicationProtectionClusterOperationResultResource(ArmClient client, ReplicationProtectionClusterData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ReplicationProtectionClusterOperationResultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ReplicationProtectionClusterOperationResultResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultReplicationProtectionClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultReplicationProtectionClustersApiVersion);
-            _vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultReplicationProtectionClustersRestClient = new ReplicationProtectionClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultReplicationProtectionClustersApiVersion);
+            _replicationProtectionClusterOperationResultResourceReplicationProtectionClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string replicationProtectionClusterOperationResultResourceReplicationProtectionClustersApiVersion);
+            _replicationProtectionClusterOperationResultResourceReplicationProtectionClustersRestClient = new ReplicationProtectionClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, replicationProtectionClusterOperationResultResourceReplicationProtectionClustersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -108,21 +108,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource"/></description>
+        /// <description><see cref="ReplicationProtectionClusterOperationResultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReplicationProtectionClusterOperationResultResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultReplicationProtectionClustersClientDiagnostics.CreateScope("VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource.Get");
+            using var scope = _replicationProtectionClusterOperationResultResourceReplicationProtectionClustersClientDiagnostics.CreateScope("ReplicationProtectionClusterOperationResultResource.Get");
             scope.Start();
             try
             {
-                var response = await _vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultReplicationProtectionClustersRestClient.GetOperationResultsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new ResourceIdentifier(Id.Name), cancellationToken).ConfigureAwait(false);
+                var response = await _replicationProtectionClusterOperationResultResourceReplicationProtectionClustersRestClient.GetOperationResultsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new ResourceIdentifier(Id.Name), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReplicationProtectionClusterOperationResultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,21 +148,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource"/></description>
+        /// <description><see cref="ReplicationProtectionClusterOperationResultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ReplicationProtectionClusterOperationResultResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultReplicationProtectionClustersClientDiagnostics.CreateScope("VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource.Get");
+            using var scope = _replicationProtectionClusterOperationResultResourceReplicationProtectionClustersClientDiagnostics.CreateScope("ReplicationProtectionClusterOperationResultResource.Get");
             scope.Start();
             try
             {
-                var response = _vaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultReplicationProtectionClustersRestClient.GetOperationResults(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new ResourceIdentifier(Id.Name), cancellationToken);
+                var response = _replicationProtectionClusterOperationResultResourceReplicationProtectionClustersRestClient.GetOperationResults(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, new ResourceIdentifier(Id.Name), cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReplicationProtectionClusterOperationResultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -191,27 +191,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource.CreateResourceIdentifier" /> to create a <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ReplicationProtectionClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationProtectionClusterResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationProtectionClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource"/> object. </returns>
-        public virtual VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReplicationProtectionClusterResource"/> object. </returns>
+        public virtual ReplicationProtectionClusterResource GetReplicationProtectionClusterResource(ResourceIdentifier id)
         {
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource.ValidateResourceId(id);
-            return new VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource(Client, id);
+            ReplicationProtectionClusterResource.ValidateResourceId(id);
+            return new ReplicationProtectionClusterResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource.CreateResourceIdentifier" /> to create a <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ReplicationProtectionClusterOperationResultResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationProtectionClusterOperationResultResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationProtectionClusterOperationResultResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource"/> object. </returns>
-        public virtual VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReplicationProtectionClusterOperationResultResource"/> object. </returns>
+        public virtual ReplicationProtectionClusterOperationResultResource GetReplicationProtectionClusterOperationResultResource(ResourceIdentifier id)
         {
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource.ValidateResourceId(id);
-            return new VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource(Client, id);
+            ReplicationProtectionClusterOperationResultResource.ValidateResourceId(id);
+            return new ReplicationProtectionClusterOperationResultResource(Client, id);
         }
 
         /// <summary>

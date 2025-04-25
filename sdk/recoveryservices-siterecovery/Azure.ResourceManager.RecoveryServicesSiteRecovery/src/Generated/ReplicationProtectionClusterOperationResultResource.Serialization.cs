@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    public partial class VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterOperationResultResource : IJsonModel<ReplicationProtectionClusterData>
+    public partial class ReplicationProtectionClusterOperationResultResource : IJsonModel<ReplicationProtectionClusterData>
     {
         void IJsonModel<ReplicationProtectionClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ReplicationProtectionClusterData>)Data).Write(writer, options);
 

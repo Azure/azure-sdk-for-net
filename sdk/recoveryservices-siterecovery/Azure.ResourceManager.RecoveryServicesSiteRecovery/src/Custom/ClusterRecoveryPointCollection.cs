@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A class representing a collection of <see cref="ClusterRecoveryPointResource"/> and their operations.
-    /// Each <see cref="ClusterRecoveryPointResource"/> in the collection will belong to the same instance of <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource"/>.
-    /// To get a <see cref="ClusterRecoveryPointCollection"/> instance call the GetClusterRecoveryPoints method from an instance of <see cref="VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource"/>.
+    /// Each <see cref="ClusterRecoveryPointResource"/> in the collection will belong to the same instance of <see cref="ReplicationProtectionClusterResource"/>.
+    /// To get a <see cref="ClusterRecoveryPointCollection"/> instance call the GetClusterRecoveryPoints method from an instance of <see cref="ReplicationProtectionClusterResource"/>.
     /// </summary>
     public partial class ClusterRecoveryPointCollection : ArmCollection, IEnumerable<ClusterRecoveryPointResource>, IAsyncEnumerable<ClusterRecoveryPointResource>
     {

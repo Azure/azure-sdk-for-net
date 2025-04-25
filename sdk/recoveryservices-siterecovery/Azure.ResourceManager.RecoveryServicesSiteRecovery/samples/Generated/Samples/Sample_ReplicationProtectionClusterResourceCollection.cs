@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 {
-    public partial class Sample_VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterCollection
+    public partial class Sample_ReplicationProtectionClusterResourceCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             ResourceIdentifier siteRecoveryProtectionContainerResourceId = SiteRecoveryProtectionContainerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName);
             SiteRecoveryProtectionContainerResource siteRecoveryProtectionContainer = client.GetSiteRecoveryProtectionContainerResource(siteRecoveryProtectionContainerResourceId);
 
-            // get the collection of this VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterCollection collection = siteRecoveryProtectionContainer.GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusters();
+            // get the collection of this ReplicationProtectionClusterResource
+            ReplicationProtectionClusterResourceCollection collection = siteRecoveryProtectionContainer.GetReplicationProtectionClusterResources();
 
             // invoke the operation
             string replicationProtectionClusterName = "cluster12";
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
                     PolicyId = new ResourceIdentifier("/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationPolicies/24-hour-retention-policy"),
                 },
             };
-            ArmOperation<VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, replicationProtectionClusterName, data);
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource result = lro.Value;
+            ArmOperation<ReplicationProtectionClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, replicationProtectionClusterName, data);
+            ReplicationProtectionClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             ResourceIdentifier siteRecoveryProtectionContainerResourceId = SiteRecoveryProtectionContainerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName);
             SiteRecoveryProtectionContainerResource siteRecoveryProtectionContainer = client.GetSiteRecoveryProtectionContainerResource(siteRecoveryProtectionContainerResourceId);
 
-            // get the collection of this VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterCollection collection = siteRecoveryProtectionContainer.GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusters();
+            // get the collection of this ReplicationProtectionClusterResource
+            ReplicationProtectionClusterResourceCollection collection = siteRecoveryProtectionContainer.GetReplicationProtectionClusterResources();
 
             // invoke the operation
             string replicationProtectionClusterName = "cluster1";
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource result = await collection.GetAsync(replicationProtectionClusterName);
+            ReplicationProtectionClusterResource result = await collection.GetAsync(replicationProtectionClusterName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -120,11 +120,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             ResourceIdentifier siteRecoveryProtectionContainerResourceId = SiteRecoveryProtectionContainerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName);
             SiteRecoveryProtectionContainerResource siteRecoveryProtectionContainer = client.GetSiteRecoveryProtectionContainerResource(siteRecoveryProtectionContainerResourceId);
 
-            // get the collection of this VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterCollection collection = siteRecoveryProtectionContainer.GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusters();
+            // get the collection of this ReplicationProtectionClusterResource
+            ReplicationProtectionClusterResourceCollection collection = siteRecoveryProtectionContainer.GetReplicationProtectionClusterResources();
 
             // invoke the operation and iterate over the result
-            await foreach (VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource item in collection.GetAllAsync())
+            await foreach (ReplicationProtectionClusterResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -158,8 +158,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             ResourceIdentifier siteRecoveryProtectionContainerResourceId = SiteRecoveryProtectionContainerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName);
             SiteRecoveryProtectionContainerResource siteRecoveryProtectionContainer = client.GetSiteRecoveryProtectionContainerResource(siteRecoveryProtectionContainerResourceId);
 
-            // get the collection of this VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterCollection collection = siteRecoveryProtectionContainer.GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusters();
+            // get the collection of this ReplicationProtectionClusterResource
+            ReplicationProtectionClusterResourceCollection collection = siteRecoveryProtectionContainer.GetReplicationProtectionClusterResources();
 
             // invoke the operation
             string replicationProtectionClusterName = "cluster1";
@@ -190,13 +190,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             ResourceIdentifier siteRecoveryProtectionContainerResourceId = SiteRecoveryProtectionContainerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName);
             SiteRecoveryProtectionContainerResource siteRecoveryProtectionContainer = client.GetSiteRecoveryProtectionContainerResource(siteRecoveryProtectionContainerResourceId);
 
-            // get the collection of this VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterCollection collection = siteRecoveryProtectionContainer.GetVaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusters();
+            // get the collection of this ReplicationProtectionClusterResource
+            ReplicationProtectionClusterResourceCollection collection = siteRecoveryProtectionContainer.GetReplicationProtectionClusterResources();
 
             // invoke the operation
             string replicationProtectionClusterName = "cluster1";
-            NullableResponse<VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource> response = await collection.GetIfExistsAsync(replicationProtectionClusterName);
-            VaultReplicationFabricReplicationProtectionContainerReplicationProtectionClusterResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ReplicationProtectionClusterResource> response = await collection.GetIfExistsAsync(replicationProtectionClusterName);
+            ReplicationProtectionClusterResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
