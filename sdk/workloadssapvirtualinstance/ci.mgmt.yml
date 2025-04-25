@@ -1,7 +1,6 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
 trigger: none
-
 pr:
   branches:
     include:
@@ -12,7 +11,7 @@ pr:
   paths:
     include:
     - sdk/workloads/ci.mgmt.yml
-    - sdk/workloads/Azure.ResourceManager.SapVirtualInstances/
+    - sdk/workloads/Azure.ResourceManager.WorkloadsSapVirtualInstance/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -20,5 +19,5 @@ extends:
     ServiceDirectory: workloads
     LimitForPullRequest: true
     Artifacts:
-    - name: Azure.ResourceManager.SapVirtualInstances
-      safeName: AzureResourceManagerSapVirtualInstances
+    - name: Azure.ResourceManager.WorkloadsSapVirtualInstance
+      safeName: AzureResourceManagerWorkloadsSapVirtualInstance
