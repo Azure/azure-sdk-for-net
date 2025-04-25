@@ -981,6 +981,21 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             containerClient.Verify(r => r.Uri, Times.Exactly(1));
         }
 
+        [RecordedTest]
+        public async Task GetLastConsumable()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobChangeFeedClient changeFeedClient = service.GetChangeFeedClient();
+
+            // Act
+            DateTimeOffset? lastConsumable = await changeFeedClient.GetLastConsumableAsync();
+
+            // Assert
+            DateTimeOffset expectedLastConsumable = new DateTimeOffset();
+            Assert.AreEqual(expectedLastConsumable, lastConsumable.Value);
+        }
+
         public static Task<Page<BlobHierarchyItem>> GetYearsPathShortFuncAsync(string continuation, int? pageSizeHint)
             => Task.FromResult(GetYearsPathShortFunc(continuation, pageSizeHint));
 
