@@ -6,7 +6,7 @@ This sample demonstrates how to call type related API using `TypeDefinitionClien
 
 First we need to create the DataMapClient using `Azure.Identity`.
 
-The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) provides [role-based access control](https://docs.microsoft.com/azure/role-based-access-control/overview) support for authentication using Azure Active Directory.In order to leverage role-based access control for Service Bus, please refer to the [role-based access control documentation](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-role-based-access-control). The simplest way to get started using the `Azure.Identity` library is to use the [DefaultAzureCredential](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet).
+The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) provides [role-based access control](https://learn.microsoft.com/azure/role-based-access-control/overview) support for authentication using Azure Active Directory.In order to leverage role-based access control for Service Bus, please refer to the [role-based access control documentation](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-role-based-access-control). The simplest way to get started using the `Azure.Identity` library is to use the [DefaultAzureCredential](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet).
 
 ```C# Snippet:CreateDataMapClient
 Uri endpoint = TestEnvironment.Endpoint;

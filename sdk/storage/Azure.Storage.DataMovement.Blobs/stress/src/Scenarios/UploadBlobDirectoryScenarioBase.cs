@@ -23,11 +23,11 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             int? blobSize,
             int? blobCount,
             TransferManagerOptions transferManagerOptions,
-            DataTransferOptions dataTransferOptions,
+            TransferOptions transferOptions,
             TokenCredential tokenCredential,
             Metrics metrics,
             string testRunId)
-            : base(destinationBlobUri, blobSize, transferManagerOptions, dataTransferOptions, tokenCredential, metrics, testRunId)
+            : base(destinationBlobUri, blobSize, transferManagerOptions, transferOptions, tokenCredential, metrics, testRunId)
         {
             _blobCount = blobCount ?? DataMovementBlobStressConstants.DefaultObjectCount;
         }
@@ -58,12 +58,12 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                     StorageResource sourceResource = await TestSetupHelper.GetTemporaryFileStorageResourceAsync(disposingLocalDirectory.DirectoryPath);
 
                     // Create Destination Storage Resource
-                    StorageResource destinationResource = _blobsStorageResourceProvider.FromClient(
+                    StorageResource destinationResource = BlobsStorageResourceProvider.FromClient(
                         destinationContainerClient,
                         new()
                         {
-                            BlobDirectoryPrefix = pathPrefix,
-                            BlobType = new(blobType)
+                            BlobPrefix = pathPrefix,
+                            BlobType = blobType
                         });
 
                     // Upload
@@ -76,7 +76,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                         TransferValidator.GetLocalFileLister(disposingLocalDirectory.DirectoryPath),
                         TransferValidator.GetBlobLister(destinationContainerClient, default),
                         _blobCount,
-                        _dataTransferOptions,
+                        _transferOptions,
                         cancellationToken);
                 }
                 catch (TaskCanceledException)

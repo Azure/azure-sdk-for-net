@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGlobalRulestackData(document.RootElement, options);
                     }
                 default:

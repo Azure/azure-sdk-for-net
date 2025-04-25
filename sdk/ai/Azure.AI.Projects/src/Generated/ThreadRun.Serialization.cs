@@ -126,7 +126,7 @@ namespace Azure.AI.Projects
             if (IncompleteDetails != null)
             {
                 writer.WritePropertyName("incomplete_details"u8);
-                writer.WriteStringValue(IncompleteDetails.Value.ToString());
+                writer.WriteObjectValue(IncompleteDetails, options);
             }
             else
             {
@@ -198,7 +198,7 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ToolChoice);
 #else
-                using (JsonDocument document = JsonDocument.Parse(ToolChoice))
+                using (JsonDocument document = JsonDocument.Parse(ToolChoice, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -214,7 +214,7 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ResponseFormat);
 #else
-                using (JsonDocument document = JsonDocument.Parse(ResponseFormat))
+                using (JsonDocument document = JsonDocument.Parse(ResponseFormat, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -251,11 +251,8 @@ namespace Azure.AI.Projects
                     writer.WriteNull("tool_resources");
                 }
             }
-            if (Optional.IsDefined(ParallelToolCalls))
-            {
-                writer.WritePropertyName("parallelToolCalls"u8);
-                writer.WriteBooleanValue(ParallelToolCalls.Value);
-            }
+            writer.WritePropertyName("parallel_tool_calls"u8);
+            writer.WriteBooleanValue(ParallelToolCalls);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -264,7 +261,7 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -309,7 +306,7 @@ namespace Azure.AI.Projects
             DateTimeOffset? completedAt = default;
             DateTimeOffset? cancelledAt = default;
             DateTimeOffset? failedAt = default;
-            IncompleteRunDetails? incompleteDetails = default;
+            IncompleteRunDetails incompleteDetails = default;
             RunCompletionUsage usage = default;
             float? temperature = default;
             float? topP = default;
@@ -320,7 +317,7 @@ namespace Azure.AI.Projects
             BinaryData responseFormat = default;
             IReadOnlyDictionary<string, string> metadata = default;
             UpdateToolResourcesOptions toolResources = default;
-            bool? parallelToolCalls = default;
+            bool parallelToolCalls = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -427,7 +424,7 @@ namespace Azure.AI.Projects
                         incompleteDetails = null;
                         continue;
                     }
-                    incompleteDetails = new IncompleteRunDetails(property.Value.GetString());
+                    incompleteDetails = IncompleteRunDetails.DeserializeIncompleteRunDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("usage"u8))
@@ -535,12 +532,8 @@ namespace Azure.AI.Projects
                     toolResources = UpdateToolResourcesOptions.DeserializeUpdateToolResourcesOptions(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("parallelToolCalls"u8))
+                if (property.NameEquals("parallel_tool_calls"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     parallelToolCalls = property.Value.GetBoolean();
                     continue;
                 }
@@ -603,7 +596,7 @@ namespace Azure.AI.Projects
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeThreadRun(document.RootElement, options);
                     }
                 default:
@@ -617,7 +610,7 @@ namespace Azure.AI.Projects
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ThreadRun FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeThreadRun(document.RootElement);
         }
 

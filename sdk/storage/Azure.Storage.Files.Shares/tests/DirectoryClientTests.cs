@@ -72,6 +72,27 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(createResponse.Value.ETag, propertiesResponse.Value.ETag);
         }
 
+        [Test]
+        public void Ctor_ConnectionString_CustomUri()
+        {
+            var accountName = "accountName";
+            var shareName = "shareName";
+            var directoryName = "directoryName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var fileEndpoint = new Uri("http://customdomain/" + accountName);
+            var fileSecondaryEndpoint = new Uri("http://customdomain/" + accountName + "-secondary");
+
+            var connectionString = new StorageConnectionString(credentials, (default, default), (default, default), (default, default), (fileEndpoint, fileSecondaryEndpoint));
+
+            ShareDirectoryClient directoryClient = new ShareDirectoryClient(connectionString.ToString(true), shareName, directoryName);
+
+            Assert.AreEqual(accountName, directoryClient.AccountName);
+            Assert.AreEqual(shareName, directoryClient.ShareName);
+            Assert.AreEqual(directoryName, directoryClient.Path);
+        }
+
         [RecordedTest]
         public async Task Ctor_AzureSasCredential()
         {
@@ -88,6 +109,24 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Assert.IsNotNull(properties);
+        }
+
+        [Test]
+        public void Ctor_SharedKey_AccountName()
+        {
+            // Arrange
+            var accountName = "accountName";
+            var shareName = "shareName";
+            var directoryName = "directoryName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var shareEndpoint = new Uri($"https://customdomain/{shareName}/{directoryName}");
+
+            ShareDirectoryClient ShareDirectoryClient = new ShareDirectoryClient(shareEndpoint, credentials);
+
+            Assert.AreEqual(accountName, ShareDirectoryClient.AccountName);
+            Assert.AreEqual(shareName, ShareDirectoryClient.ShareName);
+            Assert.AreEqual(directoryName, ShareDirectoryClient.Path);
         }
 
         [RecordedTest]
@@ -157,6 +196,13 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             bool exists = await aadDirClient.ExistsAsync();
             Assert.IsNotNull(exists);
+        }
+
+        [Test]
+        public void Ctor_DevelopmentThrows()
+        {
+            var ex = Assert.Throws<ArgumentException>(() => new ShareDirectoryClient("UseDevelopmentStorage=true", "share", "dir"));
+            Assert.AreEqual("connectionString", ex.ParamName);
         }
 
         [RecordedTest]
@@ -586,6 +632,44 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task CreateAsync_NFS()
+        {
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(nfs: true);
+            ShareClient share = test.Share;
+
+            // Arrange
+            var name = GetNewDirectoryName();
+            ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(name));
+
+            string owner = "345";
+            string group = "123";
+            string fileMode = "7777";
+
+            ShareDirectoryCreateOptions options = new ShareDirectoryCreateOptions
+            {
+                PosixProperties = new FilePosixProperties
+                {
+                    Owner = owner,
+                    Group = group,
+                    FileMode = NfsFileMode.ParseOctalFileMode(fileMode)
+                }
+            };
+
+            // Act
+            Response<ShareDirectoryInfo> response = await directory.CreateAsync(options);
+
+            // Assert
+            Assert.AreEqual(NfsFileType.Directory, response.Value.PosixProperties.FileType);
+            Assert.AreEqual(owner, response.Value.PosixProperties.Owner);
+            Assert.AreEqual(group, response.Value.PosixProperties.Group);
+            Assert.AreEqual(fileMode, response.Value.PosixProperties.FileMode.ToOctalFileMode());
+
+            Assert.IsNull(response.Value.SmbProperties.FileAttributes);
+            Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
+        }
+
+        [RecordedTest]
         public async Task CreateIfNotExists_NotExists()
         {
             // Arrange
@@ -983,6 +1067,27 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task GetPropertiesAsync_NFS()
+        {
+            // Arrange
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(nfs: true);
+
+            // Act
+            Response<ShareDirectoryProperties> response = await test.Directory.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(NfsFileType.Directory, response.Value.PosixProperties.FileType);
+            Assert.AreEqual("0", response.Value.PosixProperties.Owner);
+            Assert.AreEqual("0", response.Value.PosixProperties.Group);
+            Assert.AreEqual("0755", response.Value.PosixProperties.FileMode.ToOctalFileMode());
+
+            Assert.IsNull(response.Value.PosixProperties.LinkCount);
+            Assert.IsNull(response.Value.SmbProperties.FileAttributes);
+            Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
+        }
+
+        [RecordedTest]
         public async Task SetHttpHeadersAsync()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -1219,6 +1324,40 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act
             await directory.SetHttpHeadersAsync();
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
+        public async Task SetHttpHeadersAsync_NFS()
+        {
+            // Arrange
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(nfs: true);
+
+            string owner = "345";
+            string group = "123";
+            string fileMode = "7777";
+
+            ShareDirectorySetHttpHeadersOptions options = new ShareDirectorySetHttpHeadersOptions
+            {
+                PosixProperties = new FilePosixProperties
+                {
+                    Owner = owner,
+                    Group = group,
+                    FileMode = NfsFileMode.ParseOctalFileMode(fileMode)
+                }
+            };
+
+            // Act
+            Response<ShareDirectoryInfo> response = await test.Directory.SetHttpHeadersAsync(options);
+
+            // Assert
+            Assert.AreEqual(owner, response.Value.PosixProperties.Owner);
+            Assert.AreEqual(group, response.Value.PosixProperties.Group);
+            Assert.AreEqual(fileMode, response.Value.PosixProperties.FileMode.ToOctalFileMode());
+
+            Assert.IsNull(response.Value.PosixProperties.LinkCount);
+            Assert.IsNull(response.Value.SmbProperties.FileAttributes);
+            Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
         }
 
         [RecordedTest]
@@ -1904,6 +2043,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [TestCase("%21%27%28%29%3B%5B%5D", "%2B%24%2C%23äÄöÖüÜß%3B")]
         [TestCase("directory", "my cool file")]
         [TestCase("directory", "file")]
+        [TestCase("  ", "  ")]
         [RetryOnException(5, typeof(RequestFailedException))]
         public async Task GetFileClient_SpecialCharacters(string directoryName, string fileName)
         {
@@ -1968,6 +2108,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [TestCase("%21%27%28", "%21%27%28%29%3B%5B%5D%40%26äÄöÖüÜß%3B")]
         [TestCase("directory", "my cool directory")]
         [TestCase("directory0", "directory1")]
+        [TestCase(" ", " ")]
         public async Task GetSubDirectoryClient_SpecialCharacters(string directoryName, string subDirectoryName)
         {
             await using DisposingShare test = await GetTestShareAsync();

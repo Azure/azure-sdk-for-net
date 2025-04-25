@@ -6,46 +6,67 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The reason why the run is incomplete. This will point to which specific token limit was reached over the course of the run. </summary>
-    public readonly partial struct IncompleteRunDetails : IEquatable<IncompleteRunDetails>
+    /// <summary> Details on why the run is incomplete. Will be `null` if the run is not incomplete. </summary>
+    public partial class IncompleteRunDetails
     {
-        private readonly string _value;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IncompleteRunDetails"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public IncompleteRunDetails(string value)
+        /// <param name="reason"> The reason why the run is incomplete. This indicates which specific token limit was reached during the run. </param>
+        internal IncompleteRunDetails(IncompleteDetailsReason reason)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Reason = reason;
         }
 
-        private const string MaxCompletionTokensValue = "max_completion_tokens";
-        private const string MaxPromptTokensValue = "max_prompt_tokens";
+        /// <summary> Initializes a new instance of <see cref="IncompleteRunDetails"/>. </summary>
+        /// <param name="reason"> The reason why the run is incomplete. This indicates which specific token limit was reached during the run. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IncompleteRunDetails(IncompleteDetailsReason reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
 
-        /// <summary> Maximum completion tokens exceeded. </summary>
-        public static IncompleteRunDetails MaxCompletionTokens { get; } = new IncompleteRunDetails(MaxCompletionTokensValue);
-        /// <summary> Maximum prompt tokens exceeded. </summary>
-        public static IncompleteRunDetails MaxPromptTokens { get; } = new IncompleteRunDetails(MaxPromptTokensValue);
-        /// <summary> Determines if two <see cref="IncompleteRunDetails"/> values are the same. </summary>
-        public static bool operator ==(IncompleteRunDetails left, IncompleteRunDetails right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="IncompleteRunDetails"/> values are not the same. </summary>
-        public static bool operator !=(IncompleteRunDetails left, IncompleteRunDetails right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IncompleteRunDetails"/>. </summary>
-        public static implicit operator IncompleteRunDetails(string value) => new IncompleteRunDetails(value);
+        /// <summary> Initializes a new instance of <see cref="IncompleteRunDetails"/> for deserialization. </summary>
+        internal IncompleteRunDetails()
+        {
+        }
 
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is IncompleteRunDetails other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(IncompleteRunDetails other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        /// <summary> The reason why the run is incomplete. This indicates which specific token limit was reached during the run. </summary>
+        public IncompleteDetailsReason Reason { get; }
     }
 }

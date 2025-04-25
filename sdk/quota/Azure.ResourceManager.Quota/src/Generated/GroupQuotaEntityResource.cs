@@ -36,10 +36,8 @@ namespace Azure.ResourceManager.Quota
 
         private readonly ClientDiagnostics _groupQuotaEntityGroupQuotasClientDiagnostics;
         private readonly GroupQuotasRestOperations _groupQuotaEntityGroupQuotasRestClient;
-        private readonly ClientDiagnostics _groupQuotaRequestStatusGroupQuotaLimitsRequestClientDiagnostics;
-        private readonly GroupQuotaLimitsRequestRestOperations _groupQuotaRequestStatusGroupQuotaLimitsRequestRestClient;
-        private readonly ClientDiagnostics _groupQuotaUsagesClientDiagnostics;
-        private readonly GroupQuotaUsagesRestOperations _groupQuotaUsagesRestClient;
+        private readonly ClientDiagnostics _groupQuotaLimitsRequestClientDiagnostics;
+        private readonly GroupQuotaLimitsRequestRestOperations _groupQuotaLimitsRequestRestClient;
         private readonly GroupQuotaEntityData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -67,11 +65,8 @@ namespace Azure.ResourceManager.Quota
             _groupQuotaEntityGroupQuotasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string groupQuotaEntityGroupQuotasApiVersion);
             _groupQuotaEntityGroupQuotasRestClient = new GroupQuotasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaEntityGroupQuotasApiVersion);
-            _groupQuotaRequestStatusGroupQuotaLimitsRequestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", GroupQuotaRequestStatusResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(GroupQuotaRequestStatusResource.ResourceType, out string groupQuotaRequestStatusGroupQuotaLimitsRequestApiVersion);
-            _groupQuotaRequestStatusGroupQuotaLimitsRequestRestClient = new GroupQuotaLimitsRequestRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaRequestStatusGroupQuotaLimitsRequestApiVersion);
-            _groupQuotaUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _groupQuotaUsagesRestClient = new GroupQuotaUsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _groupQuotaLimitsRequestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _groupQuotaLimitsRequestRestClient = new GroupQuotaLimitsRequestRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -118,7 +113,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -149,7 +144,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -187,7 +182,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -218,7 +213,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -236,94 +231,75 @@ namespace Azure.ResourceManager.Quota
             return GetGroupQuotaSubscriptionRequestStatuses().Get(requestId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GroupQuotaLimitResources in the GroupQuotaEntity. </summary>
+        /// <summary> Gets a collection of GroupQuotaLimitListResources in the GroupQuotaEntity. </summary>
+        /// <returns> An object representing collection of GroupQuotaLimitListResources and their operations over a GroupQuotaLimitListResource. </returns>
+        public virtual GroupQuotaLimitListCollection GetGroupQuotaLimitLists()
+        {
+            return GetCachedClient(client => new GroupQuotaLimitListCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the GroupQuotaLimits for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GroupQuotaLimits_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GroupQuotaLimitListResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of GroupQuotaLimitResources and their operations over a GroupQuotaLimitResource. </returns>
-        public virtual GroupQuotaLimitCollection GetGroupQuotaLimits(string resourceProviderName)
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GroupQuotaLimitListResource>> GetGroupQuotaLimitListAsync(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return new GroupQuotaLimitCollection(Client, Id, resourceProviderName);
+            return await GetGroupQuotaLimitLists().GetAsync(resourceProviderName, location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets the GroupQuotaLimits for the specific resource for a specific resource based on the resourceProviders, resourceName and $filter passed.
-        /// The $filter=location eq {location} is required to location specific resources groupQuota.
+        /// Gets the GroupQuotaLimits for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{resourceName}</description>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotaLimits_Get</description>
+        /// <description>GroupQuotaLimits_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GroupQuotaLimitResource"/></description>
+        /// <description><see cref="GroupQuotaLimitListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="resourceName"> Resource name. </param>
-        /// <param name="filter">
-        /// | Field | Supported operators
-        /// |---------------------|------------------------
-        ///
-        ///  location eq {location}
-        ///  Example: $filter=location eq eastus
-        /// </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/>, <paramref name="resourceName"/> or <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GroupQuotaLimitResource>> GetGroupQuotaLimitAsync(string resourceProviderName, string resourceName, string filter, CancellationToken cancellationToken = default)
+        public virtual Response<GroupQuotaLimitListResource> GetGroupQuotaLimitList(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetGroupQuotaLimits(resourceProviderName).GetAsync(resourceName, filter, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the GroupQuotaLimits for the specific resource for a specific resource based on the resourceProviders, resourceName and $filter passed.
-        /// The $filter=location eq {location} is required to location specific resources groupQuota.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotaLimits_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GroupQuotaLimitResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="resourceName"> Resource name. </param>
-        /// <param name="filter">
-        /// | Field | Supported operators
-        /// |---------------------|------------------------
-        ///
-        ///  location eq {location}
-        ///  Example: $filter=location eq eastus
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/>, <paramref name="resourceName"/> or <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<GroupQuotaLimitResource> GetGroupQuotaLimit(string resourceProviderName, string resourceName, string filter, CancellationToken cancellationToken = default)
-        {
-            return GetGroupQuotaLimits(resourceProviderName).Get(resourceName, filter, cancellationToken);
+            return GetGroupQuotaLimitLists().Get(resourceProviderName, location, cancellationToken);
         }
 
         /// <summary> Gets a collection of GroupQuotaRequestStatusResources in the GroupQuotaEntity. </summary>
@@ -346,7 +322,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -377,7 +353,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -395,80 +371,6 @@ namespace Azure.ResourceManager.Quota
             return GetGroupQuotaRequestStatuses().Get(requestId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GroupQuotaEnforcementResources in the GroupQuotaEntity. </summary>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of GroupQuotaEnforcementResources and their operations over a GroupQuotaEnforcementResource. </returns>
-        public virtual GroupQuotaEnforcementCollection GetGroupQuotaEnforcements(string resourceProviderName)
-        {
-            return new GroupQuotaEnforcementCollection(Client, Id, resourceProviderName);
-        }
-
-        /// <summary>
-        /// Gets the GroupQuotas enforcement settings for the ResourceProvider/location. The locations, where GroupQuota enforcement is not enabled will return Not Found.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/locationSettings/{location}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotaLocationSettings_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GroupQuotaEnforcementResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<GroupQuotaEnforcementResource>> GetGroupQuotaEnforcementAsync(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return await GetGroupQuotaEnforcements(resourceProviderName).GetAsync(location, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the GroupQuotas enforcement settings for the ResourceProvider/location. The locations, where GroupQuota enforcement is not enabled will return Not Found.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/locationSettings/{location}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotaLocationSettings_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GroupQuotaEnforcementResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<GroupQuotaEnforcementResource> GetGroupQuotaEnforcement(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return GetGroupQuotaEnforcements(resourceProviderName).Get(location, cancellationToken);
-        }
-
         /// <summary>
         /// Gets the GroupQuotas for the name passed. It will return the GroupQuotas properties only. The details on group quota can be access from the group quota APIs.
         /// <list type="bullet">
@@ -482,7 +384,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -522,7 +424,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -562,7 +464,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -604,7 +506,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -647,7 +549,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -694,7 +596,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -728,210 +630,6 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary>
-        /// Put the GroupQuota requests for a specific ResourceProvider/Location/Resource. the location and resourceName ("name": {"value" : "resourceName") properties are specified in the request body. Only 1 resource quota can be requested.
-        /// Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaRequests/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotaLimitsRequest_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GroupQuotaRequestStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="resourceName"> Resource name. </param>
-        /// <param name="data"> The GroupQuotaRequest body details for specific resourceProvider/location/resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> or <paramref name="resourceName"/> is null. </exception>
-        public virtual async Task<ArmOperation<GroupQuotaRequestStatusResource>> CreateOrUpdateGroupQuotaLimitsRequestAsync(WaitUntil waitUntil, string resourceProviderName, string resourceName, GroupQuotaRequestStatusData data = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            using var scope = _groupQuotaRequestStatusGroupQuotaLimitsRequestClientDiagnostics.CreateScope("GroupQuotaEntityResource.CreateOrUpdateGroupQuotaLimitsRequest");
-            scope.Start();
-            try
-            {
-                var response = await _groupQuotaRequestStatusGroupQuotaLimitsRequestRestClient.CreateOrUpdateAsync(Id.Parent.Name, Id.Name, resourceProviderName, resourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new QuotaArmOperation<GroupQuotaRequestStatusResource>(new GroupQuotaRequestStatusOperationSource(Client), _groupQuotaRequestStatusGroupQuotaLimitsRequestClientDiagnostics, Pipeline, _groupQuotaRequestStatusGroupQuotaLimitsRequestRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, resourceProviderName, resourceName, data).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Put the GroupQuota requests for a specific ResourceProvider/Location/Resource. the location and resourceName ("name": {"value" : "resourceName") properties are specified in the request body. Only 1 resource quota can be requested.
-        /// Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaRequests/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotaLimitsRequest_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GroupQuotaRequestStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="resourceName"> Resource name. </param>
-        /// <param name="data"> The GroupQuotaRequest body details for specific resourceProvider/location/resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> or <paramref name="resourceName"/> is null. </exception>
-        public virtual ArmOperation<GroupQuotaRequestStatusResource> CreateOrUpdateGroupQuotaLimitsRequest(WaitUntil waitUntil, string resourceProviderName, string resourceName, GroupQuotaRequestStatusData data = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            using var scope = _groupQuotaRequestStatusGroupQuotaLimitsRequestClientDiagnostics.CreateScope("GroupQuotaEntityResource.CreateOrUpdateGroupQuotaLimitsRequest");
-            scope.Start();
-            try
-            {
-                var response = _groupQuotaRequestStatusGroupQuotaLimitsRequestRestClient.CreateOrUpdate(Id.Parent.Name, Id.Name, resourceProviderName, resourceName, data, cancellationToken);
-                var operation = new QuotaArmOperation<GroupQuotaRequestStatusResource>(new GroupQuotaRequestStatusOperationSource(Client), _groupQuotaRequestStatusGroupQuotaLimitsRequestClientDiagnostics, Pipeline, _groupQuotaRequestStatusGroupQuotaLimitsRequestRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, resourceProviderName, resourceName, data).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create the GroupQuota requests for a specific ResourceProvider/Location/Resource. the location and resourceName properties are specified in the request body. Only 1 resource quota can be requested. Please note that patch request creates a new groupQuota request.
-        /// Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaRequests/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotaLimitsRequest_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GroupQuotaRequestStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="resourceName"> Resource name. </param>
-        /// <param name="data"> The GroupQuotaRequest body details for specific resourceProvider/location/resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> or <paramref name="resourceName"/> is null. </exception>
-        public virtual async Task<ArmOperation<GroupQuotaRequestStatusResource>> UpdateGroupQuotaLimitsRequestAsync(WaitUntil waitUntil, string resourceProviderName, string resourceName, GroupQuotaRequestStatusData data = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            using var scope = _groupQuotaRequestStatusGroupQuotaLimitsRequestClientDiagnostics.CreateScope("GroupQuotaEntityResource.UpdateGroupQuotaLimitsRequest");
-            scope.Start();
-            try
-            {
-                var response = await _groupQuotaRequestStatusGroupQuotaLimitsRequestRestClient.UpdateAsync(Id.Parent.Name, Id.Name, resourceProviderName, resourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new QuotaArmOperation<GroupQuotaRequestStatusResource>(new GroupQuotaRequestStatusOperationSource(Client), _groupQuotaRequestStatusGroupQuotaLimitsRequestClientDiagnostics, Pipeline, _groupQuotaRequestStatusGroupQuotaLimitsRequestRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, resourceProviderName, resourceName, data).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create the GroupQuota requests for a specific ResourceProvider/Location/Resource. the location and resourceName properties are specified in the request body. Only 1 resource quota can be requested. Please note that patch request creates a new groupQuota request.
-        /// Use the polling API - OperationsStatus URI specified in Azure-AsyncOperation header field, with retry-after duration in seconds to check the intermediate status. This API provides the finals status with the request details and status.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaRequests/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotaLimitsRequest_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GroupQuotaRequestStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="resourceName"> Resource name. </param>
-        /// <param name="data"> The GroupQuotaRequest body details for specific resourceProvider/location/resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> or <paramref name="resourceName"/> is null. </exception>
-        public virtual ArmOperation<GroupQuotaRequestStatusResource> UpdateGroupQuotaLimitsRequest(WaitUntil waitUntil, string resourceProviderName, string resourceName, GroupQuotaRequestStatusData data = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            using var scope = _groupQuotaRequestStatusGroupQuotaLimitsRequestClientDiagnostics.CreateScope("GroupQuotaEntityResource.UpdateGroupQuotaLimitsRequest");
-            scope.Start();
-            try
-            {
-                var response = _groupQuotaRequestStatusGroupQuotaLimitsRequestRestClient.Update(Id.Parent.Name, Id.Name, resourceProviderName, resourceName, data, cancellationToken);
-                var operation = new QuotaArmOperation<GroupQuotaRequestStatusResource>(new GroupQuotaRequestStatusOperationSource(Client), _groupQuotaRequestStatusGroupQuotaLimitsRequestClientDiagnostics, Pipeline, _groupQuotaRequestStatusGroupQuotaLimitsRequestRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, resourceProviderName, resourceName, data).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Get API to check the status of a GroupQuota request by requestId.
         /// <list type="bullet">
         /// <item>
@@ -944,11 +642,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GroupQuotaRequestStatusResource"/></description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -969,9 +663,9 @@ namespace Azure.ResourceManager.Quota
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _groupQuotaRequestStatusGroupQuotaLimitsRequestRestClient.CreateListRequest(Id.Parent.Name, Id.Name, resourceProviderName, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _groupQuotaRequestStatusGroupQuotaLimitsRequestRestClient.CreateListNextPageRequest(nextLink, Id.Parent.Name, Id.Name, resourceProviderName, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GroupQuotaRequestStatusResource(Client, GroupQuotaRequestStatusData.DeserializeGroupQuotaRequestStatusData(e)), _groupQuotaRequestStatusGroupQuotaLimitsRequestClientDiagnostics, Pipeline, "GroupQuotaEntityResource.GetGroupQuotaLimitsRequests", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _groupQuotaLimitsRequestRestClient.CreateListRequest(Id.Parent.Name, Id.Name, resourceProviderName, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _groupQuotaLimitsRequestRestClient.CreateListNextPageRequest(nextLink, Id.Parent.Name, Id.Name, resourceProviderName, filter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GroupQuotaRequestStatusResource(Client, GroupQuotaRequestStatusData.DeserializeGroupQuotaRequestStatusData(e)), _groupQuotaLimitsRequestClientDiagnostics, Pipeline, "GroupQuotaEntityResource.GetGroupQuotaLimitsRequests", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -987,11 +681,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GroupQuotaRequestStatusResource"/></description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1012,73 +702,9 @@ namespace Azure.ResourceManager.Quota
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _groupQuotaRequestStatusGroupQuotaLimitsRequestRestClient.CreateListRequest(Id.Parent.Name, Id.Name, resourceProviderName, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _groupQuotaRequestStatusGroupQuotaLimitsRequestRestClient.CreateListNextPageRequest(nextLink, Id.Parent.Name, Id.Name, resourceProviderName, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GroupQuotaRequestStatusResource(Client, GroupQuotaRequestStatusData.DeserializeGroupQuotaRequestStatusData(e)), _groupQuotaRequestStatusGroupQuotaLimitsRequestClientDiagnostics, Pipeline, "GroupQuotaEntityResource.GetGroupQuotaLimitsRequests", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the GroupQuotas usages and limits(quota). Location is required paramter.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/locationUsages/{location}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotaUsages_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="GroupQuotaResourceUsages"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GroupQuotaResourceUsages> GetGroupQuotaUsagesAsync(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _groupQuotaUsagesRestClient.CreateListRequest(Id.Parent.Name, Id.Name, resourceProviderName, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _groupQuotaUsagesRestClient.CreateListNextPageRequest(nextLink, Id.Parent.Name, Id.Name, resourceProviderName, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => GroupQuotaResourceUsages.DeserializeGroupQuotaResourceUsages(e), _groupQuotaUsagesClientDiagnostics, Pipeline, "GroupQuotaEntityResource.GetGroupQuotaUsages", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the GroupQuotas usages and limits(quota). Location is required paramter.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/locationUsages/{location}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupQuotaUsages_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
-        /// <returns> A collection of <see cref="GroupQuotaResourceUsages"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GroupQuotaResourceUsages> GetGroupQuotaUsages(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _groupQuotaUsagesRestClient.CreateListRequest(Id.Parent.Name, Id.Name, resourceProviderName, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _groupQuotaUsagesRestClient.CreateListNextPageRequest(nextLink, Id.Parent.Name, Id.Name, resourceProviderName, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => GroupQuotaResourceUsages.DeserializeGroupQuotaResourceUsages(e), _groupQuotaUsagesClientDiagnostics, Pipeline, "GroupQuotaEntityResource.GetGroupQuotaUsages", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _groupQuotaLimitsRequestRestClient.CreateListRequest(Id.Parent.Name, Id.Name, resourceProviderName, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _groupQuotaLimitsRequestRestClient.CreateListNextPageRequest(nextLink, Id.Parent.Name, Id.Name, resourceProviderName, filter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GroupQuotaRequestStatusResource(Client, GroupQuotaRequestStatusData.DeserializeGroupQuotaRequestStatusData(e)), _groupQuotaLimitsRequestClientDiagnostics, Pipeline, "GroupQuotaEntityResource.GetGroupQuotaLimitsRequests", "value", "nextLink", cancellationToken);
         }
     }
 }

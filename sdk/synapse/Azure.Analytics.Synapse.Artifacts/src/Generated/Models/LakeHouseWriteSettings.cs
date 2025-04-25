@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Microsoft Fabric LakeHouse Files write settings. </summary>
+    /// <summary> Microsoft Fabric Lakehouse Files write settings. </summary>
     public partial class LakeHouseWriteSettings : StoreWriteSettings
     {
         /// <summary> Initializes a new instance of <see cref="LakeHouseWriteSettings"/>. </summary>

@@ -18,6 +18,16 @@ namespace Azure.Communication
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
+            if (CallAutomation.Optional.IsDefined(IsAnonymous))
+            {
+                writer.WritePropertyName("isAnonymous"u8);
+                writer.WriteBooleanValue(IsAnonymous.Value);
+            }
+            if (CallAutomation.Optional.IsDefined(AssertedId))
+            {
+                writer.WritePropertyName("assertedId"u8);
+                writer.WriteStringValue(AssertedId);
+            }
             writer.WriteEndObject();
         }
 
@@ -28,6 +38,8 @@ namespace Azure.Communication
                 return null;
             }
             string value = default;
+            bool? isAnonymous = default;
+            string assertedId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -35,15 +47,29 @@ namespace Azure.Communication
                     value = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("isAnonymous"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isAnonymous = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("assertedId"u8))
+                {
+                    assertedId = property.Value.GetString();
+                    continue;
+                }
             }
-            return new PhoneNumberIdentifierModel(value);
+            return new PhoneNumberIdentifierModel(value, isAnonymous, assertedId);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static PhoneNumberIdentifierModel FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePhoneNumberIdentifierModel(document.RootElement);
         }
 

@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using Azure.Core;
 using Azure.Storage.Files.Shares.Models;
 
@@ -16,14 +18,14 @@ namespace Azure.Storage.Files.Shares
     {
         internal static void AssertValidFilePermissionAndKey(string filePermission, string filePermissionKey)
         {
-            if (filePermission != null && filePermissionKey != null)
-            {
-                throw Errors.CannotBothBeNotNull(nameof(filePermission), nameof(filePermissionKey));
-            }
-
             if (filePermission != null && Encoding.UTF8.GetByteCount(filePermission) > Constants.File.MaxFilePermissionHeaderSize)
             {
                 throw Errors.MustBeLessThanOrEqualTo(nameof(filePermission), Constants.File.MaxFilePermissionHeaderSize);
+            }
+
+            if (filePermission != null && filePermissionKey != null)
+            {
+                throw new ArgumentException("filePermission and filePermissionKey cannot both be set");
             }
         }
 
@@ -113,6 +115,13 @@ namespace Azure.Storage.Files.Shares
                     FileChangedOn = response.Headers.FileChangeTime,
                     FileId = response.Headers.FileId,
                     ParentId = response.Headers.FileParentId
+                },
+                PosixProperties = new FilePosixProperties
+                {
+                    FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
+                    Owner = response.Headers.Owner,
+                    Group = response.Headers.Group,
+                    FileType = response.Headers.NfsFileType,
                 }
             };
         }
@@ -138,6 +147,13 @@ namespace Azure.Storage.Files.Shares
                     FileChangedOn = response.Headers.FileChangeTime,
                     FileId = response.Headers.FileId,
                     ParentId = response.Headers.FileParentId
+                },
+                PosixProperties = new FilePosixProperties()
+                {
+                    FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
+                    Owner = response.Headers.Owner,
+                    Group = response.Headers.Group,
+                    FileType = response.Headers.NfsFileType,
                 }
             };
         }
@@ -161,6 +177,12 @@ namespace Azure.Storage.Files.Shares
                     FileChangedOn = response.Headers.FileChangeTime,
                     FileId = response.Headers.FileId,
                     ParentId = response.Headers.FileParentId
+                },
+                PosixProperties = new FilePosixProperties
+                {
+                    FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
+                    Owner = response.Headers.Owner,
+                    Group = response.Headers.Group
                 }
             };
         }
@@ -279,7 +301,7 @@ namespace Azure.Storage.Files.Shares
                 return null;
             }
 
-            return new ShareFileInfo
+            ShareFileInfo shareFileInfo = new ShareFileInfo
             {
                 ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
@@ -293,8 +315,17 @@ namespace Azure.Storage.Files.Shares
                     FileChangedOn = response.Headers.FileChangeTime,
                     FileId = response.Headers.FileId,
                     ParentId = response.Headers.FileParentId
+                },
+                PosixProperties = new FilePosixProperties()
+                {
+                    FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
+                    Owner = response.Headers.Owner,
+                    Group = response.Headers.Group,
+                    FileType = response.Headers.NfsFileType,
                 }
             };
+
+            return shareFileInfo;
         }
 
         internal static ShareFileCopyInfo ToShareFileCopyInfo(this ResponseWithHeaders<FileStartCopyHeaders> response)
@@ -347,7 +378,15 @@ namespace Azure.Storage.Files.Shares
                 },
                 LeaseDuration = response.Headers.LeaseDuration.GetValueOrDefault(),
                 LeaseState = response.Headers.LeaseState.GetValueOrDefault(),
-                LeaseStatus = response.Headers.LeaseStatus.GetValueOrDefault()
+                LeaseStatus = response.Headers.LeaseStatus.GetValueOrDefault(),
+                PosixProperties = new FilePosixProperties()
+                {
+                    FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
+                    Owner = response.Headers.Owner,
+                    Group = response.Headers.Group,
+                    FileType = response.Headers.NfsFileType,
+                    LinkCount = response.Headers.LinkCount
+                }
             };
 
             if (response.Headers.ContentEncoding != null)
@@ -383,6 +422,13 @@ namespace Azure.Storage.Files.Shares
                     FileChangedOn = response.Headers.FileChangeTime,
                     FileId = response.Headers.FileId,
                     ParentId = response.Headers.FileParentId
+                },
+                PosixProperties = new FilePosixProperties()
+                {
+                    FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
+                    Owner = response.Headers.Owner,
+                    Group = response.Headers.Group,
+                    LinkCount = response.Headers.LinkCount
                 }
             };
         }
@@ -883,6 +929,13 @@ namespace Azure.Storage.Files.Shares
                         FileChangedOn = response.Headers.FileChangeTime,
                         FileId = response.Headers.FileId,
                         ParentId = response.Headers.FileParentId
+                    },
+                    PosixProperties = new FilePosixProperties
+                    {
+                        FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
+                        Owner = response.Headers.Owner,
+                        Group = response.Headers.Group,
+                        LinkCount = response.Headers.LinkCount,
                     }
                 }
             };
@@ -998,6 +1051,78 @@ namespace Azure.Storage.Files.Shares
                     PermissionFormat = response.Value.Format
                 },
                 response.GetRawResponse());
+        }
+
+        internal static ShareFileSymbolicLinkInfo ToFileSymbolicLinkInfo(this ResponseWithHeaders<FileGetSymbolicLinkHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new ShareFileSymbolicLinkInfo
+            {
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                LinkText = response.Headers.LinkText
+            };
+        }
+
+        internal static ShareFileInfo ToShareFileInfo(this ResponseWithHeaders<FileCreateSymbolicLinkHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+            return new ShareFileInfo
+            {
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                SmbProperties = new FileSmbProperties
+                {
+                    FileCreatedOn = response.Headers.FileCreationTime,
+                    FileLastWrittenOn = response.Headers.FileLastWriteTime,
+                    FileChangedOn = response.Headers.FileChangeTime,
+                    FileId = response.Headers.FileId,
+                    ParentId = response.Headers.FileParentId
+                },
+                PosixProperties = new FilePosixProperties()
+                {
+                    FileType = response.Headers.NfsFileType,
+                    FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
+                    Owner = response.Headers.Owner,
+                    Group = response.Headers.Group
+                }
+            };
+        }
+
+        internal static ShareFileInfo ToShareFileInfo(this ResponseWithHeaders<FileCreateHardLinkHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+            return new ShareFileInfo
+            {
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                SmbProperties = new FileSmbProperties
+                {
+                    FileCreatedOn = response.Headers.FileCreationTime,
+                    FileLastWrittenOn = response.Headers.FileLastWriteTime,
+                    FileChangedOn = response.Headers.FileChangeTime,
+                    FileId = response.Headers.FileId,
+                    ParentId = response.Headers.FileParentId
+                },
+                PosixProperties = new FilePosixProperties()
+                {
+                    FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
+                    Owner = response.Headers.Owner,
+                    Group = response.Headers.Group,
+                    LinkCount = response.Headers.LinkCount,
+                    FileType = response.Headers.NfsFileType
+                }
+            };
         }
     }
 }

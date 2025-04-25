@@ -565,9 +565,9 @@ namespace Azure.AI.Translation.Document
         public virtual AsyncPageable<DocumentStatusResult> GetDocumentsStatusAsync(Guid translationId, int? maxCount = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> documentIds = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderby = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(translationId, maxCount, skip, maxpagesize, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, translationId, maxCount, skip, maxpagesize, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DocumentStatusResult.DeserializeDocumentStatusResult(e), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetDocumentsStatus", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(translationId, maxCount, skip, pageSizeHint, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, translationId, maxCount, skip, pageSizeHint, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DocumentStatusResult.DeserializeDocumentStatusResult(e), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetDocumentsStatus", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Returns the status for all documents in a batch document translation request. </summary>
@@ -668,9 +668,9 @@ namespace Azure.AI.Translation.Document
         public virtual Pageable<DocumentStatusResult> GetDocumentsStatus(Guid translationId, int? maxCount = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> documentIds = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderby = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(translationId, maxCount, skip, maxpagesize, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, translationId, maxCount, skip, maxpagesize, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DocumentStatusResult.DeserializeDocumentStatusResult(e), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetDocumentsStatus", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(translationId, maxCount, skip, pageSizeHint, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, translationId, maxCount, skip, pageSizeHint, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DocumentStatusResult.DeserializeDocumentStatusResult(e), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetDocumentsStatus", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -738,9 +738,9 @@ namespace Azure.AI.Translation.Document
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual AsyncPageable<BinaryData> GetDocumentsStatusAsync(Guid translationId, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> documentIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderby, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(translationId, maxCount, skip, maxpagesize, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, translationId, maxCount, skip, maxpagesize, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetDocumentsStatus", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(translationId, maxCount, skip, pageSizeHint, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, translationId, maxCount, skip, pageSizeHint, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetDocumentsStatus", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -808,9 +808,9 @@ namespace Azure.AI.Translation.Document
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual Pageable<BinaryData> GetDocumentsStatus(Guid translationId, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> documentIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderby, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(translationId, maxCount, skip, maxpagesize, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, translationId, maxCount, skip, maxpagesize, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetDocumentsStatus", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(translationId, maxCount, skip, pageSizeHint, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, translationId, maxCount, skip, pageSizeHint, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetDocumentsStatus", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Submit a document translation request to the Document Translation service. </summary>

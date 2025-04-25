@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            GroupQuotasEntityBasePatch properties = default;
+            GroupQuotasEntityPatchProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    properties = GroupQuotasEntityBasePatch.DeserializeGroupQuotasEntityBasePatch(property.Value, options);
+                    properties = GroupQuotasEntityPatchProperties.DeserializeGroupQuotasEntityPatchProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGroupQuotaEntityPatch(document.RootElement, options);
                     }
                 default:

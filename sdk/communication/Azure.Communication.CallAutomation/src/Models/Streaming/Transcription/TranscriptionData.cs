@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -11,19 +12,20 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     public class TranscriptionData : StreamingData
     {
-        internal TranscriptionData(string text, string format, double confidence, ulong offset, ulong duration, IEnumerable<WordData> words, string participantRawID, string resultStatus)
+        internal TranscriptionData(string text, string format, double confidence, long offset, long duration, IEnumerable<WordDataInternal> words, string participantRawID, TranscriptionResultState resultState)
         {
             Text = text;
             Format = ConvertToTextFormatEnum(format);
             Confidence = confidence;
-            Offset = offset;
-            Duration = duration;
-            Words = words;
+            Offset = TimeSpan.FromTicks(offset);
+            Duration = TimeSpan.FromTicks(duration);
+            if (words != null)
+                Words = ConvertToWordData(words);
             if (participantRawID != null)
             {
                 Participant = CommunicationIdentifier.FromRawId(participantRawID);
             }
-            ResultStatus = ConvertToResultStatusEnum(resultStatus);
+            ResultState = resultState;
         }
 
         /// <summary>
@@ -45,12 +47,12 @@ namespace Azure.Communication.CallAutomation
         /// The position of this payload
         /// </summary>
 
-        public ulong Offset { get; set; }
+        public TimeSpan Offset { get; set; }
 
         /// <summary>
         /// Duration in ticks. 1 tick = 100 nanoseconds.
         /// </summary>
-        public ulong Duration { get; set; }
+        public TimeSpan Duration { get; set; }
 
         /// <summary>
         /// The result for each word of the phrase
@@ -65,24 +67,19 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Status of the result of transcription
         /// </summary>
-        public ResultStatus ResultStatus { get; set; }
-
-        private static ResultStatus ConvertToResultStatusEnum(string resultStatus)
-        {
-            if ("Intermediate".Equals(resultStatus, StringComparison.OrdinalIgnoreCase))
-                return ResultStatus.Intermediate;
-            else if ("Final".Equals(resultStatus, StringComparison.OrdinalIgnoreCase))
-                return ResultStatus.Final;
-            else
-                throw new NotSupportedException(resultStatus);
-        }
+        public TranscriptionResultState ResultState { get; set; }
 
         private static TextFormat ConvertToTextFormatEnum(string format)
         {
-            if ("Display".Equals(format, StringComparison.OrdinalIgnoreCase))
+            if (TextFormat.Display.ToString().Equals(format, StringComparison.OrdinalIgnoreCase))
                 return TextFormat.Display;
             else
                 throw new NotSupportedException(format);
+        }
+
+        private static IEnumerable<WordData> ConvertToWordData(IEnumerable<WordDataInternal> wordData)
+        {
+            return wordData.Select(w => new WordData(w.Text, w.Offset, w.Duration));
         }
     }
 }

@@ -1,0 +1,493 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Aurora-CLU-Prod/models/m1/evaluation/summary-result?api-version=2024-11-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250228.1 (.NET 8.0.13; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "cebbab18-e61a-44d0-a20b-212a10962e7f",
+        "Content-Length": "7102",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 01 Mar 2025 07:44:14 GMT",
+        "request-id": "cebbab18-e61a-44d0-a20b-212a10962e7f",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "194",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "entitiesEvaluation": {
+          "confusionMatrix": {
+            "Date": {
+              "Date": {
+                "normalizedValue": 88.23529,
+                "rawValue": 15.0
+              },
+              "Duration": {
+                "normalizedValue": 5.882353,
+                "rawValue": 1.0
+              },
+              "StartTime": {
+                "normalizedValue": 5.882353,
+                "rawValue": 1.0
+              }
+            },
+            "UserPreferredLanguage": {},
+            "Duration": {
+              "Duration": {
+                "normalizedValue": 85.71429,
+                "rawValue": 6.0
+              },
+              "Date": {
+                "normalizedValue": 14.285714,
+                "rawValue": 1.0
+              }
+            },
+            "Activity.Raise": {
+              "Activity.Raise": {
+                "normalizedValue": 88.23529,
+                "rawValue": 15.0
+              },
+              "$none": {
+                "normalizedValue": 11.764706,
+                "rawValue": 2.0
+              }
+            },
+            "Activity.Edit": {
+              "$none": {
+                "normalizedValue": 38.46154,
+                "rawValue": 5.0
+              },
+              "Activity.Edit": {
+                "normalizedValue": 61.53846,
+                "rawValue": 8.0
+              }
+            },
+            "Activity.Cancel": {
+              "Activity.Cancel": {
+                "normalizedValue": 100.0,
+                "rawValue": 4.0
+              }
+            },
+            "Activity.View": {
+              "Activity.View": {
+                "normalizedValue": 100.0,
+                "rawValue": 2.0
+              }
+            },
+            "Location.Country": {},
+            "TicketNumber": {
+              "TicketNumber": {
+                "normalizedValue": 100.0,
+                "rawValue": 2.0
+              }
+            },
+            "Location.City": {},
+            "Location.Office": {},
+            "StartTime": {
+              "StartTime": {
+                "normalizedValue": 83.333336,
+                "rawValue": 5.0
+              },
+              "Date": {
+                "normalizedValue": 16.666666,
+                "rawValue": 1.0
+              }
+            },
+            "FloorNumber": {
+              "FloorNumber": {
+                "normalizedValue": 100.0,
+                "rawValue": 3.0
+              }
+            },
+            "Capacity": {
+              "Capacity": {
+                "normalizedValue": 75.0,
+                "rawValue": 3.0
+              },
+              "$none": {
+                "normalizedValue": 25.0,
+                "rawValue": 1.0
+              }
+            },
+            "PersonName": {
+              "PersonName": {
+                "normalizedValue": 100.0,
+                "rawValue": 11.0
+              }
+            },
+            "PersonEmail": {
+              "PersonEmail": {
+                "normalizedValue": 100.0,
+                "rawValue": 1.0
+              }
+            },
+            "MeetingRoomsList": {},
+            "SystemName": {},
+            "WhoIs_Manager": {
+              "MeetingRoomsList": {
+                "normalizedValue": 31.818182,
+                "rawValue": 1.4
+              },
+              "WhoIs_Manager": {
+                "normalizedValue": 68.181816,
+                "rawValue": 3.0
+              }
+            },
+            "WhoIs_Peers": {
+              "WhoIs_Peers": {
+                "normalizedValue": 100.0,
+                "rawValue": 4.0
+              }
+            },
+            "WhoIs_WhoAmI": {},
+            "WhoIs_DirectReports": {
+              "WhoIs_DirectReports": {
+                "normalizedValue": 100.0,
+                "rawValue": 2.0
+              }
+            },
+            "FacilityType": {},
+            "OfficeType": {},
+            "OfficeName": {},
+            "RegionName": {},
+            "$none": {
+              "WhoIs_WhoAmI": {
+                "normalizedValue": 2.9303622,
+                "rawValue": 2.761866
+              },
+              "$none": {
+                "normalizedValue": 77.76676,
+                "rawValue": 73.295166
+              },
+              "OfficeType": {
+                "normalizedValue": 1.7489973,
+                "rawValue": 1.6484299
+              },
+              "Activity.Raise": {
+                "normalizedValue": 0.07578629,
+                "rawValue": 0.071428575
+              },
+              "Date": {
+                "normalizedValue": 9.199277,
+                "rawValue": 8.670318
+              },
+              "Location.Country": {
+                "normalizedValue": 0.2074151,
+                "rawValue": 0.19548872
+              },
+              "SystemName": {
+                "normalizedValue": 0.13960633,
+                "rawValue": 0.13157895
+              },
+              "MeetingRoomsList": {
+                "normalizedValue": 0.8252285,
+                "rawValue": 0.7777778
+              },
+              "Duration": {
+                "normalizedValue": 0.76807755,
+                "rawValue": 0.7239131
+              },
+              "StartTime": {
+                "normalizedValue": 5.883772,
+                "rawValue": 5.5454545
+              },
+              "Activity.View": {
+                "normalizedValue": 0.45471773,
+                "rawValue": 0.42857143
+              }
+            }
+          },
+          "entities": {
+            "Activity.Edit": {
+              "f1": 0.761904776096344,
+              "precision": 1.0,
+              "recall": 0.6153846383094788,
+              "truePositiveCount": 8,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 5
+            },
+            "WhoIs_WhoAmI": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "truePositiveCount": 0,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 25,
+              "falseNegativeCount": 0
+            },
+            "OfficeType": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "truePositiveCount": 0,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 6,
+              "falseNegativeCount": 0
+            },
+            "Activity.Raise": {
+              "f1": 0.9090908765792847,
+              "precision": 0.9375,
+              "recall": 0.8823529481887817,
+              "truePositiveCount": 15,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 1,
+              "falseNegativeCount": 2
+            },
+            "Date": {
+              "f1": 0.27586209774017334,
+              "precision": 0.2857142984867096,
+              "recall": 0.2666666805744171,
+              "truePositiveCount": 4,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 10,
+              "falseNegativeCount": 11
+            },
+            "Location.Country": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "truePositiveCount": 0,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 2,
+              "falseNegativeCount": 0
+            },
+            "SystemName": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "truePositiveCount": 0,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 1,
+              "falseNegativeCount": 0
+            },
+            "Activity.Cancel": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 4,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "PersonName": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 11,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "WhoIs_Peers": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 4,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "Duration": {
+              "f1": 0.5,
+              "precision": 0.5,
+              "recall": 0.5,
+              "truePositiveCount": 3,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 3,
+              "falseNegativeCount": 3
+            },
+            "MeetingRoomsList": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "truePositiveCount": 0,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 3,
+              "falseNegativeCount": 0
+            },
+            "StartTime": {
+              "f1": 0.20000000298023224,
+              "precision": 0.20000000298023224,
+              "recall": 0.20000000298023224,
+              "truePositiveCount": 1,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 4,
+              "falseNegativeCount": 4
+            },
+            "Capacity": {
+              "f1": 0.8571428060531616,
+              "precision": 1.0,
+              "recall": 0.75,
+              "truePositiveCount": 3,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 1
+            },
+            "FloorNumber": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 3,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "WhoIs_Manager": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 3,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "Activity.View": {
+              "f1": 0.800000011920929,
+              "precision": 0.6666666865348816,
+              "recall": 1.0,
+              "truePositiveCount": 2,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 1,
+              "falseNegativeCount": 0
+            },
+            "TicketNumber": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 2,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "WhoIs_DirectReports": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 2,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "PersonEmail": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 1,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "UserPreferredLanguage": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "truePositiveCount": 0,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "Location.City": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "truePositiveCount": 0,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "Location.Office": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "truePositiveCount": 0,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "FacilityType": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "truePositiveCount": 0,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "OfficeName": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "truePositiveCount": 0,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "RegionName": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "truePositiveCount": 0,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            }
+          },
+          "microF1": 0.6168225,
+          "microPrecision": 0.5409836,
+          "microRecall": 0.7173913,
+          "macroF1": 0.8202667,
+          "macroPrecision": 0.83932537,
+          "macroRecall": 0.8142936
+        },
+        "intentsEvaluation": {
+          "confusionMatrix": {
+            "None": {
+              "None": {
+                "normalizedValue": 100.0,
+                "rawValue": 49.0
+              }
+            }
+          },
+          "intents": {
+            "None": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 49,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            }
+          },
+          "microF1": 1.0,
+          "microPrecision": 1.0,
+          "microRecall": 1.0,
+          "macroF1": 1.0,
+          "macroPrecision": 1.0,
+          "macroRecall": 1.0
+        },
+        "evaluationOptions": {
+          "kind": "percentage",
+          "trainingSplitPercentage": 80,
+          "testingSplitPercentage": 20
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORING_ENDPOINT": "https://gokulk-test.cognitiveservices.azure.com/",
+    "AZURE_AUTHORING_KEY": "Sanitized",
+    "RandomSeed": "1362262465"
+  }
+}

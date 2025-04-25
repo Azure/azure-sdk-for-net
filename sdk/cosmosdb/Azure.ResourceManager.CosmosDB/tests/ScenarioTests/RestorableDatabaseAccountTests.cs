@@ -284,7 +284,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                                     {
                                         new CosmosDBSpatialType("Point")
                                     }, null),
-                        }, null)
+                        },
+                        new List<CosmosDBVectorIndex>(),
+                        serializedAdditionalRawData: new Dictionary<string, BinaryData>())
                 })
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

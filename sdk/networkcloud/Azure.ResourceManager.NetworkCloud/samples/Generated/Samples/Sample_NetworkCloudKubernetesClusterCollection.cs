@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateKubernetesCluster()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/KubernetesClusters_Create.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-10-01-preview/examples/KubernetesClusters_Create.json
             // this example is just showing the usage of "KubernetesClusters_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudKubernetesClusterData data = new NetworkCloudKubernetesClusterData(
                 new AzureLocation("location"),
                 new ExtendedLocation("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterExtendedLocationName", "CustomLocation"),
-                new ControlPlaneNodeConfiguration(3L, "NC_XXXX")
+                new ControlPlaneNodeConfiguration(3L, "NC_G6_28_v1")
                 {
                     AdministratorConfiguration = new AdministratorConfiguration
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
                 },
                 new InitialAgentPoolConfiguration[]
             {
-new InitialAgentPoolConfiguration(3L, NetworkCloudAgentPoolMode.System, "SystemPool-1", "NC_XXXX")
+new InitialAgentPoolConfiguration(3L, NetworkCloudAgentPoolMode.System, "SystemPool-1", "NC_P46_224_v1")
 {
 AdministratorConfiguration = new AdministratorConfiguration
 {
@@ -85,7 +85,7 @@ PluginType = KubernetesPluginType.Macvlan,
 },
 AvailabilityZones = {"1", "2", "3"},
 Labels = {new KubernetesLabel("kubernetes.label", "true")},
-Taints = {new KubernetesLabel("kubernetes.taint", "true")},
+Taints = {new KubernetesLabel("kubernetes.taint", "true:NoSchedule")},
 UpgradeSettings = new AgentPoolUpgradeSettings
 {
 MaxSurge = "1",
@@ -171,7 +171,7 @@ OnlyUseHostIPs = BfdEnabled.True,
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateKubernetesClusterWithALayer2LoadBalancer()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/KubernetesClusters_L2LoadBalancer_Create.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-10-01-preview/examples/KubernetesClusters_L2LoadBalancer_Create.json
             // this example is just showing the usage of "KubernetesClusters_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -194,7 +194,7 @@ OnlyUseHostIPs = BfdEnabled.True,
             NetworkCloudKubernetesClusterData data = new NetworkCloudKubernetesClusterData(
                 new AzureLocation("location"),
                 new ExtendedLocation("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterExtendedLocationName", "CustomLocation"),
-                new ControlPlaneNodeConfiguration(3L, "NC_XXXX")
+                new ControlPlaneNodeConfiguration(3L, "NC_G6_28_v1")
                 {
                     AdministratorConfiguration = new AdministratorConfiguration
                     {
@@ -205,7 +205,7 @@ OnlyUseHostIPs = BfdEnabled.True,
                 },
                 new InitialAgentPoolConfiguration[]
             {
-new InitialAgentPoolConfiguration(3L, NetworkCloudAgentPoolMode.System, "SystemPool-1", "NC_XXXX")
+new InitialAgentPoolConfiguration(3L, NetworkCloudAgentPoolMode.System, "SystemPool-1", "NC_P46_224_v1")
 {
 AdministratorConfiguration = new AdministratorConfiguration
 {
@@ -234,7 +234,7 @@ PluginType = KubernetesPluginType.Macvlan,
 },
 AvailabilityZones = {"1", "2", "3"},
 Labels = {new KubernetesLabel("kubernetes.label", "true")},
-Taints = {new KubernetesLabel("kubernetes.taint", "true")},
+Taints = {new KubernetesLabel("kubernetes.taint", "true:NoSchedule")},
 UpgradeSettings = new AgentPoolUpgradeSettings
 {
 MaxSurge = "1",
@@ -300,7 +300,7 @@ AutoAssign = BfdEnabled.True,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetKubernetesCluster()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/KubernetesClusters_Get.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-10-01-preview/examples/KubernetesClusters_Get.json
             // this example is just showing the usage of "KubernetesClusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -333,7 +333,7 @@ AutoAssign = BfdEnabled.True,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListKubernetesClustersForResourceGroup()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/KubernetesClusters_ListByResourceGroup.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-10-01-preview/examples/KubernetesClusters_ListByResourceGroup.json
             // this example is just showing the usage of "KubernetesClusters_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -368,7 +368,7 @@ AutoAssign = BfdEnabled.True,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetKubernetesCluster()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/KubernetesClusters_Get.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-10-01-preview/examples/KubernetesClusters_Get.json
             // this example is just showing the usage of "KubernetesClusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -397,7 +397,7 @@ AutoAssign = BfdEnabled.True,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetKubernetesCluster()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/KubernetesClusters_Get.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-10-01-preview/examples/KubernetesClusters_Get.json
             // this example is just showing the usage of "KubernetesClusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

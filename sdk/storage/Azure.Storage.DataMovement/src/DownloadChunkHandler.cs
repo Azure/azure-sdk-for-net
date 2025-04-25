@@ -4,17 +4,16 @@
 using System;
 using System.IO;
 using System.Threading;
-using System.Threading.Channels;
 using System.Threading.Tasks;
 using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class DownloadChunkHandler : IDisposable
+    internal class DownloadChunkHandler : IAsyncDisposable
     {
         #region Delegate Definitions
         public delegate Task CopyToDestinationFileInternal(long offset, long length, Stream stream, long expectedLength, bool initial);
-        public delegate void ReportProgressInBytes(long bytesWritten);
+        public delegate ValueTask ReportProgressInBytes(long bytesWritten);
         public delegate Task QueueCompleteFileDownloadInternal();
         public delegate Task InvokeFailedEventHandlerInternal(Exception ex);
         #endregion Delegate Definitions
@@ -33,15 +32,16 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Create channel of <see cref="QueueDownloadChunkArgs"/> to keep track to handle
-        /// writing downloaded chunks to the destination as well as tracking overall progress.
+        /// Create channel of <see cref="QueueDownloadChunkArgs"/> to handle writing
+        /// downloaded chunks to the destination as well as tracking overall progress.
         /// </summary>
-        private readonly Channel<QueueDownloadChunkArgs> _downloadRangeChannel;
-        private readonly Task _processDownloadRangeEvents;
+        private readonly IProcessor<QueueDownloadChunkArgs> _downloadRangeProcessor;
         private readonly CancellationToken _cancellationToken;
 
         private long _bytesTransferred;
         private readonly long _expectedLength;
+
+        internal bool _isChunkHandlerRunning;
 
         /// <summary>
         /// The controller for downloading the chunks to each file.
@@ -66,30 +66,18 @@ namespace Azure.Storage.DataMovement
             Behaviors behaviors,
             CancellationToken cancellationToken)
         {
-            // Set bytes transferred to the length of bytes we got back from the initial
-            // download request
-            _bytesTransferred = currentTransferred;
-
-            // The size of the channel should never exceed 50k (limit on blocks in a block blob).
-            // and that's in the worst case that we never read from the channel and had a maximum chunk blob.
-            _downloadRangeChannel = Channel.CreateUnbounded<QueueDownloadChunkArgs>(
-                new UnboundedChannelOptions()
-                {
-                    // Single reader is required as we can only have one writer to the destination.
-                    SingleReader = true,
-                });
-            _processDownloadRangeEvents = Task.Run(NotifyOfPendingChunkDownloadEvents);
-            _cancellationToken = cancellationToken;
-
-            _expectedLength = expectedLength;
-
             if (expectedLength <= 0)
             {
                 throw Errors.InvalidExpectedLength(expectedLength);
             }
             Argument.AssertNotNull(behaviors, nameof(behaviors));
 
-            // Set values
+            _cancellationToken = cancellationToken;
+            // Set bytes transferred to the length of bytes we got back from the initial
+            // download request
+            _bytesTransferred = currentTransferred;
+            _expectedLength = expectedLength;
+
             _copyToDestinationFile = behaviors.CopyToDestinationFile
                 ?? throw Errors.ArgumentNull(nameof(behaviors.CopyToDestinationFile));
             _reportProgressInBytes = behaviors.ReportProgressInBytes
@@ -98,61 +86,59 @@ namespace Azure.Storage.DataMovement
                 ?? throw Errors.ArgumentNull(nameof(behaviors.InvokeFailedHandler));
             _queueCompleteFileDownload = behaviors.QueueCompleteFileDownload
                 ?? throw Errors.ArgumentNull(nameof(behaviors.QueueCompleteFileDownload));
+
+            _downloadRangeProcessor = ChannelProcessing.NewProcessor<QueueDownloadChunkArgs>(
+                readers: 1,
+                capacity: DataMovementConstants.Channels.DownloadChunkCapacity);
+            _downloadRangeProcessor.Process = ProcessDownloadRange;
+            _isChunkHandlerRunning = true;
         }
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
-            _downloadRangeChannel.Writer.TryComplete();
+            _isChunkHandlerRunning = false;
+            await _downloadRangeProcessor.DisposeAsync().ConfigureAwait(false);
         }
 
-        public void QueueChunk(QueueDownloadChunkArgs args)
+        public async ValueTask QueueChunkAsync(QueueDownloadChunkArgs args)
         {
-            _downloadRangeChannel.Writer.TryWrite(args);
+            await _downloadRangeProcessor.QueueAsync(args).ConfigureAwait(false);
         }
 
-        private async Task NotifyOfPendingChunkDownloadEvents()
+        private async Task ProcessDownloadRange(QueueDownloadChunkArgs args, CancellationToken cancellationToken = default)
         {
             try
             {
-                while (await _downloadRangeChannel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
+                // Copy the current chunk to the destination
+                using (Stream content = args.Content)
                 {
-                    // Read one event argument at a time.
-                    QueueDownloadChunkArgs args = await _downloadRangeChannel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
+                    await _copyToDestinationFile(
+                        args.Offset,
+                        args.Length,
+                        content,
+                        _expectedLength,
+                        initial: _bytesTransferred == 0).ConfigureAwait(false);
+                }
+                _bytesTransferred += args.Length;
+                await _reportProgressInBytes(args.Length).ConfigureAwait(false);
 
-                    // Copy the current chunk to the destination
-                    using (Stream content = args.Content)
-                    {
-                        await _copyToDestinationFile(
-                            args.Offset,
-                            args.Length,
-                            content,
-                            _expectedLength,
-                            initial: _bytesTransferred == 0).ConfigureAwait(false);
-                    }
-                    UpdateBytesAndRange(args.Length);
-
-                    // Check if we finished downloading the blob
-                    if (_bytesTransferred == _expectedLength)
-                    {
-                        await _queueCompleteFileDownload().ConfigureAwait(false);
-                    }
+                // Check if we finished downloading the blob
+                if (_bytesTransferred == _expectedLength)
+                {
+                    await _queueCompleteFileDownload().ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
             {
-                // This will trigger the job part to call Dispose on this object
-                await _invokeFailedEventHandler(ex).ConfigureAwait(false);
+                // If we are disposing, we don't want to invoke the failed event handler
+                // because the error is likely due to the job part being disposed and was
+                // invoked by another InvokeFailedEventHandler call.
+                if (_isChunkHandlerRunning)
+                {
+                    // This will trigger the job part to call Dispose on this object
+                    _ = Task.Run(() => _invokeFailedEventHandler(ex));
+                }
             }
-        }
-
-        /// <summary>
-        /// Moves the downloader to the next range and updates/reports bytes transferred.
-        /// </summary>
-        /// <param name="bytesDownloaded"></param>
-        private void UpdateBytesAndRange(long bytesDownloaded)
-        {
-            _bytesTransferred += bytesDownloaded;
-            _reportProgressInBytes(bytesDownloaded);
         }
     }
 }

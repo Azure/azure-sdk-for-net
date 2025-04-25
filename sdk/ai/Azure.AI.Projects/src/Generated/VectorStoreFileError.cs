@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Details on the error that may have ocurred while processing a file for this vector store. </summary>
+    /// <summary> Details on the error that may have occurred while processing a file for this vector store. </summary>
     public partial class VectorStoreFileError
     {
         /// <summary>

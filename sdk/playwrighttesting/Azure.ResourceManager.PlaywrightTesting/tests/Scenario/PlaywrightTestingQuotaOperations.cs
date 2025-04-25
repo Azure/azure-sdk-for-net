@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.PlaywrightTesting.Models;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
-        public async Task QuotaOperationTests()
+        public async Task QuotaOperationTestsScalable()
         {
             //GET API
             Response<PlaywrightTestingQuotaResource> getResponse = await _quotaCollection.GetAsync(PlaywrightTestingQuotaName.ScalableExecution);
@@ -49,9 +50,11 @@ namespace Azure.ResourceManager.PlaywrightTesting.Tests.Scenario
             Assert.IsNotNull(getResponse.Value);
             Assert.IsNotNull(getResponse.Value.Data);
             Assert.IsNotNull(getResponse.Value.Data.Name);
+            Assert.IsNotNull(getResponse.Value.Data.Properties);
+            Assert.AreEqual(PlaywrightTestingProvisioningState.Succeeded, getResponse.Value.Data.Properties.ProvisioningState);
+            Assert.IsNotNull(getResponse.Value.Data.Properties.FreeTrial);
+            Assert.IsNotNull(getResponse.Value.Data.Properties.FreeTrial.AccountId);
             Assert.AreEqual(PlaywrightTestingQuotaName.ScalableExecution.ToString(), getResponse.Value.Data.Name);
-            Assert.IsNotNull(getResponse.Value.Data.FreeTrial);
-            Assert.IsNotNull(getResponse.Value.Data.FreeTrial.AccountId);
 
             //List API
             List<PlaywrightTestingQuotaResource> listResponse = await _quotaCollection.GetAllAsync().ToEnumerableAsync();
@@ -62,9 +65,26 @@ namespace Azure.ResourceManager.PlaywrightTesting.Tests.Scenario
                 Assert.IsNotNull(resource.Data);
                 Assert.IsNotNull(resource.Data.Name);
                 Assert.IsNotNull(resource.Data.Id);
-                Assert.IsNotNull(resource.Data.FreeTrial);
-                Assert.IsNotNull(resource.Data.FreeTrial.AccountId);
+                Assert.IsNotNull(resource.Data.Properties.FreeTrial);
+                Assert.IsNotNull(resource.Data.Properties.FreeTrial.AccountId);
             }
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task QuotaOperationTestsReporting()
+        {
+            //GET API
+            Response<PlaywrightTestingQuotaResource> getResponseReporting = await _quotaCollection.GetAsync(PlaywrightTestingQuotaName.Reporting);
+            Assert.NotNull(getResponseReporting);
+            Assert.IsNotNull(getResponseReporting.Value);
+            Assert.IsNotNull(getResponseReporting.Value.Data);
+            Assert.IsNotNull(getResponseReporting.Value.Data.Name);
+            Assert.AreEqual(PlaywrightTestingQuotaName.Reporting.ToString(), getResponseReporting.Value.Data.Name);
+            Assert.IsNotNull(getResponseReporting.Value.Data.Properties);
+            Assert.AreEqual(PlaywrightTestingProvisioningState.Succeeded, getResponseReporting.Value.Data.Properties.ProvisioningState);
+            Assert.IsNotNull(getResponseReporting.Value.Data.Properties.FreeTrial);
+            Assert.IsNotNull(getResponseReporting.Value.Data.Properties.FreeTrial.AccountId);
         }
     }
 }

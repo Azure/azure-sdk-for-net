@@ -19,12 +19,12 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             Uri destinationBlobUri,
             int? blobSize,
             TransferManagerOptions transferManagerOptions,
-            DataTransferOptions dataTransferOptions,
+            TransferOptions transferOptions,
             TokenCredential sourceTokenCredential,
             TokenCredential destinationTokenCredential,
             Metrics metrics,
             string testRunId)
-            : base(sourceBlobUri, destinationBlobUri, blobSize, transferManagerOptions, dataTransferOptions, sourceTokenCredential, destinationTokenCredential, metrics, testRunId)
+            : base(sourceBlobUri, destinationBlobUri, blobSize, transferManagerOptions, transferOptions, sourceTokenCredential, destinationTokenCredential, metrics, testRunId)
         {
         }
 

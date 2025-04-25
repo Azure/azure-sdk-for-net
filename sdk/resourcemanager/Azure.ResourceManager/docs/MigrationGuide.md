@@ -68,7 +68,7 @@ As you can see, now authentication is handled by Azure.Identity, and just a sing
 
 **Old**
 ```C#
-ServiceClientCredentials credentials = getMyCredentials(); 
+ServiceClientCredentials credentials = getMyCredentials();
 ResourceManagementClient resourcesClient = new ResourceManagementClient(credentials);
 
 string rgName = "QuickStartRG";
@@ -112,7 +112,7 @@ AvailabilitySet inputAvailabilitySet = new AvailabilitySet
     PlatformUpdateDomainCount = 1,
     Sku = new CM.Sku
     {
-        Name = AvailabilitySetSkuTypes.Aligned 
+        Name = AvailabilitySetSkuTypes.Aligned
     }
 };
 string aSetName = "quickstartvm_aSet";
@@ -130,7 +130,7 @@ ArmOperation<AvailabilitySetResource> availabilitySetOperation = await availabil
 AvailabilitySetResource availabilitySet = availabilitySetOperation.Value;
 ```
 
-Parameters can be specified via the `AvailabilitySetData` object, in here, the basic default only requires the location. The availability set is created using  the AvailabilitySetsCollection returned from the `GetAvailabilitySets()` extension method instead of using another client. 
+Parameters can be specified via the `AvailabilitySetData` object, in here, the basic default only requires the location. The availability set is created using  the AvailabilitySetsCollection returned from the `GetAvailabilitySets()` extension method instead of using another client.
 
 ### Create a Security Group
 
@@ -256,7 +256,7 @@ ArmOperation<NetworkInterfaceResource> networkInterfaceOperation = await network
 NetworkInterfaceResource networkInterface = networkInterfaceOperation.Value;
 ```
 
-This step is similar to the old SDK, however, notice that the `CreateOrUpdateAsync()` method returns the network interface that has been created. 
+This step is similar to the old SDK, however, notice that the `CreateOrUpdateAsync()` method returns the network interface that has been created.
 
 ### Create a Virtual Machine
 
@@ -510,7 +510,7 @@ In both libraries, subnets are defined inside virtual networks, however, with th
 
 **Old**
 ```C#
-var virutalMachine = azure.VirtualMachines.Define(virtualMachineName)
+var virtualMachine = azure.VirtualMachines.Define(virtualMachineName)
         .WithRegion(Region.USEast)
         .WithExistingResourceGroup(ResourceGroupName)
         .WithExistingPrimaryNetwork(virtualNetwork)
@@ -718,4 +718,4 @@ await virtualNetwork.DeleteAsync(WaitUntil.Completed);
 
 ## Next steps
 
-Check out [more .NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK) we have available.
+Check out [more .NET Management Library Code Samples](https://learn.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK) we have available.

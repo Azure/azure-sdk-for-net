@@ -52,7 +52,7 @@ namespace Azure.AI.Language.Text
         /// <param name="redactedText"> Returns redacted text. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/>, <paramref name="redactedText"/> or <paramref name="entities"/> is null. </exception>
-        internal PiiActionResult(string id, IEnumerable<DocumentWarning> warnings, string redactedText, IEnumerable<NamedEntity> entities)
+        internal PiiActionResult(string id, IEnumerable<DocumentWarning> warnings, string redactedText, IEnumerable<PiiEntity> entities)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(warnings, nameof(warnings));
@@ -73,7 +73,7 @@ namespace Azure.AI.Language.Text
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PiiActionResult(string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, string redactedText, IReadOnlyList<NamedEntity> entities, DetectedLanguage detectedLanguage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PiiActionResult(string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, string redactedText, IReadOnlyList<PiiEntity> entities, DetectedLanguage detectedLanguage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Warnings = warnings;
@@ -98,7 +98,7 @@ namespace Azure.AI.Language.Text
         /// <summary> Returns redacted text. </summary>
         public string RedactedText { get; }
         /// <summary> Recognized entities in the document. </summary>
-        public IReadOnlyList<NamedEntity> Entities { get; }
+        public IReadOnlyList<PiiEntity> Entities { get; }
         /// <summary> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </summary>
         public DetectedLanguage DetectedLanguage { get; }
     }

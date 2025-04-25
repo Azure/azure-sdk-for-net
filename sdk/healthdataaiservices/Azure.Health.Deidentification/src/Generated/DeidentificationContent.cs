@@ -57,16 +57,14 @@ namespace Azure.Health.Deidentification
 
         /// <summary> Initializes a new instance of <see cref="DeidentificationContent"/>. </summary>
         /// <param name="inputText"> Input text to de-identify. </param>
-        /// <param name="operation"> Operation to perform on the input. </param>
-        /// <param name="dataType"> Data type of the input. </param>
-        /// <param name="redactionFormat"> Format of the redacted output. Only valid when OperationType is "Redact". </param>
+        /// <param name="operationType"> Operation to perform on the input documents. </param>
+        /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationContent(string inputText, OperationType? operation, DocumentDataType? dataType, string redactionFormat, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeidentificationContent(string inputText, DeidentificationOperationType? operationType, DeidentificationCustomizationOptions customizations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InputText = inputText;
-            Operation = operation;
-            DataType = dataType;
-            RedactionFormat = redactionFormat;
+            OperationType = operationType;
+            Customizations = customizations;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -77,11 +75,9 @@ namespace Azure.Health.Deidentification
 
         /// <summary> Input text to de-identify. </summary>
         public string InputText { get; }
-        /// <summary> Operation to perform on the input. </summary>
-        public OperationType? Operation { get; set; }
-        /// <summary> Data type of the input. </summary>
-        public DocumentDataType? DataType { get; set; }
-        /// <summary> Format of the redacted output. Only valid when OperationType is "Redact". </summary>
-        public string RedactionFormat { get; set; }
+        /// <summary> Operation to perform on the input documents. </summary>
+        public DeidentificationOperationType? OperationType { get; set; }
+        /// <summary> Customization parameters to override default service behaviors. </summary>
+        public DeidentificationCustomizationOptions Customizations { get; set; }
     }
 }

@@ -18,11 +18,6 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
-    <!-- The explicit package reference is required to pull a version >4.6.0 which contains a vulnerability.
-         Not versioning will use the version defined in eng/Packages.Data.props.
-         System.Text.Encodings.Web is a dependency for System.Text.Json -->
-    <PackageReference Include="System.Text.Encodings.Web" />
   </ItemGroup>
 
   <!-- Common source from Azure.Core -->

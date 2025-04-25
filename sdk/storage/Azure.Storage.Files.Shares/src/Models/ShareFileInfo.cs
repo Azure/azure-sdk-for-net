@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -31,8 +32,15 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary>
         /// The file's SMB properties.
+        /// Only applicable to files in a SMB share.
         /// </summary>
         public FileSmbProperties SmbProperties { get; set; }
+
+        /// <summary>
+        /// The file's NFS properties.
+        /// Only applicable to files in a NFS share.
+        /// </summary>
+        public FilePosixProperties PosixProperties { get; internal set; }
 
         /// <summary>
         /// Constructor.
@@ -48,6 +56,49 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Creates a new StorageFileInfo instance for mocking.
         /// </summary>
+        public static ShareFileInfo StorageFileInfo(
+            ETag eTag = default,
+            DateTimeOffset lastModified = default,
+            bool isServerEncrypted = default,
+            string filePermissionKey = default,
+            string fileAttributes = default,
+            DateTimeOffset fileCreationTime = default,
+            DateTimeOffset fileLastWriteTime = default,
+            DateTimeOffset fileChangeTime = default,
+            string fileId = default,
+            string fileParentId = default,
+            NfsFileMode nfsFileMode = default,
+            string owner = default,
+            string group = default,
+            NfsFileType nfsFileType = default)
+            => new ShareFileInfo
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                IsServerEncrypted = isServerEncrypted,
+                SmbProperties = new FileSmbProperties
+                {
+                    FileAttributes = ShareModelExtensions.ToFileAttributes(fileAttributes),
+                    FilePermissionKey = filePermissionKey,
+                    FileCreatedOn = fileCreationTime,
+                    FileLastWrittenOn = fileLastWriteTime,
+                    FileChangedOn = fileChangeTime,
+                    FileId = fileId,
+                    ParentId = fileParentId
+                },
+                PosixProperties = new FilePosixProperties
+                {
+                    FileMode = nfsFileMode,
+                    Owner =  owner,
+                    Group = group,
+                    FileType = nfsFileType,
+                }
+            };
+
+        /// <summary>
+        /// Creates a new StorageFileInfo instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ShareFileInfo StorageFileInfo(
             ETag eTag,
             DateTimeOffset lastModified,

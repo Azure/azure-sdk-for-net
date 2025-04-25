@@ -7,9 +7,8 @@ namespace Azure.Data.Tables
     {
         internal const string LegacyCosmosTableDomain = ".table.cosmosdb.";
         internal const string CosmosTableDomain = ".table.cosmos.";
-        internal const string StorageScope = "https://storage.azure.com/.default";
-        internal const string CosmosScope = "https://cosmos.azure.com/.default";
         internal const string ReturnNoContent = "return-no-content";
+        internal const string DefaultScope = ".default";
 
         internal static class CompatSwitches
         {
@@ -17,6 +16,8 @@ namespace Azure.Data.Tables
             public const string DisableEscapeSingleQuotesOnGetEntityEnvVar = "AZURE_DATA_TABLES_DISABLE_ESCAPESINGLEQUOTESONGETENTITY";
             public const string DisableEscapeSingleQuotesOnDeleteEntitySwitchName = "Azure.Data.Tables.DisableEscapeSingleQuotesOnDeleteEntity";
             public const string DisableEscapeSingleQuotesOnDeleteEntityEnvVar = "AZURE_DATA_TABLES_DISABLE_ESCAPESINGLEQUOTESONDELETEENTITY";
+            public const string DisableThrowOnStringComparisonFilterSwitchName = "Azure.Data.Tables.DisableThrowOnStringComparisonFilter";
+            public const string DisableThrowOnStringComparisonFilterEnvVar = "AZURE_DATA_TABLES_DISABLE_THROWONSTRINGCOMPARISONFILTER";
         }
 
         internal static class HeaderNames

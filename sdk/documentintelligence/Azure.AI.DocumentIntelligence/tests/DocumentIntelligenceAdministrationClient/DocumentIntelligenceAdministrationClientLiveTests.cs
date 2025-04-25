@@ -19,7 +19,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
             var client = CreateDocumentIntelligenceAdministrationClient(useApiKey: true);
 
-            Response<ResourceDetails> response = await client.GetResourceInfoAsync();
+            Response<DocumentIntelligenceResourceDetails> response = await client.GetResourceDetailsAsync();
             Response rawResponse = response.GetRawResponse();
 
             Assert.That(rawResponse.Status, Is.EqualTo(200));

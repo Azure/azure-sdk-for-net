@@ -15,7 +15,6 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Kusto.Tests
 {
-    [LiveOnly(Reason = "Kusto tests rely on PrincipalId which can't be stored in recordings.")]
     public class KustoManagementTestBase : ManagementRecordedTestBase<KustoManagementTestEnvironment>
     {
         protected KustoManagementTestEnvironment TE => TestEnvironment;

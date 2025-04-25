@@ -11,7 +11,6 @@ using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
 using Azure.Messaging.ServiceBus.Administration;
 using Azure.Messaging.ServiceBus.Authorization;
-using Azure.Messaging.ServiceBus.Tests.Infrastructure;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Management

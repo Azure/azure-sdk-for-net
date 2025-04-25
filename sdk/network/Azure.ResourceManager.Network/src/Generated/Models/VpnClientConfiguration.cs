@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="aadIssuer"> The AADIssuer property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication. </param>
         /// <param name="vngClientConnectionConfigurations"> per ip address pool connection policy for virtual network gateway P2S client. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VpnClientConfiguration(AddressSpace vpnClientAddressPool, IList<VpnClientRootCertificate> vpnClientRootCertificates, IList<VpnClientRevokedCertificate> vpnClientRevokedCertificates, IList<VpnClientProtocol> vpnClientProtocols, IList<VpnAuthenticationType> vpnAuthenticationTypes, IList<IPsecPolicy> vpnClientIPsecPolicies, string radiusServerAddress, string radiusServerSecret, IList<RadiusServer> radiusServers, string aadTenant, string aadAudience, string aadIssuer, IList<VngClientConnectionConfiguration> vngClientConnectionConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VpnClientConfiguration(VirtualNetworkAddressSpace vpnClientAddressPool, IList<VpnClientRootCertificate> vpnClientRootCertificates, IList<VpnClientRevokedCertificate> vpnClientRevokedCertificates, IList<VpnClientProtocol> vpnClientProtocols, IList<VpnAuthenticationType> vpnAuthenticationTypes, IList<IPsecPolicy> vpnClientIPsecPolicies, string radiusServerAddress, string radiusServerSecret, IList<RadiusServer> radiusServers, string aadTenant, string aadAudience, string aadIssuer, IList<VngClientConnectionConfiguration> vngClientConnectionConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VpnClientAddressPool = vpnClientAddressPool;
             VpnClientRootCertificates = vpnClientRootCertificates;
@@ -91,18 +91,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The reference to the address space resource which represents Address space for P2S VpnClient. </summary>
-        internal AddressSpace VpnClientAddressPool { get; set; }
-        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
-        public IList<string> VpnClientAddressPrefixes
-        {
-            get
-            {
-                if (VpnClientAddressPool is null)
-                    VpnClientAddressPool = new AddressSpace();
-                return VpnClientAddressPool.AddressPrefixes;
-            }
-        }
-
+        public VirtualNetworkAddressSpace VpnClientAddressPool { get; set; }
         /// <summary> VpnClientRootCertificate for virtual network gateway. </summary>
         public IList<VpnClientRootCertificate> VpnClientRootCertificates { get; }
         /// <summary> VpnClientRevokedCertificate for Virtual network gateway. </summary>

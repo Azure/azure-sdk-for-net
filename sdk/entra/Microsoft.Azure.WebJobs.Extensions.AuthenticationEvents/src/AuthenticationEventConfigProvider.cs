@@ -109,7 +109,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                 //We create an event response handler and attach it to the income HTTP message, then on the trigger we set the function response
                 //in the event response handler and after the executor calls the functions we have reference to the function response.
                 WebJobsAuthenticationEventResponseHandler eventsResponseHandler = new WebJobsAuthenticationEventResponseHandler();
+#if NET8_0_OR_GREATER
+                HttpRequestOptionsKey<WebJobsAuthenticationEventResponseHandler> httpRequestOptionsKey = new(WebJobsAuthenticationEventResponseHandler.EventResponseProperty);
+                input.Options.Set(httpRequestOptionsKey, eventsResponseHandler);
+#else
                 input.Properties.Add(WebJobsAuthenticationEventResponseHandler.EventResponseProperty, eventsResponseHandler);
+#endif
 
                 TriggeredFunctionData triggerData = new TriggeredFunctionData()
                 {

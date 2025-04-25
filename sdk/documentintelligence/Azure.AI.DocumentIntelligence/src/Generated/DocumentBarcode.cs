@@ -50,11 +50,10 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="value"> Barcode value. </param>
         /// <param name="span"> Location of the barcode in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the barcode. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> or <paramref name="span"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DocumentBarcode(DocumentBarcodeKind kind, string value, DocumentSpan span, float confidence)
         {
             Argument.AssertNotNull(value, nameof(value));
-            Argument.AssertNotNull(span, nameof(span));
 
             Kind = kind;
             Value = value;

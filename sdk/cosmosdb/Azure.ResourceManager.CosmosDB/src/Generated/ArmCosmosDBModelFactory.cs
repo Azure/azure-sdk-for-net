@@ -17,6 +17,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmCosmosDBModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBChaosFaultResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="cosmosDBChaosFaultSupportedActions"> Indicates whether what action to take for the Chaos Fault. </param>
+        /// <param name="region"> Region of the account where the Chaos Fault is to be enabled/disabled. </param>
+        /// <param name="databaseName"> Database name. </param>
+        /// <param name="containerName"> Container name. </param>
+        /// <param name="provisioningState"> A provisioning state of the Chaos Fault. </param>
+        /// <returns> A new <see cref="CosmosDB.CosmosDBChaosFaultResourceData"/> instance for mocking. </returns>
+        public static CosmosDBChaosFaultResourceData CosmosDBChaosFaultResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CosmosDBChaosFaultSupportedAction? cosmosDBChaosFaultSupportedActions = null, string region = null, string databaseName = null, string containerName = null, string provisioningState = null)
+        {
+            return new CosmosDBChaosFaultResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                cosmosDBChaosFaultSupportedActions,
+                region,
+                databaseName,
+                containerName,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -25,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="kind"> Indicates the type of database account. This can only be set at database account creation. </param>
-        /// <param name="provisioningState"> The status of the Cosmos DB account at the time the operation was called. The status can be one of following. 'Creating' – the Cosmos DB account is being created. When an account is in Creating state, only properties that are specified as input for the Create Cosmos DB account operation are returned. 'Succeeded' – the Cosmos DB account is active for use. 'Updating' – the Cosmos DB account is being updated. 'Deleting' – the Cosmos DB account is being deleted. 'Failed' – the Cosmos DB account failed creation. 'DeletionFailed' – the Cosmos DB account deletion failed. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="documentEndpoint"> The connection endpoint for the Cosmos DB database account. </param>
         /// <param name="databaseAccountOfferType"> The offer type for the Cosmos DB database account. Default value: Standard. </param>
         /// <param name="ipRules"> List of IpRules. </param>
@@ -153,7 +179,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="id"> The unique identifier of the region within the database account. Example: &lt;accountName&gt;-&lt;locationName&gt;. </param>
         /// <param name="locationName"> The name of the region. </param>
         /// <param name="documentEndpoint"> The connection endpoint for the specific region. Example: https://&lt;accountName&gt;-&lt;locationName&gt;.documents.azure.com:443/. </param>
-        /// <param name="provisioningState"> The status of the Cosmos DB account at the time the operation was called. The status can be one of following. 'Creating' – the Cosmos DB account is being created. When an account is in Creating state, only properties that are specified as input for the Create Cosmos DB account operation are returned. 'Succeeded' – the Cosmos DB account is active for use. 'Updating' – the Cosmos DB account is being updated. 'Deleting' – the Cosmos DB account is being deleted. 'Failed' – the Cosmos DB account failed creation. 'DeletionFailed' – the Cosmos DB account deletion failed. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="failoverPriority"> The failover priority of the region. A failover priority of 0 indicates a write region. The maximum value for a failover priority = (total number of regions - 1). Failover priority values must be unique for each of the regions in which the database account exists. </param>
         /// <param name="isZoneRedundant"> Flag to indicate whether or not this region is an AvailabilityZone region. </param>
         /// <returns> A new <see cref="Models.CosmosDBAccountLocation"/> instance for mocking. </returns>
@@ -863,12 +889,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="offerReplacePending"> The throughput replace is pending. </param>
         /// <param name="instantMaximumThroughput"> The offer throughput value to instantly scale up without triggering splits. </param>
         /// <param name="softAllowedMaximumThroughput"> The maximum throughput value or the maximum maxThroughput value (for autoscale) that can be specified. </param>
+        /// <param name="throughputBuckets"> Array of Throughput Bucket limits to be applied to the Cosmos DB container. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
         /// <returns> A new <see cref="Models.ExtendedThroughputSettingsResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedThroughputSettingsResourceInfo ExtendedThroughputSettingsResourceInfo(int? throughput = null, AutoscaleSettingsResourceInfo autoscaleSettings = null, string minimumThroughput = null, string offerReplacePending = null, string instantMaximumThroughput = null, string softAllowedMaximumThroughput = null, string rid = null, float? timestamp = null, ETag? etag = null)
+        public static ExtendedThroughputSettingsResourceInfo ExtendedThroughputSettingsResourceInfo(int? throughput = null, AutoscaleSettingsResourceInfo autoscaleSettings = null, string minimumThroughput = null, string offerReplacePending = null, string instantMaximumThroughput = null, string softAllowedMaximumThroughput = null, IEnumerable<CosmosDBThroughputBucket> throughputBuckets = null, string rid = null, float? timestamp = null, ETag? etag = null)
         {
+            throughputBuckets ??= new List<CosmosDBThroughputBucket>();
+
             return new ExtendedThroughputSettingsResourceInfo(
                 throughput,
                 autoscaleSettings,
@@ -876,6 +905,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 offerReplacePending,
                 instantMaximumThroughput,
                 softAllowedMaximumThroughput,
+                throughputBuckets?.ToList(),
                 serializedAdditionalRawData: null,
                 rid,
                 timestamp,
@@ -889,9 +919,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="offerReplacePending"> The throughput replace is pending. </param>
         /// <param name="instantMaximumThroughput"> The offer throughput value to instantly scale up without triggering splits. </param>
         /// <param name="softAllowedMaximumThroughput"> The maximum throughput value or the maximum maxThroughput value (for autoscale) that can be specified. </param>
+        /// <param name="throughputBuckets"> Array of Throughput Bucket limits to be applied to the Cosmos DB container. </param>
         /// <returns> A new <see cref="Models.ThroughputSettingsResourceInfo"/> instance for mocking. </returns>
-        public static ThroughputSettingsResourceInfo ThroughputSettingsResourceInfo(int? throughput = null, AutoscaleSettingsResourceInfo autoscaleSettings = null, string minimumThroughput = null, string offerReplacePending = null, string instantMaximumThroughput = null, string softAllowedMaximumThroughput = null)
+        public static ThroughputSettingsResourceInfo ThroughputSettingsResourceInfo(int? throughput = null, AutoscaleSettingsResourceInfo autoscaleSettings = null, string minimumThroughput = null, string offerReplacePending = null, string instantMaximumThroughput = null, string softAllowedMaximumThroughput = null, IEnumerable<CosmosDBThroughputBucket> throughputBuckets = null)
         {
+            throughputBuckets ??= new List<CosmosDBThroughputBucket>();
+
             return new ThroughputSettingsResourceInfo(
                 throughput,
                 autoscaleSettings,
@@ -899,6 +932,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 offerReplacePending,
                 instantMaximumThroughput,
                 softAllowedMaximumThroughput,
+                throughputBuckets?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
@@ -1019,14 +1053,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
         /// <param name="materializedViewDefinition"> The configuration for defining Materialized Views. This must be specified only for creating a Materialized View container. </param>
         /// <param name="computedProperties"> List of computed properties. </param>
+        /// <param name="vectorEmbeddings"> The vector embedding policy for the container. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
         /// <returns> A new <see cref="Models.ExtendedCosmosDBSqlContainerResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedCosmosDBSqlContainerResourceInfo ExtendedCosmosDBSqlContainerResourceInfo(string containerName = null, CosmosDBIndexingPolicy indexingPolicy = null, CosmosDBContainerPartitionKey partitionKey = null, int? defaultTtl = null, IEnumerable<CosmosDBUniqueKey> uniqueKeys = null, ConflictResolutionPolicy conflictResolutionPolicy = null, CosmosDBClientEncryptionPolicy clientEncryptionPolicy = null, long? analyticalStorageTtl = null, ResourceRestoreParameters restoreParameters = null, CosmosDBAccountCreateMode? createMode = null, MaterializedViewDefinition materializedViewDefinition = null, IEnumerable<ComputedProperty> computedProperties = null, string rid = null, float? timestamp = null, ETag? etag = null)
+        public static ExtendedCosmosDBSqlContainerResourceInfo ExtendedCosmosDBSqlContainerResourceInfo(string containerName = null, CosmosDBIndexingPolicy indexingPolicy = null, CosmosDBContainerPartitionKey partitionKey = null, int? defaultTtl = null, IEnumerable<CosmosDBUniqueKey> uniqueKeys = null, ConflictResolutionPolicy conflictResolutionPolicy = null, CosmosDBClientEncryptionPolicy clientEncryptionPolicy = null, long? analyticalStorageTtl = null, ResourceRestoreParameters restoreParameters = null, CosmosDBAccountCreateMode? createMode = null, MaterializedViewDefinition materializedViewDefinition = null, IEnumerable<ComputedProperty> computedProperties = null, IEnumerable<CosmosDBVectorEmbedding> vectorEmbeddings = null, string rid = null, float? timestamp = null, ETag? etag = null)
         {
             uniqueKeys ??= new List<CosmosDBUniqueKey>();
             computedProperties ??= new List<ComputedProperty>();
+            vectorEmbeddings ??= new List<CosmosDBVectorEmbedding>();
 
             return new ExtendedCosmosDBSqlContainerResourceInfo(
                 containerName,
@@ -1041,6 +1077,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 createMode,
                 materializedViewDefinition,
                 computedProperties?.ToList(),
+                vectorEmbeddings != null ? new VectorEmbeddingPolicy(vectorEmbeddings?.ToList(), serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null,
                 rid,
                 timestamp,
@@ -2897,15 +2934,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
         /// <param name="materializedViewDefinition"> The configuration for defining Materialized Views. This must be specified only for creating a Materialized View container. </param>
         /// <param name="computedProperties"> List of computed properties. </param>
+        /// <param name="vectorEmbeddings"> The vector embedding policy for the container. </param>
         /// <param name="self"> A system generated property that specifies the addressable path of the container resource. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
         /// <returns> A new <see cref="Models.RestorableSqlContainerPropertiesResourceContainer"/> instance for mocking. </returns>
-        public static RestorableSqlContainerPropertiesResourceContainer RestorableSqlContainerPropertiesResourceContainer(string containerName = null, CosmosDBIndexingPolicy indexingPolicy = null, CosmosDBContainerPartitionKey partitionKey = null, int? defaultTtl = null, IEnumerable<CosmosDBUniqueKey> uniqueKeys = null, ConflictResolutionPolicy conflictResolutionPolicy = null, CosmosDBClientEncryptionPolicy clientEncryptionPolicy = null, long? analyticalStorageTtl = null, ResourceRestoreParameters restoreParameters = null, CosmosDBAccountCreateMode? createMode = null, MaterializedViewDefinition materializedViewDefinition = null, IEnumerable<ComputedProperty> computedProperties = null, string self = null, string rid = null, float? timestamp = null, ETag? etag = null)
+        public static RestorableSqlContainerPropertiesResourceContainer RestorableSqlContainerPropertiesResourceContainer(string containerName = null, CosmosDBIndexingPolicy indexingPolicy = null, CosmosDBContainerPartitionKey partitionKey = null, int? defaultTtl = null, IEnumerable<CosmosDBUniqueKey> uniqueKeys = null, ConflictResolutionPolicy conflictResolutionPolicy = null, CosmosDBClientEncryptionPolicy clientEncryptionPolicy = null, long? analyticalStorageTtl = null, ResourceRestoreParameters restoreParameters = null, CosmosDBAccountCreateMode? createMode = null, MaterializedViewDefinition materializedViewDefinition = null, IEnumerable<ComputedProperty> computedProperties = null, IEnumerable<CosmosDBVectorEmbedding> vectorEmbeddings = null, string self = null, string rid = null, float? timestamp = null, ETag? etag = null)
         {
             uniqueKeys ??= new List<CosmosDBUniqueKey>();
             computedProperties ??= new List<ComputedProperty>();
+            vectorEmbeddings ??= new List<CosmosDBVectorEmbedding>();
 
             return new RestorableSqlContainerPropertiesResourceContainer(
                 containerName,
@@ -2920,6 +2959,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 createMode,
                 materializedViewDefinition,
                 computedProperties?.ToList(),
+                vectorEmbeddings != null ? new VectorEmbeddingPolicy(vectorEmbeddings?.ToList(), serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null,
                 self,
                 rid,
@@ -3296,28 +3336,55 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBChaosFaultResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBTableRoleDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="cosmosDBChaosFaultSupportedActions"> Indicates whether what action to take for the Chaos Fault. </param>
-        /// <param name="region"> Region of the account where the Chaos Fault is to be enabled/disabled. </param>
-        /// <param name="databaseName"> Database name. </param>
-        /// <param name="containerName"> Container name. </param>
-        /// <param name="provisioningState"> A provisioning state of the Chaos Fault. </param>
-        /// <returns> A new <see cref="CosmosDB.CosmosDBChaosFaultResourceData"/> instance for mocking. </returns>
-        public static CosmosDBChaosFaultResourceData CosmosDBChaosFaultResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CosmosDBChaosFaultSupportedAction? cosmosDBChaosFaultSupportedActions = null, string region = null, string databaseName = null, string containerName = null, string provisioningState = null)
+        /// <param name="pathId"> The path id for the Role Definition. </param>
+        /// <param name="roleName"> A user-friendly name for the Role Definition. Must be unique for the database account. </param>
+        /// <param name="roleDefinitionType"> Indicates whether the Role Definition was built-in or user created. </param>
+        /// <param name="assignableScopes"> A set of fully qualified Scopes at or below which Table Role Assignments may be created using this Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Must have at least one element. Scopes higher than Database account are not enforceable as assignable Scopes. Note that resources referenced in assignable Scopes need not exist. </param>
+        /// <param name="permissions"> The set of operations allowed through this Role Definition. </param>
+        /// <returns> A new <see cref="CosmosDB.CosmosDBTableRoleDefinitionData"/> instance for mocking. </returns>
+        public static CosmosDBTableRoleDefinitionData CosmosDBTableRoleDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string pathId = null, string roleName = null, CosmosDBSqlRoleDefinitionType? roleDefinitionType = null, IEnumerable<string> assignableScopes = null, IEnumerable<CosmosDBTableRolePermission> permissions = null)
         {
-            return new CosmosDBChaosFaultResourceData(
+            assignableScopes ??= new List<string>();
+            permissions ??= new List<CosmosDBTableRolePermission>();
+
+            return new CosmosDBTableRoleDefinitionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                cosmosDBChaosFaultSupportedActions,
-                region,
-                databaseName,
-                containerName,
+                pathId,
+                roleName,
+                roleDefinitionType,
+                assignableScopes?.ToList(),
+                permissions?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBTableRoleAssignmentData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="roleDefinitionId"> The unique identifier for the associated Role Definition. </param>
+        /// <param name="scope"> The data plane resource path for which access is being granted through this Table Role Assignment. </param>
+        /// <param name="principalId"> The unique identifier for the associated AAD principal in the AAD graph to which access is being granted through this Table Role Assignment. Tenant ID for the principal is inferred using the tenant associated with the subscription. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="CosmosDB.CosmosDBTableRoleAssignmentData"/> instance for mocking. </returns>
+        public static CosmosDBTableRoleAssignmentData CosmosDBTableRoleAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier roleDefinitionId = null, ResourceIdentifier scope = null, Guid? principalId = null, string provisioningState = null)
+        {
+            return new CosmosDBTableRoleAssignmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                roleDefinitionId,
+                scope,
+                principalId,
                 provisioningState,
                 serializedAdditionalRawData: null);
         }

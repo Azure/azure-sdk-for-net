@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Samples
 
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "EnforceNaming";
@@ -81,7 +81,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
 
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "EnforceNaming";
@@ -133,7 +133,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
 
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "EnforceNaming";
@@ -191,7 +191,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
 
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "securityInitAssignment";
@@ -231,7 +231,7 @@ PolicyDefinitionReferenceId = "8572513655450389710",
 
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "CostManagement";
@@ -279,7 +279,7 @@ In = {"Limit_Skus", "Limit_Locations"},
 
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "CostManagement";
@@ -326,7 +326,7 @@ In = {"eastus2euap", "centraluseuap"},
 
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "EnforceNaming";
@@ -376,7 +376,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
 
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "EnforceNaming";
@@ -403,7 +403,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
 
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "EnforceNaming";
@@ -430,7 +430,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
 
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "EnforceNaming";
@@ -457,7 +457,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
 
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "CostManagement";
@@ -484,7 +484,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
 
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "CostManagement";
@@ -513,7 +513,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
             string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
             string resourceGroupName = "TestResourceGroup";
             string scope = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation and iterate over the result
             string filter = "atScope()";
@@ -549,7 +549,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
             string resourceType = "domainNames";
             string resourceName = "MyTestComputer.cloudapp.net";
             string scope = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation and iterate over the result
             await foreach (PolicyAssignmentResource item in collection.GetAllAsync())
@@ -579,7 +579,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
             // get the collection of this PolicyAssignmentResource
             string managementGroupId = "TestManagementGroup";
             string scope = $"/providers/Microsoft.Management/managementGroups/{managementGroupId}";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation and iterate over the result
             string filter = "atScope()";
@@ -610,7 +610,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
             // get the collection of this PolicyAssignmentResource
             string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
             string scope = $"/subscriptions/{subscriptionId}";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation and iterate over the result
             string filter = "atScope()";
@@ -640,7 +640,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
 
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "EnforceNaming";
@@ -663,7 +663,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
 
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "EnforceNaming";
@@ -686,7 +686,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
 
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "EnforceNaming";
@@ -709,7 +709,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
 
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "CostManagement";
@@ -732,7 +732,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
 
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "CostManagement";
@@ -755,7 +755,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
 
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "EnforceNaming";
@@ -790,7 +790,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
 
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "EnforceNaming";
@@ -825,7 +825,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
 
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "EnforceNaming";
@@ -860,7 +860,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
 
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "CostManagement";
@@ -895,7 +895,7 @@ Value = BinaryData.FromObjectAsJson("-LC"),
 
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            PolicyAssignmentCollection collection = client.GetPolicyAssignments(new ResourceIdentifier(scope));
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "CostManagement";

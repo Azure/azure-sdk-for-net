@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <summary> Initializes a new instance of <see cref="ElasticVersionsListResponse"/>. </summary>
         internal ElasticVersionsListResponse()
         {
-            Value = new ChangeTrackingList<ElasticVersionListFormat>();
+            Value = new ChangeTrackingList<ElasticVersion>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticVersionsListResponse"/>. </summary>
         /// <param name="value"> Results of a list operation. </param>
         /// <param name="nextLink"> Link to the next set of results, if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticVersionsListResponse(IReadOnlyList<ElasticVersionListFormat> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticVersionsListResponse(IReadOnlyList<ElasticVersion> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Elastic.Models
         }
 
         /// <summary> Results of a list operation. </summary>
-        public IReadOnlyList<ElasticVersionListFormat> Value { get; }
+        public IReadOnlyList<ElasticVersion> Value { get; }
         /// <summary> Link to the next set of results, if any. </summary>
         public string NextLink { get; }
     }

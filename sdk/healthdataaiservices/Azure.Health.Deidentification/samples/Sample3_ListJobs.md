@@ -10,7 +10,7 @@ Pageable<DeidentificationJob> jobs = client.GetJobs();
 
 foreach (DeidentificationJob job in jobs)
 {
-    Console.WriteLine($"Job Name: {job.Name}");
+    Console.WriteLine($"Job Name: {job.JobName}");
     Console.WriteLine($"Job Status: {job.Status}");
 }
 ```

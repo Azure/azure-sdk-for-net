@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <summary> Generate the resource identifier of a <see cref="PlaywrightTestingQuotaResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="name"> The name. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, PlaywrightTestingQuotaName name)
+        /// <param name="quotaName"> The quotaName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, PlaywrightTestingQuotaName quotaName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{name}";
+            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{quotaName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -90,19 +90,19 @@ namespace Azure.ResourceManager.PlaywrightTesting
         }
 
         /// <summary>
-        /// Get quota by name.
+        /// Get subscription quota by name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{quotaName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quotas_Get</description>
+        /// <description>Quota_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             scope.Start();
             try
             {
-                var response = await _playwrightTestingQuotaQuotasRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _playwrightTestingQuotaQuotasRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PlaywrightTestingQuotaResource(Client, response.Value), response.GetRawResponse());
@@ -130,19 +130,19 @@ namespace Azure.ResourceManager.PlaywrightTesting
         }
 
         /// <summary>
-        /// Get quota by name.
+        /// Get subscription quota by name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{quotaName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quotas_Get</description>
+        /// <description>Quota_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             scope.Start();
             try
             {
-                var response = _playwrightTestingQuotaQuotasRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                var response = _playwrightTestingQuotaQuotasRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PlaywrightTestingQuotaResource(Client, response.Value), response.GetRawResponse());

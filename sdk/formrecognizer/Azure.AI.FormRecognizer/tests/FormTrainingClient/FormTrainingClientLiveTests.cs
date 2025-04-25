@@ -38,6 +38,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/47689")]
         public async Task StartTrainingCanAuthenticateWithTokenCredential()
         {
             var client = CreateFormTrainingClient(useTokenCredential: true);
@@ -69,9 +70,9 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [RecordedTest]
         [TestCase(true, true)]
-        [TestCase(true, false)]
+        [TestCase(true, false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/47689")]
         [TestCase(false, true)]
-        [TestCase(false, false)]
+        [TestCase(false, false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/47689")]
         public async Task StartTraining(bool singlePage, bool labeled)
         {
             var client = CreateFormTrainingClient();
@@ -132,6 +133,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/47689")]
         public async Task StartTrainingSucceedsWithValidPrefix()
         {
             var client = CreateFormTrainingClient();
@@ -157,6 +159,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/47689")]
         public async Task StartTrainingFailsWithInvalidPrefix()
         {
             var client = CreateFormTrainingClient();
@@ -197,6 +200,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/47689")]
         public async Task StartTrainingWithNoLabelsModelName()
         {
             var client = CreateFormTrainingClient();
@@ -236,7 +240,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [RecordedTest]
         [TestCase(true)]
-        [TestCase(false)]
+        [TestCase(false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/47689")]
         [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public async Task CheckFormTypeinSubmodelAndRecognizedForm(bool labeled)
         {
@@ -394,9 +398,9 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [RecordedTest]
         [TestCase(true, true)]
-        [TestCase(false, true)]
+        [TestCase(false, true, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/47689")]
         [TestCase(true, false)]
-        [TestCase(false, false)]
+        [TestCase(false, false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/47689")]
         public async Task TrainingOps(bool labeled, bool useTokenCredential)
         {
             var client = CreateFormTrainingClient(useTokenCredential);

@@ -4,12 +4,9 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Health.Deidentification.Tests;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Health.Deidentification.Samples
@@ -31,9 +28,9 @@ namespace Azure.Health.Deidentification.Samples
             #endregion
 
             #region Snippet:AzHealthDeidSample1Async_CreateRequest
-            DeidentificationContent content = new("Hello, John!", OperationType.Surrogate, DocumentDataType.Plaintext, null, null);
+            DeidentificationContent content = new("Hello, John!");
 
-            Response<DeidentificationResult> result = await client.DeidentifyAsync(content);
+            Response<DeidentificationResult> result = await client.DeidentifyTextAsync(content);
             string outputString = result.Value.OutputText;
             Console.WriteLine(outputString); // Hello, Tom!
             #endregion

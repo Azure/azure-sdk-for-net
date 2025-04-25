@@ -31,5 +31,11 @@ namespace Azure.Storage.Files.Shares.Models
         /// Optional file permission to set for the file.
         /// </summary>
         public ShareFilePermission FilePermission { get; set; }
+
+        /// <summary>
+        /// Optional properties to set on NFS files.
+        /// Note that this property is only applicable to files created in NFS shares.
+        /// </summary>
+        public FilePosixProperties PosixProperties { get; set; }
     }
 }

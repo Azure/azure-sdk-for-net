@@ -16,7 +16,7 @@ namespace Azure.AI.Projects
     public partial class ConnectionsClient
     {
         /// <summary> Initializes a new instance of AzureAIClient. </summary>
-        /// <param name="connectionString">The Azure AI Studio project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
+        /// <param name="connectionString">The Azure AI Foundry project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionString"/> </exception>
@@ -27,7 +27,7 @@ namespace Azure.AI.Projects
         /// <summary>
         /// Initializes a new instance of AzureAIClient.
         /// </summary>
-        /// <param name="connectionString">The Azure AI Studio project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
+        /// <param name="connectionString">The Azure AI Foundry project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
@@ -43,10 +43,10 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of AzureAIClient. </summary>
-        /// <param name="endpoint"> The Azure AI Studio project endpoint, in the form `https://&lt;azure-region&gt;.api.azureml.ms` or `https://&lt;private-link-guid&gt;.&lt;azure-region&gt;.api.azureml.ms`, where &lt;azure-region&gt; is the Azure region where the project is deployed (e.g. westus) and &lt;private-link-guid&gt; is the GUID of the Enterprise private link. </param>
+        /// <param name="endpoint"> The Azure AI Foundry project endpoint, in the form `https://&lt;azure-region&gt;.api.azureml.ms` or `https://&lt;private-link-guid&gt;.&lt;azure-region&gt;.api.azureml.ms`, where &lt;azure-region&gt; is the Azure region where the project is deployed (e.g. westus) and &lt;private-link-guid&gt; is the GUID of the Enterprise private link. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the Azure Resource Group. </param>
-        /// <param name="projectName"> The Azure AI Studio project name. </param>
+        /// <param name="projectName"> The Azure AI Foundry project name. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -55,10 +55,10 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of AzureAIClient. </summary>
-        /// <param name="endpoint"> The Azure AI Studio project endpoint, in the form `https://&lt;azure-region&gt;.api.azureml.ms` or `https://&lt;private-link-guid&gt;.&lt;azure-region&gt;.api.azureml.ms`, where &lt;azure-region&gt; is the Azure region where the project is deployed (e.g. westus) and &lt;private-link-guid&gt; is the GUID of the Enterprise private link. </param>
+        /// <param name="endpoint"> The Azure AI Foundry project endpoint, in the form `https://&lt;azure-region&gt;.api.azureml.ms` or `https://&lt;private-link-guid&gt;.&lt;azure-region&gt;.api.azureml.ms`, where &lt;azure-region&gt; is the Azure region where the project is deployed (e.g. westus) and &lt;private-link-guid&gt; is the GUID of the Enterprise private link. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the Azure Resource Group. </param>
-        /// <param name="projectName"> The Azure AI Studio project name. </param>
+        /// <param name="projectName"> The Azure AI Foundry project name. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="credential"/> is null. </exception>
@@ -86,10 +86,10 @@ namespace Azure.AI.Projects
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
-        /// <param name="endpoint"> The Azure AI Studio project endpoint, in the form `https://&lt;azure-region&gt;.api.azureml.ms` or `https://&lt;private-link-guid&gt;.&lt;azure-region&gt;.api.azureml.ms`, where &lt;azure-region&gt; is the Azure region where the project is deployed (e.g. westus) and &lt;private-link-guid&gt; is the GUID of the Enterprise private link. </param>
+        /// <param name="endpoint"> The Azure AI Foundry project endpoint, in the form `https://&lt;azure-region&gt;.api.azureml.ms` or `https://&lt;private-link-guid&gt;.&lt;azure-region&gt;.api.azureml.ms`, where &lt;azure-region&gt; is the Azure region where the project is deployed (e.g. westus) and &lt;private-link-guid&gt; is the GUID of the Enterprise private link. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the Azure Resource Group. </param>
-        /// <param name="projectName"> The Azure AI Studio project name. </param>
+        /// <param name="projectName"> The Azure AI Foundry project name. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         internal ConnectionsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, string apiVersion)
         {
@@ -197,7 +197,7 @@ namespace Azure.AI.Projects
         public virtual async Task<Response<ListConnectionsResponse>> GetConnectionsAsync(ConnectionType? category = null, bool? includeAll = null, string target = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetConnectionsAsync(category?.ToSerialString(), includeAll, target, context).ConfigureAwait(false);
+            Response response = await GetConnectionsAsync(category?.ToString(), includeAll, target, context).ConfigureAwait(false);
             return Response.FromValue(ListConnectionsResponse.FromResponse(response), response);
         }
 
@@ -209,7 +209,7 @@ namespace Azure.AI.Projects
         public virtual Response<ListConnectionsResponse> GetConnections(ConnectionType? category = null, bool? includeAll = null, string target = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetConnections(category?.ToSerialString(), includeAll, target, context);
+            Response response = GetConnections(category?.ToString(), includeAll, target, context);
             return Response.FromValue(ListConnectionsResponse.FromResponse(response), response);
         }
 
@@ -524,10 +524,11 @@ namespace Azure.AI.Projects
                 throw new InvalidOperationException("No connections found for the specified parameters.");
             }
 
-            var secret = connections.Value[0];
+            var connection = connections.Value[0];
             return withCredential.GetValueOrDefault()
-                ? await GetConnectionWithSecretsAsync(secret.Name, "ignored").ConfigureAwait(false)
-                : await GetConnectionAsync(secret.Name).ConfigureAwait(false);
+                ? await GetConnectionWithSecretsAsync(connection.Name, "ignored").ConfigureAwait(false)
+                : Response.FromValue(connection, null);
+            ;
         }
 
         /// <summary> Get the details of a single connection. </summary>
@@ -542,13 +543,13 @@ namespace Azure.AI.Projects
 
             if (connections?.Value == null || connections.Value.Count == 0)
             {
-                throw new InvalidOperationException("No connections found for the specified parameters.");
+                throw new InvalidOperationException($"No connections found for '{category}'. At least one connection is required. Please add a new connection in the Azure AI Foundry portal by following the instructions here: https://aka.ms/azsdk/azure-ai-projects/how-to/connections-add");
             }
 
-            var secret = connections.Value[0];
+            ConnectionResponse connection = connections.Value[0];
             return withCredential.GetValueOrDefault()
-                ? GetConnectionWithSecrets(secret.Name, "ignored")
-                : GetConnection(secret.Name);
+                ? GetConnectionWithSecrets(connection.Name, "ignored")
+                : Response.FromValue(connection, null);
         }
 
         // CUSTOM: Fixed the request URI by removing "/agents/v1.0"

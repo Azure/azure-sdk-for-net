@@ -31,12 +31,6 @@ To authenticate in Visual Studio, select the **Tools** > **Options** menu to lau
 
 ![Visual Studio Account Selection][vs_login_image]
 
-#### Authenticate via Visual Studio Code
-
-Developers using Visual Studio Code can use the [Azure Account extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account) to authenticate via the editor. Apps using `DefaultAzureCredential` or `VisualStudioCodeCredential` can then use this account to authenticate calls in their app when running locally.
-
-It's a [known issue](https://github.com/Azure/azure-sdk-for-net/issues/30525) that `VisualStudioCodeCredential` doesn't work with [Azure Account extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account) versions newer than **0.9.11**. A long-term fix to this problem is in progress. In the meantime, [authenticate via the Azure CLI](#authenticate-via-the-azure-cli).
-
 #### Authenticate via the Azure CLI
 
 Developers coding outside of an IDE can also use the [Azure CLI][azure_cli] to authenticate. Apps using `DefaultAzureCredential` or `AzureCliCredential` can then use this account to authenticate calls in their app when running locally.
@@ -82,15 +76,6 @@ As of version 1.10.1, `DefaultAzureCredential` attempts to authenticate with all
 This behavior allows for trying all of the developer tool credentials on your machine while having predictable deployed behavior.
 
 ## Examples
-
-### Authenticate with `DefaultAzureCredential`
-
-This example demonstrates authenticating `SecretClient` from the [Azure.Security.KeyVault.Secrets][secrets_client_library] client library with `DefaultAzureCredential`:
-
-```C# Snippet:AuthenticatingWithDefaultAzureCredential
-// Create a secret client using the DefaultAzureCredential
-var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), new DefaultAzureCredential());
-```
 
 ### Specify a user-assigned managed identity with `DefaultAzureCredential`
 
@@ -154,52 +139,6 @@ While `DefaultAzureCredential` is generally the quickest way to authenticate app
 
 As of version 1.8.0, `ManagedIdentityCredential` supports [token caching](#token-caching).
 
-### Examples
-
-These examples demonstrate authenticating `SecretClient` from the [Azure.Security.KeyVault.Secrets][secrets_client_library] client library with `ManagedIdentityCredential`.
-
-#### Authenticate with a user-assigned managed identity
-
-To authenticate with a user-assigned managed identity, you must specify one of the following IDs for the managed identity.
-
-**Client ID**
-
-```C# Snippet:AuthenticatingWithManagedIdentityCredentialUserAssigned
-string userAssignedClientId = "some client ID";
-
-var credential = new ManagedIdentityCredential(
-    ManagedIdentityId.FromUserAssignedClientId(userAssignedClientId));
-var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
-```
-
-**Resource ID**
-
-```C# Snippet:AuthenticatingWithManagedIdentityCredentialUserAssignedResourceId
-ResourceIdentifier userAssignedResourceId = new ResourceIdentifier(
-    "/subscriptions/<subscriptionID>/resourcegroups/<resource group>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<MI name>");
-
-var credential = new ManagedIdentityCredential(
-    ManagedIdentityId.FromUserAssignedResourceId(userAssignedResourceId));
-var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
-```
-
-**Object ID**
-
-```C# Snippet:AuthenticatingWithManagedIdentityCredentialUserAssignedObjectId
-string userAssignedObjectId = "some object ID";
-
-var credential = new ManagedIdentityCredential(
-    ManagedIdentityId.FromUserAssignedObjectId(userAssignedObjectId));
-var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
-```
-
-#### Authenticate with a system-assigned managed identity
-
-```C# Snippet:AuthenticatingWithManagedIdentityCredentialSystemAssigned
-var credential = new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
-var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
-```
-
 ## Sovereign cloud configuration
 
 By default, credentials authenticate to the Microsoft Entra endpoint for the Azure Public Cloud. To access resources in other clouds, such as Azure US Government or a private cloud, use one of the following solutions:
@@ -224,53 +163,51 @@ Not all credentials require this configuration. Credentials that authenticate th
 
 ### Credential chains
 
-|Credential | Usage | Reference
-|-|-|-
-|[`DefaultAzureCredential`][ref_DefaultAzureCredential]|Provides a simplified authentication experience to quickly start developing apps run in Azure.|[DefaultAzureCredential overview][dac_overview]
-|[`ChainedTokenCredential`][ref_ChainedTokenCredential]|Allows users to define custom authentication flows comprised of multiple credentials.|[ChainedTokenCredential overview][ctc_overview]
+|Credential | Usage | Reference|
+|-|-|-|
+|[`DefaultAzureCredential`][ref_DefaultAzureCredential]|Provides a simplified authentication experience to quickly start developing apps run in Azure.|[DefaultAzureCredential overview][dac_overview]|
+|[`ChainedTokenCredential`][ref_ChainedTokenCredential]|Allows users to define custom authentication flows comprised of multiple credentials.|[ChainedTokenCredential overview][ctc_overview]|
 
 ### Authenticate Azure-hosted apps
 
-|Credential | Usage
-|-|-
-|[`EnvironmentCredential`][ref_EnvironmentCredential]|Authenticates a service principal or user via credential information specified in environment variables.
-|[`ManagedIdentityCredential`][ref_ManagedIdentityCredential]|Authenticates the managed identity of an Azure resource.
-|[`WorkloadIdentityCredential`][ref_WorkloadIdentityCredential]|Supports [Microsoft Entra Workload ID](https://learn.microsoft.com/azure/aks/workload-identity-overview) on Kubernetes.
+|Credential | Usage | Reference|
+|-|-|-|
+|[`EnvironmentCredential`][ref_EnvironmentCredential]|Authenticates a service principal or user via credential information specified in [environment variables](#environment-variables).||
+|[`ManagedIdentityCredential`][ref_ManagedIdentityCredential]|Authenticates the managed identity of an Azure resource.|[user-assigned managed identity][uami_doc]<br>[system-assigned managed identity][sami_doc]|
+|[`WorkloadIdentityCredential`][ref_WorkloadIdentityCredential]|Supports [Microsoft Entra Workload ID](https://learn.microsoft.com/azure/aks/workload-identity-overview) on Kubernetes.||
 
 ### Authenticate service principals
 
-|Credential | Usage | Reference
-|-|-|-
-|[`AzurePipelinesCredential`][ref_AzurePipelinesCredential]|Supports [Microsoft Entra Workload ID](https://learn.microsoft.com/azure/devops/pipelines/release/configure-workload-identity?view=azure-devops) on Azure Pipelines.| [example](https://aka.ms/azsdk/net/identity/azurepipelinescredential/usage)
-|[`ClientAssertionCredential`][ref_ClientAssertionCredential]|Authenticates a service principal using a signed client assertion. |
-|[`ClientCertificateCredential`][ref_ClientCertificateCredential]|Authenticates a service principal using a certificate. | [Service principal authentication](https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals)
-|[`ClientSecretCredential`][ref_ClientSecretCredential]|Authenticates a service principal using a secret. | [Service principal authentication](https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals)
+|Credential | Usage | Reference|
+|-|-|-|
+|[`AzurePipelinesCredential`][ref_AzurePipelinesCredential]|Supports [Microsoft Entra Workload ID](https://learn.microsoft.com/azure/devops/pipelines/release/configure-workload-identity?view=azure-devops) on Azure Pipelines.| [example](https://aka.ms/azsdk/net/identity/azurepipelinescredential/usage)|
+|[`ClientAssertionCredential`][ref_ClientAssertionCredential]|Authenticates a service principal using a signed client assertion.||
+|[`ClientCertificateCredential`][ref_ClientCertificateCredential]|Authenticates a service principal using a certificate. | [Service principal authentication](https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals)|
+|[`ClientSecretCredential`][ref_ClientSecretCredential]|Authenticates a service principal using a secret. | [Service principal authentication](https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals)|
 
 ### Authenticate users
 
-|Credential | Usage | Reference
-|-|-|-
-|[`AuthorizationCodeCredential`][ref_AuthorizationCodeCredential]|Authenticates a user with a previously obtained authorization code. | [OAuth2 authentication code](https://learn.microsoft.com/entra/identity-platform/v2-oauth2-auth-code-flow)
-|[`DeviceCodeCredential`][ref_DeviceCodeCredential]|Interactively authenticates a user on devices with limited UI. | [Device code authentication](https://learn.microsoft.com/entra/identity-platform/v2-oauth2-device-code)
-|[`InteractiveBrowserCredential`][ref_InteractiveBrowserCredential]|Interactively authenticates a user with the default system browser. | [OAuth2 authentication code](https://learn.microsoft.com/entra/identity-platform/v2-oauth2-auth-code-flow)
-|[`OnBehalfOfCredential`][ref_OnBehalfOfCredential]|Propagates the delegated user identity and permissions through the request chain. | [On-behalf-of authentication](https://learn.microsoft.com/entra/identity-platform/v2-oauth2-on-behalf-of-flow)
-|[`UsernamePasswordCredential`][ref_UsernamePasswordCredential]|Authenticates a user with a username and password. | [Username + password authentication](https://learn.microsoft.com/entra/identity-platform/v2-oauth-ropc)
+|Credential | Usage | Reference|
+|-|-|-|
+|[`AuthorizationCodeCredential`][ref_AuthorizationCodeCredential]|Authenticates a user with a previously obtained authorization code. | [OAuth2 authorization code](https://learn.microsoft.com/entra/identity-platform/v2-oauth2-auth-code-flow)|
+|[`DeviceCodeCredential`][ref_DeviceCodeCredential]|Interactively authenticates a user on devices with limited UI. | [Device code authentication](https://learn.microsoft.com/entra/identity-platform/v2-oauth2-device-code)|
+|[`InteractiveBrowserCredential`][ref_InteractiveBrowserCredential]|Interactively authenticates a user with the default system browser. | [Interactive browser authentication](https://aka.ms/azsdk/net/identity/interactivebrowsercredential/usage)|
+|[`OnBehalfOfCredential`][ref_OnBehalfOfCredential]|Propagates the delegated user identity and permissions through the request chain. | [On-behalf-of authentication](https://learn.microsoft.com/entra/identity-platform/v2-oauth2-on-behalf-of-flow)|
 
 ### Authenticate via development tools
 
-|Credential | Usage | Reference
-|-|-|-
-|[`AzureCliCredential`][ref_AzureCliCredential]|Authenticates in a development environment with the Azure CLI. | [Azure CLI authentication](https://learn.microsoft.com/cli/azure/authenticate-azure-cli)
-|[`AzureDeveloperCliCredential`][ref_AzureDeveloperCliCredential]|Authenticates in a development environment with the Azure Developer CLI. | [Azure Developer CLI Reference](https://learn.microsoft.com/azure/developer/azure-developer-cli/reference)
-|[`AzurePowerShellCredential`][ref_AzurePowerShellCredential]|Authenticates in a development environment with the Azure PowerShell. | [Azure PowerShell authentication](https://learn.microsoft.com/powershell/azure/authenticate-azureps)
-|[`VisualStudioCredential`][ref_VisualStudioCredential]|Authenticates in a development environment with Visual Studio. | [Visual Studio configuration](https://learn.microsoft.com/dotnet/azure/configure-visual-studio)
-|[`VisualStudioCodeCredential`][ref_VisualStudioCodeCredential]|Authenticates as the user signed in to the Visual Studio Code Azure Account extension. | [VS Code Azure Account extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account)
+|Credential | Usage | Reference|
+|-|-|-|
+|[`AzureCliCredential`][ref_AzureCliCredential]|Authenticates in a development environment with the Azure CLI. | [Azure CLI authentication](https://learn.microsoft.com/cli/azure/authenticate-azure-cli)|
+|[`AzureDeveloperCliCredential`][ref_AzureDeveloperCliCredential]|Authenticates in a development environment with the Azure Developer CLI. | [Azure Developer CLI Reference](https://learn.microsoft.com/azure/developer/azure-developer-cli/reference)|
+|[`AzurePowerShellCredential`][ref_AzurePowerShellCredential]|Authenticates in a development environment with the Azure PowerShell. | [Azure PowerShell authentication](https://learn.microsoft.com/powershell/azure/authenticate-azureps)|
+|[`VisualStudioCredential`][ref_VisualStudioCredential]|Authenticates in a development environment with Visual Studio. | [Visual Studio configuration](https://learn.microsoft.com/dotnet/azure/configure-visual-studio)|
 
 > __Note:__ All credential implementations in the Azure Identity library are threadsafe, and a single credential instance can be used by multiple service clients.
 
 ## Environment variables
 
-[`DefaultAzureCredential`][ref_DefaultAzureCredential] and [`EnvironmentCredential`][ref_EnvironmentCredential] can be configured with environment variables. Each type of authentication requires values for specific variables.
+[`DefaultAzureCredential`][ref_DefaultAzureCredential] and [`EnvironmentCredential`][ref_EnvironmentCredential] can be configured with environment variables. Each type of authentication requires values for specific variables. Configuration is attempted in the order in which these environment variables are listed. For example, if values for a client secret and certificate are both present, the client secret is used by `EnvironmentCredential`.
 
 ### Service principal with secret
 
@@ -290,26 +227,21 @@ Not all credentials require this configuration. Credentials that authenticate th
 |`AZURE_CLIENT_CERTIFICATE_PASSWORD`|(optional) the password protecting the certificate file (currently only supported for PFX (PKCS12) certificates)
 |`AZURE_CLIENT_SEND_CERTIFICATE_CHAIN`|(optional) send certificate chain in x5c header to support subject name / issuer based authentication
 
-### Username and password
+### Workload identity (`DefaultAzureCredential`)
 
 |Variable name|Value
 |-|-
-|`AZURE_CLIENT_ID`|ID of a Microsoft Entra application
-|`AZURE_TENANT_ID`|ID of the application's Microsoft Entra tenant
-|`AZURE_USERNAME`|a username (usually an email address)
-|`AZURE_PASSWORD`|that user's password
+|`AZURE_CLIENT_ID`|The client ID of the application the workload identity will authenticate. If defined, used as the default value for `WorkloadIdentityClientId` in `DefaultAzureCredentialOptions`.
 
 ### Managed identity (`DefaultAzureCredential`)
 
 |Variable name|Value
 |-|-
-|`AZURE_CLIENT_ID`|The client ID for the user-assigned managed identity. If defined, used as the default value for `ManagedIdentityClientId` in `DefaultAzureCredentialOptions`
-
-Configuration is attempted in the order in which these environment variables are listed. For example, if values for a client secret and certificate are both present, the client secret is used.
+|`AZURE_CLIENT_ID`|The client ID for the user-assigned managed identity. If defined, used as the default value for `ManagedIdentityClientId` in `DefaultAzureCredentialOptions`.
 
 ## Continuous Access Evaluation
 
-As of version 1.10.0, accessing resources protected by [Continuous Access Evaluation (CAE)][cae] is possible on a per-request basis. This behavior can be enabled by setting the `IsCaeEnabled` property of `TokenRequestContext` via its constructor. CAE isn't supported for developer and managed identity credentials.
+As of version 1.10.0, accessing resources protected by [Continuous Access Evaluation (CAE)][cae] is possible on a per-request basis. This behavior can be enabled by setting the `IsCaeEnabled` property of `TokenRequestContext` via its constructor. CAE isn't supported for developer credentials.
 
 ## Token caching
 
@@ -399,7 +331,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [entraid_err_doc]: https://learn.microsoft.com/entra/identity-platform/reference-error-codes
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
-[secrets_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Secrets
 [blobs_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Blobs
 [azure_core_library]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core
 [identity_api_docs]: https://learn.microsoft.com/dotnet/api/azure.identity?view=azure-dotnet
@@ -423,10 +354,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [ref_InteractiveBrowserCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.interactivebrowsercredential?view=azure-dotnet
 [ref_ManagedIdentityCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.managedidentitycredential?view=azure-dotnet
 [ref_OnBehalfOfCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.onbehalfofcredential?view=azure-dotnet
-[ref_UsernamePasswordCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.usernamepasswordcredential?view=azure-dotnet
 [ref_VisualStudioCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.visualstudiocredential?view=azure-dotnet
-[ref_VisualStudioCodeCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.visualstudiocodecredential?view=azure-dotnet
 [ref_WorkloadIdentityCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.workloadidentitycredential?view=azure-dotnet
 [cae]: https://learn.microsoft.com/entra/identity/conditional-access/concept-continuous-access-evaluation
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fidentity%2FAzure.Identity%2FREADME.png)
+[sami_doc]: https://learn.microsoft.com/dotnet/azure/sdk/authentication/system-assigned-managed-identity
+[uami_doc]: https://learn.microsoft.com/dotnet/azure/sdk/authentication/user-assigned-managed-identity

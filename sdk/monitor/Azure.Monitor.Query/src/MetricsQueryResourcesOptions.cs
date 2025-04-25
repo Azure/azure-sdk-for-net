@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.Monitor.Query.Models;
 
@@ -16,9 +17,19 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Gets or sets the timespan over which the metric will be queried. If only the starttime is set, the endtime default becomes the current time. When the endtime is specified, the starttime is necessary as well. Duration is disregarded.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [CodeGenMember("TimeSpan")]
-        // TODO: https://github.com/Azure/azure-sdk-for-net/issues/46454
         public QueryTimeRange? TimeRange { get; set; }
+
+        /// <summary>
+        /// Gets the <see cref="StartTime"/> of the query. If only the <see cref="StartTime"/> is set, the <see cref="EndTime"/> default becomes the current time. When the <see cref="EndTime"/> is specified, the <see cref="StartTime"/> is necessary as well.
+        /// </summary>
+        public DateTimeOffset? StartTime { get; set; }
+
+        /// <summary>
+        /// Gets the <see cref="EndTime"/> of the query. If only the <see cref="StartTime"/> is set, the <see cref="EndTime"/> default becomes the current time. When the <see cref="EndTime"/> is specified, the <see cref="StartTime"/> is necessary as well.
+        /// </summary>
+        public DateTimeOffset? EndTime { get; set; }
 
         /// <summary>
         /// <para>

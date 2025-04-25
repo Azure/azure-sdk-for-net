@@ -55,7 +55,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of <see cref="ToolResources"/>. </summary>
-        /// <param name="codeInterpreter"> Resources to be used by the `code_interpreter tool` consisting of file IDs. </param>
+        /// <param name="codeInterpreter"> Resources to be used by the `code_interpreter` tool consisting of file IDs. </param>
         /// <param name="fileSearch"> Resources to be used by the `file_search` tool consisting of vector store IDs. </param>
         /// <param name="azureAISearch"> Resources to be used by the `azure_ai_search` tool consisting of index IDs and names. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -67,7 +67,7 @@ namespace Azure.AI.Projects
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resources to be used by the `code_interpreter tool` consisting of file IDs. </summary>
+        /// <summary> Resources to be used by the `code_interpreter` tool consisting of file IDs. </summary>
         public CodeInterpreterToolResource CodeInterpreter { get; set; }
         /// <summary> Resources to be used by the `file_search` tool consisting of vector store IDs. </summary>
         public FileSearchToolResource FileSearch { get; set; }

@@ -40,6 +40,12 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility
                 return BitConverter.ToString(hash).Replace("-", string.Empty).ToLower();
             }
         }
+        internal static string? TruncateData(string? value, int maxLength)
+        {
+            if (string.IsNullOrEmpty(value))
+                return value;
+            return value?.Length <= maxLength ? value : value?.Substring(0, maxLength);
+        }
 
         internal static string GetRunName(CIInfo ciInfo)
         {

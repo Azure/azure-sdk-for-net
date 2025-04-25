@@ -10,7 +10,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/4f68529971f845e8757c2b2a746d78ceb91854cd/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/883abbe08d313739069c0007eb820aa0a0710748/specification/compute/resource-manager/readme.md
+#tag: package-2025-02-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,6 +21,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 update-required-copy:
   GalleryImage: OSType
@@ -95,6 +99,8 @@ override-operation-name:
   LogAnalytics_ExportRequestRateByInterval: ExportLogAnalyticsRequestRateByInterval
   LogAnalytics_ExportThrottledRequests: ExportLogAnalyticsThrottledRequests
   ResourceSkus_List: GetComputeResourceSkus
+  VirtualMachineImages_ListWithProperties: GetVirtualMachineImagesWithProperties
+  VirtualMachines_MigrateToVmScaleSet: MigrateToVirtualMachineScaleSet
 
 request-path-to-resource-data:
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}: SharedGallery
@@ -124,9 +130,6 @@ prepend-rp-prefix:
 - PublicIPAddressSkuName
 - PublicIPAddressSkuTier
 - StatusLevelTypes
-
-# mgmt-debug:
-#   show-serialized-names: true
 
 rename-mapping:
   DiskSecurityTypes.ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey: ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey
@@ -282,6 +285,28 @@ rename-mapping:
   SkuProfile : ComputeSkuProfile
   SkuProfileVMSize : ComputeSkuProfileVMSize
   AllocationStrategy : ComputeAllocationStrategy
+  GalleryImageVersion.properties.restore: IsRestoreEnabled
+  EndpointAccess: ComputeGalleryEndpointAccess
+  EndpointTypes: ComputeGalleryEndpointTypes
+  GallerySoftDeletedResource : GallerySoftDeletedResourceDetails
+  GallerySoftDeletedResource.properties.softDeletedTime: -|date-time
+  PlatformAttribute: ComputeGalleryPlatformAttribute
+  ValidationStatus: ComputeGalleryValidationStatus
+  AccessControlRules: GalleryInVmAccessControlRules
+  AccessControlRulesIdentity: GalleryInVmAccessControlRulesIdentity
+  AccessControlRulesMode: GalleryInVmAccessControlRulesMode
+  AccessControlRulesPrivilege: GalleryInVmAccessControlRulesPrivilege
+  AccessControlRulesRole: GalleryInVmAccessControlRulesRole
+  AccessControlRulesRoleAssignment: GalleryInVmAccessControlRulesRoleAssignment
+  ValidationsProfile: GalleryImageValidationsProfile
+  SoftDeletedArtifactTypes: GallerySoftDeletedArtifactType
+  GalleryImageVersionSafetyProfile.blockDeletionBeforeEndOfLife: IsBlockedDeletionBeforeEndOfLife
+  ExecutedValidation: GalleryImageExecutedValidation
+  Placement: VirtualMachinePlacement
+  Modes: HostEndpointSettingsMode
+  Expand: GetVirtualMachineImagesWithPropertiesExpand
+  RebalanceBehavior: VmssRebalanceBehavior
+  RebalanceStrategy: VmssRebalanceStrategy 
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
@@ -404,4 +429,35 @@ directive:
     where: $.definitions.VMSizeProperties
     transform: >
       $.additionalProperties = true;
+  # Enable AnyZone Capability, this is a temporary change, will be removed after service team update the spec
+  - from: virtualMachine.json
+    where: $.definitions
+    transform: >
+      $.Placement = {
+              "properties": {
+                "zonePlacementPolicy": {
+                  "type": "string",
+                  "description": "Specifies policy for auto zone placement."
+                },
+                "includeZones": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "List of zones to include for auto zone placement."
+                },
+                "excludeZones": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "List of zones to exclude for auto zone placement."
+                }
+              },
+              "description": "The virtual machine automatic zone placement feature."
+            };
+      $.VirtualMachine.properties.placement = {
+              "$ref": "#/definitions/Placement",
+              "description": "The virtual machine automatic zone placement feature."
+            };
 ```

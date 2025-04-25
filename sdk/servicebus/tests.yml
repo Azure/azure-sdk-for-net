@@ -8,4 +8,4 @@ extends:
     SDKType: client
     TimeoutInMinutes: 240
     Clouds: 'Public,Canary'
-    SupportedClouds: 'Public,UsGov,Canary'
+    SupportedClouds: 'Public,Canary'

@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: AppService
 namespace: Azure.ResourceManager.AppService
-require: https://github.com/Azure/azure-rest-api-specs/blob/0410d404c68289cb1737d06bba92133bb84b515c/specification/web/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/7c1e8a2c1e18ac0dd65b88f00447992ed86fcc0f/specification/web/resource-manager/readme.md
 #tag: package-2024-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -24,7 +24,7 @@ deserialize-null-collection-as-null-value: true
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 list-exception:
@@ -107,6 +107,7 @@ override-operation-name:
   StaticSites_UpdateStaticSiteUser: UpdateUser
   CheckNameAvailability: CheckAppServiceNameAvailability
   AppServicePlans_ListHybridConnections: GetHybridConnectionRelays
+  AppServicePlans_ListWebAppsByHybridConnection: GetAllWebAppsByHybridConnection
   StaticSites_CreateOrUpdateStaticSiteBuildAppSettings: CreateOrUpdateAppSettings
   StaticSites_CreateOrUpdateStaticSiteBuildFunctionAppSettings: CreateOrUpdateFunctionAppSettings
   StaticSites_ListStaticSiteBuildFunctions: GetFunctions
@@ -981,6 +982,11 @@ directive:
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionRelays'].get
     transform: >
         $['responses']['200']['schema']['$ref'] = "./AppServicePlans.json#/definitions/HybridConnectionCollection";
+  # Fix https://github.com/Azure/azure-sdk-for-net/issues/47267, fix the issue of data type mismatch in the AsyncPageable return values.
+  - from: AppServicePlans.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}/sites'].get
+    transform: >
+        $['responses']['200']['schema']['$ref'] = "./CommonDefinitions.json#/definitions/WebAppCollection";
   # The Enum name "StorageType" is shared by artifactsStorageType, cause the apicompat error
   - from: CommonDefinitions.json
     where: $.definitions.FunctionsDeployment.properties.storage.properties.type
@@ -1012,7 +1018,7 @@ directive:
             "$ref": "#/definitions/DayOfWeek",
             "description": "The days of the week."
           };
-  # Fix https://github.com/Azure/azure-sdk-for-net/issues/39126, fix the `ProcessThreadInfo` definition based on the return result 
+  # Fix https://github.com/Azure/azure-sdk-for-net/issues/39126, fix the `ProcessThreadInfo` definition based on the return result
   - from: WebApps.json
     where: $.definitions
     transform: >

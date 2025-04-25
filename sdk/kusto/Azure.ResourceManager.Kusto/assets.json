@@ -2,5 +2,5 @@
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
   "TagPrefix": "net/kusto/Azure.ResourceManager.Kusto",
-  "Tag": "net/kusto/Azure.ResourceManager.Kusto_18caa72bd9"
+  "Tag": "net/kusto/Azure.ResourceManager.Kusto_fd84a47c05"
 }

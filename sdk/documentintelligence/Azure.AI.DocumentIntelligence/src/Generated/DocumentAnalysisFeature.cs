@@ -27,7 +27,7 @@ namespace Azure.AI.DocumentIntelligence
         private const string BarcodesValue = "barcodes";
         private const string FormulasValue = "formulas";
         private const string KeyValuePairsValue = "keyValuePairs";
-        private const string StyleFontValue = "styleFont";
+        private const string FontStylingValue = "styleFont";
         private const string QueryFieldsValue = "queryFields";
 
         /// <summary> Perform OCR at a higher resolution to handle documents with fine print. </summary>
@@ -41,7 +41,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Enable the detection of general key value pairs (form fields) in the document. </summary>
         public static DocumentAnalysisFeature KeyValuePairs { get; } = new DocumentAnalysisFeature(KeyValuePairsValue);
         /// <summary> Enable the recognition of various font styles. </summary>
-        public static DocumentAnalysisFeature StyleFont { get; } = new DocumentAnalysisFeature(StyleFontValue);
+        public static DocumentAnalysisFeature FontStyling { get; } = new DocumentAnalysisFeature(FontStylingValue);
         /// <summary> Enable the extraction of additional fields via the queryFields query parameter. </summary>
         public static DocumentAnalysisFeature QueryFields { get; } = new DocumentAnalysisFeature(QueryFieldsValue);
         /// <summary> Determines if two <see cref="DocumentAnalysisFeature"/> values are the same. </summary>

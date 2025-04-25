@@ -179,7 +179,7 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ToolChoice);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(ToolChoice))
+                    using (JsonDocument document = JsonDocument.Parse(ToolChoice, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -198,7 +198,7 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ResponseFormat);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(ResponseFormat))
+                    using (JsonDocument document = JsonDocument.Parse(ResponseFormat, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -208,6 +208,11 @@ namespace Azure.AI.Projects
                 {
                     writer.WriteNull("response_format");
                 }
+            }
+            if (Optional.IsDefined(ParallelToolCalls))
+            {
+                writer.WritePropertyName("parallel_tool_calls"u8);
+                writer.WriteBooleanValue(ParallelToolCalls.Value);
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
@@ -235,7 +240,7 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -278,6 +283,7 @@ namespace Azure.AI.Projects
             TruncationObject truncationStrategy = default;
             BinaryData toolChoice = default;
             BinaryData responseFormat = default;
+            bool? parallelToolCalls = default;
             IReadOnlyDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -425,6 +431,15 @@ namespace Azure.AI.Projects
                     responseFormat = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("parallel_tool_calls"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parallelToolCalls = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -460,6 +475,7 @@ namespace Azure.AI.Projects
                 truncationStrategy,
                 toolChoice,
                 responseFormat,
+                parallelToolCalls,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
@@ -485,7 +501,7 @@ namespace Azure.AI.Projects
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCreateRunRequest(document.RootElement, options);
                     }
                 default:
@@ -499,7 +515,7 @@ namespace Azure.AI.Projects
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static CreateRunRequest FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeCreateRunRequest(document.RootElement);
         }
 

@@ -2,9 +2,9 @@
   <PropertyGroup>
     <Description>A library for querying Azure Monitor's Logs and Metrics data sources.</Description>
     <AssemblyTitle>Azure Monitor Query client library</AssemblyTitle>
-    <Version>1.6.0-beta.1</Version>
+    <Version>1.7.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.5.0</ApiCompatVersion>
+    <ApiCompatVersion>1.6.0</ApiCompatVersion>
     <PackageTags>Azure Monitor Query</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -12,7 +12,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" />
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
 

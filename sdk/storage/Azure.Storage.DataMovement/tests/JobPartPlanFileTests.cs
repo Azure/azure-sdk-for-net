@@ -32,7 +32,7 @@ namespace Azure.Storage.DataMovement.Tests
                     id: transferId,
                     jobPart: jobPart,
                     header: new(
-                        DataMovementConstants.JobPartPlanFile.SchemaVersion_b3,
+                        DataMovementConstants.JobPartPlanFile.SchemaVersion,
                         transferId,
                         jobPart,
                         System.DateTimeOffset.Now,
@@ -77,7 +77,7 @@ namespace Azure.Storage.DataMovement.Tests
                 file = await JobPartPlanFile.CreateJobPartPlanFileAsync(
                    fileName: fileName,
                    header: new(
-                        DataMovementConstants.JobPartPlanFile.SchemaVersion_b3,
+                        DataMovementConstants.JobPartPlanFile.SchemaVersion,
                         transferId,
                         jobPart,
                         System.DateTimeOffset.Now,

@@ -7,8 +7,8 @@ The Azure Monitor Distro is a client library that sends telemetry data to Azure 
 ### Prerequisites
 
 - **Azure Subscription:**  To use Azure services, including Azure Monitor Distro, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://azure.microsoft.com/account).
-- **Azure Application Insights Connection String:** To send telemetry data to the monitoring service you'll need connection string from Azure Application Insights. If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [Create an Application Insights resource](https://docs.microsoft.com/azure/azure-monitor/app/create-new-resource) and [copy the connection string](https://docs.microsoft.com/azure/azure-monitor/app/sdk-connection-string?tabs=net#find-your-connection-string).
-- **ASP.NET Core App:** An ASP.NET Core application is required to instrument it with Azure Monitor Distro. You can either bring your own app or follow the [Get started with ASP.NET Core MVC](https://docs.microsoft.com/aspnet/core/tutorials/first-mvc-app/start-mvc) to create a new one.
+- **Azure Application Insights Connection String:** To send telemetry data to the monitoring service you'll need connection string from Azure Application Insights. If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [Create an Application Insights resource](https://learn.microsoft.com/azure/azure-monitor/app/create-new-resource) and [copy the connection string](https://learn.microsoft.com/azure/azure-monitor/app/sdk-connection-string?tabs=net#find-your-connection-string).
+- **ASP.NET Core App:** An ASP.NET Core application is required to instrument it with Azure Monitor Distro. You can either bring your own app or follow the [Get started with ASP.NET Core MVC](https://learn.microsoft.com/aspnet/core/tutorials/first-mvc-app/start-mvc) to create a new one.
 
 ### What is Included in the Distro
 
@@ -16,7 +16,7 @@ The Azure Monitor Distro is a distribution of the .NET OpenTelemetry SDK with in
 
 * Traces
   * **ASP.NET Core Instrumentation**: Provides automatic tracing for incoming HTTP requests to ASP.NET Core applications.
-  * **HTTP Client Instrumentation**: Provides automatic tracing for outgoing HTTP requests made using [System.Net.Http.HttpClient](https://docs.microsoft.com/dotnet/api/system.net.http.httpclient).
+  * **HTTP Client Instrumentation**: Provides automatic tracing for outgoing HTTP requests made using [System.Net.Http.HttpClient](https://learn.microsoft.com/dotnet/api/system.net.http.httpclient).
   * **SQL Client Instrumentation** Provides automatic tracing for SQL queries executed using the [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient) and [System.Data.SqlClient](https://www.nuget.org/packages/System.Data.SqlClient) packages. (While the OpenTelemetry SqlClient instrumentation remains in its beta phase, we have taken the step to vendor it and include it in our Distro)
 
 * Metrics
@@ -333,6 +333,48 @@ using (logger.BeginScope(scope))
 In scenarios involving multiple scopes or a single scope with multiple key-value pairs, if duplicate keys are present,
 only the first occurrence of the key-value pair from the outermost scope will be recorded.
 However, when the same key is utilized both within a logging scope and directly in the log statement, the value specified in the log message template will take precedence.
+
+### CustomEvents
+
+Azure Monitor relies on OpenTelemetry's Log Signal to create CustomEvents.
+For .NET, users will use ILogger and place an attribute named `"microsoft.custom_event.name"` in the message template.
+Severity and CategoryName are not recorded in the CustomEvent.
+
+#### via ILogger.Log methods
+
+To send a CustomEvent via ILogger, include the `"microsoft.custom_event.name"` attribute in the message template.
+
+Note: This example shows `LogInformation`, but any Log method can be used.
+Severity is not recorded, but depending on your configuration it may be filtered out.
+Users should take care to select a severity for CustomEvents that is not filtered out by their configuration.
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddOpenTelemetry().UseAzureMonitor();
+
+var app = builder.Build();
+
+app.Logger.LogInformation("{microsoft.custom_event.name} {key1} {key2}", "MyCustomEventName", "value1", "value2");
+```
+
+This example generates a CustomEvent structured like this:
+
+```json
+{
+    "name": "Event",
+    "data": {
+        "baseType": "EventData",
+        "baseData": {
+            "name": "MyCustomEventName",
+            "properties": {
+                "key1": "value1",
+                "key2": "value2"
+            }
+        }
+    }
+}
+```
 
 ## Troubleshooting
 

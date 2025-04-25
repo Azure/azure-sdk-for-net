@@ -34,6 +34,20 @@ Here's an example using the Azure CLI:
 az storage account create --name MyStorageAccount --resource-group MyResourceGroup --location westus --sku Standard_LRS
 ```
 
+### Authenticate the client
+
+In order to interact with the Azure Blobs Storage service, you'll need to create an instance of the ShareServiceClient class. The [Azure Identity](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md) library makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
+
+```C# Snippet:ShareFile_TokenCredential
+// Create a TokenCredential that we can use to authenticate
+TokenCredential credential = new DefaultAzureCredential();
+
+// Create a client that can authenticate with a TokenCredential
+ShareServiceClient shareServiceClient = new ShareServiceClient(
+    StorageAccountFileUri,
+    credential);
+```
+
 ## Key concepts
 
 Azure file shares can be used to:
@@ -187,6 +201,8 @@ using (FileStream stream = File.OpenWrite(localFilePath))
 All Azure Storage File Shares service operations will throw a
 [RequestFailedException][RequestFailedException] on failure with
 helpful [`ErrorCode`s][error_codes].  Many of these errors are recoverable.
+If multiple failures occur, an [AggregateException][AggregateException] will be thrown,
+containing each failure instance.
 
 ```C# Snippet:Azure_Storage_Files_Shares_Samples_Sample01a_HelloWorld_Errors
 // Connect to the existing share
@@ -228,26 +244,25 @@ For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Files.Shares%2FREADME.png)
-
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Files.Shares/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Files.Shares/
-[docs]: https://docs.microsoft.com/dotnet/api/azure.storage.files.shares
-[rest_docs]: https://docs.microsoft.com/rest/api/storageservices/file-service-rest-api
-[product_docs]: https://docs.microsoft.com/azure/storage/files/storage-files-introduction
+[docs]: https://learn.microsoft.com/dotnet/api/azure.storage.files.shares
+[rest_docs]: https://learn.microsoft.com/rest/api/storageservices/file-service-rest-api
+[product_docs]: https://learn.microsoft.com/azure/storage/files/storage-files-introduction
 [nuget]: https://www.nuget.org/
-[storage_account_docs]: https://docs.microsoft.com/azure/storage/common/storage-account-overview
-[storage_account_create_ps]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
-[storage_account_create_cli]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
-[storage_account_create_portal]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[storage_account_docs]: https://learn.microsoft.com/azure/storage/common/storage-account-overview
+[storage_account_create_ps]: https://learn.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
+[storage_account_create_cli]: https://learn.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
+[storage_account_create_portal]: https://learn.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/src/RequestFailedException.cs
-[error_codes]: https://docs.microsoft.com/rest/api/storageservices/file-service-error-codes
+[error_codes]: https://learn.microsoft.com/rest/api/storageservices/file-service-error-codes
 [samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Files.Shares/samples/
 [storage_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
+[AggregateException]: https://learn.microsoft.com/dotnet/api/system.aggregateexception?view=net-9.0

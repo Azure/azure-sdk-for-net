@@ -3,7 +3,12 @@
 
 using System;
 using System.Text.Json;
+
+using MessagePack;
+using MessagePack.Formatters;
+
 using Microsoft.AspNetCore.SignalR.Protocol;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -15,14 +20,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService;
 /// </summary>
 
 [System.Text.Json.Serialization.JsonConverter(typeof(JTokenWrapperJsonConverter))]
-internal class JTokenWrapper
+[MessagePackFormatter(typeof(JTokenWrapperMessagePackFormatter))]
+internal class JTokenWrapper(JToken value)
 {
-    public JTokenWrapper(JToken value)
-    {
-        Value = value;
-    }
-
-    public JToken Value { get; }
+    public JToken Value { get; } = value;
 }
 
 internal class JTokenWrapperJsonConverter : System.Text.Json.Serialization.JsonConverter<JTokenWrapper>
@@ -34,14 +35,21 @@ internal class JTokenWrapperJsonConverter : System.Text.Json.Serialization.JsonC
 
     public override void Write(Utf8JsonWriter writer, JTokenWrapper value, JsonSerializerOptions options)
     {
-#if NET6_0_OR_GREATER
         var jsonString = JsonConvert.SerializeObject(value.Value);
         writer.WriteRawValue(jsonString);
-#elif NETSTANDARD2_0
-        // No need to implement.
-        // First of all, the SignalR extensions for host process always run on .NET 6 or greater runtime when this class is first written.
-        // Even if somehow the extensions run on .NET Framework, the JsonHubProtocol would use Newtonsoft.Json for serialization and this class would not be used.
-        throw new NotImplementedException("Serializing Newtonsoft.Json.JsonToken with System.Text.Json is not implemented. ");
-#endif
+    }
+}
+
+internal class JTokenWrapperMessagePackFormatter : IMessagePackFormatter<JTokenWrapper>
+{
+    public JTokenWrapper Deserialize(ref MessagePackReader reader, MessagePackSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Serialize(ref MessagePackWriter writer, JTokenWrapper value, MessagePackSerializerOptions options)
+    {
+        var jsonString = value.Value.ToString();
+        MessagePackSerializer.ConvertFromJson(jsonString, ref writer, options);
     }
 }

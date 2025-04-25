@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         AddressResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AddressResourceList.DeserializeAddressResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         AddressResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AddressResourceList.DeserializeAddressResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductFamilies value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProductFamilies.DeserializeProductFamilies(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductFamilies value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProductFamilies.DeserializeProductFamilies(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductConfigurations value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProductConfigurations.DeserializeProductConfigurations(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductConfigurations value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProductConfigurations.DeserializeProductConfigurations(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductFamiliesMetadataListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProductFamiliesMetadataListResult.DeserializeProductFamiliesMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductFamiliesMetadataListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProductFamiliesMetadataListResult.DeserializeProductFamiliesMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrderResourceList.DeserializeOrderResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrderResourceList.DeserializeOrderResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderItemResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrderItemResourceList.DeserializeOrderItemResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderItemResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrderItemResourceList.DeserializeOrderItemResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         AddressResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AddressResourceList.DeserializeAddressResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         AddressResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AddressResourceList.DeserializeAddressResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         EdgeOrderAddressData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EdgeOrderAddressData.DeserializeEdgeOrderAddressData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -811,7 +811,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         EdgeOrderAddressData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EdgeOrderAddressData.DeserializeEdgeOrderAddressData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1157,7 +1157,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrderResourceList.DeserializeOrderResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1185,7 +1185,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrderResourceList.DeserializeOrderResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1253,7 +1253,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         EdgeOrderData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EdgeOrderData.DeserializeEdgeOrderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1285,7 +1285,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         EdgeOrderData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EdgeOrderData.DeserializeEdgeOrderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1373,7 +1373,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderItemResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrderItemResourceList.DeserializeOrderItemResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1403,7 +1403,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderItemResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrderItemResourceList.DeserializeOrderItemResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1475,7 +1475,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         EdgeOrderItemData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EdgeOrderItemData.DeserializeEdgeOrderItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1507,7 +1507,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         EdgeOrderItemData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EdgeOrderItemData.DeserializeEdgeOrderItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2024,7 +2024,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         AddressResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AddressResourceList.DeserializeAddressResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2053,7 +2053,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         AddressResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AddressResourceList.DeserializeAddressResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2106,7 +2106,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductFamilies value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProductFamilies.DeserializeProductFamilies(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2137,7 +2137,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductFamilies value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProductFamilies.DeserializeProductFamilies(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2189,7 +2189,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductConfigurations value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProductConfigurations.DeserializeProductConfigurations(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2219,7 +2219,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductConfigurations value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProductConfigurations.DeserializeProductConfigurations(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2269,7 +2269,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductFamiliesMetadataListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ProductFamiliesMetadataListResult.DeserializeProductFamiliesMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2297,7 +2297,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         ProductFamiliesMetadataListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ProductFamiliesMetadataListResult.DeserializeProductFamiliesMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2347,7 +2347,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrderResourceList.DeserializeOrderResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2375,7 +2375,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrderResourceList.DeserializeOrderResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2427,7 +2427,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderItemResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrderItemResourceList.DeserializeOrderItemResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2457,7 +2457,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderItemResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrderItemResourceList.DeserializeOrderItemResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2510,7 +2510,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         AddressResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AddressResourceList.DeserializeAddressResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2541,7 +2541,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         AddressResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AddressResourceList.DeserializeAddressResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2593,7 +2593,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrderResourceList.DeserializeOrderResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2623,7 +2623,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrderResourceList.DeserializeOrderResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2677,7 +2677,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderItemResourceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OrderItemResourceList.DeserializeOrderItemResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2709,7 +2709,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case 200:
                     {
                         OrderItemResourceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OrderItemResourceList.DeserializeOrderItemResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

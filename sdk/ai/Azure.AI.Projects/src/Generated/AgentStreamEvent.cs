@@ -45,6 +45,7 @@ namespace Azure.AI.Projects
         private const string ThreadRunInProgressValue = "thread.run.in_progress";
         private const string ThreadRunRequiresActionValue = "thread.run.requires_action";
         private const string ThreadRunCompletedValue = "thread.run.completed";
+        private const string ThreadRunIncompleteValue = "thread.run.incomplete";
         private const string ThreadRunFailedValue = "thread.run.failed";
         private const string ThreadRunCancellingValue = "thread.run.cancelling";
         private const string ThreadRunCancelledValue = "thread.run.cancelled";
@@ -76,6 +77,8 @@ namespace Azure.AI.Projects
         public static AgentStreamEvent ThreadRunRequiresAction { get; } = new AgentStreamEvent(ThreadRunRequiresActionValue);
         /// <summary> Event sent when a run is completed. The data of this event is of type ThreadRun. </summary>
         public static AgentStreamEvent ThreadRunCompleted { get; } = new AgentStreamEvent(ThreadRunCompletedValue);
+        /// <summary> Event sent when a run ends incomplete. The data of this event is of type ThreadRun. </summary>
+        public static AgentStreamEvent ThreadRunIncomplete { get; } = new AgentStreamEvent(ThreadRunIncompleteValue);
         /// <summary> Event sent when a run fails. The data of this event is of type ThreadRun. </summary>
         public static AgentStreamEvent ThreadRunFailed { get; } = new AgentStreamEvent(ThreadRunFailedValue);
         /// <summary> Event sent when a run moves to `cancelling` status. The data of this event is of type ThreadRun. </summary>

@@ -57,6 +57,9 @@ parameters:
   - name: UseFederatedAuth
     type: boolean
     default: true
+  - name: PersistOidcToken
+    type: boolean
+    default: false
 
 jobs:
   - job:
@@ -142,6 +145,7 @@ jobs:
               SubscriptionConfiguration: $(SubscriptionConfiguration)
               ArmTemplateParameters: $(ArmTemplateParameters)
               UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
+              PersistOidcToken: ${{ parameters.PersistOidcToken }}
               ServiceConnection: ${{ parameters.CloudConfig.ServiceConnection }}
               SubscriptionConfigurationFilePaths: ${{ parameters.CloudConfig.SubscriptionConfigurationFilePaths }}
               EnvVars:
@@ -197,6 +201,8 @@ jobs:
           env:
             AZURE_TEST_MODE: $(TestMode)
             SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+            ${{ if parameters.PersistOidcToken }}:
+              ARM_OIDC_TOKEN: $(ARM_OIDC_TOKEN)
             ${{ each var in parameters.EnvVars }}:
               ${{ var.key }}: ${{ var.value }}
 

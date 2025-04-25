@@ -65,7 +65,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Processor
             Assert.AreEqual("PLAYWRIGHT", result.TestRunConfig!.TestFramework!.Name);
             Assert.AreEqual("NUNIT", result.TestRunConfig!.TestFramework!.RunnerName);
             Assert.AreEqual("3.1", result.TestRunConfig!.TestFramework!.Version);
-            Assert.AreEqual("1.0.0-beta.3", result.TestRunConfig!.ReporterPackageVersion);
+            Assert.AreEqual("1.0.0-beta.4", result.TestRunConfig!.ReporterPackageVersion);
             Assert.IsNotNull(result.TestRunConfig!.Shards);
             Assert.AreEqual(1, result.TestRunConfig!.Shards!.Total);
         }
@@ -165,7 +165,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Processor
             Assert.IsNotNull(result.TestId);
             Assert.AreEqual(testResult.TestCase.DisplayName, result.TestTitle);
             Assert.AreEqual("Test", result.SuiteTitle);
-            Assert.AreEqual("Test", result.SuiteId);
+            Assert.AreEqual(ReporterUtils.CalculateSha1Hash("Test"), result.SuiteId);
             Assert.AreEqual("TestNamespace.TestClass", result.FileName);
             Assert.AreEqual(testResult.TestCase.LineNumber, result.LineNumber);
             Assert.AreEqual(0, result.Retry);

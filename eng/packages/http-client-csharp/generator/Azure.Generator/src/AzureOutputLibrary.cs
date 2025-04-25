@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Providers;
-using Microsoft.Generator.CSharp.ClientModel;
-using Microsoft.Generator.CSharp.Providers;
+using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.Providers;
 
 namespace Azure.Generator
 {
@@ -11,6 +11,7 @@ namespace Azure.Generator
     public class AzureOutputLibrary : ScmOutputLibrary
     {
         /// <inheritdoc/>
-        protected override TypeProvider[] BuildTypeProviders() => [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition()];
+        protected override TypeProvider[] BuildTypeProviders()
+            => [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition()];
     }
 }

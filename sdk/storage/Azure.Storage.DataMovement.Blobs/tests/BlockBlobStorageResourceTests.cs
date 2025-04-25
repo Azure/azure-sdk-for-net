@@ -266,11 +266,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             // Act
             StorageResourceWriteToOffsetOptions copyFromStreamOptions = new()
             {
-                SourceProperties = new StorageResourceItemProperties(
-                    resourceLength: length,
-                    eTag: new("ETag"),
-                    lastModifiedTime: DateTimeOffset.UtcNow.AddHours(-1),
-                    default)
+                SourceProperties = new StorageResourceItemProperties()
+                {
+                    ResourceLength = length,
+                    ETag = new("ETag"),
+                    LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
+                }
             };
             await storageResource.CopyFromStreamInternalAsync(
                 stream: stream,
@@ -328,15 +329,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Metadata metadata = DataProvider.BuildMetadata();
 
             // Act
-            BlockBlobStorageResourceOptions resourceOptions = new()
-            {
-                CacheControl = new(true),
-                ContentDisposition = new(true),
-                ContentEncoding = new(true),
-                ContentLanguage = new(true),
-                ContentType = new(true),
-                Metadata = new(true)
-            };
+            BlockBlobStorageResourceOptions resourceOptions = new();
 
             Mock<BlockBlobClient> mock = await CopyFromStreamInternalPreserve(
                 resourceOptions,
@@ -372,12 +365,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Metadata metadata = DataProvider.BuildMetadata();
             BlockBlobStorageResourceOptions resourceOptions = new()
             {
-                CacheControl = new(false),
-                ContentDisposition = new(false),
-                ContentEncoding = new(false),
-                ContentLanguage = new(false),
-                ContentType = new(false),
-                Metadata = new(false)
+                CacheControl = default,
+                ContentDisposition = default,
+                ContentEncoding = default,
+                ContentLanguage = default,
+                ContentType = default,
+                Metadata = default
             };
             Mock<BlockBlobClient> mock = await CopyFromStreamInternalPreserve(
                 resourceOptions,
@@ -627,11 +620,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             };
             StorageResourceCopyFromUriOptions copyFromUriOptions = new()
             {
-                SourceProperties = new StorageResourceItemProperties(
-                    resourceLength: length,
-                    eTag: new("ETag"),
-                    lastModifiedTime: DateTimeOffset.UtcNow.AddHours(-1),
-                    properties: sourceProperties)
+                SourceProperties = new StorageResourceItemProperties()
+                {
+                    ResourceLength = length,
+                    ETag = new("ETag"),
+                    LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
+                    RawProperties = sourceProperties
+                }
             };
             await destinationResource.CopyFromUriInternalAsync(
                 sourceResource: sourceResource,
@@ -650,12 +645,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Metadata expectedMetdata)
         {
             AccessTier? expectedAccessTier = resourceOptions.AccessTier != default ? resourceOptions.AccessTier.Value : DefaultAccessTier;
-            string expectedContentDisposition = resourceOptions.ContentDisposition != default ? resourceOptions.ContentDisposition.Value : DefaultContentDisposition;
-            string expectedContentEncoding = resourceOptions.ContentEncoding != default ? resourceOptions.ContentEncoding.Value : DefaultContentEncoding;
-            string expectedContentLanguage = resourceOptions.ContentLanguage != default ? resourceOptions.ContentLanguage.Value : DefaultContentLanguage;
-            string expectedContentType = resourceOptions.ContentType != default ? resourceOptions.ContentType.Value : DefaultContentType;
-            string expectedCacheControl = resourceOptions.CacheControl != default ? resourceOptions.CacheControl.Value : DefaultCacheControl;
-            Metadata expectedMetadata = resourceOptions.Metadata != default ? resourceOptions.Metadata.Value : expectedMetdata;
+            string expectedContentDisposition = resourceOptions._isContentDispositionSet  ? resourceOptions.ContentDisposition : DefaultContentDisposition;
+            string expectedContentEncoding = resourceOptions._isContentEncodingSet != default ? resourceOptions.ContentEncoding : DefaultContentEncoding;
+            string expectedContentLanguage = resourceOptions._isContentLanguageSet != default ? resourceOptions.ContentLanguage : DefaultContentLanguage;
+            string expectedContentType = resourceOptions._isContentTypeSet != default ? resourceOptions.ContentType : DefaultContentType;
+            string expectedCacheControl = resourceOptions._isCacheControlSet != default ? resourceOptions.CacheControl : DefaultCacheControl;
+            Metadata expectedMetadata = resourceOptions._isMetadataSet != default ? resourceOptions.Metadata : expectedMetdata;
 
             mockDestination.Verify(b => b.SyncUploadFromUriAsync(
                 expectedUri,
@@ -701,15 +696,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
             Metadata metadata = DataProvider.BuildMetadata();
-            BlockBlobStorageResourceOptions resourceOptions = new()
-            {
-                ContentDisposition = new(true),
-                ContentEncoding = new(true),
-                ContentLanguage = new(true),
-                ContentType = new(true),
-                CacheControl = new(true),
-                Metadata = new(true)
-            };
+            BlockBlobStorageResourceOptions resourceOptions = new();
             Mock<BlockBlobClient> mockDestination = await CopyFromUriInternalPreserveAsync(
                 default,
                 sourceUri,
@@ -734,7 +721,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Metadata metadata = DataProvider.BuildMetadata();
             BlockBlobStorageResourceOptions resourceOptions = new()
             {
-                ContentType = new(false)
+                ContentType = default
             };
             Mock<BlockBlobClient> destinationMock = await CopyFromUriInternalPreserveAsync(
                 resourceOptions,
@@ -754,7 +741,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Metadata metadata = DataProvider.BuildMetadata();
             BlockBlobStorageResourceOptions resourceOptions = new()
             {
-                ContentDisposition = new(false)
+                ContentDisposition = default
             };
             Mock<BlockBlobClient> destinationMock = await CopyFromUriInternalPreserveAsync(
                 resourceOptions,
@@ -774,7 +761,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Metadata metadata = DataProvider.BuildMetadata();
             BlockBlobStorageResourceOptions resourceOptions = new()
             {
-                ContentLanguage= new(false)
+                ContentLanguage= default
             };
             Mock<BlockBlobClient> destinationMock = await CopyFromUriInternalPreserveAsync(
                 resourceOptions,
@@ -794,7 +781,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Metadata metadata = DataProvider.BuildMetadata();
             BlockBlobStorageResourceOptions resourceOptions = new()
             {
-                CacheControl = new(false)
+                CacheControl = default
             };
             Mock<BlockBlobClient> destinationMock = await CopyFromUriInternalPreserveAsync(
                 resourceOptions,
@@ -814,7 +801,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Metadata metadata = DataProvider.BuildMetadata();
             BlockBlobStorageResourceOptions resourceOptions = new()
             {
-                Metadata = new(false)
+                Metadata = default
             };
             Mock<BlockBlobClient> mockDestination = await CopyFromUriInternalPreserveAsync(
                 resourceOptions,
@@ -871,12 +858,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Metadata metadata = DataProvider.BuildMetadata();
             BlockBlobStorageResourceOptions resourceOptions = new()
             {
-                CacheControl = new(false),
-                ContentDisposition = new(false),
-                ContentEncoding = new(false),
-                ContentLanguage = new(false),
-                ContentType = new(false),
-                Metadata = new(false)
+                CacheControl = default,
+                ContentDisposition = default,
+                ContentEncoding = default,
+                ContentLanguage = default,
+                ContentType = default,
+                Metadata = default
             };
             Mock<BlockBlobClient> mockDestination = await CopyFromUriInternalPreserveAsync(
                 resourceOptions,
@@ -939,23 +926,24 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobStorageResourceOptions resourceOptions = new()
             {
                 AccessTier = DefaultAccessTier,
-                CacheControl = new(DefaultCacheControl),
-                ContentDisposition = new(DefaultContentDisposition),
-                ContentEncoding = new(DefaultContentEncoding),
-                ContentLanguage = new(DefaultContentLanguage),
-                ContentType = new(DefaultContentType),
-                Metadata = new(metadata)
+                CacheControl = DefaultCacheControl,
+                ContentDisposition = DefaultContentDisposition,
+                ContentEncoding = DefaultContentEncoding,
+                ContentLanguage = DefaultContentLanguage,
+                ContentType = DefaultContentType,
+                Metadata = metadata
             };
             BlockBlobStorageResource destinationResource = new BlockBlobStorageResource(mockDestination.Object, resourceOptions);
 
             // Act
             StorageResourceCopyFromUriOptions copyFromUriOptions = new()
             {
-                SourceProperties = new StorageResourceItemProperties(
-                    resourceLength: length,
-                    eTag: new("ETag"),
-                    lastModifiedTime: DateTimeOffset.UtcNow.AddHours(-1),
-                    properties: default)
+                SourceProperties = new StorageResourceItemProperties()
+                {
+                    ResourceLength = length,
+                    ETag = new("ETag"),
+                    LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1)
+                }
             };
             await destinationResource.CopyFromUriInternalAsync(
                 sourceResource: sourceResource,
@@ -1284,6 +1272,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.That(metadata, Is.EqualTo(metadataResult));
             mock.Verify(b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()),
                 Times.Once());
+            mock.Verify(b => b.Uri, Times.Once());
             mock.VerifyNoOtherCalls();
         }
 
@@ -1312,11 +1301,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             BlockBlobStorageResource storageResource = new BlockBlobStorageResource(
                 mock.Object,
-                new StorageResourceItemProperties(
-                    length,
-                    eTag,
-                    lastModified,
-                    rawProperties));
+                new StorageResourceItemProperties()
+                {
+                    ResourceLength = length,
+                    ETag = eTag,
+                    LastModifiedTime = lastModified,
+                    RawProperties = rawProperties
+                });
 
             // Act
             StorageResourceItemProperties result = await storageResource.GetPropertiesInternalAsync();
@@ -1325,6 +1316,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.That(rawProperties, Is.EqualTo(result.RawProperties));
             mock.Verify(b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()),
                 Times.Never());
+            mock.Verify(b => b.Uri, Times.Once());
             mock.VerifyNoOtherCalls();
         }
 
@@ -1433,18 +1425,15 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 { DataMovementConstants.ResourceProperties.Metadata, sourceMetdata },
             };
-            StorageResourceItemProperties sourceProperties = new(
-                length,
-                new ETag("etag"),
-                DateTimeOffset.UtcNow.AddHours(-1),
-                rawProperties);
             StorageResourceCopyFromUriOptions copyFromUriOptions = new()
             {
-                SourceProperties = new StorageResourceItemProperties(
-                    resourceLength: length,
-                    eTag: new("ETag"),
-                    lastModifiedTime: DateTimeOffset.UtcNow.AddHours(-1),
-                    properties: rawProperties)
+                SourceProperties = new StorageResourceItemProperties()
+                {
+                    ResourceLength = length,
+                    ETag = new("ETag"),
+                    LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
+                    RawProperties = rawProperties
+                }
             };
             await destinationResource.CopyFromUriInternalAsync(
                 sourceResource,
@@ -1524,11 +1513,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
                 { DataMovementConstants.ResourceProperties.Metadata, metadata }
             };
-            StorageResourceItemProperties sourceProperties = new(
-                completeLength,
-                new ETag("etag"),
-                DateTimeOffset.UtcNow.AddHours(-1),
-                rawProperties);
+            StorageResourceItemProperties sourceProperties = new()
+            {
+                ResourceLength = completeLength,
+                ETag = new("etag"),
+                LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
+                RawProperties = rawProperties
+            };
             await destinationResource.CompleteTransferAsync(
                 overwrite: false,
                 completeTransferOptions: new() { SourceProperties = sourceProperties });
@@ -1577,15 +1568,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Metadata metadata = DataProvider.BuildMetadata();
 
             // Act
-            BlockBlobStorageResourceOptions resourceOptions = new()
-            {
-                CacheControl = new(true),
-                ContentDisposition = new(true),
-                ContentEncoding = new(true),
-                ContentLanguage = new(true),
-                ContentType = new(true),
-                Metadata = new(true)
-            };
+            BlockBlobStorageResourceOptions resourceOptions = new();
             Mock<BlockBlobClient> mockDestination = await CompleteTransferAsyncInternalProperties(
                 resourceOptions,
                 metadata);
@@ -1621,12 +1604,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             // Act
             BlockBlobStorageResourceOptions resourceOptions = new()
             {
-                CacheControl = new(false),
-                ContentDisposition = new(false),
-                ContentEncoding = new(false),
-                ContentLanguage = new(false),
-                ContentType = new(false),
-                Metadata = new(false)
+                CacheControl = default,
+                ContentDisposition = default,
+                ContentEncoding = default,
+                ContentLanguage = default,
+                ContentType = default,
+                Metadata = default
             };
             Mock<BlockBlobClient> mockDestination = await CompleteTransferAsyncInternalProperties(
                 resourceOptions,
@@ -1664,12 +1647,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobStorageResourceOptions resourceOptions = new()
             {
                 AccessTier = DefaultAccessTier,
-                CacheControl = new(false),
-                ContentDisposition = new(false),
-                ContentEncoding = new(false),
-                ContentLanguage = new(false),
-                ContentType = new(false),
-                Metadata = new(false)
+                CacheControl = default,
+                ContentDisposition = default,
+                ContentEncoding = default,
+                ContentLanguage = default,
+                ContentType = default,
+                Metadata = default
             };
             Mock<BlockBlobClient> mockDestination = await CompleteTransferAsyncInternalProperties(
                 resourceOptions,

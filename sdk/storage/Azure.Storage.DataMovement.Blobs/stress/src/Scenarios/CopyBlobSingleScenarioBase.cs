@@ -25,12 +25,12 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             Uri destinationBlobUri,
             int? blobSize,
             TransferManagerOptions transferManagerOptions,
-            DataTransferOptions dataTransferOptions,
+            TransferOptions transferOptions,
             TokenCredential sourceTokenCredential,
             TokenCredential destinationTokenCredential,
             Metrics metrics,
             string testRunId)
-            : base(destinationBlobUri, blobSize, transferManagerOptions, dataTransferOptions, destinationTokenCredential, metrics, testRunId)
+            : base(destinationBlobUri, blobSize, transferManagerOptions, transferOptions, destinationTokenCredential, metrics, testRunId)
         {
             _sourceServiceClient = new BlobServiceClient(sourceBlobUri, sourceTokenCredential);
         }
@@ -63,11 +63,11 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                             _blobSize,
                             cancellationToken);
                         sourceBaseBlob = sourceBlob;
-                        sourceResource = _blobsStorageResourceProvider.FromClient(sourceBlob);
+                        sourceResource = BlobsStorageResourceProvider.FromClient(sourceBlob);
 
                         AppendBlobClient destinationBlob = destinationContainerClient.GetAppendBlobClient(blobName);
                         destinationBaseBlob = destinationBlob;
-                        destinationResource = _blobsStorageResourceProvider.FromClient(destinationBlob);
+                        destinationResource = BlobsStorageResourceProvider.FromClient(destinationBlob);
                     }
                     else if (blobType == BlobType.Page)
                     {
@@ -77,11 +77,11 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                             _blobSize,
                             cancellationToken);
                         sourceBaseBlob = sourceBlob;
-                        sourceResource = _blobsStorageResourceProvider.FromClient(sourceBlob);
+                        sourceResource = BlobsStorageResourceProvider.FromClient(sourceBlob);
 
                         PageBlobClient destinationBlob = destinationContainerClient.GetPageBlobClient(blobName);
                         destinationBaseBlob = destinationBlob;
-                        destinationResource = _blobsStorageResourceProvider.FromClient(destinationBlob);
+                        destinationResource = BlobsStorageResourceProvider.FromClient(destinationBlob);
                     }
                     else
                     {
@@ -91,11 +91,11 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                             _blobSize,
                             cancellationToken);
                         sourceBaseBlob = sourceBlob;
-                        sourceResource = _blobsStorageResourceProvider.FromClient(sourceBlob);
+                        sourceResource = BlobsStorageResourceProvider.FromClient(sourceBlob);
 
                         BlockBlobClient destinationBlob = destinationContainerClient.GetBlockBlobClient(blobName);
                         destinationBaseBlob = destinationBlob;
-                        destinationResource = _blobsStorageResourceProvider.FromClient(destinationBlob);
+                        destinationResource = BlobsStorageResourceProvider.FromClient(destinationBlob);
                     }
 
                     // Start Transfer
@@ -107,7 +107,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                         destinationResource,
                         async cToken => await sourceBaseBlob.OpenReadAsync(default, cToken),
                         async cToken => await destinationBaseBlob.OpenReadAsync(default, cToken),
-                        options: _dataTransferOptions,
+                        options: _transferOptions,
                         cancellationToken: cancellationToken);
                 }
                 catch (TaskCanceledException)

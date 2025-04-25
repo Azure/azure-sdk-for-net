@@ -9,6 +9,7 @@ namespace Azure.AI.OpenAI.Tests;
 #nullable disable
 #pragma warning disable OPENAI002
 
+#if !AZURE_OPENAI_GA
 [TestFixture(false)]
 [Category("Smoke")]
 public class ConversationSmokeTests : ConversationTestFixtureBase
@@ -183,3 +184,4 @@ public class ConversationSmokeTests : ConversationTestFixtureBase
         Assert.That(deserializedUpdate, Is.Not.Null);
     }
 }
+#endif

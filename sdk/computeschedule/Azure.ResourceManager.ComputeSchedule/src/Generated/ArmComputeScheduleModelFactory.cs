@@ -15,6 +15,24 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmComputeScheduleModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.UserRequestSchedule"/>. </summary>
+        /// <param name="deadline"> The deadline for the operation. </param>
+        /// <param name="userRequestDeadline"> The deadline for the operation. </param>
+        /// <param name="timezone"> The timezone for the operation. </param>
+        /// <param name="userRequestTimezone"> The timezone for the operation. </param>
+        /// <param name="deadlineType"> The deadlinetype of the operation, this can either be InitiateAt or CompleteBy. </param>
+        /// <returns> A new <see cref="Models.UserRequestSchedule"/> instance for mocking. </returns>
+        public static UserRequestSchedule UserRequestSchedule(DateTimeOffset? deadline = null, DateTimeOffset? userRequestDeadline = null, string timezone = null, string userRequestTimezone = null, ScheduledActionDeadlineType deadlineType = default)
+        {
+            return new UserRequestSchedule(
+                deadline,
+                userRequestDeadline,
+                timezone,
+                userRequestTimezone,
+                deadlineType,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.DeallocateResourceOperationResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
         /// <param name="resourceType"> The type of resources used in the deallocate request eg virtual machines. </param>
@@ -47,12 +65,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="deadline"> Deadline for the operation. </param>
         /// <param name="deadlineType"> Type of deadline of the operation. </param>
         /// <param name="state"> Current state of the operation. </param>
-        /// <param name="timeZone"> Timezone for the operation. </param>
+        /// <param name="timezone"> Timezone for the operation. </param>
+        /// <param name="operationTimezone"> Timezone for the operation. </param>
         /// <param name="resourceOperationError"> Operation level errors if they exist. </param>
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <returns> A new <see cref="Models.ResourceOperationDetails"/> instance for mocking. </returns>
-        public static ResourceOperationDetails ResourceOperationDetails(string operationId = null, ResourceIdentifier resourceId = null, ResourceOperationType opType = default, string subscriptionId = null, DateTimeOffset deadline = default, ScheduledActionDeadlineType deadlineType = default, ScheduledActionOperationState state = default, string timeZone = null, ResourceOperationError resourceOperationError = null, DateTimeOffset? completedOn = null, UserRequestRetryPolicy retryPolicy = null)
+        public static ResourceOperationDetails ResourceOperationDetails(string operationId = null, ResourceIdentifier resourceId = null, ResourceOperationType? opType = null, string subscriptionId = null, DateTimeOffset? deadline = null, ScheduledActionDeadlineType? deadlineType = null, ScheduledActionOperationState? state = null, string timezone = null, string operationTimezone = null, ResourceOperationError resourceOperationError = null, DateTimeOffset? completedOn = null, UserRequestRetryPolicy retryPolicy = null)
         {
             return new ResourceOperationDetails(
                 operationId,
@@ -62,7 +81,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 deadline,
                 deadlineType,
                 state,
-                timeZone,
+                timezone,
+                operationTimezone,
                 resourceOperationError,
                 completedOn,
                 retryPolicy,
@@ -161,12 +181,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="Models.OperationErrorDetails"/>. </summary>
         /// <param name="errorCode"> The error code of the operation. </param>
         /// <param name="errorDetails"> The error details of the operation. </param>
-        /// <param name="timeStamp"> The timestamp of the error occurence. </param>
-        /// <param name="crpOperationId"> CRP operationid of the operation for deeper analysis. </param>
+        /// <param name="timestamp"> The timestamp of the error occurence. </param>
+        /// <param name="errorDetailsTimestamp"> The timestamp of the error occurence. </param>
+        /// <param name="azureOperationName"> The compute operationid of the Start/Deallocate/Hibernate request. </param>
+        /// <param name="crpOperationId"> The compute operationid of the Start/Deallocate/Hibernate request. </param>
         /// <returns> A new <see cref="Models.OperationErrorDetails"/> instance for mocking. </returns>
-        public static OperationErrorDetails OperationErrorDetails(string errorCode = null, DateTimeOffset errorDetails = default, DateTimeOffset timeStamp = default, string crpOperationId = null)
+        public static OperationErrorDetails OperationErrorDetails(string errorCode = null, string errorDetails = null, DateTimeOffset? timestamp = null, DateTimeOffset? errorDetailsTimestamp = null, string azureOperationName = null, string crpOperationId = null)
         {
-            return new OperationErrorDetails(errorCode, errorDetails, timeStamp, crpOperationId, serializedAdditionalRawData: null);
+            return new OperationErrorDetails(
+                errorCode,
+                errorDetails,
+                timestamp,
+                errorDetailsTimestamp,
+                azureOperationName,
+                crpOperationId,
+                serializedAdditionalRawData: null);
         }
     }
 }

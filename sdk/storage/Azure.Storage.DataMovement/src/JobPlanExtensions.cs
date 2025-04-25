@@ -8,7 +8,7 @@ namespace Azure.Storage.DataMovement
 {
     internal static partial class JobPlanExtensions
     {
-        internal static JobPlanStatus ToJobPlanStatus(this DataTransferStatus transferStatus)
+        internal static JobPlanStatus ToJobPlanStatus(this TransferStatus transferStatus)
         {
             if (transferStatus == default)
             {
@@ -28,42 +28,42 @@ namespace Azure.Storage.DataMovement
             return jobPlanStatus;
         }
 
-        internal static DataTransferStatus ToDataTransferStatus(this JobPlanStatus jobPlanStatus)
+        internal static TransferStatus ToTransferStatus(this JobPlanStatus jobPlanStatus)
         {
-            DataTransferState state;
+            TransferState state;
             if (jobPlanStatus.HasFlag(JobPlanStatus.Queued))
             {
-                state = DataTransferState.Queued;
+                state = TransferState.Queued;
             }
             else if (jobPlanStatus.HasFlag(JobPlanStatus.InProgress))
             {
-                state = DataTransferState.InProgress;
+                state = TransferState.InProgress;
             }
             else if (jobPlanStatus.HasFlag(JobPlanStatus.Pausing))
             {
-                state = DataTransferState.Pausing;
+                state = TransferState.Pausing;
             }
             else if (jobPlanStatus.HasFlag(JobPlanStatus.Stopping))
             {
-                state = DataTransferState.Stopping;
+                state = TransferState.Stopping;
             }
             else if (jobPlanStatus.HasFlag(JobPlanStatus.Paused))
             {
-                state = DataTransferState.Paused;
+                state = TransferState.Paused;
             }
             else if (jobPlanStatus.HasFlag(JobPlanStatus.Completed))
             {
-                state = DataTransferState.Completed;
+                state = TransferState.Completed;
             }
             else
             {
-                state = DataTransferState.None;
+                state = TransferState.None;
             }
 
             bool hasFailed = jobPlanStatus.HasFlag(JobPlanStatus.HasFailed);
             bool hasSkipped = jobPlanStatus.HasFlag(JobPlanStatus.HasSkipped);
 
-            return new DataTransferStatus(state, hasFailed, hasSkipped);
+            return new TransferStatus(state, hasFailed, hasSkipped);
         }
     }
 }

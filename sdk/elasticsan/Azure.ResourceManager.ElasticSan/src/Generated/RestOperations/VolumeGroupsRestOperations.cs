@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.ElasticSan
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-06-01-preview";
+            _apiVersion = apiVersion ?? "2024-07-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListByElasticSanRequestUri(string subscriptionId, string resourceGroupName, string elasticSanName)
+        internal RequestUriBuilder CreateListByElasticSanRequestUri(string subscriptionId, string resourceGroupName, string elasticSanName, ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ElasticSan
             return uri;
         }
 
-        internal HttpMessage CreateListByElasticSanRequest(string subscriptionId, string resourceGroupName, string elasticSanName)
+        internal HttpMessage CreateListByElasticSanRequest(string subscriptionId, string resourceGroupName, string elasticSanName, ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.ElasticSan
             uri.AppendPath("/volumeGroups", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            if (accessSoftDeletedResources != null)
+            {
+                request.Headers.Add("x-ms-access-soft-deleted-resources", accessSoftDeletedResources.Value.ToString());
+            }
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -76,23 +80,24 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
+        /// <param name="accessSoftDeletedResources"> Optional, returns only soft deleted volume groups if set to true. If set to false or if not specified, returns only active volume groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="elasticSanName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="elasticSanName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ElasticSanVolumeGroupList>> ListByElasticSanAsync(string subscriptionId, string resourceGroupName, string elasticSanName, CancellationToken cancellationToken = default)
+        public async Task<Response<ElasticSanVolumeGroupList>> ListByElasticSanAsync(string subscriptionId, string resourceGroupName, string elasticSanName, ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
 
-            using var message = CreateListByElasticSanRequest(subscriptionId, resourceGroupName, elasticSanName);
+            using var message = CreateListByElasticSanRequest(subscriptionId, resourceGroupName, elasticSanName, accessSoftDeletedResources);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         ElasticSanVolumeGroupList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ElasticSanVolumeGroupList.DeserializeElasticSanVolumeGroupList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,23 +110,24 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
+        /// <param name="accessSoftDeletedResources"> Optional, returns only soft deleted volume groups if set to true. If set to false or if not specified, returns only active volume groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="elasticSanName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="elasticSanName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ElasticSanVolumeGroupList> ListByElasticSan(string subscriptionId, string resourceGroupName, string elasticSanName, CancellationToken cancellationToken = default)
+        public Response<ElasticSanVolumeGroupList> ListByElasticSan(string subscriptionId, string resourceGroupName, string elasticSanName, ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
 
-            using var message = CreateListByElasticSanRequest(subscriptionId, resourceGroupName, elasticSanName);
+            using var message = CreateListByElasticSanRequest(subscriptionId, resourceGroupName, elasticSanName, accessSoftDeletedResources);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         ElasticSanVolumeGroupList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ElasticSanVolumeGroupList.DeserializeElasticSanVolumeGroupList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -484,7 +490,7 @@ namespace Azure.ResourceManager.ElasticSan
                 case 200:
                     {
                         ElasticSanVolumeGroupData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ElasticSanVolumeGroupData.DeserializeElasticSanVolumeGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -517,7 +523,7 @@ namespace Azure.ResourceManager.ElasticSan
                 case 200:
                     {
                         ElasticSanVolumeGroupData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ElasticSanVolumeGroupData.DeserializeElasticSanVolumeGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -528,7 +534,7 @@ namespace Azure.ResourceManager.ElasticSan
             }
         }
 
-        internal RequestUriBuilder CreateListByElasticSanNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string elasticSanName)
+        internal RequestUriBuilder CreateListByElasticSanNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string elasticSanName, ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -536,7 +542,7 @@ namespace Azure.ResourceManager.ElasticSan
             return uri;
         }
 
-        internal HttpMessage CreateListByElasticSanNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string elasticSanName)
+        internal HttpMessage CreateListByElasticSanNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string elasticSanName, ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -545,6 +551,10 @@ namespace Azure.ResourceManager.ElasticSan
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            if (accessSoftDeletedResources != null)
+            {
+                request.Headers.Add("x-ms-access-soft-deleted-resources", accessSoftDeletedResources.Value.ToString());
+            }
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -555,24 +565,25 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
+        /// <param name="accessSoftDeletedResources"> Optional, returns only soft deleted volume groups if set to true. If set to false or if not specified, returns only active volume groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="elasticSanName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="elasticSanName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ElasticSanVolumeGroupList>> ListByElasticSanNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string elasticSanName, CancellationToken cancellationToken = default)
+        public async Task<Response<ElasticSanVolumeGroupList>> ListByElasticSanNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string elasticSanName, ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
 
-            using var message = CreateListByElasticSanNextPageRequest(nextLink, subscriptionId, resourceGroupName, elasticSanName);
+            using var message = CreateListByElasticSanNextPageRequest(nextLink, subscriptionId, resourceGroupName, elasticSanName, accessSoftDeletedResources);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         ElasticSanVolumeGroupList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ElasticSanVolumeGroupList.DeserializeElasticSanVolumeGroupList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -586,24 +597,25 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
+        /// <param name="accessSoftDeletedResources"> Optional, returns only soft deleted volume groups if set to true. If set to false or if not specified, returns only active volume groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="elasticSanName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="elasticSanName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ElasticSanVolumeGroupList> ListByElasticSanNextPage(string nextLink, string subscriptionId, string resourceGroupName, string elasticSanName, CancellationToken cancellationToken = default)
+        public Response<ElasticSanVolumeGroupList> ListByElasticSanNextPage(string nextLink, string subscriptionId, string resourceGroupName, string elasticSanName, ElasticSanAccessSoftDeletedVolume? accessSoftDeletedResources = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
 
-            using var message = CreateListByElasticSanNextPageRequest(nextLink, subscriptionId, resourceGroupName, elasticSanName);
+            using var message = CreateListByElasticSanNextPageRequest(nextLink, subscriptionId, resourceGroupName, elasticSanName, accessSoftDeletedResources);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         ElasticSanVolumeGroupList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ElasticSanVolumeGroupList.DeserializeElasticSanVolumeGroupList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

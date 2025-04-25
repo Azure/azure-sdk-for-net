@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -120,6 +121,12 @@ namespace Azure.Storage.Files.Shares.Models
         public ShareLeaseStatus LeaseStatus { get; internal set; }
 
         /// <summary>
+        /// NFS properties.
+        /// Note that this property is only applicable to files created in NFS shares.
+        /// </summary>
+        public FilePosixProperties PosixProperties { get; internal set; }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         internal ShareFileProperties() { }
@@ -133,6 +140,53 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Creates a new StorageFileProperties instance for mocking.
         /// </summary>
+        public static ShareFileProperties StorageFileProperties(
+            DateTimeOffset lastModified = default,
+            IDictionary<string, string> metadata = default,
+            long contentLength = default,
+            string contentType = default,
+            ETag eTag = default,
+            byte[] contentHash = default,
+            IEnumerable<string> contentEncoding = default,
+            string cacheControl = default,
+            string contentDisposition = default,
+            IEnumerable<string> contentLanguage = default,
+            DateTimeOffset copyCompletedOn = default,
+            string copyStatusDescription = default,
+            string copyId = default,
+            string copyProgress = default,
+            string copySource = default,
+            CopyStatus copyStatus = default,
+            bool isServerEncrypted = default,
+            FileSmbProperties smbProperties = default,
+            FilePosixProperties posixProperties = default
+            ) => new ShareFileProperties
+            {
+                LastModified = lastModified,
+                Metadata = metadata,
+                ContentLength = contentLength,
+                ContentType = contentType,
+                ETag = eTag,
+                ContentHash = contentHash,
+                ContentEncoding = contentEncoding,
+                CacheControl = cacheControl,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                CopyCompletedOn = copyCompletedOn,
+                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
+                CopyProgress = copyProgress,
+                CopySource = copySource,
+                CopyStatus = copyStatus,
+                IsServerEncrypted = isServerEncrypted,
+                SmbProperties = smbProperties,
+                PosixProperties = posixProperties,
+            };
+
+        /// <summary>
+        /// Creates a new StorageFileProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ShareFileProperties StorageFileProperties(
             DateTimeOffset lastModified,
             IDictionary<string, string> metadata,
@@ -194,6 +248,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Creates a new StorageFileProperties instance for mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ShareFileProperties StorageFileProperties(
             DateTimeOffset lastModified,
             IDictionary<string, string> metadata,
@@ -249,7 +304,8 @@ namespace Azure.Storage.Files.Shares.Models
                     FileChangedOn = fileChangeTime,
                     FileId = fileId,
                     ParentId = fileParentId
-                }
+                },
+                PosixProperties = new FilePosixProperties()
             };
     }
 }

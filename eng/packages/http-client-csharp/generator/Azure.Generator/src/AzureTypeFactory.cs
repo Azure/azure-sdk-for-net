@@ -4,19 +4,24 @@
 using Azure.Generator.Primitives;
 using Azure.Generator.Providers;
 using Azure.Generator.Providers.Abstraction;
-using Microsoft.Generator.CSharp.ClientModel;
-using Microsoft.Generator.CSharp.ClientModel.Providers;
-using Microsoft.Generator.CSharp.Input;
-using Microsoft.Generator.CSharp.Primitives;
+using Microsoft.TypeSpec.Generator;
+using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Snippets;
+using Microsoft.TypeSpec.Generator.Statements;
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.Generator
 {
     /// <inheritdoc/>
     public class AzureTypeFactory : ScmTypeFactory
     {
-        /// <inheritdoc/>
-        public override CSharpType KeyCredentialType => typeof(AzureKeyCredential);
-
         /// <inheritdoc/>
         public override IClientResponseApi ClientResponseApi => AzureClientResponseProvider.Instance;
 
@@ -41,6 +46,14 @@ namespace Azure.Generator
         /// <inheritdoc/>
         public override IHttpRequestOptionsApi HttpRequestOptionsApi => HttpRequestOptionsProvider.Instance;
 
+        /// <summary>
+        /// Get dependency packages for Azure.
+        /// </summary>
+        protected internal virtual IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> AzureDependencyPackages =>
+            [
+                new("Azure.Core")
+            ];
+
         /// <inheritdoc/>
         protected override CSharpType? CreateCSharpTypeCore(InputType inputType)
         {
@@ -60,7 +73,7 @@ namespace Azure.Generator
             InputPrimitiveType? primitiveType = inputType;
             while (primitiveType != null)
             {
-                if (KnownAzureTypes.PrimitiveTypes.TryGetValue(primitiveType.CrossLanguageDefinitionId, out var knownType))
+                if (KnownAzureTypes.TryGetPrimitiveType(primitiveType.CrossLanguageDefinitionId, out var knownType))
                 {
                     return knownType;
                 }
@@ -69,6 +82,45 @@ namespace Azure.Generator
             }
 
             return null;
+        }
+
+        /// <inheritdoc/>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+        public override ValueExpression DeserializeJsonValue(Type valueType, ScopedApi<JsonElement> element, SerializationFormat format)
+#pragma warning restore AZC0014 // Avoid using banned types in public API
+        {
+            var expression = DeserializeJsonValueCore(valueType, element, format);
+            return expression ?? base.DeserializeJsonValue(valueType, element, format);
+        }
+
+        private ValueExpression? DeserializeJsonValueCore(
+            Type valueType,
+            ScopedApi<JsonElement> element,
+            SerializationFormat format)
+        {
+            return KnownAzureTypes.TryGetJsonDeserializationExpression(valueType, out var deserializationExpression) ?
+                deserializationExpression(new CSharpType(valueType), element, format) :
+                null;
+        }
+
+        /// <inheritdoc/>
+        public override MethodBodyStatement SerializeJsonValue(Type valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter, SerializationFormat serializationFormat)
+        {
+            var statement = SerializeValueTypeCore(serializationFormat, value, valueType, utf8JsonWriter, mrwOptionsParameter);
+            return statement ?? base.SerializeJsonValue(valueType, value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
+        }
+
+        private MethodBodyStatement? SerializeValueTypeCore(SerializationFormat serializationFormat, ValueExpression value, Type valueType, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter)
+        {
+            return KnownAzureTypes.TryGetJsonSerializationExpression(valueType, out var serializationExpression) ?
+                serializationExpression(value, utf8JsonWriter, mrwOptionsParameter, serializationFormat) :
+                null;
+        }
+
+        /// <inheritdoc/>
+        public override NewProjectScaffolding CreateNewProjectScaffolding()
+        {
+            return new NewAzureProjectScaffolding();
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Azure.AI.Projects
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("microsoft_fabric"u8);
+            writer.WritePropertyName("fabric_dataagent"u8);
             writer.WriteStartObject();
             foreach (var item in MicrosoftFabric)
             {
@@ -65,21 +65,21 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            IReadOnlyDictionary<string, string> microsoftFabric = default;
+            IReadOnlyDictionary<string, string> fabricDataagent = default;
             string type = default;
             string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("microsoft_fabric"u8))
+                if (property.NameEquals("fabric_dataagent"u8))
                 {
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
-                    microsoftFabric = dictionary;
+                    fabricDataagent = dictionary;
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -98,7 +98,7 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RunStepMicrosoftFabricToolCall(type, id, serializedAdditionalRawData, microsoftFabric);
+            return new RunStepMicrosoftFabricToolCall(type, id, serializedAdditionalRawData, fabricDataagent);
         }
 
         BinaryData IPersistableModel<RunStepMicrosoftFabricToolCall>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.AI.Projects
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRunStepMicrosoftFabricToolCall(document.RootElement, options);
                     }
                 default:
@@ -136,7 +136,7 @@ namespace Azure.AI.Projects
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new RunStepMicrosoftFabricToolCall FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeRunStepMicrosoftFabricToolCall(document.RootElement);
         }
 

@@ -25,7 +25,7 @@ The `EventProcessorClient` is safe to cache and use for the lifetime of the appl
 
 ## Event lifetime
 
-When events are published, they will continue to exist in the Event Hub and be available for consuming until they reach an age greater than the [retention period](https://learn.microsoft.com//azure/event-hubs/event-hubs-faq#what-is-the-maximum-retention-period-for-events).  Once removed, the events are no longer available to be read and cannot be recovered.  Though the Event Hubs service is free to remove events older than the retention period, it does not do so deterministically; there is no guarantee of when events will be removed.
+When events are published, they will continue to exist in the Event Hub and be available for consuming until they reach an age greater than the [retention period](https://learn.microsoft.com/azure/event-hubs/event-hubs-faq#what-is-the-maximum-retention-period-for-events).  Once removed, the events are no longer available to be read and cannot be recovered.  Though the Event Hubs service is free to remove events older than the retention period, it does not do so deterministically; there is no guarantee of when events will be removed.
 
 ## Processing and consumer groups
 

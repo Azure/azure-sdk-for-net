@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDefenderForContainersAwsOffering(document.RootElement, options);
                     }
                 default:

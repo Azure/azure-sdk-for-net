@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Ignore Spelling: Checkpointing
+
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -391,7 +393,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Read the initial set back, marking the offset and sequence number of the last event in the initial set.
 
-            var startingOffset = 0L;
+            string startingOffset = null;
 
             await using (var consumer = new EventHubConsumerClient(
                 scope.ConsumerGroups.First(),
@@ -403,8 +405,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     if (partitionEvent.Data.IsEquivalentTo(lastSourceEvent))
                     {
-                        startingOffset = partitionEvent.Data.Offset;
-
+                        startingOffset = partitionEvent.Data.OffsetString;
                         break;
                     }
                 }

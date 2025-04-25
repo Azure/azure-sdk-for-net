@@ -61,9 +61,9 @@ TextTranslationClient client = new(credential);
 
 [translator_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Text/src/Custom/TextTranslationClient.cs
 [translator_vnet]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-reference#virtual-network-support
-[custom_subdomain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
+[custom_subdomain]: https://learn.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
 [translator_token]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-reference#authenticating-with-an-access-token
 [cognitive_resource_azure_portal]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 [cognitive_resource_azure_cli]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [service_access]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account

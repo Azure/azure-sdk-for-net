@@ -75,7 +75,7 @@ public class Program
             {
                 MaximumConcurrency = opts.Parallel,
             };
-            DataTransferOptions transferOptions = new DataTransferOptions()
+            TransferOptions transferOptions = new()
             {
                 MaximumTransferChunkSize = opts.BlockSize,
                 InitialTransferSize = opts.InitialTransferSize,
@@ -98,7 +98,7 @@ public class Program
                         blobSize: opts.Size,
                         blobCount: opts.Count,
                         transferManagerOptions: transferManagerOptions,
-                        dataTransferOptions: transferOptions,
+                        transferOptions: transferOptions,
                         tokenCredential: tokenCredential,
                         metrics: metrics,
                         testRunId: guid);

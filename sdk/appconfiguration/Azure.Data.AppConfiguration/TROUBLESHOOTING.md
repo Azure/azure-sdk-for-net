@@ -15,7 +15,7 @@ This troubleshooting guide contains instructions to diagnose issues encountered 
 
 ## General troubleshooting
 
-All app configuration service operations will throw a [RequestFailedException](https://docs.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet) on failure. When you interact with the library, errors returned by the service correspond to the same HTTP status codes returned for [REST API](https://learn.microsoft.com/azure/azure-app-configuration/rest-api/) requests. For example, if you try to retrieve a Configuration Setting that doesn't exist in your Configuration Store, an HTTP `404` status is returned, indicating `Not Found`.
+All app configuration service operations will throw a [RequestFailedException](https://learn.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet) on failure. When you interact with the library, errors returned by the service correspond to the same HTTP status codes returned for [REST API](https://learn.microsoft.com/azure/azure-app-configuration/rest-api/) requests. For example, if you try to retrieve a Configuration Setting that doesn't exist in your Configuration Store, an HTTP `404` status is returned, indicating `Not Found`.
 
 Here's an example of how to catch an exception:
 
@@ -56,9 +56,9 @@ Content-Length: 0
 
 ### Enable client logging
 
-To troubleshoot issues with the library, first enable logging to monitor the behavior of the application. The errors and warnings in the logs generally provide useful insights into what went wrong and sometimes include corrective actions to fix issues. To learn more about the approach used for logging, see [Logging with the Azure SDK for .NET](https://docs.microsoft.com/dotnet/azure/sdk/logging).
+To troubleshoot issues with the library, first enable logging to monitor the behavior of the application. The errors and warnings in the logs generally provide useful insights into what went wrong and sometimes include corrective actions to fix issues. To learn more about the approach used for logging, see [Logging with the Azure SDK for .NET](https://learn.microsoft.com/dotnet/azure/sdk/logging).
 
-Basic information about HTTP sessions, such as URLs and headers, is logged at the `INFO` level. The simplest way to see the logs is to enable console logging. To create an Azure SDK log listener that outputs messages to the console, use the [AzureEventSourceListener.CreateConsoleLogger](https://docs.microsoft.com/dotnet/api/azure.core.diagnostics.azureeventsourcelistener.createconsolelogger?view=azure-dotnet) method:
+Basic information about HTTP sessions, such as URLs and headers, is logged at the `INFO` level. The simplest way to see the logs is to enable console logging. To create an Azure SDK log listener that outputs messages to the console, use the [AzureEventSourceListener.CreateConsoleLogger](https://learn.microsoft.com/dotnet/api/azure.core.diagnostics.azureeventsourcelistener.createconsolelogger?view=azure-dotnet) method:
 
 ```csharp
 using Azure.Core.Diagnostics;
@@ -125,7 +125,7 @@ To reduce number of requests made to App Configuration service, please check out
 
 ## Troubleshooting authentication issues
 
-In addition to connection strings, Azure App Configuration supports [role-based access control](https://learn.microsoft.com/azure/role-based-access-control/overview) (RBAC) using Azure Active Directory authentication. The `Azure.Identity` package is used to obtain credentials for RBAC. For more information on getting started, see the [Azure App Configuration library's README](https://learn.microsoft.com/dotnet/api/overview/azure/data.appconfiguration-readme?view=azure-dotnet#authenticate-the-client). For details on the credential types supported in `Azure.Identity`, see the [Azure Identity documentation](https://docs.microsoft.com/dotnet/api/overview/azure/Identity-readme).
+In addition to connection strings, Azure App Configuration supports [role-based access control](https://learn.microsoft.com/azure/role-based-access-control/overview) (RBAC) using Azure Active Directory authentication. The `Azure.Identity` package is used to obtain credentials for RBAC. For more information on getting started, see the [Azure App Configuration library's README](https://learn.microsoft.com/dotnet/api/overview/azure/data.appconfiguration-readme?view=azure-dotnet#authenticate-the-client). For details on the credential types supported in `Azure.Identity`, see the [Azure Identity documentation](https://learn.microsoft.com/dotnet/api/overview/azure/Identity-readme).
 
 When authentication or authorization fail, you're most likely to see one of the following errors:
 

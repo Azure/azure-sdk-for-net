@@ -30,7 +30,7 @@ Train custom models to recognize all fields and values found in your custom form
 // managed identity configured.
 //
 // For instructions on setting up forms for training in an Azure Blob Storage Container, see
-// https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
+// https://learn.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
 Uri trainingFileUri = new Uri("<trainingFileUri>");
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
@@ -73,10 +73,10 @@ Train custom models to recognize specific fields and values you specify by label
 // managed identity configured.
 //
 // For instructions to set up forms for training in an Azure Blob Storage Container, please see:
-// https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
+// https://learn.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
 // For instructions to create a label file for your training forms, please see:
-// https://docs.microsoft.com/azure/cognitive-services/form-recognizer/label-tool?tabs=v2-1
+// https://learn.microsoft.com/azure/cognitive-services/form-recognizer/label-tool?tabs=v2-1
 
 Uri trainingFileUri = new Uri("<trainingFileUri>");
 string modelName = "My Model with labels";
@@ -110,4 +110,4 @@ foreach (CustomFormSubmodel submodel in model.Submodels)
 ```
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
-[labeling_tool]: https://docs.microsoft.com/azure/cognitive-services/form-recognizer/label-tool?tabs=v2-1
+[labeling_tool]: https://learn.microsoft.com/azure/cognitive-services/form-recognizer/label-tool?tabs=v2-1

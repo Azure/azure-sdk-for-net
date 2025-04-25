@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: NetworkCloud
 namespace: Azure.ResourceManager.NetworkCloud
-require: https://github.com/Azure/azure-rest-api-specs/blob/d6be8f199982997f0a94e3e9bbbe8b2f7e304f7d/specification/networkcloud/resource-manager/readme.md
-#tag: package-2024-06-01-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/c0a12a75b702054cf1e7fcd8c014d0fc116dea6e/specification/networkcloud/resource-manager/readme.md
+#tag: package-2024-07-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -78,6 +78,7 @@ rename-mapping:
   Console.properties.privateLinkServiceId: -|arm-id
   Console.properties.virtualMachineAccessId: -|uuid
   ConsolePatchParameters.properties.expiration: ExpireOn
+  IdentitySelector: ManagedServiceIdentitySelector
   ImageRepositoryCredentials.registryUrl: registryUriString
   KubernetesCluster.properties.attachedNetworkIds: -|arm-id
   KubernetesCluster.properties.clusterId: -|arm-id

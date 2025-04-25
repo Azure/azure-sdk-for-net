@@ -115,12 +115,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             // Include the queue details here.
             IDictionary<string, string> details = PopulateTriggerDetails(value);
 
+#pragma warning disable CS8073 // The result of the expression is always true in net8.0, but not this is not true in netstandard2.0
             if (blobProperties.CreatedOn != null)
+#pragma warning restore CS8073
             {
                 details[BlobCreatedKey] = blobProperties.CreatedOn.ToString(Constants.DateTimeFormatString, CultureInfo.InvariantCulture);
             }
 
+#pragma warning disable CS8073 // The result of the expression is always true in net8.0, but not this is not true in netstandard2.0
             if (blobProperties.LastModified != null)
+#pragma warning restore CS8073
             {
                 details[BlobLastModifiedKey] = blobProperties.LastModified.ToString(Constants.DateTimeFormatString, CultureInfo.InvariantCulture);
             }

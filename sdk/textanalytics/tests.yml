@@ -13,9 +13,6 @@ extends:
     CloudConfig:
       Public:
         Location: '${{ parameters.Location }}'
-      UsGov:
-      China:
-    SupportedClouds: 'Public,UsGov,China'
     # temporary env vars for custom text features
     EnvVars:
         AZURE_SUBSCRIPTION_ID: $(azure-subscription-id)

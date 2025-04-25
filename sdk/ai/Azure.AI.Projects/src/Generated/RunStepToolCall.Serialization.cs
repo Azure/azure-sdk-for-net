@@ -46,7 +46,7 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -80,11 +80,13 @@ namespace Azure.AI.Projects
                 switch (discriminator.GetString())
                 {
                     case "azure_ai_search": return RunStepAzureAISearchToolCall.DeserializeRunStepAzureAISearchToolCall(element, options);
+                    case "bing_custom_search": return RunStepCustomSearchToolCall.DeserializeRunStepCustomSearchToolCall(element, options);
                     case "bing_grounding": return RunStepBingGroundingToolCall.DeserializeRunStepBingGroundingToolCall(element, options);
                     case "code_interpreter": return RunStepCodeInterpreterToolCall.DeserializeRunStepCodeInterpreterToolCall(element, options);
+                    case "fabric_dataagent": return RunStepMicrosoftFabricToolCall.DeserializeRunStepMicrosoftFabricToolCall(element, options);
                     case "file_search": return RunStepFileSearchToolCall.DeserializeRunStepFileSearchToolCall(element, options);
                     case "function": return RunStepFunctionToolCall.DeserializeRunStepFunctionToolCall(element, options);
-                    case "microsoft_fabric": return RunStepMicrosoftFabricToolCall.DeserializeRunStepMicrosoftFabricToolCall(element, options);
+                    case "openapi": return RunStepOpenAPIToolCall.DeserializeRunStepOpenAPIToolCall(element, options);
                     case "sharepoint_grounding": return RunStepSharepointToolCall.DeserializeRunStepSharepointToolCall(element, options);
                 }
             }
@@ -112,7 +114,7 @@ namespace Azure.AI.Projects
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRunStepToolCall(document.RootElement, options);
                     }
                 default:
@@ -126,7 +128,7 @@ namespace Azure.AI.Projects
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static RunStepToolCall FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeRunStepToolCall(document.RootElement);
         }
 

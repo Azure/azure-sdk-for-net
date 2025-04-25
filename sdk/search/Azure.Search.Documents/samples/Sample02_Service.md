@@ -39,7 +39,7 @@ to French if not a human translation is not already defined.
 
 First we'll create a synonym map for country names and abbreviations. A synonym map contains aliases
 and other transformations using the
-[Solr format](https://docs.microsoft.com/rest/api/searchservice/create-synonym-map#apache-solr-synonym-format),
+[Solr format](https://learn.microsoft.com/rest/api/searchservice/create-synonym-map#apache-solr-synonym-format),
 for example:
 
 ```
@@ -100,7 +100,7 @@ SearchIndex index = new SearchIndex(indexName)
                 new SearchableField("StreetAddress"),
                 new SearchableField("City") { IsFilterable = true, IsSortable = true, IsFacetable = true },
                 new SearchableField("StateProvince") { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                new SearchableField("Country") { SynonymMapNames = new[] { synonymMapName }, IsFilterable = true, IsSortable = true, IsFacetable = true },
+                new SearchableField("Country") { SynonymMapNames = { synonymMapName }, IsFilterable = true, IsSortable = true, IsFacetable = true },
                 new SearchableField("PostalCode") { IsFilterable = true, IsSortable = true, IsFacetable = true }
             }
         }
@@ -155,15 +155,15 @@ indexerClient = new SearchIndexerClient(endpoint, credential, options);
 
 ### Create a Skillset
 
-To provide French translations of descriptions, we'll define a [translation skill](https://docs.microsoft.com/azure/search/cognitive-search-skill-text-translation) to translate from English.
-We'll also define a [conditional skill](https://docs.microsoft.com/azure/search/cognitive-search-skill-conditional) to use a human-translated descriptions instead if available.
+To provide French translations of descriptions, we'll define a [translation skill](https://learn.microsoft.com/azure/search/cognitive-search-skill-text-translation) to translate from English.
+We'll also define a [conditional skill](https://learn.microsoft.com/azure/search/cognitive-search-skill-conditional) to use a human-translated descriptions instead if available.
 
-See all [built-in skills](https://docs.microsoft.com/azure/search/cognitive-search-predefined-skills) for more information
+See all [built-in skills](https://learn.microsoft.com/azure/search/cognitive-search-predefined-skills) for more information
 about all available skills.
 
 ```C# Snippet:Azure_Search_Tests_Samples_CreateIndexerAsync_Skillset
 // Translate English descriptions to French.
-// See https://docs.microsoft.com/azure/search/cognitive-search-skill-text-translation for details of the Text Translation skill.
+// See https://learn.microsoft.com/azure/search/cognitive-search-skill-text-translation for details of the Text Translation skill.
 TextTranslationSkill translationSkill = new TextTranslationSkill(
     inputs: new[]
     {
@@ -181,7 +181,7 @@ TextTranslationSkill translationSkill = new TextTranslationSkill(
 };
 
 // Use the human-translated French description if available; otherwise, use the translated description.
-// See https://docs.microsoft.com/azure/search/cognitive-search-skill-conditional for details of the Conditional skill.
+// See https://learn.microsoft.com/azure/search/cognitive-search-skill-conditional for details of the Conditional skill.
 ConditionalSkill conditionalSkill = new ConditionalSkill(
     inputs: new[]
     {

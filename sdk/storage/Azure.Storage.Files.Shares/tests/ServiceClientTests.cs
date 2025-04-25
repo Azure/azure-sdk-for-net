@@ -40,7 +40,38 @@ namespace Azure.Storage.Files.Shares.Tests
 
             Assert.AreEqual("", builder.ShareName);
             Assert.AreEqual("", builder.DirectoryOrFilePath);
-            //Assert.AreEqual("accountName", builder.AccountName);
+            Assert.AreEqual(accountName, builder.AccountName);
+        }
+
+        [Test]
+        public void Ctor_ConnectionString_CustomUri()
+        {
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var fileEndpoint = new Uri("http://customdomain/" + accountName);
+            var fileSecondaryEndpoint = new Uri("http://customdomain/" + accountName + "-secondary");
+
+            var connectionString = new StorageConnectionString(credentials, (default, default), (default, default), (default, default), (fileEndpoint, fileSecondaryEndpoint));
+
+            ShareServiceClient service = new ShareServiceClient(connectionString.ToString(true));
+
+            Assert.AreEqual(accountName, service.AccountName);
+        }
+
+        [Test]
+        public void Ctor_SharedKey_AccountName()
+        {
+            // Arrange
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var shareEndpoint = new Uri($"https://customdomain/");
+
+            ShareServiceClient service = new ShareServiceClient(shareEndpoint, credentials);
+
+            Assert.AreEqual(accountName, service.AccountName);
         }
 
         [RecordedTest]
@@ -70,6 +101,13 @@ namespace Azure.Storage.Files.Shares.Tests
             TestHelper.AssertExpectedException<ArgumentException>(
                 () => new ShareClient(uri, new AzureSasCredential(sas)),
                 e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
+        }
+
+        [Test]
+        public void Ctor_DevelopmentThrows()
+        {
+            var ex = Assert.Throws<ArgumentException>(() => new ShareServiceClient("UseDevelopmentStorage=true"));
+            Assert.AreEqual("connectionString", ex.ParamName);
         }
 
         [RecordedTest]
@@ -151,21 +189,36 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareServiceProperties> propertiesResponse = await service.GetPropertiesAsync();
             ShareServiceProperties properties = propertiesResponse.Value;
 
-            // Assert
-            Assert.IsFalse(properties.Protocol.Smb.Multichannel.Enabled);
+            if (properties.Protocol.Smb.Multichannel.Enabled == true)
+            {
+                // Act
+                properties.Protocol.Smb.Multichannel.Enabled = false;
+                await service.SetPropertiesAsync(properties);
+                propertiesResponse = await service.GetPropertiesAsync();
+                properties = propertiesResponse.Value;
 
-            // Act
-            properties.Protocol.Smb.Multichannel.Enabled = true;
-            await service.SetPropertiesAsync(properties);
-            propertiesResponse = await service.GetPropertiesAsync();
-            properties = propertiesResponse.Value;
+                // Assert
+                Assert.IsFalse(properties.Protocol.Smb.Multichannel.Enabled);
 
-            // Assert
-            Assert.IsTrue(properties.Protocol.Smb.Multichannel.Enabled);
+                // Cleanup
+                properties.Protocol.Smb.Multichannel.Enabled = true;
+                await service.SetPropertiesAsync(properties);
+            }
+            else
+            {
+                // Act
+                properties.Protocol.Smb.Multichannel.Enabled = true;
+                await service.SetPropertiesAsync(properties);
+                propertiesResponse = await service.GetPropertiesAsync();
+                properties = propertiesResponse.Value;
 
-            // Cleanup
-            properties.Protocol.Smb.Multichannel.Enabled = false;
-            await service.SetPropertiesAsync(properties);
+                // Assert
+                Assert.IsTrue(properties.Protocol.Smb.Multichannel.Enabled);
+
+                // Cleanup
+                properties.Protocol.Smb.Multichannel.Enabled = false;
+                await service.SetPropertiesAsync(properties);
+            }
         }
 
         [RecordedTest]

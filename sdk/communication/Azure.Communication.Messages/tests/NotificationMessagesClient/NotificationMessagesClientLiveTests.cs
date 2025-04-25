@@ -17,10 +17,11 @@ namespace Azure.Communication.Messages.Tests
         {
         }
 
-        public static readonly Uri ImageUrl = new Uri("https://filesamples.com/samples/image/jpg/sample_640%C3%97426.jpg");
+        public static readonly Uri ImageUrl = new Uri("https://aka.ms/acsicon1");
         public static readonly Uri DocumentUrl = new Uri("https://filesamples.com/samples/document/pdf/sample2.pdf");
         public static readonly Uri VideoUrl = new Uri("https://filesamples.com/samples/video/3gp/sample_640x360.3gp");
         public static readonly Uri AudioUrl = new Uri("https://filesamples.com/samples/audio/mp3/sample3.mp3");
+        public static readonly Uri StickUrl = new Uri("https://img-06.stickers.cloud/packs/5df297e3-a7f0-44e0-a6d1-43bdb09b793c/webp/8709a42d-0579-4314-b659-9c2cdb979305.webp");
 
         [Test]
         public async Task SendTextMessage_ShouldSucceed()
@@ -101,6 +102,256 @@ namespace Azure.Communication.Messages.Tests
 
             // Act
             Response<SendMessageResult> response = await notificationMessagesClient.SendAsync(content);
+
+            // Assert
+            validateResponse(response);
+        }
+
+        [Test]
+        public async Task SendStickerMessage_ShouldSucceed()
+        {
+            // Arrange
+            var recipients = new List<string> { TestEnvironment.RecipientIdentifier };
+            var content = new StickerNotificationContent(new Guid(TestEnvironment.SenderChannelRegistrationId), recipients, StickUrl);
+
+            NotificationMessagesClient messagesClient = CreateInstrumentedNotificationMessagesClient();
+
+            // Act
+            var response = await messagesClient.SendAsync(content);
+
+            // Assert
+            validateResponse(response);
+        }
+
+        [Test]
+        public async Task SendReactionMessage_ShouldSucceed()
+        {
+            // Arrange
+            NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
+            TextNotificationContent textContent = new(new Guid(TestEnvironment.SenderChannelRegistrationId), new List<string> { TestEnvironment.RecipientIdentifier }, "LiveTest");
+            Response<SendMessageResult> textResponse = await notificationMessagesClient.SendAsync(textContent);
+            var messageId = textResponse.Value.Receipts[0].MessageId;
+            ReactionNotificationContent reactionContent = new(new Guid(TestEnvironment.SenderChannelRegistrationId), new List<string> { TestEnvironment.RecipientIdentifier }, "\uD83D\uDE00", messageId);
+
+            // Act
+            Response<SendMessageResult> response = await notificationMessagesClient.SendAsync(reactionContent);
+
+            // Assert
+            validateResponse(textResponse);
+        }
+
+        [Test]
+        public async Task SendInteractiveMessageWithButtonAction_ShouldSucceed()
+        {
+            // Arrange
+            var recipients = new List<string> { TestEnvironment.RecipientIdentifier };
+            var buttonActions = new List<ButtonContent>
+            {
+                new ButtonContent("no", "No"),
+                new ButtonContent("yes", "Yes")
+            };
+            var buttonSet = new ButtonSetContent(buttonActions);
+            var interactiveMessage = new InteractiveMessage(
+                new TextMessageContent("Do you want to proceed?"),
+                new WhatsAppButtonActionBindings(buttonSet));
+
+            var content = new InteractiveNotificationContent(new Guid(TestEnvironment.SenderChannelRegistrationId), recipients, interactiveMessage);
+            NotificationMessagesClient messagesClient = CreateInstrumentedNotificationMessagesClient();
+
+            // Act
+            var response = await messagesClient.SendAsync(content);
+
+            // Assert
+            validateResponse(response);
+        }
+
+        [Test]
+        public async Task SendInteractiveMessageWithImageHeader_ShouldSucceed()
+        {
+            // Arrange
+            var recipients = new List<string> { TestEnvironment.RecipientIdentifier };
+            var buttonActions = new List<ButtonContent>
+            {
+                new ButtonContent("no", "No"),
+                new ButtonContent("yes", "Yes")
+            };
+            var buttonSet = new ButtonSetContent(buttonActions);
+            var interactiveMessage = new InteractiveMessage(
+                new TextMessageContent("Do you want to proceed?"),
+                new WhatsAppButtonActionBindings(buttonSet));
+            interactiveMessage.Header = new ImageMessageContent(ImageUrl);
+
+            var content = new InteractiveNotificationContent(new Guid(TestEnvironment.SenderChannelRegistrationId), recipients, interactiveMessage);
+            NotificationMessagesClient messagesClient = CreateInstrumentedNotificationMessagesClient();
+
+            // Act
+            var response = await messagesClient.SendAsync(content);
+
+            // Assert
+            validateResponse(response);
+        }
+
+        [Test]
+        public async Task SendInteractiveMessageWithDocumentHeader_ShouldSucceed()
+        {
+            // Arrange
+            var recipients = new List<string> { TestEnvironment.RecipientIdentifier };
+            var buttonActions = new List<ButtonContent>
+            {
+                new ButtonContent("no", "No"),
+                new ButtonContent("yes", "Yes")
+            };
+            var buttonSet = new ButtonSetContent(buttonActions);
+            var interactiveMessage = new InteractiveMessage(
+                new TextMessageContent("Do you want to proceed?"),
+                new WhatsAppButtonActionBindings(buttonSet));
+            interactiveMessage.Header = new DocumentMessageContent(DocumentUrl);
+
+            var content = new InteractiveNotificationContent(new Guid(TestEnvironment.SenderChannelRegistrationId), recipients, interactiveMessage);
+            NotificationMessagesClient messagesClient = CreateInstrumentedNotificationMessagesClient();
+
+            // Act
+            var response = await messagesClient.SendAsync(content);
+
+            // Assert
+            validateResponse(response);
+        }
+
+        [Test]
+        public async Task SendInteractiveMessageWithVideoHeader_ShouldSucceed()
+        {
+            // Arrange
+            var recipients = new List<string> { TestEnvironment.RecipientIdentifier };
+            var buttonActions = new List<ButtonContent>
+            {
+                new ButtonContent("no", "No"),
+                new ButtonContent("yes", "Yes")
+            };
+            var buttonSet = new ButtonSetContent(buttonActions);
+            var interactiveMessage = new InteractiveMessage(
+                new TextMessageContent("Do you like it?"),
+                new WhatsAppButtonActionBindings(buttonSet));
+            interactiveMessage.Header = new VideoMessageContent(VideoUrl);
+
+            var content = new InteractiveNotificationContent(new Guid(TestEnvironment.SenderChannelRegistrationId), recipients, interactiveMessage);
+            NotificationMessagesClient messagesClient = CreateInstrumentedNotificationMessagesClient();
+
+            // Act
+            var response = await messagesClient.SendAsync(content);
+
+            // Assert
+            validateResponse(response);
+        }
+
+        [Test]
+
+        public async Task SendInteractiveListMessage_ShouldSucceed()
+        {
+            // Arrange
+            var recipients = new List<string> { TestEnvironment.RecipientIdentifier };
+            var channelRegistrationId = new Guid(TestEnvironment.SenderChannelRegistrationId);
+
+            var actionItemsList1 = new List<ActionGroupItem>
+            {
+                new ActionGroupItem("priority_express", "Priority Mail Express", "Next Day to 2 Days"),
+                new ActionGroupItem("priority_mail", "Priority Mail", "1–3 Days")
+            };
+
+            var actionItemsList2 = new List<ActionGroupItem>
+            {
+                new ActionGroupItem("usps_ground_advantage", "USPS Ground Advantage", "2-5 Days"),
+                new ActionGroupItem("media_mail", "Media Mail", "2-8 Days")
+            };
+
+            var groups = new List<ActionGroup>
+            {
+                new ActionGroup("I want it ASAP!", actionItemsList1),
+                new ActionGroup("I can wait a bit", actionItemsList2)
+            };
+
+            var actionGroupContent = new ActionGroupContent("Shipping Options", groups);
+
+            var interactionMessage = new InteractiveMessage(
+                new TextMessageContent("Test Body"),
+                new WhatsAppListActionBindings(actionGroupContent)
+            );
+            interactionMessage.Header = new TextMessageContent("Test Header");
+            interactionMessage.Footer = new TextMessageContent("Test Footer");
+
+            var interactiveMessageContent = new InteractiveNotificationContent(
+                channelRegistrationId,
+                recipients,
+                interactionMessage
+            );
+
+            NotificationMessagesClient messagesClient = CreateInstrumentedNotificationMessagesClient();
+
+            // Act
+            var response = await messagesClient.SendAsync(interactiveMessageContent);
+
+            // Assert
+            validateResponse(response);
+        }
+
+        [Test]
+        public async Task SendInteractiveReplyButtonMessage_ShouldSucceed()
+        {
+            // Arrange
+            var recipients = new List<string> { TestEnvironment.RecipientIdentifier };
+            var channelRegistrationId = new Guid(TestEnvironment.SenderChannelRegistrationId);
+
+            var replyButtonActionList = new List<ButtonContent>
+            {
+                new ButtonContent("cancel", "Cancel"),
+                new ButtonContent("agree", "Agree")
+            };
+
+            var buttonSet = new ButtonSetContent(replyButtonActionList);
+
+            var interactiveMessage = new InteractiveMessage(
+                new TextMessageContent("Test Body"),
+                new WhatsAppButtonActionBindings(buttonSet)
+            );
+            interactiveMessage.Header = new TextMessageContent("Test Header");
+            interactiveMessage.Footer = new TextMessageContent("Test Footer");
+
+            var interactiveMessageContent = new InteractiveNotificationContent(
+                channelRegistrationId,
+                recipients,
+                interactiveMessage
+            );
+
+            NotificationMessagesClient messagesClient = CreateInstrumentedNotificationMessagesClient();
+
+            // Act
+            var response = await messagesClient.SendAsync(interactiveMessageContent);
+
+            // Assert
+            validateResponse(response);
+        }
+
+        [Test]
+        public async Task SendInteractiveClickToActionMessage_ShouldSucceed()
+        {
+            // Arrange
+            var recipients = new List<string> { TestEnvironment.RecipientIdentifier };
+            var channelRegistrationId = new Guid(TestEnvironment.SenderChannelRegistrationId);
+
+            var urlAction = new LinkContent("Test Url", AudioUrl);
+
+            var interactiveMessage = new InteractiveMessage(
+                new TextMessageContent("Test Body"),
+                new WhatsAppUrlActionBindings(urlAction)
+            );
+            interactiveMessage.Header = new TextMessageContent("Test Header");
+            interactiveMessage.Footer = new TextMessageContent("Test Footer");
+
+            var interactiveMessageContent = new InteractiveNotificationContent(channelRegistrationId, recipients, interactiveMessage);
+
+            NotificationMessagesClient messagesClient = CreateInstrumentedNotificationMessagesClient();
+
+            // Act
+            var response = await messagesClient.SendAsync(interactiveMessageContent);
 
             // Assert
             validateResponse(response);

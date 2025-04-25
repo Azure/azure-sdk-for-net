@@ -36,7 +36,8 @@ namespace Azure.Storage.Tests
             Mock<PooledMemoryStream> mockBuffer = new(
                 MockBehavior.Loose,
                 ArrayPool<byte>.Shared,
-                Constants.MB)
+                Constants.MB,
+                default(int?))
             {
                 CallBase = true,
             };
@@ -94,7 +95,8 @@ namespace Azure.Storage.Tests
             Mock<PooledMemoryStream> mockBuffer = new(
                 MockBehavior.Loose,
                 ArrayPool<byte>.Shared,
-                Constants.MB)
+                Constants.MB,
+                default(int?))
             {
                 CallBase = true,
             };
@@ -149,7 +151,8 @@ namespace Azure.Storage.Tests
             Mock<PooledMemoryStream> mockBuffer = new(
                 MockBehavior.Loose,
                 ArrayPool<byte>.Shared,
-                Constants.MB)
+                Constants.MB,
+                default(int?))
             {
                 CallBase = true,
             };
@@ -186,6 +189,49 @@ namespace Azure.Storage.Tests
             mockBuffer.Verify(r => r.WriteAsync(data[1], 0, 48, default));
             mockBuffer.Verify(r => r.WriteAsync(data[1], 48, 1024, default));
             mockBuffer.Verify(r => r.WriteAsync(data[1], 1072, 928, default));
+        }
+
+        [Test]
+        public async Task ErrorsInCommitCleanupArrayPoolOnDispose()
+        {
+            // Arrange
+            int bufferSize = Constants.KB;
+            int writeSize = 256;
+
+            Mock<PooledMemoryStream> mockBuffer = new(
+                MockBehavior.Loose,
+                ArrayPool<byte>.Shared,
+                Constants.MB,
+                default(int?))
+            {
+                CallBase = true,
+            };
+
+            RentReturnTrackingArrayPool<byte> bufferPool = new RentReturnTrackingArrayPool<byte>();
+
+            StorageWriteStreamWithFlushError stream = new StorageWriteStreamWithFlushError(
+                position: 0,
+                bufferSize: bufferSize,
+                progressHandler: null,
+                buffer: mockBuffer.Object,
+                bufferPool: bufferPool);
+
+            // Act
+            // Do one write, and then explicitly dispose
+            // This dispose will raise an exception (as it has a Commit/Flush failure),
+            // and then we will assert that after the dispose, the proper ArrayPool calls were made.
+            await stream.WriteAsync(GetRandomBuffer(writeSize), 0, writeSize);
+
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(stream.Dispose);
+
+            // Assert
+            Assert.AreEqual(2, stream.ApiCalls.Count);
+            Assert.AreEqual(s_append, stream.ApiCalls[0]);
+            Assert.AreEqual(s_flush, stream.ApiCalls[1]);
+            Assert.AreEqual(ex.Message, "Flush failed");
+
+            Assert.AreEqual(3, bufferPool.RentCount); // Crc, Checksum, and buffer is rented from the bufferPool
+            Assert.AreEqual(3, bufferPool.ReturnCount, "Not all allocated array pool arrays were properly returned");
         }
 
         internal class StorageWriteStreamImplementation : StorageWriteStream
@@ -233,6 +279,69 @@ namespace Azure.Storage.Tests
             {
             }
         }
+
+        internal class StorageWriteStreamWithFlushError : StorageWriteStream
+        {
+            public List<string> ApiCalls;
+
+            public StorageWriteStreamWithFlushError(
+                long position,
+                long bufferSize,
+                IProgress<long> progressHandler,
+                PooledMemoryStream buffer,
+                RentReturnTrackingArrayPool<byte> bufferPool)
+                : base(
+                    position,
+                    bufferSize,
+                    progressHandler,
+                    transferValidation: new UploadTransferValidationOptions
+                    {
+                        ChecksumAlgorithm = StorageChecksumAlgorithm.Auto
+                    },
+                    buffer,
+                    bufferPool)
+            {
+                ApiCalls = new List<string>();
+            }
+
+            protected override Task AppendInternal(UploadTransferValidationOptions validationOptions, bool async, CancellationToken cancellationToken)
+            {
+                ApiCalls.Add(s_append);
+                return Task.CompletedTask;
+            }
+
+            protected override Task CommitInternal(bool async, CancellationToken cancellationToken)
+            {
+                ApiCalls.Add(s_flush);
+                throw new InvalidOperationException("Flush failed");
+            }
+
+            protected override void ValidateBufferSize(long bufferSize)
+            {
+            }
+        }
+
+        internal class RentReturnTrackingArrayPool<T> : ArrayPool<T>
+        {
+            private int _rentCount = 0;
+            private int _returnCount = 0;
+
+            public int RentCount => _rentCount;
+            public int ReturnCount => _returnCount;
+
+            public override T[] Rent(int minimumLength)
+            {
+                Interlocked.Increment(ref _rentCount);
+                return Shared.Rent(minimumLength);
+            }
+
+            public override void Return(T[] array, bool clearArray = false)
+            {
+                Interlocked.Increment(ref _returnCount);
+                Shared.Return(array, clearArray);
+            }
+        }
+
         private static byte[] GetRandomBuffer(long size)
         {
             Random random = new Random(Environment.TickCount);

@@ -64,16 +64,16 @@ namespace Azure.AI.Language.Text
         /// <param name="name"> Long name of a detected language (e.g. English, French). </param>
         /// <param name="iso6391Name"> A two letter representation of the detected language according to the ISO 639-1 standard (e.g. en, fr). </param>
         /// <param name="confidenceScore"> A confidence score between 0 and 1. Scores close to 1 indicate 100% certainty that the identified language is true. </param>
-        /// <param name="script"> Identifies the script of the input document. </param>
-        /// <param name="scriptCode"> Identifies the script of the input document. </param>
+        /// <param name="scriptName"> Identifies the script name of the input document according to the ISO 15924 standard. </param>
+        /// <param name="scriptIso15924Code"> Identifies the script code of the input document according to the ISO 15924 standard. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DetectedLanguage(string name, string iso6391Name, double confidenceScore, ScriptKind? script, ScriptCode? scriptCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DetectedLanguage(string name, string iso6391Name, double confidenceScore, ScriptKind? scriptName, ScriptCode? scriptIso15924Code, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Iso6391Name = iso6391Name;
             ConfidenceScore = confidenceScore;
-            Script = script;
-            ScriptCode = scriptCode;
+            ScriptName = scriptName;
+            ScriptIso15924Code = scriptIso15924Code;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -88,9 +88,9 @@ namespace Azure.AI.Language.Text
         public string Iso6391Name { get; }
         /// <summary> A confidence score between 0 and 1. Scores close to 1 indicate 100% certainty that the identified language is true. </summary>
         public double ConfidenceScore { get; }
-        /// <summary> Identifies the script of the input document. </summary>
-        public ScriptKind? Script { get; }
-        /// <summary> Identifies the script of the input document. </summary>
-        public ScriptCode? ScriptCode { get; }
+        /// <summary> Identifies the script name of the input document according to the ISO 15924 standard. </summary>
+        public ScriptKind? ScriptName { get; }
+        /// <summary> Identifies the script code of the input document according to the ISO 15924 standard. </summary>
+        public ScriptCode? ScriptIso15924Code { get; }
     }
 }
