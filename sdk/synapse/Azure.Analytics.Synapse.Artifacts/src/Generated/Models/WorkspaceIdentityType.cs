@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The identity type. Currently the only supported type is 'SystemAssigned'. </summary>
+    /// <summary> The WorkspaceIdentityType. </summary>
     public readonly partial struct WorkspaceIdentityType : IEquatable<WorkspaceIdentityType>
     {
         private readonly string _value;
@@ -44,5 +44,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
+    }
+}
+erride string ToString() => _value;
     }
 }

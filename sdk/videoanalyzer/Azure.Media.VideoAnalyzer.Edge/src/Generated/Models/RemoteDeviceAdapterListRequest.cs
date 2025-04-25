@@ -19,7 +19,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of <see cref="RemoteDeviceAdapterListRequest"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
-        internal RemoteDeviceAdapterListRequest(string methodName, string apiVersion) : base(methodName, apiVersion)
+        internal RemoteDeviceAdapterListRequest(string methodName, ApiVersionEnum? apiVersion) : base(methodName, apiVersion)
         {
             MethodName = methodName ?? "remoteDeviceAdapterList";
         }

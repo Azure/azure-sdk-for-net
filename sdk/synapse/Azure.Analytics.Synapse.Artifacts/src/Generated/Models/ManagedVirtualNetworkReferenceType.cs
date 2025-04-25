@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Managed Virtual Network reference type. </summary>
+    /// <summary> The ManagedVirtualNetworkReferenceType. </summary>
     public readonly partial struct ManagedVirtualNetworkReferenceType : IEquatable<ManagedVirtualNetworkReferenceType>
     {
         private readonly string _value;

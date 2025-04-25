@@ -29,7 +29,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="name"> Live pipeline unique identifier. </param>
         /// <param name="systemData"> Read-only system metadata associated with this object. </param>
         /// <param name="properties"> Live pipeline properties. </param>
-        internal LivePipelineSetRequestBody(string methodName, string apiVersion, string name, SystemData systemData, LivePipelineProperties properties) : base(methodName, apiVersion)
+        internal LivePipelineSetRequestBody(string methodName, ApiVersionEnum? apiVersion, string name, SystemData systemData, LivePipelineProperties properties) : base(methodName, apiVersion)
         {
             Name = name;
             SystemData = systemData;

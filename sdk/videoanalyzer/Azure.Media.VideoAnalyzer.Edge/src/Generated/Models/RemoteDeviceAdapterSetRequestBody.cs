@@ -29,7 +29,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="name"> The unique identifier for the remote device adapter. </param>
         /// <param name="systemData"> Read-only system metadata associated with this object. </param>
         /// <param name="properties"> Properties of the remote device adapter. </param>
-        internal RemoteDeviceAdapterSetRequestBody(string methodName, string apiVersion, string name, SystemData systemData, RemoteDeviceAdapterProperties properties) : base(methodName, apiVersion)
+        internal RemoteDeviceAdapterSetRequestBody(string methodName, ApiVersionEnum? apiVersion, string name, SystemData systemData, RemoteDeviceAdapterProperties properties) : base(methodName, apiVersion)
         {
             Name = name;
             SystemData = systemData;

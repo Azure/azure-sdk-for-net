@@ -27,7 +27,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
         /// <param name="remoteDeviceAdapter"> The Video Analyzer edge module can act as a transparent gateway for video, enabling IoT devices to send video to the cloud from behind a firewall. A remote device adapter should be created for each such IoT device. Communication between the cloud and IoT device would then flow via the Video Analyzer edge module. </param>
-        internal RemoteDeviceAdapterSetRequest(string methodName, string apiVersion, RemoteDeviceAdapter remoteDeviceAdapter) : base(methodName, apiVersion)
+        internal RemoteDeviceAdapterSetRequest(string methodName, ApiVersionEnum? apiVersion, RemoteDeviceAdapter remoteDeviceAdapter) : base(methodName, apiVersion)
         {
             RemoteDeviceAdapter = remoteDeviceAdapter;
             MethodName = methodName ?? "remoteDeviceAdapterSet";

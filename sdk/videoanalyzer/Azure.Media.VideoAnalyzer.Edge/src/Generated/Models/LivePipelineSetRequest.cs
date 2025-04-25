@@ -27,7 +27,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
         /// <param name="livePipeline"> Live Pipeline represents an unique instance of a pipeline topology which is used for real-time content ingestion and analysis. </param>
-        internal LivePipelineSetRequest(string methodName, string apiVersion, LivePipeline livePipeline) : base(methodName, apiVersion)
+        internal LivePipelineSetRequest(string methodName, ApiVersionEnum? apiVersion, LivePipeline livePipeline) : base(methodName, apiVersion)
         {
             LivePipeline = livePipeline;
             MethodName = methodName ?? "livePipelineSet";

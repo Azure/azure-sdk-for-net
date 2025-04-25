@@ -25,7 +25,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("@apiVersion"u8);
-                writer.WriteStringValue(ApiVersion);
+                writer.WriteStringValue(ApiVersion.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -38,7 +38,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             string discoveryDuration = default;
             string methodName = default;
-            string apiVersion = default;
+            ApiVersionEnum? apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("discoveryDuration"u8))
@@ -53,7 +53,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 if (property.NameEquals("@apiVersion"u8))
                 {
-                    apiVersion = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    apiVersion = new ApiVersionEnum(property.Value.GetString());
                     continue;
                 }
             }

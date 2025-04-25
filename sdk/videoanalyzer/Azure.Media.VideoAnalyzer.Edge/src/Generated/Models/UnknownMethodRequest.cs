@@ -13,7 +13,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of <see cref="UnknownMethodRequest"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
-        internal UnknownMethodRequest(string methodName, string apiVersion) : base(methodName, apiVersion)
+        internal UnknownMethodRequest(string methodName, ApiVersionEnum? apiVersion) : base(methodName, apiVersion)
         {
             MethodName = methodName ?? "Unknown";
         }
