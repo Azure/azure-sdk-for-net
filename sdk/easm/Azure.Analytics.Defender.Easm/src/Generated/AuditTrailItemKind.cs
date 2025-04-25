@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    /// <summary> The kind of asset. </summary>
+    /// <summary> The AuditTrailItemKind. </summary>
     public readonly partial struct AuditTrailItemKind : IEquatable<AuditTrailItemKind>
     {
         private readonly string _value;
@@ -23,30 +23,9 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         private const string AsValue = "as";
-        private const string ContactValue = "contact";
-        private const string DomainValue = "domain";
-        private const string HostValue = "host";
-        private const string IpAddressValue = "ipAddress";
-        private const string IpBlockValue = "ipBlock";
-        private const string PageValue = "page";
-        private const string SslCertValue = "sslCert";
 
         /// <summary> as. </summary>
         public static AuditTrailItemKind As { get; } = new AuditTrailItemKind(AsValue);
-        /// <summary> contact. </summary>
-        public static AuditTrailItemKind Contact { get; } = new AuditTrailItemKind(ContactValue);
-        /// <summary> domain. </summary>
-        public static AuditTrailItemKind Domain { get; } = new AuditTrailItemKind(DomainValue);
-        /// <summary> host. </summary>
-        public static AuditTrailItemKind Host { get; } = new AuditTrailItemKind(HostValue);
-        /// <summary> ipAddress. </summary>
-        public static AuditTrailItemKind IpAddress { get; } = new AuditTrailItemKind(IpAddressValue);
-        /// <summary> ipBlock. </summary>
-        public static AuditTrailItemKind IpBlock { get; } = new AuditTrailItemKind(IpBlockValue);
-        /// <summary> page. </summary>
-        public static AuditTrailItemKind Page { get; } = new AuditTrailItemKind(PageValue);
-        /// <summary> sslCert. </summary>
-        public static AuditTrailItemKind SslCert { get; } = new AuditTrailItemKind(SslCertValue);
         /// <summary> Determines if two <see cref="AuditTrailItemKind"/> values are the same. </summary>
         public static bool operator ==(AuditTrailItemKind left, AuditTrailItemKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AuditTrailItemKind"/> values are not the same. </summary>

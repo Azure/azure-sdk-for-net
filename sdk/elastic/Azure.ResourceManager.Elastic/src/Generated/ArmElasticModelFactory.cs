@@ -25,7 +25,10 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="location"> The location. </param>
         /// <param name="skuName"> SKU of the monitor resource. </param>
         /// <param name="properties"> Properties of the monitor resource. </param>
-        /// <param name="identity"> Identity properties of the monitor resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity">
+        /// Identity properties of the monitor resource.
+        /// Current supported identity types: SystemAssigned
+        /// </param>
         /// <returns> A new <see cref="Elastic.ElasticMonitorData"/> instance for mocking. </returns>
         public static ElasticMonitorData ElasticMonitorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string skuName = null, ElasticMonitorProperties properties = null, ManagedServiceIdentity identity = null)
         {

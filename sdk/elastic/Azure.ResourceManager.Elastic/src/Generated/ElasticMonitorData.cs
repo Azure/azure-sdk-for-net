@@ -66,7 +66,10 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="location"> The location. </param>
         /// <param name="sku"> SKU of the monitor resource. </param>
         /// <param name="properties"> Properties of the monitor resource. </param>
-        /// <param name="identity"> Identity properties of the monitor resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity">
+        /// Identity properties of the monitor resource.
+        /// Current supported identity types: SystemAssigned
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ElasticMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSku sku, ElasticMonitorProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -92,7 +95,10 @@ namespace Azure.ResourceManager.Elastic
 
         /// <summary> Properties of the monitor resource. </summary>
         public ElasticMonitorProperties Properties { get; set; }
-        /// <summary> Identity properties of the monitor resource. Current supported identity types: SystemAssigned. </summary>
+        /// <summary>
+        /// Identity properties of the monitor resource.
+        /// Current supported identity types: SystemAssigned
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }
 }
