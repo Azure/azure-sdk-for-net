@@ -141,10 +141,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             TransferManager transferManager = new();
             BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
 
-            TransferOptions transferOptions = new()
-            {
-                CreationMode = StorageResourceCreationMode.OverwriteIfExists,
-            };
+            TransferOptions transferOptions = new();
             TestEventsRaised testEventsRaised = new(transferOptions);
 
             TransferOperation transfer = await transferManager.StartTransferAsync(
@@ -159,8 +156,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 tokenSource.Token);
 
             testEventsRaised.AssertUnexpectedFailureCheck();
+            await VerifyResultsAsync(
+                sourceContainer.Container, "/",
+                destinationContainer.Container, "/");
 
-            // TODO: Validation, work without overwrite
+            // TODO: Handle empty directories
         }
     }
 }
