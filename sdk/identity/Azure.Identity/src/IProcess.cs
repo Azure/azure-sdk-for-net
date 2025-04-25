@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 
 namespace Azure.Identity
 {
@@ -20,5 +21,6 @@ namespace Azure.Identity
         void Kill();
         void BeginOutputReadLine();
         void BeginErrorReadLine();
+        StreamWriter StandardInput { get; }
     }
 }
