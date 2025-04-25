@@ -282,11 +282,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.RedisEnterpriseSkuDetails"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
-        /// <param name="customerFacingSizeInGB"> The cache size in GB. </param>
+        /// <param name="sizeInGB"> The cache size in GB. </param>
         /// <returns> A new <see cref="Models.RedisEnterpriseSkuDetails"/> instance for mocking. </returns>
-        public static RedisEnterpriseSkuDetails RedisEnterpriseSkuDetails(string name = null, float? customerFacingSizeInGB = null)
+        public static RedisEnterpriseSkuDetails RedisEnterpriseSkuDetails(string name = null, float? sizeInGB = null)
         {
-            return new RedisEnterpriseSkuDetails(name, customerFacingSizeInGB, serializedAdditionalRawData: null);
+            return new RedisEnterpriseSkuDetails(name, sizeInGB, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RedisEnterprisePrivateLinkResource"/>. </summary>
