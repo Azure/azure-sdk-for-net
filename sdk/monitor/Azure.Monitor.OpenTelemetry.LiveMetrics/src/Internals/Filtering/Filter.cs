@@ -447,6 +447,22 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
                             Type enumUnderlyingType = fieldType.GetTypeInfo().GetEnumUnderlyingType();
 
+                            // This block matches the case statements just above.
+                            static Type GetNullableType(Type inputType) => inputType switch
+                            {
+                                _ when inputType == typeof(sbyte) => typeof(sbyte?),
+                                _ when inputType == typeof(short) => typeof(short?),
+                                _ when inputType == typeof(int) => typeof(int?),
+                                _ when inputType == typeof(long) => typeof(long?),
+                                _ when inputType == typeof(byte) => typeof(byte?),
+                                _ when inputType == typeof(ushort) => typeof(ushort?),
+                                _ when inputType == typeof(uint) => typeof(uint?),
+                                _ when inputType == typeof(ulong) => typeof(ulong?),
+                                _ when inputType == typeof(float) => typeof(float?),
+                                _ when inputType == typeof(double) => typeof(double?),
+                                _ => throw new ArgumentException($"Cannot create a nullable type for {inputType.FullName}."),
+                            };
+
                             switch (predicate)
                             {
                                 case Predicate.Equal:
@@ -458,28 +474,28 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                                 case Predicate.LessThan:
                                     // (int)fieldValue < (int)enumValue
                                     // (int?)fieldValue < (int?)enumValue
-                                    Type underlyingType = isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(enumUnderlyingType) : enumUnderlyingType;
+                                    Type underlyingType = isFieldTypeNullable ? GetNullableType(enumUnderlyingType) : enumUnderlyingType;
                                     return Expression.LessThan(
                                         Expression.Convert(fieldExpression, underlyingType),
                                         Expression.Convert(Expression.Constant(enumValue, fieldType), underlyingType));
                                 case Predicate.GreaterThan:
                                     // (int)fieldValue > (int)enumValue
                                     // (int?)fieldValue > (int?)enumValue
-                                    underlyingType = isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(enumUnderlyingType) : enumUnderlyingType;
+                                    underlyingType = isFieldTypeNullable ? GetNullableType(enumUnderlyingType) : enumUnderlyingType;
                                     return Expression.GreaterThan(
                                         Expression.Convert(fieldExpression, underlyingType),
                                         Expression.Convert(Expression.Constant(enumValue, fieldType), underlyingType));
                                 case Predicate.LessThanOrEqual:
                                     // (int)fieldValue <= (int)enumValue
                                     // (int?)fieldValue <= (int?)enumValue
-                                    underlyingType = isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(enumUnderlyingType) : enumUnderlyingType;
+                                    underlyingType = isFieldTypeNullable ? GetNullableType(enumUnderlyingType) : enumUnderlyingType;
                                     return Expression.LessThanOrEqual(
                                         Expression.Convert(fieldExpression, underlyingType),
                                         Expression.Convert(Expression.Constant(enumValue, fieldType), underlyingType));
                                 case Predicate.GreaterThanOrEqual:
                                     // (int)fieldValue >= (int)enumValue
                                     // (int?)fieldValue >= (int?)enumValue
-                                    underlyingType = isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(enumUnderlyingType) : enumUnderlyingType;
+                                    underlyingType = isFieldTypeNullable ? GetNullableType(enumUnderlyingType) : enumUnderlyingType;
                                     return Expression.GreaterThanOrEqual(
                                         Expression.Convert(fieldExpression, underlyingType),
                                         Expression.Convert(Expression.Constant(enumValue, fieldType), underlyingType));
@@ -513,32 +529,32 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                                     ThrowOnInvalidFilter(fieldType, !comparandDouble.HasValue);
                                     return Expression.Equal(
                                         fieldConvertedExpression,
-                                        Expression.Constant(comparandDouble.Value, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(typeof(double)) : typeof(double)));
+                                        Expression.Constant(comparandDouble.Value, isFieldTypeNullable ? typeof(double?) : typeof(double)));
                                 case Predicate.NotEqual:
                                     ThrowOnInvalidFilter(fieldType, !comparandDouble.HasValue);
                                     return Expression.NotEqual(
                                         fieldConvertedExpression,
-                                        Expression.Constant(comparandDouble.Value, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(typeof(double)) : typeof(double)));
+                                        Expression.Constant(comparandDouble.Value, isFieldTypeNullable ? typeof(double?) : typeof(double)));
                                 case Predicate.LessThan:
                                     ThrowOnInvalidFilter(fieldType, !comparandDouble.HasValue);
                                     return Expression.LessThan(
                                         fieldConvertedExpression,
-                                        Expression.Constant(comparandDouble.Value, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(typeof(double)) : typeof(double)));
+                                        Expression.Constant(comparandDouble.Value, isFieldTypeNullable ? typeof(double?) : typeof(double)));
                                 case Predicate.GreaterThan:
                                     ThrowOnInvalidFilter(fieldType, !comparandDouble.HasValue);
                                     return Expression.GreaterThan(
                                         fieldConvertedExpression,
-                                        Expression.Constant(comparandDouble.Value, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(typeof(double)) : typeof(double)));
+                                        Expression.Constant(comparandDouble.Value, isFieldTypeNullable ? typeof(double?) : typeof(double)));
                                 case Predicate.LessThanOrEqual:
                                     ThrowOnInvalidFilter(fieldType, !comparandDouble.HasValue);
                                     return Expression.LessThanOrEqual(
                                         fieldConvertedExpression,
-                                        Expression.Constant(comparandDouble.Value, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(typeof(double)) : typeof(double)));
+                                        Expression.Constant(comparandDouble.Value, isFieldTypeNullable ? typeof(double?) : typeof(double)));
                                 case Predicate.GreaterThanOrEqual:
                                     ThrowOnInvalidFilter(fieldType, !comparandDouble.HasValue);
                                     return Expression.GreaterThanOrEqual(
                                         fieldConvertedExpression,
-                                        Expression.Constant(comparandDouble.Value, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(typeof(double)) : typeof(double)));
+                                        Expression.Constant(comparandDouble.Value, isFieldTypeNullable ? typeof(double?) : typeof(double)));
                                 case Predicate.Contains:
                                     // fieldValue.ToString(CultureInfo.InvariantCulture).IndexOf(this.comparand, StringComparison.OrdinalIgnoreCase) != -1
                                     Expression toStringCall = isFieldTypeNullable
