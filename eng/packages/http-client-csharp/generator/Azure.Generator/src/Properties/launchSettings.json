@@ -32,7 +32,7 @@
     },
     "http-encode-bytes": {
       //"commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/encode/bytes -g AzureStubGenerator",
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/encode/bytes -g AzureClientGenerator",
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/encode/bytes -g AzureClientGenerator -new-project",
       "commandName": "Executable",
       "executablePath": "dotnet"
     },

@@ -52,6 +52,7 @@ namespace Azure.Generator.Primitives
             if (hasOperation)
             {
                 builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("RawRequestUriBuilder.cs", pathSegmentCount), "Shared/Core"));
+                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("TypeFormatters.cs", pathSegmentCount), "Shared/Core"));
             }
 
             if (hasLongRunningOperation)
