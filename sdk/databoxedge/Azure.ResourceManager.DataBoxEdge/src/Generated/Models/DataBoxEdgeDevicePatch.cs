@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDevicePatch"/>. </summary>
         /// <param name="tags"> The tags attached to the Data Box Edge/Gateway resource. </param>
-        /// <param name="identity"> Msi identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="identity">
+        /// Msi identity of the resource
+        /// Current supported identity types: None, SystemAssigned, UserAssigned
+        /// </param>
         /// <param name="edgeProfile"> Edge Profile property of the Data Box Edge/Gateway device. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataBoxEdgeDevicePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, EdgeProfilePatch edgeProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -68,7 +71,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> The tags attached to the Data Box Edge/Gateway resource. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Msi identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        /// <summary>
+        /// Msi identity of the resource
+        /// Current supported identity types: None, SystemAssigned, UserAssigned
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Edge Profile property of the Data Box Edge/Gateway device. </summary>
         internal EdgeProfilePatch EdgeProfile { get; set; }

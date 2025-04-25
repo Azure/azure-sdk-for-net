@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryPatch"/>. </summary>
         /// <param name="tags"> The resource tags. </param>
-        /// <param name="identity"> Managed service identity of the factory. Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned. </param>
+        /// <param name="identity">
+        /// Managed service identity of the factory.
+        /// Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned
+        /// </param>
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the data factory. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataFactoryPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, DataFactoryPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -67,7 +70,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Managed service identity of the factory. Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned. </summary>
+        /// <summary>
+        /// Managed service identity of the factory.
+        /// Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Whether or not public network access is allowed for the data factory. </summary>
         public DataFactoryPublicNetworkAccess? PublicNetworkAccess { get; set; }

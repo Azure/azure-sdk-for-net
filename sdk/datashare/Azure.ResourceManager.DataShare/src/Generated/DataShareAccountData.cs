@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary> Initializes a new instance of <see cref="DataShareAccountData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Identity Info on the Account. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity">
+        /// Identity Info on the Account
+        /// Current supported identity types: SystemAssigned
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identity"/> is null. </exception>
         public DataShareAccountData(AzureLocation location, ManagedServiceIdentity identity) : base(location)
         {
@@ -69,7 +72,10 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Identity Info on the Account. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity">
+        /// Identity Info on the Account
+        /// Current supported identity types: SystemAssigned
+        /// </param>
         /// <param name="createdOn"> Time at which the account was created. </param>
         /// <param name="provisioningState"> Provisioning state of the Account. </param>
         /// <param name="userEmail"> Email of the user who created the resource. </param>
@@ -90,7 +96,10 @@ namespace Azure.ResourceManager.DataShare
         {
         }
 
-        /// <summary> Identity Info on the Account. Current supported identity types: SystemAssigned. </summary>
+        /// <summary>
+        /// Identity Info on the Account
+        /// Current supported identity types: SystemAssigned
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Time at which the account was created. </summary>
         public DateTimeOffset? CreatedOn { get; }

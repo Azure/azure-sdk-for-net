@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The resource location. </param>
         /// <param name="tags"> The resource tags. </param>
-        /// <param name="identity"> The Key Vault encryption identity, if any. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity"> The Key Vault encryption identity, if any. </param>
         /// <param name="defaultGroup"> The default owner group for all new folders and files created in the Data Lake Store account. </param>
         /// <param name="encryptionConfig"> The Key Vault encryption configuration. </param>
         /// <param name="encryptionState"> The current state of encryption for this Data Lake Store account. </param>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public AzureLocation Location { get; }
         /// <summary> The resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The Key Vault encryption identity, if any. Current supported identity types: SystemAssigned. </summary>
+        /// <summary> The Key Vault encryption identity, if any. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The default owner group for all new folders and files created in the Data Lake Store account. </summary>
         public string DefaultGroup { get; set; }

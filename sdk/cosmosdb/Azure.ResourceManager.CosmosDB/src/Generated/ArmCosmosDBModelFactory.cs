@@ -2226,7 +2226,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of a managed Cassandra cluster. </param>
-        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned, None. </param>
+        /// <param name="identity">
+        /// Identity for the resource.
+        /// Current supported identity types: SystemAssigned, None
+        /// </param>
         /// <returns> A new <see cref="CosmosDB.CassandraClusterData"/> instance for mocking. </returns>
         public static CassandraClusterData CassandraClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CassandraClusterProperties properties = null, ManagedServiceIdentity identity = null)
         {
