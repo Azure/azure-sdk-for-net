@@ -86,7 +86,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            OpenAIPageableListOfThreadRunObject @object = default;
+            OpenAIPageableListOfObject3 @object = default;
             IReadOnlyList<ThreadRun> data = default;
             string firstId = default;
             string lastId = default;
@@ -97,7 +97,7 @@ namespace Azure.AI.Projects
             {
                 if (property.NameEquals("object"u8))
                 {
-                    @object = new OpenAIPageableListOfThreadRunObject(property.Value.GetString());
+                    @object = new OpenAIPageableListOfObject3(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("data"u8))

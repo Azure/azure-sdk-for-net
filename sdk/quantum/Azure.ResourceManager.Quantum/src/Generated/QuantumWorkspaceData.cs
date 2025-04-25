@@ -65,7 +65,10 @@ namespace Azure.ResourceManager.Quantum
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Managed Identity information. Current supported identity types: SystemAssigned, None. </param>
+        /// <param name="identity">
+        /// Managed Identity information.
+        /// Current supported identity types: SystemAssigned, None
+        /// </param>
         /// <param name="providers"> List of Providers selected for this Workspace. </param>
         /// <param name="usable"> Whether the current workspace is ready to accept Jobs. </param>
         /// <param name="provisioningState"> Provisioning status field. </param>
@@ -90,7 +93,10 @@ namespace Azure.ResourceManager.Quantum
         {
         }
 
-        /// <summary> Managed Identity information. Current supported identity types: SystemAssigned, None. </summary>
+        /// <summary>
+        /// Managed Identity information.
+        /// Current supported identity types: SystemAssigned, None
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> List of Providers selected for this Workspace. </summary>
         public IList<QuantumProvider> Providers { get; }

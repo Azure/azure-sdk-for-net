@@ -23,7 +23,10 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned, None. </param>
+        /// <param name="identity">
+        /// Identity for the resource.
+        /// Current supported identity types: SystemAssigned, None
+        /// </param>
         /// <param name="authentication"> This is optional input that contains the authentication that should be used to generate the namespace. </param>
         /// <param name="clusterExtensionIds"> Contains the reference to the add-on that contains charts to deploy CRDs and operators. </param>
         /// <param name="displayName"> Display name for the Custom Locations location. </param>

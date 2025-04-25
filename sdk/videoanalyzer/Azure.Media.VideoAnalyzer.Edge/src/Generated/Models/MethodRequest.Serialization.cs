@@ -20,7 +20,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("@apiVersion"u8);
-                writer.WriteStringValue(ApiVersion);
+                writer.WriteStringValue(ApiVersion.Value.ToString());
             }
             writer.WriteEndObject();
         }

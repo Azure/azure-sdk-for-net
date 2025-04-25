@@ -65,7 +65,10 @@ namespace Azure.ResourceManager.MySql
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity">
+        /// The Azure Active Directory identity of the server.
+        /// Current supported identity types: SystemAssigned
+        /// </param>
         /// <param name="sku"> The SKU (pricing tier) of the server. </param>
         /// <param name="administratorLogin"> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
         /// <param name="version"> Server version. </param>
@@ -110,7 +113,10 @@ namespace Azure.ResourceManager.MySql
         {
         }
 
-        /// <summary> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </summary>
+        /// <summary>
+        /// The Azure Active Directory identity of the server.
+        /// Current supported identity types: SystemAssigned
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The SKU (pricing tier) of the server. </summary>
         public MySqlSku Sku { get; set; }

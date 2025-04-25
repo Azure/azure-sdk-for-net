@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public DataBoxOrderPreferences()
         {
             PreferredDataCenterRegion = new ChangeTrackingList<string>();
-            StorageAccountAccessTierPreferences = new ChangeTrackingList<string>();
+            StorageAccountAccessTierPreferences = new ChangeTrackingList<StorageAccountAccessTier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxOrderPreferences"/>. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="encryptionPreferences"> Preferences related to the Encryption. </param>
         /// <param name="storageAccountAccessTierPreferences"> Preferences related to the Access Tier of storage accounts. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxOrderPreferences(IList<string> preferredDataCenterRegion, TransportPreferences transportPreferences, TransportPreferences reverseTransportPreferences, DataBoxEncryptionPreferences encryptionPreferences, IList<string> storageAccountAccessTierPreferences, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataBoxOrderPreferences(IList<string> preferredDataCenterRegion, TransportPreferences transportPreferences, TransportPreferences reverseTransportPreferences, DataBoxEncryptionPreferences encryptionPreferences, IList<StorageAccountAccessTier> storageAccountAccessTierPreferences, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PreferredDataCenterRegion = preferredDataCenterRegion;
             TransportPreferences = transportPreferences;
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Preferences related to the Encryption. </summary>
         public DataBoxEncryptionPreferences EncryptionPreferences { get; set; }
         /// <summary> Preferences related to the Access Tier of storage accounts. </summary>
-        public IList<string> StorageAccountAccessTierPreferences { get; }
+        public IList<StorageAccountAccessTier> StorageAccountAccessTierPreferences { get; }
     }
 }

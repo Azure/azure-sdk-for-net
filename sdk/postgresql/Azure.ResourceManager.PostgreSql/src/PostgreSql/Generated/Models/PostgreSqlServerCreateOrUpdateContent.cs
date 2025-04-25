@@ -65,7 +65,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlServerCreateOrUpdateContent"/>. </summary>
-        /// <param name="identity"> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity">
+        /// The Azure Active Directory identity of the server.
+        /// Current supported identity types: SystemAssigned
+        /// </param>
         /// <param name="sku"> The SKU (pricing tier) of the server. </param>
         /// <param name="properties">
         /// Properties of the server.
@@ -90,7 +93,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
         {
         }
 
-        /// <summary> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </summary>
+        /// <summary>
+        /// The Azure Active Directory identity of the server.
+        /// Current supported identity types: SystemAssigned
+        /// </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The SKU (pricing tier) of the server. </summary>

@@ -67,7 +67,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU type. </param>
         /// <param name="etag"> The etag for the devices. </param>
-        /// <param name="identity"> Msi identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="identity">
+        /// Msi identity of the resource
+        /// Current supported identity types: None, SystemAssigned, UserAssigned
+        /// </param>
         /// <param name="kind"> The kind of the device. </param>
         /// <param name="dataBoxEdgeDeviceStatus"> The status of the Data Box Edge/Gateway device. </param>
         /// <param name="serialNumber"> The Serial Number of Data Box Edge/Gateway device. </param>
@@ -122,7 +125,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         public DataBoxEdgeSku Sku { get; set; }
         /// <summary> The etag for the devices. </summary>
         public ETag? ETag { get; set; }
-        /// <summary> Msi identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        /// <summary>
+        /// Msi identity of the resource
+        /// Current supported identity types: None, SystemAssigned, UserAssigned
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The kind of the device. </summary>
         public DataBoxEdgeDeviceKind? Kind { get; }

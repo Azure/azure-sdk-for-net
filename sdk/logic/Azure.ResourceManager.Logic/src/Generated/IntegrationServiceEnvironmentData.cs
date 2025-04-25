@@ -66,7 +66,10 @@ namespace Azure.ResourceManager.Logic
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The integration service environment properties. </param>
         /// <param name="sku"> The sku. </param>
-        /// <param name="identity"> Managed service identity properties. Current supported identity types: SystemAssigned, UserAssigned, None. </param>
+        /// <param name="identity">
+        /// Managed service identity properties.
+        /// Current supported identity types: SystemAssigned, UserAssigned, None
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IntegrationServiceEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationServiceEnvironmentProperties properties, IntegrationServiceEnvironmentSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -85,7 +88,10 @@ namespace Azure.ResourceManager.Logic
         public IntegrationServiceEnvironmentProperties Properties { get; set; }
         /// <summary> The sku. </summary>
         public IntegrationServiceEnvironmentSku Sku { get; set; }
-        /// <summary> Managed service identity properties. Current supported identity types: SystemAssigned, UserAssigned, None. </summary>
+        /// <summary>
+        /// Managed service identity properties.
+        /// Current supported identity types: SystemAssigned, UserAssigned, None
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

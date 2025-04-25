@@ -41,7 +41,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         ///   - Processors: list of nodes which perform data analysis or transformations.
         ///   -Sinks: list of one or more data sinks which allow for data to be stored or exported to other destinations.
         /// </param>
-        internal PipelineTopologySetRequest(string methodName, string apiVersion, PipelineTopology pipelineTopology) : base(methodName, apiVersion)
+        internal PipelineTopologySetRequest(string methodName, ApiVersionEnum? apiVersion, PipelineTopology pipelineTopology) : base(methodName, apiVersion)
         {
             PipelineTopology = pipelineTopology;
             MethodName = methodName ?? "pipelineTopologySet";

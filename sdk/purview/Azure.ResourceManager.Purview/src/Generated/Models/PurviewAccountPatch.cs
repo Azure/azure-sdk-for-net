@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.Purview.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PurviewAccountPatch"/>. </summary>
-        /// <param name="identity"> The Managed Identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="identity">
+        /// The Managed Identity of the resource
+        /// Current supported identity types: None, SystemAssigned, UserAssigned
+        /// </param>
         /// <param name="properties"> The account properties. </param>
         /// <param name="tags"> Tags on the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -65,7 +68,10 @@ namespace Azure.ResourceManager.Purview.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Managed Identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        /// <summary>
+        /// The Managed Identity of the resource
+        /// Current supported identity types: None, SystemAssigned, UserAssigned
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The account properties. </summary>
         public PurviewAccountProperties Properties { get; set; }

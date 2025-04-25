@@ -75,7 +75,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            FileSearchToolCallContentType type = default;
+            AgentsApiResponseFormatType1 type = default;
             string text = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -83,7 +83,7 @@ namespace Azure.AI.Projects
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new FileSearchToolCallContentType(property.Value.GetString());
+                    type = new AgentsApiResponseFormatType1(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("text"u8))

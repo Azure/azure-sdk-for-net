@@ -20,7 +20,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
         /// <param name="discoveryDuration"> The amount of time that the ONVIF device discovery will wait for supported device responses. </param>
-        internal OnvifDeviceDiscoverRequest(string methodName, string apiVersion, string discoveryDuration) : base(methodName, apiVersion)
+        internal OnvifDeviceDiscoverRequest(string methodName, ApiVersionEnum? apiVersion, string discoveryDuration) : base(methodName, apiVersion)
         {
             DiscoveryDuration = discoveryDuration;
             MethodName = methodName ?? "onvifDeviceDiscover";

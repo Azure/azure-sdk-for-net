@@ -71,7 +71,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalOpenAIPageableListOfRunStep(OpenAIPageableListOfRunStepObject @object, IReadOnlyList<RunStep> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalOpenAIPageableListOfRunStep(OpenAIPageableListOfObject5 @object, IReadOnlyList<RunStep> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Object = @object;
             Data = data;
@@ -87,7 +87,7 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> The object type, which is always list. </summary>
-        public OpenAIPageableListOfRunStepObject Object { get; } = OpenAIPageableListOfRunStepObject.List;
+        public OpenAIPageableListOfObject5 Object { get; } = OpenAIPageableListOfObject5.List;
 
         /// <summary> The requested list of items. </summary>
         public IReadOnlyList<RunStep> Data { get; }

@@ -77,7 +77,7 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 return null;
             }
-            DataGenerationConnectionInfoKind kind = default;
+            TextAnalysisAuthoringDataGenerationConnectionInfoKind kind = default;
             string resourceId = default;
             string deploymentName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -86,7 +86,7 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = new DataGenerationConnectionInfoKind(property.Value.GetString());
+                    kind = new TextAnalysisAuthoringDataGenerationConnectionInfoKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceId"u8))

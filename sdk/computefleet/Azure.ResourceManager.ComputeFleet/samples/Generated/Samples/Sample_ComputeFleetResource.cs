@@ -125,8 +125,8 @@ Rank = 19225,
                         TimeZone = "hlyjiqcfksgrpjrct",
                         AdditionalUnattendContent = {new WindowsSetupAdditionalInformation
 {
-PassName = WindowsSetupAdditionalInformationPassName.OobeSystem,
-ComponentName = WindowsSetupAdditionalInformationComponentName.MicrosoftWindowsShellSetup,
+PassName = AdditionalUnattendContentPassName.OobeSystem,
+ComponentName = AdditionalUnattendContentComponentName.MicrosoftWindowsShellSetup,
 SettingName = AdditionalInformationSettingName.AutoLogon,
 Content = "bubmqbxjkj",
 }},

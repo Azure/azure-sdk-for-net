@@ -71,7 +71,7 @@ namespace Azure.AI.Projects
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPageableListOfVectorStoreFile(AgentPageableListOfVectorStoreFileObject @object, IReadOnlyList<VectorStoreFile> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AgentPageableListOfVectorStoreFile(OpenAIPageableListOfObject7 @object, IReadOnlyList<VectorStoreFile> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Object = @object;
             Data = data;
@@ -87,7 +87,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The object type, which is always list. </summary>
-        public AgentPageableListOfVectorStoreFileObject Object { get; } = AgentPageableListOfVectorStoreFileObject.List;
+        public OpenAIPageableListOfObject7 Object { get; } = OpenAIPageableListOfObject7.List;
 
         /// <summary> The requested list of items. </summary>
         public IReadOnlyList<VectorStoreFile> Data { get; }

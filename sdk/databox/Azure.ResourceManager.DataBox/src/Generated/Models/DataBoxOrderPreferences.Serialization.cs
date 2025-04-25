@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccountAccessTierPreferences)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBox.Models
             TransportPreferences transportPreferences = default;
             TransportPreferences reverseTransportPreferences = default;
             DataBoxEncryptionPreferences encryptionPreferences = default;
-            IList<string> storageAccountAccessTierPreferences = default;
+            IList<StorageAccountAccessTier> storageAccountAccessTierPreferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,10 +162,10 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<StorageAccountAccessTier> array = new List<StorageAccountAccessTier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new StorageAccountAccessTier(item.GetString()));
                     }
                     storageAccountAccessTierPreferences = array;
                     continue;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 transportPreferences,
                 reverseTransportPreferences,
                 encryptionPreferences,
-                storageAccountAccessTierPreferences ?? new ChangeTrackingList<string>(),
+                storageAccountAccessTierPreferences ?? new ChangeTrackingList<StorageAccountAccessTier>(),
                 serializedAdditionalRawData);
         }
 

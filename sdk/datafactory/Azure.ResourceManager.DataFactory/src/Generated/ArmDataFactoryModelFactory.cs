@@ -25,7 +25,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Managed service identity of the factory. Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned. </param>
+        /// <param name="identity">
+        /// Managed service identity of the factory.
+        /// Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned
+        /// </param>
         /// <param name="provisioningState"> Factory provisioning state, example Succeeded. </param>
         /// <param name="createdOn"> Time the factory was created in ISO8601 format. </param>
         /// <param name="version"> Version of the factory. </param>

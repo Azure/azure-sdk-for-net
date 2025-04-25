@@ -208,7 +208,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Describes the managed identity assigned to this job that can be used to authenticate with inputs and outputs. Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned. </param>
+        /// <param name="identity">
+        /// Describes the managed identity assigned to this job that can be used to authenticate with inputs and outputs.
+        /// Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned
+        /// </param>
         /// <param name="skuName"> Describes the SKU of the streaming job. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="jobId"> A GUID uniquely identifying the streaming job. This GUID is generated upon creation of the streaming job. </param>
         /// <param name="provisioningState"> Describes the provisioning status of the streaming job. </param>

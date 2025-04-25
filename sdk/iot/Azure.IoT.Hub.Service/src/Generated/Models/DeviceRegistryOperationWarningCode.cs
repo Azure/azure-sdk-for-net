@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    /// <summary> The warning code. </summary>
+    /// <summary> The DeviceRegistryOperationWarningCode. </summary>
     public readonly partial struct DeviceRegistryOperationWarningCode : IEquatable<DeviceRegistryOperationWarningCode>
     {
         private readonly string _value;

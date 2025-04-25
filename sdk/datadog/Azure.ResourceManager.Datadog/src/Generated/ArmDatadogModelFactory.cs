@@ -95,7 +95,10 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="location"> The location. </param>
         /// <param name="skuName"></param>
         /// <param name="properties"> Properties specific to the monitor resource. </param>
-        /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned, UserAssigned. </param>
+        /// <param name="identity">
+        /// Gets or sets the identity
+        /// Current supported identity types: SystemAssigned, UserAssigned
+        /// </param>
         /// <returns> A new <see cref="Datadog.DatadogMonitorResourceData"/> instance for mocking. </returns>
         public static DatadogMonitorResourceData DatadogMonitorResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string skuName = null, MonitorProperties properties = null, ManagedServiceIdentity identity = null)
         {

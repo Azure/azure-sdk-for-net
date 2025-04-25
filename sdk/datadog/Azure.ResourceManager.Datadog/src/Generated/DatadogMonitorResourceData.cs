@@ -63,7 +63,10 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="location"> The location. </param>
         /// <param name="sku"></param>
         /// <param name="properties"> Properties specific to the monitor resource. </param>
-        /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned, UserAssigned. </param>
+        /// <param name="identity">
+        /// Gets or sets the identity
+        /// Current supported identity types: SystemAssigned, UserAssigned
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DatadogMonitorResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceSku sku, MonitorProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -89,7 +92,10 @@ namespace Azure.ResourceManager.Datadog
 
         /// <summary> Properties specific to the monitor resource. </summary>
         public MonitorProperties Properties { get; set; }
-        /// <summary> Gets or sets the identity. Current supported identity types: SystemAssigned, UserAssigned. </summary>
+        /// <summary>
+        /// Gets or sets the identity
+        /// Current supported identity types: SystemAssigned, UserAssigned
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

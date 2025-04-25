@@ -17,12 +17,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of <see cref="MethodRequest"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
-        internal MethodRequest(string methodName, string apiVersion)
+        internal MethodRequest(string methodName, ApiVersionEnum? apiVersion)
         {
             MethodName = methodName;
             ApiVersion = apiVersion;
         }
         /// <summary> Video Analyzer API version. </summary>
-        public string ApiVersion { get; set; }
+        public ApiVersionEnum? ApiVersion { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
         /// <param name="name"> Resource name. </param>
-        internal MethodRequestEmptyBodyBase(string methodName, string apiVersion, string name) : base(methodName, apiVersion)
+        internal MethodRequestEmptyBodyBase(string methodName, ApiVersionEnum? apiVersion, string name) : base(methodName, apiVersion)
         {
             Name = name;
             MethodName = methodName ?? "MethodRequestEmptyBodyBase";

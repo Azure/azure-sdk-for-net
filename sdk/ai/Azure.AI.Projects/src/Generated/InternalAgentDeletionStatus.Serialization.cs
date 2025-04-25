@@ -79,7 +79,7 @@ namespace Azure.AI.Projects
             }
             string id = default;
             bool deleted = default;
-            InternalAgentDeletionStatusObject @object = default;
+            AgentDeletionStatusObject @object = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("object"u8))
                 {
-                    @object = new InternalAgentDeletionStatusObject(property.Value.GetString());
+                    @object = new AgentDeletionStatusObject(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

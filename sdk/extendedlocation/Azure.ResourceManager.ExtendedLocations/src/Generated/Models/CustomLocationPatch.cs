@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomLocationPatch"/>. </summary>
-        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned, None. </param>
+        /// <param name="identity">
+        /// Identity for the resource.
+        /// Current supported identity types: SystemAssigned, None
+        /// </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="authentication"> This is optional input that contains the authentication that should be used to generate the namespace. </param>
         /// <param name="clusterExtensionIds"> Contains the reference to the add-on that contains charts to deploy CRDs and operators. </param>
@@ -79,7 +82,10 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Identity for the resource. Current supported identity types: SystemAssigned, None. </summary>
+        /// <summary>
+        /// Identity for the resource.
+        /// Current supported identity types: SystemAssigned, None
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }

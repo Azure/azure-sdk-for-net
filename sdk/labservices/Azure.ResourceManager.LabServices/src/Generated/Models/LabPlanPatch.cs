@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <summary> Initializes a new instance of <see cref="LabPlanPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="identity"> Managed Identity Information. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity"> Managed Identity Information. </param>
         /// <param name="defaultConnectionProfile"> The default lab connection profile. This can be changed on a lab resource and only provides a default profile. </param>
         /// <param name="defaultAutoShutdownProfile"> The default lab shutdown profile. This can be changed on a lab resource and only provides a default profile. </param>
         /// <param name="defaultNetworkProfile"> The lab plan network profile. To enforce lab network policies they must be defined here and cannot be changed when there are existing labs associated with this lab plan. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.LabServices.Models
             LinkedLmsInstance = linkedLmsInstance;
         }
 
-        /// <summary> Managed Identity Information. Current supported identity types: SystemAssigned. </summary>
+        /// <summary> Managed Identity Information. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The default lab connection profile. This can be changed on a lab resource and only provides a default profile. </summary>
         public LabConnectionProfile DefaultConnectionProfile { get; set; }

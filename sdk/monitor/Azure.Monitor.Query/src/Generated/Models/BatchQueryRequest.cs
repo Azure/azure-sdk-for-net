@@ -27,8 +27,8 @@ namespace Azure.Monitor.Query.Models
             Id = id;
             Headers = new ChangeTrackingDictionary<string, string>();
             Body = body;
-            Path = "/query";
-            Method = "POST";
+            Path = Path.Query;
+            Method = MethodType.POST;
             Workspace = workspace;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="path"> The query path of a single request in a batch, defaults to /query. </param>
         /// <param name="method"> The method of a single request in a batch, defaults to POST. </param>
         /// <param name="workspace"> Primary Workspace ID of the query. This is the Workspace ID from the Properties blade in the Azure portal. </param>
-        internal BatchQueryRequest(string id, IDictionary<string, string> headers, QueryBody body, string path, string method, string workspace)
+        internal BatchQueryRequest(string id, IDictionary<string, string> headers, QueryBody body, Path path, MethodType method, string workspace)
         {
             Id = id;
             Headers = headers;
@@ -56,9 +56,9 @@ namespace Azure.Monitor.Query.Models
         /// <summary> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </summary>
         public QueryBody Body { get; }
         /// <summary> The query path of a single request in a batch, defaults to /query. </summary>
-        public string Path { get; }
+        public Path Path { get; }
         /// <summary> The method of a single request in a batch, defaults to POST. </summary>
-        public string Method { get; }
+        public MethodType Method { get; }
         /// <summary> Primary Workspace ID of the query. This is the Workspace ID from the Properties blade in the Azure portal. </summary>
         public string Workspace { get; }
     }

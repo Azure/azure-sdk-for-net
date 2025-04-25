@@ -14,15 +14,19 @@ namespace Azure.Storage.Blobs.Models
         public static string ToSerialString(this BlobType value) => value switch
         {
             BlobType.Block => "BlockBlob",
-            BlobType.Page => "PageBlob",
-            BlobType.Append => "AppendBlob",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobType value.")
         };
 
         public static BlobType ToBlobType(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "BlockBlob")) return BlobType.Block;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PageBlob")) return BlobType.Page;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobType value.");
+        }
+    }
+}
+
+}
+IgnoreCase.Equals(value, "PageBlob")) return BlobType.Page;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "AppendBlob")) return BlobType.Append;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobType value.");
         }

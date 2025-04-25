@@ -36,7 +36,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="name"> Pipeline topology unique identifier. </param>
         /// <param name="systemData"> Read-only system metadata associated with this object. </param>
         /// <param name="properties"> Pipeline topology properties. </param>
-        internal PipelineTopologySetRequestBody(string methodName, string apiVersion, string name, SystemData systemData, PipelineTopologyProperties properties) : base(methodName, apiVersion)
+        internal PipelineTopologySetRequestBody(string methodName, ApiVersionEnum? apiVersion, string name, SystemData systemData, PipelineTopologyProperties properties) : base(methodName, apiVersion)
         {
             Name = name;
             SystemData = systemData;

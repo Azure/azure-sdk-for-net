@@ -60,7 +60,7 @@ namespace Azure.AI.Projects
         /// <param name="object"> The object type, which is always 'list'. </param>
         /// <param name="data"> The files returned for the request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalFileListResponse(InternalFileListResponseObject @object, IReadOnlyList<AgentFile> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalFileListResponse(OpenAIPageableListOfObject5 @object, IReadOnlyList<AgentFile> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Object = @object;
             Data = data;
@@ -73,7 +73,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The object type, which is always 'list'. </summary>
-        public InternalFileListResponseObject Object { get; } = InternalFileListResponseObject.List;
+        public OpenAIPageableListOfObject5 Object { get; } = OpenAIPageableListOfObject5.List;
 
         /// <summary> The files returned for the request. </summary>
         public IReadOnlyList<AgentFile> Data { get; }

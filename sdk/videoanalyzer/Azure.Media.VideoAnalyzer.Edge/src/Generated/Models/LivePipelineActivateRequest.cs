@@ -26,7 +26,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
         /// <param name="name"> Resource name. </param>
-        internal LivePipelineActivateRequest(string methodName, string apiVersion, string name) : base(methodName, apiVersion, name)
+        internal LivePipelineActivateRequest(string methodName, ApiVersionEnum? apiVersion, string name) : base(methodName, apiVersion, name)
         {
             MethodName = methodName ?? "livePipelineActivate";
         }

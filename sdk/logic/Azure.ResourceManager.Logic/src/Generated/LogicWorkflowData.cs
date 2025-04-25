@@ -65,7 +65,10 @@ namespace Azure.ResourceManager.Logic
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Managed service identity properties. Current supported identity types: SystemAssigned, UserAssigned, None. </param>
+        /// <param name="identity">
+        /// Managed service identity properties.
+        /// Current supported identity types: SystemAssigned, UserAssigned, None
+        /// </param>
         /// <param name="provisioningState"> Gets the provisioning state. </param>
         /// <param name="createdOn"> Gets the created time. </param>
         /// <param name="changedOn"> Gets the changed time. </param>
@@ -104,7 +107,10 @@ namespace Azure.ResourceManager.Logic
         {
         }
 
-        /// <summary> Managed service identity properties. Current supported identity types: SystemAssigned, UserAssigned, None. </summary>
+        /// <summary>
+        /// Managed service identity properties.
+        /// Current supported identity types: SystemAssigned, UserAssigned, None
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Gets the provisioning state. </summary>
         public LogicWorkflowProvisioningState? ProvisioningState { get; }

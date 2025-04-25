@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity"> Identity of the Extension resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity"> Identity of the Extension resource. </param>
         /// <param name="plan"> The plan information. </param>
         /// <param name="extensionType"> Type of the Extension, of which this resource is an instance of.  It must be one of the Extension Types registered with Microsoft.KubernetesConfiguration by the Extension publisher. </param>
         /// <param name="autoUpgradeMinorVersion"> Flag to note if this extension participates in auto upgrade of minor version, or not. </param>
@@ -36,7 +36,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <param name="errorInfo"> Error information from the Agent - e.g. errors during installation. </param>
         /// <param name="customLocationSettings"> Custom Location settings properties. </param>
         /// <param name="packageUri"> Uri of the Helm package. </param>
-        /// <param name="aksAssignedIdentity"> Identity of the Extension resource in an AKS cluster. Current supported identity types: SystemAssigned, UserAssigned. </param>
+        /// <param name="aksAssignedIdentity">
+        /// Identity of the Extension resource in an AKS cluster
+        /// Current supported identity types: SystemAssigned, UserAssigned
+        /// </param>
         /// <param name="isSystemExtension"> Flag to note if this extension is a system extension. </param>
         /// <returns> A new <see cref="KubernetesConfiguration.KubernetesClusterExtensionData"/> instance for mocking. </returns>
         public static KubernetesClusterExtensionData KubernetesClusterExtensionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, ArmPlan plan = null, string extensionType = null, bool? autoUpgradeMinorVersion = null, string releaseTrain = null, string version = null, KubernetesClusterExtensionScope scope = null, IDictionary<string, string> configurationSettings = null, IDictionary<string, string> configurationProtectedSettings = null, string currentVersion = null, KubernetesConfigurationProvisioningState? provisioningState = null, IEnumerable<KubernetesClusterExtensionStatus> statuses = null, ResponseError errorInfo = null, IReadOnlyDictionary<string, string> customLocationSettings = null, Uri packageUri = null, ManagedServiceIdentity aksAssignedIdentity = null, bool? isSystemExtension = null)

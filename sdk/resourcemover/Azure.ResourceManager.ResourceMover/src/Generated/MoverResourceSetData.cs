@@ -65,7 +65,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="etag"> The etag of the resource. </param>
-        /// <param name="identity"> Defines the MSI properties of the Move Collection. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="identity">
+        /// Defines the MSI properties of the Move Collection.
+        /// Current supported identity types: None, SystemAssigned, UserAssigned
+        /// </param>
         /// <param name="properties"> Defines the move collection properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MoverResourceSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, MoverResourceSetProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
@@ -83,7 +86,10 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary> The etag of the resource. </summary>
         public ETag? ETag { get; }
-        /// <summary> Defines the MSI properties of the Move Collection. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        /// <summary>
+        /// Defines the MSI properties of the Move Collection.
+        /// Current supported identity types: None, SystemAssigned, UserAssigned
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Defines the move collection properties. </summary>
         public MoverResourceSetProperties Properties { get; set; }

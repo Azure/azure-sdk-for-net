@@ -62,7 +62,7 @@ namespace Azure.AI.Projects
         /// <param name="deleted"> A value indicating whether deletion was successful. </param>
         /// <param name="object"> The object type, which is always 'assistant.deleted'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalAgentDeletionStatus(string id, bool deleted, InternalAgentDeletionStatusObject @object, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalAgentDeletionStatus(string id, bool deleted, AgentDeletionStatusObject @object, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Deleted = deleted;
@@ -80,6 +80,6 @@ namespace Azure.AI.Projects
         /// <summary> A value indicating whether deletion was successful. </summary>
         public bool Deleted { get; }
         /// <summary> The object type, which is always 'assistant.deleted'. </summary>
-        public InternalAgentDeletionStatusObject Object { get; } = InternalAgentDeletionStatusObject.AssistantDeleted;
+        public AgentDeletionStatusObject Object { get; } = AgentDeletionStatusObject.AssistantDeleted;
     }
 }

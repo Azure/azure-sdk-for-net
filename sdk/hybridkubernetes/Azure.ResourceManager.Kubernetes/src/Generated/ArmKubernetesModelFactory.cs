@@ -23,7 +23,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the connected cluster. Current supported identity types: None, SystemAssigned. </param>
+        /// <param name="identity">
+        /// The identity of the connected cluster.
+        /// Current supported identity types: None, SystemAssigned
+        /// </param>
         /// <param name="agentPublicKeyCertificate"> Base64 encoded public certificate used by the agent to do the initial handshake to the backend services in Azure. </param>
         /// <param name="kubernetesVersion"> The Kubernetes version of the connected cluster resource. </param>
         /// <param name="totalNodeCount"> Number of nodes present in the connected cluster resource. </param>

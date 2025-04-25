@@ -71,7 +71,7 @@ namespace Azure.AI.Projects
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OpenAIPageableListOfAgentThread(OpenAIPageableListOfAgentThreadObject @object, IReadOnlyList<AgentThread> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OpenAIPageableListOfAgentThread(OpenAIPageableListOfObject1 @object, IReadOnlyList<AgentThread> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Object = @object;
             Data = data;
@@ -87,7 +87,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The object type, which is always list. </summary>
-        public OpenAIPageableListOfAgentThreadObject Object { get; } = OpenAIPageableListOfAgentThreadObject.List;
+        public OpenAIPageableListOfObject1 Object { get; } = OpenAIPageableListOfObject1.List;
 
         /// <summary> The requested list of items. </summary>
         public IReadOnlyList<AgentThread> Data { get; }

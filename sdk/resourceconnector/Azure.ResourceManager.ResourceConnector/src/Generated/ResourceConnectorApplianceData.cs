@@ -64,7 +64,10 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned, None. </param>
+        /// <param name="identity">
+        /// Identity for the resource.
+        /// Current supported identity types: SystemAssigned, None
+        /// </param>
         /// <param name="distro"> Represents a supported Fabric/Infra. (AKSEdge etc...). </param>
         /// <param name="infrastructureConfig"> Contains infrastructure information about the Appliance. </param>
         /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
@@ -89,7 +92,10 @@ namespace Azure.ResourceManager.ResourceConnector
         {
         }
 
-        /// <summary> Identity for the resource. Current supported identity types: SystemAssigned, None. </summary>
+        /// <summary>
+        /// Identity for the resource.
+        /// Current supported identity types: SystemAssigned, None
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Represents a supported Fabric/Infra. (AKSEdge etc...). </summary>
         public ResourceConnectorDistro? Distro { get; set; }

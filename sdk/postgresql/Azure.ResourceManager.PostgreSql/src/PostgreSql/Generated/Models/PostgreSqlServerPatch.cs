@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlServerPatch"/>. </summary>
-        /// <param name="identity"> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity">
+        /// The Azure Active Directory identity of the server.
+        /// Current supported identity types: SystemAssigned
+        /// </param>
         /// <param name="sku"> The SKU (pricing tier) of the server. </param>
         /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
         /// <param name="storageProfile"> Storage profile of a server. </param>
@@ -79,7 +82,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </summary>
+        /// <summary>
+        /// The Azure Active Directory identity of the server.
+        /// Current supported identity types: SystemAssigned
+        /// </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The SKU (pricing tier) of the server. </summary>

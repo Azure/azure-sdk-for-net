@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
 
         /// <summary> Initializes a new instance of <see cref="FarmBeatPatch"/>. </summary>
         /// <param name="location"> Geo-location where the resource lives. </param>
-        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="properties"> FarmBeats ARM Resource properties. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
 
         /// <summary> Geo-location where the resource lives. </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary> Identity for the resource. Current supported identity types: SystemAssigned. </summary>
+        /// <summary> Identity for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> FarmBeats ARM Resource properties. </summary>
         public FarmBeatsUpdateProperties Properties { get; set; }

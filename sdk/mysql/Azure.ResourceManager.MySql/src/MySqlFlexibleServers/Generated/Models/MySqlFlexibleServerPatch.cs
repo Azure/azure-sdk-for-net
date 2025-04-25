@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerPatch"/>. </summary>
-        /// <param name="identity"> The cmk identity for the server. Current supported identity types: UserAssigned. </param>
+        /// <param name="identity">
+        /// The cmk identity for the server.
+        /// Current supported identity types: UserAssigned
+        /// </param>
         /// <param name="sku"> The SKU (pricing tier) of the server. </param>
         /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
         /// <param name="administratorLoginPassword"> The password of the administrator login. </param>
@@ -83,7 +86,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The cmk identity for the server. Current supported identity types: UserAssigned. </summary>
+        /// <summary>
+        /// The cmk identity for the server.
+        /// Current supported identity types: UserAssigned
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The SKU (pricing tier) of the server. </summary>
         public MySqlFlexibleServerSku Sku { get; set; }

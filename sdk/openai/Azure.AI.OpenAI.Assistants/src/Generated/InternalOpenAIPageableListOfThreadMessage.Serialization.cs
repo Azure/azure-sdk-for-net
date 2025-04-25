@@ -86,7 +86,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            OpenAIPageableListOfThreadMessageObject @object = default;
+            OpenAIPageableListOfObject2 @object = default;
             IReadOnlyList<ThreadMessage> data = default;
             string firstId = default;
             string lastId = default;
@@ -97,7 +97,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("object"u8))
                 {
-                    @object = new OpenAIPageableListOfThreadMessageObject(property.Value.GetString());
+                    @object = new OpenAIPageableListOfObject2(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("data"u8))

@@ -22,7 +22,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Identity Info on the Account. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity">
+        /// Identity Info on the Account
+        /// Current supported identity types: SystemAssigned
+        /// </param>
         /// <param name="createdOn"> Time at which the account was created. </param>
         /// <param name="provisioningState"> Provisioning state of the Account. </param>
         /// <param name="userEmail"> Email of the user who created the resource. </param>

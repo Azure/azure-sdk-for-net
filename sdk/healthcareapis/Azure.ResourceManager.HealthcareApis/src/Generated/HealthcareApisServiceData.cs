@@ -69,7 +69,10 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="properties"> The common properties of a service. </param>
         /// <param name="kind"> The kind of the service. </param>
         /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
-        /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. Current supported identity types: SystemAssigned, None. </param>
+        /// <param name="identity">
+        /// Setting indicating whether the service has a managed identity associated with it.
+        /// Current supported identity types: SystemAssigned, None
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HealthcareApisServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthcareApisServiceProperties properties, HealthcareApisKind kind, ETag? etag, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -91,7 +94,10 @@ namespace Azure.ResourceManager.HealthcareApis
         public HealthcareApisKind Kind { get; set; }
         /// <summary> An etag associated with the resource, used for optimistic concurrency when editing it. </summary>
         public ETag? ETag { get; set; }
-        /// <summary> Setting indicating whether the service has a managed identity associated with it. Current supported identity types: SystemAssigned, None. </summary>
+        /// <summary>
+        /// Setting indicating whether the service has a managed identity associated with it.
+        /// Current supported identity types: SystemAssigned, None
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

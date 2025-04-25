@@ -400,7 +400,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="resourceId"> Resource ID for the data generation resource. Looks something like "/subscriptions/&lt;SUBSCRIPTION-ID-GUID&gt;/resourceGroups/&lt;RG-NAME&gt;/providers/Microsoft.CognitiveServices/accounts/&lt;AOAI-ACCOUNT-NAME&gt;". </param>
         /// <param name="deploymentName"> Deployment name of model to be used for synthetic data generation. </param>
         /// <returns> A new <see cref="Authoring.DataGenerationConnectionInfo"/> instance for mocking. </returns>
-        public static DataGenerationConnectionInfo DataGenerationConnectionInfo(DataGenerationConnectionInfoKind kind = default, string resourceId = null, string deploymentName = null)
+        public static DataGenerationConnectionInfo DataGenerationConnectionInfo(TextAnalysisAuthoringDataGenerationConnectionInfoKind kind = default, string resourceId = null, string deploymentName = null)
         {
             return new DataGenerationConnectionInfo(kind, resourceId, deploymentName, serializedAdditionalRawData: null);
         }

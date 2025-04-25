@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="instanceUri"> Uri of the FarmBeats instance. </param>
         /// <param name="provisioningState"> FarmBeats instance provisioning state. </param>
         /// <param name="sensorIntegration"> Sensor integration request model. </param>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         {
         }
 
-        /// <summary> Identity for the resource. Current supported identity types: SystemAssigned. </summary>
+        /// <summary> Identity for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Uri of the FarmBeats instance. </summary>
         public Uri InstanceUri { get; }

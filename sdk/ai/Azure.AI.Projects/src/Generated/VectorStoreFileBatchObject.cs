@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The VectorStoreFileBatch_object. </summary>
+    /// <summary> The VectorStoreFileBatchObject. </summary>
     public readonly partial struct VectorStoreFileBatchObject : IEquatable<VectorStoreFileBatchObject>
     {
         private readonly string _value;

@@ -86,7 +86,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            AgentPageableListOfVectorStoreObject @object = default;
+            OpenAIPageableListOfObject6 @object = default;
             IReadOnlyList<VectorStore> data = default;
             string firstId = default;
             string lastId = default;
@@ -97,7 +97,7 @@ namespace Azure.AI.Projects
             {
                 if (property.NameEquals("object"u8))
                 {
-                    @object = new AgentPageableListOfVectorStoreObject(property.Value.GetString());
+                    @object = new OpenAIPageableListOfObject6(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("data"u8))

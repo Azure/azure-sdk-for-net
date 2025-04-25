@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         /// <summary> Initializes a new instance of <see cref="MoverResourceSetPatch"/>. </summary>
         /// <param name="tags"> Gets or sets the Resource tags. </param>
-        /// <param name="identity"> Defines the MSI properties of the Move Collection. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="identity">
+        /// Defines the MSI properties of the Move Collection.
+        /// Current supported identity types: None, SystemAssigned, UserAssigned
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MoverResourceSetPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,7 +68,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         /// <summary> Gets or sets the Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Defines the MSI properties of the Move Collection. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        /// <summary>
+        /// Defines the MSI properties of the Move Collection.
+        /// Current supported identity types: None, SystemAssigned, UserAssigned
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }
 }
