@@ -57,7 +57,10 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. Current supported identity types: None, SystemAssigned. </param>
+        /// <param name="identity">
+        /// The managed service identities assigned to this resource.
+        /// Current supported identity types: None, SystemAssigned
+        /// </param>
         /// <param name="managementCluster"> The default cluster used for management. </param>
         /// <param name="internet"> Connectivity to internet is enabled or disabled. </param>
         /// <param name="identitySources"> vCenter Single Sign On Identity Sources. </param>
@@ -90,7 +93,10 @@ namespace Azure.ResourceManager.Avs.Models
         public IDictionary<string, string> Tags { get; }
         /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
         public AvsSku Sku { get; set; }
-        /// <summary> The managed service identities assigned to this resource. Current supported identity types: None, SystemAssigned. </summary>
+        /// <summary>
+        /// The managed service identities assigned to this resource.
+        /// Current supported identity types: None, SystemAssigned
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The default cluster used for management. </summary>
         public AvsManagementCluster ManagementCluster { get; set; }

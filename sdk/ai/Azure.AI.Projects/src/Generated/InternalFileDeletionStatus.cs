@@ -62,7 +62,7 @@ namespace Azure.AI.Projects
         /// <param name="deleted"> A value indicating whether deletion was successful. </param>
         /// <param name="object"> The object type, which is always 'file'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalFileDeletionStatus(string id, bool deleted, InternalFileDeletionStatusObject @object, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalFileDeletionStatus(string id, bool deleted, OpenAIFileObject1 @object, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Deleted = deleted;
@@ -80,6 +80,6 @@ namespace Azure.AI.Projects
         /// <summary> A value indicating whether deletion was successful. </summary>
         public bool Deleted { get; }
         /// <summary> The object type, which is always 'file'. </summary>
-        public InternalFileDeletionStatusObject Object { get; } = InternalFileDeletionStatusObject.File;
+        public OpenAIFileObject1 Object { get; } = OpenAIFileObject1.File;
     }
 }

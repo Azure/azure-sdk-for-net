@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The MessageDeltaChunk_object. </summary>
+    /// <summary> The MessageDeltaChunkObject. </summary>
     public readonly partial struct MessageDeltaChunkObject : IEquatable<MessageDeltaChunkObject>
     {
         private readonly string _value;

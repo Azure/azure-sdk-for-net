@@ -59,7 +59,7 @@ namespace Azure.AI.Inference
         /// <param name="type"> The type of the tool. Currently, only `function` is supported. </param>
         /// <param name="function"> The function that should be called. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChatCompletionsNamedToolChoice(ChatCompletionsNamedToolChoiceType type, ChatCompletionsNamedToolChoiceFunction function, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChatCompletionsNamedToolChoice(ChatCompletionsToolCallType2 type, ChatCompletionsNamedToolChoiceFunction function, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Function = function;
@@ -72,7 +72,7 @@ namespace Azure.AI.Inference
         }
 
         /// <summary> The type of the tool. Currently, only `function` is supported. </summary>
-        public ChatCompletionsNamedToolChoiceType Type { get; } = ChatCompletionsNamedToolChoiceType.Function;
+        public ChatCompletionsToolCallType2 Type { get; } = ChatCompletionsToolCallType2.Function;
 
         /// <summary> The function that should be called. </summary>
         public ChatCompletionsNamedToolChoiceFunction Function { get; }

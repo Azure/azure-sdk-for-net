@@ -86,7 +86,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            OpenAIPageableListOfAgentObject @object = default;
+            OpenAIPageableListOfObject @object = default;
             IReadOnlyList<Agent> data = default;
             string firstId = default;
             string lastId = default;
@@ -97,7 +97,7 @@ namespace Azure.AI.Projects
             {
                 if (property.NameEquals("object"u8))
                 {
-                    @object = new OpenAIPageableListOfAgentObject(property.Value.GetString());
+                    @object = new OpenAIPageableListOfObject(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("data"u8))

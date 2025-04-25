@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The possible types of run steps. </summary>
+    /// <summary> The RunStepType. </summary>
     public readonly partial struct RunStepType : IEquatable<RunStepType>
     {
         private readonly string _value;
@@ -23,12 +23,9 @@ namespace Azure.AI.Projects
         }
 
         private const string MessageCreationValue = "message_creation";
-        private const string ToolCallsValue = "tool_calls";
 
-        /// <summary> Represents a run step to create a message. </summary>
+        /// <summary> message_creation. </summary>
         public static RunStepType MessageCreation { get; } = new RunStepType(MessageCreationValue);
-        /// <summary> Represents a run step that calls tools. </summary>
-        public static RunStepType ToolCalls { get; } = new RunStepType(ToolCallsValue);
         /// <summary> Determines if two <see cref="RunStepType"/> values are the same. </summary>
         public static bool operator ==(RunStepType left, RunStepType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RunStepType"/> values are not the same. </summary>

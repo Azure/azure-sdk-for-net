@@ -61,7 +61,7 @@ namespace Azure.AI.Inference
         /// <param name="type"> The type of the tool. Currently, only `function` is supported. </param>
         /// <param name="function"> The function definition details for the function tool. </param>
         /// <returns> A new <see cref="Inference.ChatCompletionsToolDefinition"/> instance for mocking. </returns>
-        public static ChatCompletionsToolDefinition ChatCompletionsToolDefinition(ChatCompletionsToolDefinitionType type = default, FunctionDefinition function = null)
+        public static ChatCompletionsToolDefinition ChatCompletionsToolDefinition(ChatCompletionsToolCallType1 type = default, FunctionDefinition function = null)
         {
             return new ChatCompletionsToolDefinition(type, function, serializedAdditionalRawData: null);
         }
@@ -70,7 +70,7 @@ namespace Azure.AI.Inference
         /// <param name="type"> The type of the tool. Currently, only `function` is supported. </param>
         /// <param name="function"> The function that should be called. </param>
         /// <returns> A new <see cref="Inference.ChatCompletionsNamedToolChoice"/> instance for mocking. </returns>
-        public static ChatCompletionsNamedToolChoice ChatCompletionsNamedToolChoice(ChatCompletionsNamedToolChoiceType type = default, ChatCompletionsNamedToolChoiceFunction function = null)
+        public static ChatCompletionsNamedToolChoice ChatCompletionsNamedToolChoice(ChatCompletionsToolCallType2 type = default, ChatCompletionsNamedToolChoiceFunction function = null)
         {
             return new ChatCompletionsNamedToolChoice(type, function, serializedAdditionalRawData: null);
         }

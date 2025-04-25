@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The ResponseFormatJsonSchemaType_type. </summary>
+    /// <summary> The ResponseFormatJsonSchemaTypeType. </summary>
     public readonly partial struct ResponseFormatJsonSchemaTypeType : IEquatable<ResponseFormatJsonSchemaTypeType>
     {
         private readonly string _value;

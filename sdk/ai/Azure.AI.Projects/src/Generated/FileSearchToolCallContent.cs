@@ -59,7 +59,7 @@ namespace Azure.AI.Projects
         /// <param name="type"> The type of the content. </param>
         /// <param name="text"> The text content of the file. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileSearchToolCallContent(FileSearchToolCallContentType type, string text, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FileSearchToolCallContent(AgentsApiResponseFormatType1 type, string text, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Text = text;
@@ -72,7 +72,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The type of the content. </summary>
-        public FileSearchToolCallContentType Type { get; } = FileSearchToolCallContentType.Text;
+        public AgentsApiResponseFormatType1 Type { get; } = AgentsApiResponseFormatType1.Text;
 
         /// <summary> The text content of the file. </summary>
         public string Text { get; }

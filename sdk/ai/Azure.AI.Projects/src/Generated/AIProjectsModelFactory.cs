@@ -277,7 +277,7 @@ namespace Azure.AI.Projects
         /// <param name="type"> The type of the content. </param>
         /// <param name="text"> The text content of the file. </param>
         /// <returns> A new <see cref="Projects.FileSearchToolCallContent"/> instance for mocking. </returns>
-        public static FileSearchToolCallContent FileSearchToolCallContent(FileSearchToolCallContentType type = default, string text = null)
+        public static FileSearchToolCallContent FileSearchToolCallContent(AgentsApiResponseFormatType1 type = default, string text = null)
         {
             return new FileSearchToolCallContent(type, text, serializedAdditionalRawData: null);
         }
@@ -374,7 +374,7 @@ namespace Azure.AI.Projects
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
         /// <returns> A new <see cref="Projects.AgentPageableListOfVectorStore"/> instance for mocking. </returns>
-        public static AgentPageableListOfVectorStore AgentPageableListOfVectorStore(AgentPageableListOfVectorStoreObject @object = default, IEnumerable<VectorStore> data = null, string firstId = null, string lastId = null, bool hasMore = default)
+        public static AgentPageableListOfVectorStore AgentPageableListOfVectorStore(OpenAIPageableListOfObject6 @object = default, IEnumerable<VectorStore> data = null, string firstId = null, string lastId = null, bool hasMore = default)
         {
             data ??= new List<VectorStore>();
 
@@ -462,7 +462,7 @@ namespace Azure.AI.Projects
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
         /// <returns> A new <see cref="Projects.AgentPageableListOfVectorStoreFile"/> instance for mocking. </returns>
-        public static AgentPageableListOfVectorStoreFile AgentPageableListOfVectorStoreFile(AgentPageableListOfVectorStoreFileObject @object = default, IEnumerable<VectorStoreFile> data = null, string firstId = null, string lastId = null, bool hasMore = default)
+        public static AgentPageableListOfVectorStoreFile AgentPageableListOfVectorStoreFile(OpenAIPageableListOfObject7 @object = default, IEnumerable<VectorStoreFile> data = null, string firstId = null, string lastId = null, bool hasMore = default)
         {
             data ??= new List<VectorStoreFile>();
 

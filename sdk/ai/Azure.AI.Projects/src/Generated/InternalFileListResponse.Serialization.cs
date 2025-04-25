@@ -80,7 +80,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            InternalFileListResponseObject @object = default;
+            OpenAIPageableListOfObject5 @object = default;
             IReadOnlyList<AgentFile> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -88,7 +88,7 @@ namespace Azure.AI.Projects
             {
                 if (property.NameEquals("object"u8))
                 {
-                    @object = new InternalFileListResponseObject(property.Value.GetString());
+                    @object = new OpenAIPageableListOfObject5(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("data"u8))

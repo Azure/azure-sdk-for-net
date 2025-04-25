@@ -75,7 +75,7 @@ namespace Azure.AI.Inference
             {
                 return null;
             }
-            ChatCompletionsNamedToolChoiceType type = default;
+            ChatCompletionsToolCallType2 type = default;
             ChatCompletionsNamedToolChoiceFunction function = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -83,7 +83,7 @@ namespace Azure.AI.Inference
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ChatCompletionsNamedToolChoiceType(property.Value.GetString());
+                    type = new ChatCompletionsToolCallType2(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("function"u8))
