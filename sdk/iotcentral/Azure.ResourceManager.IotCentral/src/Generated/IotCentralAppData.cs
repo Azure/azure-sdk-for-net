@@ -71,7 +71,10 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> A valid instance SKU. </param>
-        /// <param name="identity"> The managed identities for the IoT Central application. Current supported identity types: None, SystemAssigned. </param>
+        /// <param name="identity">
+        /// The managed identities for the IoT Central application.
+        /// Current supported identity types: None, SystemAssigned
+        /// </param>
         /// <param name="provisioningState"> The provisioning state of the application. </param>
         /// <param name="applicationId"> The ID of the application. </param>
         /// <param name="displayName"> The display name of the application. </param>
@@ -115,7 +118,10 @@ namespace Azure.ResourceManager.IotCentral
             }
         }
 
-        /// <summary> The managed identities for the IoT Central application. Current supported identity types: None, SystemAssigned. </summary>
+        /// <summary>
+        /// The managed identities for the IoT Central application.
+        /// Current supported identity types: None, SystemAssigned
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The provisioning state of the application. </summary>
         public IotCentralProvisioningState? ProvisioningState { get; }

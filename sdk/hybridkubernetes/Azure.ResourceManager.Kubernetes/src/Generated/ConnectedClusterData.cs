@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.Kubernetes
 
         /// <summary> Initializes a new instance of <see cref="ConnectedClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the connected cluster. Current supported identity types: None, SystemAssigned. </param>
+        /// <param name="identity">
+        /// The identity of the connected cluster.
+        /// Current supported identity types: None, SystemAssigned
+        /// </param>
         /// <param name="agentPublicKeyCertificate"> Base64 encoded public certificate used by the agent to do the initial handshake to the backend services in Azure. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identity"/> or <paramref name="agentPublicKeyCertificate"/> is null. </exception>
         public ConnectedClusterData(AzureLocation location, ManagedServiceIdentity identity, string agentPublicKeyCertificate) : base(location)
@@ -72,7 +75,10 @@ namespace Azure.ResourceManager.Kubernetes
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the connected cluster. Current supported identity types: None, SystemAssigned. </param>
+        /// <param name="identity">
+        /// The identity of the connected cluster.
+        /// Current supported identity types: None, SystemAssigned
+        /// </param>
         /// <param name="agentPublicKeyCertificate"> Base64 encoded public certificate used by the agent to do the initial handshake to the backend services in Azure. </param>
         /// <param name="kubernetesVersion"> The Kubernetes version of the connected cluster resource. </param>
         /// <param name="totalNodeCount"> Number of nodes present in the connected cluster resource. </param>
@@ -113,7 +119,10 @@ namespace Azure.ResourceManager.Kubernetes
         {
         }
 
-        /// <summary> The identity of the connected cluster. Current supported identity types: None, SystemAssigned. </summary>
+        /// <summary>
+        /// The identity of the connected cluster.
+        /// Current supported identity types: None, SystemAssigned
+        /// </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Base64 encoded public certificate used by the agent to do the initial handshake to the backend services in Azure. </summary>

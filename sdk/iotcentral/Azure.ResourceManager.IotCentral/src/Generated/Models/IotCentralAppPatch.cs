@@ -56,7 +56,10 @@ namespace Azure.ResourceManager.IotCentral.Models
         /// <summary> Initializes a new instance of <see cref="IotCentralAppPatch"/>. </summary>
         /// <param name="tags"> Instance tags. </param>
         /// <param name="sku"> A valid instance SKU. </param>
-        /// <param name="identity"> The managed identities for the IoT Central application. Current supported identity types: None, SystemAssigned. </param>
+        /// <param name="identity">
+        /// The managed identities for the IoT Central application.
+        /// Current supported identity types: None, SystemAssigned
+        /// </param>
         /// <param name="provisioningState"> The provisioning state of the application. </param>
         /// <param name="applicationId"> The ID of the application. </param>
         /// <param name="displayName"> The display name of the application. </param>
@@ -98,7 +101,10 @@ namespace Azure.ResourceManager.IotCentral.Models
             }
         }
 
-        /// <summary> The managed identities for the IoT Central application. Current supported identity types: None, SystemAssigned. </summary>
+        /// <summary>
+        /// The managed identities for the IoT Central application.
+        /// Current supported identity types: None, SystemAssigned
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The provisioning state of the application. </summary>
         public IotCentralProvisioningState? ProvisioningState { get; }

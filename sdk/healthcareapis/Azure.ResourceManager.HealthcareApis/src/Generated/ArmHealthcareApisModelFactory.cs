@@ -27,7 +27,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="properties"> The common properties of a service. </param>
         /// <param name="kind"> The kind of the service. </param>
         /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
-        /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. Current supported identity types: SystemAssigned, None. </param>
+        /// <param name="identity">
+        /// Setting indicating whether the service has a managed identity associated with it.
+        /// Current supported identity types: SystemAssigned, None
+        /// </param>
         /// <returns> A new <see cref="HealthcareApis.HealthcareApisServiceData"/> instance for mocking. </returns>
         public static HealthcareApisServiceData HealthcareApisServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HealthcareApisServiceProperties properties = null, HealthcareApisKind kind = default, ETag? etag = null, ManagedServiceIdentity identity = null)
         {

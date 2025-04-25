@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="HybridComputeMachinePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="kind"> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </param>
         /// <param name="locationData"> Metadata pertaining to the geographic location of the resource. </param>
         /// <param name="osProfile"> Specifies the operating system settings for the hybrid machine. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             PrivateLinkScopeResourceId = privateLinkScopeResourceId;
         }
 
-        /// <summary> Identity for the resource. Current supported identity types: SystemAssigned. </summary>
+        /// <summary> Identity for the resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </summary>
