@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class ServerEndpointProvisioningStatus : IUtf8JsonSerializable, IJsonModel<ServerEndpointProvisioningStatus>
+    public partial class StorageSyncServerEndpointProvisioningStatus : IUtf8JsonSerializable, IJsonModel<StorageSyncServerEndpointProvisioningStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerEndpointProvisioningStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageSyncServerEndpointProvisioningStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ServerEndpointProvisioningStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StorageSyncServerEndpointProvisioningStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointProvisioningStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageSyncServerEndpointProvisioningStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerEndpointProvisioningStatus)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageSyncServerEndpointProvisioningStatus)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(ProvisioningStatus))
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
         }
 
-        ServerEndpointProvisioningStatus IJsonModel<ServerEndpointProvisioningStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        StorageSyncServerEndpointProvisioningStatus IJsonModel<StorageSyncServerEndpointProvisioningStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointProvisioningStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageSyncServerEndpointProvisioningStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerEndpointProvisioningStatus)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageSyncServerEndpointProvisioningStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeServerEndpointProvisioningStatus(document.RootElement, options);
+            return DeserializeStorageSyncServerEndpointProvisioningStatus(document.RootElement, options);
         }
 
-        internal static ServerEndpointProvisioningStatus DeserializeServerEndpointProvisioningStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static StorageSyncServerEndpointProvisioningStatus DeserializeStorageSyncServerEndpointProvisioningStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            ServerProvisioningStatus? provisioningStatus = default;
+            StorageSyncServerProvisioningStatus? provisioningStatus = default;
             string provisioningType = default;
             IReadOnlyList<ServerEndpointProvisioningStepStatus> provisioningStepStatuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    provisioningStatus = new ServerProvisioningStatus(property.Value.GetString());
+                    provisioningStatus = new StorageSyncServerProvisioningStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningType"u8))
@@ -132,38 +132,38 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ServerEndpointProvisioningStatus(provisioningStatus, provisioningType, provisioningStepStatuses ?? new ChangeTrackingList<ServerEndpointProvisioningStepStatus>(), serializedAdditionalRawData);
+            return new StorageSyncServerEndpointProvisioningStatus(provisioningStatus, provisioningType, provisioningStepStatuses ?? new ChangeTrackingList<ServerEndpointProvisioningStepStatus>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ServerEndpointProvisioningStatus>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<StorageSyncServerEndpointProvisioningStatus>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointProvisioningStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageSyncServerEndpointProvisioningStatus>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServerEndpointProvisioningStatus)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageSyncServerEndpointProvisioningStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ServerEndpointProvisioningStatus IPersistableModel<ServerEndpointProvisioningStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        StorageSyncServerEndpointProvisioningStatus IPersistableModel<StorageSyncServerEndpointProvisioningStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointProvisioningStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageSyncServerEndpointProvisioningStatus>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeServerEndpointProvisioningStatus(document.RootElement, options);
+                        return DeserializeStorageSyncServerEndpointProvisioningStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServerEndpointProvisioningStatus)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageSyncServerEndpointProvisioningStatus)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ServerEndpointProvisioningStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StorageSyncServerEndpointProvisioningStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

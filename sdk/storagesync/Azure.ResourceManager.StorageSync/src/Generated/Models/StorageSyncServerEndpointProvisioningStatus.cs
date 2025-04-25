@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> Server endpoint provisioning status information. </summary>
-    public partial class ServerEndpointProvisioningStatus
+    public partial class StorageSyncServerEndpointProvisioningStatus
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,18 +45,18 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ServerEndpointProvisioningStatus"/>. </summary>
-        public ServerEndpointProvisioningStatus()
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServerEndpointProvisioningStatus"/>. </summary>
+        public StorageSyncServerEndpointProvisioningStatus()
         {
             ProvisioningStepStatuses = new ChangeTrackingList<ServerEndpointProvisioningStepStatus>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerEndpointProvisioningStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServerEndpointProvisioningStatus"/>. </summary>
         /// <param name="provisioningStatus"> Server Endpoint provisioning status. </param>
         /// <param name="provisioningType"> Server Endpoint provisioning type. </param>
         /// <param name="provisioningStepStatuses"> Provisioning Step status information for each step in the provisioning process. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerEndpointProvisioningStatus(ServerProvisioningStatus? provisioningStatus, string provisioningType, IReadOnlyList<ServerEndpointProvisioningStepStatus> provisioningStepStatuses, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageSyncServerEndpointProvisioningStatus(StorageSyncServerProvisioningStatus? provisioningStatus, string provisioningType, IReadOnlyList<ServerEndpointProvisioningStepStatus> provisioningStepStatuses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningStatus = provisioningStatus;
             ProvisioningType = provisioningType;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         }
 
         /// <summary> Server Endpoint provisioning status. </summary>
-        public ServerProvisioningStatus? ProvisioningStatus { get; }
+        public StorageSyncServerProvisioningStatus? ProvisioningStatus { get; }
         /// <summary> Server Endpoint provisioning type. </summary>
         public string ProvisioningType { get; }
         /// <summary> Provisioning Step status information for each step in the provisioning process. </summary>

@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.StorageSync
             string applicationId = default;
             bool? identity = default;
             string latestApplicationId = default;
-            ServerAuthType? activeAuthType = default;
+            StorageSyncServerAuthType? activeAuthType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.StorageSync
                             {
                                 continue;
                             }
-                            activeAuthType = new ServerAuthType(property0.Value.GetString());
+                            activeAuthType = new StorageSyncServerAuthType(property0.Value.GetString());
                             continue;
                         }
                     }

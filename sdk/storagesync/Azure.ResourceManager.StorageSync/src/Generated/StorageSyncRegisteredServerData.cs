@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="latestApplicationId"> Latest Server Application Id discovered from the server. It is not yet applied. </param>
         /// <param name="activeAuthType"> Server auth type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageSyncRegisteredServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData serverCertificate, string agentVersion, RegisteredServerAgentVersionStatus? agentVersionStatus, DateTimeOffset? agentVersionExpireOn, string serverOSVersion, int? serverManagementErrorCode, string lastHeartbeat, string provisioningState, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, Guid? storageSyncServiceUid, string lastWorkflowId, string lastOperationName, Uri discoveryEndpointUri, AzureLocation? resourceLocation, AzureLocation? serviceLocation, string friendlyName, Uri managementEndpointUri, Uri monitoringEndpointUri, string monitoringConfiguration, string serverName, string applicationId, bool? identity, string latestApplicationId, ServerAuthType? activeAuthType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StorageSyncRegisteredServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData serverCertificate, string agentVersion, RegisteredServerAgentVersionStatus? agentVersionStatus, DateTimeOffset? agentVersionExpireOn, string serverOSVersion, int? serverManagementErrorCode, string lastHeartbeat, string provisioningState, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, Guid? storageSyncServiceUid, string lastWorkflowId, string lastOperationName, Uri discoveryEndpointUri, AzureLocation? resourceLocation, AzureLocation? serviceLocation, string friendlyName, Uri managementEndpointUri, Uri monitoringEndpointUri, string monitoringConfiguration, string serverName, string applicationId, bool? identity, string latestApplicationId, StorageSyncServerAuthType? activeAuthType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ServerCertificate = serverCertificate;
             AgentVersion = agentVersion;
@@ -203,6 +203,6 @@ namespace Azure.ResourceManager.StorageSync
         /// <summary> Latest Server Application Id discovered from the server. It is not yet applied. </summary>
         public string LatestApplicationId { get; set; }
         /// <summary> Server auth type. </summary>
-        public ServerAuthType? ActiveAuthType { get; }
+        public StorageSyncServerAuthType? ActiveAuthType { get; }
     }
 }

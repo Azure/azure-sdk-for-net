@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.StorageSync
             LocalCacheMode? localCacheMode = default;
             InitialUploadPolicy? initialUploadPolicy = default;
             string serverName = default;
-            ServerEndpointProvisioningStatus serverEndpointProvisioningStatus = default;
+            StorageSyncServerEndpointProvisioningStatus serverEndpointProvisioningStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.StorageSync
                             {
                                 continue;
                             }
-                            serverEndpointProvisioningStatus = ServerEndpointProvisioningStatus.DeserializeServerEndpointProvisioningStatus(property0.Value, options);
+                            serverEndpointProvisioningStatus = StorageSyncServerEndpointProvisioningStatus.DeserializeStorageSyncServerEndpointProvisioningStatus(property0.Value, options);
                             continue;
                         }
                     }

@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="serverName"> Server name. </param>
         /// <param name="serverEndpointProvisioningStatus"> Server Endpoint provisioning status. </param>
         /// <returns> A new <see cref="StorageSync.StorageSyncServerEndpointData"/> instance for mocking. </returns>
-        public static StorageSyncServerEndpointData StorageSyncServerEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string serverLocalPath = null, StorageSyncFeatureStatus? cloudTiering = null, int? volumeFreeSpacePercent = null, int? tierFilesOlderThanDays = null, string friendlyName = null, ResourceIdentifier serverResourceId = null, string provisioningState = null, string lastWorkflowId = null, string lastOperationName = null, ServerEndpointSyncStatus syncStatus = null, StorageSyncFeatureStatus? offlineDataTransfer = null, ResourceIdentifier offlineDataTransferStorageAccountResourceId = null, Guid? offlineDataTransferStorageAccountTenantId = null, string offlineDataTransferShareName = null, ServerEndpointCloudTieringStatus cloudTieringStatus = null, ServerEndpointRecallStatus recallStatus = null, InitialDownloadPolicy? initialDownloadPolicy = null, LocalCacheMode? localCacheMode = null, InitialUploadPolicy? initialUploadPolicy = null, string serverName = null, ServerEndpointProvisioningStatus serverEndpointProvisioningStatus = null)
+        public static StorageSyncServerEndpointData StorageSyncServerEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string serverLocalPath = null, StorageSyncFeatureStatus? cloudTiering = null, int? volumeFreeSpacePercent = null, int? tierFilesOlderThanDays = null, string friendlyName = null, ResourceIdentifier serverResourceId = null, string provisioningState = null, string lastWorkflowId = null, string lastOperationName = null, ServerEndpointSyncStatus syncStatus = null, StorageSyncFeatureStatus? offlineDataTransfer = null, ResourceIdentifier offlineDataTransferStorageAccountResourceId = null, Guid? offlineDataTransferStorageAccountTenantId = null, string offlineDataTransferShareName = null, ServerEndpointCloudTieringStatus cloudTieringStatus = null, ServerEndpointRecallStatus recallStatus = null, InitialDownloadPolicy? initialDownloadPolicy = null, LocalCacheMode? localCacheMode = null, InitialUploadPolicy? initialUploadPolicy = null, string serverName = null, StorageSyncServerEndpointProvisioningStatus serverEndpointProvisioningStatus = null)
         {
             return new StorageSyncServerEndpointData(
                 id,
@@ -665,16 +665,16 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new ServerEndpointRecallError(errorCode, count, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ServerEndpointProvisioningStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageSyncServerEndpointProvisioningStatus"/>. </summary>
         /// <param name="provisioningStatus"> Server Endpoint provisioning status. </param>
         /// <param name="provisioningType"> Server Endpoint provisioning type. </param>
         /// <param name="provisioningStepStatuses"> Provisioning Step status information for each step in the provisioning process. </param>
-        /// <returns> A new <see cref="Models.ServerEndpointProvisioningStatus"/> instance for mocking. </returns>
-        public static ServerEndpointProvisioningStatus ServerEndpointProvisioningStatus(ServerProvisioningStatus? provisioningStatus = null, string provisioningType = null, IEnumerable<ServerEndpointProvisioningStepStatus> provisioningStepStatuses = null)
+        /// <returns> A new <see cref="Models.StorageSyncServerEndpointProvisioningStatus"/> instance for mocking. </returns>
+        public static StorageSyncServerEndpointProvisioningStatus StorageSyncServerEndpointProvisioningStatus(StorageSyncServerProvisioningStatus? provisioningStatus = null, string provisioningType = null, IEnumerable<ServerEndpointProvisioningStepStatus> provisioningStepStatuses = null)
         {
             provisioningStepStatuses ??= new List<ServerEndpointProvisioningStepStatus>();
 
-            return new ServerEndpointProvisioningStatus(provisioningStatus, provisioningType, provisioningStepStatuses?.ToList(), serializedAdditionalRawData: null);
+            return new StorageSyncServerEndpointProvisioningStatus(provisioningStatus, provisioningType, provisioningStepStatuses?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServerEndpointProvisioningStepStatus"/>. </summary>
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="latestApplicationId"> Latest Server Application Id discovered from the server. It is not yet applied. </param>
         /// <param name="activeAuthType"> Server auth type. </param>
         /// <returns> A new <see cref="StorageSync.StorageSyncRegisteredServerData"/> instance for mocking. </returns>
-        public static StorageSyncRegisteredServerData StorageSyncRegisteredServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BinaryData serverCertificate = null, string agentVersion = null, RegisteredServerAgentVersionStatus? agentVersionStatus = null, DateTimeOffset? agentVersionExpireOn = null, string serverOSVersion = null, int? serverManagementErrorCode = null, string lastHeartbeat = null, string provisioningState = null, string serverRole = null, Guid? clusterId = null, string clusterName = null, Guid? serverId = null, Guid? storageSyncServiceUid = null, string lastWorkflowId = null, string lastOperationName = null, Uri discoveryEndpointUri = null, AzureLocation? resourceLocation = null, AzureLocation? serviceLocation = null, string friendlyName = null, Uri managementEndpointUri = null, Uri monitoringEndpointUri = null, string monitoringConfiguration = null, string serverName = null, string applicationId = null, bool? identity = null, string latestApplicationId = null, ServerAuthType? activeAuthType = null)
+        public static StorageSyncRegisteredServerData StorageSyncRegisteredServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BinaryData serverCertificate = null, string agentVersion = null, RegisteredServerAgentVersionStatus? agentVersionStatus = null, DateTimeOffset? agentVersionExpireOn = null, string serverOSVersion = null, int? serverManagementErrorCode = null, string lastHeartbeat = null, string provisioningState = null, string serverRole = null, Guid? clusterId = null, string clusterName = null, Guid? serverId = null, Guid? storageSyncServiceUid = null, string lastWorkflowId = null, string lastOperationName = null, Uri discoveryEndpointUri = null, AzureLocation? resourceLocation = null, AzureLocation? serviceLocation = null, string friendlyName = null, Uri managementEndpointUri = null, Uri monitoringEndpointUri = null, string monitoringConfiguration = null, string serverName = null, string applicationId = null, bool? identity = null, string latestApplicationId = null, StorageSyncServerAuthType? activeAuthType = null)
         {
             return new StorageSyncRegisteredServerData(
                 id,
