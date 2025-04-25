@@ -16,7 +16,7 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary></summary>
-    public partial class PrivateLinkResourceProperties : IJsonModel<PrivateLinkResourceProperties>
+    internal partial class PrivateLinkResourceProperties : IJsonModel<PrivateLinkResourceProperties>
     {
         void IJsonModel<PrivateLinkResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {

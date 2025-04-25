@@ -7,28 +7,30 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace MgmtTypeSpec.Models
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class FooData : TrackedResource
+    public partial class FooData : TrackedResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         internal FooData(string location) : base(location)
         {
         }
 
-        internal FooData(ResourceIdentifier id, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, FooProperties properties, string name, ExtendedLocation extendedLocation) : base(id, name, @type, systemData, additionalBinaryDataProperties, tags, location)
+        internal FooData(FooProperties properties, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             ExtendedLocation = extendedLocation;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
         public FooProperties Properties { get; }
-
-        /// <summary> The name of the Foo. </summary>
-        public new string Name => _name ?? default;
 
         /// <summary> Gets the ExtendedLocation. </summary>
         public ExtendedLocation ExtendedLocation { get; }

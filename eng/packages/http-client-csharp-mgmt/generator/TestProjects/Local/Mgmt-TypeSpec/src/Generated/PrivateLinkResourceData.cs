@@ -7,28 +7,29 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace MgmtTypeSpec.Models
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class PrivateLinkResourceData : ProxyResource
+    internal partial class PrivateLinkResourceData : ResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         internal PrivateLinkResourceData()
         {
         }
 
-        internal PrivateLinkResourceData(ResourceIdentifier id, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateLinkResourceProperties properties, string name, ManagedServiceIdentity identity) : base(id, name, @type, systemData, additionalBinaryDataProperties)
+        internal PrivateLinkResourceData(PrivateLinkResourceProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Identity = identity;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
         public PrivateLinkResourceProperties Properties { get; }
-
-        /// <summary> The name of the private link associated with the Azure resource. </summary>
-        public new string Name => _name ?? default;
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; }
