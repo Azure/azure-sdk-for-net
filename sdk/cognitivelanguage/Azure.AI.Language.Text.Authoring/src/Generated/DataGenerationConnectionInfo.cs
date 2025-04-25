@@ -63,7 +63,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="resourceId"> Resource ID for the data generation resource. Looks something like "/subscriptions/&lt;SUBSCRIPTION-ID-GUID&gt;/resourceGroups/&lt;RG-NAME&gt;/providers/Microsoft.CognitiveServices/accounts/&lt;AOAI-ACCOUNT-NAME&gt;". </param>
         /// <param name="deploymentName"> Deployment name of model to be used for synthetic data generation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataGenerationConnectionInfo(DataGenerationConnectionInfoKind kind, string resourceId, string deploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataGenerationConnectionInfo(TextAnalysisAuthoringDataGenerationConnectionInfoKind kind, string resourceId, string deploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             ResourceId = resourceId;
@@ -77,7 +77,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary> Connection type for data generation settings. Currently only supports Azure Open AI. </summary>
-        public DataGenerationConnectionInfoKind Kind { get; } = DataGenerationConnectionInfoKind.AzureOpenAI;
+        public TextAnalysisAuthoringDataGenerationConnectionInfoKind Kind { get; } = TextAnalysisAuthoringDataGenerationConnectionInfoKind.AzureOpenAI;
 
         /// <summary> Resource ID for the data generation resource. Looks something like "/subscriptions/&lt;SUBSCRIPTION-ID-GUID&gt;/resourceGroups/&lt;RG-NAME&gt;/providers/Microsoft.CognitiveServices/accounts/&lt;AOAI-ACCOUNT-NAME&gt;". </summary>
         public string ResourceId { get; }
