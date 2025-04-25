@@ -23,7 +23,10 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Managed service identity properties. Current supported identity types: SystemAssigned, UserAssigned, None. </param>
+        /// <param name="identity">
+        /// Managed service identity properties.
+        /// Current supported identity types: SystemAssigned, UserAssigned, None
+        /// </param>
         /// <param name="provisioningState"> Gets the provisioning state. </param>
         /// <param name="createdOn"> Gets the created time. </param>
         /// <param name="changedOn"> Gets the changed time. </param>
@@ -962,7 +965,10 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The integration service environment properties. </param>
         /// <param name="sku"> The sku. </param>
-        /// <param name="identity"> Managed service identity properties. Current supported identity types: SystemAssigned, UserAssigned, None. </param>
+        /// <param name="identity">
+        /// Managed service identity properties.
+        /// Current supported identity types: SystemAssigned, UserAssigned, None
+        /// </param>
         /// <returns> A new <see cref="Logic.IntegrationServiceEnvironmentData"/> instance for mocking. </returns>
         public static IntegrationServiceEnvironmentData IntegrationServiceEnvironmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IntegrationServiceEnvironmentProperties properties = null, IntegrationServiceEnvironmentSku sku = null, ManagedServiceIdentity identity = null)
         {

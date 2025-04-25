@@ -65,7 +65,10 @@ namespace Azure.ResourceManager.MySql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MySqlServerCreateOrUpdateContent"/>. </summary>
-        /// <param name="identity"> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity">
+        /// The Azure Active Directory identity of the server.
+        /// Current supported identity types: SystemAssigned
+        /// </param>
         /// <param name="sku"> The SKU (pricing tier) of the server. </param>
         /// <param name="properties">
         /// Properties of the server.
@@ -90,7 +93,10 @@ namespace Azure.ResourceManager.MySql.Models
         {
         }
 
-        /// <summary> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </summary>
+        /// <summary>
+        /// The Azure Active Directory identity of the server.
+        /// Current supported identity types: SystemAssigned
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The SKU (pricing tier) of the server. </summary>
         public MySqlSku Sku { get; set; }

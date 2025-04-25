@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.MixedReality
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity associated with this account. Current supported identity types: SystemAssigned. </param>
-        /// <param name="plan"> The plan associated with this account. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity"> The identity associated with this account. </param>
+        /// <param name="plan"> The plan associated with this account. </param>
         /// <param name="sku"> The sku associated with this account. </param>
         /// <param name="kind"> The kind of account, if supported. </param>
         /// <param name="storageAccountName"> The name of the storage account associated with this accountId. </param>
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.MixedReality
         {
         }
 
-        /// <summary> The identity associated with this account. Current supported identity types: SystemAssigned. </summary>
+        /// <summary> The identity associated with this account. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The plan associated with this account. Current supported identity types: SystemAssigned. </summary>
+        /// <summary> The plan associated with this account. </summary>
         public ManagedServiceIdentity Plan { get; set; }
         /// <summary> The sku associated with this account. </summary>
         public MixedRealitySku Sku { get; set; }
