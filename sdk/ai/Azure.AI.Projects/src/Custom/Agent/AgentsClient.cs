@@ -19,6 +19,9 @@ namespace Azure.AI.Projects
     [CodeGenClient("Agents")]
     public partial class AgentsClient
     {
+        private Dictionary<string, Delegate> _autoFUnctionCallDelegates;
+        private int _maxRetry;
+
         /// <summary> Initializes a new instance of AzureAIClient. </summary>
         /// <param name="connectionString">The Azure AI Foundry project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
@@ -84,6 +87,8 @@ namespace Azure.AI.Projects
             _resourceGroupName = resourceGroupName;
             _projectName = projectName;
             _apiVersion = options.Version;
+            _autoFUnctionCallDelegates = options.AutoFunctionCallDelegates;
+            _maxRetry = options.MaxRetry;
         }
 
         /*

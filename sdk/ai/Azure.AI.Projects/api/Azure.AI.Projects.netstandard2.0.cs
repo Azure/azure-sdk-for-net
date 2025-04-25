@@ -484,6 +484,7 @@ namespace Azure.AI.Projects
     {
         public AIProjectClientOptions(Azure.AI.Projects.AIProjectClientOptions.ServiceVersion version = Azure.AI.Projects.AIProjectClientOptions.ServiceVersion.V2024_07_01_Preview) { }
         public int ClientCacheSize { get { throw null; } set { } }
+        public virtual void EnableAutoFunctionCalls(System.Collections.Generic.Dictionary<string, System.Delegate> delegates, int maxRetry = 10) { }
         public enum ServiceVersion
         {
             V2024_07_01_Preview = 1,
@@ -3568,6 +3569,14 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.WorkspaceProperties System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.WorkspaceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.WorkspaceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.WorkspaceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+}
+namespace Azure.AI.Projects.Custom.Agent
+{
+    public partial class ToolCallsResolver
+    {
+        internal ToolCallsResolver() { }
+        public static object Resolve(System.Delegate function, string functionArguments) { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure
