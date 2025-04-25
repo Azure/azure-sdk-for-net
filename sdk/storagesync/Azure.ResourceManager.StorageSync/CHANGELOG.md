@@ -8,12 +8,6 @@
 - Managaed Identity support for Storage Sync Service.
 - Fast DR V2 support for Storage Sync Service.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.2.1 (2025-03-11)
 
 ### Features Added
