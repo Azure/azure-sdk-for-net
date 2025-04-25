@@ -169,6 +169,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
                 if (type.ObsoleteLevel == ObsoleteLevel.Error)
                 {
                     // if its marked as error obsolete we can't create a builder for it
+                    // you cannot suppress the reference to an obsolete type marked as error
                     return null;
                 }
 

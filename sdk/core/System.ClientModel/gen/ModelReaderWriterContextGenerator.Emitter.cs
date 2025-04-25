@@ -495,6 +495,10 @@ internal sealed partial class ModelReaderWriterContextGenerator
             }
         }
 
+        /// <summary>
+        /// Helper method to wrap the action in #pragma warning disable CS0618 and #pragma warning restore CS0618.
+        /// This is needed if MRW is used with a type that is marked as Obsolete, but not marked as an error.
+        /// </summary>
         private static void WrapInSuppress(ObsoleteLevel level, StringBuilder builder, Action action)
         {
             if (level == ObsoleteLevel.None)
