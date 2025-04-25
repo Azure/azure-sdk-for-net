@@ -4,9 +4,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-tag: package-composite-v5
-require: https://github.com/Azure/azure-rest-api-specs/blob/f45a76fc39f033947ed12faf4b6416e1e19724cd/specification/sql/resource-manager/readme.md
-#package-composite-v5
+tag: package-2023-08
+require: https://github.com/Azure/azure-rest-api-specs/blob/8c2c4da647cc9dbe6317a5961138fd058ed78401/specification/sql/resource-manager/readme.md
+#package-2023-08
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -28,7 +28,7 @@ head-as-boolean: false
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 # this is temporary, to be removed when we find the owner of this feature

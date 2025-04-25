@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql
         public SqlServerTrustGroupData()
         {
             GroupMembers = new ChangeTrackingList<ServerTrustGroupServerInfo>();
-            TrustScopes = new ChangeTrackingList<ServerTrustGroupPropertiesTrustScopesItem>();
+            TrustScopes = new ChangeTrackingList<TrustScope>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlServerTrustGroupData"/>. </summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="groupMembers"> Group members information for the server trust group. </param>
         /// <param name="trustScopes"> Trust scope of the server trust group. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerTrustGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ServerTrustGroupServerInfo> groupMembers, IList<ServerTrustGroupPropertiesTrustScopesItem> trustScopes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SqlServerTrustGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ServerTrustGroupServerInfo> groupMembers, IList<TrustScope> trustScopes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GroupMembers = groupMembers;
             TrustScopes = trustScopes;
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.Sql
         public IList<ServerTrustGroupServerInfo> GroupMembers { get; }
         /// <summary> Trust scope of the server trust group. </summary>
         [WirePath("properties.trustScopes")]
-        public IList<ServerTrustGroupPropertiesTrustScopesItem> TrustScopes { get; }
+        public IList<TrustScope> TrustScopes { get; }
     }
 }

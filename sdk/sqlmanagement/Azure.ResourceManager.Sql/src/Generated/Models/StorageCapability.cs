@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageCapability(StorageCapabilityStorageAccountType? storageAccountType, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageCapability(StorageAccountType? storageAccountType, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageAccountType = storageAccountType;
             Status = status;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The storage account type for the database's backups. </summary>
         [WirePath("storageAccountType")]
-        public StorageCapabilityStorageAccountType? StorageAccountType { get; }
+        public StorageAccountType? StorageAccountType { get; }
         /// <summary> The status of the capability. </summary>
         [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }

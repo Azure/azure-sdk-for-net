@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="ManagedInstanceOperationSteps"/>. </summary>
         internal ManagedInstanceOperationSteps()
         {
-            StepsList = new ChangeTrackingList<UpsertManagedServerOperationStep>();
+            StepsList = new ChangeTrackingList<UpsertManagedServerOperationStepWithEstimatesAndDuration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedInstanceOperationSteps"/>. </summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="currentStep"> The number of current operation steps. </param>
         /// <param name="stepsList"> The operation steps list. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceOperationSteps(string totalSteps, int? currentStep, IReadOnlyList<UpsertManagedServerOperationStep> stepsList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedInstanceOperationSteps(string totalSteps, int? currentStep, IReadOnlyList<UpsertManagedServerOperationStepWithEstimatesAndDuration> stepsList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TotalSteps = totalSteps;
             CurrentStep = currentStep;
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.Sql.Models
         public int? CurrentStep { get; }
         /// <summary> The operation steps list. </summary>
         [WirePath("stepsList")]
-        public IReadOnlyList<UpsertManagedServerOperationStep> StepsList { get; }
+        public IReadOnlyList<UpsertManagedServerOperationStepWithEstimatesAndDuration> StepsList { get; }
     }
 }

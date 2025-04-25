@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            StorageCapabilityStorageAccountType? storageAccountType = default;
+            StorageAccountType? storageAccountType = default;
             SqlCapabilityStatus? status = default;
             string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    storageAccountType = new StorageCapabilityStorageAccountType(property.Value.GetString());
+                    storageAccountType = new StorageAccountType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"u8))

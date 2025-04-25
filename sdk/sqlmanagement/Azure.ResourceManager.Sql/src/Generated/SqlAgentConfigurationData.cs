@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="systemData"> The systemData. </param>
         /// <param name="state"> The state of Sql Agent. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlAgentConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlAgentConfigurationPropertiesState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SqlAgentConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlAgentState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             State = state;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> The state of Sql Agent. </summary>
         [WirePath("properties.state")]
-        public SqlAgentConfigurationPropertiesState? State { get; set; }
+        public SqlAgentState? State { get; set; }
     }
 }

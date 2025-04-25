@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn't already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </summary>
     public enum DataMaskingRuleState
     {
-        /// <summary> Disabled. </summary>
-        Disabled,
         /// <summary> Enabled. </summary>
-        Enabled
+        Enabled,
+        /// <summary> Disabled. </summary>
+        Disabled
     }
 }
