@@ -468,8 +468,6 @@ namespace Azure.Storage.DataMovement.Blobs
             bool overwrite,
             StorageResourceItemProperties sourceProperties)
         {
-            AccessTier? accessTier = GetAccessTier(options, sourceProperties?.RawProperties);
-            PremiumPageBlobAccessTier? pageBlobAccessTier = accessTier.ToPremiumPageBlobAccessTier();
             return new PageBlobCreateOptions()
             {
                 SequenceNumber = options?.SequenceNumber,
