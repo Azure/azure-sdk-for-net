@@ -732,11 +732,11 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="monitoringConfiguration"> Monitoring Configuration. </param>
         /// <param name="serverName"> Server name. </param>
         /// <param name="applicationId"> Server Application Id. </param>
-        /// <param name="identity"> Apply server with newly discovered ApplicationId if available. </param>
+        /// <param name="useIdentity"> Apply server with newly discovered ApplicationId if available. </param>
         /// <param name="latestApplicationId"> Latest Server Application Id discovered from the server. It is not yet applied. </param>
         /// <param name="activeAuthType"> Server auth type. </param>
         /// <returns> A new <see cref="StorageSync.StorageSyncRegisteredServerData"/> instance for mocking. </returns>
-        public static StorageSyncRegisteredServerData StorageSyncRegisteredServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BinaryData serverCertificate = null, string agentVersion = null, RegisteredServerAgentVersionStatus? agentVersionStatus = null, DateTimeOffset? agentVersionExpireOn = null, string serverOSVersion = null, int? serverManagementErrorCode = null, string lastHeartbeat = null, string provisioningState = null, string serverRole = null, Guid? clusterId = null, string clusterName = null, Guid? serverId = null, Guid? storageSyncServiceUid = null, string lastWorkflowId = null, string lastOperationName = null, Uri discoveryEndpointUri = null, AzureLocation? resourceLocation = null, AzureLocation? serviceLocation = null, string friendlyName = null, Uri managementEndpointUri = null, Uri monitoringEndpointUri = null, string monitoringConfiguration = null, string serverName = null, string applicationId = null, bool? identity = null, string latestApplicationId = null, StorageSyncServerAuthType? activeAuthType = null)
+        public static StorageSyncRegisteredServerData StorageSyncRegisteredServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BinaryData serverCertificate = null, string agentVersion = null, RegisteredServerAgentVersionStatus? agentVersionStatus = null, DateTimeOffset? agentVersionExpireOn = null, string serverOSVersion = null, int? serverManagementErrorCode = null, string lastHeartbeat = null, string provisioningState = null, string serverRole = null, Guid? clusterId = null, string clusterName = null, Guid? serverId = null, Guid? storageSyncServiceUid = null, string lastWorkflowId = null, string lastOperationName = null, Uri discoveryEndpointUri = null, AzureLocation? resourceLocation = null, AzureLocation? serviceLocation = null, string friendlyName = null, Uri managementEndpointUri = null, Uri monitoringEndpointUri = null, string monitoringConfiguration = null, string serverName = null, Guid? applicationId = null, bool? useIdentity = null, Guid? latestApplicationId = null, StorageSyncServerAuthType? activeAuthType = null)
         {
             return new StorageSyncRegisteredServerData(
                 id,
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 monitoringConfiguration,
                 serverName,
                 applicationId,
-                identity,
+                useIdentity,
                 latestApplicationId,
                 activeAuthType,
                 serializedAdditionalRawData: null);
@@ -788,9 +788,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="serverId"> Registered Server serverId. </param>
         /// <param name="friendlyName"> Friendly Name. </param>
         /// <param name="applicationId"> Server ServicePrincipal Id. </param>
-        /// <param name="identity"> Apply server with newly discovered ApplicationId if available. </param>
+        /// <param name="useIdentity"> Apply server with newly discovered ApplicationId if available. </param>
         /// <returns> A new <see cref="Models.StorageSyncRegisteredServerCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static StorageSyncRegisteredServerCreateOrUpdateContent StorageSyncRegisteredServerCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BinaryData serverCertificate = null, string agentVersion = null, string serverOSVersion = null, string lastHeartbeat = null, string serverRole = null, Guid? clusterId = null, string clusterName = null, Guid? serverId = null, string friendlyName = null, string applicationId = null, bool? identity = null)
+        public static StorageSyncRegisteredServerCreateOrUpdateContent StorageSyncRegisteredServerCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BinaryData serverCertificate = null, string agentVersion = null, string serverOSVersion = null, string lastHeartbeat = null, string serverRole = null, Guid? clusterId = null, string clusterName = null, Guid? serverId = null, string friendlyName = null, Guid? applicationId = null, bool? useIdentity = null)
         {
             return new StorageSyncRegisteredServerCreateOrUpdateContent(
                 id,
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 serverId,
                 friendlyName,
                 applicationId,
-                identity,
+                useIdentity,
                 serializedAdditionalRawData: null);
         }
 
@@ -816,17 +816,17 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity"> Apply server with newly discovered ApplicationId if available. </param>
+        /// <param name="useIdentity"> Apply server with newly discovered ApplicationId if available. </param>
         /// <param name="applicationId"> Apply server with new ServicePrincipal Id. </param>
         /// <returns> A new <see cref="Models.StorageSyncRegisteredServerPatch"/> instance for mocking. </returns>
-        public static StorageSyncRegisteredServerPatch StorageSyncRegisteredServerPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? identity = null, string applicationId = null)
+        public static StorageSyncRegisteredServerPatch StorageSyncRegisteredServerPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? useIdentity = null, Guid? applicationId = null)
         {
             return new StorageSyncRegisteredServerPatch(
                 id,
                 name,
                 resourceType,
                 systemData,
-                identity,
+                useIdentity,
                 applicationId,
                 serializedAdditionalRawData: null);
         }
@@ -974,7 +974,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageSyncRegisteredServerData StorageSyncRegisteredServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData serverCertificate, string agentVersion, RegisteredServerAgentVersionStatus? agentVersionStatus, DateTimeOffset? agentVersionExpireOn, string serverOSVersion, int? serverManagementErrorCode, string lastHeartbeat, string provisioningState, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, Guid? storageSyncServiceUid, string lastWorkflowId, string lastOperationName, Uri discoveryEndpointUri, AzureLocation? resourceLocation, AzureLocation? serviceLocation, string friendlyName, Uri managementEndpointUri, Uri monitoringEndpointUri, string monitoringConfiguration, string serverName)
         {
-            return StorageSyncRegisteredServerData(id: id, name: name, resourceType: resourceType, systemData: systemData, serverCertificate: serverCertificate, agentVersion: agentVersion, agentVersionStatus: agentVersionStatus, agentVersionExpireOn: agentVersionExpireOn, serverOSVersion: serverOSVersion, serverManagementErrorCode: serverManagementErrorCode, lastHeartbeat: lastHeartbeat, provisioningState: provisioningState, serverRole: serverRole, clusterId: clusterId, clusterName: clusterName, serverId: serverId, storageSyncServiceUid: storageSyncServiceUid, lastWorkflowId: lastWorkflowId, lastOperationName: lastOperationName, discoveryEndpointUri: discoveryEndpointUri, resourceLocation: resourceLocation, serviceLocation: serviceLocation, friendlyName: friendlyName, managementEndpointUri: managementEndpointUri, monitoringEndpointUri: monitoringEndpointUri, monitoringConfiguration: monitoringConfiguration, serverName: serverName, applicationId: default, identity: default, latestApplicationId: default, activeAuthType: default);
+            return StorageSyncRegisteredServerData(id: id, name: name, resourceType: resourceType, systemData: systemData, serverCertificate: serverCertificate, agentVersion: agentVersion, agentVersionStatus: agentVersionStatus, agentVersionExpireOn: agentVersionExpireOn, serverOSVersion: serverOSVersion, serverManagementErrorCode: serverManagementErrorCode, lastHeartbeat: lastHeartbeat, provisioningState: provisioningState, serverRole: serverRole, clusterId: clusterId, clusterName: clusterName, serverId: serverId, storageSyncServiceUid: storageSyncServiceUid, lastWorkflowId: lastWorkflowId, lastOperationName: lastOperationName, discoveryEndpointUri: discoveryEndpointUri, resourceLocation: resourceLocation, serviceLocation: serviceLocation, friendlyName: friendlyName, managementEndpointUri: managementEndpointUri, monitoringEndpointUri: monitoringEndpointUri, monitoringConfiguration: monitoringConfiguration, serverName: serverName, applicationId: default, useIdentity: default, latestApplicationId: default, activeAuthType: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.StorageSync.Models.StorageSyncRegisteredServerCreateOrUpdateContent" />. </summary>
@@ -995,7 +995,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageSyncRegisteredServerCreateOrUpdateContent StorageSyncRegisteredServerCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData serverCertificate, string agentVersion, string serverOSVersion, string lastHeartbeat, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, string friendlyName)
         {
-            return StorageSyncRegisteredServerCreateOrUpdateContent(id: id, name: name, resourceType: resourceType, systemData: systemData, serverCertificate: serverCertificate, agentVersion: agentVersion, serverOSVersion: serverOSVersion, lastHeartbeat: lastHeartbeat, serverRole: serverRole, clusterId: clusterId, clusterName: clusterName, serverId: serverId, friendlyName: friendlyName, applicationId: default, identity: default);
+            return StorageSyncRegisteredServerCreateOrUpdateContent(id: id, name: name, resourceType: resourceType, systemData: systemData, serverCertificate: serverCertificate, agentVersion: agentVersion, serverOSVersion: serverOSVersion, lastHeartbeat: lastHeartbeat, serverRole: serverRole, clusterId: clusterId, clusterName: clusterName, serverId: serverId, friendlyName: friendlyName, applicationId: default, useIdentity: default);
         }
     }
 }

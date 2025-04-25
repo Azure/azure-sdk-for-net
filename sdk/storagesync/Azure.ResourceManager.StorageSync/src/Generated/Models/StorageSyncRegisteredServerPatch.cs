@@ -57,19 +57,19 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity"> Apply server with newly discovered ApplicationId if available. </param>
+        /// <param name="useIdentity"> Apply server with newly discovered ApplicationId if available. </param>
         /// <param name="applicationId"> Apply server with new ServicePrincipal Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageSyncRegisteredServerPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? identity, string applicationId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StorageSyncRegisteredServerPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? useIdentity, Guid? applicationId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Identity = identity;
+            UseIdentity = useIdentity;
             ApplicationId = applicationId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Apply server with newly discovered ApplicationId if available. </summary>
-        public bool? Identity { get; set; }
+        public bool? UseIdentity { get; set; }
         /// <summary> Apply server with new ServicePrincipal Id. </summary>
-        public string ApplicationId { get; set; }
+        public Guid? ApplicationId { get; set; }
     }
 }

@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.StorageSync.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Optional.IsDefined(UseIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteBooleanValue(Identity.Value);
+                writer.WriteBooleanValue(UseIdentity.Value);
             }
             if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
-                writer.WriteStringValue(ApplicationId);
+                writer.WriteStringValue(ApplicationId.Value);
             }
             writer.WriteEndObject();
         }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             ResourceType type = default;
             SystemData systemData = default;
             bool? identity = default;
-            string applicationId = default;
+            Guid? applicationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,11 @@ namespace Azure.ResourceManager.StorageSync.Models
                         }
                         if (property0.NameEquals("applicationId"u8))
                         {
-                            applicationId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            applicationId = property0.Value.GetGuid();
                             continue;
                         }
                     }

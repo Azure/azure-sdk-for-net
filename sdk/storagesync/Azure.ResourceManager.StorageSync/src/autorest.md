@@ -20,6 +20,9 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
+# mgmt-debug: 
+#  show-serialized-names: true
+
 format-by-name-rules:
   'tenantId': 'uuid'
   '*TenantId': 'uuid'
@@ -95,13 +98,13 @@ rename-mapping:
   Workflow.properties.createdTimestamp: CreatedOn
   Workflow.properties.lastStatusTimestamp: LastStatusUpdatedOn
   ServerEndpointCloudTieringStatus.healthLastUpdatedTimestamp: HealthLastUpdatedOn
-  RegisteredServerProperties.properties.identity: UseIdentity
-  RegisteredServerProperties.properties.applicationId: -|uuid
-  RegisteredServerProperties.properties.latestApplicationId: -|uuid
-  RegisteredServerCreateParametersProperties.properties.identity: UseIdentity
-  RegisteredServerCreateParametersProperties.properties.applicationId: -|uuid
-  RegisteredServerUpdateProperties.properties.identity: UseIdentity
-  RegisteredServerUpdateProperties.properties.applicationId: -|uuid
+  RegisteredServer.properties.identity: UseIdentity
+  RegisteredServer.properties.applicationId: -|uuid
+  RegisteredServer.properties.latestApplicationId: -|uuid
+  RegisteredServerCreateParameters.properties.identity: UseIdentity
+  RegisteredServerCreateParameters.properties.applicationId: -|uuid
+  RegisteredServerUpdateParameters.properties.identity: UseIdentity
+  RegisteredServerUpdateParameters.properties.applicationId: -|uuid
   ServerAuthType: StorageSyncServerAuthType 
   ServerProvisioningStatus: StorageSyncServerProvisioningStatus
   ServerEndpointProvisioningStatus: StorageSyncServerEndpointProvisioningStatus
@@ -109,11 +112,6 @@ rename-mapping:
 override-operation-name:
   CloudEndpoints_Restoreheartbeat: RestoreHeartbeat
   StorageSyncServices_CheckNameAvailability: CheckStorageSyncNameAvailability
-
-models-to-treat-empty-string-as-null:
-   StorageSyncRegisteredServerData
-   StorageSyncRegisteredServerCreateOrUpdateContent
-   StorageSyncRegisteredServerPatch
 
 directive:
   - remove-operation: OperationStatus_Get

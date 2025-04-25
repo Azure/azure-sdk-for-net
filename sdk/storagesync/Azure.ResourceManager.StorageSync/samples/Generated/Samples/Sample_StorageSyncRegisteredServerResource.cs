@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.StorageSync.Samples
             // invoke the operation
             StorageSyncRegisteredServerPatch patch = new StorageSyncRegisteredServerPatch
             {
-                Identity = true,
-                ApplicationId = "120d4132-bcd5-40a0-96a0-71a6057ebf0c",
+                UseIdentity = true,
+                ApplicationId = Guid.Parse("120d4132-bcd5-40a0-96a0-71a6057ebf0c"),
             };
             ArmOperation<StorageSyncRegisteredServerResource> lro = await storageSyncRegisteredServer.UpdateAsync(WaitUntil.Completed, patch);
             StorageSyncRegisteredServerResource result = lro.Value;

@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.StorageSync.Models
             if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
-                writer.WriteStringValue(ApplicationId);
+                writer.WriteStringValue(ApplicationId.Value);
             }
-            if (Optional.IsDefined(Identity))
+            if (Optional.IsDefined(UseIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteBooleanValue(Identity.Value);
+                writer.WriteBooleanValue(UseIdentity.Value);
             }
             writer.WriteEndObject();
         }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             string clusterName = default;
             Guid? serverId = default;
             string friendlyName = default;
-            string applicationId = default;
+            Guid? applicationId = default;
             bool? identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -234,7 +234,11 @@ namespace Azure.ResourceManager.StorageSync.Models
                         }
                         if (property0.NameEquals("applicationId"u8))
                         {
-                            applicationId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            applicationId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("identity"u8))

@@ -67,9 +67,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="serverId"> Registered Server serverId. </param>
         /// <param name="friendlyName"> Friendly Name. </param>
         /// <param name="applicationId"> Server ServicePrincipal Id. </param>
-        /// <param name="identity"> Apply server with newly discovered ApplicationId if available. </param>
+        /// <param name="useIdentity"> Apply server with newly discovered ApplicationId if available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageSyncRegisteredServerCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData serverCertificate, string agentVersion, string serverOSVersion, string lastHeartbeat, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, string friendlyName, string applicationId, bool? identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StorageSyncRegisteredServerCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData serverCertificate, string agentVersion, string serverOSVersion, string lastHeartbeat, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, string friendlyName, Guid? applicationId, bool? useIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ServerCertificate = serverCertificate;
             AgentVersion = agentVersion;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             ServerId = serverId;
             FriendlyName = friendlyName;
             ApplicationId = applicationId;
-            Identity = identity;
+            UseIdentity = useIdentity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Friendly Name. </summary>
         public string FriendlyName { get; set; }
         /// <summary> Server ServicePrincipal Id. </summary>
-        public string ApplicationId { get; set; }
+        public Guid? ApplicationId { get; set; }
         /// <summary> Apply server with newly discovered ApplicationId if available. </summary>
-        public bool? Identity { get; set; }
+        public bool? UseIdentity { get; set; }
     }
 }
