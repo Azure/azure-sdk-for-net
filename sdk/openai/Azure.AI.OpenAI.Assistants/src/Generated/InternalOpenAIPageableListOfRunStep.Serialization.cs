@@ -86,7 +86,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            OpenAIPageableListOfRunStepObject @object = default;
+            OpenAIPageableListOfObject5 @object = default;
             IReadOnlyList<RunStep> data = default;
             string firstId = default;
             string lastId = default;
@@ -97,7 +97,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("object"u8))
                 {
-                    @object = new OpenAIPageableListOfRunStepObject(property.Value.GetString());
+                    @object = new OpenAIPageableListOfObject5(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("data"u8))

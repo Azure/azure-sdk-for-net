@@ -18,7 +18,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
     public static partial class ArmPostgreSqlModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlServerCreateOrUpdateContent"/>. </summary>
-        /// <param name="identity"> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity">
+        /// The Azure Active Directory identity of the server.
+        /// Current supported identity types: SystemAssigned
+        /// </param>
         /// <param name="sku"> The SKU (pricing tier) of the server. </param>
         /// <param name="properties">
         /// Properties of the server.
@@ -48,7 +51,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity">
+        /// The Azure Active Directory identity of the server.
+        /// Current supported identity types: SystemAssigned
+        /// </param>
         /// <param name="sku"> The SKU (pricing tier) of the server. </param>
         /// <param name="administratorLogin"> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
         /// <param name="version"> Server version. </param>

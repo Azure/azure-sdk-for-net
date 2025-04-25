@@ -639,7 +639,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="identity">
+        /// The identity of the resource.
+        /// Current supported identity types: None, SystemAssigned, UserAssigned
+        /// </param>
         /// <param name="etag"> The etag of the workspace. </param>
         /// <param name="provisioningState"> The provisioning state of the workspace. </param>
         /// <param name="customerId"> This is a read-only property. Represents the ID associated with the workspace. </param>
@@ -773,7 +776,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="identity">
+        /// The identity of the resource.
+        /// Current supported identity types: None, SystemAssigned, UserAssigned
+        /// </param>
         /// <param name="tags"> Resource tags. Optional. </param>
         /// <param name="provisioningState"> The provisioning state of the workspace. </param>
         /// <param name="customerId"> This is a read-only property. Represents the ID associated with the workspace. </param>

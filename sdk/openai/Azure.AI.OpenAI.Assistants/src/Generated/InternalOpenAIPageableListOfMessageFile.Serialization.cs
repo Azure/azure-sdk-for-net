@@ -86,7 +86,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            OpenAIPageableListOfMessageFileObject @object = default;
+            OpenAIPageableListOfObject3 @object = default;
             IReadOnlyList<MessageFile> data = default;
             string firstId = default;
             string lastId = default;
@@ -97,7 +97,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("object"u8))
                 {
-                    @object = new OpenAIPageableListOfMessageFileObject(property.Value.GetString());
+                    @object = new OpenAIPageableListOfObject3(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("data"u8))

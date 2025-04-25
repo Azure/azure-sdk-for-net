@@ -59,7 +59,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="identity">
+        /// The identity of the resource.
+        /// Current supported identity types: None, SystemAssigned, UserAssigned
+        /// </param>
         /// <param name="tags"> Resource tags. Optional. </param>
         /// <param name="provisioningState"> The provisioning state of the workspace. </param>
         /// <param name="customerId"> This is a read-only property. Represents the ID associated with the workspace. </param>
@@ -101,7 +104,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        /// <summary>
+        /// The identity of the resource.
+        /// Current supported identity types: None, SystemAssigned, UserAssigned
+        /// </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource tags. Optional. </summary>

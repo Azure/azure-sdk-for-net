@@ -60,7 +60,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="object"> The object type, which is always 'list'. </param>
         /// <param name="data"> The files returned for the request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalFileListResponse(InternalFileListResponseObject @object, IReadOnlyList<OpenAIFile> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalFileListResponse(OpenAIPageableListOfObject6 @object, IReadOnlyList<OpenAIFile> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Object = @object;
             Data = data;
@@ -73,7 +73,7 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> The object type, which is always 'list'. </summary>
-        public InternalFileListResponseObject Object { get; } = InternalFileListResponseObject.List;
+        public OpenAIPageableListOfObject6 Object { get; } = OpenAIPageableListOfObject6.List;
 
         /// <summary> The files returned for the request. </summary>
         public IReadOnlyList<OpenAIFile> Data { get; }

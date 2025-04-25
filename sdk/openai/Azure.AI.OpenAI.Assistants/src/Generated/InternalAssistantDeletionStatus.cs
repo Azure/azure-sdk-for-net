@@ -62,7 +62,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="deleted"> A value indicating whether deletion was successful. </param>
         /// <param name="object"> The object type, which is always 'assistant.deleted'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalAssistantDeletionStatus(string id, bool deleted, InternalAssistantDeletionStatusObject @object, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalAssistantDeletionStatus(string id, bool deleted, AssistantDeletionStatusObject @object, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Deleted = deleted;
@@ -80,6 +80,6 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> A value indicating whether deletion was successful. </summary>
         public bool Deleted { get; }
         /// <summary> The object type, which is always 'assistant.deleted'. </summary>
-        public InternalAssistantDeletionStatusObject Object { get; } = InternalAssistantDeletionStatusObject.AssistantDeleted;
+        public AssistantDeletionStatusObject Object { get; } = AssistantDeletionStatusObject.AssistantDeleted;
     }
 }
