@@ -83,8 +83,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="restrictOutboundNetworkAccess"> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="isIPv6Enabled"> Whether or not to enable IPv6 support for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="externalGovernanceStatus"> Status of external governance. </param>
+        /// <param name="retentionDays"> Number of days this server will stay soft-deleted. </param>
+        /// <param name="createMode"> Create mode for server, only valid values for this are Normal and Restore. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, string administratorLogin, string administratorLoginPassword, string version, string state, string fullyQualifiedDomainName, IReadOnlyList<SqlServerPrivateEndpointConnection> privateEndpointConnections, SqlMinimalTlsVersion? minTlsVersion, ServerNetworkAccessFlag? publicNetworkAccess, ServerWorkspaceFeature? workspaceFeature, ResourceIdentifier primaryUserAssignedIdentityId, Guid? federatedClientId, Uri keyId, ServerExternalAdministrator administrators, ServerNetworkAccessFlag? restrictOutboundNetworkAccess, ServerNetworkAccessFlag? isIPv6Enabled, ExternalGovernanceStatus? externalGovernanceStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal SqlServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, string administratorLogin, string administratorLoginPassword, string version, string state, string fullyQualifiedDomainName, IReadOnlyList<SqlServerPrivateEndpointConnection> privateEndpointConnections, SqlMinimalTlsVersion? minTlsVersion, ServerNetworkAccessFlag? publicNetworkAccess, ServerWorkspaceFeature? workspaceFeature, ResourceIdentifier primaryUserAssignedIdentityId, Guid? federatedClientId, Uri keyId, ServerExternalAdministrator administrators, ServerNetworkAccessFlag? restrictOutboundNetworkAccess, ServerNetworkAccessFlag? isIPv6Enabled, ExternalGovernanceStatus? externalGovernanceStatus, int? retentionDays, ServerCreateMode? createMode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Kind = kind;
@@ -104,6 +106,8 @@ namespace Azure.ResourceManager.Sql
             RestrictOutboundNetworkAccess = restrictOutboundNetworkAccess;
             IsIPv6Enabled = isIPv6Enabled;
             ExternalGovernanceStatus = externalGovernanceStatus;
+            RetentionDays = retentionDays;
+            CreateMode = createMode;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -166,5 +170,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Status of external governance. </summary>
         [WirePath("properties.externalGovernanceStatus")]
         public ExternalGovernanceStatus? ExternalGovernanceStatus { get; }
+        /// <summary> Number of days this server will stay soft-deleted. </summary>
+        [WirePath("properties.retentionDays")]
+        public int? RetentionDays { get; set; }
+        /// <summary> Create mode for server, only valid values for this are Normal and Restore. </summary>
+        [WirePath("properties.createMode")]
+        public ServerCreateMode? CreateMode { get; set; }
     }
 }
