@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// Please note <see cref="ManagedServiceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="StatefulServiceProperties"/> and <see cref="StatelessServiceProperties"/>.
     /// </summary>
-    public partial class ManagedServiceProperties : ManagedServiceBaseProperties
+    public abstract partial class ManagedServiceProperties : ManagedServiceBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="ManagedServiceProperties"/>. </summary>
         /// <param name="serviceTypeName"> The name of the service type. </param>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// The available derived classes include <see cref="NamedPartitionScheme"/>, <see cref="SingletonPartitionScheme"/> and <see cref="UniformInt64RangePartitionScheme"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceTypeName"/> or <paramref name="partitionDescription"/> is null. </exception>
-        public ManagedServiceProperties(string serviceTypeName, ManagedServicePartitionScheme partitionDescription)
+        protected ManagedServiceProperties(string serviceTypeName, ManagedServicePartitionScheme partitionDescription)
         {
             Argument.AssertNotNull(serviceTypeName, nameof(serviceTypeName));
             Argument.AssertNotNull(partitionDescription, nameof(partitionDescription));
@@ -59,7 +59,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// Dns name used for the service. If this is specified, then the DNS name can be used to return the IP addresses of service endpoints for application layer protocols (e.g., HTTP).
         /// When updating serviceDnsName, old name may be temporarily resolvable. However, rely on new name.
         /// When removing serviceDnsName, removed name may temporarily be resolvable. Do not rely on the name being unresolvable.
-        ///
         /// </param>
         internal ManagedServiceProperties(string placementConstraints, IList<ManagedServiceCorrelation> correlationScheme, IList<ManagedServiceLoadMetric> serviceLoadMetrics, IList<ManagedServicePlacementPolicy> servicePlacementPolicies, ServiceFabricManagedServiceMoveCost? defaultMoveCost, IList<ManagedServiceScalingPolicy> scalingPolicies, IDictionary<string, BinaryData> serializedAdditionalRawData, string provisioningState, ServiceKind serviceKind, string serviceTypeName, ManagedServicePartitionScheme partitionDescription, ManagedServicePackageActivationMode? servicePackageActivationMode, string serviceDnsName) : base(placementConstraints, correlationScheme, serviceLoadMetrics, servicePlacementPolicies, defaultMoveCost, scalingPolicies, serializedAdditionalRawData)
         {
@@ -94,7 +93,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// Dns name used for the service. If this is specified, then the DNS name can be used to return the IP addresses of service endpoints for application layer protocols (e.g., HTTP).
         /// When updating serviceDnsName, old name may be temporarily resolvable. However, rely on new name.
         /// When removing serviceDnsName, removed name may temporarily be resolvable. Do not rely on the name being unresolvable.
-        ///
         /// </summary>
         public string ServiceDnsName { get; set; }
     }
