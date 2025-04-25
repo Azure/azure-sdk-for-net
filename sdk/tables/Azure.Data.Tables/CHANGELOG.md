@@ -1,6 +1,6 @@
 # Release History
 
-## 12.11.0 (2025-04-28)
+## 12.11.0 (2025-05-06)
 
 ### Features Added
 
