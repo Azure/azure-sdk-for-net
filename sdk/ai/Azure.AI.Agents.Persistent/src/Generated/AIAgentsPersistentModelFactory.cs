@@ -14,24 +14,6 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> Model factory for models. </summary>
     public static partial class AIAgentsPersistentModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Persistent.AzureFunctionBinding"/>. </summary>
-        /// <param name="type"> The type of binding, which is always 'storage_queue'. </param>
-        /// <param name="storageQueue"> Storage queue. </param>
-        /// <returns> A new <see cref="Persistent.AzureFunctionBinding"/> instance for mocking. </returns>
-        public static AzureFunctionBinding AzureFunctionBinding(AzureFunctionBindingType type = default, AzureFunctionStorageQueue storageQueue = null)
-        {
-            return new AzureFunctionBinding(type, storageQueue, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.ResponseFormatJsonSchemaType"/>. </summary>
-        /// <param name="type"> Type. </param>
-        /// <param name="jsonSchema"> The JSON schema, describing response format. </param>
-        /// <returns> A new <see cref="Persistent.ResponseFormatJsonSchemaType"/> instance for mocking. </returns>
-        public static ResponseFormatJsonSchemaType ResponseFormatJsonSchemaType(ResponseFormatJsonSchemaTypeType type = default, ResponseFormatJsonSchema jsonSchema = null)
-        {
-            return new ResponseFormatJsonSchemaType(type, jsonSchema, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Persistent.ThreadMessageOptions"/>. </summary>
         /// <param name="role">
         /// The role of the entity that is creating the message. Allowed values include:
@@ -96,6 +78,60 @@ namespace Azure.AI.Agents.Persistent
         public static MessageImageUrlParam MessageImageUrlParam(string url = null, ImageDetailLevel? detail = null)
         {
             return new MessageImageUrlParam(url, detail, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.AzureFunctionBinding"/>. </summary>
+        /// <param name="type"> The type of binding, which is always 'storage_queue'. </param>
+        /// <param name="storageQueue"> Storage queue. </param>
+        /// <returns> A new <see cref="Persistent.AzureFunctionBinding"/> instance for mocking. </returns>
+        public static AzureFunctionBinding AzureFunctionBinding(AzureFunctionBindingType type = default, AzureFunctionStorageQueue storageQueue = null)
+        {
+            return new AzureFunctionBinding(type, storageQueue, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.ResponseFormatJsonSchemaType"/>. </summary>
+        /// <param name="type"> Type. </param>
+        /// <param name="jsonSchema"> The JSON schema, describing response format. </param>
+        /// <returns> A new <see cref="Persistent.ResponseFormatJsonSchemaType"/> instance for mocking. </returns>
+        public static ResponseFormatJsonSchemaType ResponseFormatJsonSchemaType(ResponseFormatJsonSchemaTypeType type = default, ResponseFormatJsonSchema jsonSchema = null)
+        {
+            return new ResponseFormatJsonSchemaType(type, jsonSchema, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.RequiredToolCall"/>. </summary>
+        /// <param name="type"> The object type. </param>
+        /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
+        /// <returns> A new <see cref="Persistent.RequiredToolCall"/> instance for mocking. </returns>
+        public static RequiredToolCall RequiredToolCall(string type = null, string id = null)
+        {
+            return new UnknownRequiredToolCall(type, serializedAdditionalRawData: null, id);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.RunError"/>. </summary>
+        /// <param name="code"> The status for the error. </param>
+        /// <param name="message"> The human-readable text associated with the error. </param>
+        /// <returns> A new <see cref="Persistent.RunError"/> instance for mocking. </returns>
+        public static RunError RunError(string code = null, string message = null)
+        {
+            return new RunError(code, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.IncompleteRunDetails"/>. </summary>
+        /// <param name="reason"> The reason why the run is incomplete. This indicates which specific token limit was reached during the run. </param>
+        /// <returns> A new <see cref="Persistent.IncompleteRunDetails"/> instance for mocking. </returns>
+        public static IncompleteRunDetails IncompleteRunDetails(IncompleteDetailsReason reason = default)
+        {
+            return new IncompleteRunDetails(reason, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.RunCompletionUsage"/>. </summary>
+        /// <param name="completionTokens"> Number of completion tokens used over the course of the run. </param>
+        /// <param name="promptTokens"> Number of prompt tokens used over the course of the run. </param>
+        /// <param name="totalTokens"> Total number of tokens used (prompt + completion). </param>
+        /// <returns> A new <see cref="Persistent.RunCompletionUsage"/> instance for mocking. </returns>
+        public static RunCompletionUsage RunCompletionUsage(long completionTokens = default, long promptTokens = default, long totalTokens = default)
+        {
+            return new RunCompletionUsage(completionTokens, promptTokens, totalTokens, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.PersistentAgentThread"/>. </summary>
@@ -163,42 +199,6 @@ namespace Azure.AI.Agents.Persistent
         public static MessageTextUrlCitationDetails MessageTextUrlCitationDetails(string url = null, string title = null)
         {
             return new MessageTextUrlCitationDetails(url, title, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RequiredToolCall"/>. </summary>
-        /// <param name="type"> The object type. </param>
-        /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
-        /// <returns> A new <see cref="Persistent.RequiredToolCall"/> instance for mocking. </returns>
-        public static RequiredToolCall RequiredToolCall(string type = null, string id = null)
-        {
-            return new UnknownRequiredToolCall(type, serializedAdditionalRawData: null, id);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunError"/>. </summary>
-        /// <param name="code"> The status for the error. </param>
-        /// <param name="message"> The human-readable text associated with the error. </param>
-        /// <returns> A new <see cref="Persistent.RunError"/> instance for mocking. </returns>
-        public static RunError RunError(string code = null, string message = null)
-        {
-            return new RunError(code, message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.IncompleteRunDetails"/>. </summary>
-        /// <param name="reason"> The reason why the run is incomplete. This indicates which specific token limit was reached during the run. </param>
-        /// <returns> A new <see cref="Persistent.IncompleteRunDetails"/> instance for mocking. </returns>
-        public static IncompleteRunDetails IncompleteRunDetails(IncompleteDetailsReason reason = default)
-        {
-            return new IncompleteRunDetails(reason, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunCompletionUsage"/>. </summary>
-        /// <param name="completionTokens"> Number of completion tokens used over the course of the run. </param>
-        /// <param name="promptTokens"> Number of prompt tokens used over the course of the run. </param>
-        /// <param name="totalTokens"> Total number of tokens used (prompt + completion). </param>
-        /// <returns> A new <see cref="Persistent.RunCompletionUsage"/> instance for mocking. </returns>
-        public static RunCompletionUsage RunCompletionUsage(long completionTokens = default, long promptTokens = default, long totalTokens = default)
-        {
-            return new RunCompletionUsage(completionTokens, promptTokens, totalTokens, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepMessageCreationDetails"/>. </summary>
