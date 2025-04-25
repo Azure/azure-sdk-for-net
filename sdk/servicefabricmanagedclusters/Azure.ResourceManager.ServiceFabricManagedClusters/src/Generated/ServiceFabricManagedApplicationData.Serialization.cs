@@ -243,12 +243,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                identity,
                 provisioningState,
                 version,
                 parameters ?? new ChangeTrackingDictionary<string, string>(),
                 upgradePolicy,
                 managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentityInfo>(),
+                identity,
                 serializedAdditionalRawData);
         }
 
