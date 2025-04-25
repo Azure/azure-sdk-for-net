@@ -982,6 +982,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("Last Consumable is always changing")]
         public async Task GetLastConsumable()
         {
             // Arrange
@@ -992,7 +993,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             DateTimeOffset? lastConsumable = await changeFeedClient.GetLastConsumableAsync();
 
             // Assert
-            DateTimeOffset expectedLastConsumable = new DateTimeOffset();
+            DateTimeOffset expectedLastConsumable = new DateTimeOffset(2020, 06, 01, 21, 0, 0, TimeSpan.Zero);
             Assert.AreEqual(expectedLastConsumable, lastConsumable.Value);
         }
 
