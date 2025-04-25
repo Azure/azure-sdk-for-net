@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityOperatorData"/> instance for mocking. </returns>
         public static SecurityOperatorData SecurityOperatorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null)
         {

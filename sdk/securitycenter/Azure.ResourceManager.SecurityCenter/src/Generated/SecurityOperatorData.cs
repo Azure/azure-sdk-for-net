@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityOperatorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Identity for the resource. Current supported identity types: SystemAssigned. </summary>
+        /// <summary> Identity for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

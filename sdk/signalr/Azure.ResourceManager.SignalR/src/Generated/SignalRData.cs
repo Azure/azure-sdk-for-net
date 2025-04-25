@@ -69,7 +69,10 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The billing information of the resource. </param>
         /// <param name="kind"> The kind of the service, it can be SignalR or RawWebSockets. </param>
-        /// <param name="identity"> A class represent managed identities used for request and response. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="identity">
+        /// A class represent managed identities used for request and response
+        /// Current supported identity types: None, SystemAssigned, UserAssigned
+        /// </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="externalIP"> The publicly accessible IP of the resource. </param>
         /// <param name="hostName"> FQDN of the service instance. </param>
@@ -147,7 +150,10 @@ namespace Azure.ResourceManager.SignalR
         /// <summary> The kind of the service, it can be SignalR or RawWebSockets. </summary>
         [WirePath("kind")]
         public SignalRServiceKind? Kind { get; set; }
-        /// <summary> A class represent managed identities used for request and response. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        /// <summary>
+        /// A class represent managed identities used for request and response
+        /// Current supported identity types: None, SystemAssigned, UserAssigned
+        /// </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning state of the resource. </summary>

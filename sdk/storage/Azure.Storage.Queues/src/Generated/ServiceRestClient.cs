@@ -252,7 +252,7 @@ namespace Azure.Storage.Queues
             }
         }
 
-        internal HttpMessage CreateListQueuesSegmentRequest(string prefix, string marker, int? maxresults, IEnumerable<string> include, int? timeout)
+        internal HttpMessage CreateListQueuesSegmentRequest(string prefix, string marker, int? maxresults, IEnumerable<ListQueuesIncludeType> include, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -273,7 +273,7 @@ namespace Azure.Storage.Queues
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            if (include != null && !(include is Common.ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (include != null && !(include is Common.ChangeTrackingList<ListQueuesIncludeType> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }
@@ -294,7 +294,7 @@ namespace Azure.Storage.Queues
         /// <param name="include"> Include this parameter to specify that the queues' metadata be returned as part of the response body. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ListQueuesSegmentResponse, ServiceListQueuesSegmentHeaders>> ListQueuesSegmentAsync(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<string> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ListQueuesSegmentResponse, ServiceListQueuesSegmentHeaders>> ListQueuesSegmentAsync(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListQueuesIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListQueuesSegmentRequest(prefix, marker, maxresults, include, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -323,7 +323,7 @@ namespace Azure.Storage.Queues
         /// <param name="include"> Include this parameter to specify that the queues' metadata be returned as part of the response body. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ListQueuesSegmentResponse, ServiceListQueuesSegmentHeaders> ListQueuesSegment(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<string> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ListQueuesSegmentResponse, ServiceListQueuesSegmentHeaders> ListQueuesSegment(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListQueuesIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListQueuesSegmentRequest(prefix, marker, maxresults, include, timeout);
             _pipeline.Send(message, cancellationToken);
@@ -345,7 +345,7 @@ namespace Azure.Storage.Queues
             }
         }
 
-        internal HttpMessage CreateListQueuesSegmentNextPageRequest(string nextLink, string prefix, string marker, int? maxresults, IEnumerable<string> include, int? timeout)
+        internal HttpMessage CreateListQueuesSegmentNextPageRequest(string nextLink, string prefix, string marker, int? maxresults, IEnumerable<ListQueuesIncludeType> include, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -368,7 +368,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ListQueuesSegmentResponse, ServiceListQueuesSegmentHeaders>> ListQueuesSegmentNextPageAsync(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<string> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ListQueuesSegmentResponse, ServiceListQueuesSegmentHeaders>> ListQueuesSegmentNextPageAsync(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListQueuesIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -404,7 +404,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public ResponseWithHeaders<ListQueuesSegmentResponse, ServiceListQueuesSegmentHeaders> ListQueuesSegmentNextPage(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<string> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ListQueuesSegmentResponse, ServiceListQueuesSegmentHeaders> ListQueuesSegmentNextPage(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListQueuesIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {

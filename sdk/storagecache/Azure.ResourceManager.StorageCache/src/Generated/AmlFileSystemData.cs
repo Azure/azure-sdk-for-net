@@ -65,7 +65,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The managed identity used by the AML file system, if configured. Current supported identity types: None, UserAssigned. </param>
+        /// <param name="identity">
+        /// The managed identity used by the AML file system, if configured.
+        /// Current supported identity types: None, UserAssigned
+        /// </param>
         /// <param name="sku"> SKU for the resource. </param>
         /// <param name="zones"> Availability zones for resources. This field should only contain a single element in the array. </param>
         /// <param name="storageCapacityTiB"> The size of the AML file system, in TiB. This might be rounded up. </param>
@@ -102,7 +105,10 @@ namespace Azure.ResourceManager.StorageCache
         {
         }
 
-        /// <summary> The managed identity used by the AML file system, if configured. Current supported identity types: None, UserAssigned. </summary>
+        /// <summary>
+        /// The managed identity used by the AML file system, if configured.
+        /// Current supported identity types: None, UserAssigned
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> SKU for the resource. </summary>
         internal StorageCacheSkuName Sku { get; set; }

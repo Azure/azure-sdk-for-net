@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs
 {
@@ -26,7 +27,7 @@ namespace Azure.Storage.Blobs
         /// <summary> String identifier for this copy operation. </summary>
         public string CopyId => _response.Headers.TryGetValue("x-ms-copy-id", out string value) ? value : null;
         /// <summary> State of the copy operation identified by x-ms-copy-id. </summary>
-        public string CopyStatus => _response.Headers.TryGetValue("x-ms-copy-status", out string value) ? value : null;
+        public SyncCopyStatusType CopyStatus => _response.Headers.TryGetValue("x-ms-copy-status", out string value) ? new SyncCopyStatusType(value) : (SyncCopyStatusType?)null;
         /// <summary> This response header is returned so that the client can check for the integrity of the copied content. This header is only returned if the source content MD5 was specified. </summary>
         public byte[] ContentMD5 => _response.Headers.TryGetValue("Content-MD5", out byte[] value) ? value : null;
         /// <summary> This response header is returned so that the client can check for the integrity of the copied content. </summary>

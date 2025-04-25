@@ -94,7 +94,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Azure Active Directory identity of the server. Current supported identity types: None, SystemAssigned. </param>
+        /// <param name="identity">
+        /// Azure Active Directory identity of the server.
+        /// Current supported identity types: None, SystemAssigned
+        /// </param>
         /// <param name="virtualMachineResourceId"> ARM Resource id of underlying virtual machine created from SQL marketplace image. </param>
         /// <param name="provisioningState"> Provisioning state to track the async operation status. </param>
         /// <param name="sqlImageOffer"> SQL image offer. Examples include SQL2016-WS2016, SQL2017-WS2016. </param>
