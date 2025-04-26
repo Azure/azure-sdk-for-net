@@ -17,7 +17,7 @@ namespace Azure.AI.Agents.Persistent
 {
     // Data plane generated sub-client.
     /// <summary> A collection of vector-store operations under `/vector_stores`. </summary>
-    public partial class VectorStores
+    public partial class VectorStoresClient
     {
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
@@ -34,19 +34,19 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of VectorStores for mocking. </summary>
-        protected VectorStores()
+        /// <summary> Initializes a new instance of VectorStoresClient for mocking. </summary>
+        protected VectorStoresClient()
         {
         }
 
-        /// <summary> Initializes a new instance of VectorStores. </summary>
+        /// <summary> Initializes a new instance of VectorStoresClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal VectorStores(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal VectorStoresClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -106,7 +106,7 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetVectorStoresAsync(int? limit, string order, string after, string before, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("VectorStores.GetVectorStores");
+            using var scope = ClientDiagnostics.CreateScope("VectorStoresClient.GetVectorStores");
             scope.Start();
             try
             {
@@ -144,7 +144,7 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetVectorStores(int? limit, string order, string after, string before, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("VectorStores.GetVectorStores");
+            using var scope = ClientDiagnostics.CreateScope("VectorStoresClient.GetVectorStores");
             scope.Start();
             try
             {
@@ -228,7 +228,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("VectorStores.CreateVectorStore");
+            using var scope = ClientDiagnostics.CreateScope("VectorStoresClient.CreateVectorStore");
             scope.Start();
             try
             {
@@ -266,7 +266,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("VectorStores.CreateVectorStore");
+            using var scope = ClientDiagnostics.CreateScope("VectorStoresClient.CreateVectorStore");
             scope.Start();
             try
             {
@@ -333,7 +333,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            using var scope = ClientDiagnostics.CreateScope("VectorStores.GetVectorStore");
+            using var scope = ClientDiagnostics.CreateScope("VectorStoresClient.GetVectorStore");
             scope.Start();
             try
             {
@@ -372,7 +372,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            using var scope = ClientDiagnostics.CreateScope("VectorStores.GetVectorStore");
+            using var scope = ClientDiagnostics.CreateScope("VectorStoresClient.GetVectorStore");
             scope.Start();
             try
             {
@@ -449,7 +449,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("VectorStores.ModifyVectorStore");
+            using var scope = ClientDiagnostics.CreateScope("VectorStoresClient.ModifyVectorStore");
             scope.Start();
             try
             {
@@ -490,7 +490,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("VectorStores.ModifyVectorStore");
+            using var scope = ClientDiagnostics.CreateScope("VectorStoresClient.ModifyVectorStore");
             scope.Start();
             try
             {
@@ -557,7 +557,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            using var scope = ClientDiagnostics.CreateScope("VectorStores.DeleteVectorStore");
+            using var scope = ClientDiagnostics.CreateScope("VectorStoresClient.DeleteVectorStore");
             scope.Start();
             try
             {
@@ -596,7 +596,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            using var scope = ClientDiagnostics.CreateScope("VectorStores.DeleteVectorStore");
+            using var scope = ClientDiagnostics.CreateScope("VectorStoresClient.DeleteVectorStore");
             scope.Start();
             try
             {

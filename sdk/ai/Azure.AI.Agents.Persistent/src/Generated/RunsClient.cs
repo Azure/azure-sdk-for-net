@@ -17,7 +17,7 @@ namespace Azure.AI.Agents.Persistent
 {
     // Data plane generated sub-client.
     /// <summary> A collection of run operations under `/threads/{threadId}/runs`. </summary>
-    public partial class Runs
+    public partial class RunsClient
     {
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
@@ -34,19 +34,19 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of Runs for mocking. </summary>
-        protected Runs()
+        /// <summary> Initializes a new instance of RunsClient for mocking. </summary>
+        protected RunsClient()
         {
         }
 
-        /// <summary> Initializes a new instance of Runs. </summary>
+        /// <summary> Initializes a new instance of RunsClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal Runs(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal RunsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -242,7 +242,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Runs.CreateRun");
+            using var scope = ClientDiagnostics.CreateScope("RunsClient.CreateRun");
             scope.Start();
             try
             {
@@ -288,7 +288,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Runs.CreateRun");
+            using var scope = ClientDiagnostics.CreateScope("RunsClient.CreateRun");
             scope.Start();
             try
             {
@@ -367,7 +367,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            using var scope = ClientDiagnostics.CreateScope("Runs.InternalGetRuns");
+            using var scope = ClientDiagnostics.CreateScope("RunsClient.InternalGetRuns");
             scope.Start();
             try
             {
@@ -410,7 +410,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            using var scope = ClientDiagnostics.CreateScope("Runs.InternalGetRuns");
+            using var scope = ClientDiagnostics.CreateScope("RunsClient.InternalGetRuns");
             scope.Start();
             try
             {
@@ -483,7 +483,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("Runs.GetRun");
+            using var scope = ClientDiagnostics.CreateScope("RunsClient.GetRun");
             scope.Start();
             try
             {
@@ -524,7 +524,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("Runs.GetRun");
+            using var scope = ClientDiagnostics.CreateScope("RunsClient.GetRun");
             scope.Start();
             try
             {
@@ -603,7 +603,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Runs.UpdateRun");
+            using var scope = ClientDiagnostics.CreateScope("RunsClient.UpdateRun");
             scope.Start();
             try
             {
@@ -646,137 +646,11 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Runs.UpdateRun");
+            using var scope = ClientDiagnostics.CreateScope("RunsClient.UpdateRun");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateRunRequest(threadId, runId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Submits outputs from tools as requested by tool calls in a run. </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="runId"> Identifier of the run. </param>
-        /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
-        /// <param name="stream"> If true, returns a stream of events that happen during the Run as SSE, terminating at `[DONE]`. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="toolOutputs"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ThreadRun>> SubmitToolOutputsAsync(string threadId, string runId, IEnumerable<ToolOutput> toolOutputs, bool? stream = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-            Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
-
-            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs.ToList(), stream, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await SubmitToolOutputsAsync(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(ThreadRun.FromResponse(response), response);
-        }
-
-        /// <summary> Submits outputs from tools as requested by tool calls in a run. </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="runId"> Identifier of the run. </param>
-        /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
-        /// <param name="stream"> If true, returns a stream of events that happen during the Run as SSE, terminating at `[DONE]`. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="toolOutputs"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ThreadRun> SubmitToolOutputs(string threadId, string runId, IEnumerable<ToolOutput> toolOutputs, bool? stream = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-            Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
-
-            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs.ToList(), stream, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = SubmitToolOutputs(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context);
-            return Response.FromValue(ThreadRun.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Submits outputs from tools as requested by tool calls in a run.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="SubmitToolOutputsAsync(string,string,IEnumerable{ToolOutput},bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="runId"> Identifier of the run. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SubmitToolOutputsAsync(string threadId, string runId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Runs.SubmitToolOutputs");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateSubmitToolOutputsRequest(threadId, runId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Submits outputs from tools as requested by tool calls in a run.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="SubmitToolOutputs(string,string,IEnumerable{ToolOutput},bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="runId"> Identifier of the run. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response SubmitToolOutputs(string threadId, string runId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Runs.SubmitToolOutputs");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateSubmitToolOutputsRequest(threadId, runId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -845,7 +719,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("Runs.CancelRun");
+            using var scope = ClientDiagnostics.CreateScope("RunsClient.CancelRun");
             scope.Start();
             try
             {
@@ -886,7 +760,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("Runs.CancelRun");
+            using var scope = ClientDiagnostics.CreateScope("RunsClient.CancelRun");
             scope.Start();
             try
             {
@@ -990,7 +864,7 @@ namespace Azure.AI.Agents.Persistent
             return message;
         }
 
-        internal HttpMessage CreateSubmitToolOutputsRequest(string threadId, string runId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateSubmitToolOutputsToRunRequest(string threadId, string runId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

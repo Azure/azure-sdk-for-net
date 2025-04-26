@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.Agents.Persistent
+namespace Azure.AI.Agents.Persistent.Custom
 {
     // Data plane generated sub-client.
     /// <summary> A collection of file‐related operations under `/files`. </summary>
-    public partial class Files
+    public partial class FilesClient
     {
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
@@ -32,19 +32,19 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of Files for mocking. </summary>
-        protected Files()
+        /// <summary> Initializes a new instance of FilesClient for mocking. </summary>
+        protected FilesClient()
         {
         }
 
-        /// <summary> Initializes a new instance of Files. </summary>
+        /// <summary> Initializes a new instance of FilesClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal Files(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal FilesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -95,7 +95,7 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> InternalListFilesAsync(string purpose, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("Files.InternalListFiles");
+            using var scope = ClientDiagnostics.CreateScope("FilesClient.InternalListFiles");
             scope.Start();
             try
             {
@@ -130,7 +130,7 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> The response returned from the service. </returns>
         internal virtual Response InternalListFiles(string purpose, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("Files.InternalListFiles");
+            using var scope = ClientDiagnostics.CreateScope("FilesClient.InternalListFiles");
             scope.Start();
             try
             {
@@ -142,34 +142,6 @@ namespace Azure.AI.Agents.Persistent
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Uploads a file for use by other operations. </summary>
-        /// <param name="body"> Multipart body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<PersistentAgentFile>> UploadFileAsync(UploadFileRequest body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UploadFileAsync(content, content.ContentType, context).ConfigureAwait(false);
-            return Response.FromValue(PersistentAgentFile.FromResponse(response), response);
-        }
-
-        /// <summary> Uploads a file for use by other operations. </summary>
-        /// <param name="body"> Multipart body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<PersistentAgentFile> UploadFile(UploadFileRequest body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = UploadFile(content, content.ContentType, context);
-            return Response.FromValue(PersistentAgentFile.FromResponse(response), response);
         }
 
         /// <summary>
@@ -197,7 +169,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Files.UploadFile");
+            using var scope = ClientDiagnostics.CreateScope("FilesClient.UploadFile");
             scope.Start();
             try
             {
@@ -236,7 +208,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Files.UploadFile");
+            using var scope = ClientDiagnostics.CreateScope("FilesClient.UploadFile");
             scope.Start();
             try
             {
@@ -303,7 +275,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("Files.InternalDeleteFile");
+            using var scope = ClientDiagnostics.CreateScope("FilesClient.InternalDeleteFile");
             scope.Start();
             try
             {
@@ -342,7 +314,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("Files.InternalDeleteFile");
+            using var scope = ClientDiagnostics.CreateScope("FilesClient.InternalDeleteFile");
             scope.Start();
             try
             {
@@ -409,7 +381,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("Files.GetFile");
+            using var scope = ClientDiagnostics.CreateScope("FilesClient.GetFile");
             scope.Start();
             try
             {
@@ -448,7 +420,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("Files.GetFile");
+            using var scope = ClientDiagnostics.CreateScope("FilesClient.GetFile");
             scope.Start();
             try
             {
@@ -515,7 +487,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("Files.GetFileContent");
+            using var scope = ClientDiagnostics.CreateScope("FilesClient.GetFileContent");
             scope.Start();
             try
             {
@@ -554,7 +526,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("Files.GetFileContent");
+            using var scope = ClientDiagnostics.CreateScope("FilesClient.GetFileContent");
             scope.Start();
             try
             {

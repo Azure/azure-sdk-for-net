@@ -3,18 +3,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using System.Text.Json;
 
 namespace Azure.AI.Agents.Persistent
 {
     [CodeGenClient("Runs")]
-    public partial class Runs //Client
+    public partial class RunsClient
     {
         /// <summary>
         /// Creates a new run of the specified thread using a specified agent.
@@ -172,6 +170,37 @@ namespace Azure.AI.Agents.Persistent
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <inheritdoc cref="InternalGetRuns(string, int?, ListSortOrder?, string, string, CancellationToken)"/>
+        public virtual Response<PageableList<ThreadRun>> GetRuns(
+            string threadId,
+            int? limit = null,
+            ListSortOrder? order = null,
+            string after = null,
+            string before = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.GetRuns");
+            scope.Start();
+            Response<InternalOpenAIPageableListOfThreadRun> baseResponse = InternalGetRuns(threadId, limit, order, after, before, cancellationToken);
+            return Response.FromValue(PageableList<ThreadRun>.Create(baseResponse.Value), baseResponse.GetRawResponse());
+        }
+
+        /// <inheritdoc cref="InternalGetRunsAsync(string, int?, ListSortOrder?, string, string, CancellationToken)"/>
+        public virtual async Task<Response<PageableList<ThreadRun>>> GetRunsAsync(
+            string threadId,
+            int? limit = null,
+            ListSortOrder? order = null,
+            string after = null,
+            string before = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.GetRuns");
+            scope.Start();
+            Response<InternalOpenAIPageableListOfThreadRun> baseResponse
+                = await InternalGetRunsAsync(threadId, limit, order, after, before, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(PageableList<ThreadRun>.Create(baseResponse.Value), baseResponse.GetRawResponse());
         }
     }
 }
