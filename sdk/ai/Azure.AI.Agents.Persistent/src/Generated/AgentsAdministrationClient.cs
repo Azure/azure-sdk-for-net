@@ -15,9 +15,9 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Agents.Persistent
 {
-    // Data plane generated sub-client.
-    /// <summary> The Administration sub-client. </summary>
-    public partial class Administration
+    // Data plane generated client.
+    /// <summary> The AgentsAdministration service client. </summary>
+    public partial class AgentsAdministrationClient
     {
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
@@ -34,26 +34,61 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of Administration for mocking. </summary>
-        protected Administration()
+        /// <summary> Initializes a new instance of AgentsAdministrationClient for mocking. </summary>
+        protected AgentsAdministrationClient()
         {
         }
 
-        /// <summary> Initializes a new instance of Administration. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="keyCredential"> The key credential to copy. </param>
-        /// <param name="tokenCredential"> The token credential to copy. </param>
+        /// <summary> Initializes a new instance of AgentsAdministrationClient. </summary>
         /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal Administration(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public AgentsAdministrationClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AgentsAdministrationClientOptions())
         {
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-            _keyCredential = keyCredential;
-            _tokenCredential = tokenCredential;
+        }
+
+        /// <summary> Initializes a new instance of AgentsAdministrationClient. </summary>
+        /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public AgentsAdministrationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AgentsAdministrationClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of AgentsAdministrationClient. </summary>
+        /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public AgentsAdministrationClient(Uri endpoint, AzureKeyCredential credential, AgentsAdministrationClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new AgentsAdministrationClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _keyCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) }, new ResponseClassifier());
             _endpoint = endpoint;
-            _apiVersion = apiVersion;
+            _apiVersion = options.Version;
+        }
+
+        /// <summary> Initializes a new instance of AgentsAdministrationClient. </summary>
+        /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public AgentsAdministrationClient(Uri endpoint, TokenCredential credential, AgentsAdministrationClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new AgentsAdministrationClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
         }
 
         /// <summary> Creates a new agent. </summary>
@@ -170,7 +205,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Administration.CreateAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentsAdministrationClient.CreateAgent");
             scope.Start();
             try
             {
@@ -208,7 +243,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Administration.CreateAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentsAdministrationClient.CreateAgent");
             scope.Start();
             try
             {
@@ -272,7 +307,7 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> InternalGetAgentsAsync(int? limit, string order, string after, string before, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("Administration.InternalGetAgents");
+            using var scope = ClientDiagnostics.CreateScope("AgentsAdministrationClient.InternalGetAgents");
             scope.Start();
             try
             {
@@ -310,7 +345,7 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> The response returned from the service. </returns>
         internal virtual Response InternalGetAgents(int? limit, string order, string after, string before, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("Administration.InternalGetAgents");
+            using var scope = ClientDiagnostics.CreateScope("AgentsAdministrationClient.InternalGetAgents");
             scope.Start();
             try
             {
@@ -377,7 +412,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
-            using var scope = ClientDiagnostics.CreateScope("Administration.GetAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentsAdministrationClient.GetAgent");
             scope.Start();
             try
             {
@@ -416,7 +451,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
-            using var scope = ClientDiagnostics.CreateScope("Administration.GetAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentsAdministrationClient.GetAgent");
             scope.Start();
             try
             {
@@ -551,7 +586,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Administration.UpdateAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentsAdministrationClient.UpdateAgent");
             scope.Start();
             try
             {
@@ -592,7 +627,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Administration.UpdateAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentsAdministrationClient.UpdateAgent");
             scope.Start();
             try
             {
@@ -606,7 +641,7 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
-        /// <summary> Deletes an existing agent. </summary>
+        /// <summary> Deletes an agent. </summary>
         /// <param name="assistantId"> Identifier of the agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
@@ -620,7 +655,7 @@ namespace Azure.AI.Agents.Persistent
             return Response.FromValue(InternalAgentDeletionStatus.FromResponse(response), response);
         }
 
-        /// <summary> Deletes an existing agent. </summary>
+        /// <summary> Deletes an agent. </summary>
         /// <param name="assistantId"> Identifier of the agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
@@ -635,7 +670,7 @@ namespace Azure.AI.Agents.Persistent
         }
 
         /// <summary>
-        /// [Protocol Method] Deletes an existing agent.
+        /// [Protocol Method] Deletes an agent.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -659,7 +694,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
-            using var scope = ClientDiagnostics.CreateScope("Administration.InternalDeleteAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentsAdministrationClient.InternalDeleteAgent");
             scope.Start();
             try
             {
@@ -674,7 +709,7 @@ namespace Azure.AI.Agents.Persistent
         }
 
         /// <summary>
-        /// [Protocol Method] Deletes an existing agent.
+        /// [Protocol Method] Deletes an agent.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -698,7 +733,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
-            using var scope = ClientDiagnostics.CreateScope("Administration.InternalDeleteAgent");
+            using var scope = ClientDiagnostics.CreateScope("AgentsAdministrationClient.InternalDeleteAgent");
             scope.Start();
             try
             {
@@ -710,6 +745,271 @@ namespace Azure.AI.Agents.Persistent
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Creates a new agent thread and immediately starts a run using that new thread. </summary>
+        /// <param name="assistantId"> The ID of the agent for which the thread should be created. </param>
+        /// <param name="thread"> The details used to create the new thread. If no thread is provided, an empty one will be created. </param>
+        /// <param name="overrideModelName"> The overridden model that the agent should use to run the thread. </param>
+        /// <param name="overrideInstructions"> The overridden system instructions the agent should use to run the thread. </param>
+        /// <param name="overrideTools"> The overridden list of enabled tools the agent should use to run the thread. </param>
+        /// <param name="toolResources"> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </param>
+        /// <param name="stream">
+        /// If `true`, returns a stream of events that happen during the Run as server-sent events,
+        /// terminating when the Run enters a terminal state with a `data: [DONE]` message.
+        /// </param>
+        /// <param name="temperature">
+        /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output
+        /// more random, while lower values like 0.2 will make it more focused and deterministic.
+        /// </param>
+        /// <param name="topP">
+        /// An alternative to sampling with temperature, called nucleus sampling, where the model
+        /// considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens
+        /// comprising the top 10% probability mass are considered.
+        ///
+        /// We generally recommend altering this or temperature but not both.
+        /// </param>
+        /// <param name="maxPromptTokens">
+        /// The maximum number of prompt tokens that may be used over the course of the run. The run will make a best effort to use only
+        /// the number of prompt tokens specified, across multiple turns of the run. If the run exceeds the number of prompt tokens specified,
+        /// the run will end with status `incomplete`. See `incomplete_details` for more info.
+        /// </param>
+        /// <param name="maxCompletionTokens">
+        /// The maximum number of completion tokens that may be used over the course of the run. The run will make a best effort to use only
+        /// the number of completion tokens specified, across multiple turns of the run. If the run exceeds the number of completion tokens
+        /// specified, the run will end with status `incomplete`. See `incomplete_details` for more info.
+        /// </param>
+        /// <param name="truncationStrategy"> The strategy to use for dropping messages as the context windows moves forward. </param>
+        /// <param name="toolChoice"> Controls whether or not and which tool is called by the model. </param>
+        /// <param name="responseFormat"> Specifies the format that the model must output. </param>
+        /// <param name="parallelToolCalls"> If `true` functions will run in parallel during tool use. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        public virtual async Task<Response<ThreadRun>> CreateThreadAndRunAsync(string assistantId, PersistentAgentThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, UpdateToolResourcesOptions toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(assistantId, nameof(assistantId));
+
+            CreateThreadAndRunRequest createThreadAndRunRequest = new CreateThreadAndRunRequest(
+                assistantId,
+                thread,
+                overrideModelName,
+                overrideInstructions,
+                overrideTools?.ToList() as IReadOnlyList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                toolResources,
+                stream,
+                temperature,
+                topP,
+                maxPromptTokens,
+                maxCompletionTokens,
+                truncationStrategy,
+                toolChoice,
+                responseFormat,
+                parallelToolCalls,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await CreateThreadAndRunAsync(createThreadAndRunRequest.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
+        }
+
+        /// <summary> Creates a new agent thread and immediately starts a run using that new thread. </summary>
+        /// <param name="assistantId"> The ID of the agent for which the thread should be created. </param>
+        /// <param name="thread"> The details used to create the new thread. If no thread is provided, an empty one will be created. </param>
+        /// <param name="overrideModelName"> The overridden model that the agent should use to run the thread. </param>
+        /// <param name="overrideInstructions"> The overridden system instructions the agent should use to run the thread. </param>
+        /// <param name="overrideTools"> The overridden list of enabled tools the agent should use to run the thread. </param>
+        /// <param name="toolResources"> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </param>
+        /// <param name="stream">
+        /// If `true`, returns a stream of events that happen during the Run as server-sent events,
+        /// terminating when the Run enters a terminal state with a `data: [DONE]` message.
+        /// </param>
+        /// <param name="temperature">
+        /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output
+        /// more random, while lower values like 0.2 will make it more focused and deterministic.
+        /// </param>
+        /// <param name="topP">
+        /// An alternative to sampling with temperature, called nucleus sampling, where the model
+        /// considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens
+        /// comprising the top 10% probability mass are considered.
+        ///
+        /// We generally recommend altering this or temperature but not both.
+        /// </param>
+        /// <param name="maxPromptTokens">
+        /// The maximum number of prompt tokens that may be used over the course of the run. The run will make a best effort to use only
+        /// the number of prompt tokens specified, across multiple turns of the run. If the run exceeds the number of prompt tokens specified,
+        /// the run will end with status `incomplete`. See `incomplete_details` for more info.
+        /// </param>
+        /// <param name="maxCompletionTokens">
+        /// The maximum number of completion tokens that may be used over the course of the run. The run will make a best effort to use only
+        /// the number of completion tokens specified, across multiple turns of the run. If the run exceeds the number of completion tokens
+        /// specified, the run will end with status `incomplete`. See `incomplete_details` for more info.
+        /// </param>
+        /// <param name="truncationStrategy"> The strategy to use for dropping messages as the context windows moves forward. </param>
+        /// <param name="toolChoice"> Controls whether or not and which tool is called by the model. </param>
+        /// <param name="responseFormat"> Specifies the format that the model must output. </param>
+        /// <param name="parallelToolCalls"> If `true` functions will run in parallel during tool use. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        public virtual Response<ThreadRun> CreateThreadAndRun(string assistantId, PersistentAgentThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, UpdateToolResourcesOptions toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(assistantId, nameof(assistantId));
+
+            CreateThreadAndRunRequest createThreadAndRunRequest = new CreateThreadAndRunRequest(
+                assistantId,
+                thread,
+                overrideModelName,
+                overrideInstructions,
+                overrideTools?.ToList() as IReadOnlyList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                toolResources,
+                stream,
+                temperature,
+                topP,
+                maxPromptTokens,
+                maxCompletionTokens,
+                truncationStrategy,
+                toolChoice,
+                responseFormat,
+                parallelToolCalls,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = CreateThreadAndRun(createThreadAndRunRequest.ToRequestContent(), context);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a new agent thread and immediately starts a run using that new thread.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateThreadAndRunAsync(string,PersistentAgentThreadCreationOptions,string,string,IEnumerable{ToolDefinition},UpdateToolResourcesOptions,bool?,float?,float?,int?,int?,TruncationObject,BinaryData,BinaryData,bool?,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateThreadAndRunAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("AgentsAdministrationClient.CreateThreadAndRun");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateThreadAndRunRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a new agent thread and immediately starts a run using that new thread.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateThreadAndRun(string,PersistentAgentThreadCreationOptions,string,string,IEnumerable{ToolDefinition},UpdateToolResourcesOptions,bool?,float?,float?,int?,int?,TruncationObject,BinaryData,BinaryData,bool?,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateThreadAndRun(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("AgentsAdministrationClient.CreateThreadAndRun");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateThreadAndRunRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private Threads _cachedThreads;
+        private ThreadMessagesClient _cachedThreadMessagesClient;
+        private Runs _cachedRuns;
+        private RunSteps _cachedRunSteps;
+        private Files _cachedFiles;
+        private VectorStores _cachedVectorStores;
+        private VectorStoreFiles _cachedVectorStoreFiles;
+        private VectorStoreFileBatches _cachedVectorStoreFileBatches;
+
+        /// <summary> Initializes a new instance of Threads. </summary>
+        public virtual Threads GetThreadsClient()
+        {
+            return Volatile.Read(ref _cachedThreads) ?? Interlocked.CompareExchange(ref _cachedThreads, new Threads(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedThreads;
+        }
+
+        /// <summary> Initializes a new instance of ThreadMessagesClient. </summary>
+        public virtual ThreadMessagesClient GetThreadMessagesClient()
+        {
+            return Volatile.Read(ref _cachedThreadMessagesClient) ?? Interlocked.CompareExchange(ref _cachedThreadMessagesClient, new ThreadMessagesClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedThreadMessagesClient;
+        }
+
+        /// <summary> Initializes a new instance of Runs. </summary>
+        public virtual Runs GetRunsClient()
+        {
+            return Volatile.Read(ref _cachedRuns) ?? Interlocked.CompareExchange(ref _cachedRuns, new Runs(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedRuns;
+        }
+
+        /// <summary> Initializes a new instance of RunSteps. </summary>
+        public virtual RunSteps GetRunStepsClient()
+        {
+            return Volatile.Read(ref _cachedRunSteps) ?? Interlocked.CompareExchange(ref _cachedRunSteps, new RunSteps(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedRunSteps;
+        }
+
+        /// <summary> Initializes a new instance of Files. </summary>
+        public virtual Files GetFilesClient()
+        {
+            return Volatile.Read(ref _cachedFiles) ?? Interlocked.CompareExchange(ref _cachedFiles, new Files(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFiles;
+        }
+
+        /// <summary> Initializes a new instance of VectorStores. </summary>
+        public virtual VectorStores GetVectorStoresClient()
+        {
+            return Volatile.Read(ref _cachedVectorStores) ?? Interlocked.CompareExchange(ref _cachedVectorStores, new VectorStores(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedVectorStores;
+        }
+
+        /// <summary> Initializes a new instance of VectorStoreFiles. </summary>
+        public virtual VectorStoreFiles GetVectorStoreFilesClient()
+        {
+            return Volatile.Read(ref _cachedVectorStoreFiles) ?? Interlocked.CompareExchange(ref _cachedVectorStoreFiles, new VectorStoreFiles(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedVectorStoreFiles;
+        }
+
+        /// <summary> Initializes a new instance of VectorStoreFileBatches. </summary>
+        public virtual VectorStoreFileBatches GetVectorStoreFileBatchesClient()
+        {
+            return Volatile.Read(ref _cachedVectorStoreFileBatches) ?? Interlocked.CompareExchange(ref _cachedVectorStoreFileBatches, new VectorStoreFileBatches(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedVectorStoreFileBatches;
         }
 
         internal HttpMessage CreateCreateAgentRequest(RequestContent content, RequestContext context)
@@ -802,6 +1102,22 @@ namespace Azure.AI.Agents.Persistent
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateThreadAndRunRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/threads/runs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
             return message;
         }
 

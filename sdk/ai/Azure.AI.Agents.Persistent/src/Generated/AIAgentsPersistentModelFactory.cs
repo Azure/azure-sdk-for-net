@@ -14,6 +14,24 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> Model factory for models. </summary>
     public static partial class AIAgentsPersistentModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Persistent.AzureFunctionBinding"/>. </summary>
+        /// <param name="type"> The type of binding, which is always 'storage_queue'. </param>
+        /// <param name="storageQueue"> Storage queue. </param>
+        /// <returns> A new <see cref="Persistent.AzureFunctionBinding"/> instance for mocking. </returns>
+        public static AzureFunctionBinding AzureFunctionBinding(AzureFunctionBindingType type = default, AzureFunctionStorageQueue storageQueue = null)
+        {
+            return new AzureFunctionBinding(type, storageQueue, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.ResponseFormatJsonSchemaType"/>. </summary>
+        /// <param name="type"> Type. </param>
+        /// <param name="jsonSchema"> The JSON schema, describing response format. </param>
+        /// <returns> A new <see cref="Persistent.ResponseFormatJsonSchemaType"/> instance for mocking. </returns>
+        public static ResponseFormatJsonSchemaType ResponseFormatJsonSchemaType(ResponseFormatJsonSchemaTypeType type = default, ResponseFormatJsonSchema jsonSchema = null)
+        {
+            return new ResponseFormatJsonSchemaType(type, jsonSchema, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Persistent.ThreadMessageOptions"/>. </summary>
         /// <param name="role">
         /// The role of the entity that is creating the message. Allowed values include:
@@ -78,24 +96,6 @@ namespace Azure.AI.Agents.Persistent
         public static MessageImageUrlParam MessageImageUrlParam(string url = null, ImageDetailLevel? detail = null)
         {
             return new MessageImageUrlParam(url, detail, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.AzureFunctionBinding"/>. </summary>
-        /// <param name="type"> The type of binding, which is always 'storage_queue'. </param>
-        /// <param name="storageQueue"> Storage queue. </param>
-        /// <returns> A new <see cref="Persistent.AzureFunctionBinding"/> instance for mocking. </returns>
-        public static AzureFunctionBinding AzureFunctionBinding(AzureFunctionBindingType type = default, AzureFunctionStorageQueue storageQueue = null)
-        {
-            return new AzureFunctionBinding(type, storageQueue, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.ResponseFormatJsonSchemaType"/>. </summary>
-        /// <param name="type"> Type. </param>
-        /// <param name="jsonSchema"> The JSON schema, describing response format. </param>
-        /// <returns> A new <see cref="Persistent.ResponseFormatJsonSchemaType"/> instance for mocking. </returns>
-        public static ResponseFormatJsonSchemaType ResponseFormatJsonSchemaType(ResponseFormatJsonSchemaTypeType type = default, ResponseFormatJsonSchema jsonSchema = null)
-        {
-            return new ResponseFormatJsonSchemaType(type, jsonSchema, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RequiredToolCall"/>. </summary>

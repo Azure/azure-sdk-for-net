@@ -10,8 +10,8 @@ using Azure.Core;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> Client options for PersistentAgentsClient. </summary>
-    public partial class PersistentAgentsClientOptions : ClientOptions
+    /// <summary> Client options for AgentsAdministrationClient. </summary>
+    public partial class AgentsAdministrationClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2025_05_15_Preview;
 
@@ -24,8 +24,8 @@ namespace Azure.AI.Agents.Persistent
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of PersistentAgentsClientOptions. </summary>
-        public PersistentAgentsClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of AgentsAdministrationClientOptions. </summary>
+        public AgentsAdministrationClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {

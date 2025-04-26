@@ -17,7 +17,7 @@ namespace Azure.AI.Agents.Persistent
 {
     // Data plane generated sub-client.
     /// <summary> A collection of message operations under `/threads/{threadId}/messages`. </summary>
-    public partial class Messages
+    public partial class ThreadMessagesClient
     {
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
@@ -34,19 +34,19 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of Messages for mocking. </summary>
-        protected Messages()
+        /// <summary> Initializes a new instance of ThreadMessagesClient for mocking. </summary>
+        protected ThreadMessagesClient()
         {
         }
 
-        /// <summary> Initializes a new instance of Messages. </summary>
+        /// <summary> Initializes a new instance of ThreadMessagesClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal Messages(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal ThreadMessagesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -143,7 +143,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Messages.CreateMessage");
+            using var scope = ClientDiagnostics.CreateScope("ThreadMessagesClient.CreateMessage");
             scope.Start();
             try
             {
@@ -184,7 +184,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Messages.CreateMessage");
+            using var scope = ClientDiagnostics.CreateScope("ThreadMessagesClient.CreateMessage");
             scope.Start();
             try
             {
@@ -266,7 +266,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            using var scope = ClientDiagnostics.CreateScope("Messages.InternalGetMessages");
+            using var scope = ClientDiagnostics.CreateScope("ThreadMessagesClient.InternalGetMessages");
             scope.Start();
             try
             {
@@ -310,7 +310,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            using var scope = ClientDiagnostics.CreateScope("Messages.InternalGetMessages");
+            using var scope = ClientDiagnostics.CreateScope("ThreadMessagesClient.InternalGetMessages");
             scope.Start();
             try
             {
@@ -383,7 +383,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
-            using var scope = ClientDiagnostics.CreateScope("Messages.GetMessage");
+            using var scope = ClientDiagnostics.CreateScope("ThreadMessagesClient.GetMessage");
             scope.Start();
             try
             {
@@ -424,7 +424,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
-            using var scope = ClientDiagnostics.CreateScope("Messages.GetMessage");
+            using var scope = ClientDiagnostics.CreateScope("ThreadMessagesClient.GetMessage");
             scope.Start();
             try
             {
@@ -503,7 +503,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Messages.UpdateMessage");
+            using var scope = ClientDiagnostics.CreateScope("ThreadMessagesClient.UpdateMessage");
             scope.Start();
             try
             {
@@ -546,7 +546,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Messages.UpdateMessage");
+            using var scope = ClientDiagnostics.CreateScope("ThreadMessagesClient.UpdateMessage");
             scope.Start();
             try
             {
