@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         private const string RedirectValue = "Redirect";
         private const string AnomalyScoringValue = "AnomalyScoring";
         private const string JSChallengeValue = "JSChallenge";
+        private const string CaptchaValue = "CAPTCHA";
 
         /// <summary> Allow. </summary>
         public static RuleMatchActionType Allow { get; } = new RuleMatchActionType(AllowValue);
@@ -41,6 +42,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static RuleMatchActionType AnomalyScoring { get; } = new RuleMatchActionType(AnomalyScoringValue);
         /// <summary> JSChallenge. </summary>
         public static RuleMatchActionType JSChallenge { get; } = new RuleMatchActionType(JSChallengeValue);
+        /// <summary> CAPTCHA. </summary>
+        public static RuleMatchActionType Captcha { get; } = new RuleMatchActionType(CaptchaValue);
         /// <summary> Determines if two <see cref="RuleMatchActionType"/> values are the same. </summary>
         public static bool operator ==(RuleMatchActionType left, RuleMatchActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RuleMatchActionType"/> values are not the same. </summary>
