@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -22,11 +23,11 @@ namespace MgmtTypeSpec.Models
         {
         }
 
-        internal FooData(FooProperties properties, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FooData(ResourceIdentifier id, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, FooProperties properties, string name, ExtendedLocation extendedLocation) : base(id, name, @type, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ExtendedLocation = extendedLocation;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>

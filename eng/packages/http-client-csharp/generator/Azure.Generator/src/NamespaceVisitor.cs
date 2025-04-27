@@ -12,7 +12,7 @@ namespace Azure.Generator
     {
         protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
         {
-            if (type is not null && type is not SystemObjectTypeProvider)
+            if (type is not null)
             {
                 UpdateModelsNamespace(type);
             }
@@ -54,11 +54,6 @@ namespace Azure.Generator
 
         private static void UpdateModelsNamespace(TypeProvider type)
         {
-            if (type is SystemObjectTypeProvider)
-            {
-                return;
-            }
-
             if (AzureClientGenerator.Instance.Configuration.UseModelNamespace())
             {
                 type.Type.Update(

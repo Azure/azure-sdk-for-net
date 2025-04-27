@@ -46,21 +46,6 @@ namespace MgmtTypeSpec.Models
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(Identity);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         PrivateLinkResourceData IJsonModel<PrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PrivateLinkResourceData)JsonModelCreateCore(ref reader, options);
@@ -84,11 +69,38 @@ namespace MgmtTypeSpec.Models
             {
                 return null;
             }
-            PrivateLinkResourceProperties properties = default;
-            ManagedServiceIdentity identity = default;
+            ResourceIdentifier id = default;
+            string @type = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            PrivateLinkResourceProperties properties = default;
+            string name = default;
+            ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("id"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = prop.Value.Deserialize<SystemData>();
+                    continue;
+                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -112,7 +124,14 @@ namespace MgmtTypeSpec.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrivateLinkResourceData(properties, identity, additionalBinaryDataProperties);
+            return new PrivateLinkResourceData(
+                id,
+                @type,
+                systemData,
+                additionalBinaryDataProperties,
+                properties,
+                name,
+                identity);
         }
 
         BinaryData IPersistableModel<PrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);

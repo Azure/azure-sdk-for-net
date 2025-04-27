@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace MgmtTypeSpec.Models
@@ -21,11 +22,11 @@ namespace MgmtTypeSpec.Models
         {
         }
 
-        internal PrivateLinkResourceData(PrivateLinkResourceProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateLinkResourceData(ResourceIdentifier id, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateLinkResourceProperties properties, string name, ManagedServiceIdentity identity) : base(id, name, @type, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Identity = identity;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
