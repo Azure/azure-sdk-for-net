@@ -467,10 +467,38 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                             {
                                 case Predicate.Equal:
                                     // fieldValue == enumValue
-                                    return Expression.Equal(fieldExpression, Expression.Constant(enumValue, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(fieldType) : fieldType));
+                                    if (isFieldTypeNullable)
+                                    {
+                                        // For nullable enums, we need to use a different approach
+                                        // First, check if the field is null, then check for equality if not null
+                                        // (fieldExpression == null ? false : fieldExpression.Value == enumValue)
+                                        return Expression.Condition(
+                                            Expression.Equal(fieldExpression, Expression.Constant(null, fieldExpression.Type)),
+                                            Expression.Constant(false),
+                                            Expression.Equal(
+                                                Expression.Convert(fieldExpression, fieldType),
+                                                Expression.Constant(enumValue, fieldType)));
+                                    }
+                                    else
+                                    {
+                                        return Expression.Equal(fieldExpression, Expression.Constant(enumValue, fieldType));
+                                    }
                                 case Predicate.NotEqual:
                                     // fieldValue != enumValue
-                                    return Expression.NotEqual(fieldExpression, Expression.Constant(enumValue, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(fieldType) : fieldType));
+                                    if (isFieldTypeNullable)
+                                    {
+                                        // For nullable enums: (fieldExpression == null ? true : fieldExpression.Value != enumValue)
+                                        return Expression.Condition(
+                                            Expression.Equal(fieldExpression, Expression.Constant(null, fieldExpression.Type)),
+                                            Expression.Constant(true),
+                                            Expression.NotEqual(
+                                                Expression.Convert(fieldExpression, fieldType),
+                                                Expression.Constant(enumValue, fieldType)));
+                                    }
+                                    else
+                                    {
+                                        return Expression.NotEqual(fieldExpression, Expression.Constant(enumValue, fieldType));
+                                    }
                                 case Predicate.LessThan:
                                     // (int)fieldValue < (int)enumValue
                                     // (int?)fieldValue < (int?)enumValue
