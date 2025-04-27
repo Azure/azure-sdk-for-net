@@ -3,7 +3,6 @@
 
 using Azure.AI.OpenAI;
 using Azure.Projects;
-using Azure.Projects.AI;
 using Azure.Projects.Tooling;
 using OpenAI.Chat;
 

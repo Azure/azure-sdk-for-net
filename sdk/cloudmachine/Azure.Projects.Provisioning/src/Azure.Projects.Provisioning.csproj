@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Description>Azure.Projects.Provisioning simplifies declarative resource provisioning in .NET.</Description>
@@ -8,8 +8,9 @@
     <Nullable>enable</Nullable>
     <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
     <NoWarn>CS1591;AZC0007</NoWarn>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Azure.Provisioning" />
@@ -24,6 +25,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.Projects\src\Azure.Projects.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="C:\git\azure-sdk-for-net\sdk\cloudmachine\Azure.Projects.Provisioning\README.md" />
   </ItemGroup>
 
 </Project>

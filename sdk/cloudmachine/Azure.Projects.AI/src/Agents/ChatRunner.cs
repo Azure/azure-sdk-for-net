@@ -113,7 +113,9 @@ namespace Azure.Projects.AI
             }
             else
             {
-                ChatCompletion completion = _chat.CompleteChat(conversation);
+                ChatCompletionOptions options = new();
+                options.Temperature = 0.0f;
+                ChatCompletion completion = _chat.CompleteChat(conversation, options);
                 return completion;
             }
         }
