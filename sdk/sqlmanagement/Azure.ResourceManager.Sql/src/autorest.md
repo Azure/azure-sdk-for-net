@@ -18,6 +18,7 @@ sample-gen:
   - ManagedDatabaseSensitivityLabels_Delete
   - SensitivityLabels_CreateOrUpdate
   - SensitivityLabels_Delete
+  - ManagedDatabaseSecurityEvents_ListByDatabase
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -225,6 +226,7 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}/scans/{scanId}/scanResults/{scanResultId}: SqlDatabaseSqlVulnerabilityAssessmentScanResult
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}/baselines/{baselineName}: SqlDatabaseSqlVulnerabilityAssessmentBaseline
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}/baselines/{baselineName}/rules/{ruleId}: SqlDatabaseSqlVulnerabilityAssessmentBaselineRule
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/distributedAvailabilityGroups/{distributedAvailabilityGroupName}: SqlDistributedAvailabilityGroup
 
 rename-mapping:
   CopyLongTermRetentionBackupParameters: CopyLongTermRetentionBackupContent
@@ -357,6 +359,14 @@ rename-mapping:
   BackupStorageAccessTier: SqlBackupStorageAccessTier
   Phase: DatabaseOperationPhase
   PhaseDetails: DatabaseOperationPhaseDetails
+  ManagementOperationStepState: UpsertManagedServerOperationStepStatus
+  UpsertManagedServerOperationStepWithEstimatesAndDuration: UpsertManagedServerOperationStep
+  StorageAccountType: StorageCapabilityStorageAccountType
+  SqlAgentState: SqlAgentConfigurationPropertiesState
+  TrustScope: ServerTrustGroupPropertiesTrustScopesItem
+  GeoBackupPolicy.properties.state: GeoBackupPolicyState
+  DistributedAvailabilityGroup: SqlDistributedAvailabilityGroup
+  RecommendedAction.properties.details: AdditionalDetails
 
 prompted-enum-values:
   - Default
@@ -571,3 +581,108 @@ directive:
       transform: >
           $.push('SecuredByPerimeter');
       reason: Align the enum choices to avoid breaking changes of one enum split into two.
+    - from: DataMaskingRules.json
+      where: $.definitions.DataMaskingRuleProperties.properties.ruleState
+      transform: >
+          $['enum'] = [
+              'Disabled',
+              'Enabled'
+            ];
+    - from: DataMaskingPolicies.json
+      where: $.definitions.DataMaskingPolicyProperties.properties.dataMaskingState
+      transform: >
+          $['enum'] = [
+              'Disabled',
+              'Enabled'
+            ];
+    - from: GeoBackupPolicies.json
+      where: $.definitions.GeoBackupPolicyProperties.properties.state
+      transform: >
+          $['enum'] = [
+              'Disabled',
+              'Enabled'
+            ];
+    - from: DatabaseAdvisors.json
+      where: $.definitions.RecommendedAction
+      transform: >
+          delete $.allOf;
+          $.properties.id = {
+            description: "Resource ID.",
+            type: "string",
+            readOnly: true
+          };
+          $.properties.name = {
+            description: "Resource name.",
+            type: "string",
+            readOnly: true
+          };
+          $.properties.type = {
+            description: "Resource type.",
+            type: "string",
+            readOnly: true
+          };
+    - from: DatabaseRecommendedActions.json
+      where: $.definitions.RecommendedAction
+      transform: >
+          delete $.allOf;
+          $.properties.id = {
+            description: "Resource ID.",
+            type: "string",
+            readOnly: true
+          };
+          $.properties.name = {
+            description: "Resource name.",
+            type: "string",
+            readOnly: true
+          };
+          $.properties.type = {
+            description: "Resource type.",
+            type: "string",
+            readOnly: true
+          };
+    - from: ManagedInstances.json
+      where: $.definitions.ManagedInstanceProperties.properties.provisioningState
+      transform: >
+          $['enum'] = [
+              'Created',
+              'InProgress',
+              'Succeeded',
+              'Failed',
+              'Canceled',
+              'Creating',
+              'Deleting',
+              'Updating',
+              'Unknown',
+              'Accepted',
+              'Deleted',
+              'Unrecognized',
+              'Running',
+              'NotSpecified',
+              'Registering',
+              'TimedOut'
+          ];
+          $['x-ms-enum']['name'] = 'ManagedInstancePropertiesProvisioningState'
+    - from: DatabaseSecurityAlertPolicies.json
+      where: $.paths
+      transform: >
+          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].get.parameters[3]['enum'] = ['Default'];
+          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].put.parameters[3]['enum'] = ['Default'];
+    - from: ManagedDatabaseSecurityAlertPolicies.json
+      where: $.paths
+      transform: >
+          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].get.parameters[3]['enum'] = ['Default'];
+          $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityAlertPolicies/{securityAlertPolicyName}'].put.parameters[3]['enum'] = ['Default'];
+    - from: ServerUsages.json
+      where: $.definitions.ServerUsageProperties.properties
+      transform: >
+          $['resourceName'] = {
+              "readOnly": true,
+              "type": "string",
+              "description": "The name of the resource."
+            };
+          $['nextResetTime'] = {
+              "readOnly": true,
+              "type": "string",
+              "format": "date-time",
+              "description": "The next reset time for the metric (ISO8601 format)."
+            };

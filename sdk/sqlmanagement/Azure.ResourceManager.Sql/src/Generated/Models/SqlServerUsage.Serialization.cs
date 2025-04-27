@@ -59,6 +59,16 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
+            if (options.Format != "W" && Optional.IsDefined(ResourceName))
+            {
+                writer.WritePropertyName("resourceName"u8);
+                writer.WriteStringValue(ResourceName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextResetOn))
+            {
+                writer.WritePropertyName("nextResetTime"u8);
+                writer.WriteStringValue(NextResetOn.Value, "O");
+            }
             writer.WriteEndObject();
         }
 
@@ -90,6 +100,8 @@ namespace Azure.ResourceManager.Sql.Models
             double? currentValue = default;
             double? limit = default;
             string unit = default;
+            string resourceName = default;
+            DateTimeOffset? nextResetTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,6 +167,20 @@ namespace Azure.ResourceManager.Sql.Models
                             unit = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("resourceName"u8))
+                        {
+                            resourceName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("nextResetTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            nextResetTime = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -173,6 +199,8 @@ namespace Azure.ResourceManager.Sql.Models
                 currentValue,
                 limit,
                 unit,
+                resourceName,
+                nextResetTime,
                 serializedAdditionalRawData);
         }
 
@@ -315,6 +343,45 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         builder.AppendLine($"'{Unit}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    resourceName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceName))
+                {
+                    builder.Append("    resourceName: ");
+                    if (ResourceName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextResetOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    nextResetTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NextResetOn))
+                {
+                    builder.Append("    nextResetTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(NextResetOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 

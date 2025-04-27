@@ -687,9 +687,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="lastCheckedOn"> Gets the time when the current resource was analyzed for recommendations by this advisor. </param>
         /// <param name="recommendedActions"> Gets the recommended actions for this advisor. </param>
         /// <returns> A new <see cref="Sql.SqlAdvisorData"/> instance for mocking. </returns>
-        public static SqlAdvisorData SqlAdvisorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AzureLocation? location = null, SqlAdvisorStatus? advisorStatus = null, AutoExecuteStatus? autoExecuteStatus = null, AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom = null, string recommendationsStatus = null, DateTimeOffset? lastCheckedOn = null, IEnumerable<RecommendedAction> recommendedActions = null)
+        public static SqlAdvisorData SqlAdvisorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AzureLocation? location = null, SqlAdvisorStatus? advisorStatus = null, AutoExecuteStatus? autoExecuteStatus = null, AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom = null, string recommendationsStatus = null, DateTimeOffset? lastCheckedOn = null, IEnumerable<RecommendedActionData> recommendedActions = null)
         {
-            recommendedActions ??= new List<RecommendedAction>();
+            recommendedActions ??= new List<RecommendedActionData>();
 
             return new SqlAdvisorData(
                 id,
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RecommendedAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.RecommendedActionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -736,17 +736,17 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="observedImpact"> Gets the observed/actual impact info for this recommended action e.g., Actual CPU gain, Actual Disk Space change. </param>
         /// <param name="timeSeries"> Gets the time series info of metrics for this recommended action e.g., CPU consumption time series. </param>
         /// <param name="linkedObjects"> Gets the linked objects, if any. </param>
-        /// <param name="details"> Gets additional details specific to this recommended action. </param>
-        /// <returns> A new <see cref="Models.RecommendedAction"/> instance for mocking. </returns>
-        public static RecommendedAction RecommendedAction(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AzureLocation? location = null, string recommendationReason = null, DateTimeOffset? validSince = null, DateTimeOffset? lastRefresh = null, RecommendedActionStateInfo state = null, bool? isExecutableAction = null, bool? isRevertableAction = null, bool? isArchivedAction = null, DateTimeOffset? executeActionStartOn = null, TimeSpan? executeActionDuration = null, DateTimeOffset? revertActionStartOn = null, TimeSpan? revertActionDuration = null, RecommendedActionInitiatedBy? executeActionInitiatedBy = null, DateTimeOffset? executeActionInitiatedOn = null, RecommendedActionInitiatedBy? revertActionInitiatedBy = null, DateTimeOffset? revertActionInitiatedOn = null, int? score = null, RecommendedActionImplementationInfo implementationDetails = null, RecommendedActionErrorInfo errorDetails = null, IEnumerable<RecommendedActionImpactRecord> estimatedImpact = null, IEnumerable<RecommendedActionImpactRecord> observedImpact = null, IEnumerable<RecommendedActionMetricInfo> timeSeries = null, IEnumerable<string> linkedObjects = null, IReadOnlyDictionary<string, string> details = null)
+        /// <param name="additionalDetails"> Gets additional details specific to this recommended action. </param>
+        /// <returns> A new <see cref="Sql.RecommendedActionData"/> instance for mocking. </returns>
+        public static RecommendedActionData RecommendedActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AzureLocation? location = null, string recommendationReason = null, DateTimeOffset? validSince = null, DateTimeOffset? lastRefresh = null, RecommendedActionStateInfo state = null, bool? isExecutableAction = null, bool? isRevertableAction = null, bool? isArchivedAction = null, DateTimeOffset? executeActionStartOn = null, TimeSpan? executeActionDuration = null, DateTimeOffset? revertActionStartOn = null, TimeSpan? revertActionDuration = null, RecommendedActionInitiatedBy? executeActionInitiatedBy = null, DateTimeOffset? executeActionInitiatedOn = null, RecommendedActionInitiatedBy? revertActionInitiatedBy = null, DateTimeOffset? revertActionInitiatedOn = null, int? score = null, RecommendedActionImplementationInfo implementationDetails = null, RecommendedActionErrorInfo errorDetails = null, IEnumerable<RecommendedActionImpactRecord> estimatedImpact = null, IEnumerable<RecommendedActionImpactRecord> observedImpact = null, IEnumerable<RecommendedActionMetricInfo> timeSeries = null, IEnumerable<string> linkedObjects = null, IReadOnlyDictionary<string, string> additionalDetails = null)
         {
             estimatedImpact ??= new List<RecommendedActionImpactRecord>();
             observedImpact ??= new List<RecommendedActionImpactRecord>();
             timeSeries ??= new List<RecommendedActionMetricInfo>();
             linkedObjects ??= new List<string>();
-            details ??= new Dictionary<string, string>();
+            additionalDetails ??= new Dictionary<string, string>();
 
-            return new RecommendedAction(
+            return new RecommendedActionData(
                 id,
                 name,
                 resourceType,
@@ -775,7 +775,7 @@ namespace Azure.ResourceManager.Sql.Models
                 observedImpact?.ToList(),
                 timeSeries?.ToList(),
                 linkedObjects?.ToList(),
-                details,
+                additionalDetails,
                 serializedAdditionalRawData: null);
         }
 
@@ -1043,78 +1043,6 @@ namespace Azure.ResourceManager.Sql.Models
             phaseInformation ??= new Dictionary<string, string>();
 
             return new DatabaseOperationPhaseDetails(phase, phaseInformation, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Sql.RecommendedActionAutoGeneratedData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Resource kind. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="recommendationReason"> Gets the reason for recommending this action. e.g., DuplicateIndex. </param>
-        /// <param name="validSince"> Gets the time since when this recommended action is valid. </param>
-        /// <param name="lastRefresh"> Gets time when this recommended action was last refreshed. </param>
-        /// <param name="state"> Gets the info of the current state the recommended action is in. </param>
-        /// <param name="isExecutableAction"> Gets if this recommended action is actionable by user. </param>
-        /// <param name="isRevertableAction"> Gets if changes applied by this recommended action can be reverted by user. </param>
-        /// <param name="isArchivedAction"> Gets if this recommended action was suggested some time ago but user chose to ignore this and system added a new recommended action again. </param>
-        /// <param name="executeActionStartOn"> Gets the time when system started applying this recommended action on the user resource. e.g., index creation start time. </param>
-        /// <param name="executeActionDuration"> Gets the time taken for applying this recommended action on user resource. e.g., time taken for index creation. </param>
-        /// <param name="revertActionStartOn"> Gets the time when system started reverting changes of this recommended action on user resource. e.g., time when index drop is executed. </param>
-        /// <param name="revertActionDuration"> Gets the time taken for reverting changes of this recommended action on user resource. e.g., time taken for dropping the created index. </param>
-        /// <param name="executeActionInitiatedBy"> Gets if approval for applying this recommended action was given by user/system. </param>
-        /// <param name="executeActionInitiatedOn"> Gets the time when this recommended action was approved for execution. </param>
-        /// <param name="revertActionInitiatedBy"> Gets if approval for reverting this recommended action was given by user/system. </param>
-        /// <param name="revertActionInitiatedOn"> Gets the time when this recommended action was approved for revert. </param>
-        /// <param name="score"> Gets the impact of this recommended action. Possible values are 1 - Low impact, 2 - Medium Impact and 3 - High Impact. </param>
-        /// <param name="implementationDetails"> Gets the implementation details of this recommended action for user to apply it manually. </param>
-        /// <param name="errorDetails"> Gets the error details if and why this recommended action is put to error state. </param>
-        /// <param name="estimatedImpact"> Gets the estimated impact info for this recommended action e.g., Estimated CPU gain, Estimated Disk Space change. </param>
-        /// <param name="observedImpact"> Gets the observed/actual impact info for this recommended action e.g., Actual CPU gain, Actual Disk Space change. </param>
-        /// <param name="timeSeries"> Gets the time series info of metrics for this recommended action e.g., CPU consumption time series. </param>
-        /// <param name="linkedObjects"> Gets the linked objects, if any. </param>
-        /// <param name="details"> Gets additional details specific to this recommended action. </param>
-        /// <returns> A new <see cref="Sql.RecommendedActionAutoGeneratedData"/> instance for mocking. </returns>
-        public static RecommendedActionAutoGeneratedData RecommendedActionAutoGeneratedData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AzureLocation? location = null, string recommendationReason = null, DateTimeOffset? validSince = null, DateTimeOffset? lastRefresh = null, RecommendedActionStateInfo state = null, bool? isExecutableAction = null, bool? isRevertableAction = null, bool? isArchivedAction = null, DateTimeOffset? executeActionStartOn = null, TimeSpan? executeActionDuration = null, DateTimeOffset? revertActionStartOn = null, TimeSpan? revertActionDuration = null, RecommendedActionInitiatedBy? executeActionInitiatedBy = null, DateTimeOffset? executeActionInitiatedOn = null, RecommendedActionInitiatedBy? revertActionInitiatedBy = null, DateTimeOffset? revertActionInitiatedOn = null, int? score = null, RecommendedActionImplementationInfo implementationDetails = null, RecommendedActionErrorInfo errorDetails = null, IEnumerable<RecommendedActionImpactRecord> estimatedImpact = null, IEnumerable<RecommendedActionImpactRecord> observedImpact = null, IEnumerable<RecommendedActionMetricInfo> timeSeries = null, IEnumerable<string> linkedObjects = null, IReadOnlyDictionary<string, string> details = null)
-        {
-            estimatedImpact ??= new List<RecommendedActionImpactRecord>();
-            observedImpact ??= new List<RecommendedActionImpactRecord>();
-            timeSeries ??= new List<RecommendedActionMetricInfo>();
-            linkedObjects ??= new List<string>();
-            details ??= new Dictionary<string, string>();
-
-            return new RecommendedActionAutoGeneratedData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                kind,
-                location,
-                recommendationReason,
-                validSince,
-                lastRefresh,
-                state,
-                isExecutableAction,
-                isRevertableAction,
-                isArchivedAction,
-                executeActionStartOn,
-                executeActionDuration,
-                revertActionStartOn,
-                revertActionDuration,
-                executeActionInitiatedBy,
-                executeActionInitiatedOn,
-                revertActionInitiatedBy,
-                revertActionInitiatedOn,
-                score,
-                implementationDetails,
-                errorDetails,
-                estimatedImpact?.ToList(),
-                observedImpact?.ToList(),
-                timeSeries?.ToList(),
-                linkedObjects?.ToList(),
-                details,
-                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Sql.DatabaseSchemaData"/>. </summary>
@@ -2069,7 +1997,7 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Sql.DistributedAvailabilityGroupData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sql.SqlDistributedAvailabilityGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2085,12 +2013,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="failoverMode"> The link failover mode - can be Manual if intended to be used for two-way failover with a supported SQL Server, or None for one-way failover to Azure. </param>
         /// <param name="seedingMode"> Database seeding mode – can be Automatic (default), or Manual for supported scenarios. </param>
         /// <param name="databases"> Databases in the distributed availability group. </param>
-        /// <returns> A new <see cref="Sql.DistributedAvailabilityGroupData"/> instance for mocking. </returns>
-        public static DistributedAvailabilityGroupData DistributedAvailabilityGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string distributedAvailabilityGroupName = null, Guid? distributedAvailabilityGroupId = null, ReplicationModeType? replicationMode = null, LinkRole? partnerLinkRole = null, string partnerAvailabilityGroupName = null, string partnerEndpoint = null, LinkRole? instanceLinkRole = null, string instanceAvailabilityGroupName = null, FailoverModeType? failoverMode = null, SeedingModeType? seedingMode = null, IEnumerable<DistributedAvailabilityGroupDatabase> databases = null)
+        /// <returns> A new <see cref="Sql.SqlDistributedAvailabilityGroupData"/> instance for mocking. </returns>
+        public static SqlDistributedAvailabilityGroupData SqlDistributedAvailabilityGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string distributedAvailabilityGroupName = null, Guid? distributedAvailabilityGroupId = null, ReplicationModeType? replicationMode = null, LinkRole? partnerLinkRole = null, string partnerAvailabilityGroupName = null, string partnerEndpoint = null, LinkRole? instanceLinkRole = null, string instanceAvailabilityGroupName = null, FailoverModeType? failoverMode = null, SeedingModeType? seedingMode = null, IEnumerable<DistributedAvailabilityGroupDatabase> databases = null)
         {
             databases ??= new List<DistributedAvailabilityGroupDatabase>();
 
-            return new DistributedAvailabilityGroupData(
+            return new SqlDistributedAvailabilityGroupData(
                 id,
                 name,
                 resourceType,
@@ -2414,10 +2342,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Backup policy location. </param>
         /// <param name="kind"> Kind of geo backup policy.  This is metadata used for the Azure portal experience. </param>
-        /// <param name="state"> The state of the geo backup policy. </param>
+        /// <param name="geoBackupPolicyState"> The state of the geo backup policy. </param>
         /// <param name="storageType"> The storage type of the geo backup policy. </param>
         /// <returns> A new <see cref="Sql.GeoBackupPolicyData"/> instance for mocking. </returns>
-        public static GeoBackupPolicyData GeoBackupPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = null, GeoBackupPolicyState? state = null, string storageType = null)
+        public static GeoBackupPolicyData GeoBackupPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = null, GeoBackupPolicyState? geoBackupPolicyState = null, string storageType = null)
         {
             return new GeoBackupPolicyData(
                 id,
@@ -2426,7 +2354,7 @@ namespace Azure.ResourceManager.Sql.Models
                 systemData,
                 location,
                 kind,
-                state,
+                geoBackupPolicyState,
                 storageType,
                 serializedAdditionalRawData: null);
         }
@@ -3005,7 +2933,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <returns> A new <see cref="Models.StorageCapability"/> instance for mocking. </returns>
-        public static StorageCapability StorageCapability(StorageAccountType? storageAccountType = null, SqlCapabilityStatus? status = null, string reason = null)
+        public static StorageCapability StorageCapability(StorageCapabilityStorageAccountType? storageAccountType = null, SqlCapabilityStatus? status = null, string reason = null)
         {
             return new StorageCapability(storageAccountType, status, reason, serializedAdditionalRawData: null);
         }
@@ -4345,24 +4273,24 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="currentStep"> The number of current operation steps. </param>
         /// <param name="stepsList"> The operation steps list. </param>
         /// <returns> A new <see cref="Models.ManagedInstanceOperationSteps"/> instance for mocking. </returns>
-        public static ManagedInstanceOperationSteps ManagedInstanceOperationSteps(string totalSteps = null, int? currentStep = null, IEnumerable<UpsertManagedServerOperationStepWithEstimatesAndDuration> stepsList = null)
+        public static ManagedInstanceOperationSteps ManagedInstanceOperationSteps(string totalSteps = null, int? currentStep = null, IEnumerable<UpsertManagedServerOperationStep> stepsList = null)
         {
-            stepsList ??= new List<UpsertManagedServerOperationStepWithEstimatesAndDuration>();
+            stepsList ??= new List<UpsertManagedServerOperationStep>();
 
             return new ManagedInstanceOperationSteps(totalSteps, currentStep, stepsList?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.UpsertManagedServerOperationStepWithEstimatesAndDuration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.UpsertManagedServerOperationStep"/>. </summary>
         /// <param name="stepStartOn"></param>
         /// <param name="stepEndOn"></param>
         /// <param name="timeElapsed"></param>
         /// <param name="order"></param>
         /// <param name="name"></param>
         /// <param name="status"></param>
-        /// <returns> A new <see cref="Models.UpsertManagedServerOperationStepWithEstimatesAndDuration"/> instance for mocking. </returns>
-        public static UpsertManagedServerOperationStepWithEstimatesAndDuration UpsertManagedServerOperationStepWithEstimatesAndDuration(DateTimeOffset? stepStartOn = null, DateTimeOffset? stepEndOn = null, string timeElapsed = null, int? order = null, string name = null, ManagementOperationStepState? status = null)
+        /// <returns> A new <see cref="Models.UpsertManagedServerOperationStep"/> instance for mocking. </returns>
+        public static UpsertManagedServerOperationStep UpsertManagedServerOperationStep(DateTimeOffset? stepStartOn = null, DateTimeOffset? stepEndOn = null, string timeElapsed = null, int? order = null, string name = null, UpsertManagedServerOperationStepStatus? status = null)
         {
-            return new UpsertManagedServerOperationStepWithEstimatesAndDuration(
+            return new UpsertManagedServerOperationStep(
                 stepStartOn,
                 stepEndOn,
                 timeElapsed,
@@ -4552,7 +4480,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="authenticationMetadata"> The managed instance's authentication metadata lookup mode. </param>
         /// <param name="databaseFormat"> Specifies the internal format of instance databases specific to the SQL engine version. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceData"/> instance for mocking. </returns>
-        public static ManagedInstanceData ManagedInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, SqlSku sku = null, JobExecutionProvisioningState? provisioningState = null, ManagedServerCreateMode? managedInstanceCreateMode = null, string fullyQualifiedDomainName = null, bool? isGeneralPurposeV2 = null, string administratorLogin = null, string administratorLoginPassword = null, ResourceIdentifier subnetId = null, string state = null, ManagedInstanceLicenseType? licenseType = null, HybridSecondaryUsage? hybridSecondaryUsage = null, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected = null, int? vCores = null, int? storageSizeInGB = null, int? storageIOps = null, int? storageThroughputMBps = null, string collation = null, string dnsZone = null, ResourceIdentifier managedDnsZonePartner = null, bool? isPublicDataEndpointEnabled = null, ResourceIdentifier sourceManagedInstanceId = null, DateTimeOffset? restorePointInTime = null, ManagedInstanceProxyOverride? proxyOverride = null, string timezoneId = null, ResourceIdentifier instancePoolId = null, ResourceIdentifier maintenanceConfigurationId = null, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections = null, string minimalTlsVersion = null, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, bool? isZoneRedundant = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Uri keyId = null, ManagedInstanceExternalAdministrator administrators = null, SqlServicePrincipal servicePrincipal = null, string virtualClusterId = null, ExternalGovernanceStatus? externalGovernanceStatus = null, PricingModel? pricingModel = null, DateTimeOffset? createOn = null, AuthMetadataLookupMode? authenticationMetadata = null, ManagedInstanceDatabaseFormat? databaseFormat = null)
+        public static ManagedInstanceData ManagedInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, SqlSku sku = null, ManagedInstancePropertiesProvisioningState? provisioningState = null, ManagedServerCreateMode? managedInstanceCreateMode = null, string fullyQualifiedDomainName = null, bool? isGeneralPurposeV2 = null, string administratorLogin = null, string administratorLoginPassword = null, ResourceIdentifier subnetId = null, string state = null, ManagedInstanceLicenseType? licenseType = null, HybridSecondaryUsage? hybridSecondaryUsage = null, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected = null, int? vCores = null, int? storageSizeInGB = null, int? storageIOps = null, int? storageThroughputMBps = null, string collation = null, string dnsZone = null, ResourceIdentifier managedDnsZonePartner = null, bool? isPublicDataEndpointEnabled = null, ResourceIdentifier sourceManagedInstanceId = null, DateTimeOffset? restorePointInTime = null, ManagedInstanceProxyOverride? proxyOverride = null, string timezoneId = null, ResourceIdentifier instancePoolId = null, ResourceIdentifier maintenanceConfigurationId = null, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections = null, string minimalTlsVersion = null, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, bool? isZoneRedundant = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Uri keyId = null, ManagedInstanceExternalAdministrator administrators = null, SqlServicePrincipal servicePrincipal = null, string virtualClusterId = null, ExternalGovernanceStatus? externalGovernanceStatus = null, PricingModel? pricingModel = null, DateTimeOffset? createOn = null, AuthMetadataLookupMode? authenticationMetadata = null, ManagedInstanceDatabaseFormat? databaseFormat = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<ManagedInstancePecProperty>();
@@ -4687,7 +4615,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="authenticationMetadata"> The managed instance's authentication metadata lookup mode. </param>
         /// <param name="databaseFormat"> Specifies the internal format of instance databases specific to the SQL engine version. </param>
         /// <returns> A new <see cref="Models.ManagedInstancePatch"/> instance for mocking. </returns>
-        public static ManagedInstancePatch ManagedInstancePatch(SqlSku sku = null, ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, JobExecutionProvisioningState? provisioningState = null, ManagedServerCreateMode? managedInstanceCreateMode = null, string fullyQualifiedDomainName = null, bool? isGeneralPurposeV2 = null, string administratorLogin = null, string administratorLoginPassword = null, ResourceIdentifier subnetId = null, string state = null, ManagedInstanceLicenseType? licenseType = null, HybridSecondaryUsage? hybridSecondaryUsage = null, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected = null, int? vCores = null, int? storageSizeInGB = null, int? storageIOps = null, int? storageThroughputMBps = null, string collation = null, string dnsZone = null, ResourceIdentifier managedDnsZonePartner = null, bool? isPublicDataEndpointEnabled = null, ResourceIdentifier sourceManagedInstanceId = null, DateTimeOffset? restorePointInTime = null, ManagedInstanceProxyOverride? proxyOverride = null, string timezoneId = null, ResourceIdentifier instancePoolId = null, ResourceIdentifier maintenanceConfigurationId = null, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections = null, string minimalTlsVersion = null, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, bool? isZoneRedundant = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Uri keyId = null, ManagedInstanceExternalAdministrator administrators = null, SqlServicePrincipal servicePrincipal = null, string virtualClusterId = null, ExternalGovernanceStatus? externalGovernanceStatus = null, PricingModel? pricingModel = null, DateTimeOffset? createOn = null, AuthMetadataLookupMode? authenticationMetadata = null, ManagedInstanceDatabaseFormat? databaseFormat = null)
+        public static ManagedInstancePatch ManagedInstancePatch(SqlSku sku = null, ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, ManagedInstancePropertiesProvisioningState? provisioningState = null, ManagedServerCreateMode? managedInstanceCreateMode = null, string fullyQualifiedDomainName = null, bool? isGeneralPurposeV2 = null, string administratorLogin = null, string administratorLoginPassword = null, ResourceIdentifier subnetId = null, string state = null, ManagedInstanceLicenseType? licenseType = null, HybridSecondaryUsage? hybridSecondaryUsage = null, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected = null, int? vCores = null, int? storageSizeInGB = null, int? storageIOps = null, int? storageThroughputMBps = null, string collation = null, string dnsZone = null, ResourceIdentifier managedDnsZonePartner = null, bool? isPublicDataEndpointEnabled = null, ResourceIdentifier sourceManagedInstanceId = null, DateTimeOffset? restorePointInTime = null, ManagedInstanceProxyOverride? proxyOverride = null, string timezoneId = null, ResourceIdentifier instancePoolId = null, ResourceIdentifier maintenanceConfigurationId = null, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections = null, string minimalTlsVersion = null, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, bool? isZoneRedundant = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Uri keyId = null, ManagedInstanceExternalAdministrator administrators = null, SqlServicePrincipal servicePrincipal = null, string virtualClusterId = null, ExternalGovernanceStatus? externalGovernanceStatus = null, PricingModel? pricingModel = null, DateTimeOffset? createOn = null, AuthMetadataLookupMode? authenticationMetadata = null, ManagedInstanceDatabaseFormat? databaseFormat = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<ManagedInstancePecProperty>();
@@ -5566,10 +5494,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="groupMembers"> Group members information for the server trust group. </param>
         /// <param name="trustScopes"> Trust scope of the server trust group. </param>
         /// <returns> A new <see cref="Sql.SqlServerTrustGroupData"/> instance for mocking. </returns>
-        public static SqlServerTrustGroupData SqlServerTrustGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<ServerTrustGroupServerInfo> groupMembers = null, IEnumerable<TrustScope> trustScopes = null)
+        public static SqlServerTrustGroupData SqlServerTrustGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<ServerTrustGroupServerInfo> groupMembers = null, IEnumerable<ServerTrustGroupPropertiesTrustScopesItem> trustScopes = null)
         {
             groupMembers ??= new List<ServerTrustGroupServerInfo>();
-            trustScopes ??= new List<TrustScope>();
+            trustScopes ??= new List<ServerTrustGroupPropertiesTrustScopesItem>();
 
             return new SqlServerTrustGroupData(
                 id,
@@ -5590,8 +5518,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="currentValue"> Current value of the metric. </param>
         /// <param name="limit"> Boundary value of the metric. </param>
         /// <param name="unit"> Unit of the metric. </param>
+        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="nextResetOn"> The next reset time for the metric (ISO8601 format). </param>
         /// <returns> A new <see cref="Models.SqlServerUsage"/> instance for mocking. </returns>
-        public static SqlServerUsage SqlServerUsage(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, double? currentValue = null, double? limit = null, string unit = null)
+        public static SqlServerUsage SqlServerUsage(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, double? currentValue = null, double? limit = null, string unit = null, string resourceName = null, DateTimeOffset? nextResetOn = null)
         {
             return new SqlServerUsage(
                 id,
@@ -5602,6 +5532,8 @@ namespace Azure.ResourceManager.Sql.Models
                 currentValue,
                 limit,
                 unit,
+                resourceName,
+                nextResetOn,
                 serializedAdditionalRawData: null);
         }
 
@@ -5829,7 +5761,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="state"> The state of Sql Agent. </param>
         /// <returns> A new <see cref="Sql.SqlAgentConfigurationData"/> instance for mocking. </returns>
-        public static SqlAgentConfigurationData SqlAgentConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SqlAgentState? state = null)
+        public static SqlAgentConfigurationData SqlAgentConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SqlAgentConfigurationPropertiesState? state = null)
         {
             return new SqlAgentConfigurationData(
                 id,

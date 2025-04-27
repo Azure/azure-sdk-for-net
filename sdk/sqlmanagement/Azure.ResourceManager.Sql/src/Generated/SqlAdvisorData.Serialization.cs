@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
             AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom = default;
             string recommendationsStatus = default;
             DateTimeOffset? lastChecked = default;
-            IReadOnlyList<RecommendedAction> recommendedActions = default;
+            IReadOnlyList<RecommendedActionData> recommendedActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -219,10 +219,10 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            List<RecommendedAction> array = new List<RecommendedAction>();
+                            List<RecommendedActionData> array = new List<RecommendedActionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecommendedAction.DeserializeRecommendedAction(item, options));
+                                array.Add(RecommendedActionData.DeserializeRecommendedActionData(item, options));
                             }
                             recommendedActions = array;
                             continue;
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Sql
                 autoExecuteStatusInheritedFrom,
                 recommendationsStatus,
                 lastChecked,
-                recommendedActions ?? new ChangeTrackingList<RecommendedAction>(),
+                recommendedActions ?? new ChangeTrackingList<RecommendedActionData>(),
                 serializedAdditionalRawData);
         }
 

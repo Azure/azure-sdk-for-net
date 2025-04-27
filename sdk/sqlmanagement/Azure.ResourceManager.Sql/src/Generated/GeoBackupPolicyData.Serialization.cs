@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.Sql
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (Optional.IsDefined(GeoBackupPolicyState))
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToSerialString());
+                writer.WriteStringValue(GeoBackupPolicyState.Value.ToSerialString());
             }
             if (options.Format != "W" && Optional.IsDefined(StorageType))
             {
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Sql
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeoBackupPolicyState), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    state: ");
@@ -289,10 +289,10 @@ namespace Azure.ResourceManager.Sql
             }
             else
             {
-                if (Optional.IsDefined(State))
+                if (Optional.IsDefined(GeoBackupPolicyState))
                 {
                     builder.Append("    state: ");
-                    builder.AppendLine($"'{State.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{GeoBackupPolicyState.Value.ToSerialString()}'");
                 }
             }
 

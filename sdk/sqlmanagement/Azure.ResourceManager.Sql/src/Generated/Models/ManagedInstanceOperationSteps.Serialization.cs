@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             string totalSteps = default;
             int? currentStep = default;
-            IReadOnlyList<UpsertManagedServerOperationStepWithEstimatesAndDuration> stepsList = default;
+            IReadOnlyList<UpsertManagedServerOperationStep> stepsList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    List<UpsertManagedServerOperationStepWithEstimatesAndDuration> array = new List<UpsertManagedServerOperationStepWithEstimatesAndDuration>();
+                    List<UpsertManagedServerOperationStep> array = new List<UpsertManagedServerOperationStep>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpsertManagedServerOperationStepWithEstimatesAndDuration.DeserializeUpsertManagedServerOperationStepWithEstimatesAndDuration(item, options));
+                        array.Add(UpsertManagedServerOperationStep.DeserializeUpsertManagedServerOperationStep(item, options));
                     }
                     stepsList = array;
                     continue;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedInstanceOperationSteps(totalSteps, currentStep, stepsList ?? new ChangeTrackingList<UpsertManagedServerOperationStepWithEstimatesAndDuration>(), serializedAdditionalRawData);
+            return new ManagedInstanceOperationSteps(totalSteps, currentStep, stepsList ?? new ChangeTrackingList<UpsertManagedServerOperationStep>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

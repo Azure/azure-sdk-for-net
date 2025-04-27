@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Backup policy location. </param>
         /// <param name="kind"> Kind of geo backup policy.  This is metadata used for the Azure portal experience. </param>
-        /// <param name="state"> The state of the geo backup policy. </param>
+        /// <param name="geoBackupPolicyState"> The state of the geo backup policy. </param>
         /// <param name="storageType"> The storage type of the geo backup policy. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GeoBackupPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, GeoBackupPolicyState? state, string storageType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal GeoBackupPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, GeoBackupPolicyState? geoBackupPolicyState, string storageType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Kind = kind;
-            State = state;
+            GeoBackupPolicyState = geoBackupPolicyState;
             StorageType = storageType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Sql
         public string Kind { get; }
         /// <summary> The state of the geo backup policy. </summary>
         [WirePath("properties.state")]
-        public GeoBackupPolicyState? State { get; set; }
+        public GeoBackupPolicyState? GeoBackupPolicyState { get; set; }
         /// <summary> The storage type of the geo backup policy. </summary>
         [WirePath("properties.storageType")]
         public string StorageType { get; }
