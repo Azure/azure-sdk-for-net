@@ -209,7 +209,7 @@
     <PackageReference Update="Microsoft.TypeSpec.Generator.ClientModel" Version="1.0.0-alpha.20250424.2" />
     <PackageReference Update="Microsoft.TypeSpec.Generator.Input" Version="1.0.0-alpha.20250424.2" />
     <PackageReference Update="Azure.Generator" Version="1.0.0-alpha.20250423.3" />
-    <PackageReference Update="System.ClientModel" Version="1.4.0-alpha.20250424.10" />
+    <PackageReference Update="System.ClientModel" Version="1.4.0-beta.6" />
   </ItemGroup>
 
   <!--
@@ -411,7 +411,7 @@
     <PackageReference Update="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.9.0" />
     <PackageReference Update="PublicApiGenerator" Version="10.0.1" />
-    <PackageReference Update="System.ClientModel" Version="1.4.0-alpha.20250424.10" />
+    <PackageReference Update="System.ClientModel" Version="1.4.0-beta.6" />
     <PackageReference Update="System.Diagnostics.TraceSource" Version="4.3.0" />
     <PackageReference Update="System.IO.Compression" Version="4.3.0" />
     <PackageReference Update="System.IO.Pipelines" Version="4.5.1" />
