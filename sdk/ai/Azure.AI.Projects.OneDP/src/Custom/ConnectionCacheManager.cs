@@ -37,9 +37,9 @@ namespace Azure.AI.Projects.OneDP
 
             var connectionType = GetConnectionTypeFromId(connectionId);
             var connection = _connectionCache.GetOrAdd(connectionType, type =>
-                _connectionsClient.GetDefaultConnection(type, true));
+                _connectionsClient.GetDefaultConnection(type));
 
-            if (connection.AuthType == "ApiKey")
+            if (connection.AuthType == AuthenticationType.ApiKey.ToSerialString())
             {
                 if (string.IsNullOrWhiteSpace(connection.Target))
                 {
@@ -56,7 +56,7 @@ namespace Azure.AI.Projects.OneDP
                 var newConnection = new ClientConnection(connectionId, connection.Target, apiKeyCredentials.ApiKey);
                 return _connections.GetOrAdd(connectionId, newConnection);
             }
-            else if (connection.AuthType == "AAD")
+            else if (connection.AuthType == AuthenticationType.EntraId.ToSerialString())
             {
                 if (string.IsNullOrWhiteSpace(connection.Target))
                 {
