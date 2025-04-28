@@ -20,12 +20,11 @@ namespace Azure.ResourceManager.HDInsight.Tests
     {
         protected ArmClient Client { get; private set; }
         protected const string DefaultResourceGroupPrefix = "HDInsightRG-";
-        protected AzureLocation DefaultLocation = AzureLocation.EastUS;
+        protected AzureLocation DefaultLocation = AzureLocation.EastAsia;
         protected const string Common_User = "sshuser5951";
         protected const string Common_Password = "Password!5951";
-        protected const string Common_VNet_Id = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/yukundemo5/providers/Microsoft.Network/virtualNetworks/yk01networkeastasia";
-        protected const string Common_SubNet = "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/yukundemo5/providers/Microsoft.Network/virtualNetworks/yk01networkeastasia/subnets/default";
-
+        protected const string Common_VNet_Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/yukundemo1/providers/Microsoft.Network/virtualNetworks/yk01networkeastasia";
+        protected const string Common_SubNet = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/yukundemo1/providers/Microsoft.Network/virtualNetworks/yk01networkeastasia/subnets/default";
         protected HDInsightManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {

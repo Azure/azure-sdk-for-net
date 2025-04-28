@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.HDInsight.Tests
         public async Task TestSetUp()
         {
             string rgName = Recording.GenerateAssetName(DefaultResourceGroupPrefix);
-            _storageAccountName = Recording.GenerateAssetName("azstorageforcluster");
-            _containerName = Recording.GenerateAssetName("container");
-            _clusterName = Recording.GenerateAssetName("hdi");
+            _storageAccountName = Recording.GenerateAssetName("ykstorageforcluster");
+            _containerName = Recording.GenerateAssetName("ykcontainer");
+            _clusterName = Recording.GenerateAssetName("hd");
             _resourceGroup = await CreateResourceGroup(rgName);
             if (Mode == RecordedTestMode.Playback)
             {
@@ -116,8 +116,8 @@ namespace Azure.ResourceManager.HDInsight.Tests
         [RecordedTest]
         public async Task UpdateManagedIdentity()
         {
-            ResourceIdentifier resourceIdentifier = new ResourceIdentifier("/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourcegroups/yuchen-devrp/providers/microsoft.managedidentity/userassignedidentities/hdiwasbmsi");
-            ResourceIdentifier resourceIdentifier2 = new ResourceIdentifier("/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourcegroups/yuchen-ps-test/providers/microsoft.managedidentity/userassignedidentities/hdi-msi");
+            ResourceIdentifier resourceIdentifier = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/yukundemo1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/yk-test-msi");
+            ResourceIdentifier resourceIdentifier2 = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/yukundemo1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/yk-test-msi2");
 
             var cluster = await CreateDefaultHadoopCluster(_resourceGroup, _clusterName, _storageAccountName, _containerName, _accessKey);
 
