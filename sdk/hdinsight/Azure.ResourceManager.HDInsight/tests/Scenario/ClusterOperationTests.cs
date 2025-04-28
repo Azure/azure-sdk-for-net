@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 Username = Common_User,
                 Password = Common_Password
             };
-            properties.ComputeRoles.Add(new HDInsightClusterRole() // Head Node
+            properties.ComputeRoles.Add(new HDInsightClusterRole()
             {
                 Name = "headnode",
                 TargetInstanceCount = 2,
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 OSLinuxProfile = commonLinuxProfile,
                 VirtualNetworkProfile = commonVnetProfile
             });
-            properties.ComputeRoles.Add(new HDInsightClusterRole() // Worker Node
+            properties.ComputeRoles.Add(new HDInsightClusterRole()
             {
                 Name = "workernode",
                 TargetInstanceCount = 3,
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 OSLinuxProfile = commonLinuxProfile,
                 VirtualNetworkProfile = commonVnetProfile
             });
-            properties.ComputeRoles.Add(new HDInsightClusterRole() // Zookeeper Node
+            properties.ComputeRoles.Add(new HDInsightClusterRole()
             {
                 Name = "zookeepernode",
                 TargetInstanceCount = 3,
