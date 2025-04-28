@@ -1,14 +1,15 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0 (Unreleased)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded api-version tag from 'package-2023-08' to 'package-2025-01-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/84eef1839d5db0edaf791fd0915b38a50b3b64b5/specification/recoveryservicessiterecovery/resource-manager/readme.md
+- Changes related to Azure to Azure shared disk cluster scenarios.
 
 ### Other Changes
+
+- Upgraded Azure.Core from 1.37.0 to 1.41.0
 
 ## 1.2.1 (2025-03-11)
 
