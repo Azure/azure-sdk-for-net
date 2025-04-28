@@ -178,7 +178,6 @@ directive:
   - from: cdn.json
     where: $.definitions
     transform: >
-      $.CacheExpirationActionParameters.properties.cacheDuration["x-ms-client-name"] = "CacheDurationWorkaround";
       $.SocketAddrMatchConditionParameters.properties.operator['x-ms-enum'].name = 'SocketAddressOperator';
       $.RequestSchemeMatchConditionParameters.properties.operator['x-ms-enum'] = {
           "name": "RequestSchemeOperator"
