@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="cacheBehavior"> Caching behavior for the requests. </param>
         /// <param name="cacheType"> The level at which the content needs to be cached. </param>
-        /// <param name="cacheDurationWorkaround"> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </param>
-        internal CacheExpirationActionParameters(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, CacheBehaviorSetting cacheBehavior, CdnCacheLevel cacheType, TimeSpan? cacheDurationWorkaround) : base(typeName, serializedAdditionalRawData)
+        /// <param name="cacheDuration"> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </param>
+        internal CacheExpirationActionParameters(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, CacheBehaviorSetting cacheBehavior, CdnCacheLevel cacheType, TimeSpan? cacheDuration) : base(typeName, serializedAdditionalRawData)
         {
             CacheBehavior = cacheBehavior;
             CacheType = cacheType;
-            CacheDurationWorkaround = cacheDurationWorkaround;
+            CacheDuration = cacheDuration;
             TypeName = typeName;
         }
 
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The level at which the content needs to be cached. </summary>
         public CdnCacheLevel CacheType { get; set; }
         /// <summary> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </summary>
-        public TimeSpan? CacheDurationWorkaround { get; set; }
+        public TimeSpan? CacheDuration { get; set; }
     }
 }

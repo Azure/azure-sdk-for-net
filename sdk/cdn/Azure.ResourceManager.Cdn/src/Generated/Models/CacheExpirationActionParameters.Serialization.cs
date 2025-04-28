@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(CacheBehavior.ToString());
             writer.WritePropertyName("cacheType"u8);
             writer.WriteStringValue(CacheType.ToString());
-            if (Optional.IsDefined(CacheDurationWorkaround))
+            if (Optional.IsDefined(CacheDuration))
             {
-                if (CacheDurationWorkaround != null)
+                if (CacheDuration != null)
                 {
                     writer.WritePropertyName("cacheDuration"u8);
-                    writer.WriteStringValue(CacheDurationWorkaround.Value, "c");
+                    writer.WriteStringValue(CacheDuration.Value, "c");
                 }
                 else
                 {
