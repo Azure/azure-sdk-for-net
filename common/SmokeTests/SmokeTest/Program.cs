@@ -205,7 +205,7 @@ void ProcessType(Type type)
             catch (PlatformNotSupportedException)
             {
                 // Expected; this is a known scenario where the type is not impactful to the
-                // Azure SDK experience and cane be safely ignored.
+                // Azure SDK experience and can be safely ignored.
             }
         }
     }
@@ -292,6 +292,7 @@ bool ShouldIgnoreInvocationException(TargetInvocationException targetInvocationE
     TypeLoadException => true,
     TypeInitializationException => true,
     ThreadStateException => true,
+    MissingMethodException => true,
 
     // Occurs when the assembly is locked; this is most likely a framework assembly.
     IOException ioEx when (ioEx.Message.ToLower().Contains("being used by another process.")) => true,
