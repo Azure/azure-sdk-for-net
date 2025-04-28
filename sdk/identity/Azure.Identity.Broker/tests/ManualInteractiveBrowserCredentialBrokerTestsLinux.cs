@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.Tracing;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Identity.Broker.Tests
@@ -20,11 +23,8 @@ namespace Azure.Identity.Broker.Tests
         [DllImport("libX11")]
         private static extern IntPtr XRootWindow(IntPtr display, int screen);
 
-        [DllImport("libX11")]
-        private static extern IntPtr XDefaultRootWindow(IntPtr display);
-
         [Test]
-        // [Ignore("This test is an integration test which can only be run with user interaction")]
+        [Ignore("This test is an integration test which can only be run with user interaction")]
         public async Task AuthenticateWithBrokerAsync()
         {
             IntPtr parentWindowHandle = XRootWindow(XOpenDisplay(null), 0);
@@ -38,16 +38,22 @@ namespace Azure.Identity.Broker.Tests
         }
 
         [Test]
-        // [Ignore("This test is an integration test which can only be run with user interaction")]
+        [Ignore("This test is an integration test which can only be run with user interaction")]
         public async Task AuthenticateWithBrokerWithDefaultBrokerAccountLinux()
         {
             IntPtr parentWindowHandle = IntPtr.Zero;
+
+            using var _listener = new TestEventListener();
+            _listener.EnableEvents(AzureIdentityEventSource.Singleton, EventLevel.Verbose); // Capture all event levels
 
             var cred = new InteractiveBrowserCredential(new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle)  { UseDefaultBrokerAccount = true });
 
             AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
 
             Assert.NotNull(token.Token);
+
+            var brokerEvents = _listener.EventData.Where(e => e.Payload.Any(p => p.ToString().Contains("source: Broker"))).ToList();
+            Assert.That(brokerEvents, Is.Not.Empty, "Expected to find log event with source: Broker");
         }
     }
 }
