@@ -759,6 +759,9 @@
 # ServiceLabel: %OpenAI
 # ServiceOwners:                                                   @jpalvarezl @trrwilson @ralph-msft
 
+# PRLabel: %Oracle
+/sdk/oracle/Azure.ResourceManager.*/                               @v-mkidane 
+
 # PRLabel: %Image Analysis
 /sdk/vision/Azure.AI.Vision.ImageAnalysis/                         @rhurey @dargilco
 
