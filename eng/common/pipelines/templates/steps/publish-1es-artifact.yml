@@ -34,5 +34,5 @@ steps:
       # Disable sbom generation by default for our public validation builds to avoid unnecessary work
       ${{ if eq(variables['System.TeamProject'], 'public') }}:
         sbomEnabled: false
-      ${{ else }}
+      ${{ else }}:
         sbomEnabled: ${{ parameters.SbomEnabled }}
