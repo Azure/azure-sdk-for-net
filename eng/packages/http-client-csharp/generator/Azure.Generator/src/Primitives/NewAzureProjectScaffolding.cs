@@ -37,9 +37,10 @@ namespace Azure.Generator.Primitives
             }
 
             int pathSegmentCount = GetPathSegmentCount();
+            const string corePathSegment = "Shared/Core";
             if (AzureClientGenerator.Instance.InputLibrary.InputNamespace.Auth?.ApiKey is not null)
             {
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("AzureKeyCredentialPolicy.cs", pathSegmentCount), "Shared/Core"));
+                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("AzureKeyCredentialPolicy.cs", pathSegmentCount), corePathSegment));
             }
 
             bool hasOperation = false;
@@ -51,7 +52,6 @@ namespace Azure.Generator.Primitives
 
             if (hasOperation)
             {
-                const string corePathSegment = "Shared/Core";
                 builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("RawRequestUriBuilder.cs", pathSegmentCount), corePathSegment));
                 builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("TypeFormatters.cs", pathSegmentCount), corePathSegment));
                 builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("RequestHeaderExtensions.cs", pathSegmentCount), corePathSegment));
