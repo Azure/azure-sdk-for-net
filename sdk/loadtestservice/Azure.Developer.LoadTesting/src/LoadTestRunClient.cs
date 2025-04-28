@@ -375,7 +375,6 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Generated/Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetricsAsync(String,String,String,String,RequestContent,String,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetMetricsAsync(string testRunId, string metricName, string metricNamespace, string timespan, RequestContent content, string aggregation, string interval, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
@@ -406,7 +405,6 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Generated/Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetMetrics(String,String,String,String,RequestContent,String,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetMetrics(string testRunId, string metricName, string metricNamespace, string timespan, RequestContent content, string aggregation, string interval, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));

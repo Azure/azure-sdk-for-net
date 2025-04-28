@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.8 (Unreleased)
+## 1.0.0-beta.9 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,14 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.8 (2025-04-23)
+
+### Sample Updates
+* New sample added for connected agent tool.
+
+### Bugs Fixed
+* Fix for filtering of messages by run ID [see GitHub issue issue 49513](https://github.com/Azure/azure-sdk-for-net/issues/49513).
 
 ## 1.0.0-beta.7 (2025-04-18)
 

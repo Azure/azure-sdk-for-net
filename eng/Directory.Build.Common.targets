@@ -100,7 +100,6 @@
 
   <!-- Remove packages built into the .NET 6+ runtime -->
   <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
-    <PackageReference Remove="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Remove="System.Buffers" />
     <PackageReference Remove="System.Diagnostics.DiagnosticSource" />
     <PackageReference Remove="System.Net.Http" />

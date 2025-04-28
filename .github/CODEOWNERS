@@ -64,10 +64,10 @@
 # AzureSdkOwners:                                                  @m-redding
 
 # PRLabel: %Azure.Identity
-/sdk/identity/                                                     @schaabs @christothes @Azure/azure-sdk-write-identity
+/sdk/identity/                                                     @schaabs @christothes @JonathanCrd @Azure/azure-sdk-write-identity
 
 # ServiceLabel: %Azure.Identity
-# AzureSdkOwners:                                                  @christothes
+# AzureSdkOwners:                                                  @christothes @JonathanCrd
 
 # PRLabel: %Extensions
 /sdk/extensions/                                                   @jsquire
@@ -904,10 +904,10 @@
 # ServiceOwners:                                                   @yanjungao718
 
 # PRLabel: %Tables
-/sdk/tables/                                                       @christothes @JonathanCrd
+/sdk/tables/                                                       @christothes @jorgerangel-msft
 
 # ServiceLabel: %Tables
-# AzureSdkOwners:                                                  @christothes @JonathanCrd
+# AzureSdkOwners:                                                  @christothes @jorgerangel-msft
 # ServiceOwners:                                                   @sakash279 @sivethe @ThomasWeiss @PaulCheng
 
 # PRLabel: %TimeSeriesInsights
@@ -959,6 +959,12 @@
 # ServiceLabel: %ARM %Mgmt
 # ServiceOwners:                                                   @Azure/arm-sdk-owners
 
+# PRLabel: %Arize AI
+/sdk/arizeaiobservabilityeval/Azure.ResourceManager.*/             @aggarwalsw
+
+# ServiceLabel: %Arize AI %Mgmt
+# ServiceOwners:                                                   @aggarwalsw
+
 # PRLabel: %Astronomer
 /sdk/astronomer/Azure.ResourceManager.Astro/                       @banggaurav
 
@@ -992,6 +998,12 @@
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
 
+# PRLabel: %Durable Task Scheduler %Mgmt
+/sdk/durabletask/Azure.ResourceManager.*/                          @berndverst @kaibocai @torosent @RyanLettieri @philliphoff @cgillum
+
+# ServiceLabel: %Durable Task Scheduler  %Mgmt
+# ServiceOwners:                                                   @berndverst @kaibocai @torosent @RyanLettieri @philliphoff @cgillum
+
 # PRLabel: %Elastic
 /sdk/elastic/Azure.ResourceManager.Elastic/                        @ArthurMa1978
 
@@ -1009,6 +1021,12 @@
 
 # ServiceLabel: %HybridConnectivity %Mgmt
 # ServiceOwners:                                                   @alexmahonic @PriyankaHariharan @apmehrotra
+
+# PRLabel: %LambdaTest HyperExecute
+/sdk/lambdatesthyperexecute/Azure.ResourceManager.*/               @aggarwalsw
+
+# ServiceLabel: %LambdaTest HyperExecute %Mgmt
+# ServiceOwners:                                                   @aggarwalsw
 
 # PRLabel: %Large Instance
 /sdk/azurelargeinstance/Azure.ResourceManager.*/                   @8Gitbrix @ArcturusZhang @ArthurMa1978
@@ -1051,6 +1069,12 @@
 
 # ServiceLabel: %Operator Nexus - Network Cloud %Mgmt
 # ServiceOwners:                                                   @Azure/azure-sdk-write-networkcloud
+
+# PRLabel: %Pinecone
+/sdk/pineconevectordb/Azure.ResourceManager.*/                     @aggarwalsw
+
+# ServiceLabel: %Pinecone %Mgmt
+# ServiceOwners:                                                   @aggarwalsw
 
 # PRLabel: %Quota
 /sdk/quota/Azure.ResourceManager.*/                                @tejasm-microsoft
@@ -1096,6 +1120,12 @@
 
 # ServiceLabel: %%Migration Assessment %Mgmt
 # ServiceOwners:                                                   @srilipta-swain
+
+# PRLabel: %Weights & Biases
+/sdk/weightsandbiases/Azure.ResourceManager.*/                     @aggarwalsw
+
+# ServiceLabel: %Weights & Biases %Mgmt
+# ServiceOwners:                                                   @aggarwalsw
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp

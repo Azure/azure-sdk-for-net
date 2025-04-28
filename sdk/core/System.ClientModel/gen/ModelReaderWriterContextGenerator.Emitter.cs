@@ -76,7 +76,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
                 indent++;
                 foreach (var referencedContext in contextGenerationSpec.ReferencedContexts)
                 {
-                    builder.AppendLine(indent, $"{{ typeof({referencedContext.FullyQualifiedName}), new {referencedContext.FullyQualifiedName}() }},");
+                    builder.AppendLine(indent, $"{{ typeof({referencedContext.FullyQualifiedName}), {referencedContext.FullyQualifiedName}.Default }},");
                 }
                 indent--;
                 builder.AppendLine(indent, "};");
@@ -302,7 +302,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
 
             builder.AppendLine(indent, "protected override object ToCollection(object builder)");
             indent++;
-            builder.AppendLine(indent, $"=> new {modelInfo.Type.Name}([.. (List<{elementType.Name}>)builder]);");
+            builder.AppendLine(indent, $"=> new {modelInfo.Type.Name}(((List<{elementType.Name}>)builder).ToArray());");
             indent--;
             builder.AppendLine();
 
