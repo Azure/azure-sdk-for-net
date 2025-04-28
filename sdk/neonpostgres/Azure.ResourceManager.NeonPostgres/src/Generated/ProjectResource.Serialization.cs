@@ -11,16 +11,16 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NeonPostgres
 {
-    public partial class NeonProjectResource : IJsonModel<NeonProjectData>
+    public partial class ProjectResource : IJsonModel<ProjectData>
     {
-        void IJsonModel<NeonProjectData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NeonProjectData>)Data).Write(writer, options);
+        void IJsonModel<ProjectData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProjectData>)Data).Write(writer, options);
 
-        NeonProjectData IJsonModel<NeonProjectData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NeonProjectData>)Data).Create(ref reader, options);
+        ProjectData IJsonModel<ProjectData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProjectData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NeonProjectData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ProjectData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NeonProjectData IPersistableModel<NeonProjectData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NeonProjectData>(data, options);
+        ProjectData IPersistableModel<ProjectData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProjectData>(data, options);
 
-        string IPersistableModel<NeonProjectData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NeonProjectData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ProjectData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProjectData>)Data).GetFormatFromOptions(options);
     }
 }

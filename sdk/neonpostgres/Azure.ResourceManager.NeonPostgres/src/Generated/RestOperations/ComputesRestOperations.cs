@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="computeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="computeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NeonComputeData>> GetAsync(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string computeName, CancellationToken cancellationToken = default)
+        public async Task<Response<ComputeData>> GetAsync(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string computeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -107,13 +107,13 @@ namespace Azure.ResourceManager.NeonPostgres
             {
                 case 200:
                     {
-                        NeonComputeData value = default;
+                        ComputeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = NeonComputeData.DeserializeNeonComputeData(document.RootElement);
+                        value = ComputeData.DeserializeComputeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((NeonComputeData)null, message.Response);
+                    return Response.FromValue((ComputeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="computeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="computeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NeonComputeData> Get(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string computeName, CancellationToken cancellationToken = default)
+        public Response<ComputeData> Get(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string computeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -144,19 +144,19 @@ namespace Azure.ResourceManager.NeonPostgres
             {
                 case 200:
                     {
-                        NeonComputeData value = default;
+                        ComputeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = NeonComputeData.DeserializeNeonComputeData(document.RootElement);
+                        value = ComputeData.DeserializeComputeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((NeonComputeData)null, message.Response);
+                    return Response.FromValue((ComputeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string computeName, NeonComputeData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string computeName, ComputeData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.NeonPostgres
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string computeName, NeonComputeData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string computeName, ComputeData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/>, <paramref name="computeName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="computeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string computeName, NeonComputeData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string computeName, ComputeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/>, <paramref name="computeName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="computeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string computeName, NeonComputeData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string computeName, ComputeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.NeonPostgres
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string computeName, NeonComputeData data)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string computeName, ComputeData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.NeonPostgres
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string computeName, NeonComputeData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string computeName, ComputeData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/>, <paramref name="computeName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="computeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string computeName, NeonComputeData data, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string computeName, ComputeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/>, <paramref name="computeName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="projectName"/>, <paramref name="branchName"/> or <paramref name="computeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string computeName, NeonComputeData data, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string computeName, ComputeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

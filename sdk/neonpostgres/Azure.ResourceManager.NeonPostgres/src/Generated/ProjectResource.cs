@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.NeonPostgres
 {
     /// <summary>
     /// A Class representing a Project along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NeonProjectResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetNeonProjectResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProjectResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetProjectResource method.
     /// Otherwise you can get one from its parent resource <see cref="NeonOrganizationResource"/> using the GetProject method.
     /// </summary>
-    public partial class NeonProjectResource : ArmResource
+    public partial class ProjectResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="NeonProjectResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ProjectResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="organizationName"> The organizationName. </param>
@@ -36,29 +36,29 @@ namespace Azure.ResourceManager.NeonPostgres
 
         private readonly ClientDiagnostics _projectClientDiagnostics;
         private readonly ProjectsRestOperations _projectRestClient;
-        private readonly NeonProjectData _data;
+        private readonly ProjectData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Neon.Postgres/organizations/projects";
 
-        /// <summary> Initializes a new instance of the <see cref="NeonProjectResource"/> class for mocking. </summary>
-        protected NeonProjectResource()
+        /// <summary> Initializes a new instance of the <see cref="ProjectResource"/> class for mocking. </summary>
+        protected ProjectResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NeonProjectResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProjectResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NeonProjectResource(ArmClient client, NeonProjectData data) : this(client, data.Id)
+        internal ProjectResource(ArmClient client, ProjectData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NeonProjectResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProjectResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NeonProjectResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ProjectResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _projectClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string projectApiVersion);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NeonPostgres
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual NeonProjectData Data
+        public virtual ProjectData Data
         {
             get
             {
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.NeonPostgres
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of NeonBranchResources in the Project. </summary>
-        /// <returns> An object representing collection of NeonBranchResources and their operations over a NeonBranchResource. </returns>
-        public virtual NeonBranchCollection GetBranches()
+        /// <summary> Gets a collection of BranchResources in the Project. </summary>
+        /// <returns> An object representing collection of BranchResources and their operations over a BranchResource. </returns>
+        public virtual BranchCollection GetBranches()
         {
-            return GetCachedClient(client => new NeonBranchCollection(client, Id));
+            return GetCachedClient(client => new BranchCollection(client, Id));
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NeonBranchResource"/></description>
+        /// <description><see cref="BranchResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <exception cref="ArgumentNullException"> <paramref name="branchName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="branchName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NeonBranchResource>> GetBranchAsync(string branchName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BranchResource>> GetBranchAsync(string branchName, CancellationToken cancellationToken = default)
         {
             return await GetBranches().GetAsync(branchName, cancellationToken).ConfigureAwait(false);
         }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NeonBranchResource"/></description>
+        /// <description><see cref="BranchResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <exception cref="ArgumentNullException"> <paramref name="branchName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="branchName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NeonBranchResource> GetBranch(string branchName, CancellationToken cancellationToken = default)
+        public virtual Response<BranchResource> GetBranch(string branchName, CancellationToken cancellationToken = default)
         {
             return GetBranches().Get(branchName, cancellationToken);
         }
@@ -175,21 +175,21 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NeonProjectResource"/></description>
+        /// <description><see cref="ProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NeonProjectResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _projectClientDiagnostics.CreateScope("NeonProjectResource.Get");
+            using var scope = _projectClientDiagnostics.CreateScope("ProjectResource.Get");
             scope.Start();
             try
             {
                 var response = await _projectRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NeonProjectResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProjectResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,21 +215,21 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NeonProjectResource"/></description>
+        /// <description><see cref="ProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NeonProjectResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ProjectResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _projectClientDiagnostics.CreateScope("NeonProjectResource.Get");
+            using var scope = _projectClientDiagnostics.CreateScope("ProjectResource.Get");
             scope.Start();
             try
             {
                 var response = _projectRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NeonProjectResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProjectResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NeonProjectResource"/></description>
+        /// <description><see cref="ProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _projectClientDiagnostics.CreateScope("NeonProjectResource.Delete");
+            using var scope = _projectClientDiagnostics.CreateScope("ProjectResource.Delete");
             scope.Start();
             try
             {
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NeonProjectResource"/></description>
+        /// <description><see cref="ProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _projectClientDiagnostics.CreateScope("NeonProjectResource.Delete");
+            using var scope = _projectClientDiagnostics.CreateScope("ProjectResource.Delete");
             scope.Start();
             try
             {
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NeonProjectResource"/></description>
+        /// <description><see cref="ProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -351,16 +351,16 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<NeonProjectResource>> UpdateAsync(WaitUntil waitUntil, NeonProjectData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ProjectResource>> UpdateAsync(WaitUntil waitUntil, ProjectData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _projectClientDiagnostics.CreateScope("NeonProjectResource.Update");
+            using var scope = _projectClientDiagnostics.CreateScope("ProjectResource.Update");
             scope.Start();
             try
             {
                 var response = await _projectRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NeonPostgresArmOperation<NeonProjectResource>(new ProjectOperationSource(Client), _projectClientDiagnostics, Pipeline, _projectRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new NeonPostgresArmOperation<ProjectResource>(new ProjectOperationSource(Client), _projectClientDiagnostics, Pipeline, _projectRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NeonProjectResource"/></description>
+        /// <description><see cref="ProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -397,16 +397,16 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<NeonProjectResource> Update(WaitUntil waitUntil, NeonProjectData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ProjectResource> Update(WaitUntil waitUntil, ProjectData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _projectClientDiagnostics.CreateScope("NeonProjectResource.Update");
+            using var scope = _projectClientDiagnostics.CreateScope("ProjectResource.Update");
             scope.Start();
             try
             {
                 var response = _projectRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new NeonPostgresArmOperation<NeonProjectResource>(new ProjectOperationSource(Client), _projectClientDiagnostics, Pipeline, _projectRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new NeonPostgresArmOperation<ProjectResource>(new ProjectOperationSource(Client), _projectClientDiagnostics, Pipeline, _projectRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NeonProjectResource"/></description>
+        /// <description><see cref="ProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.NeonPostgres
         {
             Argument.AssertNotNull(connectionUriParameters, nameof(connectionUriParameters));
 
-            using var scope = _projectClientDiagnostics.CreateScope("NeonProjectResource.GetConnectionUri");
+            using var scope = _projectClientDiagnostics.CreateScope("ProjectResource.GetConnectionUri");
             scope.Start();
             try
             {
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NeonProjectResource"/></description>
+        /// <description><see cref="ProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.NeonPostgres
         {
             Argument.AssertNotNull(connectionUriParameters, nameof(connectionUriParameters));
 
-            using var scope = _projectClientDiagnostics.CreateScope("NeonProjectResource.GetConnectionUri");
+            using var scope = _projectClientDiagnostics.CreateScope("ProjectResource.GetConnectionUri");
             scope.Start();
             try
             {

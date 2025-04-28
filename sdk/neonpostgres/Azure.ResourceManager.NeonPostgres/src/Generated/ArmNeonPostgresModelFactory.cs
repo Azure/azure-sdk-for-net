@@ -225,16 +225,16 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             return new PgVersionsResult(versions?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NeonPostgres.NeonProjectData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NeonPostgres.ProjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="NeonPostgres.NeonProjectData"/> instance for mocking. </returns>
-        public static NeonProjectData NeonProjectData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NeonProjectProperties properties = null)
+        /// <returns> A new <see cref="NeonPostgres.ProjectData"/> instance for mocking. </returns>
+        public static ProjectData ProjectData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NeonProjectProperties properties = null)
         {
-            return new NeonProjectData(
+            return new ProjectData(
                 id,
                 name,
                 resourceType,
@@ -265,16 +265,16 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NeonPostgres.NeonBranchData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NeonPostgres.BranchData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="NeonPostgres.NeonBranchData"/> instance for mocking. </returns>
-        public static NeonBranchData NeonBranchData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NeonBranchProperties properties = null)
+        /// <returns> A new <see cref="NeonPostgres.BranchData"/> instance for mocking. </returns>
+        public static BranchData BranchData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NeonBranchProperties properties = null)
         {
-            return new NeonBranchData(
+            return new BranchData(
                 id,
                 name,
                 resourceType,
@@ -283,16 +283,16 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NeonPostgres.NeonComputeData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NeonPostgres.ComputeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="NeonPostgres.NeonComputeData"/> instance for mocking. </returns>
-        public static NeonComputeData NeonComputeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NeonComputeProperties properties = null)
+        /// <returns> A new <see cref="NeonPostgres.ComputeData"/> instance for mocking. </returns>
+        public static ComputeData ComputeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NeonComputeProperties properties = null)
         {
-            return new NeonComputeData(
+            return new ComputeData(
                 id,
                 name,
                 resourceType,
@@ -365,16 +365,16 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NeonPostgres.NeonEndpointData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NeonPostgres.EndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="NeonPostgres.NeonEndpointData"/> instance for mocking. </returns>
-        public static NeonEndpointData NeonEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NeonEndpointProperties properties = null)
+        /// <returns> A new <see cref="NeonPostgres.EndpointData"/> instance for mocking. </returns>
+        public static EndpointData EndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NeonEndpointProperties properties = null)
         {
-            return new NeonEndpointData(
+            return new EndpointData(
                 id,
                 name,
                 resourceType,

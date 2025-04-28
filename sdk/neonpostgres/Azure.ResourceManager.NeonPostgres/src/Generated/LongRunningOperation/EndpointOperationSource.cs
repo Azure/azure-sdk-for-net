@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NeonPostgres
 {
-    internal class EndpointOperationSource : IOperationSource<NeonEndpointResource>
+    internal class EndpointOperationSource : IOperationSource<EndpointResource>
     {
         private readonly ArmClient _client;
 
@@ -21,16 +21,16 @@ namespace Azure.ResourceManager.NeonPostgres
             _client = client;
         }
 
-        NeonEndpointResource IOperationSource<NeonEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        EndpointResource IOperationSource<EndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NeonEndpointData>(response.Content);
-            return new NeonEndpointResource(_client, data);
+            var data = ModelReaderWriter.Read<EndpointData>(response.Content);
+            return new EndpointResource(_client, data);
         }
 
-        async ValueTask<NeonEndpointResource> IOperationSource<NeonEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<EndpointResource> IOperationSource<EndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NeonEndpointData>(response.Content);
-            return await Task.FromResult(new NeonEndpointResource(_client, data)).ConfigureAwait(false);
+            var data = ModelReaderWriter.Read<EndpointData>(response.Content);
+            return await Task.FromResult(new EndpointResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

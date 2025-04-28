@@ -47,39 +47,39 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NeonProjectResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NeonProjectResource.CreateResourceIdentifier" /> to create a <see cref="NeonProjectResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ProjectResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProjectResource.CreateResourceIdentifier" /> to create a <see cref="ProjectResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NeonProjectResource"/> object. </returns>
-        public virtual NeonProjectResource GetNeonProjectResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ProjectResource"/> object. </returns>
+        public virtual ProjectResource GetProjectResource(ResourceIdentifier id)
         {
-            NeonProjectResource.ValidateResourceId(id);
-            return new NeonProjectResource(Client, id);
+            ProjectResource.ValidateResourceId(id);
+            return new ProjectResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NeonBranchResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NeonBranchResource.CreateResourceIdentifier" /> to create a <see cref="NeonBranchResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="BranchResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BranchResource.CreateResourceIdentifier" /> to create a <see cref="BranchResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NeonBranchResource"/> object. </returns>
-        public virtual NeonBranchResource GetNeonBranchResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BranchResource"/> object. </returns>
+        public virtual BranchResource GetBranchResource(ResourceIdentifier id)
         {
-            NeonBranchResource.ValidateResourceId(id);
-            return new NeonBranchResource(Client, id);
+            BranchResource.ValidateResourceId(id);
+            return new BranchResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NeonComputeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NeonComputeResource.CreateResourceIdentifier" /> to create a <see cref="NeonComputeResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ComputeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ComputeResource.CreateResourceIdentifier" /> to create a <see cref="ComputeResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NeonComputeResource"/> object. </returns>
-        public virtual NeonComputeResource GetNeonComputeResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ComputeResource"/> object. </returns>
+        public virtual ComputeResource GetComputeResource(ResourceIdentifier id)
         {
-            NeonComputeResource.ValidateResourceId(id);
-            return new NeonComputeResource(Client, id);
+            ComputeResource.ValidateResourceId(id);
+            return new ComputeResource(Client, id);
         }
 
         /// <summary>
@@ -107,15 +107,15 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="NeonEndpointResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NeonEndpointResource.CreateResourceIdentifier" /> to create an <see cref="NeonEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="EndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EndpointResource.CreateResourceIdentifier" /> to create an <see cref="EndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NeonEndpointResource"/> object. </returns>
-        public virtual NeonEndpointResource GetNeonEndpointResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EndpointResource"/> object. </returns>
+        public virtual EndpointResource GetEndpointResource(ResourceIdentifier id)
         {
-            NeonEndpointResource.ValidateResourceId(id);
-            return new NeonEndpointResource(Client, id);
+            EndpointResource.ValidateResourceId(id);
+            return new EndpointResource(Client, id);
         }
     }
 }

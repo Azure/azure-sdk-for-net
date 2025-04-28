@@ -11,16 +11,16 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NeonPostgres
 {
-    public partial class NeonComputeResource : IJsonModel<NeonComputeData>
+    public partial class ComputeResource : IJsonModel<ComputeData>
     {
-        void IJsonModel<NeonComputeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NeonComputeData>)Data).Write(writer, options);
+        void IJsonModel<ComputeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ComputeData>)Data).Write(writer, options);
 
-        NeonComputeData IJsonModel<NeonComputeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NeonComputeData>)Data).Create(ref reader, options);
+        ComputeData IJsonModel<ComputeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ComputeData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NeonComputeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ComputeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NeonComputeData IPersistableModel<NeonComputeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NeonComputeData>(data, options);
+        ComputeData IPersistableModel<ComputeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ComputeData>(data, options);
 
-        string IPersistableModel<NeonComputeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NeonComputeData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ComputeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ComputeData>)Data).GetFormatFromOptions(options);
     }
 }

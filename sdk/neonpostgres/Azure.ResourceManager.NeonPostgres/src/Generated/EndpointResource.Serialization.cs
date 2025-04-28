@@ -11,16 +11,16 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NeonPostgres
 {
-    public partial class NeonEndpointResource : IJsonModel<NeonEndpointData>
+    public partial class EndpointResource : IJsonModel<EndpointData>
     {
-        void IJsonModel<NeonEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NeonEndpointData>)Data).Write(writer, options);
+        void IJsonModel<EndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EndpointData>)Data).Write(writer, options);
 
-        NeonEndpointData IJsonModel<NeonEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NeonEndpointData>)Data).Create(ref reader, options);
+        EndpointData IJsonModel<EndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EndpointData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NeonEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<EndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NeonEndpointData IPersistableModel<NeonEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NeonEndpointData>(data, options);
+        EndpointData IPersistableModel<EndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EndpointData>(data, options);
 
-        string IPersistableModel<NeonEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NeonEndpointData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<EndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EndpointData>)Data).GetFormatFromOptions(options);
     }
 }

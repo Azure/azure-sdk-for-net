@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NeonPostgres
     /// A class representing the Compute data model.
     /// The Compute resource type.
     /// </summary>
-    public partial class NeonComputeData : ResourceData
+    public partial class ComputeData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NeonComputeData"/>. </summary>
-        public NeonComputeData()
+        /// <summary> Initializes a new instance of <see cref="ComputeData"/>. </summary>
+        public ComputeData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NeonComputeData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonComputeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NeonComputeProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ComputeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NeonComputeProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;

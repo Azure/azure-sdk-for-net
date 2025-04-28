@@ -18,27 +18,27 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.NeonPostgres
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NeonEndpointResource"/> and their operations.
-    /// Each <see cref="NeonEndpointResource"/> in the collection will belong to the same instance of <see cref="NeonBranchResource"/>.
-    /// To get an <see cref="NeonEndpointCollection"/> instance call the GetEndpoints method from an instance of <see cref="NeonBranchResource"/>.
+    /// A class representing a collection of <see cref="EndpointResource"/> and their operations.
+    /// Each <see cref="EndpointResource"/> in the collection will belong to the same instance of <see cref="BranchResource"/>.
+    /// To get an <see cref="EndpointCollection"/> instance call the GetEndpoints method from an instance of <see cref="BranchResource"/>.
     /// </summary>
-    public partial class NeonEndpointCollection : ArmCollection, IEnumerable<NeonEndpointResource>, IAsyncEnumerable<NeonEndpointResource>
+    public partial class EndpointCollection : ArmCollection, IEnumerable<EndpointResource>, IAsyncEnumerable<EndpointResource>
     {
         private readonly ClientDiagnostics _endpointClientDiagnostics;
         private readonly EndpointsRestOperations _endpointRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NeonEndpointCollection"/> class for mocking. </summary>
-        protected NeonEndpointCollection()
+        /// <summary> Initializes a new instance of the <see cref="EndpointCollection"/> class for mocking. </summary>
+        protected EndpointCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NeonEndpointCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EndpointCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal NeonEndpointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal EndpointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _endpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", NeonEndpointResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(NeonEndpointResource.ResourceType, out string endpointApiVersion);
+            _endpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", EndpointResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(EndpointResource.ResourceType, out string endpointApiVersion);
             _endpointRestClient = new EndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, endpointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.NeonPostgres
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != NeonBranchResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NeonBranchResource.ResourceType), nameof(id));
+            if (id.ResourceType != BranchResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, BranchResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NeonEndpointResource"/></description>
+        /// <description><see cref="EndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<NeonEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string endpointName, NeonEndpointData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string endpointName, EndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _endpointClientDiagnostics.CreateScope("NeonEndpointCollection.CreateOrUpdate");
+            using var scope = _endpointClientDiagnostics.CreateScope("EndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _endpointRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, endpointName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NeonPostgresArmOperation<NeonEndpointResource>(new EndpointOperationSource(Client), _endpointClientDiagnostics, Pipeline, _endpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NeonPostgresArmOperation<EndpointResource>(new EndpointOperationSource(Client), _endpointClientDiagnostics, Pipeline, _endpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NeonEndpointResource"/></description>
+        /// <description><see cref="EndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<NeonEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string endpointName, NeonEndpointData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EndpointResource> CreateOrUpdate(WaitUntil waitUntil, string endpointName, EndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _endpointClientDiagnostics.CreateScope("NeonEndpointCollection.CreateOrUpdate");
+            using var scope = _endpointClientDiagnostics.CreateScope("EndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _endpointRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, endpointName, data, cancellationToken);
-                var operation = new NeonPostgresArmOperation<NeonEndpointResource>(new EndpointOperationSource(Client), _endpointClientDiagnostics, Pipeline, _endpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NeonPostgresArmOperation<EndpointResource>(new EndpointOperationSource(Client), _endpointClientDiagnostics, Pipeline, _endpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NeonEndpointResource"/></description>
+        /// <description><see cref="EndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,18 +174,18 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        public virtual async Task<Response<NeonEndpointResource>> GetAsync(string endpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EndpointResource>> GetAsync(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using var scope = _endpointClientDiagnostics.CreateScope("NeonEndpointCollection.Get");
+            using var scope = _endpointClientDiagnostics.CreateScope("EndpointCollection.Get");
             scope.Start();
             try
             {
                 var response = await _endpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, endpointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NeonEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NeonEndpointResource"/></description>
+        /// <description><see cref="EndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,18 +219,18 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        public virtual Response<NeonEndpointResource> Get(string endpointName, CancellationToken cancellationToken = default)
+        public virtual Response<EndpointResource> Get(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using var scope = _endpointClientDiagnostics.CreateScope("NeonEndpointCollection.Get");
+            using var scope = _endpointClientDiagnostics.CreateScope("EndpointCollection.Get");
             scope.Start();
             try
             {
                 var response = _endpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, endpointName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NeonEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,17 +256,17 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NeonEndpointResource"/></description>
+        /// <description><see cref="EndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NeonEndpointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NeonEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _endpointRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _endpointRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NeonEndpointResource(Client, NeonEndpointData.DeserializeNeonEndpointData(e)), _endpointClientDiagnostics, Pipeline, "NeonEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EndpointResource(Client, EndpointData.DeserializeEndpointData(e)), _endpointClientDiagnostics, Pipeline, "EndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -286,17 +286,17 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NeonEndpointResource"/></description>
+        /// <description><see cref="EndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NeonEndpointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NeonEndpointResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _endpointRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _endpointRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NeonEndpointResource(Client, NeonEndpointData.DeserializeNeonEndpointData(e)), _endpointClientDiagnostics, Pipeline, "NeonEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EndpointResource(Client, EndpointData.DeserializeEndpointData(e)), _endpointClientDiagnostics, Pipeline, "EndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NeonEndpointResource"/></description>
+        /// <description><see cref="EndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.NeonPostgres
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using var scope = _endpointClientDiagnostics.CreateScope("NeonEndpointCollection.Exists");
+            using var scope = _endpointClientDiagnostics.CreateScope("EndpointCollection.Exists");
             scope.Start();
             try
             {
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NeonEndpointResource"/></description>
+        /// <description><see cref="EndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.NeonPostgres
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using var scope = _endpointClientDiagnostics.CreateScope("NeonEndpointCollection.Exists");
+            using var scope = _endpointClientDiagnostics.CreateScope("EndpointCollection.Exists");
             scope.Start();
             try
             {
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NeonEndpointResource"/></description>
+        /// <description><see cref="EndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -410,18 +410,18 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        public virtual async Task<NullableResponse<NeonEndpointResource>> GetIfExistsAsync(string endpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<EndpointResource>> GetIfExistsAsync(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using var scope = _endpointClientDiagnostics.CreateScope("NeonEndpointCollection.GetIfExists");
+            using var scope = _endpointClientDiagnostics.CreateScope("EndpointCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = await _endpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, endpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<NeonEndpointResource>(response.GetRawResponse());
-                return Response.FromValue(new NeonEndpointResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<EndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NeonEndpointResource"/></description>
+        /// <description><see cref="EndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -455,18 +455,18 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        public virtual NullableResponse<NeonEndpointResource> GetIfExists(string endpointName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<EndpointResource> GetIfExists(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            using var scope = _endpointClientDiagnostics.CreateScope("NeonEndpointCollection.GetIfExists");
+            using var scope = _endpointClientDiagnostics.CreateScope("EndpointCollection.GetIfExists");
             scope.Start();
             try
             {
                 var response = _endpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, endpointName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<NeonEndpointResource>(response.GetRawResponse());
-                return Response.FromValue(new NeonEndpointResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<EndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.NeonPostgres
             }
         }
 
-        IEnumerator<NeonEndpointResource> IEnumerable<NeonEndpointResource>.GetEnumerator()
+        IEnumerator<EndpointResource> IEnumerable<EndpointResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.NeonPostgres
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<NeonEndpointResource> IAsyncEnumerable<NeonEndpointResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<EndpointResource> IAsyncEnumerable<EndpointResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
