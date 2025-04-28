@@ -4,10 +4,16 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <IsTestProject>true</IsTestProject>
+    <!-- Don't warn for missing XML comments for test project. -->
+    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
+		<PackageReference Include="Azure.Core" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.TypeSpec.Generator.Input" />
 	</ItemGroup>
 
 </Project>

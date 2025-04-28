@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2025-04-09)
+
+### Features Added
+
+- Stable release for api-version `2024-09-01`. Detail available at https://github.com/Azure/azure-rest-api-specs/tree/735b8f03b5e773b751f93960137e397e2282ca92/specification/recoveryservicesdatareplication/DataReplication.Management/routes.tsp.
 
 ## 1.0.0-beta.3 (2025-03-11)
 

@@ -1,29 +1,27 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace System.ClientModel.SourceGeneration;
 
 internal static class StringBuilderExtensions
 {
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void AppendLine(this StringBuilder builder, int indent, string value)
     {
-        if (indent > 0)
-        {
-            builder.Append(' ', indent * 4);
-        }
-
-        builder.AppendLine(value);
+        builder.Append(indent, value);
+        builder.AppendLine();
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Append(this StringBuilder builder, int indent, string value)
     {
         if (indent > 0)
         {
             builder.Append(' ', indent * 4);
         }
-
         builder.Append(value);
     }
 
@@ -58,5 +56,11 @@ internal static class StringBuilderExtensions
         }
         builder.Append(elementName);
         builder.Append('>', rank);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void AppendType(this StringBuilder builder, Type type)
+    {
+        type.WriteFullyQualifiedName(builder);
     }
 }

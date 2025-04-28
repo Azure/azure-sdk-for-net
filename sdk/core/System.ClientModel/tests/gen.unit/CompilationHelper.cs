@@ -17,9 +17,11 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
     {
         private static readonly CSharpParseOptions s_defaultParseOptions = CreateParseOptions();
 
+        private static readonly HashSet<string> s_noWarn = ["CS1701", "CS8019", "CS0311", "CS1702"];
+
         public record GeneratorResult
         {
-            internal ModelReaderWriterContextGenerationSpec? ContextFile { get; set; }
+            internal ModelReaderWriterContextGenerationSpec? GenerationSpec { get; set; }
             public ImmutableArray<Diagnostic> Diagnostics { get; set; }
         }
 
@@ -95,6 +97,9 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
         }
 
         public static GeneratorResult RunSourceGenerator(Compilation compilation, bool disableDiagnosticValidation = false)
+            => RunSourceGenerator(compilation, out _, disableDiagnosticValidation);
+
+        public static GeneratorResult RunSourceGenerator(Compilation compilation, out Compilation newCompilation, bool disableDiagnosticValidation = false)
         {
             ModelReaderWriterContextGenerationSpec? generatedSpecs = null;
             var generator = new ModelReaderWriterContextGenerator
@@ -103,11 +108,35 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
             };
 
             CSharpGeneratorDriver driver = CreateJsonSourceGeneratorDriver(compilation, generator);
-            driver.RunGeneratorsAndUpdateCompilation(compilation, out Compilation outCompilation, out ImmutableArray<Diagnostic> diagnostics);
+            var newDriver = driver.RunGeneratorsAndUpdateCompilation(compilation, out newCompilation, out ImmutableArray<Diagnostic> diagnostics);
+            var runResult = newDriver.GetRunResult();
+
+            var finalDiagnostics = newCompilation.GetDiagnostics().Where(d => !s_noWarn.Contains(d.Descriptor.Id));
+            foreach (var diagnostic in finalDiagnostics)
+            {
+                var location = diagnostic.Location;
+                if (location.IsInSource)
+                {
+                    var filePath = location.SourceTree?.FilePath;
+
+                    foreach (var result in runResult.Results)
+                    {
+                        foreach (var generatedSource in result.GeneratedSources)
+                        {
+                            if (generatedSource.SyntaxTree.FilePath == filePath)
+                            {
+                                var code = generatedSource.SyntaxTree.ToString();
+                                Assert.Fail($"Generated source file has errors: {diagnostic}{Environment.NewLine}Source:{Environment.NewLine}{code}");
+                            }
+                        }
+                    }
+                }
+                Assert.Fail($"Compilation Error: {diagnostic}");
+            }
 
             return new()
             {
-                ContextFile = generatedSpecs,
+                GenerationSpec = generatedSpecs,
                 Diagnostics = diagnostics
             };
         }
