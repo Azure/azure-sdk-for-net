@@ -3,6 +3,7 @@
 ## 12.0.0-preview.55 (Unreleased)
 
 ### Features Added
+- Added BlobChangeFeedClient.GetLastConsumable() and .GetLastConsumableAsync().
 
 ### Breaking Changes
 
