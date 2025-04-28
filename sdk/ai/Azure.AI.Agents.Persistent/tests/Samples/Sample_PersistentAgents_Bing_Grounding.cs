@@ -37,7 +37,7 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
         BingGroundingToolDefinition bingGroundingTool = new(connectionList);
         #endregion
         #region Snippet:AgentsBingGroundingAsync_CreateAgent
-        PersistentAgent agent = await agentClient.CreateAgentAsync(
+        PersistentAgent agent = await agentClient.AgentsAdministration.CreateAgentAsync(
            model: modelDeploymentName,
            name: "my-agent",
            instructions: "You are a helpful agent.",
@@ -45,20 +45,20 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
         #endregion
         // Create thread for communication
         #region Snippet:AgentsBingGroundingAsync_CreateThreadMessage
-        PersistentAgentThread thread = await agentClient.CreateThreadAsync();
+        PersistentAgentThread thread = await agentClient.Threads.CreateThreadAsync();
 
         // Create message to thread
-        ThreadMessage message = await agentClient.CreateMessageAsync(
+        ThreadMessage message = await agentClient.Messages.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
             "How does wikipedia explain Euler's Identity?");
 
         // Run the agent
-        ThreadRun run = await agentClient.CreateRunAsync(thread, agent);
+        ThreadRun run = await agentClient.Runs.CreateRunAsync(thread, agent);
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            run = await agentClient.GetRunAsync(thread.Id, run.Id);
+            run = await agentClient.Runs.GetRunAsync(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
@@ -70,7 +70,7 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
         #endregion
 
         #region Snippet:AgentsBingGroundingAsync_Print
-        PageableList<ThreadMessage> messages = await agentClient.GetMessagesAsync(
+        PageableList<ThreadMessage> messages = await agentClient.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
@@ -104,8 +104,8 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
         }
         #endregion
         #region Snippet:AgentsBingGroundingCleanupAsync
-        await agentClient.DeleteThreadAsync(threadId: thread.Id);
-        await agentClient.DeleteAgentAsync(agentId: agent.Id);
+        await agentClient.Threads.DeleteThreadAsync(threadId: thread.Id);
+        await agentClient.AgentsAdministration.DeleteAgentAsync(agentId: agent.Id);
         #endregion
     }
 
@@ -131,7 +131,7 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
         BingGroundingToolDefinition bingGroundingTool = new(connectionList);
         #endregion
         #region Snippet:AgentsBingGrounding_CreateAgent
-        PersistentAgent agent = agentClient.CreateAgent(
+        PersistentAgent agent = agentClient.AgentsAdministration.CreateAgent(
            model: modelDeploymentName,
            name: "my-agent",
            instructions: "You are a helpful agent.",
@@ -139,20 +139,20 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
         #endregion
         // Create thread for communication
         #region Snippet:AgentsBingGrounding_CreateThreadMessage
-        PersistentAgentThread thread = agentClient.CreateThread();
+        PersistentAgentThread thread = agentClient.Threads.CreateThread();
 
         // Create message to thread
-        ThreadMessage message = agentClient.CreateMessage(
+        ThreadMessage message = agentClient.Messages.CreateMessage(
             thread.Id,
             MessageRole.User,
             "How does wikipedia explain Euler's Identity?");
 
         // Run the agent
-        ThreadRun run = agentClient.CreateRun(thread, agent);
+        ThreadRun run = agentClient.Runs.CreateRun(thread, agent);
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            run = agentClient.GetRun(thread.Id, run.Id);
+            run = agentClient.Runs.GetRun(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
@@ -164,7 +164,7 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
         #endregion
 
         #region Snippet:AgentsBingGrounding_Print
-        PageableList<ThreadMessage> messages = agentClient.GetMessages(
+        PageableList<ThreadMessage> messages = agentClient.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
@@ -198,8 +198,8 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
         }
         #endregion
         #region Snippet:AgentsBingGroundingCleanup
-        agentClient.DeleteThread(threadId: thread.Id);
-        agentClient.DeleteAgent(agentId: agent.Id);
+        agentClient.Threads.DeleteThread(threadId: thread.Id);
+        agentClient.AgentsAdministration.DeleteAgent(agentId: agent.Id);
         #endregion
     }
 }

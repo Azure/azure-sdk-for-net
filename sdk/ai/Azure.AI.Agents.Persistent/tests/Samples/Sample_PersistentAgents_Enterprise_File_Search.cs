@@ -35,7 +35,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
             assetIdentifier: blobURI,
             assetType: VectorStoreDataSourceAssetType.UriAsset
         );
-        VectorStore vectorStore = await client.CreateVectorStoreAsync(
+        VectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
             name: "sample_vector_store",
             storeConfiguration: new VectorStoreConfiguration(
                 dataSources: [ ds ]
@@ -45,7 +45,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 
         List<ToolDefinition> tools = [new FileSearchToolDefinition()];
-        PersistentAgent agent = await client.CreateAgentAsync(
+        PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
             model: modelDeploymentName,
             name: "my-agent",
             instructions: "You are helpful agent.",
@@ -54,15 +54,15 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         );
         #endregion
         #region Snippet:AgentsEnterpriseFileSearchAsync_CreateThreadMessage
-        PersistentAgentThread thread = await client.CreateThreadAsync();
+        PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
-        ThreadMessage message = await client.CreateMessageAsync(
+        ThreadMessage message = await client.Messages.CreateMessageAsync(
             threadId: thread.Id,
             role: MessageRole.User,
             content: "What feature does Smart Eyewear offer?"
             );
 
-        ThreadRun run = await client.CreateRunAsync(
+        ThreadRun run = await client.Runs.CreateRunAsync(
             thread.Id,
             agent.Id
         );
@@ -70,7 +70,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            run = await client.GetRunAsync(thread.Id, run.Id);
+            run = await client.Runs.GetRunAsync(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
@@ -80,7 +80,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
             run.LastError?.Message);
         #endregion
         #region Snippet:AgentsEnterpriseFileSearchAsync_ListUpdatedMessages
-        PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
+        PageableList<ThreadMessage> messages = await client.Messages.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
@@ -90,14 +90,14 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         Dictionary<string, string> dtFiles = [];
         do
         {
-            storeFiles = await client.GetVectorStoreFilesAsync(
+            storeFiles = await client.VectorStores.VectorStoreFiles.VectorStoreFiles.GetVectorStoreFilesAsync(
                 vectorStoreId: vectorStore.Id,
                 after: after
             );
             after = storeFiles.LastId;
             foreach (VectorStoreFile fle in storeFiles.Data)
             {
-                PersistentAgentFile agentFile = await client.GetFileAsync(fle.Id);
+                PersistentAgentFile agentFile = await client.Files.GetFileAsync(fle.Id);
                 Uri uriFile = new(agentFile.Filename);
                 dtFiles.Add(fle.Id, uriFile.Segments[uriFile.Segments.Length - 1]);
             }
@@ -106,7 +106,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         WriteMessages(messages, dtFiles);
         #endregion
         #region Snippet:AgentsEnterpriseFileSearchAsync_Cleanup
-        VectorStoreDeletionStatus delTask = await client.DeleteVectorStoreAsync(vectorStore.Id);
+        VectorStoreDeletionStatus delTask = await client.VectorStores.DeleteVectorStoreAsync(vectorStore.Id);
         if (delTask.Deleted)
         {
             Console.WriteLine($"Deleted vector store {vectorStore.Id}");
@@ -115,8 +115,8 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         {
             Console.WriteLine($"Unable to delete vector store {vectorStore.Id}");
         }
-        await client.DeleteThreadAsync(thread.Id);
-        await client.DeleteAgentAsync(agent.Id);
+        await client.Threads.DeleteThreadAsync(thread.Id);
+        await client.AgentsAdministration.DeleteAgentAsync(agent.Id);
         #endregion
     }
 
@@ -141,7 +141,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
             assetIdentifier: blobURI,
             assetType: VectorStoreDataSourceAssetType.UriAsset
         );
-        VectorStore vectorStore = client.CreateVectorStore(
+        VectorStore vectorStore = client.VectorStores.CreateVectorStore(
             name: "sample_vector_store",
             storeConfiguration: new VectorStoreConfiguration(
                 dataSources: [ds]
@@ -151,7 +151,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 
         List<ToolDefinition> tools = [new FileSearchToolDefinition()];
-        PersistentAgent agent = client.CreateAgent(
+        PersistentAgent agent = client.AgentsAdministration.CreateAgent(
             model: modelDeploymentName,
             name: "my-agent",
             instructions: "You are helpful agent.",
@@ -160,15 +160,15 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         );
         #endregion
         #region Snippet:AgentsEnterpriseFileSearch_CreateThreadMessage
-        PersistentAgentThread thread = client.CreateThread();
+        PersistentAgentThread thread = client.Threads.CreateThread();
 
-        ThreadMessage message = client.CreateMessage(
+        ThreadMessage message = client.Messages.CreateMessage(
             threadId: thread.Id,
             role: MessageRole.User,
             content: "What feature does Smart Eyewear offer?"
         );
 
-        ThreadRun run = client.CreateRun(
+        ThreadRun run = client.Runs.CreateRun(
             thread.Id,
             agent.Id
         );
@@ -176,7 +176,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            run = client.GetRun(thread.Id, run.Id);
+            run = client.Runs.GetRun(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
@@ -186,7 +186,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
             run.LastError?.Message);
         #endregion
         #region Snippet:AgentsEnterpriseFileSearch_ListUpdatedMessages
-        PageableList<ThreadMessage> messages = client.GetMessages(
+        PageableList<ThreadMessage> messages = client.Messages.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
@@ -196,14 +196,14 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         Dictionary<string, string> dtFiles = [];
         do
         {
-            storeFiles = client.GetVectorStoreFiles(
+            storeFiles = client.VectorStores.VectorStoreFiles.VectorStoreFiles.GetVectorStoreFiles(
                 vectorStoreId: vectorStore.Id,
                 after: after
             );
             after = storeFiles.LastId;
             foreach (VectorStoreFile fle in storeFiles.Data)
             {
-                PersistentAgentFile agentFile = client.GetFile(fle.Id);
+                PersistentAgentFile agentFile = client.Files.GetFile(fle.Id);
                 Uri uriFile = new(agentFile.Filename);
                 dtFiles.Add(fle.Id, uriFile.Segments[uriFile.Segments.Length - 1]);
             }
@@ -212,7 +212,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         WriteMessages(messages, dtFiles);
         #endregion
         #region Snippet:AgentsEnterpriseFileSearch_Cleanup
-        VectorStoreDeletionStatus delTask = client.DeleteVectorStore(vectorStore.Id);
+        VectorStoreDeletionStatus delTask = client.VectorStores.DeleteVectorStore(vectorStore.Id);
         if (delTask.Deleted)
         {
             Console.WriteLine($"Deleted vector store {vectorStore.Id}");
@@ -221,8 +221,8 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         {
             Console.WriteLine($"Unable to delete vector store {vectorStore.Id}");
         }
-        client.DeleteThread(thread.Id);
-        client.DeleteAgent(agent.Id);
+        client.Threads.DeleteThread(thread.Id);
+        client.AgentsAdministration.DeleteAgent(agent.Id);
         #endregion
     }
 

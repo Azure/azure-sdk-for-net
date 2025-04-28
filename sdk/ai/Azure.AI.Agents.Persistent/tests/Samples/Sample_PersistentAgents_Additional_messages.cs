@@ -29,20 +29,20 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
             projectEndpoint,
             new DefaultAzureCredential());
 
-        PersistentAgent agent = await agentClient.CreateAgentAsync(
+        PersistentAgent agent = await agentClient.AgentsAdministration.CreateAgentAsync(
             model: modelDeploymentName,
             name: "Math Tutor",
             instructions: "You are a personal electronics tutor. Write and run code to answer questions.",
             tools: [new CodeInterpreterToolDefinition()]);
         #endregion
         #region Snippet:Sample_Agent_Multiple_Messages_RunAsync
-        PersistentAgentThread thread = await agentClient.CreateThreadAsync();
-        ThreadMessage message = await agentClient.CreateMessageAsync(
+        PersistentAgentThread thread = await agentClient.Threads.CreateThreadAsync();
+        ThreadMessage message = await agentClient.Messages.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
             "What is the impedance formula?");
 
-        ThreadRun agentRun = await agentClient.CreateRunAsync(
+        ThreadRun agentRun = await agentClient.Runs.CreateRunAsync(
             threadId: thread.Id,
             agent.Id,
             additionalMessages: [
@@ -60,13 +60,13 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            agentRun = await agentClient.GetRunAsync(thread.Id, agentRun.Id);
+            agentRun = await agentClient.Runs.GetRunAsync(thread.Id, agentRun.Id);
         }
         while (agentRun.Status == RunStatus.Queued
             || agentRun.Status == RunStatus.InProgress);
         #endregion
         #region Snippet:Sample_Agent_Multiple_Messages_PrintAsync
-        PageableList<ThreadMessage> messages = await agentClient.GetMessagesAsync(thread.Id, order:ListSortOrder.Ascending);
+        PageableList<ThreadMessage> messages = await agentClient.Messages.GetMessagesAsync(thread.Id, order:ListSortOrder.Ascending);
 
         foreach (ThreadMessage threadMessage in messages)
         {
@@ -103,20 +103,20 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
             projectEndpoint,
             new DefaultAzureCredential());
 
-        PersistentAgent agent = agentClient.CreateAgent(
+        PersistentAgent agent = agentClient.AgentsAdministration.CreateAgent(
             model: modelDeploymentName,
             name: "Math Tutor",
             instructions: "You are a personal electronics tutor. Write and run code to answer questions.",
             tools: [new CodeInterpreterToolDefinition()]);
         #endregion
         #region Snippet:Sample_Agent_Multiple_Messages_Run
-        PersistentAgentThread thread = agentClient.CreateThread();
-        ThreadMessage message = agentClient.CreateMessage(
+        PersistentAgentThread thread = agentClient.Threads.CreateThread();
+        ThreadMessage message = agentClient.Messages.CreateMessage(
             thread.Id,
             MessageRole.User,
             "What is the impedance formula?");
 
-        ThreadRun agentRun = agentClient.CreateRun(
+        ThreadRun agentRun = agentClient.Runs.CreateRun(
             threadId: thread.Id,
             agent.Id,
             additionalMessages: [
@@ -134,13 +134,13 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            agentRun = agentClient.GetRun(thread.Id, agentRun.Id);
+            agentRun = agentClient.Runs.GetRun(thread.Id, agentRun.Id);
         }
         while (agentRun.Status == RunStatus.Queued
             || agentRun.Status == RunStatus.InProgress);
         #endregion
         #region Snippet:Sample_Agent_Multiple_Messages_Print
-        PageableList<ThreadMessage> messages = agentClient.GetMessages(thread.Id, order: ListSortOrder.Ascending);
+        PageableList<ThreadMessage> messages = agentClient.Messages.GetMessages(thread.Id, order: ListSortOrder.Ascending);
 
         foreach (ThreadMessage threadMessage in messages)
         {
