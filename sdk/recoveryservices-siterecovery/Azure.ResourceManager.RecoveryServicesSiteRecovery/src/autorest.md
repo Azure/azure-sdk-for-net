@@ -44,6 +44,14 @@ rename-mapping:
   A2AProtectedManagedDiskDetails.recoveryTargetDiskId: -|arm-id
   A2AProtectedManagedDiskDetails.recoveryReplicaDiskId: -|arm-id
   A2AProtectedManagedDiskDetails.recoveryOrignalTargetDiskId: -|arm-id
+  A2AProtectedManagedDiskDetails.diskId: -|arm-id
+  A2AReplicationDetails.protectionClusterId: -|arm-id
+  A2AReplicationProtectionClusterDetails.clusterManagementId: -|uuid
+  A2AReplicationProtectionClusterDetails.multiVmGroupId: -|uuid
+  A2AReplicationProtectionClusterDetails.lifecycleId : -|uuid
+  A2ASharedDiskReplicationDetails.managementId: -|uuid
+  RegisteredClusterNodes.biosId: -|uuid
+  RegisteredClusterNodes.machineId: -|uuid
   A2AProtectedManagedDiskDetails.resyncRequired: IsResyncRequired
   A2AProtectedDiskDetails.resyncRequired: IsResyncRequired
   A2AProtectionIntentDiskInputDetails: A2AProtectionIntentDiskDetails
@@ -315,6 +323,11 @@ rename-mapping:
   VMwareCbtMigrationDetails.dataMoverRunAsAccountId: -|arm-id
   VMwareCbtMigrationDetails.snapshotRunAsAccountId: -|arm-id
   VMwareV2FabricSpecificDetails.serviceResourceId: -|arm-id
+  
+prepend-rp-prefix:
+  - LinuxLicenseType
+  - FailoverDirection
+  - DiskState
 
 format-by-name-rules:
   'tenantId': 'uuid'

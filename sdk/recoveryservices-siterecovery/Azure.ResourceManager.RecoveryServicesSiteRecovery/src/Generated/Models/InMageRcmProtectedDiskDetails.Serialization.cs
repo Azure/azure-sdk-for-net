@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string diskName = default;
             string isOSDisk = default;
             long? capacityInBytes = default;
-            DiskState? diskState = default;
+            RecoveryServicesSiteRecoveryDiskState? diskState = default;
             ResourceIdentifier logStorageAccountId = default;
             ResourceIdentifier diskEncryptionSetId = default;
             string seedManagedDiskId = default;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    diskState = new DiskState(property.Value.GetString());
+                    diskState = new RecoveryServicesSiteRecoveryDiskState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("logStorageAccountId"u8))

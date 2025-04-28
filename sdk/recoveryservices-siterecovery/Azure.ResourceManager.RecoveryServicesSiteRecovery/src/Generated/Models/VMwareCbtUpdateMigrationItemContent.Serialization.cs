@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IList<VMwareCbtUpdateDiskContent> vmDisks = default;
             SiteRecoveryLicenseType? licenseType = default;
             SiteRecoverySqlServerLicenseType? sqlServerLicenseType = default;
-            LinuxLicenseType? linuxLicenseType = default;
+            RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = default;
             string userSelectedOSName = default;
             string performAutoResync = default;
             IDictionary<string, string> targetVmTags = default;
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    linuxLicenseType = new LinuxLicenseType(property.Value.GetString());
+                    linuxLicenseType = new RecoveryServicesSiteRecoveryLinuxLicenseType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("userSelectedOSName"u8))

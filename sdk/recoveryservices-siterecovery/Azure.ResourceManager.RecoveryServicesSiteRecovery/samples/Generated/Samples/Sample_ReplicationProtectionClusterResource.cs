@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // invoke the operation
             ClusterTestFailoverContent content = new ClusterTestFailoverContent(new ClusterTestFailoverContentProperties
             {
-                FailoverDirection = FailoverDirection.PrimaryToRecovery,
+                FailoverDirection = RecoveryServicesSiteRecoveryFailoverDirection.PrimaryToRecovery,
                 NetworkType = "VmNetworkAsInput",
                 NetworkId = new ResourceIdentifier("/subscriptions/7c943c1b-5122-4097-90c8-861411bdd574/resourceGroups/ClusterTestRG-19-01-asr/providers/Microsoft.Network/virtualNetworks/adVNET-asr"),
                 ProviderSpecificDetails = new A2AClusterTestFailoverContent

@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string targetGeneration = default;
             string licenseType = default;
             string sqlServerLicenseType = default;
-            LinuxLicenseType? linuxLicenseType = default;
+            RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = default;
             ResourceIdentifier dataMoverRunAsAccountId = default;
             ResourceIdentifier snapshotRunAsAccountId = default;
             ResourceIdentifier storageAccountId = default;
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    linuxLicenseType = new LinuxLicenseType(property.Value.GetString());
+                    linuxLicenseType = new RecoveryServicesSiteRecoveryLinuxLicenseType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataMoverRunAsAccountId"u8))

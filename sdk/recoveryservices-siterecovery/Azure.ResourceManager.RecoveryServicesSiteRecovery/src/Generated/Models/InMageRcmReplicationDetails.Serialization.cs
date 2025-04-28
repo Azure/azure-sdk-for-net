@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IPAddress primaryNicIPAddress = default;
             string targetGeneration = default;
             string licenseType = default;
-            LinuxLicenseType? linuxLicenseType = default;
+            RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = default;
             ResourceIdentifier storageAccountId = default;
             string targetVmName = default;
             string targetVmSize = default;
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    linuxLicenseType = new LinuxLicenseType(property.Value.GetString());
+                    linuxLicenseType = new RecoveryServicesSiteRecoveryLinuxLicenseType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storageAccountId"u8))

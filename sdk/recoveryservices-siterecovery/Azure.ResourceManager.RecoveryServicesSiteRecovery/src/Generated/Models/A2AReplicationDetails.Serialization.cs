@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string multiVmGroupName = default;
             MultiVmGroupCreateOption? multiVmGroupCreateOption = default;
             string managementId = default;
-            string protectionClusterId = default;
+            ResourceIdentifier protectionClusterId = default;
             bool? isClusterInfraReady = default;
             IReadOnlyList<A2AProtectedDiskDetails> protectedDisks = default;
             IReadOnlyList<A2AUnprotectedDiskDetails> unprotectedDisks = default;
@@ -499,7 +499,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("protectionClusterId"u8))
                 {
-                    protectionClusterId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    protectionClusterId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isClusterInfraReady"u8))

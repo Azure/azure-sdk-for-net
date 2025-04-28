@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string targetAvailabilityZone = default;
             SiteRecoveryLicenseType? licenseType = default;
             SiteRecoverySqlServerLicenseType? sqlServerLicenseType = default;
-            LinuxLicenseType? linuxLicenseType = default;
+            RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = default;
             SecurityProfileProperties targetVmSecurityProfile = default;
             string targetVmSize = default;
             ResourceIdentifier targetProximityPlacementGroupId = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    linuxLicenseType = new LinuxLicenseType(property.Value.GetString());
+                    linuxLicenseType = new RecoveryServicesSiteRecoveryLinuxLicenseType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetVmSecurityProfile"u8))

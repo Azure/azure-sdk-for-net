@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Guid processServerId = default;
             string multiVmGroupName = default;
             SiteRecoverySqlServerLicenseType? sqlServerLicenseType = default;
-            LinuxLicenseType? linuxLicenseType = default;
+            RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = default;
             IList<UserCreatedResourceTag> targetVmTags = default;
             IList<UserCreatedResourceTag> seedManagedDiskTags = default;
             IList<UserCreatedResourceTag> targetManagedDiskTags = default;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    linuxLicenseType = new LinuxLicenseType(property.Value.GetString());
+                    linuxLicenseType = new RecoveryServicesSiteRecoveryLinuxLicenseType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetVmTags"u8))

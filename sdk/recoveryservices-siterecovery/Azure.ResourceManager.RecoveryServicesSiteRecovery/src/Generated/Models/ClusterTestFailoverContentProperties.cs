@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The available derived classes include <see cref="A2AClusterTestFailoverContent"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterTestFailoverContentProperties(FailoverDirection? failoverDirection, string networkType, ResourceIdentifier networkId, ClusterTestFailoverProviderSpecificContent providerSpecificDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClusterTestFailoverContentProperties(RecoveryServicesSiteRecoveryFailoverDirection? failoverDirection, string networkType, ResourceIdentifier networkId, ClusterTestFailoverProviderSpecificContent providerSpecificDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FailoverDirection = failoverDirection;
             NetworkType = networkType;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Failover direction. </summary>
-        public FailoverDirection? FailoverDirection { get; set; }
+        public RecoveryServicesSiteRecoveryFailoverDirection? FailoverDirection { get; set; }
         /// <summary> Network type to be used for test failover. </summary>
         public string NetworkType { get; set; }
         /// <summary> The id of the network to be used for test failover. </summary>

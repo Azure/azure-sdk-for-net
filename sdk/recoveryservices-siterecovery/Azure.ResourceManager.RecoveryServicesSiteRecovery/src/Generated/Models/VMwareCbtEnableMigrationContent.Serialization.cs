@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IList<VMwareCbtDiskContent> disksToInclude = default;
             SiteRecoveryLicenseType? licenseType = default;
             SiteRecoverySqlServerLicenseType? sqlServerLicenseType = default;
-            LinuxLicenseType? linuxLicenseType = default;
+            RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = default;
             string performSqlBulkRegistration = default;
             ResourceIdentifier dataMoverRunAsAccountId = default;
             ResourceIdentifier snapshotRunAsAccountId = default;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    linuxLicenseType = new LinuxLicenseType(property.Value.GetString());
+                    linuxLicenseType = new RecoveryServicesSiteRecoveryLinuxLicenseType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("performSqlBulkRegistration"u8))

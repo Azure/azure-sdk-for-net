@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string useManagedDisks = default;
             string licenseType = default;
             string sqlServerLicenseType = default;
-            LinuxLicenseType? linuxLicenseType = default;
+            RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = default;
             DateTimeOffset? lastRecoveryPointReceived = default;
             IReadOnlyDictionary<string, string> targetVmTags = default;
             IReadOnlyDictionary<string, string> seedManagedDiskTags = default;
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    linuxLicenseType = new LinuxLicenseType(property.Value.GetString());
+                    linuxLicenseType = new RecoveryServicesSiteRecoveryLinuxLicenseType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastRecoveryPointReceived"u8))

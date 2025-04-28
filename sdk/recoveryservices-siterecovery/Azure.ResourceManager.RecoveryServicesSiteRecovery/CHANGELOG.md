@@ -4,8 +4,8 @@
 
 ### Features Added
 
-- Upgraded api-version tag from 'package-2023-08' to 'package-2025-01-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/84eef1839d5db0edaf791fd0915b38a50b3b64b5/specification/recoveryservicessiterecovery/resource-manager/readme.md
-- Changes related to Azure to Azure shared disk cluster scenarios.
+- Upgraded api-version tag from 'package-2023-08' to 'package-2025-01-01'.
+- Changes related to Azure shared disk cluster scenarios.
 
 ### Other Changes
 

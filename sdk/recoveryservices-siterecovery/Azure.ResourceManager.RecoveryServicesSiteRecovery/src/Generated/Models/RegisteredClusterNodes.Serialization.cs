@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(MachineId))
             {
                 writer.WritePropertyName("machineId"u8);
-                writer.WriteStringValue(MachineId);
+                writer.WriteStringValue(MachineId.Value);
             }
             if (Optional.IsDefined(BiosId))
             {
                 writer.WritePropertyName("biosId"u8);
-                writer.WriteStringValue(BiosId);
+                writer.WriteStringValue(BiosId.Value);
             }
             if (Optional.IsDefined(IsSharedDiskVirtualNode))
             {
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             string clusterNodeFqdn = default;
-            string machineId = default;
-            string biosId = default;
+            Guid? machineId = default;
+            Guid? biosId = default;
             bool? isSharedDiskVirtualNode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -106,12 +106,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("machineId"u8))
                 {
-                    machineId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    machineId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("biosId"u8))
                 {
-                    biosId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    biosId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("isSharedDiskVirtualNode"u8))

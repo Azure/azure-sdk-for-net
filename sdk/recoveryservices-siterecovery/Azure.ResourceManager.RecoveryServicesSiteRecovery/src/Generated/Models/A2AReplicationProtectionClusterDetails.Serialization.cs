@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(MultiVmGroupId))
             {
                 writer.WritePropertyName("multiVmGroupId"u8);
-                writer.WriteStringValue(MultiVmGroupId);
+                writer.WriteStringValue(MultiVmGroupId.Value);
             }
             if (Optional.IsDefined(MultiVmGroupName))
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ClusterManagementId))
             {
                 writer.WritePropertyName("clusterManagementId"u8);
-                writer.WriteStringValue(ClusterManagementId);
+                writer.WriteStringValue(ClusterManagementId.Value);
             }
             if (Optional.IsDefined(RpoInSeconds))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(LifecycleId))
             {
                 writer.WritePropertyName("lifecycleId"u8);
-                writer.WriteStringValue(LifecycleId);
+                writer.WriteStringValue(LifecycleId.Value);
             }
         }
 
@@ -157,13 +157,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            string multiVmGroupId = default;
+            Guid? multiVmGroupId = default;
             string multiVmGroupName = default;
             MultiVmGroupCreateOption? multiVmGroupCreateOption = default;
             AzureLocation? primaryFabricLocation = default;
             AzureLocation? recoveryFabricLocation = default;
             ResourceIdentifier failoverRecoveryPointId = default;
-            string clusterManagementId = default;
+            Guid? clusterManagementId = default;
             long? rpoInSeconds = default;
             DateTimeOffset? lastRpoCalculatedTime = default;
             string initialPrimaryZone = default;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string recoveryAvailabilityZone = default;
             SiteRecoveryExtendedLocation primaryExtendedLocation = default;
             SiteRecoveryExtendedLocation recoveryExtendedLocation = default;
-            string lifecycleId = default;
+            Guid? lifecycleId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -184,7 +184,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 if (property.NameEquals("multiVmGroupId"u8))
                 {
-                    multiVmGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    multiVmGroupId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("multiVmGroupName"u8))
@@ -230,7 +234,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("clusterManagementId"u8))
                 {
-                    clusterManagementId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clusterManagementId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("rpoInSeconds"u8))
@@ -327,7 +335,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("lifecycleId"u8))
                 {
-                    lifecycleId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lifecycleId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

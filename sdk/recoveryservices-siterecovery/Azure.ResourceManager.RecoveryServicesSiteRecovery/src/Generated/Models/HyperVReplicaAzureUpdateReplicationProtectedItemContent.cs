@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="linuxLicenseType"> The license type for Linux VM's. </param>
         /// <param name="userSelectedOSName"> The OS name selected by user. </param>
         /// <param name="vmDisks"> The list of disk update properties. </param>
-        internal HyperVReplicaAzureUpdateReplicationProtectedItemContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier recoveryAzureV1ResourceGroupId, ResourceIdentifier recoveryAzureV2ResourceGroupId, string useManagedDisks, IDictionary<string, string> diskIdToDiskEncryptionMap, ResourceIdentifier targetProximityPlacementGroupId, string targetAvailabilityZone, IDictionary<string, string> targetVmTags, IDictionary<string, string> targetManagedDiskTags, IDictionary<string, string> targetNicTags, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, LinuxLicenseType? linuxLicenseType, string userSelectedOSName, IList<UpdateDiskContent> vmDisks) : base(instanceType, serializedAdditionalRawData)
+        internal HyperVReplicaAzureUpdateReplicationProtectedItemContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier recoveryAzureV1ResourceGroupId, ResourceIdentifier recoveryAzureV2ResourceGroupId, string useManagedDisks, IDictionary<string, string> diskIdToDiskEncryptionMap, ResourceIdentifier targetProximityPlacementGroupId, string targetAvailabilityZone, IDictionary<string, string> targetVmTags, IDictionary<string, string> targetManagedDiskTags, IDictionary<string, string> targetNicTags, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, string userSelectedOSName, IList<UpdateDiskContent> vmDisks) : base(instanceType, serializedAdditionalRawData)
         {
             RecoveryAzureV1ResourceGroupId = recoveryAzureV1ResourceGroupId;
             RecoveryAzureV2ResourceGroupId = recoveryAzureV2ResourceGroupId;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The SQL Server license type. </summary>
         public SiteRecoverySqlServerLicenseType? SqlServerLicenseType { get; set; }
         /// <summary> The license type for Linux VM's. </summary>
-        public LinuxLicenseType? LinuxLicenseType { get; set; }
+        public RecoveryServicesSiteRecoveryLinuxLicenseType? LinuxLicenseType { get; set; }
         /// <summary> The OS name selected by user. </summary>
         public string UserSelectedOSName { get; set; }
         /// <summary> The list of disk update properties. </summary>

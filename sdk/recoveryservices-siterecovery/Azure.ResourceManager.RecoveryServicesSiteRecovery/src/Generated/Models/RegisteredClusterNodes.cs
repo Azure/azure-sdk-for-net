@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="biosId"> The BIOS ID. </param>
         /// <param name="isSharedDiskVirtualNode"> A value indicating whether this represents virtual entity hosting all the shared disks. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RegisteredClusterNodes(string clusterNodeFqdn, string machineId, string biosId, bool? isSharedDiskVirtualNode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RegisteredClusterNodes(string clusterNodeFqdn, Guid? machineId, Guid? biosId, bool? isSharedDiskVirtualNode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClusterNodeFqdn = clusterNodeFqdn;
             MachineId = machineId;
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The cluster node name. </summary>
         public string ClusterNodeFqdn { get; set; }
         /// <summary> The machine ID. </summary>
-        public string MachineId { get; set; }
+        public Guid? MachineId { get; set; }
         /// <summary> The BIOS ID. </summary>
-        public string BiosId { get; set; }
+        public Guid? BiosId { get; set; }
         /// <summary> A value indicating whether this represents virtual entity hosting all the shared disks. </summary>
         public bool? IsSharedDiskVirtualNode { get; set; }
     }

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            FailoverDirection? failoverDirection = default;
+            RecoveryServicesSiteRecoveryFailoverDirection? failoverDirection = default;
             string networkType = default;
             ResourceIdentifier networkId = default;
             ClusterTestFailoverProviderSpecificContent providerSpecificDetails = default;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    failoverDirection = new FailoverDirection(property.Value.GetString());
+                    failoverDirection = new RecoveryServicesSiteRecoveryFailoverDirection(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("networkType"u8))

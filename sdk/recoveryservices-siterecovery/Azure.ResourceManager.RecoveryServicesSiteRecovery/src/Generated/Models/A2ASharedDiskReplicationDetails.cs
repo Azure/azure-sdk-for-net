@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="rpoInSeconds"> The last RPO value in seconds. </param>
         /// <param name="lastRpoCalculatedOn"> The time (in UTC) when the last RPO value was calculated by Protection Service. </param>
         /// <param name="sharedDiskIRErrors"> The IR Errors. </param>
-        internal A2ASharedDiskReplicationDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string managementId, IList<A2AUnprotectedDiskDetails> unprotectedDisks, IList<A2AProtectedManagedDiskDetails> protectedManagedDisks, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation, ResourceIdentifier failoverRecoveryPointId, int? monitoringPercentageCompletion, string monitoringJobType, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, IList<A2ASharedDiskIRErrorDetails> sharedDiskIRErrors) : base(instanceType, serializedAdditionalRawData)
+        internal A2ASharedDiskReplicationDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? managementId, IList<A2AUnprotectedDiskDetails> unprotectedDisks, IList<A2AProtectedManagedDiskDetails> protectedManagedDisks, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation, ResourceIdentifier failoverRecoveryPointId, int? monitoringPercentageCompletion, string monitoringJobType, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, IList<A2ASharedDiskIRErrorDetails> sharedDiskIRErrors) : base(instanceType, serializedAdditionalRawData)
         {
             ManagementId = managementId;
             UnprotectedDisks = unprotectedDisks;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The management Id. </summary>
-        public string ManagementId { get; set; }
+        public Guid? ManagementId { get; set; }
         /// <summary> The list of unprotected disks. </summary>
         public IList<A2AUnprotectedDiskDetails> UnprotectedDisks { get; }
         /// <summary> The list of protected managed disks. </summary>

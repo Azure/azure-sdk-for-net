@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ManagementId))
             {
                 writer.WritePropertyName("managementId"u8);
-                writer.WriteStringValue(ManagementId);
+                writer.WriteStringValue(ManagementId.Value);
             }
             if (Optional.IsCollectionDefined(UnprotectedDisks))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            string managementId = default;
+            Guid? managementId = default;
             IList<A2AUnprotectedDiskDetails> unprotectedDisks = default;
             IList<A2AProtectedManagedDiskDetails> protectedManagedDisks = default;
             AzureLocation? primaryFabricLocation = default;
@@ -145,7 +145,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 if (property.NameEquals("managementId"u8))
                 {
-                    managementId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managementId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("unprotectedDisks"u8))

@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            string diskId = default;
+            ResourceIdentifier diskId = default;
             ResourceIdentifier recoveryResourceGroupId = default;
             ResourceIdentifier recoveryTargetDiskId = default;
             ResourceIdentifier recoveryReplicaDiskId = default;
@@ -250,7 +250,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 if (property.NameEquals("diskId"u8))
                 {
-                    diskId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recoveryResourceGroupId"u8))

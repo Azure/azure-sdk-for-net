@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="customTargetDiskName"> The custom target Azure disk name. </param>
         /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InMageRcmProtectedDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, DiskState? diskState, ResourceIdentifier logStorageAccountId, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, SiteRecoveryDiskAccountType? diskType, double? dataPendingInLogDataStoreInMB, double? dataPendingAtSourceAgentInMB, string isInitialReplicationComplete, InMageRcmSyncDetails irDetails, InMageRcmSyncDetails resyncDetails, string customTargetDiskName, int? sectorSizeInBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InMageRcmProtectedDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, RecoveryServicesSiteRecoveryDiskState? diskState, ResourceIdentifier logStorageAccountId, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, SiteRecoveryDiskAccountType? diskType, double? dataPendingInLogDataStoreInMB, double? dataPendingAtSourceAgentInMB, string isInitialReplicationComplete, InMageRcmSyncDetails irDetails, InMageRcmSyncDetails resyncDetails, string customTargetDiskName, int? sectorSizeInBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The disk capacity in bytes. </summary>
         public long? CapacityInBytes { get; }
         /// <summary> The disk state. </summary>
-        public DiskState? DiskState { get; }
+        public RecoveryServicesSiteRecoveryDiskState? DiskState { get; }
         /// <summary> The log storage account ARM Id. </summary>
         public ResourceIdentifier LogStorageAccountId { get; }
         /// <summary> The DiskEncryptionSet ARM Id. </summary>

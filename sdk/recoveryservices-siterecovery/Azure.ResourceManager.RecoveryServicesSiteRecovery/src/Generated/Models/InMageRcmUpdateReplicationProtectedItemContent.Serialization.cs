@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IList<InMageRcmNicContent> vmNics = default;
             SiteRecoveryLicenseType? licenseType = default;
             SiteRecoverySqlServerLicenseType? sqlServerLicenseType = default;
-            LinuxLicenseType? linuxLicenseType = default;
+            RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = default;
             string userSelectedOSName = default;
             IList<UserCreatedResourceTag> targetVmTags = default;
             IList<UserCreatedResourceTag> targetManagedDiskTags = default;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    linuxLicenseType = new LinuxLicenseType(property.Value.GetString());
+                    linuxLicenseType = new RecoveryServicesSiteRecoveryLinuxLicenseType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("userSelectedOSName"u8))
