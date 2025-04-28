@@ -1,9 +1,20 @@
 # Release History
 
-## 1.2.0-beta.5 (Unreleased)
+## 1.2.0-beta.6 (Unreleased)
 
 ### Features Added
 
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.2.0-beta.5 (2025-04-28)
+
+### Features Added
+Upgraded api-version tag from 'package-2024-08-preview' to 'package-2025-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/4c0f7731c93696af01bd2bb9927bf28d2afcbc98/specification/hdinsight/resource-manager/readme.md.
+    - Support to create and update HDInsight Entra cluster.
 ### Breaking Changes
 
 ### Bugs Fixed
