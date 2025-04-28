@@ -202,6 +202,11 @@ void ProcessType(Type type)
                 // Expected; this is a known scenario where the type is not impactful to the
                 // Azure SDK experience and cane be safely ignored.
             }
+            catch (PlatformNotSupportedException)
+            {
+                // Expected; this is a known scenario where the type is not impactful to the
+                // Azure SDK experience and cane be safely ignored.
+            }
         }
     }
     catch (Exception ex)
