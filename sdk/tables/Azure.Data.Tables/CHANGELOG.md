@@ -1,14 +1,10 @@
 # Release History
 
-## 12.11.0-beta.1 (Unreleased)
+## 12.11.0 (2025-05-06)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for specifying the token credential's Microsoft Entra audience when creating a client.
 
 ## 12.10.0 (2025-01-14)
 
