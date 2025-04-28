@@ -95,7 +95,7 @@
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="6.0.1" />
     <PackageReference Update="System.Reflection.TypeExtensions" Version="4.7.0" />
     <PackageReference Update="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
-    <PackageReference Update="System.Security.Cryptography.Cose" Version="7.0.0" />
+    <PackageReference Update="System.Security.Cryptography.Cose" Version="8.0.1" />
     <PackageReference Update="System.Threading.Channels" Version="8.0.0" />
     <PackageReference Update="System.Threading.Tasks.Extensions" Version="4.5.4" />
     <PackageReference Update="System.Text.Json" Version="8.0.5" />
