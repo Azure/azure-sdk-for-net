@@ -17,7 +17,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
 
         internal void Emit(ModelReaderWriterContextGenerationSpec contextGenerationSpec)
         {
-            var hintNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var hintNames = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
             EmitContextClass(contextGenerationSpec, hintNames);
 
@@ -27,7 +27,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             }
         }
 
-        private void EmitContextClass(ModelReaderWriterContextGenerationSpec contextGenerationSpec, HashSet<string> hintNames)
+        private void EmitContextClass(ModelReaderWriterContextGenerationSpec contextGenerationSpec, Dictionary<string, int> hintNames)
         {
             var contextName = contextGenerationSpec.Type.Name;
             var namespaces = GetNameSpaces(contextGenerationSpec);
@@ -180,15 +180,18 @@ internal sealed partial class ModelReaderWriterContextGenerator
             AddNewFile(contextName, builder.ToString(), hintNames);
         }
 
-        private void AddNewFile(string fileName, string source, HashSet<string> hintNames)
+        private void AddNewFile(string fileName, string source, Dictionary<string, int> hintNames)
         {
             var hintName = fileName;
-            int collisionCount = 0;
-            while (hintNames.Contains(hintName))
+            if (hintNames.TryGetValue(fileName, out var collisionCount))
             {
-                hintName = $"{fileName}_{collisionCount}";
+                hintName = $"{fileName}_{collisionCount++}";
+                hintNames[fileName] = collisionCount;
             }
-            hintNames.Add(hintName);
+            else
+            {
+                hintNames.Add(fileName, 1);
+            }
 
             AddSource($"{hintName}.g.cs", SourceText.From(source, Encoding.UTF8));
         }
@@ -209,7 +212,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
                 contextGenerationSpec.Type.Equals(modelInfo.ContextType);
         }
 
-        private void EmitTypeBuilder(TypeBuilderSpec modelInfo, TypeRef context, HashSet<string> hintNames)
+        private void EmitTypeBuilder(TypeBuilderSpec modelInfo, TypeRef context, Dictionary<string, int> hintNames)
         {
             if (modelInfo.Kind == TypeBuilderKind.IPersistableModel && !context.IsSameAssembly(modelInfo.Type))
             {

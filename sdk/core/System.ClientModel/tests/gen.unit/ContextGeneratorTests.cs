@@ -972,24 +972,39 @@ namespace TestProject
         void IJsonModel<Jsonmodel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
         BinaryData IPersistableModel<Jsonmodel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
     }
+
+    public class JsonmodeL : IJsonModel<JsonmodeL>
+    {
+        JsonmodeL IJsonModel<JsonmodeL>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonmodeL();
+        JsonmodeL IPersistableModel<JsonmodeL>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonmodeL();
+        string IPersistableModel<JsonmodeL>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        void IJsonModel<JsonmodeL>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        BinaryData IPersistableModel<JsonmodeL>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
 }
 """;
 
             Compilation compilation = CompilationHelper.CreateCompilation(source);
 
-            var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
+            var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation, out var generatedSources);
 
             Assert.IsNotNull(result.GenerationSpec);
             Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
             Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
             Assert.AreEqual(0, result.Diagnostics.Length);
             Assert.AreEqual("public", result.GenerationSpec!.Modifier);
-            Assert.AreEqual(2, result.GenerationSpec.TypeBuilders.Count);
+            Assert.AreEqual(3, result.GenerationSpec.TypeBuilders.Count);
             Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
             Assert.AreEqual("JsonModel", result.GenerationSpec.TypeBuilders[0].Type.Name);
             Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[0].Type.Namespace);
             Assert.AreEqual("Jsonmodel", result.GenerationSpec.TypeBuilders[1].Type.Name);
             Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[1].Type.Namespace);
+            Assert.AreEqual("JsonmodeL", result.GenerationSpec.TypeBuilders[2].Type.Name);
+            Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[2].Type.Namespace);
+
+            Assert.AreEqual("TestProject_JsonModel_Builder.g.cs", generatedSources[1].HintName);
+            Assert.AreEqual("TestProject_Jsonmodel_Builder_1.g.cs", generatedSources[2].HintName);
+            Assert.AreEqual("TestProject_JsonmodeL_Builder_2.g.cs", generatedSources[3].HintName);
         }
 
         [Test]
