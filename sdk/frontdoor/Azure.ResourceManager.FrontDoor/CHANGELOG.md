@@ -1,11 +1,14 @@
 # Release History
 
-## 1.4.0 (2025-05-10)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
-- Updated API version to 2025-04-15
-- Added support for cipher
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
 
 ## 1.3.1 (2025-03-11)
 
