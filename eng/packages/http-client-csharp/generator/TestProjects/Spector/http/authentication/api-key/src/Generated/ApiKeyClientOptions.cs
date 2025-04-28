@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace Authentication.ApiKey
 {
-    /// <summary> Client options for <see cref="ApiKeyClient"/>. </summary>
     public partial class ApiKeyClientOptions : ClientOptions
     {
     }
