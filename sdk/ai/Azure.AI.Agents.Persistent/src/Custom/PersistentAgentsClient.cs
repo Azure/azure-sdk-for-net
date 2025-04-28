@@ -55,7 +55,7 @@ namespace Azure.AI.Agents.Persistent
         {
         }
 
-        public AgentsAdministrationClient Agents { get => _client; }
+        public AgentsAdministrationClient AgentsAdministration { get => _client; }
         public FilesClient Files { get => _client.GetFilesClient(); }
         public ThreadMessagesClient Messages { get => _client.GetThreadMessagesClient();}
         public ThreadsClient Threads { get => _client.GetThreadsClient(); }

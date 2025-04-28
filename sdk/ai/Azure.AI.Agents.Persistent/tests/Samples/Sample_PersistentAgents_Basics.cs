@@ -30,7 +30,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
 
         // Step 1: Create an agent
         #region Snippet:AgentsOverviewCreateAgent
-        PersistentAgent agent = await client.Agents.CreateAgentAsync(
+        PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
             model: modelDeploymentName,
             name: "Math Tutor",
             instructions: "You are a personal math tutor. Write and run code to answer math questions."
@@ -102,7 +102,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         #endregion
         #region Snippet:AgentsOverviewCleanup
         await client.Threads.DeleteThreadAsync(threadId: thread.Id);
-        await client.Agents.DeleteAgentAsync(agentId: agent.Id);
+        await client.AgentsAdministration.DeleteAgentAsync(agentId: agent.Id);
         #endregion
     }
 
@@ -121,7 +121,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
 
         // Step 1: Create an agent
         #region Snippet:AgentsOverviewCreateAgentSync
-        PersistentAgent agent = client.Agents.CreateAgent(
+        PersistentAgent agent = client.AgentsAdministration.CreateAgent(
             model: modelDeploymentName,
             name: "Math Tutor",
             instructions: "You are a personal math tutor. Write and run code to answer math questions."
@@ -194,7 +194,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
 
         #region Snippet:AgentsOverviewCleanupSync
         client.Threads.DeleteThread(threadId: thread.Id);
-        client.Agents.DeleteAgent(agentId: agent.Id);
+        client.AgentsAdministration.DeleteAgent(agentId: agent.Id);
         #endregion
     }
 }
