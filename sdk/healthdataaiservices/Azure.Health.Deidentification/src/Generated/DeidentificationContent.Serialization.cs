@@ -36,10 +36,10 @@ namespace Azure.Health.Deidentification
 
             writer.WritePropertyName("inputText"u8);
             writer.WriteStringValue(InputText);
-            if (Optional.IsDefined(Operation))
+            if (Optional.IsDefined(OperationType))
             {
                 writer.WritePropertyName("operation"u8);
-                writer.WriteStringValue(Operation.Value.ToString());
+                writer.WriteStringValue(OperationType.Value.ToString());
             }
             if (Optional.IsDefined(Customizations))
             {

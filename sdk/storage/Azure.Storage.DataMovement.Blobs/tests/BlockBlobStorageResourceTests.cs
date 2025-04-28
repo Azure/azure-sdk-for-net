@@ -365,6 +365,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Metadata metadata = DataProvider.BuildMetadata();
             BlockBlobStorageResourceOptions resourceOptions = new()
             {
+                AccessTier = default,
                 CacheControl = default,
                 ContentDisposition = default,
                 ContentEncoding = default,
@@ -382,6 +383,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 stream,
                 It.Is<BlobUploadOptions>(
                     options =>
+                        options.AccessTier == default &&
                         options.HttpHeaders.ContentType == default &&
                         options.HttpHeaders.ContentEncoding == default &&
                         options.HttpHeaders.ContentLanguage == default &&
@@ -644,8 +646,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Uri expectedUri,
             Metadata expectedMetdata)
         {
-            AccessTier? expectedAccessTier = resourceOptions.AccessTier != default ? resourceOptions.AccessTier.Value : DefaultAccessTier;
-            string expectedContentDisposition = resourceOptions._isContentDispositionSet  ? resourceOptions.ContentDisposition : DefaultContentDisposition;
+            AccessTier? expectedAccessTier = resourceOptions._isAccessTierSet != default ? resourceOptions.AccessTier.Value : DefaultAccessTier;
+            string expectedContentDisposition = resourceOptions._isContentDispositionSet != default ? resourceOptions.ContentDisposition : DefaultContentDisposition;
             string expectedContentEncoding = resourceOptions._isContentEncodingSet != default ? resourceOptions.ContentEncoding : DefaultContentEncoding;
             string expectedContentLanguage = resourceOptions._isContentLanguageSet != default ? resourceOptions.ContentLanguage : DefaultContentLanguage;
             string expectedContentType = resourceOptions._isContentTypeSet != default ? resourceOptions.ContentType : DefaultContentType;
@@ -858,6 +860,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Metadata metadata = DataProvider.BuildMetadata();
             BlockBlobStorageResourceOptions resourceOptions = new()
             {
+                AccessTier = default,
                 CacheControl = default,
                 ContentDisposition = default,
                 ContentEncoding = default,
@@ -874,7 +877,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.Is<BlobSyncUploadFromUriOptions>(
                     options =>
                         options.CopySourceBlobProperties == false &&
-                        options.AccessTier == DefaultAccessTier &&
+                        options.AccessTier == default &&
                         options.HttpHeaders.ContentType == default &&
                         options.HttpHeaders.ContentEncoding == default &&
                         options.HttpHeaders.ContentLanguage == default &&
@@ -1272,6 +1275,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.That(metadata, Is.EqualTo(metadataResult));
             mock.Verify(b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()),
                 Times.Once());
+            mock.Verify(b => b.Uri, Times.Once());
             mock.VerifyNoOtherCalls();
         }
 
@@ -1315,6 +1319,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.That(rawProperties, Is.EqualTo(result.RawProperties));
             mock.Verify(b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()),
                 Times.Never());
+            mock.Verify(b => b.Uri, Times.Once());
             mock.VerifyNoOtherCalls();
         }
 
@@ -1576,6 +1581,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<IEnumerable<string>>(),
                 It.Is<CommitBlockListOptions>(
                     options =>
+                        options.AccessTier == DefaultAccessTier &&
                         options.HttpHeaders.ContentType == DefaultContentType &&
                         options.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
                         options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
@@ -1602,6 +1608,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             // Act
             BlockBlobStorageResourceOptions resourceOptions = new()
             {
+                AccessTier = default,
                 CacheControl = default,
                 ContentDisposition = default,
                 ContentEncoding = default,
@@ -1618,6 +1625,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<IEnumerable<string>>(),
                 It.Is<CommitBlockListOptions>(
                     options =>
+                        options.AccessTier == default &&
                         options.HttpHeaders.ContentType == default &&
                         options.HttpHeaders.ContentEncoding == default &&
                         options.HttpHeaders.ContentLanguage == default &&

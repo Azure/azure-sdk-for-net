@@ -70,8 +70,9 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="networkAcls"> A collection of rules governing the accessibility from specific network locations. </param>
         /// <param name="privateEndpointConnections"> The list of Private Endpoint Connections. </param>
         /// <param name="enforceDataIntegrityCheckForIscsi"> A boolean indicating whether or not Data Integrity Check is enabled. </param>
+        /// <param name="deleteRetentionPolicy"> The retention policy for the soft deleted volume group and its associated resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ElasticSanProvisioningState? provisioningState, ElasticSanStorageTargetType? protocolType, ElasticSanEncryptionType? encryption, ElasticSanEncryptionProperties encryptionProperties, NetworkRuleSet networkAcls, IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, bool? enforceDataIntegrityCheckForIscsi, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ElasticSanProvisioningState? provisioningState, ElasticSanStorageTargetType? protocolType, ElasticSanEncryptionType? encryption, ElasticSanEncryptionProperties encryptionProperties, ElasticSanNetworkRuleSet networkAcls, IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, bool? enforceDataIntegrityCheckForIscsi, ElasticSanDeleteRetentionPolicy deleteRetentionPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -81,6 +82,7 @@ namespace Azure.ResourceManager.ElasticSan
             NetworkAcls = networkAcls;
             PrivateEndpointConnections = privateEndpointConnections;
             EnforceDataIntegrityCheckForIscsi = enforceDataIntegrityCheckForIscsi;
+            DeleteRetentionPolicy = deleteRetentionPolicy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -95,14 +97,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <summary> Encryption Properties describing Key Vault and Identity information. </summary>
         public ElasticSanEncryptionProperties EncryptionProperties { get; set; }
         /// <summary> A collection of rules governing the accessibility from specific network locations. </summary>
-        internal NetworkRuleSet NetworkAcls { get; set; }
+        internal ElasticSanNetworkRuleSet NetworkAcls { get; set; }
         /// <summary> The list of virtual network rules. </summary>
         public IList<ElasticSanVirtualNetworkRule> VirtualNetworkRules
         {
             get
             {
                 if (NetworkAcls is null)
-                    NetworkAcls = new NetworkRuleSet();
+                    NetworkAcls = new ElasticSanNetworkRuleSet();
                 return NetworkAcls.VirtualNetworkRules;
             }
         }
@@ -111,5 +113,7 @@ namespace Azure.ResourceManager.ElasticSan
         public IReadOnlyList<ElasticSanPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> A boolean indicating whether or not Data Integrity Check is enabled. </summary>
         public bool? EnforceDataIntegrityCheckForIscsi { get; set; }
+        /// <summary> The retention policy for the soft deleted volume group and its associated resources. </summary>
+        public ElasticSanDeleteRetentionPolicy DeleteRetentionPolicy { get; set; }
     }
 }

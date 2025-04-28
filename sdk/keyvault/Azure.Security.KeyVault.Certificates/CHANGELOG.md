@@ -1,12 +1,28 @@
 # Release History
 
-## 4.8.0-beta.1 (Unreleased)
+## 4.8.0-beta.2 (Unreleased)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Key Vault client libraries better with their contributions to this release:
+
+- James Gould _([GitHub](https://github.com/james-gould))_
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Removed additional forward slash in `RestoreCertificateBackup` and `RestoreCertificateBackupAsync`.
+
+### Other Changes
+
+## 4.8.0-beta.1 (2025-04-08)
 
 ### Features Added
 
 - New `preserveCertificateOrder` option when creating and importing certificates. It can be set as an optional paremeter in `StartCreateCertificate`, as an option in `ImportCertificateOptions`, and it can be retrieved from certificates of type `KeyVaultCertificateWithPolicy`
-
-### Breaking Changes
 
 ### Bugs Fixed
 

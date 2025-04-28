@@ -37,7 +37,14 @@ namespace Azure.AI.Projects
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToString());
             writer.WritePropertyName("content"u8);
-            writer.WriteStringValue(Content);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Content);
+#else
+            using (JsonDocument document = JsonDocument.Parse(Content, ModelSerializationExtensions.JsonDocumentOptions))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsCollectionDefined(Attachments))
             {
                 if (Attachments != null)
@@ -111,7 +118,7 @@ namespace Azure.AI.Projects
                 return null;
             }
             MessageRole role = default;
-            string content = default;
+            BinaryData content = default;
             IReadOnlyList<MessageAttachment> attachments = default;
             IReadOnlyDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -125,7 +132,7 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("content"u8))
                 {
-                    content = property.Value.GetString();
+                    content = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("attachments"u8))

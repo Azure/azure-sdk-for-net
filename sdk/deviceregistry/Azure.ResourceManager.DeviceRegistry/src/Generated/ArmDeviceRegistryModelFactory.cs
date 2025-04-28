@@ -16,87 +16,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDeviceRegistryModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="DeviceRegistry.DeviceRegistryBillingContainerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="billingContainerProvisioningState"> The resource-specific properties for this resource. </param>
-        /// <param name="etag"> Resource ETag. </param>
-        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryBillingContainerData"/> instance for mocking. </returns>
-        public static DeviceRegistryBillingContainerData DeviceRegistryBillingContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DeviceRegistryProvisioningState? billingContainerProvisioningState = null, ETag? etag = null)
-        {
-            return new DeviceRegistryBillingContainerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                billingContainerProvisioningState != null ? new BillingContainerProperties(billingContainerProvisioningState, serializedAdditionalRawData: null) : null,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DeviceRegistry.DeviceRegistryAssetEndpointProfileData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"> The extended location. </param>
-        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryAssetEndpointProfileData"/> instance for mocking. </returns>
-        public static DeviceRegistryAssetEndpointProfileData DeviceRegistryAssetEndpointProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DeviceRegistryAssetEndpointProfileProperties properties = null, DeviceRegistryExtendedLocation extendedLocation = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new DeviceRegistryAssetEndpointProfileData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                properties,
-                extendedLocation,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DeviceRegistryAssetEndpointProfileProperties"/>. </summary>
-        /// <param name="uuid"> Globally unique, immutable, non-reusable id. </param>
-        /// <param name="targetAddress"> The local valid URI specifying the network address/DNS name of a southbound device. The scheme part of the targetAddress URI specifies the type of the device. The additionalConfiguration field holds further connector type specific configuration. </param>
-        /// <param name="endpointProfileType"> Defines the configuration for the connector type that is being used with the endpoint profile. </param>
-        /// <param name="authentication"> Defines the client authentication mechanism to the server. </param>
-        /// <param name="additionalConfiguration"> Stringified JSON that contains connectivity type specific further configuration (e.g. OPC UA, Modbus, ONVIF). </param>
-        /// <param name="discoveredAssetEndpointProfileRef"> Reference to a discovered asset endpoint profile. Populated only if the asset endpoint profile has been created from discovery flow. Discovered asset endpoint profile name must be provided. </param>
-        /// <param name="statusErrors"> Read only object to reflect changes that have occurred on the Edge. Similar to Kubernetes status property for custom resources. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Models.DeviceRegistryAssetEndpointProfileProperties"/> instance for mocking. </returns>
-        public static DeviceRegistryAssetEndpointProfileProperties DeviceRegistryAssetEndpointProfileProperties(string uuid = null, Uri targetAddress = null, string endpointProfileType = null, DeviceRegistryAuthentication authentication = null, string additionalConfiguration = null, string discoveredAssetEndpointProfileRef = null, IEnumerable<AssetEndpointProfileStatusError> statusErrors = null, DeviceRegistryProvisioningState? provisioningState = null)
-        {
-            statusErrors ??= new List<AssetEndpointProfileStatusError>();
-
-            return new DeviceRegistryAssetEndpointProfileProperties(
-                uuid,
-                targetAddress,
-                endpointProfileType,
-                authentication,
-                additionalConfiguration,
-                discoveredAssetEndpointProfileRef,
-                statusErrors != null ? new AssetEndpointProfileStatus(statusErrors?.ToList(), serializedAdditionalRawData: null) : null,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AssetEndpointProfileStatusError"/>. </summary>
-        /// <param name="code"> Error code for classification of errors (ex: 400, 404, 500, etc.). </param>
-        /// <param name="message"> Human readable helpful error message to provide additional context for error (ex: “targetAddress 'foo' is not a valid url”). </param>
-        /// <returns> A new <see cref="Models.AssetEndpointProfileStatusError"/> instance for mocking. </returns>
-        public static AssetEndpointProfileStatusError AssetEndpointProfileStatusError(int? code = null, string message = null)
-        {
-            return new AssetEndpointProfileStatusError(code, message, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="DeviceRegistry.DeviceRegistryAssetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -234,6 +153,87 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public static DeviceRegistryAssetStatusEvent DeviceRegistryAssetStatusEvent(string name = null, MessageSchemaReference messageSchemaReference = null)
         {
             return new DeviceRegistryAssetStatusEvent(name, messageSchemaReference, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistry.DeviceRegistryAssetEndpointProfileData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extended location. </param>
+        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryAssetEndpointProfileData"/> instance for mocking. </returns>
+        public static DeviceRegistryAssetEndpointProfileData DeviceRegistryAssetEndpointProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DeviceRegistryAssetEndpointProfileProperties properties = null, DeviceRegistryExtendedLocation extendedLocation = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DeviceRegistryAssetEndpointProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                extendedLocation,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceRegistryAssetEndpointProfileProperties"/>. </summary>
+        /// <param name="uuid"> Globally unique, immutable, non-reusable id. </param>
+        /// <param name="targetAddress"> The local valid URI specifying the network address/DNS name of a southbound device. The scheme part of the targetAddress URI specifies the type of the device. The additionalConfiguration field holds further connector type specific configuration. </param>
+        /// <param name="endpointProfileType"> Defines the configuration for the connector type that is being used with the endpoint profile. </param>
+        /// <param name="authentication"> Defines the client authentication mechanism to the server. </param>
+        /// <param name="additionalConfiguration"> Stringified JSON that contains connectivity type specific further configuration (e.g. OPC UA, Modbus, ONVIF). </param>
+        /// <param name="discoveredAssetEndpointProfileRef"> Reference to a discovered asset endpoint profile. Populated only if the asset endpoint profile has been created from discovery flow. Discovered asset endpoint profile name must be provided. </param>
+        /// <param name="statusErrors"> Read only object to reflect changes that have occurred on the Edge. Similar to Kubernetes status property for custom resources. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.DeviceRegistryAssetEndpointProfileProperties"/> instance for mocking. </returns>
+        public static DeviceRegistryAssetEndpointProfileProperties DeviceRegistryAssetEndpointProfileProperties(string uuid = null, Uri targetAddress = null, string endpointProfileType = null, DeviceRegistryAuthentication authentication = null, string additionalConfiguration = null, string discoveredAssetEndpointProfileRef = null, IEnumerable<AssetEndpointProfileStatusError> statusErrors = null, DeviceRegistryProvisioningState? provisioningState = null)
+        {
+            statusErrors ??= new List<AssetEndpointProfileStatusError>();
+
+            return new DeviceRegistryAssetEndpointProfileProperties(
+                uuid,
+                targetAddress,
+                endpointProfileType,
+                authentication,
+                additionalConfiguration,
+                discoveredAssetEndpointProfileRef,
+                statusErrors != null ? new AssetEndpointProfileStatus(statusErrors?.ToList(), serializedAdditionalRawData: null) : null,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AssetEndpointProfileStatusError"/>. </summary>
+        /// <param name="code"> Error code for classification of errors (ex: 400, 404, 500, etc.). </param>
+        /// <param name="message"> Human readable helpful error message to provide additional context for error (ex: “targetAddress 'foo' is not a valid url”). </param>
+        /// <returns> A new <see cref="Models.AssetEndpointProfileStatusError"/> instance for mocking. </returns>
+        public static AssetEndpointProfileStatusError AssetEndpointProfileStatusError(int? code = null, string message = null)
+        {
+            return new AssetEndpointProfileStatusError(code, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistry.DeviceRegistryBillingContainerData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="billingContainerProvisioningState"> The resource-specific properties for this resource. </param>
+        /// <param name="etag"> Resource ETag. </param>
+        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryBillingContainerData"/> instance for mocking. </returns>
+        public static DeviceRegistryBillingContainerData DeviceRegistryBillingContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DeviceRegistryProvisioningState? billingContainerProvisioningState = null, ETag? etag = null)
+        {
+            return new DeviceRegistryBillingContainerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                billingContainerProvisioningState != null ? new BillingContainerProperties(billingContainerProvisioningState, serializedAdditionalRawData: null) : null,
+                etag,
+                serializedAdditionalRawData: null);
         }
     }
 }
