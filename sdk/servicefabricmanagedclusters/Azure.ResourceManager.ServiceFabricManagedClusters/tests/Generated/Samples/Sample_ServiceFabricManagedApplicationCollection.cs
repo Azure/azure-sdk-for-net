@@ -7,10 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
@@ -21,8 +19,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutAnApplicationWithMaximumParameters()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ApplicationPutOperation_example_max.json
-            // this example is just showing the usage of "Applications_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-03-01-preview/ApplicationPutOperation_example_max.json
+            // this example is just showing the usage of "ApplicationResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -42,41 +40,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 
             // invoke the operation
             string applicationName = "myApp";
-            ServiceFabricManagedApplicationData data = new ServiceFabricManagedApplicationData(new AzureLocation("eastus"))
-            {
-                Version = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/resRg/providers/Microsoft.ServiceFabric/managedclusters/myCluster/applicationTypes/myAppType/versions/1.0",
-                Parameters =
-{
-["param1"] = "value1"
-},
-                UpgradePolicy = new ApplicationUpgradePolicy
-                {
-                    ApplicationHealthPolicy = new ApplicationHealthPolicy(true, 0)
-                    {
-                        DefaultServiceTypeHealthPolicy = new ServiceTypeHealthPolicy(0, 0, 0),
-                        ServiceTypeHealthPolicyMap =
-{
-["service1"] = new ServiceTypeHealthPolicy(30, 30, 30)
-},
-                    },
-                    ForceRestart = false,
-                    RollingUpgradeMonitoringPolicy = new RollingUpgradeMonitoringPolicy(
-                PolicyViolationCompensationAction.Rollback,
-                XmlConvert.ToTimeSpan("00:02:00"),
-                XmlConvert.ToTimeSpan("00:05:00"),
-                XmlConvert.ToTimeSpan("00:10:00"),
-                XmlConvert.ToTimeSpan("01:00:00"),
-                XmlConvert.ToTimeSpan("00:15:00")),
-                    InstanceCloseDelayDurationInSeconds = 600L,
-                    UpgradeMode = RollingUpgradeMode.UnmonitoredAuto,
-                    UpgradeReplicaSetCheckTimeout = 3600L,
-                    RecreateApplication = false,
-                },
-                Tags =
-{
-["a"] = "b"
-},
-            };
+            ServiceFabricManagedApplicationData data = new ServiceFabricManagedApplicationData(default);
             ArmOperation<ServiceFabricManagedApplicationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, applicationName, data);
             ServiceFabricManagedApplicationResource result = lro.Value;
 
@@ -91,8 +55,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutAnApplicationWithMinimumParameters()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ApplicationPutOperation_example_min.json
-            // this example is just showing the usage of "Applications_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-03-01-preview/ApplicationPutOperation_example_min.json
+            // this example is just showing the usage of "ApplicationResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -112,10 +76,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 
             // invoke the operation
             string applicationName = "myApp";
-            ServiceFabricManagedApplicationData data = new ServiceFabricManagedApplicationData(new AzureLocation("eastus"))
-            {
-                Version = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/resRg/providers/Microsoft.ServiceFabric/managedclusters/myCluster/applicationTypes/myAppType/versions/1.0",
-            };
+            ServiceFabricManagedApplicationData data = new ServiceFabricManagedApplicationData(default);
             ArmOperation<ServiceFabricManagedApplicationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, applicationName, data);
             ServiceFabricManagedApplicationResource result = lro.Value;
 
@@ -130,8 +91,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnApplication()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ApplicationGetOperation_example.json
-            // this example is just showing the usage of "Applications_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-03-01-preview/ApplicationGetOperation_example.json
+            // this example is just showing the usage of "ApplicationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -164,8 +125,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetAListOfApplicationResources()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ApplicationListOperation_example.json
-            // this example is just showing the usage of "Applications_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-03-01-preview/ApplicationListOperation_example.json
+            // this example is just showing the usage of "ApplicationResource_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -200,8 +161,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAnApplication()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ApplicationGetOperation_example.json
-            // this example is just showing the usage of "Applications_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-03-01-preview/ApplicationGetOperation_example.json
+            // this example is just showing the usage of "ApplicationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -230,8 +191,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAnApplication()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ApplicationGetOperation_example.json
-            // this example is just showing the usage of "Applications_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-03-01-preview/ApplicationGetOperation_example.json
+            // this example is just showing the usage of "ApplicationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

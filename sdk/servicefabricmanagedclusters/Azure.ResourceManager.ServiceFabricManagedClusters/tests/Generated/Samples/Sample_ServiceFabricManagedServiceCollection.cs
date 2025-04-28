@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
@@ -20,8 +19,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutAServiceWithMaximumParameters()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ServicePutOperation_example_max.json
-            // this example is just showing the usage of "Services_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-03-01-preview/ServicePutOperation_example_max.json
+            // this example is just showing the usage of "ServiceResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -42,30 +41,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 
             // invoke the operation
             string serviceName = "myService";
-            ServiceFabricManagedServiceData data = new ServiceFabricManagedServiceData(new AzureLocation("eastus"))
-            {
-                Properties = new StatelessServiceProperties("myServiceType", new SingletonPartitionScheme(), 5)
-                {
-                    MinInstanceCount = 3,
-                    MinInstancePercentage = 30,
-                    ServicePackageActivationMode = ManagedServicePackageActivationMode.SharedProcess,
-                    ServiceDnsName = "myservicednsname.myApp",
-                    PlacementConstraints = "NodeType==frontend",
-                    CorrelationScheme = { new ManagedServiceCorrelation(ManagedServiceCorrelationScheme.AlignedAffinity, "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/resRg/providers/Microsoft.ServiceFabric/managedclusters/myCluster/applications/myApp/services/myService1") },
-                    ServiceLoadMetrics = {new ManagedServiceLoadMetric("metric1")
-{
-Weight = ManagedServiceLoadMetricWeight.Low,
-DefaultLoad = 3,
-}},
-                    ServicePlacementPolicies = { new ServicePlacementNonPartiallyPlaceServicePolicy() },
-                    DefaultMoveCost = ServiceFabricManagedServiceMoveCost.Medium,
-                    ScalingPolicies = { new ManagedServiceScalingPolicy(new PartitionInstanceCountScalingMechanism(3, 9, 2), new AveragePartitionLoadScalingTrigger("metricName", 2, 8, "00:01:00")) },
-                },
-                Tags =
-{
-["a"] = "b"
-},
-            };
+            ServiceFabricManagedServiceData data = new ServiceFabricManagedServiceData(default);
             ArmOperation<ServiceFabricManagedServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
             ServiceFabricManagedServiceResource result = lro.Value;
 
@@ -80,8 +56,8 @@ DefaultLoad = 3,
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutAServiceWithMinimumParameters()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ServicePutOperation_example_min.json
-            // this example is just showing the usage of "Services_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-03-01-preview/ServicePutOperation_example_min.json
+            // this example is just showing the usage of "ServiceResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -102,10 +78,7 @@ DefaultLoad = 3,
 
             // invoke the operation
             string serviceName = "myService";
-            ServiceFabricManagedServiceData data = new ServiceFabricManagedServiceData(new AzureLocation("eastus"))
-            {
-                Properties = new StatelessServiceProperties("myServiceType", new SingletonPartitionScheme(), 1),
-            };
+            ServiceFabricManagedServiceData data = new ServiceFabricManagedServiceData(default);
             ArmOperation<ServiceFabricManagedServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
             ServiceFabricManagedServiceResource result = lro.Value;
 
@@ -120,8 +93,8 @@ DefaultLoad = 3,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAService()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ServiceGetOperation_example.json
-            // this example is just showing the usage of "Services_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-03-01-preview/ServiceGetOperation_example.json
+            // this example is just showing the usage of "ServiceResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -155,8 +128,8 @@ DefaultLoad = 3,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetAListOfServiceResources()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ServiceListOperation_example.json
-            // this example is just showing the usage of "Services_ListByApplications" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-03-01-preview/ServiceListOperation_example.json
+            // this example is just showing the usage of "ServiceResource_ListByApplications" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -192,8 +165,8 @@ DefaultLoad = 3,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAService()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ServiceGetOperation_example.json
-            // this example is just showing the usage of "Services_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-03-01-preview/ServiceGetOperation_example.json
+            // this example is just showing the usage of "ServiceResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -223,8 +196,8 @@ DefaultLoad = 3,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAService()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ServiceGetOperation_example.json
-            // this example is just showing the usage of "Services_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-03-01-preview/ServiceGetOperation_example.json
+            // this example is just showing the usage of "ServiceResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
