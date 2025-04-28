@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
         [RecordedTest]
         public async Task TestCreateClusterWithAutoScaleScheduleBasedType()
         {
-            string clusterName = "hdisd-schedulebased";
+            string clusterName = "hdisd-schedulebased2";
             var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
             var workerNode = properties.ComputeRoles.First(role => role.Name.Equals("workernode"));
 
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
         [RecordedTest]
         public async Task TestCreateClusterWithOutboundAndPrivateLink()
         {
-            string clusterName = "hdi-outbounprivatelink";
+            string clusterName = "hdi-outbounprivatelink2";
             var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
             properties.StorageAccounts.FirstOrDefault().ResourceId = StorageAccountResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, _storageAccountName);
             properties.NetworkProperties = new HDInsightClusterNetworkProperties()
