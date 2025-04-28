@@ -52,14 +52,7 @@ namespace Azure.Generator.Primitives
 
             if (hasOperation)
             {
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("RawRequestUriBuilder.cs", pathSegmentCount), SharedSourceLinkBase));
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("TypeFormatters.cs", pathSegmentCount), SharedSourceLinkBase));
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("RequestHeaderExtensions.cs", pathSegmentCount), SharedSourceLinkBase));
-            }
-
-            if (hasLongRunningOperation)
-            {
-                foreach (var file in _lroSharedFiles)
+                foreach (var file in _operationSharedFiles)
                 {
                     builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude(file, pathSegmentCount), "Shared/Core"));
                 }
@@ -68,8 +61,9 @@ namespace Azure.Generator.Primitives
             return builder.Write();
         }
 
-        private static readonly IReadOnlyList<string> _lroSharedFiles =
+        private static readonly IReadOnlyList<string> _operationSharedFiles =
         [
+            "RawRequestUriBuilder.cs",
             "AppContextSwitchHelper.cs",
             "AsyncLockWithValue.cs",
             "FixedDelayWithNoJitterStrategy.cs",
@@ -84,10 +78,12 @@ namespace Azure.Generator.Primitives
             "OperationInternalBase.cs",
             "OperationInternalOfT.cs",
             "OperationPoller.cs",
+            "RequestHeaderExtensions.cs",
             "SequentialDelayStrategy.cs",
             "TaskExtensions.cs",
             "TrimmingAttribute.cs",
-            "VoidValue.cs"
+            "TypeFormatters.cs",
+            "VoidValue.cs",
         ];
 
         private static void TraverseInput(InputClient rootClient, ref bool hasOperation, ref bool hasLongRunningOperation)

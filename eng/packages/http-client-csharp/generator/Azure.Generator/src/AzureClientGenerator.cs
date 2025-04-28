@@ -50,6 +50,6 @@ public class AzureClientGenerator : ScmCodeModelGenerator
         var sharedSourceDirectory = Path.Combine(Path.GetDirectoryName(typeof(AzureClientGenerator).Assembly.Location)!, "Shared", "Core");
         AddSharedSourceDirectory(sharedSourceDirectory);
         AddVisitor(new NamespaceVisitor());
-        AddVisitor(new ClientVisitor());
+        AddVisitor(new DistributedTracingVisitor());
     }
 }
