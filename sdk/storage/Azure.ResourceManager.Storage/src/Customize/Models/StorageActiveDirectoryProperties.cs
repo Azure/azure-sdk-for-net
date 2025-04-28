@@ -17,9 +17,13 @@ namespace Azure.ResourceManager.Storage.Models
         private static void DeserializeNullableGuid(JsonProperty property, ref Guid domainGuid)
         {
             if (string.IsNullOrEmpty(property.Value.GetString()))
+            {
                 domainGuid = Guid.Empty;
+            }
             else
+            {
                 domainGuid = property.Value.GetGuid();
+            }
         }
     }
 }
