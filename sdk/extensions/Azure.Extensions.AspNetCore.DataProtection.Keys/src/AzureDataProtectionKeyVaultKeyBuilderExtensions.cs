@@ -97,23 +97,7 @@ namespace Microsoft.AspNetCore.DataProtection
             Argument.AssertNotNull(tokenCredentialFactory, nameof(tokenCredentialFactory));
             Argument.AssertNotNullOrEmpty(keyIdentifier, nameof(keyIdentifier));
 
-            builder.Services.AddSingleton<IActivator, DecryptorTypeForwardingActivator>();
-
-            builder.Services.AddSingleton<IKeyEncryptionKeyResolver>(sp =>
-            {
-                var tokenCredential = tokenCredentialFactory(sp);
-                return new KeyResolver(tokenCredential);
-            });
-
-            builder.Services.AddSingleton(sp =>
-            {
-                var keyResolver = sp.GetRequiredService<IKeyEncryptionKeyResolver>();
-                return new AzureKeyVaultXmlEncryptor(keyResolver, keyIdentifier);
-            });
-
-            builder.Services.AddSingleton<IConfigureOptions<KeyManagementOptions>, ConfigureKeyManagementKeyVaultEncryptorClientOptions>();
-
-            return builder;
+            return builder.ProtectKeysWithAzureKeyVault(_ => keyIdentifier, tokenCredentialFactory);
         }
 
         /// <summary>
