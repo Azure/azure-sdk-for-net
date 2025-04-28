@@ -3,6 +3,8 @@
 
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Azure.Storage.DataMovement
 {
@@ -49,5 +51,14 @@ namespace Azure.Storage.DataMovement
         /// <returns>A <see cref="StorageResourceCheckpointDetails"/> containing the checkpoint information for this resource.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal abstract StorageResourceCheckpointDetails GetDestinationCheckpointDetails();
+
+        /// <summary>
+        /// Validates whether the proper protocol has been set for the resource.
+        /// Applies only to File Shares.
+        /// </summary>
+        /// <returns>Whether the protocol of the resource is NFS. Returns null if the resource is not File Share.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected internal virtual Task<bool?> ValidateProtocolAsync(bool isDestination, CancellationToken cancellationToken = default)
+            => Task.FromResult<bool?>(null);
     }
 }

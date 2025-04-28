@@ -176,5 +176,32 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 options: options,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
+
+        protected override async Task<bool?> ValidateProtocolAsync(bool isDestination, CancellationToken cancellationToken = default)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            if (ResourceOptions?.SkipProtocolValidation ?? false)
+            {
+                return (ResourceOptions?.IsNfs ?? false);
+            }
+
+            string endpoint = isDestination ? "destination" : "source";
+            try
+            {
+                ShareClient parentShare = ShareDirectoryClient.GetParentShareClient();
+                ShareProperties properties = await parentShare.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                ShareProtocols setProtocol = (ResourceOptions?.IsNfs ?? false) ? ShareProtocols.Nfs : ShareProtocols.Smb;
+                ShareProtocols actualProtocol = properties.Protocols ?? ShareProtocols.Smb;
+                if (actualProtocol != setProtocol)
+                {
+                    throw Errors.ProtocolSetMismatch(endpoint, setProtocol, actualProtocol);
+                }
+            }
+            catch (RequestFailedException ex) when (ex.Status == 403)
+            {
+                throw Errors.NoShareLevelPermissions(endpoint);
+            }
+            return (ResourceOptions?.IsNfs ?? false);
+        }
     }
 }

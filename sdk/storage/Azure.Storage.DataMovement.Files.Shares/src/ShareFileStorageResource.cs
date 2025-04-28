@@ -347,6 +347,33 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 isDirectoryMetadataSet: _options?._isDirectoryMetadataSet ?? false,
                 directoryMetadata: _options?.DirectoryMetadata);
         }
+
+        protected override async Task<bool?> ValidateProtocolAsync(bool isDestination, CancellationToken cancellationToken = default)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            if (_options?.SkipProtocolValidation ?? false)
+            {
+                return (_options?.IsNfs ?? false);
+            }
+
+            string endpoint = isDestination ? "destination" : "source";
+            try
+            {
+                ShareClient parentShare = ShareFileClient.GetParentShareClient();
+                ShareProperties properties = await parentShare.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                ShareProtocols setProtocol = (_options?.IsNfs ?? false) ? ShareProtocols.Nfs : ShareProtocols.Smb;
+                ShareProtocols actualProtocol = properties.Protocols ?? ShareProtocols.Smb;
+                if (actualProtocol != setProtocol)
+                {
+                    throw Errors.ProtocolSetMismatch(endpoint, setProtocol, actualProtocol);
+                }
+            }
+            catch (RequestFailedException ex) when (ex.Status == 403)
+            {
+                throw Errors.NoShareLevelPermissions(endpoint);
+            }
+            return (_options?.IsNfs ?? false);
+        }
     }
 
 #pragma warning disable SA1402 // File may only contain a single type
@@ -355,5 +382,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
     {
         public static InvalidOperationException ShareFileAlreadyExists(string pathName)
             => new InvalidOperationException($"Share File `{pathName}` already exists. Cannot overwrite file.");
+
+        public static ArgumentException ProtocolSetMismatch(string endpoint, ShareProtocols setProtocol, ShareProtocols actualProtocol)
+            => new ArgumentException($"The Protocol set on the {endpoint} '{setProtocol}' does not match the actual Protocol of the share '{actualProtocol}'.");
+
+        public static UnauthorizedAccessException NoShareLevelPermissions(string endpoint)
+            => new UnauthorizedAccessException($"Share-level permissions on the {endpoint} is required to validate the Protocol. " +
+                "Please enable SkipProtocolValidation if you wish to skip the validation.");
     }
 }
