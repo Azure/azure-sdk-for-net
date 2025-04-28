@@ -24,6 +24,7 @@ namespace Azure.Communication.CallAutomation
             ServerCallId = internalEvent.ServerCallId;
             CorrelationId = internalEvent.CorrelationId;
             InvitationId = internalEvent.InvitationId;
+            ResultInformation = internalEvent.ResultInformation;
         }
 
         /// <summary>

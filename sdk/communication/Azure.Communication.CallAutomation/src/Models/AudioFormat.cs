@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// The states of a call.
+    /// AudioFormat for media streaming.
     /// </summary>
     [CodeGenModel("AudioFormat", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public readonly partial struct AudioFormat

@@ -19,10 +19,9 @@ namespace Azure.Communication.CallAutomation
             CommunicationIdentifier source,
             PhoneNumberIdentifier sourceCallerIdNumber,
             string sourceDisplayName,
-            MediaStreamingSubscription mediaStreamingSubscription,
-            TranscriptionSubscription transcriptionSubscription,
+            string dataSubscriptionId,
             CommunicationUserIdentifier answeredBy,
-            PhoneNumberIdentifier answeredFor
+            MediaStreamingSubscription mediaStreamingSubscription
             )
         {
             CallConnectionId = callConnectionId;
@@ -33,10 +32,9 @@ namespace Azure.Communication.CallAutomation
             Source = source;
             SourceCallerIdNumber = sourceCallerIdNumber;
             SourceDisplayName = sourceDisplayName;
-            MediaStreamingSubscription = mediaStreamingSubscription;
-            TranscriptionSubscription = transcriptionSubscription;
+            DataSubscriptionId = dataSubscriptionId;
             AnsweredBy = answeredBy;
-            AnsweredFor = answeredFor;
+            MediaStreamingSubscription = mediaStreamingSubscription;
         }
 
         internal CallConnectionProperties(CallConnectionPropertiesInternal callConnectionPropertiesDtoInternal)
@@ -45,7 +43,7 @@ namespace Azure.Communication.CallAutomation
             ServerCallId = callConnectionPropertiesDtoInternal.ServerCallId;
             Targets = callConnectionPropertiesDtoInternal.Targets.Select(t => CommunicationIdentifierSerializer.Deserialize(t)).ToList();
 
-            if (callConnectionPropertiesDtoInternal.CallConnectionState == null || callConnectionPropertiesDtoInternal.CallConnectionState == default(CallConnectionState))
+            if (callConnectionPropertiesDtoInternal.CallConnectionState == null || callConnectionPropertiesDtoInternal.CallConnectionState ==  default(CallConnectionState))
             {
                 CallConnectionState = CallConnectionState.Unknown;
             }
@@ -55,32 +53,22 @@ namespace Azure.Communication.CallAutomation
             }
 
             CallbackUri = new Uri(callConnectionPropertiesDtoInternal.CallbackUri);
-            MediaStreamingSubscription = callConnectionPropertiesDtoInternal.MediaStreamingSubscription != null ?
-               new MediaStreamingSubscription(
-                   callConnectionPropertiesDtoInternal.MediaStreamingSubscription.Id,
-                   callConnectionPropertiesDtoInternal.MediaStreamingSubscription.State,
-                   callConnectionPropertiesDtoInternal.MediaStreamingSubscription.SubscribedContentTypes)
-               : null;
-            TranscriptionSubscription = callConnectionPropertiesDtoInternal.TranscriptionSubscription != null ?
-                new TranscriptionSubscription(
-                    callConnectionPropertiesDtoInternal.TranscriptionSubscription.Id,
-                    callConnectionPropertiesDtoInternal.TranscriptionSubscription.State,
-                    callConnectionPropertiesDtoInternal.TranscriptionSubscription.SubscribedResultTypes)
-                : null;
-            Source = callConnectionPropertiesDtoInternal.Source == null ? null : CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.Source);
+            DataSubscriptionId = callConnectionPropertiesDtoInternal.DataSubscriptionId;
+            Source = callConnectionPropertiesDtoInternal.Source == null? null : CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.Source);
             SourceDisplayName = callConnectionPropertiesDtoInternal.SourceDisplayName;
             CorrelationId = callConnectionPropertiesDtoInternal.CorrelationId;
-            AnsweredBy = callConnectionPropertiesDtoInternal.AnsweredBy == null ? null : new CommunicationUserIdentifier(callConnectionPropertiesDtoInternal.AnsweredBy.Id);
+            AnsweredBy = callConnectionPropertiesDtoInternal.AnsweredBy == null? null : new CommunicationUserIdentifier(callConnectionPropertiesDtoInternal.AnsweredBy.Id);
 
             if (callConnectionPropertiesDtoInternal.SourceCallerIdNumber != null)
             {
                 SourceCallerIdNumber = new PhoneNumberIdentifier(callConnectionPropertiesDtoInternal.SourceCallerIdNumber.Value);
             }
-
-            if (callConnectionPropertiesDtoInternal.AnsweredFor != null)
-            {
-                AnsweredFor = new PhoneNumberIdentifier(callConnectionPropertiesDtoInternal.AnsweredFor.Value);
-            }
+            MediaStreamingSubscription = callConnectionPropertiesDtoInternal.MediaStreamingSubscription != null ?
+              new MediaStreamingSubscription(
+                  callConnectionPropertiesDtoInternal.MediaStreamingSubscription.Id,
+                  callConnectionPropertiesDtoInternal.MediaStreamingSubscription.State,
+                  callConnectionPropertiesDtoInternal.MediaStreamingSubscription.SubscribedContentTypes)
+              : null;
         }
 
         /// <summary> The call connection id. </summary>
@@ -93,10 +81,8 @@ namespace Azure.Communication.CallAutomation
         public CallConnectionState CallConnectionState { get; }
         /// <summary> The callback URI. </summary>
         public Uri CallbackUri { get; }
-        /// <summary> SubscriptionId for media streaming. </summary>
-        public MediaStreamingSubscription MediaStreamingSubscription { get; }
         /// <summary> SubscriptionId for transcription. </summary>
-        public TranscriptionSubscription TranscriptionSubscription { get; }
+        public string DataSubscriptionId { get; }
         /// <summary>
         /// Caller ID phone number to appear on the invitee.
         /// </summary>
@@ -121,8 +107,8 @@ namespace Azure.Communication.CallAutomation
         public CommunicationUserIdentifier AnsweredBy { get; }
 
         /// <summary>
-        /// Identity of the original Pstn target of an incoming Call. Only populated when the original target is a Pstn number.
+        /// Media streaming subscription details.
         /// </summary>
-        public PhoneNumberIdentifier AnsweredFor { get; }
+        public MediaStreamingSubscription MediaStreamingSubscription { get; }
     }
 }

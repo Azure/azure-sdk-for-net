@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Text.Json;
@@ -15,15 +15,15 @@ namespace Azure.Communication.CallAutomation
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IncomingCall"/>. </summary>
-        /// <param name="internalEvent">Internal Representation of the IncomingCall. </param>
+        /// <summary> Initializes a new instance of IncomingCallEvent. </summary>
+        /// <param name="internalEvent">Internal Representation of the IncomingCallEvent. </param>
         internal IncomingCall(IncomingCallInternal internalEvent)
         {
             To = CommunicationIdentifierSerializer.Deserialize(internalEvent.To);
             From = CommunicationIdentifierSerializer.Deserialize(internalEvent.From);
             ServerCallId = internalEvent.ServerCallId;
             CallerDisplayName = internalEvent.CallerDisplayName;
-            CustomContext = new CustomCallingContext(internalEvent.CustomContext.VoipHeaders, internalEvent.CustomContext.SipHeaders);
+            CustomContext = new CustomCallingContext(internalEvent.CustomContext.SipHeaders, internalEvent.CustomContext.VoipHeaders);
             IncomingCallContext = internalEvent.IncomingCallContext;
 
             if (internalEvent.OnBehalfOfCallee != null)

@@ -20,10 +20,10 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new CustomCallingContext.
         /// </summary>
-        internal CustomCallingContext(IDictionary<string, string> voipHeaders, IDictionary<string, string> sipHeaders)
+        internal CustomCallingContext(IDictionary<string, string> sipHeaders, IDictionary<string, string> voipHeaders)
         {
-            SipHeaders = sipHeaders ?? new ChangeTrackingDictionary<string, string>();
-            VoipHeaders = voipHeaders ?? new ChangeTrackingDictionary<string, string>();
+            SipHeaders = sipHeaders;
+            VoipHeaders = voipHeaders;
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Add a custom calling context sip X header. The provided key is appended to such as 'X-MS-Custom-{key}'
+        /// Add a custom calling context sip X header (X-* or X-MS-Custom-*).
         /// </summary>
         /// <param name="key">custom calling context sip X header's key.</param>
         /// <param name="value">custom calling context sip X header's value.</param>

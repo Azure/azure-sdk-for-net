@@ -54,21 +54,17 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             JsonPathSanitizers.Add("$..botAppId");
             JsonPathSanitizers.Add("$..ivrContext");
             JsonPathSanitizers.Add("$..dialog.botAppId");
-            BodyKeySanitizers.Add(new BodyKeySanitizer("..sourceDisplayName") { Value = SanitizeValue });
             BodyKeySanitizers.Add(new BodyKeySanitizer("..incomingCallContext") { Value = SanitizeValue });
-            BodyKeySanitizers.Add(new BodyKeySanitizer("..callbackUri") { Value = @"https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("..callbackUri") { Value = @"https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized"});
             BodyKeySanitizers.Add(new BodyKeySanitizer("..recordingStateCallbackUri") { Value = @"https://sanitized.skype.com/api/servicebuscallback/events" });
             BodyKeySanitizers.Add(new BodyKeySanitizer("..transportUrl") { Value = @"wss://sanitized.skype.com" });
             BodyKeySanitizers.Add(new BodyKeySanitizer("..cognitiveServicesEndpoint") { Value = @"https://sanitized.skype.com" });
-                BodyKeySanitizers.Add(new BodyKeySanitizer("$..file.uri") { Value = @"https://sanitized.skype.com/prompt.wav" });
-                BodyRegexSanitizers.Add(new BodyRegexSanitizer(TestDispatcherRegEx) { Value = "https://sanitized.skype.com" });
-                UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx) { Value = "https://sanitized.skype.com" });
-                UriRegexSanitizers.Add(new UriRegexSanitizer(TestDispatcherQNameRegEx) { Value = SanitizeValue });
-                UriRegexSanitizers.Add(new UriRegexSanitizer(ACSUserIdInUrlRegex) { Value = SanitizeValue });
-            }
-
-        public bool SkipCallAutomationInteractionLiveTests
-            => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_CALLAUTOMATION_INTERACTION_LIVE_TESTS") == "TRUE";
+            BodyKeySanitizers.Add(new BodyKeySanitizer("$..file.uri") { Value = @"https://sanitized.skype.com/prompt.wav" });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(TestDispatcherRegEx) { Value = "https://sanitized.skype.com" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx) { Value = "https://sanitized.skype.com" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(TestDispatcherQNameRegEx));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(ACSUserIdInUrlRegex) { Value = SanitizeValue });
+        }
 
         [SetUp]
         public void TestSetup()
@@ -104,7 +100,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         }
 
         public bool SkipCallingServerInteractionLiveTests
-            => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_CALLINGSERVER_INTERACTION_LIVE_TESTS") == "TRUE";
+            => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_CALLINGSERVER_INTERACTION_LIVE_TESTS")== "TRUE";
 
         /// <summary>
         /// Creates a <see cref="CallAutomationClient" />
@@ -115,7 +111,6 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             var connectionString = TestEnvironment.LiveTestStaticConnectionString;
 
             CallAutomationClient callAutomationClient;
-
             if (TestEnvironment.PMAEndpoint == null || TestEnvironment.PMAEndpoint.Length == 0)
             {
                 callAutomationClient = new CallAutomationClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs(source));
@@ -181,37 +176,6 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         protected string GetResourceId()
         {
             return TestEnvironment.ResourceIdentifier;
-        }
-
-        protected void GetPhoneNumbers(out CommunicationIdentifier sourcePhone, out CommunicationIdentifier target)
-        {
-            if (Mode == RecordedTestMode.Playback)
-            {
-                sourcePhone = new PhoneNumberIdentifier("Sanitized");
-                target = new PhoneNumberIdentifier("Sanitized");
-            }
-            else
-            {
-                PhoneNumbersClient phoneNumbersClient = new PhoneNumbersClient(TestEnvironment.LiveTestStaticConnectionString);
-                var purchasedPhoneNumbers = phoneNumbersClient.GetPurchasedPhoneNumbers();
-                List<string> phoneNumbers = new List<string>();
-                foreach (var phoneNumber in purchasedPhoneNumbers)
-                {
-                    phoneNumbers.Add(phoneNumber.PhoneNumber);
-                    Console.WriteLine($"Phone number: {phoneNumber.PhoneNumber}, monthly cost: {phoneNumber.Cost}");
-                }
-
-                Random random = new Random();
-                int num1 = random.Next(0, phoneNumbers.Count);
-                int num2;
-                do
-                {
-                    num2 = random.Next(0, phoneNumbers.Count);
-                } while (num2 == num1);
-
-                target = new PhoneNumberIdentifier(phoneNumbers[num1]);
-                sourcePhone = new PhoneNumberIdentifier(phoneNumbers[num2]);
-            }
         }
 
         /// <summary>
@@ -280,7 +244,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         private void HandleServiceBusReceivedMessage(RecordedServiceBusReceivedMessage receivedMessage)
         {
-            string body = Regex.Unescape(receivedMessage.Body.ToString());
+            string body = receivedMessage.Body.ToString();
 
             if (!string.IsNullOrEmpty(body))
             {
@@ -320,7 +284,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             string fromId = unparsed.Split(new string[] { "\"from\":{\"kind\":" }, StringSplitOptions.None)[1].Split(new string[] { "\"rawId\":\"" }, StringSplitOptions.None)[1].Split(new string[] { "\"" }, StringSplitOptions.None)[0];
             string toId = unparsed.Split(new string[] { "\"to\":{\"kind\":" }, StringSplitOptions.None)[1].Split(new string[] { "\"rawId\":\"" }, StringSplitOptions.None)[1].Split(new string[] { "\"" }, StringSplitOptions.None)[0];
 
-            return RemoveAllNonChar(fromId + toId);
+            return fromId + toId;
         }
 
         private string ParseIdsFromIdentifier(CommunicationIdentifier inputIdentifier)
@@ -338,7 +302,10 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                     }
                     else
                     {
-                        return RemoveAllNonChar(((PhoneNumberIdentifier)inputIdentifier).RawId);
+                        /* Change the plus + sign to it's unicode without the special characters i.e. u002B.
+                         * It's required because the dispacther app receives the incoming call context for pstn call
+                         * with the + as unicode in it and builds the topic id with it to send the event.*/
+                        return RemoveAllNonChar(((PhoneNumberIdentifier)inputIdentifier).RawId).Insert(1, "u002B");
                     }
                 case MicrosoftTeamsUserIdentifier:
                     return RemoveAllNonChar(((MicrosoftTeamsUserIdentifier)inputIdentifier).RawId);
@@ -356,7 +323,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         private HttpPipeline BuildHttpPipeline()
         {
             var clientOptions = CreateServerCallingClientOptionsWithCorrelationVectorLogs();
-            return clientOptions.BuildHttpPipeline(
+            return clientOptions.CustomBuildHttpPipeline(
                 ConnectionString.Parse(TestEnvironment.LiveTestStaticConnectionString));
         }
 

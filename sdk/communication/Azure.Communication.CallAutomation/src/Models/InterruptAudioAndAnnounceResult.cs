@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -42,9 +42,7 @@ namespace Azure.Communication.CallAutomation
                 && (filter.OperationContext == _operationContext || _operationContext is null)
                 && (filter.GetType() == typeof(PlayCompleted)
                 || filter.GetType() == typeof(PlayStarted)
-                || filter.GetType() == typeof(PlayFailed)
-                || filter.GetType() == typeof(PlayPaused)
-                || filter.GetType() == typeof(PlayResumed)),
+                || filter.GetType() == typeof(PlayFailed)),
                 cancellationToken);
 
             return SetReturnedEvent(returnedEvent);
@@ -67,9 +65,7 @@ namespace Azure.Communication.CallAutomation
                 && (filter.OperationContext == _operationContext || _operationContext is null)
                 && (filter.GetType() == typeof(PlayCompleted)
                 || filter.GetType() == typeof(PlayStarted)
-                || filter.GetType() == typeof(PlayFailed)
-                || filter.GetType() == typeof(PlayPaused)
-                || filter.GetType() == typeof(PlayResumed)),
+                || filter.GetType() == typeof(PlayFailed)),
                 cancellationToken).ConfigureAwait(false);
 
             return SetReturnedEvent(returnedEvent);
@@ -88,12 +84,6 @@ namespace Azure.Communication.CallAutomation
                     break;
                 case PlayStarted:
                     result = new PlayEventResult(true, null, null, (PlayStarted)returnedEvent, null, null);
-                    break;
-                case PlayPaused:
-                    result = new PlayEventResult(true, null, null, null, (PlayPaused)returnedEvent, null);
-                    break;
-                case PlayResumed:
-                    result = new PlayEventResult(true, null, null, null, null, (PlayResumed)returnedEvent);
                     break;
                 default:
                     throw new NotSupportedException(returnedEvent.GetType().Name);

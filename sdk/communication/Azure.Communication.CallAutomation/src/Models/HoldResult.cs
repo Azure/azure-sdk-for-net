@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading;
+using System;
 using System.Threading.Tasks;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary>The result from playing audio.</summary>
+    /// <summary>The result from hold audio.</summary>
     public class HoldResult
     {
         private CallAutomationEventProcessor _evHandler;
@@ -54,7 +54,7 @@ namespace Azure.Communication.CallAutomation
         /// Wait for <see cref="HoldEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="HoldEventResult"/> which contains <see cref="HoldFailed"/> event.</returns>
+        /// <returns>Returns <see cref="HoldEventResult"/> which contains either <see cref="HoldAudioCompleted"/> event or <see cref="HoldFailed"/> event.</returns>
         public async Task<HoldEventResult> WaitForEventProcessorAsync(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
@@ -65,10 +65,10 @@ namespace Azure.Communication.CallAutomation
             var returnedEvent = await _evHandler.WaitForEventProcessorAsync(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
-                && (filter.GetType() == typeof(HoldAudioCompleted)
-                || filter.GetType() == typeof(HoldAudioStarted)
+                && (filter.GetType() == typeof(HoldAudioStarted)
                 || filter.GetType() == typeof(HoldAudioPaused)
                 || filter.GetType() == typeof(HoldAudioResumed)
+                || filter.GetType() == typeof(HoldAudioCompleted)
                 || filter.GetType() == typeof(HoldFailed)),
                 cancellationToken).ConfigureAwait(false);
 
