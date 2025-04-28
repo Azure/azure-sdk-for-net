@@ -1240,7 +1240,8 @@
         "vcpus",
         "esxi",
         "seleted",
-        "dras"
+        "dras",
+        "Fqdns"
       ]
     },
     {
