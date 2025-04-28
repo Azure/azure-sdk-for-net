@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Caching behavior for the requests
-    /// Serialized Name: CacheBehaviorSetting
+    /// Serialized Name: CacheBehavior
     /// </summary>
     public readonly partial struct CacheBehaviorSetting : IEquatable<CacheBehaviorSetting>
     {
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// BypassCache
-        /// Serialized Name: CacheBehaviorSetting.BypassCache
+        /// Serialized Name: CacheBehavior.BypassCache
         /// </summary>
         public static CacheBehaviorSetting BypassCache { get; } = new CacheBehaviorSetting(BypassCacheValue);
         /// <summary>
         /// Override
-        /// Serialized Name: CacheBehaviorSetting.Override
+        /// Serialized Name: CacheBehavior.Override
         /// </summary>
         public static CacheBehaviorSetting Override { get; } = new CacheBehaviorSetting(OverrideValue);
         /// <summary>
         /// SetIfMissing
-        /// Serialized Name: CacheBehaviorSetting.SetIfMissing
+        /// Serialized Name: CacheBehavior.SetIfMissing
         /// </summary>
         public static CacheBehaviorSetting SetIfMissing { get; } = new CacheBehaviorSetting(SetIfMissingValue);
         /// <summary> Determines if two <see cref="CacheBehaviorSetting"/> values are the same. </summary>

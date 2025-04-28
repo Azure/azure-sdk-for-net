@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Defines the TLS extension protocol that is used for secure delivery.
-    /// Serialized Name: SecureDeliveryProtocolType
+    /// Serialized Name: ProtocolType
     /// </summary>
     public readonly partial struct SecureDeliveryProtocolType : IEquatable<SecureDeliveryProtocolType>
     {
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// ServerNameIndication
-        /// Serialized Name: SecureDeliveryProtocolType.ServerNameIndication
+        /// Serialized Name: ProtocolType.ServerNameIndication
         /// </summary>
         public static SecureDeliveryProtocolType ServerNameIndication { get; } = new SecureDeliveryProtocolType(ServerNameIndicationValue);
         /// <summary>
         /// IPBased
-        /// Serialized Name: SecureDeliveryProtocolType.IPBased
+        /// Serialized Name: ProtocolType.IPBased
         /// </summary>
         public static SecureDeliveryProtocolType IPBased { get; } = new SecureDeliveryProtocolType(IPBasedValue);
         /// <summary> Determines if two <see cref="SecureDeliveryProtocolType"/> values are the same. </summary>

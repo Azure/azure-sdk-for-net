@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Describes operator to be matched
-    /// Serialized Name: SocketAddressOperator
+    /// Serialized Name: SocketAddrOperator
     /// </summary>
     public readonly partial struct SocketAddressOperator : IEquatable<SocketAddressOperator>
     {
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// Any
-        /// Serialized Name: SocketAddressOperator.Any
+        /// Serialized Name: SocketAddrOperator.Any
         /// </summary>
         public static SocketAddressOperator Any { get; } = new SocketAddressOperator(AnyValue);
         /// <summary>
         /// IPMatch
-        /// Serialized Name: SocketAddressOperator.IPMatch
+        /// Serialized Name: SocketAddrOperator.IPMatch
         /// </summary>
         public static SocketAddressOperator IPMatch { get; } = new SocketAddressOperator(IPMatchValue);
         /// <summary> Determines if two <see cref="SocketAddressOperator"/> values are the same. </summary>

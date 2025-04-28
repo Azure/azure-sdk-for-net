@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Type of certificate used
-    /// Serialized Name: CdnManagedCertificateType
+    /// Serialized Name: CertificateType
     /// </summary>
     public readonly partial struct CdnManagedCertificateType : IEquatable<CdnManagedCertificateType>
     {
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// Shared
-        /// Serialized Name: CdnManagedCertificateType.Shared
+        /// Serialized Name: CertificateType.Shared
         /// </summary>
         public static CdnManagedCertificateType Shared { get; } = new CdnManagedCertificateType(SharedValue);
         /// <summary>
         /// Dedicated
-        /// Serialized Name: CdnManagedCertificateType.Dedicated
+        /// Serialized Name: CertificateType.Dedicated
         /// </summary>
         public static CdnManagedCertificateType Dedicated { get; } = new CdnManagedCertificateType(DedicatedValue);
         /// <summary> Determines if two <see cref="CdnManagedCertificateType"/> values are the same. </summary>

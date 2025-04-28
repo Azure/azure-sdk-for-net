@@ -98,7 +98,7 @@ override-operation-name:
 
 rename-mapping:
   SecretProperties: FrontDoorSecretProperties
-  CacheLevel: CdnCacheLevel
+  CacheType: CdnCacheLevel
   SslProtocol: DeliveryRuleSslProtocol
   SslProtocolMatchCondition: DeliveryRuleSslProtocolMatchCondition
   Endpoint.properties.customDomains: DeepCreatedCustomDomains
@@ -168,6 +168,15 @@ rename-mapping:
   MatchCondition.operator: matchOperator
   CdnWebApplicationFirewallPolicy.properties.customRules: CustomSettings
   Endpoint: CdnEndpoint
+  SocketAddrOperator: SocketAddressOperator
+  SocketAddrMatchCondition.operator: SocketAddressOperator
+  CacheExpirationActionProperties.cacheDuration: -|duration-constant
+  CacheConfiguration.cacheDuration: -|duration-constant
+  ProtocolType: SecureDeliveryProtocolType
+  ProbeProtocol: HealthProbeProtocol
+  CustomHttpsProvisioningSubstate: CustomHttpsAvailabilityState
+  CacheBehavior: CacheBehaviorSetting
+  CertificateType: CdnManagedCertificateType
 
 directive:
   - from: swagger-document
@@ -177,10 +186,10 @@ directive:
   - from: cdn.json
     where: $.definitions
     transform: >
-      $.SocketAddrMatchConditionParameters.properties.operator['x-ms-enum'].name = 'SocketAddressOperator';
       $.RequestSchemeMatchConditionParameters.properties.operator['x-ms-enum'] = {
-          "name": "RequestSchemeOperator"
-        }
+            "name": "RequestSchemeOperator",
+            "modelAsString": true
+        };
       for (var key in $) {
             if (key.endsWith('Parameters')) {
                 for (var property in $[key].properties) {
@@ -208,15 +217,6 @@ directive:
                 }
             }
         }
-      $.CacheExpirationActionParameters.properties.cacheDuration['x-ms-format'] = 'duration-constant';
-      $.CacheConfiguration.properties.cacheDuration['x-ms-format'] = 'duration-constant';
-
-      $.HealthProbeParameters.properties.probeProtocol['x-ms-enum'].name = 'HealthProbeProtocol';
-      $.CustomDomainHttpsParameters.properties.protocolType['x-ms-enum'].name = 'SecureDeliveryProtocolType';
-      $.CustomDomainProperties.properties.customHttpsProvisioningSubstate['x-ms-enum'].name = 'CustomHttpsAvailabilityState';
-      $.CacheExpirationActionParameters.properties.cacheBehavior['x-ms-enum'].name = 'cacheBehaviorSetting';
-      $.CacheExpirationActionParameters.properties.cacheType['x-ms-enum'].name = 'cacheLevel';
-      $.CdnCertificateSourceParameters.properties.certificateType['x-ms-enum'].name = 'CdnManagedCertificateType';
       $.ResourceType['x-ms-enum'].name = 'CdnResourceType';
       $.CustomDomainHttpsParameters.properties.minimumTlsVersion['x-ms-enum'].name = 'CdnMinimumTlsVersion';
       $.ResourceType['x-ms-enum'].values = [
@@ -244,10 +244,6 @@ directive:
         }
       $.RequestMethodMatchConditionParameters.properties.matchValues.items['x-ms-enum'] = {
             "name": "RequestMethodMatchConditionMatchValue",
-            "modelAsString": true
-        }
-      $.RequestSchemeMatchConditionParameters.properties.operator['x-ms-enum'] = {
-            "name": "RequestSchemeOperator",
             "modelAsString": true
         }
       $.RequestSchemeMatchConditionParameters.properties.matchValues.items['x-ms-enum'] = {

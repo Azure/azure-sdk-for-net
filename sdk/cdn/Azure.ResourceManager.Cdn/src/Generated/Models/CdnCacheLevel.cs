@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The level at which the content needs to be cached.
-    /// Serialized Name: CacheLevel
+    /// Serialized Name: CacheType
     /// </summary>
     public readonly partial struct CdnCacheLevel : IEquatable<CdnCacheLevel>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// All
-        /// Serialized Name: CacheLevel.All
+        /// Serialized Name: CacheType.All
         /// </summary>
         public static CdnCacheLevel All { get; } = new CdnCacheLevel(AllValue);
         /// <summary> Determines if two <see cref="CdnCacheLevel"/> values are the same. </summary>
