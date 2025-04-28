@@ -53,17 +53,9 @@ function IsSpecDir {
 $failingSpecs = @(
     Join-Path 'http' 'payload' 'pageable'
     Join-Path 'http' 'payload' 'xml'
-    Join-Path 'http' 'type' 'model' 'flatten'
-    Join-Path 'http' 'type' 'model' 'templated'
     Join-Path 'http' 'payload' 'multipart'
     Join-Path 'http' 'server' 'path' 'multiple'
     Join-Path 'http' 'server' 'versions' 'versioned'
-    Join-Path 'http' 'type' 'union'
-    Join-Path 'http' 'type' 'enum' 'extensible'
-    Join-Path 'http' 'type' 'model' 'inheritance' 'enum-discriminator'
-    Join-Path 'http' 'type' 'property' 'additional-properties'
-    Join-Path 'http' 'type' 'property' 'optionality'
-    Join-Path 'http' 'type' 'property' 'value-types'
     Join-Path 'http' 'versioning' 'added'
     Join-Path 'http' 'versioning' 'madeOptional'
     Join-Path 'http' 'versioning' 'removed'
@@ -82,9 +74,6 @@ $failingSpecs = @(
     Join-Path 'http' 'parameters' 'collection-format'
     Join-Path 'http' 'response' 'status-code-range' # Response namespace conflicts with Azure.Response
     Join-Path 'http' 'routes'
-    Join-Path 'http' 'type' 'array'
-    Join-Path 'http' 'type' 'dictionary'
-    Join-Path 'http' 'type' 'scalar'
 )
 
 $azureAllowSpecs = @(

@@ -30,6 +30,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public static BlobServiceClient GetServiceClient_SharedKey(this BlobsClientBuilder clientBuilder, BlobClientOptions options = default)
             => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigDefault, options);
 
+        public static BlobServiceClient GetServiceClient_Premium(this BlobsClientBuilder clientBuilder, BlobClientOptions options = default)
+            => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigPremiumBlob, options);
+
         public static BlobServiceClient GetServiceClient_OAuth(this BlobsClientBuilder clientBuilder, TokenCredential tokenCredential)
             => clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigOAuth, tokenCredential);
 
@@ -58,7 +61,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             bool premium = default)
         {
             containerName ??= clientBuilder.GetNewContainerName();
-            service ??= clientBuilder.GetServiceClient_SharedKey();
+            service ??= premium ? clientBuilder.GetServiceClient_Premium() : clientBuilder.GetServiceClient_SharedKey();
 
             if (publicAccessType == default)
             {
