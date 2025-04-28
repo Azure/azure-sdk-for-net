@@ -18,6 +18,7 @@ namespace Azure.Generator.Primitives
         private const string MSBuildThisFileDirectory = "$(MSBuildThisFileDirectory)";
         private const string RelativeCoreSegment = "sdk/core/Azure.Core/src/Shared/";
         private const string ParentDirectory = "../";
+        private const string corePathSegment = "Shared/Core";
 
         /// <inheritdoc/>
         protected override string GetSourceProjectFileContent()
@@ -37,7 +38,6 @@ namespace Azure.Generator.Primitives
             }
 
             int pathSegmentCount = GetPathSegmentCount();
-            const string corePathSegment = "Shared/Core";
             if (AzureClientGenerator.Instance.InputLibrary.InputNamespace.Auth?.ApiKey is not null)
             {
                 builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("AzureKeyCredentialPolicy.cs", pathSegmentCount), corePathSegment));
