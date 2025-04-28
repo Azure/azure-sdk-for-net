@@ -885,6 +885,9 @@
 # ServiceLabel: %Storage
 # ServiceOwners:                                                   @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft @nickliu-msft
 
+# PRLabel: %Storage
+/sdk/storagesync/                                                  @ankushbindlish2 @anpint @jlindamood
+
 # ServiceLabel: %Storsimple
 # ServiceOwners:                                                   @anoobbacker @ganzee @manuaery
 
