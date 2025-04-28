@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
                     ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/yukundemo1/providers/Microsoft.Storage/storageAccounts/yk01wasb666666666666"),
                     IsDefault = true,
                     Container = _containerName,
-                    Key = "tIH78jYu4V3VHkb/Xl4yvrNu+Dllv+kKulwPCsG42YYKgLYItGrjh3/DCGwVJbMahmnrlucgOVkU+ASt1xNIoA==",
+                    Key = _accessKey,
                 });
                 properties.NetworkProperties = new HDInsightClusterNetworkProperties()
                 {
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
                     ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/yukundemo1/providers/Microsoft.Storage/storageAccounts/yka01hdistorage"),
                     IsDefault = true,
                     Container = _containerName,
-                    Key = "5XfCsLUf6LU4Ak0wkLSzYeelvfwzqthPQ/oXHRigZZQeEUnZvWzFIEWdNja0eMGznatDxNedam5a+ASty1qhJA==",
+                    Key = _accessKey,
                 });
             }
             return properties;
