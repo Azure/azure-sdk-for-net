@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string type = default;
             bool? canMigrate = default;
             CanMigrateDefaultSku? defaultSku = default;
@@ -115,7 +115,11 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("type"u8))

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            RemoteAddressMatchCondition parameters = default;
+            RemoteAddressMatchConditionParameters parameters = default;
             MatchVariable name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = RemoteAddressMatchCondition.DeserializeRemoteAddressMatchCondition(property.Value, options);
+                    parameters = RemoteAddressMatchConditionParameters.DeserializeRemoteAddressMatchConditionParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

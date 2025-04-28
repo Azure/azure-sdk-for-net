@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="migrateResultType"> Resource type. </param>
         /// <param name="migratedProfileResourceId"> Arm resource id of the migrated profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateResult(string id, string migrateResultType, WritableSubResource migratedProfileResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MigrateResult(ResourceIdentifier id, string migrateResultType, WritableSubResource migratedProfileResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             MigrateResultType = migrateResultType;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource ID. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> Resource type. </summary>
         public string MigrateResultType { get; }
         /// <summary> Arm resource id of the migrated profile. </summary>

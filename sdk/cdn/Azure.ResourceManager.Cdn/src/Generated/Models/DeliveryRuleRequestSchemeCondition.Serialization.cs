@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            RequestSchemeMatchCondition parameters = default;
+            RequestSchemeMatchConditionParameters parameters = default;
             MatchVariable name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = RequestSchemeMatchCondition.DeserializeRequestSchemeMatchCondition(property.Value, options);
+                    parameters = RequestSchemeMatchConditionParameters.DeserializeRequestSchemeMatchConditionParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

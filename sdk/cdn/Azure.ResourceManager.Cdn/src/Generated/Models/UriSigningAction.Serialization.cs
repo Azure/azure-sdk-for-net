@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            UriSigningActionProperties parameters = default;
+            UriSigningActionParameters parameters = default;
             DeliveryRuleActionType name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = UriSigningActionProperties.DeserializeUriSigningActionProperties(property.Value, options);
+                    parameters = UriSigningActionParameters.DeserializeUriSigningActionParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
