@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.Agents.Persistent.Custom
+namespace Azure.AI.Agents.Persistent
 {
     [CodeGenClient("Files")]
     public partial class FilesClient

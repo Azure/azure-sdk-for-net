@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Agents.Persistent.Custom;
 using Azure.Core;
 using Azure.Core.Pipeline;
 

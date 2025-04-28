@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.Agents.Persistent.Custom
+namespace Azure.AI.Agents.Persistent
 {
     // Data plane generated sub-client.
     /// <summary> A collection of file‐related operations under `/files`. </summary>
