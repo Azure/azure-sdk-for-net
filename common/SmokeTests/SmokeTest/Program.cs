@@ -191,6 +191,12 @@ void ProcessType(Type type)
                 // Expected; this is a known scenario where the type is not impactful to the
                 // Azure SDK experience and cane be safely ignored.
             }
+            catch (NotSupportedException ex) when (ShouldIgnoreNotSupportedException(ex))
+            {
+                // Expected; this is a known scenario where the type is not able to be created
+                // via reflection using the Activator.  These are not types related to the SDK
+                // and are not impactful to the Azure SDK experience.
+            }
             catch (COMException)
             {
                 // Expected; this is a known scenario where the type is not impactful to the
@@ -293,6 +299,15 @@ bool ShouldIgnoreFileLoadException(FileLoadException ex) => ex switch
 {
     // Occurs when the assembly is not supported on the target framework/platform.
     _ when (ex.Message.ToLower().Contains("operation is not supported")) => true,
+
+    // By default, do not ignore.
+    _ => false
+};
+
+bool ShouldIgnoreNotSupportedException(NotSupportedException ex) => ex switch
+{
+    // Occurs when the type cannot be created via Activator.CreateInstance.
+    _ when (ex.Message.ToLower().Contains("cannot dynamically create an instance of type")) => true,
 
     // By default, do not ignore.
     _ => false
