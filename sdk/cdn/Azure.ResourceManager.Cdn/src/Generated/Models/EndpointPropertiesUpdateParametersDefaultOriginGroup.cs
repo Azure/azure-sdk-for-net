@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> A reference to the origin group. </summary>
+    /// <summary>
+    /// A reference to the origin group.
+    /// Serialized Name: EndpointPropertiesUpdateParametersDefaultOriginGroup
+    /// </summary>
     internal partial class EndpointPropertiesUpdateParametersDefaultOriginGroup
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EndpointPropertiesUpdateParametersDefaultOriginGroup"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id">
+        /// Resource ID.
+        /// Serialized Name: EndpointPropertiesUpdateParametersDefaultOriginGroup.id
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EndpointPropertiesUpdateParametersDefaultOriginGroup(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource ID. </summary>
+        /// <summary>
+        /// Resource ID.
+        /// Serialized Name: EndpointPropertiesUpdateParametersDefaultOriginGroup.id
+        /// </summary>
         public ResourceIdentifier Id { get; set; }
     }
 }

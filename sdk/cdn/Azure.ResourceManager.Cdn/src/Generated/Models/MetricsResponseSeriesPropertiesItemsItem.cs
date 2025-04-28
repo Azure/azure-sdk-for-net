@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The MetricsResponseSeriesPropertiesItemsItem. </summary>
+    /// <summary>
+    /// The MetricsResponseSeriesPropertiesItemsItem.
+    /// Serialized Name: MetricsResponseSeriesPropertiesItemsItem
+    /// </summary>
     public partial class MetricsResponseSeriesPropertiesItemsItem
     {
         /// <summary>
@@ -51,8 +54,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricsResponseSeriesPropertiesItemsItem"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
+        /// <param name="name"> Serialized Name: MetricsResponseSeriesPropertiesItemsItem.name. </param>
+        /// <param name="value"> Serialized Name: MetricsResponseSeriesPropertiesItemsItem.value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MetricsResponseSeriesPropertiesItemsItem(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +64,9 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the name. </summary>
+        /// <summary> Serialized Name: MetricsResponseSeriesPropertiesItemsItem.name. </summary>
         public string Name { get; }
-        /// <summary> Gets the value. </summary>
+        /// <summary> Serialized Name: MetricsResponseSeriesPropertiesItemsItem.value. </summary>
         public string Value { get; }
     }
 }

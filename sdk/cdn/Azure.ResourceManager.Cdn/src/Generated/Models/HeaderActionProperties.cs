@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the parameters for the request header action. </summary>
+    /// <summary>
+    /// Defines the parameters for the request header action.
+    /// Serialized Name: HeaderActionProperties
+    /// </summary>
     public partial class HeaderActionProperties
     {
         /// <summary>
@@ -46,9 +49,15 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HeaderActionProperties"/>. </summary>
-        /// <param name="actionType"></param>
-        /// <param name="headerAction"> Action to perform. </param>
-        /// <param name="headerName"> Name of the header to modify. </param>
+        /// <param name="actionType"> Serialized Name: HeaderActionProperties.typeName. </param>
+        /// <param name="headerAction">
+        /// Action to perform
+        /// Serialized Name: HeaderActionProperties.headerAction
+        /// </param>
+        /// <param name="headerName">
+        /// Name of the header to modify
+        /// Serialized Name: HeaderActionProperties.headerName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headerName"/> is null. </exception>
         public HeaderActionProperties(HeaderActionType actionType, HeaderAction headerAction, string headerName)
         {
@@ -60,10 +69,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HeaderActionProperties"/>. </summary>
-        /// <param name="actionType"></param>
-        /// <param name="headerAction"> Action to perform. </param>
-        /// <param name="headerName"> Name of the header to modify. </param>
-        /// <param name="value"> Value for the specified action. </param>
+        /// <param name="actionType"> Serialized Name: HeaderActionProperties.typeName. </param>
+        /// <param name="headerAction">
+        /// Action to perform
+        /// Serialized Name: HeaderActionProperties.headerAction
+        /// </param>
+        /// <param name="headerName">
+        /// Name of the header to modify
+        /// Serialized Name: HeaderActionProperties.headerName
+        /// </param>
+        /// <param name="value">
+        /// Value for the specified action
+        /// Serialized Name: HeaderActionProperties.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HeaderActionProperties(HeaderActionType actionType, HeaderAction headerAction, string headerName, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -79,13 +97,22 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Gets or sets the action type. </summary>
+        /// <summary> Serialized Name: HeaderActionProperties.typeName. </summary>
         public HeaderActionType ActionType { get; set; }
-        /// <summary> Action to perform. </summary>
+        /// <summary>
+        /// Action to perform
+        /// Serialized Name: HeaderActionProperties.headerAction
+        /// </summary>
         public HeaderAction HeaderAction { get; set; }
-        /// <summary> Name of the header to modify. </summary>
+        /// <summary>
+        /// Name of the header to modify
+        /// Serialized Name: HeaderActionProperties.headerName
+        /// </summary>
         public string HeaderName { get; set; }
-        /// <summary> Value for the specified action. </summary>
+        /// <summary>
+        /// Value for the specified action
+        /// Serialized Name: HeaderActionProperties.value
+        /// </summary>
         public string Value { get; set; }
     }
 }

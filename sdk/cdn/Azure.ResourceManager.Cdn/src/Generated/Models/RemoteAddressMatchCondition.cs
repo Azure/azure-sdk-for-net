@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the parameters for RemoteAddress match conditions. </summary>
+    /// <summary>
+    /// Defines the parameters for RemoteAddress match conditions
+    /// Serialized Name: RemoteAddressMatchCondition
+    /// </summary>
     public partial class RemoteAddressMatchCondition
     {
         /// <summary>
@@ -46,8 +49,11 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RemoteAddressMatchCondition"/>. </summary>
-        /// <param name="conditionType"></param>
-        /// <param name="remoteAddressOperator"> Describes operator to be matched. </param>
+        /// <param name="conditionType"> Serialized Name: RemoteAddressMatchCondition.typeName. </param>
+        /// <param name="remoteAddressOperator">
+        /// Describes operator to be matched
+        /// Serialized Name: RemoteAddressMatchCondition.operator
+        /// </param>
         public RemoteAddressMatchCondition(RemoteAddressMatchConditionType conditionType, RemoteAddressOperator remoteAddressOperator)
         {
             ConditionType = conditionType;
@@ -57,11 +63,23 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RemoteAddressMatchCondition"/>. </summary>
-        /// <param name="conditionType"></param>
-        /// <param name="remoteAddressOperator"> Describes operator to be matched. </param>
-        /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
-        /// <param name="matchValues"> Match values to match against. The operator will apply to each value in here with OR semantics. If any of them match the variable with the given operator this match condition is considered a match. </param>
-        /// <param name="transforms"> List of transforms. </param>
+        /// <param name="conditionType"> Serialized Name: RemoteAddressMatchCondition.typeName. </param>
+        /// <param name="remoteAddressOperator">
+        /// Describes operator to be matched
+        /// Serialized Name: RemoteAddressMatchCondition.operator
+        /// </param>
+        /// <param name="negateCondition">
+        /// Describes if this is negate condition or not
+        /// Serialized Name: RemoteAddressMatchCondition.negateCondition
+        /// </param>
+        /// <param name="matchValues">
+        /// Match values to match against. The operator will apply to each value in here with OR semantics. If any of them match the variable with the given operator this match condition is considered a match.
+        /// Serialized Name: RemoteAddressMatchCondition.matchValues
+        /// </param>
+        /// <param name="transforms">
+        /// List of transforms
+        /// Serialized Name: RemoteAddressMatchCondition.transforms
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RemoteAddressMatchCondition(RemoteAddressMatchConditionType conditionType, RemoteAddressOperator remoteAddressOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -78,15 +96,27 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Gets or sets the condition type. </summary>
+        /// <summary> Serialized Name: RemoteAddressMatchCondition.typeName. </summary>
         public RemoteAddressMatchConditionType ConditionType { get; set; }
-        /// <summary> Describes operator to be matched. </summary>
+        /// <summary>
+        /// Describes operator to be matched
+        /// Serialized Name: RemoteAddressMatchCondition.operator
+        /// </summary>
         public RemoteAddressOperator RemoteAddressOperator { get; set; }
-        /// <summary> Describes if this is negate condition or not. </summary>
+        /// <summary>
+        /// Describes if this is negate condition or not
+        /// Serialized Name: RemoteAddressMatchCondition.negateCondition
+        /// </summary>
         public bool? NegateCondition { get; set; }
-        /// <summary> Match values to match against. The operator will apply to each value in here with OR semantics. If any of them match the variable with the given operator this match condition is considered a match. </summary>
+        /// <summary>
+        /// Match values to match against. The operator will apply to each value in here with OR semantics. If any of them match the variable with the given operator this match condition is considered a match.
+        /// Serialized Name: RemoteAddressMatchCondition.matchValues
+        /// </summary>
         public IList<string> MatchValues { get; }
-        /// <summary> List of transforms. </summary>
+        /// <summary>
+        /// List of transforms
+        /// Serialized Name: RemoteAddressMatchCondition.transforms
+        /// </summary>
         public IList<PreTransformCategory> Transforms { get; }
     }
 }

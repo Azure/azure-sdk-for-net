@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Error response indicates CDN service is not able to process the incoming request. The reason is provided in the error message. </summary>
+    /// <summary>
+    /// Error response indicates CDN service is not able to process the incoming request. The reason is provided in the error message.
+    /// Serialized Name: MigrationErrorType
+    /// </summary>
     public partial class MigrationErrorType
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrationErrorType"/>. </summary>
-        /// <param name="code"> Error code. </param>
-        /// <param name="resourceName"> Resource which has the problem. </param>
-        /// <param name="errorMessage"> Error message indicating why the operation failed. </param>
-        /// <param name="nextSteps"> Describes what needs to be done to fix the problem. </param>
+        /// <param name="code">
+        /// Error code.
+        /// Serialized Name: MigrationErrorType.code
+        /// </param>
+        /// <param name="resourceName">
+        /// Resource which has the problem.
+        /// Serialized Name: MigrationErrorType.resourceName
+        /// </param>
+        /// <param name="errorMessage">
+        /// Error message indicating why the operation failed.
+        /// Serialized Name: MigrationErrorType.errorMessage
+        /// </param>
+        /// <param name="nextSteps">
+        /// Describes what needs to be done to fix the problem
+        /// Serialized Name: MigrationErrorType.nextSteps
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MigrationErrorType(string code, string resourceName, string errorMessage, string nextSteps, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,13 +80,25 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Error code. </summary>
+        /// <summary>
+        /// Error code.
+        /// Serialized Name: MigrationErrorType.code
+        /// </summary>
         public string Code { get; }
-        /// <summary> Resource which has the problem. </summary>
+        /// <summary>
+        /// Resource which has the problem.
+        /// Serialized Name: MigrationErrorType.resourceName
+        /// </summary>
         public string ResourceName { get; }
-        /// <summary> Error message indicating why the operation failed. </summary>
+        /// <summary>
+        /// Error message indicating why the operation failed.
+        /// Serialized Name: MigrationErrorType.errorMessage
+        /// </summary>
         public string ErrorMessage { get; }
-        /// <summary> Describes what needs to be done to fix the problem. </summary>
+        /// <summary>
+        /// Describes what needs to be done to fix the problem
+        /// Serialized Name: MigrationErrorType.nextSteps
+        /// </summary>
         public string NextSteps { get; }
     }
 }

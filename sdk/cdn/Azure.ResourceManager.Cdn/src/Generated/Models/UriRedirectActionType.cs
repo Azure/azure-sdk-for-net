@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The UriRedirectActionType. </summary>
+    /// <summary>
+    /// The UriRedirectActionType.
+    /// Serialized Name: UrlRedirectActionType
+    /// </summary>
     public readonly partial struct UriRedirectActionType : IEquatable<UriRedirectActionType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string UriRedirectActionValue = "DeliveryRuleUrlRedirectActionParameters";
 
-        /// <summary> DeliveryRuleUrlRedirectActionParameters. </summary>
+        /// <summary>
+        /// DeliveryRuleUrlRedirectActionParameters
+        /// Serialized Name: UrlRedirectActionType.DeliveryRuleUrlRedirectActionParameters
+        /// </summary>
         public static UriRedirectActionType UriRedirectAction { get; } = new UriRedirectActionType(UriRedirectActionValue);
         /// <summary> Determines if two <see cref="UriRedirectActionType"/> values are the same. </summary>
         public static bool operator ==(UriRedirectActionType left, UriRedirectActionType right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The RouteConfigurationOverrideActionType. </summary>
+    /// <summary>
+    /// The RouteConfigurationOverrideActionType.
+    /// Serialized Name: RouteConfigurationOverrideActionType
+    /// </summary>
     public readonly partial struct RouteConfigurationOverrideActionType : IEquatable<RouteConfigurationOverrideActionType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string RouteConfigurationOverrideActionValue = "DeliveryRuleRouteConfigurationOverrideActionParameters";
 
-        /// <summary> DeliveryRuleRouteConfigurationOverrideActionParameters. </summary>
+        /// <summary>
+        /// DeliveryRuleRouteConfigurationOverrideActionParameters
+        /// Serialized Name: RouteConfigurationOverrideActionType.DeliveryRuleRouteConfigurationOverrideActionParameters
+        /// </summary>
         public static RouteConfigurationOverrideActionType RouteConfigurationOverrideAction { get; } = new RouteConfigurationOverrideActionType(RouteConfigurationOverrideActionValue);
         /// <summary> Determines if two <see cref="RouteConfigurationOverrideActionType"/> values are the same. </summary>
         public static bool operator ==(RouteConfigurationOverrideActionType left, RouteConfigurationOverrideActionType right) => left.Equals(right);

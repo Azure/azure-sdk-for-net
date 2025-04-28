@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the parameters for QueryString match conditions. </summary>
+    /// <summary>
+    /// Defines the parameters for QueryString match conditions
+    /// Serialized Name: QueryStringMatchCondition
+    /// </summary>
     public partial class QueryStringMatchCondition
     {
         /// <summary>
@@ -46,8 +49,11 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="QueryStringMatchCondition"/>. </summary>
-        /// <param name="conditionType"></param>
-        /// <param name="queryStringOperator"> Describes operator to be matched. </param>
+        /// <param name="conditionType"> Serialized Name: QueryStringMatchCondition.typeName. </param>
+        /// <param name="queryStringOperator">
+        /// Describes operator to be matched
+        /// Serialized Name: QueryStringMatchCondition.operator
+        /// </param>
         public QueryStringMatchCondition(QueryStringMatchConditionType conditionType, QueryStringOperator queryStringOperator)
         {
             ConditionType = conditionType;
@@ -57,11 +63,23 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="QueryStringMatchCondition"/>. </summary>
-        /// <param name="conditionType"></param>
-        /// <param name="queryStringOperator"> Describes operator to be matched. </param>
-        /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
-        /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
-        /// <param name="transforms"> List of transforms. </param>
+        /// <param name="conditionType"> Serialized Name: QueryStringMatchCondition.typeName. </param>
+        /// <param name="queryStringOperator">
+        /// Describes operator to be matched
+        /// Serialized Name: QueryStringMatchCondition.operator
+        /// </param>
+        /// <param name="negateCondition">
+        /// Describes if this is negate condition or not
+        /// Serialized Name: QueryStringMatchCondition.negateCondition
+        /// </param>
+        /// <param name="matchValues">
+        /// The match value for the condition of the delivery rule
+        /// Serialized Name: QueryStringMatchCondition.matchValues
+        /// </param>
+        /// <param name="transforms">
+        /// List of transforms
+        /// Serialized Name: QueryStringMatchCondition.transforms
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal QueryStringMatchCondition(QueryStringMatchConditionType conditionType, QueryStringOperator queryStringOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -78,15 +96,27 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Gets or sets the condition type. </summary>
+        /// <summary> Serialized Name: QueryStringMatchCondition.typeName. </summary>
         public QueryStringMatchConditionType ConditionType { get; set; }
-        /// <summary> Describes operator to be matched. </summary>
+        /// <summary>
+        /// Describes operator to be matched
+        /// Serialized Name: QueryStringMatchCondition.operator
+        /// </summary>
         public QueryStringOperator QueryStringOperator { get; set; }
-        /// <summary> Describes if this is negate condition or not. </summary>
+        /// <summary>
+        /// Describes if this is negate condition or not
+        /// Serialized Name: QueryStringMatchCondition.negateCondition
+        /// </summary>
         public bool? NegateCondition { get; set; }
-        /// <summary> The match value for the condition of the delivery rule. </summary>
+        /// <summary>
+        /// The match value for the condition of the delivery rule
+        /// Serialized Name: QueryStringMatchCondition.matchValues
+        /// </summary>
         public IList<string> MatchValues { get; }
-        /// <summary> List of transforms. </summary>
+        /// <summary>
+        /// List of transforms
+        /// Serialized Name: QueryStringMatchCondition.transforms
+        /// </summary>
         public IList<PreTransformCategory> Transforms { get; }
     }
 }

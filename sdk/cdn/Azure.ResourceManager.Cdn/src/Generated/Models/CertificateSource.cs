@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the source of the SSL certificate. </summary>
+    /// <summary>
+    /// Defines the source of the SSL certificate.
+    /// Serialized Name: CertificateSource
+    /// </summary>
     internal readonly partial struct CertificateSource : IEquatable<CertificateSource>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string AzureKeyVaultValue = "AzureKeyVault";
         private const string CdnValue = "Cdn";
 
-        /// <summary> AzureKeyVault. </summary>
+        /// <summary>
+        /// AzureKeyVault
+        /// Serialized Name: CertificateSource.AzureKeyVault
+        /// </summary>
         public static CertificateSource AzureKeyVault { get; } = new CertificateSource(AzureKeyVaultValue);
-        /// <summary> Cdn. </summary>
+        /// <summary>
+        /// Cdn
+        /// Serialized Name: CertificateSource.Cdn
+        /// </summary>
         public static CertificateSource Cdn { get; } = new CertificateSource(CdnValue);
         /// <summary> Determines if two <see cref="CertificateSource"/> values are the same. </summary>
         public static bool operator ==(CertificateSource left, CertificateSource right) => left.Equals(right);

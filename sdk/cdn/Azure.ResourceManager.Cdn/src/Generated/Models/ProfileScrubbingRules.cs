@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the contents of the log scrubbing rules. </summary>
+    /// <summary>
+    /// Defines the contents of the log scrubbing rules.
+    /// Serialized Name: ProfileScrubbingRules
+    /// </summary>
     public partial class ProfileScrubbingRules
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ProfileScrubbingRules"/>. </summary>
-        /// <param name="matchVariable"> The variable to be scrubbed from the logs. </param>
-        /// <param name="selectorMatchOperator"> When matchVariable is a collection, operate on the selector to specify which elements in the collection this rule applies to. </param>
+        /// <param name="matchVariable">
+        /// The variable to be scrubbed from the logs.
+        /// Serialized Name: ProfileScrubbingRules.matchVariable
+        /// </param>
+        /// <param name="selectorMatchOperator">
+        /// When matchVariable is a collection, operate on the selector to specify which elements in the collection this rule applies to.
+        /// Serialized Name: ProfileScrubbingRules.selectorMatchOperator
+        /// </param>
         public ProfileScrubbingRules(ScrubbingRuleEntryMatchVariable matchVariable, ScrubbingRuleEntryMatchOperator selectorMatchOperator)
         {
             MatchVariable = matchVariable;
@@ -55,10 +64,22 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProfileScrubbingRules"/>. </summary>
-        /// <param name="matchVariable"> The variable to be scrubbed from the logs. </param>
-        /// <param name="selectorMatchOperator"> When matchVariable is a collection, operate on the selector to specify which elements in the collection this rule applies to. </param>
-        /// <param name="selector"> When matchVariable is a collection, operator used to specify which elements in the collection this rule applies to. </param>
-        /// <param name="state"> Defines the state of a log scrubbing rule. Default value is enabled. </param>
+        /// <param name="matchVariable">
+        /// The variable to be scrubbed from the logs.
+        /// Serialized Name: ProfileScrubbingRules.matchVariable
+        /// </param>
+        /// <param name="selectorMatchOperator">
+        /// When matchVariable is a collection, operate on the selector to specify which elements in the collection this rule applies to.
+        /// Serialized Name: ProfileScrubbingRules.selectorMatchOperator
+        /// </param>
+        /// <param name="selector">
+        /// When matchVariable is a collection, operator used to specify which elements in the collection this rule applies to.
+        /// Serialized Name: ProfileScrubbingRules.selector
+        /// </param>
+        /// <param name="state">
+        /// Defines the state of a log scrubbing rule. Default value is enabled.
+        /// Serialized Name: ProfileScrubbingRules.state
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProfileScrubbingRules(ScrubbingRuleEntryMatchVariable matchVariable, ScrubbingRuleEntryMatchOperator selectorMatchOperator, string selector, ScrubbingRuleEntryState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,13 +95,25 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> The variable to be scrubbed from the logs. </summary>
+        /// <summary>
+        /// The variable to be scrubbed from the logs.
+        /// Serialized Name: ProfileScrubbingRules.matchVariable
+        /// </summary>
         public ScrubbingRuleEntryMatchVariable MatchVariable { get; set; }
-        /// <summary> When matchVariable is a collection, operate on the selector to specify which elements in the collection this rule applies to. </summary>
+        /// <summary>
+        /// When matchVariable is a collection, operate on the selector to specify which elements in the collection this rule applies to.
+        /// Serialized Name: ProfileScrubbingRules.selectorMatchOperator
+        /// </summary>
         public ScrubbingRuleEntryMatchOperator SelectorMatchOperator { get; set; }
-        /// <summary> When matchVariable is a collection, operator used to specify which elements in the collection this rule applies to. </summary>
+        /// <summary>
+        /// When matchVariable is a collection, operator used to specify which elements in the collection this rule applies to.
+        /// Serialized Name: ProfileScrubbingRules.selector
+        /// </summary>
         public string Selector { get; set; }
-        /// <summary> Defines the state of a log scrubbing rule. Default value is enabled. </summary>
+        /// <summary>
+        /// Defines the state of a log scrubbing rule. Default value is enabled.
+        /// Serialized Name: ProfileScrubbingRules.state
+        /// </summary>
         public ScrubbingRuleEntryState? State { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The SocketAddressMatchConditionType. </summary>
+    /// <summary>
+    /// The SocketAddressMatchConditionType.
+    /// Serialized Name: SocketAddressMatchConditionType
+    /// </summary>
     public readonly partial struct SocketAddressMatchConditionType : IEquatable<SocketAddressMatchConditionType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string SocketAddressConditionValue = "DeliveryRuleSocketAddrConditionParameters";
 
-        /// <summary> DeliveryRuleSocketAddrConditionParameters. </summary>
+        /// <summary>
+        /// DeliveryRuleSocketAddrConditionParameters
+        /// Serialized Name: SocketAddressMatchConditionType.DeliveryRuleSocketAddrConditionParameters
+        /// </summary>
         public static SocketAddressMatchConditionType SocketAddressCondition { get; } = new SocketAddressMatchConditionType(SocketAddressConditionValue);
         /// <summary> Determines if two <see cref="SocketAddressMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(SocketAddressMatchConditionType left, SocketAddressMatchConditionType right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes what transforms are applied before matching. </summary>
+    /// <summary>
+    /// Describes what transforms are applied before matching
+    /// Serialized Name: PreTransformCategory
+    /// </summary>
     public readonly partial struct PreTransformCategory : IEquatable<PreTransformCategory>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string UriEncodeValue = "UrlEncode";
         private const string RemoveNullsValue = "RemoveNulls";
 
-        /// <summary> Lowercase. </summary>
+        /// <summary>
+        /// Lowercase
+        /// Serialized Name: PreTransformCategory.Lowercase
+        /// </summary>
         public static PreTransformCategory Lowercase { get; } = new PreTransformCategory(LowercaseValue);
-        /// <summary> Uppercase. </summary>
+        /// <summary>
+        /// Uppercase
+        /// Serialized Name: PreTransformCategory.Uppercase
+        /// </summary>
         public static PreTransformCategory Uppercase { get; } = new PreTransformCategory(UppercaseValue);
-        /// <summary> Trim. </summary>
+        /// <summary>
+        /// Trim
+        /// Serialized Name: PreTransformCategory.Trim
+        /// </summary>
         public static PreTransformCategory Trim { get; } = new PreTransformCategory(TrimValue);
-        /// <summary> UrlDecode. </summary>
+        /// <summary>
+        /// UrlDecode
+        /// Serialized Name: PreTransformCategory.UrlDecode
+        /// </summary>
         public static PreTransformCategory UriDecode { get; } = new PreTransformCategory(UriDecodeValue);
-        /// <summary> UrlEncode. </summary>
+        /// <summary>
+        /// UrlEncode
+        /// Serialized Name: PreTransformCategory.UrlEncode
+        /// </summary>
         public static PreTransformCategory UriEncode { get; } = new PreTransformCategory(UriEncodeValue);
-        /// <summary> RemoveNulls. </summary>
+        /// <summary>
+        /// RemoveNulls
+        /// Serialized Name: PreTransformCategory.RemoveNulls
+        /// </summary>
         public static PreTransformCategory RemoveNulls { get; } = new PreTransformCategory(RemoveNullsValue);
         /// <summary> Determines if two <see cref="PreTransformCategory"/> values are the same. </summary>
         public static bool operator ==(PreTransformCategory left, PreTransformCategory right) => left.Equals(right);

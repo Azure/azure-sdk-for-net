@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The validation status. </summary>
+    /// <summary>
+    /// The validation status.
+    /// Serialized Name: ValidationStatus
+    /// </summary>
     public readonly partial struct ValidationStatus : IEquatable<ValidationStatus>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string AccessDeniedValue = "AccessDenied";
         private const string CertificateExpiredValue = "CertificateExpired";
 
-        /// <summary> Valid. </summary>
+        /// <summary>
+        /// Valid
+        /// Serialized Name: ValidationStatus.Valid
+        /// </summary>
         public static ValidationStatus Valid { get; } = new ValidationStatus(ValidValue);
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: ValidationStatus.Invalid
+        /// </summary>
         public static ValidationStatus Invalid { get; } = new ValidationStatus(InvalidValue);
-        /// <summary> AccessDenied. </summary>
+        /// <summary>
+        /// AccessDenied
+        /// Serialized Name: ValidationStatus.AccessDenied
+        /// </summary>
         public static ValidationStatus AccessDenied { get; } = new ValidationStatus(AccessDeniedValue);
-        /// <summary> CertificateExpired. </summary>
+        /// <summary>
+        /// CertificateExpired
+        /// Serialized Name: ValidationStatus.CertificateExpired
+        /// </summary>
         public static ValidationStatus CertificateExpired { get; } = new ValidationStatus(CertificateExpiredValue);
         /// <summary> Determines if two <see cref="ValidationStatus"/> values are the same. </summary>
         public static bool operator ==(ValidationStatus left, ValidationStatus right) => left.Equals(right);

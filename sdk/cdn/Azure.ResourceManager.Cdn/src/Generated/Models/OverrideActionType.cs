@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the action to take on rule match. </summary>
+    /// <summary>
+    /// Defines the action to take on rule match.
+    /// Serialized Name: OverrideActionType
+    /// </summary>
     public readonly partial struct OverrideActionType : IEquatable<OverrideActionType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string LogValue = "Log";
         private const string RedirectValue = "Redirect";
 
-        /// <summary> Allow. </summary>
+        /// <summary>
+        /// Allow
+        /// Serialized Name: OverrideActionType.Allow
+        /// </summary>
         public static OverrideActionType Allow { get; } = new OverrideActionType(AllowValue);
-        /// <summary> Block. </summary>
+        /// <summary>
+        /// Block
+        /// Serialized Name: OverrideActionType.Block
+        /// </summary>
         public static OverrideActionType Block { get; } = new OverrideActionType(BlockValue);
-        /// <summary> Log. </summary>
+        /// <summary>
+        /// Log
+        /// Serialized Name: OverrideActionType.Log
+        /// </summary>
         public static OverrideActionType Log { get; } = new OverrideActionType(LogValue);
-        /// <summary> Redirect. </summary>
+        /// <summary>
+        /// Redirect
+        /// Serialized Name: OverrideActionType.Redirect
+        /// </summary>
         public static OverrideActionType Redirect { get; } = new OverrideActionType(RedirectValue);
         /// <summary> Determines if two <see cref="OverrideActionType"/> values are the same. </summary>
         public static bool operator ==(OverrideActionType left, OverrideActionType right) => left.Equals(right);

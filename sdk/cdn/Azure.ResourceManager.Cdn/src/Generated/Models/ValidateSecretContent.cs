@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Input of the secret to be validated. </summary>
+    /// <summary>
+    /// Input of the secret to be validated.
+    /// Serialized Name: ValidateSecretInput
+    /// </summary>
     public partial class ValidateSecretContent
     {
         /// <summary>
@@ -48,8 +51,14 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ValidateSecretContent"/>. </summary>
-        /// <param name="secretType"> The secret type. </param>
-        /// <param name="secretSource"> Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{secretName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </param>
+        /// <param name="secretType">
+        /// The secret type.
+        /// Serialized Name: ValidateSecretInput.secretType
+        /// </param>
+        /// <param name="secretSource">
+        /// Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{secretName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+        /// Serialized Name: ValidateSecretInput.secretSource
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretSource"/> is null. </exception>
         public ValidateSecretContent(SecretType secretType, WritableSubResource secretSource)
         {
@@ -60,9 +69,18 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ValidateSecretContent"/>. </summary>
-        /// <param name="secretType"> The secret type. </param>
-        /// <param name="secretSource"> Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{secretName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </param>
-        /// <param name="secretVersion"> Secret version, if customer is using a specific version. </param>
+        /// <param name="secretType">
+        /// The secret type.
+        /// Serialized Name: ValidateSecretInput.secretType
+        /// </param>
+        /// <param name="secretSource">
+        /// Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{secretName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+        /// Serialized Name: ValidateSecretInput.secretSource
+        /// </param>
+        /// <param name="secretVersion">
+        /// Secret version, if customer is using a specific version.
+        /// Serialized Name: ValidateSecretInput.secretVersion
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ValidateSecretContent(SecretType secretType, WritableSubResource secretSource, string secretVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -77,9 +95,15 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> The secret type. </summary>
+        /// <summary>
+        /// The secret type.
+        /// Serialized Name: ValidateSecretInput.secretType
+        /// </summary>
         public SecretType SecretType { get; }
-        /// <summary> Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{secretName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </summary>
+        /// <summary>
+        /// Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{secretName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+        /// Serialized Name: ValidateSecretInput.secretSource
+        /// </summary>
         internal WritableSubResource SecretSource { get; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SecretSourceId
@@ -87,7 +111,10 @@ namespace Azure.ResourceManager.Cdn.Models
             get => SecretSource?.Id;
         }
 
-        /// <summary> Secret version, if customer is using a specific version. </summary>
+        /// <summary>
+        /// Secret version, if customer is using a specific version.
+        /// Serialized Name: ValidateSecretInput.secretVersion
+        /// </summary>
         public string SecretVersion { get; set; }
     }
 }

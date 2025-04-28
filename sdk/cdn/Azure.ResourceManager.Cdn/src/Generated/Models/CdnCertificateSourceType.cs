@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The CdnCertificateSourceType. </summary>
+    /// <summary>
+    /// The CdnCertificateSourceType.
+    /// Serialized Name: CdnCertificateSourceType
+    /// </summary>
     public readonly partial struct CdnCertificateSourceType : IEquatable<CdnCertificateSourceType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string CdnCertificateSourceValue = "CdnCertificateSourceParameters";
 
-        /// <summary> CdnCertificateSourceParameters. </summary>
+        /// <summary>
+        /// CdnCertificateSourceParameters
+        /// Serialized Name: CdnCertificateSourceType.CdnCertificateSourceParameters
+        /// </summary>
         public static CdnCertificateSourceType CdnCertificateSource { get; } = new CdnCertificateSourceType(CdnCertificateSourceValue);
         /// <summary> Determines if two <see cref="CdnCertificateSourceType"/> values are the same. </summary>
         public static bool operator ==(CdnCertificateSourceType left, CdnCertificateSourceType right) => left.Equals(right);

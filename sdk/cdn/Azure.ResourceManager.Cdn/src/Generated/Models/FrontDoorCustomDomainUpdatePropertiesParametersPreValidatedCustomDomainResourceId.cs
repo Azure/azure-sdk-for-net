@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Resource reference to the Azure resource where custom domain ownership was prevalidated. </summary>
+    /// <summary>
+    /// Resource reference to the Azure resource where custom domain ownership was prevalidated
+    /// Serialized Name: AFDDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId
+    /// </summary>
     internal partial class FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id">
+        /// Resource ID.
+        /// Serialized Name: AFDDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId.id
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource ID. </summary>
+        /// <summary>
+        /// Resource ID.
+        /// Serialized Name: AFDDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId.id
+        /// </summary>
         public ResourceIdentifier Id { get; set; }
     }
 }

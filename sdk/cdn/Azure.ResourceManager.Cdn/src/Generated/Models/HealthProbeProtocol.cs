@@ -7,14 +7,26 @@
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Protocol to use for health probe. </summary>
+    /// <summary>
+    /// Protocol to use for health probe.
+    /// Serialized Name: HealthProbeProtocol
+    /// </summary>
     public enum HealthProbeProtocol
     {
-        /// <summary> NotSet. </summary>
+        /// <summary>
+        /// NotSet
+        /// Serialized Name: HealthProbeProtocol.NotSet
+        /// </summary>
         NotSet,
-        /// <summary> Http. </summary>
+        /// <summary>
+        /// Http
+        /// Serialized Name: HealthProbeProtocol.Http
+        /// </summary>
         Http,
-        /// <summary> Https. </summary>
+        /// <summary>
+        /// Https
+        /// Serialized Name: HealthProbeProtocol.Https
+        /// </summary>
         Https
     }
 }

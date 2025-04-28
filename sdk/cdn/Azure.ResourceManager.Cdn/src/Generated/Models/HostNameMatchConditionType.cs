@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The HostNameMatchConditionType. </summary>
+    /// <summary>
+    /// The HostNameMatchConditionType.
+    /// Serialized Name: HostNameMatchConditionType
+    /// </summary>
     public readonly partial struct HostNameMatchConditionType : IEquatable<HostNameMatchConditionType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string HostNameConditionValue = "DeliveryRuleHostNameConditionParameters";
 
-        /// <summary> DeliveryRuleHostNameConditionParameters. </summary>
+        /// <summary>
+        /// DeliveryRuleHostNameConditionParameters
+        /// Serialized Name: HostNameMatchConditionType.DeliveryRuleHostNameConditionParameters
+        /// </summary>
         public static HostNameMatchConditionType HostNameCondition { get; } = new HostNameMatchConditionType(HostNameConditionValue);
         /// <summary> Determines if two <see cref="HostNameMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(HostNameMatchConditionType left, HostNameMatchConditionType right) => left.Equals(right);

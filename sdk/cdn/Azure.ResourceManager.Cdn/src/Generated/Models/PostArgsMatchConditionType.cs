@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The PostArgsMatchConditionType. </summary>
+    /// <summary>
+    /// The PostArgsMatchConditionType.
+    /// Serialized Name: PostArgsMatchConditionType
+    /// </summary>
     public readonly partial struct PostArgsMatchConditionType : IEquatable<PostArgsMatchConditionType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string PostArgsConditionValue = "DeliveryRulePostArgsConditionParameters";
 
-        /// <summary> DeliveryRulePostArgsConditionParameters. </summary>
+        /// <summary>
+        /// DeliveryRulePostArgsConditionParameters
+        /// Serialized Name: PostArgsMatchConditionType.DeliveryRulePostArgsConditionParameters
+        /// </summary>
         public static PostArgsMatchConditionType PostArgsCondition { get; } = new PostArgsMatchConditionType(PostArgsConditionValue);
         /// <summary> Determines if two <see cref="PostArgsMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(PostArgsMatchConditionType left, PostArgsMatchConditionType right) => left.Equals(right);

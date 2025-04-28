@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The CookiesMatchConditionType. </summary>
+    /// <summary>
+    /// The CookiesMatchConditionType.
+    /// Serialized Name: CookiesMatchConditionType
+    /// </summary>
     public readonly partial struct CookiesMatchConditionType : IEquatable<CookiesMatchConditionType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string CookiesConditionValue = "DeliveryRuleCookiesConditionParameters";
 
-        /// <summary> DeliveryRuleCookiesConditionParameters. </summary>
+        /// <summary>
+        /// DeliveryRuleCookiesConditionParameters
+        /// Serialized Name: CookiesMatchConditionType.DeliveryRuleCookiesConditionParameters
+        /// </summary>
         public static CookiesMatchConditionType CookiesCondition { get; } = new CookiesMatchConditionType(CookiesConditionValue);
         /// <summary> Determines if two <see cref="CookiesMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(CookiesMatchConditionType left, CookiesMatchConditionType right) => left.Equals(right);

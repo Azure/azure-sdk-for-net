@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The UriFileNameMatchConditionType. </summary>
+    /// <summary>
+    /// The UriFileNameMatchConditionType.
+    /// Serialized Name: UrlFileNameMatchConditionType
+    /// </summary>
     public readonly partial struct UriFileNameMatchConditionType : IEquatable<UriFileNameMatchConditionType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string UriFilenameConditionValue = "DeliveryRuleUrlFilenameConditionParameters";
 
-        /// <summary> DeliveryRuleUrlFilenameConditionParameters. </summary>
+        /// <summary>
+        /// DeliveryRuleUrlFilenameConditionParameters
+        /// Serialized Name: UrlFileNameMatchConditionType.DeliveryRuleUrlFilenameConditionParameters
+        /// </summary>
         public static UriFileNameMatchConditionType UriFilenameCondition { get; } = new UriFileNameMatchConditionType(UriFilenameConditionValue);
         /// <summary> Determines if two <see cref="UriFileNameMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(UriFileNameMatchConditionType left, UriFileNameMatchConditionType right) => left.Equals(right);

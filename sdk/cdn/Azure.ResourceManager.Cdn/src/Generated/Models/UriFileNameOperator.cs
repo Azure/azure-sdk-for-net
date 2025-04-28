@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes operator to be matched. </summary>
+    /// <summary>
+    /// Describes operator to be matched
+    /// Serialized Name: UrlFileNameOperator
+    /// </summary>
     public readonly partial struct UriFileNameOperator : IEquatable<UriFileNameOperator>
     {
         private readonly string _value;
@@ -33,25 +36,55 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
         private const string RegExValue = "RegEx";
 
-        /// <summary> Any. </summary>
+        /// <summary>
+        /// Any
+        /// Serialized Name: UrlFileNameOperator.Any
+        /// </summary>
         public static UriFileNameOperator Any { get; } = new UriFileNameOperator(AnyValue);
-        /// <summary> Equal. </summary>
+        /// <summary>
+        /// Equal
+        /// Serialized Name: UrlFileNameOperator.Equal
+        /// </summary>
         public static UriFileNameOperator Equal { get; } = new UriFileNameOperator(EqualValue);
-        /// <summary> Contains. </summary>
+        /// <summary>
+        /// Contains
+        /// Serialized Name: UrlFileNameOperator.Contains
+        /// </summary>
         public static UriFileNameOperator Contains { get; } = new UriFileNameOperator(ContainsValue);
-        /// <summary> BeginsWith. </summary>
+        /// <summary>
+        /// BeginsWith
+        /// Serialized Name: UrlFileNameOperator.BeginsWith
+        /// </summary>
         public static UriFileNameOperator BeginsWith { get; } = new UriFileNameOperator(BeginsWithValue);
-        /// <summary> EndsWith. </summary>
+        /// <summary>
+        /// EndsWith
+        /// Serialized Name: UrlFileNameOperator.EndsWith
+        /// </summary>
         public static UriFileNameOperator EndsWith { get; } = new UriFileNameOperator(EndsWithValue);
-        /// <summary> LessThan. </summary>
+        /// <summary>
+        /// LessThan
+        /// Serialized Name: UrlFileNameOperator.LessThan
+        /// </summary>
         public static UriFileNameOperator LessThan { get; } = new UriFileNameOperator(LessThanValue);
-        /// <summary> LessThanOrEqual. </summary>
+        /// <summary>
+        /// LessThanOrEqual
+        /// Serialized Name: UrlFileNameOperator.LessThanOrEqual
+        /// </summary>
         public static UriFileNameOperator LessThanOrEqual { get; } = new UriFileNameOperator(LessThanOrEqualValue);
-        /// <summary> GreaterThan. </summary>
+        /// <summary>
+        /// GreaterThan
+        /// Serialized Name: UrlFileNameOperator.GreaterThan
+        /// </summary>
         public static UriFileNameOperator GreaterThan { get; } = new UriFileNameOperator(GreaterThanValue);
-        /// <summary> GreaterThanOrEqual. </summary>
+        /// <summary>
+        /// GreaterThanOrEqual
+        /// Serialized Name: UrlFileNameOperator.GreaterThanOrEqual
+        /// </summary>
         public static UriFileNameOperator GreaterThanOrEqual { get; } = new UriFileNameOperator(GreaterThanOrEqualValue);
-        /// <summary> RegEx. </summary>
+        /// <summary>
+        /// RegEx
+        /// Serialized Name: UrlFileNameOperator.RegEx
+        /// </summary>
         public static UriFileNameOperator RegEx { get; } = new UriFileNameOperator(RegExValue);
         /// <summary> Determines if two <see cref="UriFileNameOperator"/> values are the same. </summary>
         public static bool operator ==(UriFileNameOperator left, UriFileNameOperator right) => left.Equals(right);

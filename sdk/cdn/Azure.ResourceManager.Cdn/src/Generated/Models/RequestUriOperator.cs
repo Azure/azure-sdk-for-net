@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes operator to be matched. </summary>
+    /// <summary>
+    /// Describes operator to be matched
+    /// Serialized Name: RequestUriOperator
+    /// </summary>
     public readonly partial struct RequestUriOperator : IEquatable<RequestUriOperator>
     {
         private readonly string _value;
@@ -33,25 +36,55 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
         private const string RegExValue = "RegEx";
 
-        /// <summary> Any. </summary>
+        /// <summary>
+        /// Any
+        /// Serialized Name: RequestUriOperator.Any
+        /// </summary>
         public static RequestUriOperator Any { get; } = new RequestUriOperator(AnyValue);
-        /// <summary> Equal. </summary>
+        /// <summary>
+        /// Equal
+        /// Serialized Name: RequestUriOperator.Equal
+        /// </summary>
         public static RequestUriOperator Equal { get; } = new RequestUriOperator(EqualValue);
-        /// <summary> Contains. </summary>
+        /// <summary>
+        /// Contains
+        /// Serialized Name: RequestUriOperator.Contains
+        /// </summary>
         public static RequestUriOperator Contains { get; } = new RequestUriOperator(ContainsValue);
-        /// <summary> BeginsWith. </summary>
+        /// <summary>
+        /// BeginsWith
+        /// Serialized Name: RequestUriOperator.BeginsWith
+        /// </summary>
         public static RequestUriOperator BeginsWith { get; } = new RequestUriOperator(BeginsWithValue);
-        /// <summary> EndsWith. </summary>
+        /// <summary>
+        /// EndsWith
+        /// Serialized Name: RequestUriOperator.EndsWith
+        /// </summary>
         public static RequestUriOperator EndsWith { get; } = new RequestUriOperator(EndsWithValue);
-        /// <summary> LessThan. </summary>
+        /// <summary>
+        /// LessThan
+        /// Serialized Name: RequestUriOperator.LessThan
+        /// </summary>
         public static RequestUriOperator LessThan { get; } = new RequestUriOperator(LessThanValue);
-        /// <summary> LessThanOrEqual. </summary>
+        /// <summary>
+        /// LessThanOrEqual
+        /// Serialized Name: RequestUriOperator.LessThanOrEqual
+        /// </summary>
         public static RequestUriOperator LessThanOrEqual { get; } = new RequestUriOperator(LessThanOrEqualValue);
-        /// <summary> GreaterThan. </summary>
+        /// <summary>
+        /// GreaterThan
+        /// Serialized Name: RequestUriOperator.GreaterThan
+        /// </summary>
         public static RequestUriOperator GreaterThan { get; } = new RequestUriOperator(GreaterThanValue);
-        /// <summary> GreaterThanOrEqual. </summary>
+        /// <summary>
+        /// GreaterThanOrEqual
+        /// Serialized Name: RequestUriOperator.GreaterThanOrEqual
+        /// </summary>
         public static RequestUriOperator GreaterThanOrEqual { get; } = new RequestUriOperator(GreaterThanOrEqualValue);
-        /// <summary> RegEx. </summary>
+        /// <summary>
+        /// RegEx
+        /// Serialized Name: RequestUriOperator.RegEx
+        /// </summary>
         public static RequestUriOperator RegEx { get; } = new RequestUriOperator(RegExValue);
         /// <summary> Determines if two <see cref="RequestUriOperator"/> values are the same. </summary>
         public static bool operator ==(RequestUriOperator left, RequestUriOperator right) => left.Equals(right);

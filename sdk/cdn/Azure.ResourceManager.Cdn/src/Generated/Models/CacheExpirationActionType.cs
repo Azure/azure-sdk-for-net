@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The CacheExpirationActionType. </summary>
+    /// <summary>
+    /// The CacheExpirationActionType.
+    /// Serialized Name: CacheExpirationActionType
+    /// </summary>
     public readonly partial struct CacheExpirationActionType : IEquatable<CacheExpirationActionType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string CacheExpirationActionValue = "DeliveryRuleCacheExpirationActionParameters";
 
-        /// <summary> DeliveryRuleCacheExpirationActionParameters. </summary>
+        /// <summary>
+        /// DeliveryRuleCacheExpirationActionParameters
+        /// Serialized Name: CacheExpirationActionType.DeliveryRuleCacheExpirationActionParameters
+        /// </summary>
         public static CacheExpirationActionType CacheExpirationAction { get; } = new CacheExpirationActionType(CacheExpirationActionValue);
         /// <summary> Determines if two <see cref="CacheExpirationActionType"/> values are the same. </summary>
         public static bool operator ==(CacheExpirationActionType left, CacheExpirationActionType right) => left.Equals(right);

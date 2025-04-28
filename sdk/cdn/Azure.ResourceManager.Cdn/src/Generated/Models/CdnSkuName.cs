@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Name of the pricing tier. </summary>
+    /// <summary>
+    /// Name of the pricing tier.
+    /// Serialized Name: SkuName
+    /// </summary>
     public readonly partial struct CdnSkuName : IEquatable<CdnSkuName>
     {
         private readonly string _value;
@@ -36,31 +39,70 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string StandardPlus955BandWidthChinaCdnValue = "StandardPlus_955BandWidth_ChinaCdn";
         private const string StandardPlusAvgBandWidthChinaCdnValue = "StandardPlus_AvgBandWidth_ChinaCdn";
 
-        /// <summary> Standard_Verizon. </summary>
+        /// <summary>
+        /// Standard_Verizon
+        /// Serialized Name: SkuName.Standard_Verizon
+        /// </summary>
         public static CdnSkuName StandardVerizon { get; } = new CdnSkuName(StandardVerizonValue);
-        /// <summary> Premium_Verizon. </summary>
+        /// <summary>
+        /// Premium_Verizon
+        /// Serialized Name: SkuName.Premium_Verizon
+        /// </summary>
         public static CdnSkuName PremiumVerizon { get; } = new CdnSkuName(PremiumVerizonValue);
-        /// <summary> Custom_Verizon. </summary>
+        /// <summary>
+        /// Custom_Verizon
+        /// Serialized Name: SkuName.Custom_Verizon
+        /// </summary>
         public static CdnSkuName CustomVerizon { get; } = new CdnSkuName(CustomVerizonValue);
-        /// <summary> Standard_Akamai. </summary>
+        /// <summary>
+        /// Standard_Akamai
+        /// Serialized Name: SkuName.Standard_Akamai
+        /// </summary>
         public static CdnSkuName StandardAkamai { get; } = new CdnSkuName(StandardAkamaiValue);
-        /// <summary> Standard_ChinaCdn. </summary>
+        /// <summary>
+        /// Standard_ChinaCdn
+        /// Serialized Name: SkuName.Standard_ChinaCdn
+        /// </summary>
         public static CdnSkuName StandardChinaCdn { get; } = new CdnSkuName(StandardChinaCdnValue);
-        /// <summary> Standard_Microsoft. </summary>
+        /// <summary>
+        /// Standard_Microsoft
+        /// Serialized Name: SkuName.Standard_Microsoft
+        /// </summary>
         public static CdnSkuName StandardMicrosoft { get; } = new CdnSkuName(StandardMicrosoftValue);
-        /// <summary> Standard_AzureFrontDoor. </summary>
+        /// <summary>
+        /// Standard_AzureFrontDoor
+        /// Serialized Name: SkuName.Standard_AzureFrontDoor
+        /// </summary>
         public static CdnSkuName StandardAzureFrontDoor { get; } = new CdnSkuName(StandardAzureFrontDoorValue);
-        /// <summary> Premium_AzureFrontDoor. </summary>
+        /// <summary>
+        /// Premium_AzureFrontDoor
+        /// Serialized Name: SkuName.Premium_AzureFrontDoor
+        /// </summary>
         public static CdnSkuName PremiumAzureFrontDoor { get; } = new CdnSkuName(PremiumAzureFrontDoorValue);
-        /// <summary> Standard_955BandWidth_ChinaCdn. </summary>
+        /// <summary>
+        /// Standard_955BandWidth_ChinaCdn
+        /// Serialized Name: SkuName.Standard_955BandWidth_ChinaCdn
+        /// </summary>
         public static CdnSkuName Standard955BandWidthChinaCdn { get; } = new CdnSkuName(Standard955BandWidthChinaCdnValue);
-        /// <summary> Standard_AvgBandWidth_ChinaCdn. </summary>
+        /// <summary>
+        /// Standard_AvgBandWidth_ChinaCdn
+        /// Serialized Name: SkuName.Standard_AvgBandWidth_ChinaCdn
+        /// </summary>
         public static CdnSkuName StandardAvgBandWidthChinaCdn { get; } = new CdnSkuName(StandardAvgBandWidthChinaCdnValue);
-        /// <summary> StandardPlus_ChinaCdn. </summary>
+        /// <summary>
+        /// StandardPlus_ChinaCdn
+        /// Serialized Name: SkuName.StandardPlus_ChinaCdn
+        /// </summary>
         public static CdnSkuName StandardPlusChinaCdn { get; } = new CdnSkuName(StandardPlusChinaCdnValue);
-        /// <summary> StandardPlus_955BandWidth_ChinaCdn. </summary>
+        /// <summary>
+        /// StandardPlus_955BandWidth_ChinaCdn
+        /// Serialized Name: SkuName.StandardPlus_955BandWidth_ChinaCdn
+        /// </summary>
         public static CdnSkuName StandardPlus955BandWidthChinaCdn { get; } = new CdnSkuName(StandardPlus955BandWidthChinaCdnValue);
-        /// <summary> StandardPlus_AvgBandWidth_ChinaCdn. </summary>
+        /// <summary>
+        /// StandardPlus_AvgBandWidth_ChinaCdn
+        /// Serialized Name: SkuName.StandardPlus_AvgBandWidth_ChinaCdn
+        /// </summary>
         public static CdnSkuName StandardPlusAvgBandWidthChinaCdn { get; } = new CdnSkuName(StandardPlusAvgBandWidthChinaCdnValue);
         /// <summary> Determines if two <see cref="CdnSkuName"/> values are the same. </summary>
         public static bool operator ==(CdnSkuName left, CdnSkuName right) => left.Equals(right);

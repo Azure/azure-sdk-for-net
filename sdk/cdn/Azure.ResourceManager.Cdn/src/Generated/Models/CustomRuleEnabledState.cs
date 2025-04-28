@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified. </summary>
+    /// <summary>
+    /// Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified.
+    /// Serialized Name: CustomRuleEnabledState
+    /// </summary>
     public readonly partial struct CustomRuleEnabledState : IEquatable<CustomRuleEnabledState>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: CustomRuleEnabledState.Disabled
+        /// </summary>
         public static CustomRuleEnabledState Disabled { get; } = new CustomRuleEnabledState(DisabledValue);
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: CustomRuleEnabledState.Enabled
+        /// </summary>
         public static CustomRuleEnabledState Enabled { get; } = new CustomRuleEnabledState(EnabledValue);
         /// <summary> Determines if two <see cref="CustomRuleEnabledState"/> values are the same. </summary>
         public static bool operator ==(CustomRuleEnabledState left, CustomRuleEnabledState right) => left.Equals(right);

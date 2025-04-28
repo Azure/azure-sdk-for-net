@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> CIDR Ip address. </summary>
+    /// <summary>
+    /// CIDR Ip address
+    /// Serialized Name: CidrIpAddress
+    /// </summary>
     public partial class CidrIPAddress
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CidrIPAddress"/>. </summary>
-        /// <param name="baseIPAddress"> Ip address itself. </param>
-        /// <param name="prefixLength"> The length of the prefix of the ip address. </param>
+        /// <param name="baseIPAddress">
+        /// Ip address itself.
+        /// Serialized Name: CidrIpAddress.baseIpAddress
+        /// </param>
+        /// <param name="prefixLength">
+        /// The length of the prefix of the ip address.
+        /// Serialized Name: CidrIpAddress.prefixLength
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CidrIPAddress(string baseIPAddress, int? prefixLength, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Ip address itself. </summary>
+        /// <summary>
+        /// Ip address itself.
+        /// Serialized Name: CidrIpAddress.baseIpAddress
+        /// </summary>
         public string BaseIPAddress { get; set; }
-        /// <summary> The length of the prefix of the ip address. </summary>
+        /// <summary>
+        /// The length of the prefix of the ip address.
+        /// Serialized Name: CidrIpAddress.prefixLength
+        /// </summary>
         public int? PrefixLength { get; set; }
     }
 }

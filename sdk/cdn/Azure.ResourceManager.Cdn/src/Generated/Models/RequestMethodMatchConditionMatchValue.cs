@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The RequestMethodMatchConditionMatchValue. </summary>
+    /// <summary>
+    /// The RequestMethodMatchConditionMatchValue.
+    /// Serialized Name: RequestMethodMatchConditionMatchValue
+    /// </summary>
     public readonly partial struct RequestMethodMatchConditionMatchValue : IEquatable<RequestMethodMatchConditionMatchValue>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string OptionsValue = "OPTIONS";
         private const string TraceValue = "TRACE";
 
-        /// <summary> GET. </summary>
+        /// <summary>
+        /// GET
+        /// Serialized Name: RequestMethodMatchConditionMatchValue.GET
+        /// </summary>
         public static RequestMethodMatchConditionMatchValue Get { get; } = new RequestMethodMatchConditionMatchValue(GetValue);
-        /// <summary> HEAD. </summary>
+        /// <summary>
+        /// HEAD
+        /// Serialized Name: RequestMethodMatchConditionMatchValue.HEAD
+        /// </summary>
         public static RequestMethodMatchConditionMatchValue Head { get; } = new RequestMethodMatchConditionMatchValue(HeadValue);
-        /// <summary> POST. </summary>
+        /// <summary>
+        /// POST
+        /// Serialized Name: RequestMethodMatchConditionMatchValue.POST
+        /// </summary>
         public static RequestMethodMatchConditionMatchValue Post { get; } = new RequestMethodMatchConditionMatchValue(PostValue);
-        /// <summary> PUT. </summary>
+        /// <summary>
+        /// PUT
+        /// Serialized Name: RequestMethodMatchConditionMatchValue.PUT
+        /// </summary>
         public static RequestMethodMatchConditionMatchValue Put { get; } = new RequestMethodMatchConditionMatchValue(PutValue);
-        /// <summary> DELETE. </summary>
+        /// <summary>
+        /// DELETE
+        /// Serialized Name: RequestMethodMatchConditionMatchValue.DELETE
+        /// </summary>
         public static RequestMethodMatchConditionMatchValue Delete { get; } = new RequestMethodMatchConditionMatchValue(DeleteValue);
-        /// <summary> OPTIONS. </summary>
+        /// <summary>
+        /// OPTIONS
+        /// Serialized Name: RequestMethodMatchConditionMatchValue.OPTIONS
+        /// </summary>
         public static RequestMethodMatchConditionMatchValue Options { get; } = new RequestMethodMatchConditionMatchValue(OptionsValue);
-        /// <summary> TRACE. </summary>
+        /// <summary>
+        /// TRACE
+        /// Serialized Name: RequestMethodMatchConditionMatchValue.TRACE
+        /// </summary>
         public static RequestMethodMatchConditionMatchValue Trace { get; } = new RequestMethodMatchConditionMatchValue(TraceValue);
         /// <summary> Determines if two <see cref="RequestMethodMatchConditionMatchValue"/> values are the same. </summary>
         public static bool operator ==(RequestMethodMatchConditionMatchValue left, RequestMethodMatchConditionMatchValue right) => left.Equals(right);

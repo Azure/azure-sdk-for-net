@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes a managed rule definition. </summary>
+    /// <summary>
+    /// Describes a managed rule definition.
+    /// Serialized Name: ManagedRuleDefinition
+    /// </summary>
     public partial class ManagedRuleDefinition
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleDefinition"/>. </summary>
-        /// <param name="ruleId"> Identifier for the managed rule. </param>
-        /// <param name="description"> Describes the functionality of the managed rule. </param>
+        /// <param name="ruleId">
+        /// Identifier for the managed rule.
+        /// Serialized Name: ManagedRuleDefinition.ruleId
+        /// </param>
+        /// <param name="description">
+        /// Describes the functionality of the managed rule.
+        /// Serialized Name: ManagedRuleDefinition.description
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedRuleDefinition(string ruleId, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Identifier for the managed rule. </summary>
+        /// <summary>
+        /// Identifier for the managed rule.
+        /// Serialized Name: ManagedRuleDefinition.ruleId
+        /// </summary>
         public string RuleId { get; }
-        /// <summary> Describes the functionality of the managed rule. </summary>
+        /// <summary>
+        /// Describes the functionality of the managed rule.
+        /// Serialized Name: ManagedRuleDefinition.description
+        /// </summary>
         public string Description { get; }
     }
 }

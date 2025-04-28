@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the parameters for the cache expiration action. </summary>
+    /// <summary>
+    /// Defines the parameters for the cache expiration action.
+    /// Serialized Name: CacheExpirationActionProperties
+    /// </summary>
     public partial class CacheExpirationActionProperties
     {
         /// <summary>
@@ -46,9 +49,15 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CacheExpirationActionProperties"/>. </summary>
-        /// <param name="actionType"></param>
-        /// <param name="cacheBehavior"> Caching behavior for the requests. </param>
-        /// <param name="cacheType"> The level at which the content needs to be cached. </param>
+        /// <param name="actionType"> Serialized Name: CacheExpirationActionProperties.typeName. </param>
+        /// <param name="cacheBehavior">
+        /// Caching behavior for the requests
+        /// Serialized Name: CacheExpirationActionProperties.cacheBehavior
+        /// </param>
+        /// <param name="cacheType">
+        /// The level at which the content needs to be cached.
+        /// Serialized Name: CacheExpirationActionProperties.cacheType
+        /// </param>
         public CacheExpirationActionProperties(CacheExpirationActionType actionType, CacheBehaviorSetting cacheBehavior, CdnCacheLevel cacheType)
         {
             ActionType = actionType;
@@ -57,10 +66,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CacheExpirationActionProperties"/>. </summary>
-        /// <param name="actionType"></param>
-        /// <param name="cacheBehavior"> Caching behavior for the requests. </param>
-        /// <param name="cacheType"> The level at which the content needs to be cached. </param>
-        /// <param name="cacheDuration"> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </param>
+        /// <param name="actionType"> Serialized Name: CacheExpirationActionProperties.typeName. </param>
+        /// <param name="cacheBehavior">
+        /// Caching behavior for the requests
+        /// Serialized Name: CacheExpirationActionProperties.cacheBehavior
+        /// </param>
+        /// <param name="cacheType">
+        /// The level at which the content needs to be cached.
+        /// Serialized Name: CacheExpirationActionProperties.cacheType
+        /// </param>
+        /// <param name="cacheDuration">
+        /// The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss
+        /// Serialized Name: CacheExpirationActionProperties.cacheDuration
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CacheExpirationActionProperties(CacheExpirationActionType actionType, CacheBehaviorSetting cacheBehavior, CdnCacheLevel cacheType, TimeSpan? cacheDuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,13 +94,22 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Gets or sets the action type. </summary>
+        /// <summary> Serialized Name: CacheExpirationActionProperties.typeName. </summary>
         public CacheExpirationActionType ActionType { get; set; }
-        /// <summary> Caching behavior for the requests. </summary>
+        /// <summary>
+        /// Caching behavior for the requests
+        /// Serialized Name: CacheExpirationActionProperties.cacheBehavior
+        /// </summary>
         public CacheBehaviorSetting CacheBehavior { get; set; }
-        /// <summary> The level at which the content needs to be cached. </summary>
+        /// <summary>
+        /// The level at which the content needs to be cached.
+        /// Serialized Name: CacheExpirationActionProperties.cacheType
+        /// </summary>
         public CdnCacheLevel CacheType { get; set; }
-        /// <summary> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </summary>
+        /// <summary>
+        /// The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss
+        /// Serialized Name: CacheExpirationActionProperties.cacheDuration
+        /// </summary>
         public TimeSpan? CacheDuration { get; set; }
     }
 }
