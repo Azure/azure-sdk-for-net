@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
@@ -53,22 +54,22 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CentralServerVmDetails"/>. </summary>
-        /// <param name="type"> Defines the type of central server VM. </param>
+        /// <param name="virtualMachineType"> Defines the type of central server VM. </param>
         /// <param name="virtualMachineId"> The virtual machine id. </param>
         /// <param name="storageDetails"> Storage details of all the Storage Accounts attached to the ASCS Virtual Machine. For e.g. NFS on AFS Shared Storage. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CentralServerVmDetails(CentralServerVirtualMachineType? type, string virtualMachineId, IReadOnlyList<SubResource> storageDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CentralServerVmDetails(CentralServerVirtualMachineType? virtualMachineType, ResourceIdentifier virtualMachineId, IReadOnlyList<SubResource> storageDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
+            VirtualMachineType = virtualMachineType;
             VirtualMachineId = virtualMachineId;
             StorageDetails = storageDetails;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Defines the type of central server VM. </summary>
-        public CentralServerVirtualMachineType? Type { get; }
+        public CentralServerVirtualMachineType? VirtualMachineType { get; }
         /// <summary> The virtual machine id. </summary>
-        public string VirtualMachineId { get; }
+        public ResourceIdentifier VirtualMachineId { get; }
         /// <summary> Storage details of all the Storage Accounts attached to the ASCS Virtual Machine. For e.g. NFS on AFS Shared Storage. </summary>
         public IReadOnlyList<SubResource> StorageDetails { get; }
     }

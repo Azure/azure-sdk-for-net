@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             if (options.Format != "W" && Optional.IsDefined(AppLocation))
             {
                 writer.WritePropertyName("appLocation"u8);
-                writer.WriteStringValue(AppLocation);
+                writer.WriteStringValue(AppLocation.Value);
             }
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
             ResourceIdentifier centralServerVmId = default;
             string managedRgStorageAccountName = default;
-            string appLocation = default;
+            AzureLocation? appLocation = default;
             SapConfigurationType configurationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -96,7 +96,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 }
                 if (property.NameEquals("appLocation"u8))
                 {
-                    appLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    appLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("configurationType"u8))

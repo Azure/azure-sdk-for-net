@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             if (Optional.IsDefined(AppLocation))
             {
                 writer.WritePropertyName("appLocation"u8);
-                writer.WriteStringValue(AppLocation);
+                writer.WriteStringValue(AppLocation.Value);
             }
             if (Optional.IsDefined(InfrastructureConfiguration))
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             {
                 return null;
             }
-            string appLocation = default;
+            AzureLocation? appLocation = default;
             InfrastructureConfiguration infrastructureConfiguration = default;
             SapSoftwareConfiguration softwareConfiguration = default;
             SapConfigurationType configurationType = default;
@@ -82,7 +82,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             {
                 if (property.NameEquals("appLocation"u8))
                 {
-                    appLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    appLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("infrastructureConfiguration"u8))

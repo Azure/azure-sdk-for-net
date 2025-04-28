@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         private const string PrimaryValue = "Primary";
         private const string SecondaryValue = "Secondary";
         private const string UnknownValue = "Unknown";
-        private const string ASCSValue = "ASCS";
-        private const string ERSInactiveValue = "ERSInactive";
+        private const string AscsValue = "ASCS";
+        private const string ErsInactiveValue = "ERSInactive";
         private const string ERSValue = "ERS";
         private const string StandbyValue = "Standby";
 
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <summary> Central server vm type unknown. </summary>
         public static CentralServerVirtualMachineType Unknown { get; } = new CentralServerVirtualMachineType(UnknownValue);
         /// <summary> ASCS Central server vm type. </summary>
-        public static CentralServerVirtualMachineType ASCS { get; } = new CentralServerVirtualMachineType(ASCSValue);
+        public static CentralServerVirtualMachineType Ascs { get; } = new CentralServerVirtualMachineType(AscsValue);
         /// <summary> ERSInactive Central server vm type. </summary>
-        public static CentralServerVirtualMachineType ERSInactive { get; } = new CentralServerVirtualMachineType(ERSInactiveValue);
+        public static CentralServerVirtualMachineType ErsInactive { get; } = new CentralServerVirtualMachineType(ErsInactiveValue);
         /// <summary> ERS Central server vm type. </summary>
         public static CentralServerVirtualMachineType ERS { get; } = new CentralServerVirtualMachineType(ERSValue);
         /// <summary> Standby Central server vm type. </summary>

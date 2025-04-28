@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             {
                 return null;
             }
-            string appLocation = default;
+            AzureLocation appLocation = default;
             SapProductType sapProduct = default;
             SapDatabaseType databaseType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             {
                 if (property.NameEquals("appLocation"u8))
                 {
-                    appLocation = property.Value.GetString();
+                    appLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sapProduct"u8))

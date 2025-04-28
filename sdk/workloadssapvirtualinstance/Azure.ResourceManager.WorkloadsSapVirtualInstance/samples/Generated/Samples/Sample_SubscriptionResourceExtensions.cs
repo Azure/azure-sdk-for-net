@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("eastus");
-            SapAvailabilityZoneDetailsContent content = new SapAvailabilityZoneDetailsContent("eastus", SapProductType.S4HANA, SapDatabaseType.HANA);
+            SapAvailabilityZoneDetailsContent content = new SapAvailabilityZoneDetailsContent(new AzureLocation("eastus"), SapProductType.S4HANA, SapDatabaseType.HANA);
             SapAvailabilityZoneDetailsResult result = await subscriptionResource.GetAvailabilityZoneDetailsSapVirtualInstanceAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("northeurope");
-            SapAvailabilityZoneDetailsContent content = new SapAvailabilityZoneDetailsContent("northeurope", SapProductType.S4HANA, SapDatabaseType.HANA);
+            SapAvailabilityZoneDetailsContent content = new SapAvailabilityZoneDetailsContent(new AzureLocation("northeurope"), SapProductType.S4HANA, SapDatabaseType.HANA);
             SapAvailabilityZoneDetailsResult result = await subscriptionResource.GetAvailabilityZoneDetailsSapVirtualInstanceAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");

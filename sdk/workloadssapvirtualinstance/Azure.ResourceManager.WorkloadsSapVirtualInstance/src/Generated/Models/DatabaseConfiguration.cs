@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
         /// <param name="instanceCount"> The number of database VMs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> or <paramref name="virtualMachineConfiguration"/> is null. </exception>
-        public DatabaseConfiguration(string subnetId, SapVirtualMachineConfiguration virtualMachineConfiguration, long instanceCount)
+        public DatabaseConfiguration(ResourceIdentifier subnetId, SapVirtualMachineConfiguration virtualMachineConfiguration, long instanceCount)
         {
             Argument.AssertNotNull(subnetId, nameof(subnetId));
             Argument.AssertNotNull(virtualMachineConfiguration, nameof(virtualMachineConfiguration));
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="instanceCount"> The number of database VMs. </param>
         /// <param name="diskConfiguration"> Gets or sets the disk configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseConfiguration(SapDatabaseType? databaseType, string subnetId, SapVirtualMachineConfiguration virtualMachineConfiguration, long instanceCount, DiskConfiguration diskConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DatabaseConfiguration(SapDatabaseType? databaseType, ResourceIdentifier subnetId, SapVirtualMachineConfiguration virtualMachineConfiguration, long instanceCount, DiskConfiguration diskConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DatabaseType = databaseType;
             SubnetId = subnetId;
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <summary> The database type. </summary>
         public SapDatabaseType? DatabaseType { get; set; }
         /// <summary> The subnet id. </summary>
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
         /// <summary> Gets or sets the virtual machine configuration. </summary>
         public SapVirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
         /// <summary> The number of database VMs. </summary>

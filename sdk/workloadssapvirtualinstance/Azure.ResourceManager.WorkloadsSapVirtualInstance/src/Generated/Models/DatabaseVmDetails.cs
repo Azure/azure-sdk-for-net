@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="status"> Defines the SAP Instance status. </param>
         /// <param name="storageDetails"> Storage details of all the Storage Accounts attached to the Database Virtual Machine. For e.g. NFS on AFS Shared Storage. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseVmDetails(string virtualMachineId, SapVirtualInstanceStatus? status, IReadOnlyList<SubResource> storageDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DatabaseVmDetails(ResourceIdentifier virtualMachineId, SapVirtualInstanceStatus? status, IReadOnlyList<SubResource> storageDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VirtualMachineId = virtualMachineId;
             Status = status;
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         }
 
         /// <summary> The virtual machine id. </summary>
-        public string VirtualMachineId { get; }
+        public ResourceIdentifier VirtualMachineId { get; }
         /// <summary> Defines the SAP Instance status. </summary>
         public SapVirtualInstanceStatus? Status { get; }
         /// <summary> Storage details of all the Storage Accounts attached to the Database Virtual Machine. For e.g. NFS on AFS Shared Storage. </summary>

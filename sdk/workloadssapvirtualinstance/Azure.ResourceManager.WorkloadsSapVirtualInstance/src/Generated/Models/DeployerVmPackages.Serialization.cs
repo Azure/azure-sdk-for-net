@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 throw new FormatException($"The model {nameof(DeployerVmPackages)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Uri))
+            if (Optional.IsDefined(PackageUri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Uri.AbsoluteUri);
+                writer.WriteStringValue(PackageUri.AbsoluteUri);
             }
             if (Optional.IsDefined(StorageAccountId))
             {

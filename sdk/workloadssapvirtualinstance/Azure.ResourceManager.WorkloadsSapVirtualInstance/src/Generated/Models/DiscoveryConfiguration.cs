@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="centralServerVmId"> The virtual machine ID of the Central Server. </param>
         /// <param name="managedRgStorageAccountName"> The custom storage account name for the storage account created by the service in the managed resource group created as part of VIS deployment.&lt;br&gt;&lt;br&gt;Refer to the storage account naming rules [here](https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules#microsoftstorage).&lt;br&gt;&lt;br&gt;If not provided, the service will create the storage account with a random name. </param>
         /// <param name="appLocation"> The geo-location where the SAP system exists. </param>
-        internal DiscoveryConfiguration(SapConfigurationType configurationType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier centralServerVmId, string managedRgStorageAccountName, string appLocation) : base(configurationType, serializedAdditionalRawData)
+        internal DiscoveryConfiguration(SapConfigurationType configurationType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier centralServerVmId, string managedRgStorageAccountName, AzureLocation? appLocation) : base(configurationType, serializedAdditionalRawData)
         {
             CentralServerVmId = centralServerVmId;
             ManagedRgStorageAccountName = managedRgStorageAccountName;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <summary> The custom storage account name for the storage account created by the service in the managed resource group created as part of VIS deployment.&lt;br&gt;&lt;br&gt;Refer to the storage account naming rules [here](https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules#microsoftstorage).&lt;br&gt;&lt;br&gt;If not provided, the service will create the storage account with a random name. </summary>
         public string ManagedRgStorageAccountName { get; set; }
         /// <summary> The geo-location where the SAP system exists. </summary>
-        public string AppLocation { get; }
+        public AzureLocation? AppLocation { get; }
     }
 }

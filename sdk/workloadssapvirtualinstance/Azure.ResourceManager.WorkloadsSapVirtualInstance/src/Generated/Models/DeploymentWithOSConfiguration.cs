@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// The available derived classes include <see cref="ExternalInstallationSoftwareConfiguration"/>, <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/> and <see cref="ServiceInitiatedSoftwareConfiguration"/>.
         /// </param>
         /// <param name="osSapConfiguration"> The OS and SAP configuration. </param>
-        internal DeploymentWithOSConfiguration(SapConfigurationType configurationType, IDictionary<string, BinaryData> serializedAdditionalRawData, string appLocation, InfrastructureConfiguration infrastructureConfiguration, SapSoftwareConfiguration softwareConfiguration, OSSapConfiguration osSapConfiguration) : base(configurationType, serializedAdditionalRawData)
+        internal DeploymentWithOSConfiguration(SapConfigurationType configurationType, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureLocation? appLocation, InfrastructureConfiguration infrastructureConfiguration, SapSoftwareConfiguration softwareConfiguration, OSSapConfiguration osSapConfiguration) : base(configurationType, serializedAdditionalRawData)
         {
             AppLocation = appLocation;
             InfrastructureConfiguration = infrastructureConfiguration;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         }
 
         /// <summary> The geo-location where the SAP system is to be created. </summary>
-        public string AppLocation { get; set; }
+        public AzureLocation? AppLocation { get; set; }
         /// <summary>
         /// The infrastructure configuration.
         /// Please note <see cref="Models.InfrastructureConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

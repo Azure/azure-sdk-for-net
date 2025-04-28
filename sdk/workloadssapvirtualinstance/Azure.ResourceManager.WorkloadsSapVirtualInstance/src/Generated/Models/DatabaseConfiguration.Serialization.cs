@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 return null;
             }
             SapDatabaseType? databaseType = default;
-            string subnetId = default;
+            ResourceIdentifier subnetId = default;
             SapVirtualMachineConfiguration virtualMachineConfiguration = default;
             long instanceCount = default;
             DiskConfiguration diskConfiguration = default;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 }
                 if (property.NameEquals("subnetId"u8))
                 {
-                    subnetId = property.Value.GetString();
+                    subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("virtualMachineConfiguration"u8))

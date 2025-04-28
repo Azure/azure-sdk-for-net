@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="managedRgStorageAccountName"> The custom storage account name for the storage account created by the service in the managed resource group created as part of VIS deployment.&lt;br&gt;&lt;br&gt;Refer to the storage account naming rules [here](https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules#microsoftstorage).&lt;br&gt;&lt;br&gt;If not provided, the service will create the storage account with a random name. </param>
         /// <param name="appLocation"> The geo-location where the SAP system exists. </param>
         /// <returns> A new <see cref="Models.DiscoveryConfiguration"/> instance for mocking. </returns>
-        public static DiscoveryConfiguration DiscoveryConfiguration(ResourceIdentifier centralServerVmId = null, string managedRgStorageAccountName = null, string appLocation = null)
+        public static DiscoveryConfiguration DiscoveryConfiguration(ResourceIdentifier centralServerVmId = null, string managedRgStorageAccountName = null, AzureLocation? appLocation = null)
         {
             return new DiscoveryConfiguration(SapConfigurationType.Discovery, serializedAdditionalRawData: null, centralServerVmId, managedRgStorageAccountName, appLocation);
         }
@@ -388,15 +388,15 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CentralServerVmDetails"/>. </summary>
-        /// <param name="type"> Defines the type of central server VM. </param>
+        /// <param name="virtualMachineType"> Defines the type of central server VM. </param>
         /// <param name="virtualMachineId"> The virtual machine id. </param>
         /// <param name="storageDetails"> Storage details of all the Storage Accounts attached to the ASCS Virtual Machine. For e.g. NFS on AFS Shared Storage. </param>
         /// <returns> A new <see cref="Models.CentralServerVmDetails"/> instance for mocking. </returns>
-        public static CentralServerVmDetails CentralServerVmDetails(CentralServerVirtualMachineType? type = null, string virtualMachineId = null, IEnumerable<SubResource> storageDetails = null)
+        public static CentralServerVmDetails CentralServerVmDetails(CentralServerVirtualMachineType? virtualMachineType = null, ResourceIdentifier virtualMachineId = null, IEnumerable<SubResource> storageDetails = null)
         {
             storageDetails ??= new List<SubResource>();
 
-            return new CentralServerVmDetails(type, virtualMachineId, storageDetails?.ToList(), serializedAdditionalRawData: null);
+            return new CentralServerVmDetails(virtualMachineType, virtualMachineId, storageDetails?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadsSapVirtualInstance.SapDatabaseInstanceData"/>. </summary>
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="status"> Defines the SAP Instance status. </param>
         /// <param name="storageDetails"> Storage details of all the Storage Accounts attached to the Database Virtual Machine. For e.g. NFS on AFS Shared Storage. </param>
         /// <returns> A new <see cref="Models.DatabaseVmDetails"/> instance for mocking. </returns>
-        public static DatabaseVmDetails DatabaseVmDetails(string virtualMachineId = null, SapVirtualInstanceStatus? status = null, IEnumerable<SubResource> storageDetails = null)
+        public static DatabaseVmDetails DatabaseVmDetails(ResourceIdentifier virtualMachineId = null, SapVirtualInstanceStatus? status = null, IEnumerable<SubResource> storageDetails = null)
         {
             storageDetails ??= new List<SubResource>();
 

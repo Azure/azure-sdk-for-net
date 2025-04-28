@@ -51,18 +51,18 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeployerVmPackages"/>. </summary>
-        /// <param name="uri"> The URL to the deployer VM packages file. </param>
+        /// <param name="packageUri"> The URL to the deployer VM packages file. </param>
         /// <param name="storageAccountId"> The deployer VM packages storage account id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeployerVmPackages(Uri uri, string storageAccountId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeployerVmPackages(Uri packageUri, string storageAccountId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Uri = uri;
+            PackageUri = packageUri;
             StorageAccountId = storageAccountId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The URL to the deployer VM packages file. </summary>
-        public Uri Uri { get; set; }
+        public Uri PackageUri { get; set; }
         /// <summary> The deployer VM packages storage account id. </summary>
         public string StorageAccountId { get; set; }
     }

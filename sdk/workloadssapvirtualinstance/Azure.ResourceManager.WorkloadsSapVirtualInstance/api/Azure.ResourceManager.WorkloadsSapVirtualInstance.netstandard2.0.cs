@@ -398,9 +398,9 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     public static partial class ArmWorkloadsSapVirtualInstanceModelFactory
     {
         public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.ApplicationServerVmDetails ApplicationServerVmDetails(Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.ApplicationServerVirtualMachineType? virtualMachineType = default(Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.ApplicationServerVirtualMachineType?), Azure.Core.ResourceIdentifier virtualMachineId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> storageDetails = null) { throw null; }
-        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.CentralServerVmDetails CentralServerVmDetails(Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.CentralServerVirtualMachineType? type = default(Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.CentralServerVirtualMachineType?), string virtualMachineId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> storageDetails = null) { throw null; }
-        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DatabaseVmDetails DatabaseVmDetails(string virtualMachineId = null, Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapVirtualInstanceStatus? status = default(Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapVirtualInstanceStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> storageDetails = null) { throw null; }
-        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DiscoveryConfiguration DiscoveryConfiguration(Azure.Core.ResourceIdentifier centralServerVmId = null, string managedRgStorageAccountName = null, string appLocation = null) { throw null; }
+        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.CentralServerVmDetails CentralServerVmDetails(Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.CentralServerVirtualMachineType? virtualMachineType = default(Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.CentralServerVirtualMachineType?), Azure.Core.ResourceIdentifier virtualMachineId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> storageDetails = null) { throw null; }
+        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DatabaseVmDetails DatabaseVmDetails(Azure.Core.ResourceIdentifier virtualMachineId = null, Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapVirtualInstanceStatus? status = default(Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapVirtualInstanceStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> storageDetails = null) { throw null; }
+        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DiscoveryConfiguration DiscoveryConfiguration(Azure.Core.ResourceIdentifier centralServerVmId = null, string managedRgStorageAccountName = null, Azure.Core.AzureLocation? appLocation = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.EnqueueReplicationServerProperties EnqueueReplicationServerProperties(Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.EnqueueReplicationServerType? ersVersion = default(Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.EnqueueReplicationServerType?), string instanceNo = null, string hostname = null, string kernelVersion = null, string kernelPatch = null, string ipAddress = null, Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapHealthState? health = default(Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapHealthState?)) { throw null; }
         public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.EnqueueServerProperties EnqueueServerProperties(string hostname = null, string ipAddress = null, long? port = default(long?), Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapHealthState? health = default(Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapHealthState?)) { throw null; }
         public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.GatewayServerProperties GatewayServerProperties(long? port = default(long?), Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapHealthState? health = default(Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapHealthState?)) { throw null; }
@@ -455,9 +455,9 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public CentralServerVirtualMachineType(string value) { throw null; }
-        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.CentralServerVirtualMachineType ASCS { get { throw null; } }
+        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.CentralServerVirtualMachineType Ascs { get { throw null; } }
         public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.CentralServerVirtualMachineType ERS { get { throw null; } }
-        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.CentralServerVirtualMachineType ERSInactive { get { throw null; } }
+        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.CentralServerVirtualMachineType ErsInactive { get { throw null; } }
         public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.CentralServerVirtualMachineType Primary { get { throw null; } }
         public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.CentralServerVirtualMachineType Secondary { get { throw null; } }
         public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.CentralServerVirtualMachineType Standby { get { throw null; } }
@@ -476,8 +476,8 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     {
         internal CentralServerVmDetails() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> StorageDetails { get { throw null; } }
-        public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.CentralServerVirtualMachineType? Type { get { throw null; } }
-        public string VirtualMachineId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier VirtualMachineId { get { throw null; } }
+        public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.CentralServerVirtualMachineType? VirtualMachineType { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.CentralServerVmDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.CentralServerVmDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.CentralServerVmDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -499,11 +499,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     }
     public partial class DatabaseConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DatabaseConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DatabaseConfiguration>
     {
-        public DatabaseConfiguration(string subnetId, Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapVirtualMachineConfiguration virtualMachineConfiguration, long instanceCount) { }
+        public DatabaseConfiguration(Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapVirtualMachineConfiguration virtualMachineConfiguration, long instanceCount) { }
         public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapDatabaseType? DatabaseType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DiskVolumeConfiguration> DiskVolumeConfigurations { get { throw null; } }
         public long InstanceCount { get { throw null; } set { } }
-        public string SubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapVirtualMachineConfiguration VirtualMachineConfiguration { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DatabaseConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DatabaseConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         internal DatabaseVmDetails() { }
         public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapVirtualInstanceStatus? Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> StorageDetails { get { throw null; } }
-        public string VirtualMachineId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier VirtualMachineId { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DatabaseVmDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DatabaseVmDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DatabaseVmDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -541,8 +541,8 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     public partial class DeployerVmPackages : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DeployerVmPackages>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DeployerVmPackages>
     {
         public DeployerVmPackages() { }
+        public System.Uri PackageUri { get { throw null; } set { } }
         public string StorageAccountId { get { throw null; } set { } }
-        public System.Uri Uri { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DeployerVmPackages System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DeployerVmPackages>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DeployerVmPackages>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     public partial class DeploymentConfiguration : Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapConfiguration, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DeploymentConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DeploymentConfiguration>
     {
         public DeploymentConfiguration() { }
-        public string AppLocation { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? AppLocation { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.InfrastructureConfiguration InfrastructureConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapSoftwareConfiguration SoftwareConfiguration { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     public partial class DeploymentWithOSConfiguration : Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapConfiguration, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DeploymentWithOSConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DeploymentWithOSConfiguration>
     {
         public DeploymentWithOSConfiguration() { }
-        public string AppLocation { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? AppLocation { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.InfrastructureConfiguration InfrastructureConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.OSSapConfiguration OSSapConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapSoftwareConfiguration SoftwareConfiguration { get { throw null; } set { } }
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     public partial class DiscoveryConfiguration : Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapConfiguration, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DiscoveryConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DiscoveryConfiguration>
     {
         public DiscoveryConfiguration() { }
-        public string AppLocation { get { throw null; } }
+        public Azure.Core.AzureLocation? AppLocation { get { throw null; } }
         public Azure.Core.ResourceIdentifier CentralServerVmId { get { throw null; } set { } }
         public string ManagedRgStorageAccountName { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -596,13 +596,13 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public DiskDetailsDiskSkuName(string value) { throw null; }
-        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DiskDetailsDiskSkuName PremiumLRS { get { throw null; } }
-        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DiskDetailsDiskSkuName PremiumV2LRS { get { throw null; } }
-        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DiskDetailsDiskSkuName PremiumZRS { get { throw null; } }
-        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DiskDetailsDiskSkuName StandardLRS { get { throw null; } }
-        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DiskDetailsDiskSkuName StandardSSDLRS { get { throw null; } }
-        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DiskDetailsDiskSkuName StandardSSDZRS { get { throw null; } }
-        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DiskDetailsDiskSkuName UltraSSDLRS { get { throw null; } }
+        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DiskDetailsDiskSkuName PremiumLrs { get { throw null; } }
+        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DiskDetailsDiskSkuName PremiumV2Lrs { get { throw null; } }
+        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DiskDetailsDiskSkuName PremiumZrs { get { throw null; } }
+        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DiskDetailsDiskSkuName StandardLrs { get { throw null; } }
+        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DiskDetailsDiskSkuName StandardSsdLrs { get { throw null; } }
+        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DiskDetailsDiskSkuName StandardSsdZrs { get { throw null; } }
+        public static Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DiskDetailsDiskSkuName UltraSsdLrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.DiskDetailsDiskSkuName other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -782,9 +782,9 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     }
     public partial class MountFileShareConfiguration : Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.FileShareConfiguration, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.MountFileShareConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.MountFileShareConfiguration>
     {
-        public MountFileShareConfiguration(string id, string privateEndpointId) { }
-        public string Id { get { throw null; } set { } }
-        public string PrivateEndpointId { get { throw null; } set { } }
+        public MountFileShareConfiguration(Azure.Core.ResourceIdentifier fileShareId, Azure.Core.ResourceIdentifier privateEndpointId) { }
+        public Azure.Core.ResourceIdentifier FileShareId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.MountFileShareConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.MountFileShareConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.MountFileShareConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -847,8 +847,8 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     }
     public partial class SapAvailabilityZoneDetailsContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapAvailabilityZoneDetailsContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapAvailabilityZoneDetailsContent>
     {
-        public SapAvailabilityZoneDetailsContent(string appLocation, Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapProductType sapProduct, Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapDatabaseType databaseType) { }
-        public string AppLocation { get { throw null; } }
+        public SapAvailabilityZoneDetailsContent(Azure.Core.AzureLocation appLocation, Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapProductType sapProduct, Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapDatabaseType databaseType) { }
+        public Azure.Core.AzureLocation AppLocation { get { throw null; } }
         public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapDatabaseType DatabaseType { get { throw null; } }
         public Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.SapProductType SapProduct { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

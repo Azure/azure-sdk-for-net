@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -49,11 +50,8 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="appLocation"> The geo-location where the SAP resources will be created. </param>
         /// <param name="sapProduct"> Defines the SAP Product type. </param>
         /// <param name="databaseType"> The database type. Eg: HANA, DB2, etc. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="appLocation"/> is null. </exception>
-        public SapAvailabilityZoneDetailsContent(string appLocation, SapProductType sapProduct, SapDatabaseType databaseType)
+        public SapAvailabilityZoneDetailsContent(AzureLocation appLocation, SapProductType sapProduct, SapDatabaseType databaseType)
         {
-            Argument.AssertNotNull(appLocation, nameof(appLocation));
-
             AppLocation = appLocation;
             SapProduct = sapProduct;
             DatabaseType = databaseType;
@@ -64,7 +62,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="sapProduct"> Defines the SAP Product type. </param>
         /// <param name="databaseType"> The database type. Eg: HANA, DB2, etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SapAvailabilityZoneDetailsContent(string appLocation, SapProductType sapProduct, SapDatabaseType databaseType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SapAvailabilityZoneDetailsContent(AzureLocation appLocation, SapProductType sapProduct, SapDatabaseType databaseType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AppLocation = appLocation;
             SapProduct = sapProduct;
@@ -78,7 +76,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         }
 
         /// <summary> The geo-location where the SAP resources will be created. </summary>
-        public string AppLocation { get; }
+        public AzureLocation AppLocation { get; }
         /// <summary> Defines the SAP Product type. </summary>
         public SapProductType SapProduct { get; }
         /// <summary> The database type. Eg: HANA, DB2, etc. </summary>

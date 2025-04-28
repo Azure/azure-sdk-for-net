@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 throw new FormatException($"The model {nameof(CentralServerVmDetails)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(VirtualMachineType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(VirtualMachineType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(VirtualMachineId))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 return null;
             }
             CentralServerVirtualMachineType? type = default;
-            string virtualMachineId = default;
+            ResourceIdentifier virtualMachineId = default;
             IReadOnlyList<SubResource> storageDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 }
                 if (property.NameEquals("virtualMachineId"u8))
                 {
-                    virtualMachineId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    virtualMachineId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storageDetails"u8))

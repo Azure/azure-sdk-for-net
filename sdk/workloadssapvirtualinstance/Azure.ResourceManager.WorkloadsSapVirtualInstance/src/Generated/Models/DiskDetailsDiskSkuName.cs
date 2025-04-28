@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string StandardLRSValue = "Standard_LRS";
-        private const string PremiumLRSValue = "Premium_LRS";
-        private const string StandardSSDLRSValue = "StandardSSD_LRS";
-        private const string UltraSSDLRSValue = "UltraSSD_LRS";
-        private const string PremiumZRSValue = "Premium_ZRS";
-        private const string StandardSSDZRSValue = "StandardSSD_ZRS";
-        private const string PremiumV2LRSValue = "PremiumV2_LRS";
+        private const string StandardLrsValue = "Standard_LRS";
+        private const string PremiumLrsValue = "Premium_LRS";
+        private const string StandardSsdLrsValue = "StandardSSD_LRS";
+        private const string UltraSsdLrsValue = "UltraSSD_LRS";
+        private const string PremiumZrsValue = "Premium_ZRS";
+        private const string StandardSsdZrsValue = "StandardSSD_ZRS";
+        private const string PremiumV2LrsValue = "PremiumV2_LRS";
 
         /// <summary> Standard LRS Disk SKU. </summary>
-        public static DiskDetailsDiskSkuName StandardLRS { get; } = new DiskDetailsDiskSkuName(StandardLRSValue);
+        public static DiskDetailsDiskSkuName StandardLrs { get; } = new DiskDetailsDiskSkuName(StandardLrsValue);
         /// <summary> Premium_LRS Disk SKU. </summary>
-        public static DiskDetailsDiskSkuName PremiumLRS { get; } = new DiskDetailsDiskSkuName(PremiumLRSValue);
+        public static DiskDetailsDiskSkuName PremiumLrs { get; } = new DiskDetailsDiskSkuName(PremiumLrsValue);
         /// <summary> StandardSSD_LRS Disk SKU. </summary>
-        public static DiskDetailsDiskSkuName StandardSSDLRS { get; } = new DiskDetailsDiskSkuName(StandardSSDLRSValue);
+        public static DiskDetailsDiskSkuName StandardSsdLrs { get; } = new DiskDetailsDiskSkuName(StandardSsdLrsValue);
         /// <summary> UltraSSD_LRS Disk SKU. </summary>
-        public static DiskDetailsDiskSkuName UltraSSDLRS { get; } = new DiskDetailsDiskSkuName(UltraSSDLRSValue);
+        public static DiskDetailsDiskSkuName UltraSsdLrs { get; } = new DiskDetailsDiskSkuName(UltraSsdLrsValue);
         /// <summary> Premium_ZRS Disk SKU. </summary>
-        public static DiskDetailsDiskSkuName PremiumZRS { get; } = new DiskDetailsDiskSkuName(PremiumZRSValue);
+        public static DiskDetailsDiskSkuName PremiumZrs { get; } = new DiskDetailsDiskSkuName(PremiumZrsValue);
         /// <summary> StandardSSD_ZRS Disk SKU. </summary>
-        public static DiskDetailsDiskSkuName StandardSSDZRS { get; } = new DiskDetailsDiskSkuName(StandardSSDZRSValue);
+        public static DiskDetailsDiskSkuName StandardSsdZrs { get; } = new DiskDetailsDiskSkuName(StandardSsdZrsValue);
         /// <summary> PremiumV2_LRS Disk SKU. </summary>
-        public static DiskDetailsDiskSkuName PremiumV2LRS { get; } = new DiskDetailsDiskSkuName(PremiumV2LRSValue);
+        public static DiskDetailsDiskSkuName PremiumV2Lrs { get; } = new DiskDetailsDiskSkuName(PremiumV2LrsValue);
         /// <summary> Determines if two <see cref="DiskDetailsDiskSkuName"/> values are the same. </summary>
         public static bool operator ==(DiskDetailsDiskSkuName left, DiskDetailsDiskSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskDetailsDiskSkuName"/> values are not the same. </summary>
