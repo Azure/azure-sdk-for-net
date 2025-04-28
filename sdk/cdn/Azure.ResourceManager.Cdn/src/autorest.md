@@ -19,6 +19,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 use-model-reader-writer: true
 deserialize-null-collection-as-null-value: true
 
@@ -177,6 +178,7 @@ directive:
   - from: cdn.json
     where: $.definitions
     transform: >
+      $.CacheExpirationActionParameters.properties.cacheDuration["x-ms-client-name"] = "CacheDurationWorkaround";
       $.SocketAddrMatchConditionParameters.properties.operator['x-ms-enum'].name = 'SocketAddressOperator';
       $.RequestSchemeMatchConditionParameters.properties.operator['x-ms-enum'] = {
           "name": "RequestSchemeOperator"
