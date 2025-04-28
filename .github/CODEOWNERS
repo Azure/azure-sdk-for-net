@@ -885,6 +885,9 @@
 # ServiceLabel: %Storage
 # ServiceOwners:                                                   @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft @nickliu-msft
 
+# PRLabel: %Storage
+/sdk/storagesync/                                                  @ankushbindlish2 @anpint @jlindamood
+
 # ServiceLabel: %Storsimple
 # ServiceOwners:                                                   @anoobbacker @ganzee @manuaery
 
@@ -997,6 +1000,12 @@
 
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
+
+# PRLabel: %Durable Task Scheduler %Mgmt
+/sdk/durabletask/Azure.ResourceManager.*/                          @berndverst @kaibocai @torosent @RyanLettieri @philliphoff @cgillum
+
+# ServiceLabel: %Durable Task Scheduler  %Mgmt
+# ServiceOwners:                                                   @berndverst @kaibocai @torosent @RyanLettieri @philliphoff @cgillum
 
 # PRLabel: %Elastic
 /sdk/elastic/Azure.ResourceManager.Elastic/                        @ArthurMa1978
