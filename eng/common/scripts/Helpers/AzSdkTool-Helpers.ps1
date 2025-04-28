@@ -58,9 +58,6 @@ function Get-Package-Meta(
         }
     }
 
-    $os = "unknown"
-    $machine = Get-SystemArchitecture
-
     if ($IsWindows) {
         $os = "Windows"
         # we only support x64 on windows, if that doesn't work the platform is unsupported
@@ -68,9 +65,14 @@ function Get-Package-Meta(
     }
     elseif ($IsLinux) {
         $os = "Linux"
+        $machine = Get-SystemArchitecture
     }
     elseif ($IsMacOS) {
         $os = "Darwin"
+        $machine = Get-SystemArchitecture
+    }
+    else {
+        $os = "unknown"
     }
 
     $ErrorActionPreference = $ErrorActionPreferenceDefault
@@ -78,14 +80,14 @@ function Get-Package-Meta(
     return $AVAILABLE_BINARIES[$os][$machine]
 }
 
-function Cleanup-Directory ($path) {
+function Clear-Directory ($path) {
     if (Test-Path -Path $path) {
         Remove-Item -Path $path -Recurse -Force
     }
     New-Item -ItemType Directory -Path $path -Force
 }
 
-function Is-Work-Necessary (
+function isNewVersion(
     [Parameter(mandatory = $true)]
     $Version,
     [Parameter(mandatory = $true)]
@@ -159,7 +161,7 @@ function Install-Standalone-Tool (
     $savedVersionTxt = Join-Path $downloadFolder "downloaded_version.txt"
     $executable_path = Join-Path $downloadFolder $systemDetails.executable
 
-    if (Is-Work-Necessary $version $downloadFolder) {
+    if (isNewVersion $version $downloadFolder) {
         Write-Host "Installing '$Package' '$Version' to '$downloadFolder' from $downloadUrl"
         Invoke-WebRequest -Uri $downloadUrl -OutFile $downloadLocation
 

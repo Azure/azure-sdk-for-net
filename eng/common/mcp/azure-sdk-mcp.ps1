@@ -16,7 +16,7 @@ $ErrorActionPreference = "Stop"
 . (Join-Path $PSScriptRoot '..' 'scripts' 'Helpers' 'AzSdkTool-Helpers.ps1')
 
 if ($Clean) {
-    Cleanup-Directory -Path $InstallDirectory
+    Clear-Directory -Path $InstallDirectory
 }
 
 if ($UpdateVsCodeConfig) {
