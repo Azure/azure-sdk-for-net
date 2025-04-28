@@ -11,7 +11,7 @@
 
 ### Other Changes
 
-- Updated `Microsoft.Identity.Client` dependency to version 4.70.2
+- Updated `Microsoft.Identity.Client` dependency to version 4.71.1
 
 ## 1.14.0-beta.3 (2025-04-08)
 
