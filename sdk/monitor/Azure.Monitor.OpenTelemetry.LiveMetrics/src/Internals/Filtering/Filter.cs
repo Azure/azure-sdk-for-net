@@ -796,7 +796,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                         }
 
                         MemberExpression customDimensionsProperty = Expression.Property(documentExpression, customDimensionsPropertyInfo);
-                        //MemberExpression customDimensionsProperty = Expression.Property(documentExpression, CustomDimensionsPropertyName);
 
                         propertyComparatorExpression = Expression.Call(
                             null,
@@ -821,7 +820,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                         }
 
                         MemberExpression customMetricsProperty = Expression.Property(documentExpression, customMetricsPropertyInfo);
-                        //MemberExpression customMetricsProperty = Expression.Property(documentExpression, CustomMetricsPropertyName);
 
                         propertyComparatorExpression = Expression.Call(
                             null,
