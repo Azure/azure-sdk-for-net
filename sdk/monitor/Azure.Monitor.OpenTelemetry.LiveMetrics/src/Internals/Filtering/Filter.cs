@@ -19,7 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
     /// The filter's configuration (condition) is specified in a <see cref="FilterInfo"/> DTO.
     /// </summary>
     /// <typeparam name="TTelemetry">Type of telemetry documents.</typeparam>
-    internal class Filter<TTelemetry>
+    internal class Filter<TTelemetry> where TTelemetry : DocumentIngress
     {
         private const string FieldNameCustomDimensionsPrefix = "CustomDimensions.";
 
@@ -56,15 +56,15 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             new[] { typeof(string), typeof(NumberStyles), typeof(IFormatProvider), typeof(double).MakeByRefType() });
 
         private static readonly MethodInfo ListStringTryGetValueMethodInfo =
-            GetMethodInfo<IList<KeyValuePairString>, string, string>((list, key) => Filter<int>.TryGetString(list, key));
+            GetMethodInfo<IList<KeyValuePairString>, string, string>((list, key) => TryGetString(list, key));
 
         private static readonly MethodInfo DictionaryStringDoubleTryGetValueMethodInfo = typeof(IDictionary<string, double>).GetMethod("TryGetValue");
 
         private static readonly MethodInfo ListKeyValuePairStringScanMethodInfo =
-            GetMethodInfo<IList<KeyValuePairString>, string, bool>((list, searchValue) => Filter<int>.ScanList(list, searchValue));
+            GetMethodInfo<IList<KeyValuePairString>, string, bool>((list, searchValue) => ScanList(list, searchValue));
 
         private static readonly MethodInfo DictionaryStringDoubleScanMethodInfo =
-           GetMethodInfo<IDictionary<string, double>, string, bool>((dict, searchValue) => Filter<int>.ScanDictionary(dict, searchValue));
+           GetMethodInfo<IDictionary<string, double>, string, bool>((dict, searchValue) => ScanDictionary(dict, searchValue));
 
         private static readonly ConstantExpression DoubleDefaultNumberStyles = Expression.Constant(NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite | NumberStyles.AllowLeadingSign | NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands | NumberStyles.AllowExponent);
         private static readonly ConstantExpression InvariantCulture = Expression.Constant(CultureInfo.InvariantCulture);
@@ -218,12 +218,35 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             return info?.ToString() ?? string.Empty;
         }
 
-        internal static Expression ProduceFieldExpression(ParameterExpression documentExpression, string fieldName, FieldNameType fieldNameType)
+        [UnconditionalSuppressMessage("AOT", "IL2075", Justification = "The DocumentIngress class and its derived classes have DynamicallyAccessedMembers attribute applied to preserve public properties.")]
+        internal static Expression ProduceFieldExpression(
+            ParameterExpression documentExpression,
+            string fieldName,
+            FieldNameType fieldNameType)
         {
             switch (fieldNameType)
             {
                 case FieldNameType.FieldName:
-                    return fieldName.Split(FieldNameTrainSeparator).Aggregate<string, Expression>(documentExpression, Expression.Property);
+                    Expression current = documentExpression;
+                    string[] propertyNames = fieldName.Split(FieldNameTrainSeparator);
+
+                    foreach (string propertyName in propertyNames)
+                    {
+                        Type currentType = current.Type;
+                        PropertyInfo propertyInfo = currentType.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public);
+
+                        if (propertyInfo == null)
+                        {
+                            throw new ArgumentOutOfRangeException(
+                                nameof(fieldName),
+                                $"Property '{propertyName}' not found on type '{currentType.FullName}'");
+                        }
+
+                        current = Expression.Property(current, propertyInfo);
+                    }
+
+                    return current;
+
                 case FieldNameType.CustomMetricName:
                     string customMetricName = fieldName.Substring(
                         FieldNameCustomMetricsPrefix.Length,
@@ -276,21 +299,47 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             return GetPropertyTypeFromFieldName(fieldName);
         }
 
-        private static Expression CreateListAccessExpression(ParameterExpression documentExpression, string listName, MethodInfo tryGetValueMethodInfo, Type valueType, string keyValue)
+        [UnconditionalSuppressMessage("AOT", "IL2075", Justification = "The DocumentIngress class and its derived classes have DynamicallyAccessedMembers attribute applied to preserve public properties.")]
+        private static Expression CreateListAccessExpression(
+            ParameterExpression documentExpression,
+            string listName,
+            MethodInfo tryGetValueMethodInfo,
+            Type valueType,
+            string keyValue)
         {
+            // Get the PropertyInfo directly to avoid string-based property access
+            PropertyInfo listProperty = documentExpression.Type.GetProperty(listName, BindingFlags.Instance | BindingFlags.Public);
+            if (listProperty == null)
+            {
+                throw new ArgumentException($"Property '{listName}' not found on type '{documentExpression.Type.FullName}'", nameof(listName));
+            }
+
             // return Filter<int>.TryGetString(document.listName, keyValue)
-            MemberExpression properties = Expression.Property(documentExpression, listName);
+            MemberExpression properties = Expression.Property(documentExpression, listProperty);
             return Expression.Call(tryGetValueMethodInfo, properties, Expression.Constant(keyValue));
         }
 
-        private static Expression CreateDictionaryAccessExpression(ParameterExpression documentExpression, string dictionaryName, MethodInfo tryGetValueMethodInfo, Type valueType, string keyValue)
+        [UnconditionalSuppressMessage("AOT", "IL2075", Justification = "The DocumentIngress class and its derived classes have DynamicallyAccessedMembers attribute applied to preserve public properties.")]
+        private static Expression CreateDictionaryAccessExpression(
+            ParameterExpression documentExpression,
+            string dictionaryName,
+            MethodInfo tryGetValueMethodInfo,
+            Type valueType,
+            string keyValue)
         {
+            // Get the PropertyInfo directly to avoid string-based property access
+            PropertyInfo dictionaryProperty = documentExpression.Type.GetProperty(dictionaryName, BindingFlags.Instance | BindingFlags.Public);
+            if (dictionaryProperty == null)
+            {
+                throw new ArgumentException($"Property '{dictionaryName}' not found on type '{documentExpression.Type.FullName}'", nameof(dictionaryName));
+            }
+
             // valueType value;
             // document.dictionaryName.TryGetValue(keyValue, out value)
             // return value;
             ParameterExpression valueVariable = Expression.Variable(valueType);
 
-            MemberExpression properties = Expression.Property(documentExpression, dictionaryName);
+            MemberExpression properties = Expression.Property(documentExpression, dictionaryProperty);
             MethodCallExpression tryGetValueCall = Expression.Call(properties, tryGetValueMethodInfo, Expression.Constant(keyValue), valueVariable);
 
             // a block will "return" its last expression
