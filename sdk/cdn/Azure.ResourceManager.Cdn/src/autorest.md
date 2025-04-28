@@ -212,7 +212,6 @@ directive:
         }
       $.CacheExpirationActionParameters.properties.cacheDuration['x-ms-format'] = 'duration-constant';
       $.CacheConfiguration.properties.cacheDuration['x-ms-format'] = 'duration-constant';
-
       $.HealthProbeParameters.properties.probeProtocol['x-ms-enum'].name = 'HealthProbeProtocol';
       $.CustomDomainHttpsParameters.properties.protocolType['x-ms-enum'].name = 'SecureDeliveryProtocolType';
       $.CustomDomainProperties.properties.customHttpsProvisioningSubstate['x-ms-enum'].name = 'CustomHttpsAvailabilityState';
@@ -230,9 +229,7 @@ directive:
                                     "value": "Microsoft.Cdn/Profiles/AfdEndpoints",
                                     "name": "FrontDoorEndpoints"
                                 }
-                            ]
-      $.SocketAddrMatchConditionParameters.properties.typeName['x-ms-enum'].name = 'SocketAddressMatchConditionType';
-      $.SocketAddrMatchConditionParameters.properties.typeName['x-ms-enum'].values[0].name = 'SocketAddressCondition';
+                            ];
       $.transform['x-ms-enum'].name = 'preTransformCategory';
       $.KeyVaultCertificateSourceParameters.properties.updateRule['x-ms-enum'].name = 'certificateUpdateAction';
       $.KeyVaultCertificateSourceParameters.properties.deleteRule['x-ms-enum'].name = 'certificateDeleteAction';
@@ -243,19 +240,19 @@ directive:
       $.IsDeviceMatchConditionParameters.properties.matchValues.items['x-ms-enum'] = {
             "name": "IsDeviceMatchConditionMatchValue",
             "modelAsString": true
-        }
+        };
       $.RequestMethodMatchConditionParameters.properties.matchValues.items['x-ms-enum'] = {
             "name": "RequestMethodMatchConditionMatchValue",
             "modelAsString": true
-        }
+        };
       $.RequestSchemeMatchConditionParameters.properties.operator['x-ms-enum'] = {
             "name": "RequestSchemeOperator",
             "modelAsString": true
-        }
+        };
       $.RequestSchemeMatchConditionParameters.properties.matchValues.items['x-ms-enum'] = {
             "name": "RequestSchemeMatchConditionMatchValue",
             "modelAsString": true
-        }
+        };
       $.EndpointPropertiesUpdateParameters.properties.defaultOriginGroup = {
             "description": "A reference to the origin group.",
             "type": "object",
@@ -266,7 +263,7 @@ directive:
                     "x-ms-format": "arm-id"
                 }
             }
-        }
+        };
       $.EndpointPropertiesUpdateParameters.properties.defaultOriginGroup['x-nullable'] = true;
       $.EndpointPropertiesUpdateParameters.properties.optimizationType['x-nullable'] = true;
       $.EndpointPropertiesUpdateParameters.properties.urlSigningKeys['x-nullable'] = true;
