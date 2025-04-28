@@ -680,6 +680,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 OSLinuxProfile = commonLinuxProfile,
                 VirtualNetworkProfile = commonVnetProfile
             });
+
             if (flag == "iptag")
             {
                 properties.StorageAccounts.Add(new HDInsightStorageAccountInfo()
