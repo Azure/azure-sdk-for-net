@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Broker.Tests
 {
-    public class ManualInteractiveBrowserCredentialBrokerTests
+    public partial class ManualInteractiveBrowserCredentialBrokerTests
     {
         private static TokenRequestContext context = new TokenRequestContext(new string[] { "https://vault.azure.net/.default" });
 
