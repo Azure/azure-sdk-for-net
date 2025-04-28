@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.NeonPostgres
     /// A Class representing a NeonDatabase along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NeonDatabaseResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetNeonDatabaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BranchResource"/> using the GetNeonDatabase method.
+    /// Otherwise you can get one from its parent resource <see cref="NeonBranchResource"/> using the GetNeonDatabase method.
     /// </summary>
     public partial class NeonDatabaseResource : ArmResource
     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="neonDatabaseName"> The neonDatabaseName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string organizationName, string projectName, string branchName, string neonDatabaseName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonDatabases/{neonDatabaseName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neondatabases/{neonDatabaseName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NeonPostgres
         private readonly NeonDatabaseData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Neon.Postgres/organizations/projects/branches/neonDatabases";
+        public static readonly ResourceType ResourceType = "Neon.Postgres/organizations/projects/branches/neondatabases";
 
         /// <summary> Initializes a new instance of the <see cref="NeonDatabaseResource"/> class for mocking. </summary>
         protected NeonDatabaseResource()
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonDatabases/{neonDatabaseName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neondatabases/{neonDatabaseName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonDatabases/{neonDatabaseName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neondatabases/{neonDatabaseName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonDatabases/{neonDatabaseName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neondatabases/{neonDatabaseName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonDatabases/{neonDatabaseName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neondatabases/{neonDatabaseName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonDatabases/{neonDatabaseName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neondatabases/{neonDatabaseName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonDatabases/{neonDatabaseName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neondatabases/{neonDatabaseName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>

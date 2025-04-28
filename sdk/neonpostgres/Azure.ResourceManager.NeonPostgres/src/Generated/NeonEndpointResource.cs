@@ -15,14 +15,14 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.NeonPostgres
 {
     /// <summary>
-    /// A Class representing an Endpoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EndpointResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BranchResource"/> using the GetEndpoint method.
+    /// A Class representing a NeonEndpoint along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NeonEndpointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNeonEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NeonBranchResource"/> using the GetNeonEndpoint method.
     /// </summary>
-    public partial class EndpointResource : ArmResource
+    public partial class NeonEndpointResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="EndpointResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="NeonEndpointResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="organizationName"> The organizationName. </param>
@@ -35,35 +35,35 @@ namespace Azure.ResourceManager.NeonPostgres
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _endpointClientDiagnostics;
-        private readonly EndpointsRestOperations _endpointRestClient;
-        private readonly EndpointData _data;
+        private readonly ClientDiagnostics _neonEndpointEndpointsClientDiagnostics;
+        private readonly EndpointsRestOperations _neonEndpointEndpointsRestClient;
+        private readonly NeonEndpointData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Neon.Postgres/organizations/projects/branches/endpoints";
 
-        /// <summary> Initializes a new instance of the <see cref="EndpointResource"/> class for mocking. </summary>
-        protected EndpointResource()
+        /// <summary> Initializes a new instance of the <see cref="NeonEndpointResource"/> class for mocking. </summary>
+        protected NeonEndpointResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NeonEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal EndpointResource(ArmClient client, EndpointData data) : this(client, data.Id)
+        internal NeonEndpointResource(ArmClient client, NeonEndpointData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NeonEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal EndpointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NeonEndpointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _endpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string endpointApiVersion);
-            _endpointRestClient = new EndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, endpointApiVersion);
+            _neonEndpointEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string neonEndpointEndpointsApiVersion);
+            _neonEndpointEndpointsRestClient = new EndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, neonEndpointEndpointsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NeonPostgres
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual EndpointData Data
+        public virtual NeonEndpointData Data
         {
             get
             {
@@ -107,21 +107,21 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EndpointResource"/></description>
+        /// <description><see cref="NeonEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EndpointResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NeonEndpointResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _endpointClientDiagnostics.CreateScope("EndpointResource.Get");
+            using var scope = _neonEndpointEndpointsClientDiagnostics.CreateScope("NeonEndpointResource.Get");
             scope.Start();
             try
             {
-                var response = await _endpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _neonEndpointEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NeonEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,21 +147,21 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EndpointResource"/></description>
+        /// <description><see cref="NeonEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EndpointResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<NeonEndpointResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _endpointClientDiagnostics.CreateScope("EndpointResource.Get");
+            using var scope = _neonEndpointEndpointsClientDiagnostics.CreateScope("NeonEndpointResource.Get");
             scope.Start();
             try
             {
-                var response = _endpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _neonEndpointEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NeonEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EndpointResource"/></description>
+        /// <description><see cref="NeonEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,12 +195,12 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _endpointClientDiagnostics.CreateScope("EndpointResource.Delete");
+            using var scope = _neonEndpointEndpointsClientDiagnostics.CreateScope("NeonEndpointResource.Delete");
             scope.Start();
             try
             {
-                var response = await _endpointRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _endpointRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var response = await _neonEndpointEndpointsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _neonEndpointEndpointsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new NeonPostgresArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EndpointResource"/></description>
+        /// <description><see cref="NeonEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -239,12 +239,12 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _endpointClientDiagnostics.CreateScope("EndpointResource.Delete");
+            using var scope = _neonEndpointEndpointsClientDiagnostics.CreateScope("NeonEndpointResource.Delete");
             scope.Start();
             try
             {
-                var response = _endpointRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _endpointRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var response = _neonEndpointEndpointsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var uri = _neonEndpointEndpointsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new NeonPostgresArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EndpointResource"/></description>
+        /// <description><see cref="NeonEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,16 +283,16 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<EndpointResource>> UpdateAsync(WaitUntil waitUntil, EndpointData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NeonEndpointResource>> UpdateAsync(WaitUntil waitUntil, NeonEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _endpointClientDiagnostics.CreateScope("EndpointResource.Update");
+            using var scope = _neonEndpointEndpointsClientDiagnostics.CreateScope("NeonEndpointResource.Update");
             scope.Start();
             try
             {
-                var response = await _endpointRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NeonPostgresArmOperation<EndpointResource>(new EndpointOperationSource(Client), _endpointClientDiagnostics, Pipeline, _endpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _neonEndpointEndpointsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NeonPostgresArmOperation<NeonEndpointResource>(new NeonEndpointOperationSource(Client), _neonEndpointEndpointsClientDiagnostics, Pipeline, _neonEndpointEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EndpointResource"/></description>
+        /// <description><see cref="NeonEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,16 +329,16 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<EndpointResource> Update(WaitUntil waitUntil, EndpointData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NeonEndpointResource> Update(WaitUntil waitUntil, NeonEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _endpointClientDiagnostics.CreateScope("EndpointResource.Update");
+            using var scope = _neonEndpointEndpointsClientDiagnostics.CreateScope("NeonEndpointResource.Update");
             scope.Start();
             try
             {
-                var response = _endpointRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new NeonPostgresArmOperation<EndpointResource>(new EndpointOperationSource(Client), _endpointClientDiagnostics, Pipeline, _endpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _neonEndpointEndpointsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new NeonPostgresArmOperation<NeonEndpointResource>(new NeonEndpointOperationSource(Client), _neonEndpointEndpointsClientDiagnostics, Pipeline, _neonEndpointEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

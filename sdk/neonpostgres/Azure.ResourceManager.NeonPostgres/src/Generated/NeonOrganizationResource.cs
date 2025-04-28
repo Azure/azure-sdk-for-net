@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.NeonPostgres
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ProjectResources in the NeonOrganization. </summary>
-        /// <returns> An object representing collection of ProjectResources and their operations over a ProjectResource. </returns>
-        public virtual ProjectCollection GetProjects()
+        /// <summary> Gets a collection of NeonProjectResources in the NeonOrganization. </summary>
+        /// <returns> An object representing collection of NeonProjectResources and their operations over a NeonProjectResource. </returns>
+        public virtual NeonProjectCollection GetNeonProjects()
         {
-            return GetCachedClient(client => new ProjectCollection(client, Id));
+            return GetCachedClient(client => new NeonProjectCollection(client, Id));
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProjectResource"/></description>
+        /// <description><see cref="NeonProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ProjectResource>> GetProjectAsync(string projectName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NeonProjectResource>> GetNeonProjectAsync(string projectName, CancellationToken cancellationToken = default)
         {
-            return await GetProjects().GetAsync(projectName, cancellationToken).ConfigureAwait(false);
+            return await GetNeonProjects().GetAsync(projectName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProjectResource"/></description>
+        /// <description><see cref="NeonProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -153,9 +153,9 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProjectResource> GetProject(string projectName, CancellationToken cancellationToken = default)
+        public virtual Response<NeonProjectResource> GetNeonProject(string projectName, CancellationToken cancellationToken = default)
         {
-            return GetProjects().Get(projectName, cancellationToken);
+            return GetNeonProjects().Get(projectName, cancellationToken);
         }
 
         /// <summary>

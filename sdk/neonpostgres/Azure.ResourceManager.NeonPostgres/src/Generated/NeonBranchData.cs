@@ -14,10 +14,10 @@ using Azure.ResourceManager.NeonPostgres.Models;
 namespace Azure.ResourceManager.NeonPostgres
 {
     /// <summary>
-    /// A class representing the Endpoint data model.
-    /// The Neon compute endpoint resource type.
+    /// A class representing the NeonBranch data model.
+    /// The Branch resource type.
     /// </summary>
-    public partial class EndpointData : ResourceData
+    public partial class NeonBranchData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +51,25 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="EndpointData"/>. </summary>
-        public EndpointData()
+        /// <summary> Initializes a new instance of <see cref="NeonBranchData"/>. </summary>
+        public NeonBranchData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EndpointData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NeonBranchData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NeonEndpointProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NeonBranchData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NeonBranchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public NeonEndpointProperties Properties { get; set; }
+        public NeonBranchProperties Properties { get; set; }
     }
 }

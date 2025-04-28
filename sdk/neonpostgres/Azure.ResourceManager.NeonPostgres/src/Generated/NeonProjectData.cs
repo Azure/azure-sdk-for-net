@@ -14,10 +14,10 @@ using Azure.ResourceManager.NeonPostgres.Models;
 namespace Azure.ResourceManager.NeonPostgres
 {
     /// <summary>
-    /// A class representing the Project data model.
+    /// A class representing the NeonProject data model.
     /// The Project resource type.
     /// </summary>
-    public partial class ProjectData : ResourceData
+    public partial class NeonProjectData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProjectData"/>. </summary>
-        public ProjectData()
+        /// <summary> Initializes a new instance of <see cref="NeonProjectData"/>. </summary>
+        public NeonProjectData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProjectData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NeonProjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NeonProjectProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NeonProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NeonProjectProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;

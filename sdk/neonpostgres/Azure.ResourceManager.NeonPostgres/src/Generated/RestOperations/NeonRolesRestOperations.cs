@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NeonPostgres
             uri.AppendPath(projectName, true);
             uri.AppendPath("/branches/", false);
             uri.AppendPath(branchName, true);
-            uri.AppendPath("/neonRoles/", false);
+            uri.AppendPath("/neonroles/", false);
             uri.AppendPath(neonRoleName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NeonPostgres
             uri.AppendPath(projectName, true);
             uri.AppendPath("/branches/", false);
             uri.AppendPath(branchName, true);
-            uri.AppendPath("/neonRoles/", false);
+            uri.AppendPath("/neonroles/", false);
             uri.AppendPath(neonRoleName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NeonPostgres
             uri.AppendPath(projectName, true);
             uri.AppendPath("/branches/", false);
             uri.AppendPath(branchName, true);
-            uri.AppendPath("/neonRoles/", false);
+            uri.AppendPath("/neonroles/", false);
             uri.AppendPath(neonRoleName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.NeonPostgres
             uri.AppendPath(projectName, true);
             uri.AppendPath("/branches/", false);
             uri.AppendPath(branchName, true);
-            uri.AppendPath("/neonRoles/", false);
+            uri.AppendPath("/neonroles/", false);
             uri.AppendPath(neonRoleName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.NeonPostgres
             uri.AppendPath(projectName, true);
             uri.AppendPath("/branches/", false);
             uri.AppendPath(branchName, true);
-            uri.AppendPath("/neonRoles/", false);
+            uri.AppendPath("/neonroles/", false);
             uri.AppendPath(neonRoleName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.NeonPostgres
             uri.AppendPath(projectName, true);
             uri.AppendPath("/branches/", false);
             uri.AppendPath(branchName, true);
-            uri.AppendPath("/neonRoles/", false);
+            uri.AppendPath("/neonroles/", false);
             uri.AppendPath(neonRoleName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.NeonPostgres
             uri.AppendPath(projectName, true);
             uri.AppendPath("/branches/", false);
             uri.AppendPath(branchName, true);
-            uri.AppendPath("/neonRoles/", false);
+            uri.AppendPath("/neonroles/", false);
             uri.AppendPath(neonRoleName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.NeonPostgres
             uri.AppendPath(projectName, true);
             uri.AppendPath("/branches/", false);
             uri.AppendPath(branchName, true);
-            uri.AppendPath("/neonRoles/", false);
+            uri.AppendPath("/neonroles/", false);
             uri.AppendPath(neonRoleName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.NeonPostgres
             uri.AppendPath(projectName, true);
             uri.AppendPath("/branches/", false);
             uri.AppendPath(branchName, true);
-            uri.AppendPath("/neonRoles", false);
+            uri.AppendPath("/neonroles", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.NeonPostgres
             uri.AppendPath(projectName, true);
             uri.AppendPath("/branches/", false);
             uri.AppendPath(branchName, true);
-            uri.AppendPath("/neonRoles", false);
+            uri.AppendPath("/neonroles", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

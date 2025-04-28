@@ -53,60 +53,60 @@ namespace Azure.ResourceManager.NeonPostgres
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectResource.CreateResourceIdentifier" /> to create a <see cref="ProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NeonProjectResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NeonProjectResource.CreateResourceIdentifier" /> to create a <see cref="NeonProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNeonPostgresArmClient.GetProjectResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNeonPostgresArmClient.GetNeonProjectResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ProjectResource"/> object. </returns>
-        public static ProjectResource GetProjectResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NeonProjectResource"/> object. </returns>
+        public static NeonProjectResource GetNeonProjectResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNeonPostgresArmClient(client).GetProjectResource(id);
+            return GetMockableNeonPostgresArmClient(client).GetNeonProjectResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BranchResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BranchResource.CreateResourceIdentifier" /> to create a <see cref="BranchResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NeonBranchResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NeonBranchResource.CreateResourceIdentifier" /> to create a <see cref="NeonBranchResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNeonPostgresArmClient.GetBranchResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNeonPostgresArmClient.GetNeonBranchResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BranchResource"/> object. </returns>
-        public static BranchResource GetBranchResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NeonBranchResource"/> object. </returns>
+        public static NeonBranchResource GetNeonBranchResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNeonPostgresArmClient(client).GetBranchResource(id);
+            return GetMockableNeonPostgresArmClient(client).GetNeonBranchResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ComputeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ComputeResource.CreateResourceIdentifier" /> to create a <see cref="ComputeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NeonComputeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NeonComputeResource.CreateResourceIdentifier" /> to create a <see cref="NeonComputeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNeonPostgresArmClient.GetComputeResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNeonPostgresArmClient.GetNeonComputeResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ComputeResource"/> object. </returns>
-        public static ComputeResource GetComputeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NeonComputeResource"/> object. </returns>
+        public static NeonComputeResource GetNeonComputeResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNeonPostgresArmClient(client).GetComputeResource(id);
+            return GetMockableNeonPostgresArmClient(client).GetNeonComputeResource(id);
         }
 
         /// <summary>
@@ -148,22 +148,22 @@ namespace Azure.ResourceManager.NeonPostgres
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EndpointResource.CreateResourceIdentifier" /> to create an <see cref="EndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NeonEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NeonEndpointResource.CreateResourceIdentifier" /> to create a <see cref="NeonEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNeonPostgresArmClient.GetEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNeonPostgresArmClient.GetNeonEndpointResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EndpointResource"/> object. </returns>
-        public static EndpointResource GetEndpointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NeonEndpointResource"/> object. </returns>
+        public static NeonEndpointResource GetNeonEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNeonPostgresArmClient(client).GetEndpointResource(id);
+            return GetMockableNeonPostgresArmClient(client).GetNeonEndpointResource(id);
         }
 
         /// <summary>

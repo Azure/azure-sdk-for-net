@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.NeonPostgres
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BranchResource"/> and their operations.
-    /// Each <see cref="BranchResource"/> in the collection will belong to the same instance of <see cref="ProjectResource"/>.
-    /// To get a <see cref="BranchCollection"/> instance call the GetBranches method from an instance of <see cref="ProjectResource"/>.
+    /// A class representing a collection of <see cref="NeonBranchResource"/> and their operations.
+    /// Each <see cref="NeonBranchResource"/> in the collection will belong to the same instance of <see cref="NeonProjectResource"/>.
+    /// To get a <see cref="NeonBranchCollection"/> instance call the GetNeonBranches method from an instance of <see cref="NeonProjectResource"/>.
     /// </summary>
-    public partial class BranchCollection : ArmCollection, IEnumerable<BranchResource>, IAsyncEnumerable<BranchResource>
+    public partial class NeonBranchCollection : ArmCollection, IEnumerable<NeonBranchResource>, IAsyncEnumerable<NeonBranchResource>
     {
-        private readonly ClientDiagnostics _branchClientDiagnostics;
-        private readonly BranchesRestOperations _branchRestClient;
+        private readonly ClientDiagnostics _neonBranchBranchesClientDiagnostics;
+        private readonly BranchesRestOperations _neonBranchBranchesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="BranchCollection"/> class for mocking. </summary>
-        protected BranchCollection()
+        /// <summary> Initializes a new instance of the <see cref="NeonBranchCollection"/> class for mocking. </summary>
+        protected NeonBranchCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BranchCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NeonBranchCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal BranchCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NeonBranchCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _branchClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", BranchResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BranchResource.ResourceType, out string branchApiVersion);
-            _branchRestClient = new BranchesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, branchApiVersion);
+            _neonBranchBranchesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", NeonBranchResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(NeonBranchResource.ResourceType, out string neonBranchBranchesApiVersion);
+            _neonBranchBranchesRestClient = new BranchesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, neonBranchBranchesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.NeonPostgres
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ProjectResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ProjectResource.ResourceType), nameof(id));
+            if (id.ResourceType != NeonProjectResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NeonProjectResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BranchResource"/></description>
+        /// <description><see cref="NeonBranchResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="branchName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="branchName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<BranchResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string branchName, BranchData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NeonBranchResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string branchName, NeonBranchData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _branchClientDiagnostics.CreateScope("BranchCollection.CreateOrUpdate");
+            using var scope = _neonBranchBranchesClientDiagnostics.CreateScope("NeonBranchCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _branchRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, branchName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NeonPostgresArmOperation<BranchResource>(new BranchOperationSource(Client), _branchClientDiagnostics, Pipeline, _branchRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, branchName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _neonBranchBranchesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, branchName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NeonPostgresArmOperation<NeonBranchResource>(new NeonBranchOperationSource(Client), _neonBranchBranchesClientDiagnostics, Pipeline, _neonBranchBranchesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, branchName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BranchResource"/></description>
+        /// <description><see cref="NeonBranchResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="branchName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="branchName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<BranchResource> CreateOrUpdate(WaitUntil waitUntil, string branchName, BranchData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NeonBranchResource> CreateOrUpdate(WaitUntil waitUntil, string branchName, NeonBranchData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _branchClientDiagnostics.CreateScope("BranchCollection.CreateOrUpdate");
+            using var scope = _neonBranchBranchesClientDiagnostics.CreateScope("NeonBranchCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _branchRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, branchName, data, cancellationToken);
-                var operation = new NeonPostgresArmOperation<BranchResource>(new BranchOperationSource(Client), _branchClientDiagnostics, Pipeline, _branchRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, branchName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _neonBranchBranchesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, branchName, data, cancellationToken);
+                var operation = new NeonPostgresArmOperation<NeonBranchResource>(new NeonBranchOperationSource(Client), _neonBranchBranchesClientDiagnostics, Pipeline, _neonBranchBranchesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, branchName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BranchResource"/></description>
+        /// <description><see cref="NeonBranchResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,18 +174,18 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="branchName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="branchName"/> is null. </exception>
-        public virtual async Task<Response<BranchResource>> GetAsync(string branchName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NeonBranchResource>> GetAsync(string branchName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
 
-            using var scope = _branchClientDiagnostics.CreateScope("BranchCollection.Get");
+            using var scope = _neonBranchBranchesClientDiagnostics.CreateScope("NeonBranchCollection.Get");
             scope.Start();
             try
             {
-                var response = await _branchRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, branchName, cancellationToken).ConfigureAwait(false);
+                var response = await _neonBranchBranchesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, branchName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BranchResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NeonBranchResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BranchResource"/></description>
+        /// <description><see cref="NeonBranchResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,18 +219,18 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="branchName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="branchName"/> is null. </exception>
-        public virtual Response<BranchResource> Get(string branchName, CancellationToken cancellationToken = default)
+        public virtual Response<NeonBranchResource> Get(string branchName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
 
-            using var scope = _branchClientDiagnostics.CreateScope("BranchCollection.Get");
+            using var scope = _neonBranchBranchesClientDiagnostics.CreateScope("NeonBranchCollection.Get");
             scope.Start();
             try
             {
-                var response = _branchRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, branchName, cancellationToken);
+                var response = _neonBranchBranchesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, branchName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BranchResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NeonBranchResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,17 +256,17 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BranchResource"/></description>
+        /// <description><see cref="NeonBranchResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BranchResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BranchResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NeonBranchResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NeonBranchResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _branchRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _branchRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BranchResource(Client, BranchData.DeserializeBranchData(e)), _branchClientDiagnostics, Pipeline, "BranchCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _neonBranchBranchesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _neonBranchBranchesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NeonBranchResource(Client, NeonBranchData.DeserializeNeonBranchData(e)), _neonBranchBranchesClientDiagnostics, Pipeline, "NeonBranchCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -286,17 +286,17 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BranchResource"/></description>
+        /// <description><see cref="NeonBranchResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BranchResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BranchResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NeonBranchResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NeonBranchResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _branchRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _branchRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BranchResource(Client, BranchData.DeserializeBranchData(e)), _branchClientDiagnostics, Pipeline, "BranchCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _neonBranchBranchesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _neonBranchBranchesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NeonBranchResource(Client, NeonBranchData.DeserializeNeonBranchData(e)), _neonBranchBranchesClientDiagnostics, Pipeline, "NeonBranchCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BranchResource"/></description>
+        /// <description><see cref="NeonBranchResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.NeonPostgres
         {
             Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
 
-            using var scope = _branchClientDiagnostics.CreateScope("BranchCollection.Exists");
+            using var scope = _neonBranchBranchesClientDiagnostics.CreateScope("NeonBranchCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _branchRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, branchName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _neonBranchBranchesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, branchName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BranchResource"/></description>
+        /// <description><see cref="NeonBranchResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.NeonPostgres
         {
             Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
 
-            using var scope = _branchClientDiagnostics.CreateScope("BranchCollection.Exists");
+            using var scope = _neonBranchBranchesClientDiagnostics.CreateScope("NeonBranchCollection.Exists");
             scope.Start();
             try
             {
-                var response = _branchRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, branchName, cancellationToken: cancellationToken);
+                var response = _neonBranchBranchesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, branchName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BranchResource"/></description>
+        /// <description><see cref="NeonBranchResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -410,18 +410,18 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="branchName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="branchName"/> is null. </exception>
-        public virtual async Task<NullableResponse<BranchResource>> GetIfExistsAsync(string branchName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<NeonBranchResource>> GetIfExistsAsync(string branchName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
 
-            using var scope = _branchClientDiagnostics.CreateScope("BranchCollection.GetIfExists");
+            using var scope = _neonBranchBranchesClientDiagnostics.CreateScope("NeonBranchCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _branchRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, branchName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _neonBranchBranchesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, branchName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<BranchResource>(response.GetRawResponse());
-                return Response.FromValue(new BranchResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<NeonBranchResource>(response.GetRawResponse());
+                return Response.FromValue(new NeonBranchResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="BranchResource"/></description>
+        /// <description><see cref="NeonBranchResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -455,18 +455,18 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="branchName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="branchName"/> is null. </exception>
-        public virtual NullableResponse<BranchResource> GetIfExists(string branchName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<NeonBranchResource> GetIfExists(string branchName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(branchName, nameof(branchName));
 
-            using var scope = _branchClientDiagnostics.CreateScope("BranchCollection.GetIfExists");
+            using var scope = _neonBranchBranchesClientDiagnostics.CreateScope("NeonBranchCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _branchRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, branchName, cancellationToken: cancellationToken);
+                var response = _neonBranchBranchesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, branchName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<BranchResource>(response.GetRawResponse());
-                return Response.FromValue(new BranchResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<NeonBranchResource>(response.GetRawResponse());
+                return Response.FromValue(new NeonBranchResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.NeonPostgres
             }
         }
 
-        IEnumerator<BranchResource> IEnumerable<BranchResource>.GetEnumerator()
+        IEnumerator<NeonBranchResource> IEnumerable<NeonBranchResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.NeonPostgres
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<BranchResource> IAsyncEnumerable<BranchResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<NeonBranchResource> IAsyncEnumerable<NeonBranchResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
