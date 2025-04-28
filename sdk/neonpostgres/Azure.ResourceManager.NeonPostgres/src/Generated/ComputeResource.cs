@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.NeonPostgres
 {
     /// <summary>
     /// A Class representing a Compute along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ComputeResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetComputeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BranchResource"/> using the GetCompute method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NeonComputeResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNeonComputeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NeonBranchResource"/> using the GetCompute method.
     /// </summary>
-    public partial class ComputeResource : ArmResource
+    public partial class NeonComputeResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ComputeResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="NeonComputeResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="organizationName"> The organizationName. </param>
@@ -37,29 +37,29 @@ namespace Azure.ResourceManager.NeonPostgres
 
         private readonly ClientDiagnostics _computeClientDiagnostics;
         private readonly ComputesRestOperations _computeRestClient;
-        private readonly ComputeData _data;
+        private readonly NeonComputeData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Neon.Postgres/organizations/projects/branches/computes";
 
-        /// <summary> Initializes a new instance of the <see cref="ComputeResource"/> class for mocking. </summary>
-        protected ComputeResource()
+        /// <summary> Initializes a new instance of the <see cref="NeonComputeResource"/> class for mocking. </summary>
+        protected NeonComputeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ComputeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NeonComputeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ComputeResource(ArmClient client, ComputeData data) : this(client, data.Id)
+        internal NeonComputeResource(ArmClient client, NeonComputeData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ComputeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NeonComputeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ComputeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NeonComputeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _computeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string computeApiVersion);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NeonPostgres
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ComputeData Data
+        public virtual NeonComputeData Data
         {
             get
             {
@@ -107,21 +107,21 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ComputeResource"/></description>
+        /// <description><see cref="NeonComputeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ComputeResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NeonComputeResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _computeClientDiagnostics.CreateScope("ComputeResource.Get");
+            using var scope = _computeClientDiagnostics.CreateScope("NeonComputeResource.Get");
             scope.Start();
             try
             {
                 var response = await _computeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ComputeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NeonComputeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,21 +147,21 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ComputeResource"/></description>
+        /// <description><see cref="NeonComputeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ComputeResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<NeonComputeResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _computeClientDiagnostics.CreateScope("ComputeResource.Get");
+            using var scope = _computeClientDiagnostics.CreateScope("NeonComputeResource.Get");
             scope.Start();
             try
             {
                 var response = _computeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ComputeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NeonComputeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ComputeResource"/></description>
+        /// <description><see cref="NeonComputeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _computeClientDiagnostics.CreateScope("ComputeResource.Delete");
+            using var scope = _computeClientDiagnostics.CreateScope("NeonComputeResource.Delete");
             scope.Start();
             try
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ComputeResource"/></description>
+        /// <description><see cref="NeonComputeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _computeClientDiagnostics.CreateScope("ComputeResource.Delete");
+            using var scope = _computeClientDiagnostics.CreateScope("NeonComputeResource.Delete");
             scope.Start();
             try
             {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ComputeResource"/></description>
+        /// <description><see cref="NeonComputeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,16 +283,16 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ComputeResource>> UpdateAsync(WaitUntil waitUntil, ComputeData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NeonComputeResource>> UpdateAsync(WaitUntil waitUntil, NeonComputeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _computeClientDiagnostics.CreateScope("ComputeResource.Update");
+            using var scope = _computeClientDiagnostics.CreateScope("NeonComputeResource.Update");
             scope.Start();
             try
             {
                 var response = await _computeRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NeonPostgresArmOperation<ComputeResource>(new ComputeOperationSource(Client), _computeClientDiagnostics, Pipeline, _computeRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new NeonPostgresArmOperation<NeonComputeResource>(new ComputeOperationSource(Client), _computeClientDiagnostics, Pipeline, _computeRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ComputeResource"/></description>
+        /// <description><see cref="NeonComputeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,16 +329,16 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ComputeResource> Update(WaitUntil waitUntil, ComputeData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NeonComputeResource> Update(WaitUntil waitUntil, NeonComputeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _computeClientDiagnostics.CreateScope("ComputeResource.Update");
+            using var scope = _computeClientDiagnostics.CreateScope("NeonComputeResource.Update");
             scope.Start();
             try
             {
                 var response = _computeRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new NeonPostgresArmOperation<ComputeResource>(new ComputeOperationSource(Client), _computeClientDiagnostics, Pipeline, _computeRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new NeonPostgresArmOperation<NeonComputeResource>(new ComputeOperationSource(Client), _computeClientDiagnostics, Pipeline, _computeRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

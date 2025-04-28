@@ -11,16 +11,16 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NeonPostgres
 {
-    public partial class BranchResource : IJsonModel<BranchData>
+    public partial class NeonBranchResource : IJsonModel<NeonBranchData>
     {
-        void IJsonModel<BranchData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BranchData>)Data).Write(writer, options);
+        void IJsonModel<NeonBranchData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NeonBranchData>)Data).Write(writer, options);
 
-        BranchData IJsonModel<BranchData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BranchData>)Data).Create(ref reader, options);
+        NeonBranchData IJsonModel<NeonBranchData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NeonBranchData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BranchData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NeonBranchData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        BranchData IPersistableModel<BranchData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BranchData>(data, options);
+        NeonBranchData IPersistableModel<NeonBranchData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NeonBranchData>(data, options);
 
-        string IPersistableModel<BranchData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BranchData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NeonBranchData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NeonBranchData>)Data).GetFormatFromOptions(options);
     }
 }

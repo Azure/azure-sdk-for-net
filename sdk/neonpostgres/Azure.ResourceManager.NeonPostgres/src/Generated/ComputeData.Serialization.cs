@@ -15,11 +15,11 @@ using Azure.ResourceManager.NeonPostgres.Models;
 
 namespace Azure.ResourceManager.NeonPostgres
 {
-    public partial class ComputeData : IUtf8JsonSerializable, IJsonModel<ComputeData>
+    public partial class NeonComputeData : IUtf8JsonSerializable, IJsonModel<NeonComputeData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NeonComputeData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ComputeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NeonComputeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NeonComputeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NeonComputeData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.NeonPostgres
             }
         }
 
-        ComputeData IJsonModel<ComputeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NeonComputeData IJsonModel<NeonComputeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NeonComputeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NeonComputeData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeComputeData(document.RootElement, options);
+            return DeserializeNeonComputeData(document.RootElement, options);
         }
 
-        internal static ComputeData DeserializeComputeData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NeonComputeData DeserializeNeonComputeData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.NeonPostgres
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ComputeData(
+            return new NeonComputeData(
                 id,
                 name,
                 type,
@@ -121,35 +121,35 @@ namespace Azure.ResourceManager.NeonPostgres
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ComputeData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NeonComputeData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NeonComputeData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComputeData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NeonComputeData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ComputeData IPersistableModel<ComputeData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NeonComputeData IPersistableModel<NeonComputeData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComputeData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NeonComputeData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeComputeData(document.RootElement, options);
+                        return DeserializeNeonComputeData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputeData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NeonComputeData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ComputeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NeonComputeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.NeonPostgres
 {
     /// <summary>
     /// A class representing a collection of <see cref="NeonRoleResource"/> and their operations.
-    /// Each <see cref="NeonRoleResource"/> in the collection will belong to the same instance of <see cref="BranchResource"/>.
-    /// To get a <see cref="NeonRoleCollection"/> instance call the GetNeonRoles method from an instance of <see cref="BranchResource"/>.
+    /// Each <see cref="NeonRoleResource"/> in the collection will belong to the same instance of <see cref="NeonBranchResource"/>.
+    /// To get a <see cref="NeonRoleCollection"/> instance call the GetNeonRoles method from an instance of <see cref="NeonBranchResource"/>.
     /// </summary>
     public partial class NeonRoleCollection : ArmCollection, IEnumerable<NeonRoleResource>, IAsyncEnumerable<NeonRoleResource>
     {
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.NeonPostgres
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != BranchResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, BranchResource.ResourceType), nameof(id));
+            if (id.ResourceType != NeonBranchResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NeonBranchResource.ResourceType), nameof(id));
         }
 
         /// <summary>
