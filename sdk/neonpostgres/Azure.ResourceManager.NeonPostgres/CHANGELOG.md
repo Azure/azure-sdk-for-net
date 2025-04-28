@@ -1,8 +1,18 @@
 # Release History
 
-## 1.0.0-beta.2 (2025-05-07)
+## 1.0.0-beta.2 (2025-05-05)
+
+### Features Added
+
+- Support Change Plan
+- Create Neon Project during Neon Organization
+- Create Neon Project from Overview
+- Create Neon Branch
+- Get Neon Database Connection URI
+- List Neon Projects, Branches, Databases, Roles, Endpoints
 
 
+## 1.0.0-beta.1 (2024-11-22)
 
 ### Features Added
 
