@@ -33,7 +33,7 @@ namespace Azure.Storage.DataMovement.Tests
                 await tm.QueueBytesTransferredAsync(i, cancellationToken);
             }
             // Wait for things to propegate into channel
-            await Task.Delay(1);
+            await Task.Delay(100);
 
             // Assert
             Assert.AreEqual(45, tm.TotalBytesTransferred);

@@ -13,7 +13,7 @@ namespace Azure.Storage.DataMovement
     /// Monitors the throughput of data transfer operations by tracking the total bytes transferred
     /// and calculating the throughput in bytes per second.
     /// </summary>
-    public class ThroughputMonitor : IAsyncDisposable
+    internal class ThroughputMonitor : IAsyncDisposable
     {
         private long _totalBytesTransferred;
         private long _bytesTransferredInCurrentInterval;
