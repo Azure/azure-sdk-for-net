@@ -42,7 +42,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 "Hi, Agent! Draw a graph for a line with a slope of 4 and y-intercept of 9.");
             #endregion
             #region Snippet:AgentsStreamingAsync_StreamLoop
-            await foreach (StreamingUpdate streamingUpdate in client.Runs.Runs.CreateRunStreamingAsync(thread.Id, agent.Id))
+            await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id))
             {
                 if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
                 {
@@ -93,7 +93,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 "Hi, Agent! Draw a graph for a line with a slope of 4 and y-intercept of 9.");
             #endregion
             #region Snippet:AgentsStreaming_StreamLoop
-            foreach (StreamingUpdate streamingUpdate in client.Runs.Runs.CreateRunStreaming(thread.Id, agent.Id))
+            foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreaming(thread.Id, agent.Id))
             {
                 if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
                 {

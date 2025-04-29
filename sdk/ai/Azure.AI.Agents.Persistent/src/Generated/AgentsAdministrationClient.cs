@@ -786,7 +786,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
-        public virtual async Task<Response<ThreadRun>> CreateThreadAndRunAsync(string assistantId, PersistentAgentThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, UpdateToolResourcesOptions toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ThreadRun>> CreateThreadAndRunAsync(string assistantId, PersistentAgentThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, UpdateToolResourcesOptions toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(assistantId, nameof(assistantId));
 
@@ -852,7 +852,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
-        public virtual Response<ThreadRun> CreateThreadAndRun(string assistantId, PersistentAgentThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, UpdateToolResourcesOptions toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        internal virtual Response<ThreadRun> CreateThreadAndRun(string assistantId, PersistentAgentThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, UpdateToolResourcesOptions toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(assistantId, nameof(assistantId));
 
@@ -899,7 +899,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateThreadAndRunAsync(RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> CreateThreadAndRunAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -937,7 +937,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CreateThreadAndRun(RequestContent content, RequestContext context = null)
+        internal virtual Response CreateThreadAndRun(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -963,54 +963,6 @@ namespace Azure.AI.Agents.Persistent
         private VectorStoresClient _cachedVectorStoresClient;
         private VectorStoreFilesClient _cachedVectorStoreFilesClient;
         private VectorStoreFileBatchesClient _cachedVectorStoreFileBatchesClient;
-
-        /// <summary> Initializes a new instance of ThreadsClient. </summary>
-        public virtual ThreadsClient GetThreadsClient()
-        {
-            return Volatile.Read(ref _cachedThreadsClient) ?? Interlocked.CompareExchange(ref _cachedThreadsClient, new ThreadsClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedThreadsClient;
-        }
-
-        /// <summary> Initializes a new instance of ThreadMessagesClient. </summary>
-        public virtual ThreadMessagesClient GetThreadMessagesClient()
-        {
-            return Volatile.Read(ref _cachedThreadMessagesClient) ?? Interlocked.CompareExchange(ref _cachedThreadMessagesClient, new ThreadMessagesClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedThreadMessagesClient;
-        }
-
-        /// <summary> Initializes a new instance of RunsClient. </summary>
-        public virtual RunsClient GetRunsClient()
-        {
-            return Volatile.Read(ref _cachedRunsClient) ?? Interlocked.CompareExchange(ref _cachedRunsClient, new RunsClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedRunsClient;
-        }
-
-        /// <summary> Initializes a new instance of RunStepsClient. </summary>
-        public virtual RunStepsClient GetRunStepsClient()
-        {
-            return Volatile.Read(ref _cachedRunStepsClient) ?? Interlocked.CompareExchange(ref _cachedRunStepsClient, new RunStepsClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedRunStepsClient;
-        }
-
-        /// <summary> Initializes a new instance of FilesClient. </summary>
-        public virtual FilesClient GetFilesClient()
-        {
-            return Volatile.Read(ref _cachedFilesClient) ?? Interlocked.CompareExchange(ref _cachedFilesClient, new FilesClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFilesClient;
-        }
-
-        /// <summary> Initializes a new instance of VectorStoresClient. </summary>
-        public virtual VectorStoresClient GetVectorStoresClient()
-        {
-            return Volatile.Read(ref _cachedVectorStoresClient) ?? Interlocked.CompareExchange(ref _cachedVectorStoresClient, new VectorStoresClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedVectorStoresClient;
-        }
-
-        /// <summary> Initializes a new instance of VectorStoreFilesClient. </summary>
-        public virtual VectorStoreFilesClient GetVectorStoreFilesClient()
-        {
-            return Volatile.Read(ref _cachedVectorStoreFilesClient) ?? Interlocked.CompareExchange(ref _cachedVectorStoreFilesClient, new VectorStoreFilesClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedVectorStoreFilesClient;
-        }
-
-        /// <summary> Initializes a new instance of VectorStoreFileBatchesClient. </summary>
-        public virtual VectorStoreFileBatchesClient GetVectorStoreFileBatchesClient()
-        {
-            return Volatile.Read(ref _cachedVectorStoreFileBatchesClient) ?? Interlocked.CompareExchange(ref _cachedVectorStoreFileBatchesClient, new VectorStoreFileBatchesClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedVectorStoreFileBatchesClient;
-        }
 
         internal HttpMessage CreateCreateAgentRequest(RequestContent content, RequestContext context)
         {

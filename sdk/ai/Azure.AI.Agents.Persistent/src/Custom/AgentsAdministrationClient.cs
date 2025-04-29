@@ -144,5 +144,53 @@ namespace Azure.AI.Agents.Persistent
                 && baseResponse.Value.Deleted;
             return Response.FromValue(simplifiedValue, baseResponse.GetRawResponse());
         }
+
+        /// <summary> Initializes a new instance of ThreadsClient. </summary>
+        internal virtual ThreadsClient GetThreadsClient()
+        {
+            return Volatile.Read(ref _cachedThreadsClient) ?? Interlocked.CompareExchange(ref _cachedThreadsClient, new ThreadsClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedThreadsClient;
+        }
+
+        /// <summary> Initializes a new instance of ThreadMessagesClient. </summary>
+        internal virtual ThreadMessagesClient GetThreadMessagesClient()
+        {
+            return Volatile.Read(ref _cachedThreadMessagesClient) ?? Interlocked.CompareExchange(ref _cachedThreadMessagesClient, new ThreadMessagesClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedThreadMessagesClient;
+        }
+
+        /// <summary> Initializes a new instance of RunsClient. </summary>
+        internal virtual RunsClient GetRunsClient()
+        {
+            return Volatile.Read(ref _cachedRunsClient) ?? Interlocked.CompareExchange(ref _cachedRunsClient, new RunsClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedRunsClient;
+        }
+
+        /// <summary> Initializes a new instance of RunStepsClient. </summary>
+        internal virtual RunStepsClient GetRunStepsClient()
+        {
+            return Volatile.Read(ref _cachedRunStepsClient) ?? Interlocked.CompareExchange(ref _cachedRunStepsClient, new RunStepsClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedRunStepsClient;
+        }
+
+        /// <summary> Initializes a new instance of FilesClient. </summary>
+        internal virtual FilesClient GetFilesClient()
+        {
+            return Volatile.Read(ref _cachedFilesClient) ?? Interlocked.CompareExchange(ref _cachedFilesClient, new FilesClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFilesClient;
+        }
+
+        /// <summary> Initializes a new instance of VectorStoresClient. </summary>
+        internal virtual VectorStoresClient GetVectorStoresClient()
+        {
+            return Volatile.Read(ref _cachedVectorStoresClient) ?? Interlocked.CompareExchange(ref _cachedVectorStoresClient, new VectorStoresClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedVectorStoresClient;
+        }
+
+        /// <summary> Initializes a new instance of VectorStoreFilesClient. </summary>
+        internal virtual VectorStoreFilesClient GetVectorStoreFilesClient()
+        {
+            return Volatile.Read(ref _cachedVectorStoreFilesClient) ?? Interlocked.CompareExchange(ref _cachedVectorStoreFilesClient, new VectorStoreFilesClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedVectorStoreFilesClient;
+        }
+
+        /// <summary> Initializes a new instance of VectorStoreFileBatchesClient. </summary>
+        internal virtual VectorStoreFileBatchesClient GetVectorStoreFileBatchesClient()
+        {
+            return Volatile.Read(ref _cachedVectorStoreFileBatchesClient) ?? Interlocked.CompareExchange(ref _cachedVectorStoreFileBatchesClient, new VectorStoreFileBatchesClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedVectorStoreFileBatchesClient;
+        }
     }
 }

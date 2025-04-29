@@ -87,7 +87,7 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
             RunStatus.Completed,
             run.Status,
             run.LastError?.Message);
-        PageableList<ThreadMessage> messages = await client.Messages.Messages.GetMessagesAsync(
+        PageableList<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
@@ -172,7 +172,7 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
             RunStatus.Completed,
             run.Status,
             run.LastError?.Message);
-        PageableList<ThreadMessage> messages = client.Messages.Messages.GetMessages(
+        PageableList<ThreadMessage> messages = client.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );

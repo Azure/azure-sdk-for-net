@@ -4,6 +4,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Threading;
 using Azure.AI.Agents.Persistent.Custom;
 using Azure.Core;
 
@@ -13,6 +16,11 @@ namespace Azure.AI.Agents.Persistent
     {
         protected PersistentAgentsClient()
         { }
+
+        internal PersistentAgentsClient(AgentsAdministrationClient client)
+        {
+            _client = client;
+        }
 
         private AgentsAdministrationClient _client;
         /// <summary> Initializes a new instance of AzureAIClient. </summary>
@@ -53,6 +61,52 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentException"> is an empty string, and was expected to be non-empty. </exception>
         public PersistentAgentsClient(string endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AgentsAdministrationClientOptions())
         {
+        }
+
+        public virtual Response<ThreadRun> CreateThreadAndRun(string assistantId, PersistentAgentThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, UpdateToolResourcesOptions toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        {
+            return _client.CreateThreadAndRun(
+                assistantId: assistantId,
+                thread: thread,
+                overrideModelName: overrideModelName,
+                overrideInstructions: overrideInstructions,
+                overrideTools: overrideTools,
+                toolResources: toolResources,
+                stream: stream,
+                temperature: temperature,
+                topP: topP,
+                maxPromptTokens: maxPromptTokens,
+                maxCompletionTokens: maxCompletionTokens,
+                truncationStrategy: truncationStrategy,
+                toolChoice: toolChoice,
+                responseFormat: responseFormat,
+                parallelToolCalls: parallelToolCalls,
+                metadata: metadata,
+                cancellationToken: cancellationToken
+            );
+        }
+
+        public virtual async Task<Response<ThreadRun>> CreateThreadAndRunAsync(string assistantId, PersistentAgentThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, UpdateToolResourcesOptions toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        {
+            return await _client.CreateThreadAndRunAsync(
+                assistantId: assistantId,
+                thread: thread,
+                overrideModelName: overrideModelName,
+                overrideInstructions: overrideInstructions,
+                overrideTools: overrideTools,
+                toolResources: toolResources,
+                stream: stream,
+                temperature: temperature,
+                topP: topP,
+                maxPromptTokens: maxPromptTokens,
+                maxCompletionTokens: maxCompletionTokens,
+                truncationStrategy: truncationStrategy,
+                toolChoice: toolChoice,
+                responseFormat: responseFormat,
+                parallelToolCalls: parallelToolCalls,
+                metadata: metadata,
+                cancellationToken: cancellationToken
+            ).ConfigureAwait(false);
         }
 
         public AgentsAdministrationClient AgentsAdministration { get => _client; }

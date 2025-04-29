@@ -68,12 +68,12 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<PersistentAgentPageableListOfVectorStoreFile>> InternalListFilesAsync(string vectorStoreId, VectorStoreFileStatusFilter? filter = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersistentAgentPageableListOfVectorStoreFile>> GetVectorStoreFilesAsync(string vectorStoreId, VectorStoreFileStatusFilter? filter = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await InternalListFilesAsync(vectorStoreId, filter?.ToString(), limit, order?.ToString(), after, before, context).ConfigureAwait(false);
+            Response response = await GetVectorStoreFilesAsync(vectorStoreId, filter?.ToString(), limit, order?.ToString(), after, before, context).ConfigureAwait(false);
             return Response.FromValue(PersistentAgentPageableListOfVectorStoreFile.FromResponse(response), response);
         }
 
@@ -87,12 +87,12 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<PersistentAgentPageableListOfVectorStoreFile> InternalListFiles(string vectorStoreId, VectorStoreFileStatusFilter? filter = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        public virtual Response<PersistentAgentPageableListOfVectorStoreFile> GetVectorStoreFiles(string vectorStoreId, VectorStoreFileStatusFilter? filter = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = InternalListFiles(vectorStoreId, filter?.ToString(), limit, order?.ToString(), after, before, context);
+            Response response = GetVectorStoreFiles(vectorStoreId, filter?.ToString(), limit, order?.ToString(), after, before, context);
             return Response.FromValue(PersistentAgentPageableListOfVectorStoreFile.FromResponse(response), response);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="InternalListFilesAsync(string,VectorStoreFileStatusFilter?,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetVectorStoreFilesAsync(string,VectorStoreFileStatusFilter?,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -122,15 +122,15 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> InternalListFilesAsync(string vectorStoreId, string filter, int? limit, string order, string after, string before, RequestContext context)
+        public virtual async Task<Response> GetVectorStoreFilesAsync(string vectorStoreId, string filter, int? limit, string order, string after, string before, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            using var scope = ClientDiagnostics.CreateScope("VectorStoreFilesClient.InternalListFiles");
+            using var scope = ClientDiagnostics.CreateScope("VectorStoreFilesClient.GetVectorStoreFiles");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateInternalListFilesRequest(vectorStoreId, filter, limit, order, after, before, context);
+                using HttpMessage message = CreateGetVectorStoreFilesRequest(vectorStoreId, filter, limit, order, after, before, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -150,7 +150,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="InternalListFiles(string,VectorStoreFileStatusFilter?,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetVectorStoreFiles(string,VectorStoreFileStatusFilter?,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -166,15 +166,15 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response InternalListFiles(string vectorStoreId, string filter, int? limit, string order, string after, string before, RequestContext context)
+        public virtual Response GetVectorStoreFiles(string vectorStoreId, string filter, int? limit, string order, string after, string before, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            using var scope = ClientDiagnostics.CreateScope("VectorStoreFilesClient.InternalListFiles");
+            using var scope = ClientDiagnostics.CreateScope("VectorStoreFilesClient.GetVectorStoreFiles");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateInternalListFilesRequest(vectorStoreId, filter, limit, order, after, before, context);
+                using HttpMessage message = CreateGetVectorStoreFilesRequest(vectorStoreId, filter, limit, order, after, before, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -530,7 +530,7 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
-        internal HttpMessage CreateInternalListFilesRequest(string vectorStoreId, string filter, int? limit, string order, string after, string before, RequestContext context)
+        internal HttpMessage CreateGetVectorStoreFilesRequest(string vectorStoreId, string filter, int? limit, string order, string after, string before, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

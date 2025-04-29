@@ -80,7 +80,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
             run.LastError?.Message);
         #endregion
         #region Snippet:AgentsEnterpriseFileSearchAsync_ListUpdatedMessages
-        PageableList<ThreadMessage> messages = await client.Messages.Messages.GetMessagesAsync(
+        PageableList<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
@@ -90,7 +90,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         Dictionary<string, string> dtFiles = [];
         do
         {
-            storeFiles = await client.VectorStores.VectorStoreFiles.VectorStoreFiles.GetVectorStoreFilesAsync(
+            storeFiles = await client.VectorStoreFiles.GetVectorStoreFilesAsync(
                 vectorStoreId: vectorStore.Id,
                 after: after
             );
@@ -186,7 +186,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
             run.LastError?.Message);
         #endregion
         #region Snippet:AgentsEnterpriseFileSearch_ListUpdatedMessages
-        PageableList<ThreadMessage> messages = client.Messages.Messages.GetMessages(
+        PageableList<ThreadMessage> messages = client.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
@@ -196,7 +196,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         Dictionary<string, string> dtFiles = [];
         do
         {
-            storeFiles = client.VectorStores.VectorStoreFiles.VectorStoreFiles.GetVectorStoreFiles(
+            storeFiles = client.VectorStoreFiles.GetVectorStoreFiles(
                 vectorStoreId: vectorStore.Id,
                 after: after
             );
