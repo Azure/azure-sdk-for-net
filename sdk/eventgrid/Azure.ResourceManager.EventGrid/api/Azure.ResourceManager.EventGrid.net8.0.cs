@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.EventGrid
 {
+    public partial class AzureResourceManagerEventGridContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerEventGridContext() { }
+        public static Azure.ResourceManager.EventGrid.AzureResourceManagerEventGridContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CaCertificateCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventGrid.CaCertificateResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.CaCertificateResource>, System.Collections.IEnumerable
     {
         protected CaCertificateCollection() { }

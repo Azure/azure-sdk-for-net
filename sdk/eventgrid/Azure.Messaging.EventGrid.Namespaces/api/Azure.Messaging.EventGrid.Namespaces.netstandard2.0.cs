@@ -12,6 +12,12 @@ namespace Azure.Messaging.EventGrid.Namespaces
         string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureMessagingEventGridNamespacesContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureMessagingEventGridNamespacesContext() { }
+        public static Azure.Messaging.EventGrid.Namespaces.AzureMessagingEventGridNamespacesContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class BrokerProperties : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.BrokerProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.BrokerProperties>
     {
         internal BrokerProperties() { }

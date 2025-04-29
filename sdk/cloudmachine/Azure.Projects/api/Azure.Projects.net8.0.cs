@@ -53,9 +53,9 @@ namespace Azure.Projects
     }
     public partial class ProjectClient : System.ClientModel.Primitives.ConnectionProvider
     {
-        public ProjectClient() { }
+        public ProjectClient() : base (default(int)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public ProjectClient(string projectId, System.ClientModel.Primitives.ConnectionProvider connections) { }
+        public ProjectClient(string projectId, System.ClientModel.Primitives.ConnectionProvider connections) : base (default(int)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string ProjectId { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

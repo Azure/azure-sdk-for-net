@@ -110,6 +110,12 @@ namespace Azure.Communication.CallAutomation
         public string MediaSubscriptionId { get { throw null; } set { } }
         public int SampleRate { get { throw null; } set { } }
     }
+    public partial class AzureCommunicationCallAutomationContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureCommunicationCallAutomationContext() { }
+        public static Azure.Communication.CallAutomation.AzureCommunicationCallAutomationContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class AzureOpenAIDialog : Azure.Communication.CallAutomation.BaseDialog
     {
         public AzureOpenAIDialog(System.Collections.Generic.IDictionary<string, object> context) : base (default(System.Collections.Generic.IDictionary<string, object>)) { }

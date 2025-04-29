@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.InformaticaDataManagement
 {
+    public partial class AzureResourceManagerInformaticaDataManagementContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerInformaticaDataManagementContext() { }
+        public static Azure.ResourceManager.InformaticaDataManagement.AzureResourceManagerInformaticaDataManagementContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class InformaticaDataManagementExtensions
     {
         public static Azure.Response<Azure.ResourceManager.InformaticaDataManagement.InformaticaOrganizationResource> GetInformaticaOrganization(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string organizationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

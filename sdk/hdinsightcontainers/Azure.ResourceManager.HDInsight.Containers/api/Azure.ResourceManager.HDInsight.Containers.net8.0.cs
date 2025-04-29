@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.HDInsight.Containers
 {
+    public partial class AzureResourceManagerHDInsightContainersContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerHDInsightContainersContext() { }
+        public static Azure.ResourceManager.HDInsight.Containers.AzureResourceManagerHDInsightContainersContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class HDInsightClusterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterResource>, System.Collections.IEnumerable
     {
         protected HDInsightClusterCollection() { }

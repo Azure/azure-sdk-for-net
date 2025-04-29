@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.NeonPostgres
 {
+    public partial class AzureResourceManagerNeonPostgresContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerNeonPostgresContext() { }
+        public static Azure.ResourceManager.NeonPostgres.AzureResourceManagerNeonPostgresContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class NeonOrganizationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NeonPostgres.NeonOrganizationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NeonPostgres.NeonOrganizationResource>, System.Collections.IEnumerable
     {
         protected NeonOrganizationCollection() { }

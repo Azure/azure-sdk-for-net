@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
+    public partial class AzureResourceManagerServiceFabricManagedClustersContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerServiceFabricManagedClustersContext() { }
+        public static Azure.ResourceManager.ServiceFabricManagedClusters.AzureResourceManagerServiceFabricManagedClustersContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ServiceFabricManagedApplicationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationResource>, System.Collections.IEnumerable
     {
         protected ServiceFabricManagedApplicationCollection() { }

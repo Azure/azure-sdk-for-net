@@ -13,6 +13,12 @@ namespace Azure.Communication.JobRouter
         string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.JobRouter.AcceptJobOfferResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.JobRouter.AcceptJobOfferResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureCommunicationJobRouterContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureCommunicationJobRouterContext() { }
+        public static Azure.Communication.JobRouter.AzureCommunicationJobRouterContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class BestWorkerMode : Azure.Communication.JobRouter.DistributionMode, System.ClientModel.Primitives.IJsonModel<Azure.Communication.JobRouter.BestWorkerMode>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.JobRouter.BestWorkerMode>
     {
         public BestWorkerMode() { }

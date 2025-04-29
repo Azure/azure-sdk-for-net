@@ -1235,6 +1235,12 @@ namespace Azure.ResourceManager.AppPlatform
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppPlatform.AppPlatformSupportedStackData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppPlatform.AppPlatformSupportedStackData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureResourceManagerAppPlatformContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerAppPlatformContext() { }
+        public static Azure.ResourceManager.AppPlatform.AzureResourceManagerAppPlatformContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
 }
 namespace Azure.ResourceManager.AppPlatform.Mocking
 {

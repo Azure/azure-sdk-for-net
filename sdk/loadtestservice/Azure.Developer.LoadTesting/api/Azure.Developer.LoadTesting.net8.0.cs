@@ -54,6 +54,12 @@ namespace Azure.Developer.LoadTesting
         string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.AutoStopCriteria>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.AutoStopCriteria>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureDeveloperLoadTestingContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureDeveloperLoadTestingContext() { }
+        public static Azure.Developer.LoadTesting.AzureDeveloperLoadTestingContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CertificateType : System.IEquatable<Azure.Developer.LoadTesting.CertificateType>
     {

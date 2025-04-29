@@ -223,6 +223,12 @@ namespace Azure.Security.Attestation
         public static bool operator !=(Azure.Security.Attestation.AttestationType left, Azure.Security.Attestation.AttestationType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class AzureSecurityAttestationContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureSecurityAttestationContext() { }
+        public static Azure.Security.Attestation.AzureSecurityAttestationContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PolicyCertificateResolution : System.IEquatable<Azure.Security.Attestation.PolicyCertificateResolution>
     {

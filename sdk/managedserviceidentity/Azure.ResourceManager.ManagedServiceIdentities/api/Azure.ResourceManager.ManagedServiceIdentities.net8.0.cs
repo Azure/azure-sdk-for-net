@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.ManagedServiceIdentities
 {
+    public partial class AzureResourceManagerManagedServiceIdentitiesContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerManagedServiceIdentitiesContext() { }
+        public static Azure.ResourceManager.ManagedServiceIdentities.AzureResourceManagerManagedServiceIdentitiesContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class FederatedIdentityCredentialCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialResource>, System.Collections.IEnumerable
     {
         protected FederatedIdentityCredentialCollection() { }

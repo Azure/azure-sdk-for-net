@@ -110,6 +110,12 @@ namespace Azure.ResourceManager.AgFoodPlatform
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgFoodPlatform.AgFoodPlatformPrivateLinkResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgFoodPlatform.AgFoodPlatformPrivateLinkResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureResourceManagerAgFoodPlatformContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerAgFoodPlatformContext() { }
+        public static Azure.ResourceManager.AgFoodPlatform.AzureResourceManagerAgFoodPlatformContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ExtensionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AgFoodPlatform.ExtensionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AgFoodPlatform.ExtensionResource>, System.Collections.IEnumerable
     {
         protected ExtensionCollection() { }

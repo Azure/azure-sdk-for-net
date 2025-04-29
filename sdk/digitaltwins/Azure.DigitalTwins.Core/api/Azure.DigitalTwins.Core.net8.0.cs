@@ -1,5 +1,11 @@
 namespace Azure.DigitalTwins.Core
 {
+    public partial class AzureDigitalTwinsCoreContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureDigitalTwinsCoreContext() { }
+        public static Azure.DigitalTwins.Core.AzureDigitalTwinsCoreContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class BasicDigitalTwin
     {
         public BasicDigitalTwin() { }

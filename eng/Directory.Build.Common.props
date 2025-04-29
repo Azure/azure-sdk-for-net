@@ -86,7 +86,7 @@
       $(NoWarn);
       AZC0150; <!-- ModelReaderWriter overload -->
     </NoWarn>
-    
+
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <!--
       .NET 8 now produces security warnings for nuget packages in dotnet restore. We want to keep all but critical (NU1904) as warnings and not turn them to errors.
@@ -129,6 +129,7 @@
       CA1812;  <!-- Avoid uninstantiated internal classes. (Result from below including the Azure.Core source) -->
       AZC0012; <!-- Single word class names -->
       AZC0008;
+      SCM0005; <!-- Resources currently do not have a parameterless ctor so builders cannot be created for them -->
     </NoWarn>
   </PropertyGroup>
 

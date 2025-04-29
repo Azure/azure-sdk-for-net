@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.DataLakeStore
 {
+    public partial class AzureResourceManagerDataLakeStoreContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerDataLakeStoreContext() { }
+        public static Azure.ResourceManager.DataLakeStore.AzureResourceManagerDataLakeStoreContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class DataLakeStoreAccountCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountBasicData>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountBasicData>, System.Collections.IEnumerable
     {
         protected DataLakeStoreAccountCollection() { }

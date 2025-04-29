@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Consumption
 {
+    public partial class AzureResourceManagerConsumptionContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerConsumptionContext() { }
+        public static Azure.ResourceManager.Consumption.AzureResourceManagerConsumptionContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class BillingAccountConsumptionResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;

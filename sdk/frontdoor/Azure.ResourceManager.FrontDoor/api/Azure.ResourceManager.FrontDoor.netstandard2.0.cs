@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.FrontDoor
 {
+    public partial class AzureResourceManagerFrontDoorContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerFrontDoorContext() { }
+        public static Azure.ResourceManager.FrontDoor.AzureResourceManagerFrontDoorContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class FrontDoorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorResource>, System.Collections.IEnumerable
     {
         protected FrontDoorCollection() { }

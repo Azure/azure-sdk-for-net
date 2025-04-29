@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.ComputeSchedule
 {
+    public partial class AzureResourceManagerComputeScheduleContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerComputeScheduleContext() { }
+        public static Azure.ResourceManager.ComputeSchedule.AzureResourceManagerComputeScheduleContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class ComputeScheduleExtensions
     {
         public static Azure.Response<Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsResult> CancelVirtualMachineOperations(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationparameter, Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

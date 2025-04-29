@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\core\System.ClientModel\src\System.ClientModel.csproj" />
+    <ProjectReference Include="..\..\..\core\System.ClientModel\gen\System.ClientModel.SourceGeneration.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
   </ItemGroup>
 
 </Project>

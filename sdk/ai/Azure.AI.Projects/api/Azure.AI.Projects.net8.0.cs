@@ -629,6 +629,12 @@ namespace Azure.AI.Projects
         Custom = 3,
         None = 4,
     }
+    public partial class AzureAIProjectsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAIProjectsContext() { }
+        public static Azure.AI.Projects.AzureAIProjectsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AzureAISearchQueryType : System.IEquatable<Azure.AI.Projects.AzureAISearchQueryType>
     {

@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Workloads
 {
+    public partial class AzureResourceManagerWorkloadsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerWorkloadsContext() { }
+        public static Azure.ResourceManager.Workloads.AzureResourceManagerWorkloadsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class SapApplicationServerInstanceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Workloads.SapApplicationServerInstanceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Workloads.SapApplicationServerInstanceResource>, System.Collections.IEnumerable
     {
         protected SapApplicationServerInstanceCollection() { }

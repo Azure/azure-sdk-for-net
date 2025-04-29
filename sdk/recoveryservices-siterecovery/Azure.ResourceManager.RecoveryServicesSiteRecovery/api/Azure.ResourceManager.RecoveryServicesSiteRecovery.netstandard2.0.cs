@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
+    public partial class AzureResourceManagerRecoveryServicesSiteRecoveryContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerRecoveryServicesSiteRecoveryContext() { }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.AzureResourceManagerRecoveryServicesSiteRecoveryContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class MigrationRecoveryPointCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationRecoveryPointResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationRecoveryPointResource>, System.Collections.IEnumerable
     {
         protected MigrationRecoveryPointCollection() { }

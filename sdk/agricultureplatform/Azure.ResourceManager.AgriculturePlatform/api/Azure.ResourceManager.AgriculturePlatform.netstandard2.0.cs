@@ -66,6 +66,12 @@ namespace Azure.ResourceManager.AgriculturePlatform
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AgriculturePlatform.AgricultureServiceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AgriculturePlatform.AgricultureServiceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AgriculturePlatform.Models.AgricultureServicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class AzureResourceManagerAgriculturePlatformContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerAgriculturePlatformContext() { }
+        public static Azure.ResourceManager.AgriculturePlatform.AzureResourceManagerAgriculturePlatformContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
 }
 namespace Azure.ResourceManager.AgriculturePlatform.Mocking
 {

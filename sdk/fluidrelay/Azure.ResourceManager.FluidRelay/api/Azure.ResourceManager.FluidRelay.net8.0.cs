@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.FluidRelay
 {
+    public partial class AzureResourceManagerFluidRelayContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerFluidRelayContext() { }
+        public static Azure.ResourceManager.FluidRelay.AzureResourceManagerFluidRelayContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class FluidRelayContainerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FluidRelay.FluidRelayContainerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.FluidRelay.FluidRelayContainerResource>, System.Collections.IEnumerable
     {
         protected FluidRelayContainerCollection() { }

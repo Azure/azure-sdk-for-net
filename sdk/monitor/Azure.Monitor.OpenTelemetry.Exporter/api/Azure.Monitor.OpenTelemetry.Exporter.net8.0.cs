@@ -29,6 +29,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         protected override void Dispose(bool disposing) { }
         public override OpenTelemetry.ExportResult Export(in OpenTelemetry.Batch<OpenTelemetry.Logs.LogRecord> batch) { throw null; }
     }
+    public partial class AzureMonitorOpenTelemetryExporterContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureMonitorOpenTelemetryExporterContext() { }
+        public static Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorOpenTelemetryExporterContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class OpenTelemetryBuilderExtensions
     {
         public static OpenTelemetry.IOpenTelemetryBuilder UseAzureMonitorExporter(this OpenTelemetry.IOpenTelemetryBuilder builder) { throw null; }

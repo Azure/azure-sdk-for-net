@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.DataMigration
 {
+    public partial class AzureResourceManagerDataMigrationContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerDataMigrationContext() { }
+        public static Azure.ResourceManager.DataMigration.AzureResourceManagerDataMigrationContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class DatabaseMigrationSqlDBCollection : Azure.ResourceManager.ArmCollection
     {
         protected DatabaseMigrationSqlDBCollection() { }

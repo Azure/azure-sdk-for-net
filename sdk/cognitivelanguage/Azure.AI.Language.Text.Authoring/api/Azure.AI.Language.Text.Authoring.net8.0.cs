@@ -1,5 +1,11 @@
 namespace Azure.AI.Language.Text.Authoring
 {
+    public partial class AzureAILanguageTextAuthoringContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAILanguageTextAuthoringContext() { }
+        public static Azure.AI.Language.Text.Authoring.AzureAILanguageTextAuthoringContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CustomEntityRecognitionDocumentEvalResult : Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomEntityRecognitionDocumentEvalResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.CustomEntityRecognitionDocumentEvalResult>
     {
         internal CustomEntityRecognitionDocumentEvalResult() : base (default(string), default(string)) { }
