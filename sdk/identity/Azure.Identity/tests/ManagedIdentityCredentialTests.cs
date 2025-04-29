@@ -442,6 +442,7 @@ namespace Azure.Identity.Tests
         [TestCase(null)]
         public void VerifyImdsRequestFailureWithValidJsonIdentityNotFoundErrorThrowsCUE(string content)
         {
+            // TODO - remove this but just making a change so that identity tests run in the pipeline
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
             var response = CreateResponse(400, content);
