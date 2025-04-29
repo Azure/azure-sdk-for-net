@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="UriSigningKeyProperties"/>. </summary>
         /// <param name="secretType">
         /// The type of the secret resource.
-        /// Serialized Name: SecretProperties.type
+        /// Serialized Name: SecretParameters.type
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="keyId">

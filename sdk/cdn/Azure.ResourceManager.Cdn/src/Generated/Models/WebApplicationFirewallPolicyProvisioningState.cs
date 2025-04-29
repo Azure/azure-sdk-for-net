@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Provisioning state of the WebApplicationFirewallPolicy.
-    /// Serialized Name: WebApplicationFirewallPolicyProvisioningState
+    /// Serialized Name: ProvisioningState
     /// </summary>
     public readonly partial struct WebApplicationFirewallPolicyProvisioningState : IEquatable<WebApplicationFirewallPolicyProvisioningState>
     {
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// Creating
-        /// Serialized Name: WebApplicationFirewallPolicyProvisioningState.Creating
+        /// Serialized Name: ProvisioningState.Creating
         /// </summary>
         public static WebApplicationFirewallPolicyProvisioningState Creating { get; } = new WebApplicationFirewallPolicyProvisioningState(CreatingValue);
         /// <summary>
         /// Succeeded
-        /// Serialized Name: WebApplicationFirewallPolicyProvisioningState.Succeeded
+        /// Serialized Name: ProvisioningState.Succeeded
         /// </summary>
         public static WebApplicationFirewallPolicyProvisioningState Succeeded { get; } = new WebApplicationFirewallPolicyProvisioningState(SucceededValue);
         /// <summary>
         /// Failed
-        /// Serialized Name: WebApplicationFirewallPolicyProvisioningState.Failed
+        /// Serialized Name: ProvisioningState.Failed
         /// </summary>
         public static WebApplicationFirewallPolicyProvisioningState Failed { get; } = new WebApplicationFirewallPolicyProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="WebApplicationFirewallPolicyProvisioningState"/> values are the same. </summary>

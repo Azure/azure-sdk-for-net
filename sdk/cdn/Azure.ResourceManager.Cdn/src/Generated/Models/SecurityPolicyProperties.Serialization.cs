@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    [PersistableModelProxy(typeof(UnknownSecurityPolicyProperties))]
+    [PersistableModelProxy(typeof(UnknownSecurityPolicyPropertiesParameters))]
     public partial class SecurityPolicyProperties : IUtf8JsonSerializable, IJsonModel<SecurityPolicyProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityPolicyProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     case "WebApplicationFirewall": return SecurityPolicyWebApplicationFirewall.DeserializeSecurityPolicyWebApplicationFirewall(element, options);
                 }
             }
-            return UnknownSecurityPolicyProperties.DeserializeUnknownSecurityPolicyProperties(element, options);
+            return UnknownSecurityPolicyPropertiesParameters.DeserializeUnknownSecurityPolicyPropertiesParameters(element, options);
         }
 
         BinaryData IPersistableModel<SecurityPolicyProperties>.Write(ModelReaderWriterOptions options)

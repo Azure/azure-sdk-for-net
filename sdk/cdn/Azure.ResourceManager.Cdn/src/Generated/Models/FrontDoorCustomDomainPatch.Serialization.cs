@@ -54,15 +54,8 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(PreValidatedCustomDomainResource))
             {
-                if (PreValidatedCustomDomainResource != null)
-                {
-                    writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
-                    writer.WriteObjectValue(PreValidatedCustomDomainResource, options);
-                }
-                else
-                {
-                    writer.WriteNull("preValidatedCustomDomainResourceId");
-                }
+                writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
+                JsonSerializer.Serialize(writer, PreValidatedCustomDomainResource);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -105,7 +98,7 @@ namespace Azure.ResourceManager.Cdn.Models
             string profileName = default;
             FrontDoorCustomDomainHttpsContent tlsSettings = default;
             WritableSubResource azureDnsZone = default;
-            FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId preValidatedCustomDomainResourceId = default;
+            WritableSubResource preValidatedCustomDomainResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,10 +139,9 @@ namespace Azure.ResourceManager.Cdn.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                preValidatedCustomDomainResourceId = null;
                                 continue;
                             }
-                            preValidatedCustomDomainResourceId = FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId.DeserializeFrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(property0.Value, options);
+                            preValidatedCustomDomainResourceId = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                     }

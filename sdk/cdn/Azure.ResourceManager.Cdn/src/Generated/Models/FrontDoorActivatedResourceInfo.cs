@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Reference to another resource along with its state.
-    /// Serialized Name: FrontDoorActivatedResourceInfo
+    /// Serialized Name: ActivatedResourceReference
     /// </summary>
     public partial class FrontDoorActivatedResourceInfo
     {
@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="FrontDoorActivatedResourceInfo"/>. </summary>
         /// <param name="id">
         /// Resource ID.
-        /// Serialized Name: FrontDoorActivatedResourceInfo.id
+        /// Serialized Name: ActivatedResourceReference.id
         /// </param>
         /// <param name="isActive">
         /// Whether the resource is active or inactive
-        /// Serialized Name: FrontDoorActivatedResourceInfo.isActive
+        /// Serialized Name: ActivatedResourceReference.isActive
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FrontDoorActivatedResourceInfo(ResourceIdentifier id, bool? isActive, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// Resource ID.
-        /// Serialized Name: FrontDoorActivatedResourceInfo.id
+        /// Serialized Name: ActivatedResourceReference.id
         /// </summary>
         public ResourceIdentifier Id { get; set; }
         /// <summary>
         /// Whether the resource is active or inactive
-        /// Serialized Name: FrontDoorActivatedResourceInfo.isActive
+        /// Serialized Name: ActivatedResourceReference.isActive
         /// </summary>
         public bool? IsActive { get; }
     }

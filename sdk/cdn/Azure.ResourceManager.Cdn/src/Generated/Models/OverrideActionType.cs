@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Defines the action to take on rule match.
-    /// Serialized Name: OverrideActionType
+    /// Serialized Name: ActionType
     /// </summary>
     public readonly partial struct OverrideActionType : IEquatable<OverrideActionType>
     {
@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// Allow
-        /// Serialized Name: OverrideActionType.Allow
+        /// Serialized Name: ActionType.Allow
         /// </summary>
         public static OverrideActionType Allow { get; } = new OverrideActionType(AllowValue);
         /// <summary>
         /// Block
-        /// Serialized Name: OverrideActionType.Block
+        /// Serialized Name: ActionType.Block
         /// </summary>
         public static OverrideActionType Block { get; } = new OverrideActionType(BlockValue);
         /// <summary>
         /// Log
-        /// Serialized Name: OverrideActionType.Log
+        /// Serialized Name: ActionType.Log
         /// </summary>
         public static OverrideActionType Log { get; } = new OverrideActionType(LogValue);
         /// <summary>
         /// Redirect
-        /// Serialized Name: OverrideActionType.Redirect
+        /// Serialized Name: ActionType.Redirect
         /// </summary>
         public static OverrideActionType Redirect { get; } = new OverrideActionType(RedirectValue);
         /// <summary> Determines if two <see cref="OverrideActionType"/> values are the same. </summary>

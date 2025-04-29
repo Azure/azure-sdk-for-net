@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="SecurityPolicyWebApplicationFirewall"/>. </summary>
         /// <param name="policyType">
         /// The type of the Security policy to create.
-        /// Serialized Name: SecurityPolicyProperties.type
+        /// Serialized Name: SecurityPolicyPropertiesParameters.type
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="wafPolicy">

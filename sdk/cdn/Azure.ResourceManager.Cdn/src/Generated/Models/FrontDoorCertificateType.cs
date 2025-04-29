@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Defines the source of the SSL certificate.
-    /// Serialized Name: FrontDoorCertificateType
+    /// Serialized Name: AfdCertificateType
     /// </summary>
     public readonly partial struct FrontDoorCertificateType : IEquatable<FrontDoorCertificateType>
     {
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// CustomerCertificate
-        /// Serialized Name: FrontDoorCertificateType.CustomerCertificate
+        /// Serialized Name: AfdCertificateType.CustomerCertificate
         /// </summary>
         public static FrontDoorCertificateType CustomerCertificate { get; } = new FrontDoorCertificateType(CustomerCertificateValue);
         /// <summary>
         /// ManagedCertificate
-        /// Serialized Name: FrontDoorCertificateType.ManagedCertificate
+        /// Serialized Name: AfdCertificateType.ManagedCertificate
         /// </summary>
         public static FrontDoorCertificateType ManagedCertificate { get; } = new FrontDoorCertificateType(ManagedCertificateValue);
         /// <summary>
         /// AzureFirstPartyManagedCertificate
-        /// Serialized Name: FrontDoorCertificateType.AzureFirstPartyManagedCertificate
+        /// Serialized Name: AfdCertificateType.AzureFirstPartyManagedCertificate
         /// </summary>
         public static FrontDoorCertificateType AzureFirstPartyManagedCertificate { get; } = new FrontDoorCertificateType(AzureFirstPartyManagedCertificateValue);
         /// <summary> Determines if two <see cref="FrontDoorCertificateType"/> values are the same. </summary>

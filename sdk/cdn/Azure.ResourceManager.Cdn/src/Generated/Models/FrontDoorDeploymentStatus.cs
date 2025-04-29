@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The FrontDoorDeploymentStatus.
-    /// Serialized Name: FrontDoorDeploymentStatus
+    /// Serialized Name: DeploymentStatus
     /// </summary>
     public readonly partial struct FrontDoorDeploymentStatus : IEquatable<FrontDoorDeploymentStatus>
     {
@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// NotStarted
-        /// Serialized Name: FrontDoorDeploymentStatus.NotStarted
+        /// Serialized Name: DeploymentStatus.NotStarted
         /// </summary>
         public static FrontDoorDeploymentStatus NotStarted { get; } = new FrontDoorDeploymentStatus(NotStartedValue);
         /// <summary>
         /// InProgress
-        /// Serialized Name: FrontDoorDeploymentStatus.InProgress
+        /// Serialized Name: DeploymentStatus.InProgress
         /// </summary>
         public static FrontDoorDeploymentStatus InProgress { get; } = new FrontDoorDeploymentStatus(InProgressValue);
         /// <summary>
         /// Succeeded
-        /// Serialized Name: FrontDoorDeploymentStatus.Succeeded
+        /// Serialized Name: DeploymentStatus.Succeeded
         /// </summary>
         public static FrontDoorDeploymentStatus Succeeded { get; } = new FrontDoorDeploymentStatus(SucceededValue);
         /// <summary>
         /// Failed
-        /// Serialized Name: FrontDoorDeploymentStatus.Failed
+        /// Serialized Name: DeploymentStatus.Failed
         /// </summary>
         public static FrontDoorDeploymentStatus Failed { get; } = new FrontDoorDeploymentStatus(FailedValue);
         /// <summary> Determines if two <see cref="FrontDoorDeploymentStatus"/> values are the same. </summary>

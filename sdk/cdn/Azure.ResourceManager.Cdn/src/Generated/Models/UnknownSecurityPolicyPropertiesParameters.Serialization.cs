@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    internal partial class UnknownSecurityPolicyProperties : IUtf8JsonSerializable, IJsonModel<SecurityPolicyProperties>
+    internal partial class UnknownSecurityPolicyPropertiesParameters : IUtf8JsonSerializable, IJsonModel<SecurityPolicyProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityPolicyProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
             return DeserializeSecurityPolicyProperties(document.RootElement, options);
         }
 
-        internal static UnknownSecurityPolicyProperties DeserializeUnknownSecurityPolicyProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownSecurityPolicyPropertiesParameters DeserializeUnknownSecurityPolicyPropertiesParameters(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownSecurityPolicyProperties(type, serializedAdditionalRawData);
+            return new UnknownSecurityPolicyPropertiesParameters(type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityPolicyProperties>.Write(ModelReaderWriterOptions options)

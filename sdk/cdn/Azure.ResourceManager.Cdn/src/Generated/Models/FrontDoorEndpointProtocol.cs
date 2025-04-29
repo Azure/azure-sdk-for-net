@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Supported protocols for the customer's endpoint.
-    /// Serialized Name: FrontDoorEndpointProtocol
+    /// Serialized Name: AFDEndpointProtocols
     /// </summary>
     public readonly partial struct FrontDoorEndpointProtocol : IEquatable<FrontDoorEndpointProtocol>
     {
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// Http
-        /// Serialized Name: FrontDoorEndpointProtocol.Http
+        /// Serialized Name: AFDEndpointProtocols.Http
         /// </summary>
         public static FrontDoorEndpointProtocol Http { get; } = new FrontDoorEndpointProtocol(HttpValue);
         /// <summary>
         /// Https
-        /// Serialized Name: FrontDoorEndpointProtocol.Https
+        /// Serialized Name: AFDEndpointProtocols.Https
         /// </summary>
         public static FrontDoorEndpointProtocol Https { get; } = new FrontDoorEndpointProtocol(HttpsValue);
         /// <summary> Determines if two <see cref="FrontDoorEndpointProtocol"/> values are the same. </summary>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// An enum describing the unit of measurement.
-    /// Serialized Name: FrontDoorUsageUnit
+    /// Serialized Name: UsageUnit
     /// </summary>
     public readonly partial struct FrontDoorUsageUnit : IEquatable<FrontDoorUsageUnit>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// Count
-        /// Serialized Name: FrontDoorUsageUnit.Count
+        /// Serialized Name: UsageUnit.Count
         /// </summary>
         public static FrontDoorUsageUnit Count { get; } = new FrontDoorUsageUnit(CountValue);
         /// <summary> Determines if two <see cref="FrontDoorUsageUnit"/> values are the same. </summary>

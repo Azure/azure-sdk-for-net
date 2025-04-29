@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The validation status.
-    /// Serialized Name: ValidationStatus
+    /// Serialized Name: Status
     /// </summary>
     public readonly partial struct ValidationStatus : IEquatable<ValidationStatus>
     {
@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// Valid
-        /// Serialized Name: ValidationStatus.Valid
+        /// Serialized Name: Status.Valid
         /// </summary>
         public static ValidationStatus Valid { get; } = new ValidationStatus(ValidValue);
         /// <summary>
         /// Invalid
-        /// Serialized Name: ValidationStatus.Invalid
+        /// Serialized Name: Status.Invalid
         /// </summary>
         public static ValidationStatus Invalid { get; } = new ValidationStatus(InvalidValue);
         /// <summary>
         /// AccessDenied
-        /// Serialized Name: ValidationStatus.AccessDenied
+        /// Serialized Name: Status.AccessDenied
         /// </summary>
         public static ValidationStatus AccessDenied { get; } = new ValidationStatus(AccessDeniedValue);
         /// <summary>
         /// CertificateExpired
-        /// Serialized Name: ValidationStatus.CertificateExpired
+        /// Serialized Name: Status.CertificateExpired
         /// </summary>
         public static ValidationStatus CertificateExpired { get; } = new ValidationStatus(CertificateExpiredValue);
         /// <summary> Determines if two <see cref="ValidationStatus"/> values are the same. </summary>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Provisioning status
-    /// Serialized Name: FrontDoorProvisioningState
+    /// Serialized Name: AfdProvisioningState
     /// </summary>
     public readonly partial struct FrontDoorProvisioningState : IEquatable<FrontDoorProvisioningState>
     {
@@ -33,27 +33,27 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// Succeeded
-        /// Serialized Name: FrontDoorProvisioningState.Succeeded
+        /// Serialized Name: AfdProvisioningState.Succeeded
         /// </summary>
         public static FrontDoorProvisioningState Succeeded { get; } = new FrontDoorProvisioningState(SucceededValue);
         /// <summary>
         /// Failed
-        /// Serialized Name: FrontDoorProvisioningState.Failed
+        /// Serialized Name: AfdProvisioningState.Failed
         /// </summary>
         public static FrontDoorProvisioningState Failed { get; } = new FrontDoorProvisioningState(FailedValue);
         /// <summary>
         /// Updating
-        /// Serialized Name: FrontDoorProvisioningState.Updating
+        /// Serialized Name: AfdProvisioningState.Updating
         /// </summary>
         public static FrontDoorProvisioningState Updating { get; } = new FrontDoorProvisioningState(UpdatingValue);
         /// <summary>
         /// Deleting
-        /// Serialized Name: FrontDoorProvisioningState.Deleting
+        /// Serialized Name: AfdProvisioningState.Deleting
         /// </summary>
         public static FrontDoorProvisioningState Deleting { get; } = new FrontDoorProvisioningState(DeletingValue);
         /// <summary>
         /// Creating
-        /// Serialized Name: FrontDoorProvisioningState.Creating
+        /// Serialized Name: AfdProvisioningState.Creating
         /// </summary>
         public static FrontDoorProvisioningState Creating { get; } = new FrontDoorProvisioningState(CreatingValue);
         /// <summary> Determines if two <see cref="FrontDoorProvisioningState"/> values are the same. </summary>

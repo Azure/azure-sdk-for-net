@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 profileName,
                 tlsSettings,
                 dnsZoneId != null ? ResourceManagerModelFactory.WritableSubResource(dnsZoneId) : null,
-                preValidatedCustomDomainResourceId != null ? new FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(preValidatedCustomDomainResourceId, serializedAdditionalRawData: null) : null,
+                preValidatedCustomDomainResourceId != null ? ResourceManagerModelFactory.WritableSubResource(preValidatedCustomDomainResourceId) : null,
                 provisioningState,
                 deploymentStatus,
                 domainValidationState,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.FrontDoorCustomDomainPatch"/> instance for mocking. </returns>
         public static FrontDoorCustomDomainPatch FrontDoorCustomDomainPatch(string profileName = null, FrontDoorCustomDomainHttpsContent tlsSettings = null, ResourceIdentifier dnsZoneId = null, ResourceIdentifier preValidatedCustomDomainResourceId = null)
         {
-            return new FrontDoorCustomDomainPatch(profileName, tlsSettings, dnsZoneId != null ? ResourceManagerModelFactory.WritableSubResource(dnsZoneId) : null, preValidatedCustomDomainResourceId != null ? new FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(preValidatedCustomDomainResourceId, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new FrontDoorCustomDomainPatch(profileName, tlsSettings, dnsZoneId != null ? ResourceManagerModelFactory.WritableSubResource(dnsZoneId) : null, preValidatedCustomDomainResourceId != null ? ResourceManagerModelFactory.WritableSubResource(preValidatedCustomDomainResourceId) : null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorEndpointData"/>. </summary>
@@ -734,11 +734,11 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorActivatedResourceInfo"/>. </summary>
         /// <param name="id">
         /// Resource ID.
-        /// Serialized Name: FrontDoorActivatedResourceInfo.id
+        /// Serialized Name: ActivatedResourceReference.id
         /// </param>
         /// <param name="isActive">
         /// Whether the resource is active or inactive
-        /// Serialized Name: FrontDoorActivatedResourceInfo.isActive
+        /// Serialized Name: ActivatedResourceReference.isActive
         /// </param>
         /// <returns> A new <see cref="Models.FrontDoorActivatedResourceInfo"/> instance for mocking. </returns>
         public static FrontDoorActivatedResourceInfo FrontDoorActivatedResourceInfo(ResourceIdentifier id = null, bool? isActive = null)
@@ -2012,11 +2012,11 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="Models.ManagedCertificateProperties"/>. </summary>
         /// <param name="subject">
         /// Subject name in the certificate.
-        /// Serialized Name: ManagedCertificateProperties.subject
+        /// Serialized Name: ManagedCertificateParameters.subject
         /// </param>
         /// <param name="expiresOn">
         /// Certificate expiration date.
-        /// Serialized Name: ManagedCertificateProperties.expirationDate
+        /// Serialized Name: ManagedCertificateParameters.expirationDate
         /// </param>
         /// <returns> A new <see cref="Models.ManagedCertificateProperties"/> instance for mocking. </returns>
         public static ManagedCertificateProperties ManagedCertificateProperties(string subject = null, DateTimeOffset? expiresOn = null)
@@ -2027,35 +2027,35 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="Models.CustomerCertificateProperties"/>. </summary>
         /// <param name="secretSourceId">
         /// Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
-        /// Serialized Name: CustomerCertificateProperties.secretSource
+        /// Serialized Name: CustomerCertificateParameters.secretSource
         /// </param>
         /// <param name="secretVersion">
         /// Version of the secret to be used
-        /// Serialized Name: CustomerCertificateProperties.secretVersion
+        /// Serialized Name: CustomerCertificateParameters.secretVersion
         /// </param>
         /// <param name="useLatestVersion">
         /// Whether to use the latest version for the certificate
-        /// Serialized Name: CustomerCertificateProperties.useLatestVersion
+        /// Serialized Name: CustomerCertificateParameters.useLatestVersion
         /// </param>
         /// <param name="subject">
         /// Subject name in the certificate.
-        /// Serialized Name: CustomerCertificateProperties.subject
+        /// Serialized Name: CustomerCertificateParameters.subject
         /// </param>
         /// <param name="expiresOn">
         /// Certificate expiration date.
-        /// Serialized Name: CustomerCertificateProperties.expirationDate
+        /// Serialized Name: CustomerCertificateParameters.expirationDate
         /// </param>
         /// <param name="certificateAuthority">
         /// Certificate issuing authority.
-        /// Serialized Name: CustomerCertificateProperties.certificateAuthority
+        /// Serialized Name: CustomerCertificateParameters.certificateAuthority
         /// </param>
         /// <param name="subjectAlternativeNames">
         /// The list of SANs.
-        /// Serialized Name: CustomerCertificateProperties.subjectAlternativeNames
+        /// Serialized Name: CustomerCertificateParameters.subjectAlternativeNames
         /// </param>
         /// <param name="thumbprint">
         /// Certificate thumbprint.
-        /// Serialized Name: CustomerCertificateProperties.thumbprint
+        /// Serialized Name: CustomerCertificateParameters.thumbprint
         /// </param>
         /// <returns> A new <see cref="Models.CustomerCertificateProperties"/> instance for mocking. </returns>
         public static CustomerCertificateProperties CustomerCertificateProperties(ResourceIdentifier secretSourceId = null, string secretVersion = null, bool? useLatestVersion = null, string subject = null, DateTimeOffset? expiresOn = null, string certificateAuthority = null, IEnumerable<string> subjectAlternativeNames = null, string thumbprint = null)

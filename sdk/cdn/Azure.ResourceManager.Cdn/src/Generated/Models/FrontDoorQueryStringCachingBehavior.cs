@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Defines how Frontdoor caches requests that include query strings. You can ignore any query strings when caching, ignore specific query strings, cache every request with a unique URL, or cache specific query strings.
-    /// Serialized Name: FrontDoorQueryStringCachingBehavior
+    /// Serialized Name: AfdQueryStringCachingBehavior
     /// </summary>
     public readonly partial struct FrontDoorQueryStringCachingBehavior : IEquatable<FrontDoorQueryStringCachingBehavior>
     {
@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// IgnoreQueryString
-        /// Serialized Name: FrontDoorQueryStringCachingBehavior.IgnoreQueryString
+        /// Serialized Name: AfdQueryStringCachingBehavior.IgnoreQueryString
         /// </summary>
         public static FrontDoorQueryStringCachingBehavior IgnoreQueryString { get; } = new FrontDoorQueryStringCachingBehavior(IgnoreQueryStringValue);
         /// <summary>
         /// UseQueryString
-        /// Serialized Name: FrontDoorQueryStringCachingBehavior.UseQueryString
+        /// Serialized Name: AfdQueryStringCachingBehavior.UseQueryString
         /// </summary>
         public static FrontDoorQueryStringCachingBehavior UseQueryString { get; } = new FrontDoorQueryStringCachingBehavior(UseQueryStringValue);
         /// <summary>
         /// IgnoreSpecifiedQueryStrings
-        /// Serialized Name: FrontDoorQueryStringCachingBehavior.IgnoreSpecifiedQueryStrings
+        /// Serialized Name: AfdQueryStringCachingBehavior.IgnoreSpecifiedQueryStrings
         /// </summary>
         public static FrontDoorQueryStringCachingBehavior IgnoreSpecifiedQueryStrings { get; } = new FrontDoorQueryStringCachingBehavior(IgnoreSpecifiedQueryStringsValue);
         /// <summary>
         /// IncludeSpecifiedQueryStrings
-        /// Serialized Name: FrontDoorQueryStringCachingBehavior.IncludeSpecifiedQueryStrings
+        /// Serialized Name: AfdQueryStringCachingBehavior.IncludeSpecifiedQueryStrings
         /// </summary>
         public static FrontDoorQueryStringCachingBehavior IncludeSpecifiedQueryStrings { get; } = new FrontDoorQueryStringCachingBehavior(IncludeSpecifiedQueryStringsValue);
         /// <summary> Determines if two <see cref="FrontDoorQueryStringCachingBehavior"/> values are the same. </summary>

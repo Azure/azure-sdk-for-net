@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified.
-    /// Serialized Name: ManagedRuleSetupState
+    /// Serialized Name: ManagedRuleEnabledState
     /// </summary>
     public readonly partial struct ManagedRuleSetupState : IEquatable<ManagedRuleSetupState>
     {
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// Disabled
-        /// Serialized Name: ManagedRuleSetupState.Disabled
+        /// Serialized Name: ManagedRuleEnabledState.Disabled
         /// </summary>
         public static ManagedRuleSetupState Disabled { get; } = new ManagedRuleSetupState(DisabledValue);
         /// <summary>
         /// Enabled
-        /// Serialized Name: ManagedRuleSetupState.Enabled
+        /// Serialized Name: ManagedRuleEnabledState.Enabled
         /// </summary>
         public static ManagedRuleSetupState Enabled { get; } = new ManagedRuleSetupState(EnabledValue);
         /// <summary> Determines if two <see cref="ManagedRuleSetupState"/> values are the same. </summary>

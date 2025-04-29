@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Defines contents of a web application firewall global configuration
-    /// Serialized Name: WafPolicySettings
+    /// Serialized Name: PolicySettings
     /// </summary>
     public partial class WafPolicySettings
     {
@@ -56,23 +56,23 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="WafPolicySettings"/>. </summary>
         /// <param name="enabledState">
         /// describes if the policy is in enabled state or disabled state
-        /// Serialized Name: WafPolicySettings.enabledState
+        /// Serialized Name: PolicySettings.enabledState
         /// </param>
         /// <param name="mode">
         /// Describes if it is in detection mode or prevention mode at policy level.
-        /// Serialized Name: WafPolicySettings.mode
+        /// Serialized Name: PolicySettings.mode
         /// </param>
         /// <param name="defaultRedirectUri">
         /// If action type is redirect, this field represents the default redirect URL for the client.
-        /// Serialized Name: WafPolicySettings.defaultRedirectUrl
+        /// Serialized Name: PolicySettings.defaultRedirectUrl
         /// </param>
         /// <param name="defaultCustomBlockResponseStatusCode">
         /// If the action type is block, this field defines the default customer overridable http response status code.
-        /// Serialized Name: WafPolicySettings.defaultCustomBlockResponseStatusCode
+        /// Serialized Name: PolicySettings.defaultCustomBlockResponseStatusCode
         /// </param>
         /// <param name="defaultCustomBlockResponseBody">
         /// If the action type is block, customer can override the response body. The body must be specified in base64 encoding.
-        /// Serialized Name: WafPolicySettings.defaultCustomBlockResponseBody
+        /// Serialized Name: PolicySettings.defaultCustomBlockResponseBody
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WafPolicySettings(PolicyEnabledState? enabledState, PolicyMode? mode, Uri defaultRedirectUri, PolicySettingsDefaultCustomBlockResponseStatusCode? defaultCustomBlockResponseStatusCode, BinaryData defaultCustomBlockResponseBody, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -87,27 +87,27 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// describes if the policy is in enabled state or disabled state
-        /// Serialized Name: WafPolicySettings.enabledState
+        /// Serialized Name: PolicySettings.enabledState
         /// </summary>
         public PolicyEnabledState? EnabledState { get; set; }
         /// <summary>
         /// Describes if it is in detection mode or prevention mode at policy level.
-        /// Serialized Name: WafPolicySettings.mode
+        /// Serialized Name: PolicySettings.mode
         /// </summary>
         public PolicyMode? Mode { get; set; }
         /// <summary>
         /// If action type is redirect, this field represents the default redirect URL for the client.
-        /// Serialized Name: WafPolicySettings.defaultRedirectUrl
+        /// Serialized Name: PolicySettings.defaultRedirectUrl
         /// </summary>
         public Uri DefaultRedirectUri { get; set; }
         /// <summary>
         /// If the action type is block, this field defines the default customer overridable http response status code.
-        /// Serialized Name: WafPolicySettings.defaultCustomBlockResponseStatusCode
+        /// Serialized Name: PolicySettings.defaultCustomBlockResponseStatusCode
         /// </summary>
         public PolicySettingsDefaultCustomBlockResponseStatusCode? DefaultCustomBlockResponseStatusCode { get; set; }
         /// <summary>
         /// If the action type is block, customer can override the response body. The body must be specified in base64 encoding.
-        /// Serialized Name: WafPolicySettings.defaultCustomBlockResponseBody
+        /// Serialized Name: PolicySettings.defaultCustomBlockResponseBody
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Managed Certificate used for https
-    /// Serialized Name: ManagedCertificateProperties
+    /// Serialized Name: ManagedCertificateParameters
     /// </summary>
     public partial class ManagedCertificateProperties : FrontDoorSecretProperties
     {
@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="ManagedCertificateProperties"/>. </summary>
         /// <param name="secretType">
         /// The type of the secret resource.
-        /// Serialized Name: SecretProperties.type
+        /// Serialized Name: SecretParameters.type
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="subject">
         /// Subject name in the certificate.
-        /// Serialized Name: ManagedCertificateProperties.subject
+        /// Serialized Name: ManagedCertificateParameters.subject
         /// </param>
         /// <param name="expiresOn">
         /// Certificate expiration date.
-        /// Serialized Name: ManagedCertificateProperties.expirationDate
+        /// Serialized Name: ManagedCertificateParameters.expirationDate
         /// </param>
         internal ManagedCertificateProperties(SecretType secretType, IDictionary<string, BinaryData> serializedAdditionalRawData, string subject, DateTimeOffset? expiresOn) : base(secretType, serializedAdditionalRawData)
         {
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// Subject name in the certificate.
-        /// Serialized Name: ManagedCertificateProperties.subject
+        /// Serialized Name: ManagedCertificateParameters.subject
         /// </summary>
         public string Subject { get; }
         /// <summary>
         /// Certificate expiration date.
-        /// Serialized Name: ManagedCertificateProperties.expirationDate
+        /// Serialized Name: ManagedCertificateParameters.expirationDate
         /// </summary>
         public DateTimeOffset? ExpiresOn { get; }
     }
