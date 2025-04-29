@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The CookiesMatchConditionType.
-    /// Serialized Name: CookiesMatchConditionType
+    /// Serialized Name: CookiesMatchConditionParametersTypeName
     /// </summary>
     public readonly partial struct CookiesMatchConditionType : IEquatable<CookiesMatchConditionType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// DeliveryRuleCookiesConditionParameters
-        /// Serialized Name: CookiesMatchConditionType.DeliveryRuleCookiesConditionParameters
+        /// Serialized Name: CookiesMatchConditionParametersTypeName.DeliveryRuleCookiesConditionParameters
         /// </summary>
         public static CookiesMatchConditionType CookiesCondition { get; } = new CookiesMatchConditionType(CookiesConditionValue);
         /// <summary> Determines if two <see cref="CookiesMatchConditionType"/> values are the same. </summary>

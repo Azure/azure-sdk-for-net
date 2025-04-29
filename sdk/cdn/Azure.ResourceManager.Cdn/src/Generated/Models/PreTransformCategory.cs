@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Describes what transforms are applied before matching
-    /// Serialized Name: PreTransformCategory
+    /// Serialized Name: Transform
     /// </summary>
     public readonly partial struct PreTransformCategory : IEquatable<PreTransformCategory>
     {
@@ -34,32 +34,32 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// Lowercase
-        /// Serialized Name: PreTransformCategory.Lowercase
+        /// Serialized Name: Transform.Lowercase
         /// </summary>
         public static PreTransformCategory Lowercase { get; } = new PreTransformCategory(LowercaseValue);
         /// <summary>
         /// Uppercase
-        /// Serialized Name: PreTransformCategory.Uppercase
+        /// Serialized Name: Transform.Uppercase
         /// </summary>
         public static PreTransformCategory Uppercase { get; } = new PreTransformCategory(UppercaseValue);
         /// <summary>
         /// Trim
-        /// Serialized Name: PreTransformCategory.Trim
+        /// Serialized Name: Transform.Trim
         /// </summary>
         public static PreTransformCategory Trim { get; } = new PreTransformCategory(TrimValue);
         /// <summary>
         /// UrlDecode
-        /// Serialized Name: PreTransformCategory.UrlDecode
+        /// Serialized Name: Transform.UrlDecode
         /// </summary>
         public static PreTransformCategory UriDecode { get; } = new PreTransformCategory(UriDecodeValue);
         /// <summary>
         /// UrlEncode
-        /// Serialized Name: PreTransformCategory.UrlEncode
+        /// Serialized Name: Transform.UrlEncode
         /// </summary>
         public static PreTransformCategory UriEncode { get; } = new PreTransformCategory(UriEncodeValue);
         /// <summary>
         /// RemoveNulls
-        /// Serialized Name: PreTransformCategory.RemoveNulls
+        /// Serialized Name: Transform.RemoveNulls
         /// </summary>
         public static PreTransformCategory RemoveNulls { get; } = new PreTransformCategory(RemoveNullsValue);
         /// <summary> Determines if two <see cref="PreTransformCategory"/> values are the same. </summary>

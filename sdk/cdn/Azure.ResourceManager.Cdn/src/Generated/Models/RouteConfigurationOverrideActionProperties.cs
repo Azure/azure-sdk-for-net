@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Defines the parameters for the route configuration override action.
-    /// Serialized Name: RouteConfigurationOverrideActionProperties
+    /// Serialized Name: RouteConfigurationOverrideActionParameters
     /// </summary>
     public partial class RouteConfigurationOverrideActionProperties
     {
@@ -49,21 +49,21 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RouteConfigurationOverrideActionProperties"/>. </summary>
-        /// <param name="actionType"> Serialized Name: RouteConfigurationOverrideActionProperties.typeName. </param>
+        /// <param name="actionType"> Serialized Name: RouteConfigurationOverrideActionParameters.typeName. </param>
         public RouteConfigurationOverrideActionProperties(RouteConfigurationOverrideActionType actionType)
         {
             ActionType = actionType;
         }
 
         /// <summary> Initializes a new instance of <see cref="RouteConfigurationOverrideActionProperties"/>. </summary>
-        /// <param name="actionType"> Serialized Name: RouteConfigurationOverrideActionProperties.typeName. </param>
+        /// <param name="actionType"> Serialized Name: RouteConfigurationOverrideActionParameters.typeName. </param>
         /// <param name="originGroupOverride">
         /// A reference to the origin group override configuration. Leave empty to use the default origin group on route.
-        /// Serialized Name: RouteConfigurationOverrideActionProperties.originGroupOverride
+        /// Serialized Name: RouteConfigurationOverrideActionParameters.originGroupOverride
         /// </param>
         /// <param name="cacheConfiguration">
         /// The caching configuration associated with this rule. To disable caching, do not provide a cacheConfiguration object.
-        /// Serialized Name: RouteConfigurationOverrideActionProperties.cacheConfiguration
+        /// Serialized Name: RouteConfigurationOverrideActionParameters.cacheConfiguration
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RouteConfigurationOverrideActionProperties(RouteConfigurationOverrideActionType actionType, OriginGroupOverride originGroupOverride, CacheConfiguration cacheConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -79,16 +79,16 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Serialized Name: RouteConfigurationOverrideActionProperties.typeName. </summary>
+        /// <summary> Serialized Name: RouteConfigurationOverrideActionParameters.typeName. </summary>
         public RouteConfigurationOverrideActionType ActionType { get; set; }
         /// <summary>
         /// A reference to the origin group override configuration. Leave empty to use the default origin group on route.
-        /// Serialized Name: RouteConfigurationOverrideActionProperties.originGroupOverride
+        /// Serialized Name: RouteConfigurationOverrideActionParameters.originGroupOverride
         /// </summary>
         public OriginGroupOverride OriginGroupOverride { get; set; }
         /// <summary>
         /// The caching configuration associated with this rule. To disable caching, do not provide a cacheConfiguration object.
-        /// Serialized Name: RouteConfigurationOverrideActionProperties.cacheConfiguration
+        /// Serialized Name: RouteConfigurationOverrideActionParameters.cacheConfiguration
         /// </summary>
         public CacheConfiguration CacheConfiguration { get; set; }
     }

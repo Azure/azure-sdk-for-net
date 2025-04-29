@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Defines the parameters for UrlFileExtension match conditions
-    /// Serialized Name: UrlFileExtensionMatchCondition
+    /// Serialized Name: UrlFileExtensionMatchConditionParameters
     /// </summary>
     public partial class UriFileExtensionMatchCondition
     {
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="UriFileExtensionMatchCondition"/>. </summary>
-        /// <param name="conditionType"> Serialized Name: UrlFileExtensionMatchCondition.typeName. </param>
+        /// <param name="conditionType"> Serialized Name: UrlFileExtensionMatchConditionParameters.typeName. </param>
         /// <param name="uriFileExtensionOperator">
         /// Describes operator to be matched
-        /// Serialized Name: UrlFileExtensionMatchCondition.operator
+        /// Serialized Name: UrlFileExtensionMatchConditionParameters.operator
         /// </param>
         public UriFileExtensionMatchCondition(UriFileExtensionMatchConditionType conditionType, UriFileExtensionOperator uriFileExtensionOperator)
         {
@@ -63,22 +63,22 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UriFileExtensionMatchCondition"/>. </summary>
-        /// <param name="conditionType"> Serialized Name: UrlFileExtensionMatchCondition.typeName. </param>
+        /// <param name="conditionType"> Serialized Name: UrlFileExtensionMatchConditionParameters.typeName. </param>
         /// <param name="uriFileExtensionOperator">
         /// Describes operator to be matched
-        /// Serialized Name: UrlFileExtensionMatchCondition.operator
+        /// Serialized Name: UrlFileExtensionMatchConditionParameters.operator
         /// </param>
         /// <param name="negateCondition">
         /// Describes if this is negate condition or not
-        /// Serialized Name: UrlFileExtensionMatchCondition.negateCondition
+        /// Serialized Name: UrlFileExtensionMatchConditionParameters.negateCondition
         /// </param>
         /// <param name="matchValues">
         /// The match value for the condition of the delivery rule
-        /// Serialized Name: UrlFileExtensionMatchCondition.matchValues
+        /// Serialized Name: UrlFileExtensionMatchConditionParameters.matchValues
         /// </param>
         /// <param name="transforms">
         /// List of transforms
-        /// Serialized Name: UrlFileExtensionMatchCondition.transforms
+        /// Serialized Name: UrlFileExtensionMatchConditionParameters.transforms
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UriFileExtensionMatchCondition(UriFileExtensionMatchConditionType conditionType, UriFileExtensionOperator uriFileExtensionOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -96,26 +96,26 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Serialized Name: UrlFileExtensionMatchCondition.typeName. </summary>
+        /// <summary> Serialized Name: UrlFileExtensionMatchConditionParameters.typeName. </summary>
         public UriFileExtensionMatchConditionType ConditionType { get; set; }
         /// <summary>
         /// Describes operator to be matched
-        /// Serialized Name: UrlFileExtensionMatchCondition.operator
+        /// Serialized Name: UrlFileExtensionMatchConditionParameters.operator
         /// </summary>
         public UriFileExtensionOperator UriFileExtensionOperator { get; set; }
         /// <summary>
         /// Describes if this is negate condition or not
-        /// Serialized Name: UrlFileExtensionMatchCondition.negateCondition
+        /// Serialized Name: UrlFileExtensionMatchConditionParameters.negateCondition
         /// </summary>
         public bool? NegateCondition { get; set; }
         /// <summary>
         /// The match value for the condition of the delivery rule
-        /// Serialized Name: UrlFileExtensionMatchCondition.matchValues
+        /// Serialized Name: UrlFileExtensionMatchConditionParameters.matchValues
         /// </summary>
         public IList<string> MatchValues { get; }
         /// <summary>
         /// List of transforms
-        /// Serialized Name: UrlFileExtensionMatchCondition.transforms
+        /// Serialized Name: UrlFileExtensionMatchConditionParameters.transforms
         /// </summary>
         public IList<PreTransformCategory> Transforms { get; }
     }

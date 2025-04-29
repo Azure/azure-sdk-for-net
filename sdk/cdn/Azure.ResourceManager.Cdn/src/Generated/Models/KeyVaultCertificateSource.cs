@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Describes the parameters for using a user's KeyVault certificate for securing custom domain.
-    /// Serialized Name: KeyVaultCertificateSource
+    /// Serialized Name: KeyVaultCertificateSourceParameters
     /// </summary>
     public partial class KeyVaultCertificateSource
     {
@@ -49,30 +49,30 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultCertificateSource"/>. </summary>
-        /// <param name="sourceType"> Serialized Name: KeyVaultCertificateSource.typeName. </param>
+        /// <param name="sourceType"> Serialized Name: KeyVaultCertificateSourceParameters.typeName. </param>
         /// <param name="subscriptionId">
         /// Subscription Id of the user's Key Vault containing the SSL certificate
-        /// Serialized Name: KeyVaultCertificateSource.subscriptionId
+        /// Serialized Name: KeyVaultCertificateSourceParameters.subscriptionId
         /// </param>
         /// <param name="resourceGroupName">
         /// Resource group of the user's Key Vault containing the SSL certificate
-        /// Serialized Name: KeyVaultCertificateSource.resourceGroupName
+        /// Serialized Name: KeyVaultCertificateSourceParameters.resourceGroupName
         /// </param>
         /// <param name="vaultName">
         /// The name of the user's Key Vault containing the SSL certificate
-        /// Serialized Name: KeyVaultCertificateSource.vaultName
+        /// Serialized Name: KeyVaultCertificateSourceParameters.vaultName
         /// </param>
         /// <param name="secretName">
         /// The name of Key Vault Secret (representing the full certificate PFX) in Key Vault.
-        /// Serialized Name: KeyVaultCertificateSource.secretName
+        /// Serialized Name: KeyVaultCertificateSourceParameters.secretName
         /// </param>
         /// <param name="updateRule">
         /// Describes the action that shall be taken when the certificate is updated in Key Vault.
-        /// Serialized Name: KeyVaultCertificateSource.updateRule
+        /// Serialized Name: KeyVaultCertificateSourceParameters.updateRule
         /// </param>
         /// <param name="deleteRule">
         /// Describes the action that shall be taken when the certificate is removed from Key Vault.
-        /// Serialized Name: KeyVaultCertificateSource.deleteRule
+        /// Serialized Name: KeyVaultCertificateSourceParameters.deleteRule
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="secretName"/> is null. </exception>
         public KeyVaultCertificateSource(KeyVaultCertificateSourceType sourceType, string subscriptionId, string resourceGroupName, string vaultName, string secretName, CertificateUpdateAction updateRule, CertificateDeleteAction deleteRule)
@@ -92,34 +92,34 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultCertificateSource"/>. </summary>
-        /// <param name="sourceType"> Serialized Name: KeyVaultCertificateSource.typeName. </param>
+        /// <param name="sourceType"> Serialized Name: KeyVaultCertificateSourceParameters.typeName. </param>
         /// <param name="subscriptionId">
         /// Subscription Id of the user's Key Vault containing the SSL certificate
-        /// Serialized Name: KeyVaultCertificateSource.subscriptionId
+        /// Serialized Name: KeyVaultCertificateSourceParameters.subscriptionId
         /// </param>
         /// <param name="resourceGroupName">
         /// Resource group of the user's Key Vault containing the SSL certificate
-        /// Serialized Name: KeyVaultCertificateSource.resourceGroupName
+        /// Serialized Name: KeyVaultCertificateSourceParameters.resourceGroupName
         /// </param>
         /// <param name="vaultName">
         /// The name of the user's Key Vault containing the SSL certificate
-        /// Serialized Name: KeyVaultCertificateSource.vaultName
+        /// Serialized Name: KeyVaultCertificateSourceParameters.vaultName
         /// </param>
         /// <param name="secretName">
         /// The name of Key Vault Secret (representing the full certificate PFX) in Key Vault.
-        /// Serialized Name: KeyVaultCertificateSource.secretName
+        /// Serialized Name: KeyVaultCertificateSourceParameters.secretName
         /// </param>
         /// <param name="secretVersion">
         /// The version(GUID) of Key Vault Secret in Key Vault.
-        /// Serialized Name: KeyVaultCertificateSource.secretVersion
+        /// Serialized Name: KeyVaultCertificateSourceParameters.secretVersion
         /// </param>
         /// <param name="updateRule">
         /// Describes the action that shall be taken when the certificate is updated in Key Vault.
-        /// Serialized Name: KeyVaultCertificateSource.updateRule
+        /// Serialized Name: KeyVaultCertificateSourceParameters.updateRule
         /// </param>
         /// <param name="deleteRule">
         /// Describes the action that shall be taken when the certificate is removed from Key Vault.
-        /// Serialized Name: KeyVaultCertificateSource.deleteRule
+        /// Serialized Name: KeyVaultCertificateSourceParameters.deleteRule
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal KeyVaultCertificateSource(KeyVaultCertificateSourceType sourceType, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion, CertificateUpdateAction updateRule, CertificateDeleteAction deleteRule, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -140,41 +140,41 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Serialized Name: KeyVaultCertificateSource.typeName. </summary>
+        /// <summary> Serialized Name: KeyVaultCertificateSourceParameters.typeName. </summary>
         public KeyVaultCertificateSourceType SourceType { get; set; }
         /// <summary>
         /// Subscription Id of the user's Key Vault containing the SSL certificate
-        /// Serialized Name: KeyVaultCertificateSource.subscriptionId
+        /// Serialized Name: KeyVaultCertificateSourceParameters.subscriptionId
         /// </summary>
         public string SubscriptionId { get; set; }
         /// <summary>
         /// Resource group of the user's Key Vault containing the SSL certificate
-        /// Serialized Name: KeyVaultCertificateSource.resourceGroupName
+        /// Serialized Name: KeyVaultCertificateSourceParameters.resourceGroupName
         /// </summary>
         public string ResourceGroupName { get; set; }
         /// <summary>
         /// The name of the user's Key Vault containing the SSL certificate
-        /// Serialized Name: KeyVaultCertificateSource.vaultName
+        /// Serialized Name: KeyVaultCertificateSourceParameters.vaultName
         /// </summary>
         public string VaultName { get; set; }
         /// <summary>
         /// The name of Key Vault Secret (representing the full certificate PFX) in Key Vault.
-        /// Serialized Name: KeyVaultCertificateSource.secretName
+        /// Serialized Name: KeyVaultCertificateSourceParameters.secretName
         /// </summary>
         public string SecretName { get; set; }
         /// <summary>
         /// The version(GUID) of Key Vault Secret in Key Vault.
-        /// Serialized Name: KeyVaultCertificateSource.secretVersion
+        /// Serialized Name: KeyVaultCertificateSourceParameters.secretVersion
         /// </summary>
         public string SecretVersion { get; set; }
         /// <summary>
         /// Describes the action that shall be taken when the certificate is updated in Key Vault.
-        /// Serialized Name: KeyVaultCertificateSource.updateRule
+        /// Serialized Name: KeyVaultCertificateSourceParameters.updateRule
         /// </summary>
         public CertificateUpdateAction UpdateRule { get; set; }
         /// <summary>
         /// Describes the action that shall be taken when the certificate is removed from Key Vault.
-        /// Serialized Name: KeyVaultCertificateSource.deleteRule
+        /// Serialized Name: KeyVaultCertificateSourceParameters.deleteRule
         /// </summary>
         public CertificateDeleteAction DeleteRule { get; set; }
     }

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Defines the parameters for UrlPath match conditions
-    /// Serialized Name: UrlPathMatchCondition
+    /// Serialized Name: UrlPathMatchConditionParameters
     /// </summary>
     public partial class UriPathMatchCondition
     {
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="UriPathMatchCondition"/>. </summary>
-        /// <param name="conditionType"> Serialized Name: UrlPathMatchCondition.typeName. </param>
+        /// <param name="conditionType"> Serialized Name: UrlPathMatchConditionParameters.typeName. </param>
         /// <param name="uriPathOperator">
         /// Describes operator to be matched
-        /// Serialized Name: UrlPathMatchCondition.operator
+        /// Serialized Name: UrlPathMatchConditionParameters.operator
         /// </param>
         public UriPathMatchCondition(UriPathMatchConditionType conditionType, UriPathOperator uriPathOperator)
         {
@@ -63,22 +63,22 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UriPathMatchCondition"/>. </summary>
-        /// <param name="conditionType"> Serialized Name: UrlPathMatchCondition.typeName. </param>
+        /// <param name="conditionType"> Serialized Name: UrlPathMatchConditionParameters.typeName. </param>
         /// <param name="uriPathOperator">
         /// Describes operator to be matched
-        /// Serialized Name: UrlPathMatchCondition.operator
+        /// Serialized Name: UrlPathMatchConditionParameters.operator
         /// </param>
         /// <param name="negateCondition">
         /// Describes if this is negate condition or not
-        /// Serialized Name: UrlPathMatchCondition.negateCondition
+        /// Serialized Name: UrlPathMatchConditionParameters.negateCondition
         /// </param>
         /// <param name="matchValues">
         /// The match value for the condition of the delivery rule
-        /// Serialized Name: UrlPathMatchCondition.matchValues
+        /// Serialized Name: UrlPathMatchConditionParameters.matchValues
         /// </param>
         /// <param name="transforms">
         /// List of transforms
-        /// Serialized Name: UrlPathMatchCondition.transforms
+        /// Serialized Name: UrlPathMatchConditionParameters.transforms
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UriPathMatchCondition(UriPathMatchConditionType conditionType, UriPathOperator uriPathOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -96,26 +96,26 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Serialized Name: UrlPathMatchCondition.typeName. </summary>
+        /// <summary> Serialized Name: UrlPathMatchConditionParameters.typeName. </summary>
         public UriPathMatchConditionType ConditionType { get; set; }
         /// <summary>
         /// Describes operator to be matched
-        /// Serialized Name: UrlPathMatchCondition.operator
+        /// Serialized Name: UrlPathMatchConditionParameters.operator
         /// </summary>
         public UriPathOperator UriPathOperator { get; set; }
         /// <summary>
         /// Describes if this is negate condition or not
-        /// Serialized Name: UrlPathMatchCondition.negateCondition
+        /// Serialized Name: UrlPathMatchConditionParameters.negateCondition
         /// </summary>
         public bool? NegateCondition { get; set; }
         /// <summary>
         /// The match value for the condition of the delivery rule
-        /// Serialized Name: UrlPathMatchCondition.matchValues
+        /// Serialized Name: UrlPathMatchConditionParameters.matchValues
         /// </summary>
         public IList<string> MatchValues { get; }
         /// <summary>
         /// List of transforms
-        /// Serialized Name: UrlPathMatchCondition.transforms
+        /// Serialized Name: UrlPathMatchConditionParameters.transforms
         /// </summary>
         public IList<PreTransformCategory> Transforms { get; }
     }

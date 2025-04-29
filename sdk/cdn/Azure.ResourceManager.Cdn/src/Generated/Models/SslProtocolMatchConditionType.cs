@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The SslProtocolMatchConditionType.
-    /// Serialized Name: SslProtocolMatchConditionType
+    /// Serialized Name: SslProtocolMatchConditionParametersTypeName
     /// </summary>
     public readonly partial struct SslProtocolMatchConditionType : IEquatable<SslProtocolMatchConditionType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// DeliveryRuleSslProtocolConditionParameters
-        /// Serialized Name: SslProtocolMatchConditionType.DeliveryRuleSslProtocolConditionParameters
+        /// Serialized Name: SslProtocolMatchConditionParametersTypeName.DeliveryRuleSslProtocolConditionParameters
         /// </summary>
         public static SslProtocolMatchConditionType SslProtocolCondition { get; } = new SslProtocolMatchConditionType(SslProtocolConditionValue);
         /// <summary> Determines if two <see cref="SslProtocolMatchConditionType"/> values are the same. </summary>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The CacheExpirationActionType.
-    /// Serialized Name: CacheExpirationActionType
+    /// Serialized Name: CacheExpirationActionParametersTypeName
     /// </summary>
     public readonly partial struct CacheExpirationActionType : IEquatable<CacheExpirationActionType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// DeliveryRuleCacheExpirationActionParameters
-        /// Serialized Name: CacheExpirationActionType.DeliveryRuleCacheExpirationActionParameters
+        /// Serialized Name: CacheExpirationActionParametersTypeName.DeliveryRuleCacheExpirationActionParameters
         /// </summary>
         public static CacheExpirationActionType CacheExpirationAction { get; } = new CacheExpirationActionType(CacheExpirationActionValue);
         /// <summary> Determines if two <see cref="CacheExpirationActionType"/> values are the same. </summary>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The UriRewriteActionType.
-    /// Serialized Name: UrlRewriteActionType
+    /// Serialized Name: UrlRewriteActionParametersTypeName
     /// </summary>
     public readonly partial struct UriRewriteActionType : IEquatable<UriRewriteActionType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// DeliveryRuleUrlRewriteActionParameters
-        /// Serialized Name: UrlRewriteActionType.DeliveryRuleUrlRewriteActionParameters
+        /// Serialized Name: UrlRewriteActionParametersTypeName.DeliveryRuleUrlRewriteActionParameters
         /// </summary>
         public static UriRewriteActionType UriRewriteAction { get; } = new UriRewriteActionType(UriRewriteActionValue);
         /// <summary> Determines if two <see cref="UriRewriteActionType"/> values are the same. </summary>

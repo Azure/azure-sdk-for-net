@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The UriFileExtensionMatchConditionType.
-    /// Serialized Name: UrlFileExtensionMatchConditionType
+    /// Serialized Name: UrlFileExtensionMatchConditionParametersTypeName
     /// </summary>
     public readonly partial struct UriFileExtensionMatchConditionType : IEquatable<UriFileExtensionMatchConditionType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// DeliveryRuleUrlFileExtensionMatchConditionParameters
-        /// Serialized Name: UrlFileExtensionMatchConditionType.DeliveryRuleUrlFileExtensionMatchConditionParameters
+        /// Serialized Name: UrlFileExtensionMatchConditionParametersTypeName.DeliveryRuleUrlFileExtensionMatchConditionParameters
         /// </summary>
         public static UriFileExtensionMatchConditionType UriFileExtensionMatchCondition { get; } = new UriFileExtensionMatchConditionType(UriFileExtensionMatchConditionValue);
         /// <summary> Determines if two <see cref="UriFileExtensionMatchConditionType"/> values are the same. </summary>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Algorithm to use for URL signing
-    /// Serialized Name: UrlSigningAlgorithm
+    /// Serialized Name: Algorithm
     /// </summary>
     public readonly partial struct UriSigningAlgorithm : IEquatable<UriSigningAlgorithm>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// SHA256
-        /// Serialized Name: UrlSigningAlgorithm.SHA256
+        /// Serialized Name: Algorithm.SHA256
         /// </summary>
         public static UriSigningAlgorithm Sha256 { get; } = new UriSigningAlgorithm(Sha256Value);
         /// <summary> Determines if two <see cref="UriSigningAlgorithm"/> values are the same. </summary>

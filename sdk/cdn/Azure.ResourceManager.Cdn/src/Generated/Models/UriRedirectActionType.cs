@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The UriRedirectActionType.
-    /// Serialized Name: UrlRedirectActionType
+    /// Serialized Name: UrlRedirectActionParametersTypeName
     /// </summary>
     public readonly partial struct UriRedirectActionType : IEquatable<UriRedirectActionType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// DeliveryRuleUrlRedirectActionParameters
-        /// Serialized Name: UrlRedirectActionType.DeliveryRuleUrlRedirectActionParameters
+        /// Serialized Name: UrlRedirectActionParametersTypeName.DeliveryRuleUrlRedirectActionParameters
         /// </summary>
         public static UriRedirectActionType UriRedirectAction { get; } = new UriRedirectActionType(UriRedirectActionValue);
         /// <summary> Determines if two <see cref="UriRedirectActionType"/> values are the same. </summary>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The IsDeviceMatchConditionType.
-    /// Serialized Name: IsDeviceMatchConditionType
+    /// Serialized Name: IsDeviceMatchConditionParametersTypeName
     /// </summary>
     public readonly partial struct IsDeviceMatchConditionType : IEquatable<IsDeviceMatchConditionType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// DeliveryRuleIsDeviceConditionParameters
-        /// Serialized Name: IsDeviceMatchConditionType.DeliveryRuleIsDeviceConditionParameters
+        /// Serialized Name: IsDeviceMatchConditionParametersTypeName.DeliveryRuleIsDeviceConditionParameters
         /// </summary>
         public static IsDeviceMatchConditionType IsDeviceCondition { get; } = new IsDeviceMatchConditionType(IsDeviceConditionValue);
         /// <summary> Determines if two <see cref="IsDeviceMatchConditionType"/> values are the same. </summary>

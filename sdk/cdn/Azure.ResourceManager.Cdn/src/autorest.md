@@ -75,7 +75,6 @@ acronym-mapping:
 
 no-property-type-replacement:
   - ContinentsResponseContinentsItem
-  - EndpointPropertiesUpdateParametersDefaultOriginGroup
   - EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink
   - FrontDoorCustomDomainHttpsContentSecret
   - FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId
@@ -117,7 +116,11 @@ rename-mapping:
   ValidateCustomDomainOutput: ValidateCustomDomainResult
   HealthProbeParameters: HealthProbeSettings
   DeliveryRuleSocketAddrCondition: DeliveryRuleSocketAddressCondition
-  SocketAddrMatchCondition: SocketAddressMatchCondition
+  SocketAddrMatchConditionParameters: SocketAddressMatchCondition
+  SocketAddrMatchConditionParameters.typeName: ConditionType
+  SocketAddrMatchConditionParametersTypeName: SocketAddressMatchConditionType
+  SocketAddrMatchConditionParametersTypeName.DeliveryRuleSocketAddrConditionParameters: SocketAddressCondition
+  SocketAddrMatchConditionParameters.operator: SocketAddressOperator
   CdnManagedHttpsParameters: CdnManagedHttpsContent
   UserManagedHttpsParameters: UserManagedHttpsContent
   ResponseBasedOriginErrorDetectionParameters: ResponseBasedOriginErrorDetectionSettings
@@ -170,13 +173,161 @@ rename-mapping:
   Endpoint: CdnEndpoint
   SocketAddrOperator: SocketAddressOperator
   SocketAddrMatchCondition.operator: SocketAddressOperator
-  CacheExpirationActionProperties.cacheDuration: -|duration-constant
+  CacheExpirationActionParameters: CacheExpirationActionProperties
+  CacheExpirationActionParameters.cacheDuration: -|duration-constant
+  CacheExpirationActionParametersTypeName: CacheExpirationActionType
+  CacheExpirationActionParameters.typeName: ActionType
+  CacheExpirationActionParametersTypeName.DeliveryRuleCacheExpirationActionParameters: CacheExpirationAction
+  CacheKeyQueryStringActionParameters: CacheKeyQueryStringActionProperties
+  CacheKeyQueryStringActionParameters.typeName: ActionType
+  CacheKeyQueryStringActionParametersTypeName: CacheKeyQueryStringActionType
+  CacheKeyQueryStringActionParametersTypeName.DeliveryRuleCacheKeyQueryStringBehaviorActionParameters: CacheKeyQueryStringBehaviorAction
   CacheConfiguration.cacheDuration: -|duration-constant
+  ClientPortMatchConditionParametersTypeName.DeliveryRuleClientPortConditionParameters: ClientPortCondition
   ProtocolType: SecureDeliveryProtocolType
   ProbeProtocol: HealthProbeProtocol
   CustomHttpsProvisioningSubstate: CustomHttpsAvailabilityState
   CacheBehavior: CacheBehaviorSetting
   CertificateType: CdnManagedCertificateType
+  MinimumTlsVersion: CdnMinimumTlsVersion
+  ResourceType: CdnResourceType
+  SocketAddrMatchConditionType: SocketAddressMatchConditionType
+  SocketAddrMatchConditionType.DeliveryRuleSocketAddrConditionParameters: SocketAddressCondition
+  EndpointProvisioningState: CdnEndpointProvisioningState
+  ResourceUsageUnit: CdnUsageUnit
+  DeleteRule: CertificateDeleteAction
+  UpdateRule: CertificateUpdateAction
+  Transform: PreTransformCategory
+  Algorithm: UriSigningAlgorithm
+  IsDeviceMatchConditionParametersMatchValuesItem: IsDeviceMatchConditionMatchValue
+  RequestMethodMatchConditionParametersMatchValuesItem: RequestMethodMatchConditionMatchValue
+  RequestSchemeMatchConditionParametersMatchValuesItem: RequestSchemeMatchConditionMatchValue
+  UrlSigningActionProperties: UrlSigningActionParameters
+  UrlRewriteActionParameters.typeName: ActionType
+  UrlRewriteActionParametersTypeName: UriRewriteActionType
+  UrlRewriteActionParametersTypeName.DeliveryRuleUrlRewriteActionParameters: UriRewriteAction
+  UrlRewriteActionParameters: UriRewriteActionProperties
+  UrlSigningActionParameters: UriSigningActionProperties
+  UrlSigningActionParameters.typeName: ActionType
+  UrlSigningActionParametersTypeName: UriSigningActionType
+  UrlSigningActionParametersTypeName.DeliveryRuleUrlSigningActionParameters: UriSigningAction
+  UrlRedirectActionParameters: UriRedirectActionProperties
+  UrlRedirectActionParameters.typeName: ActionType
+  UrlRedirectActionParametersTypeName: UriRedirectActionType
+  UrlRedirectActionParametersTypeName.DeliveryRuleUrlRedirectActionParameters: UriRedirectAction
+  UrlPathMatchConditionParameters: UriPathMatchCondition
+  UrlPathMatchConditionParameters.typeName: ConditionType
+  UrlPathMatchConditionParametersTypeName: UriPathMatchConditionType
+  UrlPathMatchConditionParametersTypeName.DeliveryRuleUrlPathMatchConditionParameters: UriPathMatchCondition
+  UrlPathMatchConditionParameters.operator: UriPathOperator
+  UrlFileNameMatchConditionParameters: UriFileNameMatchCondition
+  UrlFileNameMatchConditionParameters.typeName: ConditionType
+  UrlFileNameMatchConditionParametersTypeName: UriFileNameMatchConditionType
+  UrlFileNameMatchConditionParametersTypeName.DeliveryRuleUrlFilenameConditionParameters: UriFilenameCondition
+  UrlFileNameMatchConditionParameters.operator: UriFileNameOperator
+  UrlFileExtensionMatchConditionParameters: UriFileExtensionMatchCondition
+  UrlFileExtensionMatchConditionParameters.typeName: ConditionType
+  UrlFileExtensionMatchConditionParametersTypeName: UriFileExtensionMatchConditionType
+  UrlFileExtensionMatchConditionParametersTypeName.DeliveryRuleUrlFileExtensionMatchConditionParameters: UriFileExtensionMatchCondition
+  UrlFileExtensionMatchConditionParameters.operator: UriFileExtensionOperator
+  SslProtocolMatchConditionParameters: DeliveryRuleSslProtocolMatchCondition
+  SslProtocolMatchConditionParameters.typeName: SslProtocolMatchConditionType
+  SslProtocolMatchConditionParametersTypeName: SslProtocolMatchConditionType
+  SslProtocolMatchConditionParametersTypeName.DeliveryRuleSslProtocolConditionParameters: SslProtocolCondition
+  SslProtocolMatchConditionParameters.operator: SslProtocolOperator
+  ServerPortMatchConditionParameters: ServerPortMatchCondition
+  ServerPortMatchConditionParameters.typeName: ConditionType
+  ServerPortMatchConditionParametersTypeName: ServerPortMatchConditionType
+  ServerPortMatchConditionParametersTypeName.DeliveryRuleServerPortConditionParameters: ServerPortCondition
+  ServerPortMatchConditionParameters.operator: ServerPortOperator
+  RouteConfigurationOverrideActionParameters: RouteConfigurationOverrideActionProperties
+  RouteConfigurationOverrideActionParameters.typeName: ActionType
+  RouteConfigurationOverrideActionParametersTypeName: RouteConfigurationOverrideActionType
+  RouteConfigurationOverrideActionParametersTypeName.DeliveryRuleRouteConfigurationOverrideActionParameters: RouteConfigurationOverrideAction
+  RequestUriMatchConditionParameters: RequestUriMatchCondition
+  RequestUriMatchConditionParameters.typeName: ConditionType
+  RequestUriMatchConditionParametersTypeName: RequestUriMatchConditionType
+  RequestUriMatchConditionParametersTypeName.DeliveryRuleRequestUriConditionParameters: RequestUriCondition
+  RequestUriMatchConditionParameters.operator: RequestUriOperator
+  RequestSchemeMatchConditionParameters: RequestSchemeMatchCondition
+  RequestSchemeMatchConditionParameters.typeName: ConditionType
+  RequestSchemeMatchConditionParametersTypeName: RequestSchemeMatchConditionType
+  RequestSchemeMatchConditionParametersTypeName.DeliveryRuleRequestSchemeConditionParameters: RequestSchemeCondition
+  RequestSchemeMatchConditionParameters.operator: RequestSchemeOperator
+  RequestMethodMatchConditionParameters: RequestMethodMatchCondition
+  RequestMethodMatchConditionParameters.typeName: ConditionType
+  RequestMethodMatchConditionParametersTypeName: RequestMethodMatchConditionType
+  RequestMethodMatchConditionParametersTypeName.DeliveryRuleRequestMethodConditionParameters: RequestMethodCondition
+  RequestMethodMatchConditionParameters.operator: RequestMethodOperator
+  RequestHeaderMatchConditionParameters: RequestHeaderMatchCondition
+  RequestHeaderMatchConditionParameters.typeName: ConditionType
+  RequestHeaderMatchConditionParametersTypeName: RequestHeaderMatchConditionType
+  RequestHeaderMatchConditionParametersTypeName.DeliveryRuleRequestHeaderConditionParameters: RequestHeaderCondition
+  RequestHeaderMatchConditionParameters.operator: RequestHeaderOperator
+  RequestBodyMatchConditionParameters: RequestBodyMatchCondition
+  RequestBodyMatchConditionParameters.typeName: ConditionType
+  RequestBodyMatchConditionParametersTypeName: RequestBodyMatchConditionType
+  RequestBodyMatchConditionParametersTypeName.DeliveryRuleRequestBodyConditionParameters: RequestBodyCondition
+  RequestBodyMatchConditionParameters.operator: RequestBodyOperator
+  RemoteAddressMatchConditionParameters: RemoteAddressMatchCondition
+  RemoteAddressMatchConditionParameters.typeName: ConditionType
+  RemoteAddressMatchConditionParametersTypeName: RemoteAddressMatchConditionType
+  RemoteAddressMatchConditionParametersTypeName.DeliveryRuleRemoteAddressConditionParameters: RemoteAddressCondition
+  RemoteAddressMatchConditionParameters.operator: RemoteAddressOperator
+  QueryStringMatchConditionParameters: QueryStringMatchCondition
+  QueryStringMatchConditionParameters.typeName: ConditionType
+  QueryStringMatchConditionParametersTypeName: QueryStringMatchConditionType
+  QueryStringMatchConditionParametersTypeName.DeliveryRuleQueryStringConditionParameters: QueryStringCondition
+  QueryStringMatchConditionParameters.operator: QueryStringOperator
+  PostArgsMatchConditionParameters: PostArgsMatchCondition
+  PostArgsMatchConditionParameters.typeName: ConditionType
+  PostArgsMatchConditionParametersTypeName: PostArgsMatchConditionType
+  PostArgsMatchConditionParametersTypeName.DeliveryRulePostArgsConditionParameters: PostArgsCondition
+  PostArgsMatchConditionParameters.operator: PostArgsOperator
+  OriginGroupOverrideActionParameters: OriginGroupOverrideActionProperties
+  OriginGroupOverrideActionParameters.typeName: ActionType
+  OriginGroupOverrideActionParametersTypeName: OriginGroupOverrideActionType
+  OriginGroupOverrideActionParametersTypeName.DeliveryRuleOriginGroupOverrideActionParameters: OriginGroupOverrideAction
+  KeyVaultCertificateSourceParameters: KeyVaultCertificateSource
+  KeyVaultSigningKeyParameters: KeyVaultSigningKey
+  KeyVaultCertificateSourceParameters.typeName: SourceType
+  KeyVaultCertificateSourceParametersTypeName: KeyVaultCertificateSourceType
+  KeyVaultCertificateSourceParametersTypeName.KeyVaultCertificateSourceParameters: KeyVaultCertificateSource
+  KeyVaultSigningKeyParameters.typeName: KeyType
+  KeyVaultSigningKeyParametersTypeName: KeyVaultSigningKeyType
+  KeyVaultSigningKeyParametersTypeName.KeyVaultSigningKeyParameters: KeyVaultSigningKey
+  IsDeviceMatchConditionParameters: IsDeviceMatchCondition
+  IsDeviceMatchConditionParameters.typeName: ConditionType
+  IsDeviceMatchConditionParametersTypeName: IsDeviceMatchConditionType
+  IsDeviceMatchConditionParametersTypeName.DeliveryRuleIsDeviceConditionParameters: IsDeviceCondition
+  IsDeviceMatchConditionParameters.operator: IsDeviceOperator
+  HttpVersionMatchConditionParameters: HttpVersionMatchCondition
+  HttpVersionMatchConditionParameters.typeName: ConditionType
+  HttpVersionMatchConditionParametersTypeName: HttpVersionMatchConditionType
+  HttpVersionMatchConditionParametersTypeName.DeliveryRuleHttpVersionConditionParameters: HttpVersionCondition
+  HttpVersionMatchConditionParameters.operator: HttpVersionOperator
+  HostNameMatchConditionParameters: HostNameMatchCondition
+  HostNameMatchConditionParameters.typeName: ConditionType
+  HostNameMatchConditionParametersTypeName: HostNameMatchConditionType
+  HostNameMatchConditionParametersTypeName.DeliveryRuleHostNameConditionParameters: HostNameCondition
+  HostNameMatchConditionParameters.operator: HostNameOperator
+  HeaderActionParameters: HeaderActionProperties
+  HeaderActionParameters.typeName: ActionType
+  HeaderActionParametersTypeName: HeaderActionType
+  HeaderActionParametersTypeName.DeliveryRuleHeaderActionParameters: HeaderAction
+  CookiesMatchConditionParameters: CookiesMatchCondition
+  CookiesMatchConditionParameters.typeName: ConditionType
+  CookiesMatchConditionParametersTypeName: CookiesMatchConditionType
+  CookiesMatchConditionParametersTypeName.DeliveryRuleCookiesConditionParameters: CookiesCondition
+  CookiesMatchConditionParameters.operator: CookiesOperator
+  ClientPortMatchConditionParameters: ClientPortMatchCondition
+  ClientPortMatchConditionParameters.typeName: ConditionType
+  ClientPortMatchConditionParametersTypeName: ClientPortMatchConditionType
+  ClientPortMatchConditionParameters.operator: ClientPortOperator
+  CdnCertificateSourceParameters: CdnCertificateSource
+  CdnCertificateSourceParameters.typeName: SourceType
+  CdnCertificateSourceParametersTypeName: CdnCertificateSourceType
+  CdnCertificateSourceParametersTypeName.CdnCertificateSourceParameters: CdnCertificateSource
 
 directive:
   - from: swagger-document
@@ -190,77 +341,7 @@ directive:
             "name": "RequestSchemeOperator",
             "modelAsString": true
         };
-      for (var key in $) {
-            if (key.endsWith('Parameters')) {
-                for (var property in $[key].properties) {
-                    if (property === 'typeName' && $[key].properties[property].enum.length === 1) {
-                        const newKey = key.replace('Parameters', '');
-                        $[key]['x-ms-client-name'] = newKey;
-                        if(key.endsWith('ActionParameters')) {
-                             $[key]['x-ms-client-name'] = newKey + 'Properties';
-                        }
-                        if(key.endsWith('ConditionParameters')) {
-                            $[key].properties.operator['x-ms-client-name'] = $[key].properties.operator['x-ms-enum'].name;
-                        }
-                        $[key].properties.typeName['x-ms-client-name'] = 'type';
-                        $[key].properties.typeName['x-ms-enum'] = {
-                            "name": newKey + 'Type',
-                            "modelAsString": true,
-                            "values": [
-                                {
-                                    "value": $[key].properties.typeName.enum[0],
-                                    "name": $[key].properties.typeName.enum[0].replace(/^(DeliveryRule)/, '').replace(/(Parameters)$/, '')
-                                }
-                            ]
-                        }
-                    }
-                }
-            }
-        }
-      $.ResourceType['x-ms-enum'].name = 'CdnResourceType';
-      $.CustomDomainHttpsParameters.properties.minimumTlsVersion['x-ms-enum'].name = 'CdnMinimumTlsVersion';
-      $.ResourceType['x-ms-enum'].values = [
-                                {
-                                    "value": "Microsoft.Cdn/Profiles/Endpoints",
-                                    "name": "Endpoints"
-                                },
-                                {
-                                    "value": "Microsoft.Cdn/Profiles/AfdEndpoints",
-                                    "name": "FrontDoorEndpoints"
-                                }
-                            ]
-      $.SocketAddrMatchConditionParameters.properties.typeName['x-ms-enum'].name = 'SocketAddressMatchConditionType';
-      $.SocketAddrMatchConditionParameters.properties.typeName['x-ms-enum'].values[0].name = 'SocketAddressCondition';
-      $.transform['x-ms-enum'].name = 'preTransformCategory';
-      $.KeyVaultCertificateSourceParameters.properties.updateRule['x-ms-enum'].name = 'certificateUpdateAction';
-      $.KeyVaultCertificateSourceParameters.properties.deleteRule['x-ms-enum'].name = 'certificateDeleteAction';
       $.DeliveryRuleAction.properties.name['x-ms-enum'].name = 'DeliveryRuleActionType';
-      $.UrlSigningActionParameters.properties.algorithm['x-ms-enum'].name = 'urlSigningAlgorithm';
-      $.ResourceUsage.properties.unit['x-ms-enum'].name = 'CdnUsageUnit';
-      $.EndpointProperties.properties.provisioningState['x-ms-enum'].name = 'CdnEndpointProvisioningState';
-      $.IsDeviceMatchConditionParameters.properties.matchValues.items['x-ms-enum'] = {
-            "name": "IsDeviceMatchConditionMatchValue",
-            "modelAsString": true
-        }
-      $.RequestMethodMatchConditionParameters.properties.matchValues.items['x-ms-enum'] = {
-            "name": "RequestMethodMatchConditionMatchValue",
-            "modelAsString": true
-        }
-      $.RequestSchemeMatchConditionParameters.properties.matchValues.items['x-ms-enum'] = {
-            "name": "RequestSchemeMatchConditionMatchValue",
-            "modelAsString": true
-        }
-      $.EndpointPropertiesUpdateParameters.properties.defaultOriginGroup = {
-            "description": "A reference to the origin group.",
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string",
-                    "description": "Resource ID.",
-                    "x-ms-format": "arm-id"
-                }
-            }
-        }
       $.EndpointPropertiesUpdateParameters.properties.defaultOriginGroup['x-nullable'] = true;
       $.EndpointPropertiesUpdateParameters.properties.optimizationType['x-nullable'] = true;
       $.EndpointPropertiesUpdateParameters.properties.urlSigningKeys['x-nullable'] = true;

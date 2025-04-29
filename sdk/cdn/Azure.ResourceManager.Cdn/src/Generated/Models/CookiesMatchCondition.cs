@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Defines the parameters for Cookies match conditions
-    /// Serialized Name: CookiesMatchCondition
+    /// Serialized Name: CookiesMatchConditionParameters
     /// </summary>
     public partial class CookiesMatchCondition
     {
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CookiesMatchCondition"/>. </summary>
-        /// <param name="conditionType"> Serialized Name: CookiesMatchCondition.typeName. </param>
+        /// <param name="conditionType"> Serialized Name: CookiesMatchConditionParameters.typeName. </param>
         /// <param name="cookiesOperator">
         /// Describes operator to be matched
-        /// Serialized Name: CookiesMatchCondition.operator
+        /// Serialized Name: CookiesMatchConditionParameters.operator
         /// </param>
         public CookiesMatchCondition(CookiesMatchConditionType conditionType, CookiesOperator cookiesOperator)
         {
@@ -63,26 +63,26 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CookiesMatchCondition"/>. </summary>
-        /// <param name="conditionType"> Serialized Name: CookiesMatchCondition.typeName. </param>
+        /// <param name="conditionType"> Serialized Name: CookiesMatchConditionParameters.typeName. </param>
         /// <param name="selector">
         /// Name of Cookies to be matched
-        /// Serialized Name: CookiesMatchCondition.selector
+        /// Serialized Name: CookiesMatchConditionParameters.selector
         /// </param>
         /// <param name="cookiesOperator">
         /// Describes operator to be matched
-        /// Serialized Name: CookiesMatchCondition.operator
+        /// Serialized Name: CookiesMatchConditionParameters.operator
         /// </param>
         /// <param name="negateCondition">
         /// Describes if this is negate condition or not
-        /// Serialized Name: CookiesMatchCondition.negateCondition
+        /// Serialized Name: CookiesMatchConditionParameters.negateCondition
         /// </param>
         /// <param name="matchValues">
         /// The match value for the condition of the delivery rule
-        /// Serialized Name: CookiesMatchCondition.matchValues
+        /// Serialized Name: CookiesMatchConditionParameters.matchValues
         /// </param>
         /// <param name="transforms">
         /// List of transforms
-        /// Serialized Name: CookiesMatchCondition.transforms
+        /// Serialized Name: CookiesMatchConditionParameters.transforms
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CookiesMatchCondition(CookiesMatchConditionType conditionType, string selector, CookiesOperator cookiesOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -101,31 +101,31 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Serialized Name: CookiesMatchCondition.typeName. </summary>
+        /// <summary> Serialized Name: CookiesMatchConditionParameters.typeName. </summary>
         public CookiesMatchConditionType ConditionType { get; set; }
         /// <summary>
         /// Name of Cookies to be matched
-        /// Serialized Name: CookiesMatchCondition.selector
+        /// Serialized Name: CookiesMatchConditionParameters.selector
         /// </summary>
         public string Selector { get; set; }
         /// <summary>
         /// Describes operator to be matched
-        /// Serialized Name: CookiesMatchCondition.operator
+        /// Serialized Name: CookiesMatchConditionParameters.operator
         /// </summary>
         public CookiesOperator CookiesOperator { get; set; }
         /// <summary>
         /// Describes if this is negate condition or not
-        /// Serialized Name: CookiesMatchCondition.negateCondition
+        /// Serialized Name: CookiesMatchConditionParameters.negateCondition
         /// </summary>
         public bool? NegateCondition { get; set; }
         /// <summary>
         /// The match value for the condition of the delivery rule
-        /// Serialized Name: CookiesMatchCondition.matchValues
+        /// Serialized Name: CookiesMatchConditionParameters.matchValues
         /// </summary>
         public IList<string> MatchValues { get; }
         /// <summary>
         /// List of transforms
-        /// Serialized Name: CookiesMatchCondition.transforms
+        /// Serialized Name: CookiesMatchConditionParameters.transforms
         /// </summary>
         public IList<PreTransformCategory> Transforms { get; }
     }

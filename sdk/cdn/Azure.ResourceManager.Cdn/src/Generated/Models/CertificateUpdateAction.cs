@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Describes the action that shall be taken when the certificate is updated in Key Vault.
-    /// Serialized Name: CertificateUpdateAction
+    /// Serialized Name: UpdateRule
     /// </summary>
     public readonly partial struct CertificateUpdateAction : IEquatable<CertificateUpdateAction>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// NoAction
-        /// Serialized Name: CertificateUpdateAction.NoAction
+        /// Serialized Name: UpdateRule.NoAction
         /// </summary>
         public static CertificateUpdateAction NoAction { get; } = new CertificateUpdateAction(NoActionValue);
         /// <summary> Determines if two <see cref="CertificateUpdateAction"/> values are the same. </summary>

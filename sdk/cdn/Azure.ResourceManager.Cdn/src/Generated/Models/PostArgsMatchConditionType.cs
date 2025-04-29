@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The PostArgsMatchConditionType.
-    /// Serialized Name: PostArgsMatchConditionType
+    /// Serialized Name: PostArgsMatchConditionParametersTypeName
     /// </summary>
     public readonly partial struct PostArgsMatchConditionType : IEquatable<PostArgsMatchConditionType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// DeliveryRulePostArgsConditionParameters
-        /// Serialized Name: PostArgsMatchConditionType.DeliveryRulePostArgsConditionParameters
+        /// Serialized Name: PostArgsMatchConditionParametersTypeName.DeliveryRulePostArgsConditionParameters
         /// </summary>
         public static PostArgsMatchConditionType PostArgsCondition { get; } = new PostArgsMatchConditionType(PostArgsConditionValue);
         /// <summary> Determines if two <see cref="PostArgsMatchConditionType"/> values are the same. </summary>

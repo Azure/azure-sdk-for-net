@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The RequestUriMatchConditionType.
-    /// Serialized Name: RequestUriMatchConditionType
+    /// Serialized Name: RequestUriMatchConditionParametersTypeName
     /// </summary>
     public readonly partial struct RequestUriMatchConditionType : IEquatable<RequestUriMatchConditionType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// DeliveryRuleRequestUriConditionParameters
-        /// Serialized Name: RequestUriMatchConditionType.DeliveryRuleRequestUriConditionParameters
+        /// Serialized Name: RequestUriMatchConditionParametersTypeName.DeliveryRuleRequestUriConditionParameters
         /// </summary>
         public static RequestUriMatchConditionType RequestUriCondition { get; } = new RequestUriMatchConditionType(RequestUriConditionValue);
         /// <summary> Determines if two <see cref="RequestUriMatchConditionType"/> values are the same. </summary>

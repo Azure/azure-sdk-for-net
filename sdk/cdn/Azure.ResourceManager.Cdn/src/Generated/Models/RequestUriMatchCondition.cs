@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Defines the parameters for RequestUri match conditions
-    /// Serialized Name: RequestUriMatchCondition
+    /// Serialized Name: RequestUriMatchConditionParameters
     /// </summary>
     public partial class RequestUriMatchCondition
     {
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RequestUriMatchCondition"/>. </summary>
-        /// <param name="conditionType"> Serialized Name: RequestUriMatchCondition.typeName. </param>
+        /// <param name="conditionType"> Serialized Name: RequestUriMatchConditionParameters.typeName. </param>
         /// <param name="requestUriOperator">
         /// Describes operator to be matched
-        /// Serialized Name: RequestUriMatchCondition.operator
+        /// Serialized Name: RequestUriMatchConditionParameters.operator
         /// </param>
         public RequestUriMatchCondition(RequestUriMatchConditionType conditionType, RequestUriOperator requestUriOperator)
         {
@@ -63,22 +63,22 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestUriMatchCondition"/>. </summary>
-        /// <param name="conditionType"> Serialized Name: RequestUriMatchCondition.typeName. </param>
+        /// <param name="conditionType"> Serialized Name: RequestUriMatchConditionParameters.typeName. </param>
         /// <param name="requestUriOperator">
         /// Describes operator to be matched
-        /// Serialized Name: RequestUriMatchCondition.operator
+        /// Serialized Name: RequestUriMatchConditionParameters.operator
         /// </param>
         /// <param name="negateCondition">
         /// Describes if this is negate condition or not
-        /// Serialized Name: RequestUriMatchCondition.negateCondition
+        /// Serialized Name: RequestUriMatchConditionParameters.negateCondition
         /// </param>
         /// <param name="matchValues">
         /// The match value for the condition of the delivery rule
-        /// Serialized Name: RequestUriMatchCondition.matchValues
+        /// Serialized Name: RequestUriMatchConditionParameters.matchValues
         /// </param>
         /// <param name="transforms">
         /// List of transforms
-        /// Serialized Name: RequestUriMatchCondition.transforms
+        /// Serialized Name: RequestUriMatchConditionParameters.transforms
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RequestUriMatchCondition(RequestUriMatchConditionType conditionType, RequestUriOperator requestUriOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -96,26 +96,26 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Serialized Name: RequestUriMatchCondition.typeName. </summary>
+        /// <summary> Serialized Name: RequestUriMatchConditionParameters.typeName. </summary>
         public RequestUriMatchConditionType ConditionType { get; set; }
         /// <summary>
         /// Describes operator to be matched
-        /// Serialized Name: RequestUriMatchCondition.operator
+        /// Serialized Name: RequestUriMatchConditionParameters.operator
         /// </summary>
         public RequestUriOperator RequestUriOperator { get; set; }
         /// <summary>
         /// Describes if this is negate condition or not
-        /// Serialized Name: RequestUriMatchCondition.negateCondition
+        /// Serialized Name: RequestUriMatchConditionParameters.negateCondition
         /// </summary>
         public bool? NegateCondition { get; set; }
         /// <summary>
         /// The match value for the condition of the delivery rule
-        /// Serialized Name: RequestUriMatchCondition.matchValues
+        /// Serialized Name: RequestUriMatchConditionParameters.matchValues
         /// </summary>
         public IList<string> MatchValues { get; }
         /// <summary>
         /// List of transforms
-        /// Serialized Name: RequestUriMatchCondition.transforms
+        /// Serialized Name: RequestUriMatchConditionParameters.transforms
         /// </summary>
         public IList<PreTransformCategory> Transforms { get; }
     }

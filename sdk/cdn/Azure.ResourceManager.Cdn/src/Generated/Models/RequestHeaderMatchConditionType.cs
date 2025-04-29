@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The RequestHeaderMatchConditionType.
-    /// Serialized Name: RequestHeaderMatchConditionType
+    /// Serialized Name: RequestHeaderMatchConditionParametersTypeName
     /// </summary>
     public readonly partial struct RequestHeaderMatchConditionType : IEquatable<RequestHeaderMatchConditionType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// DeliveryRuleRequestHeaderConditionParameters
-        /// Serialized Name: RequestHeaderMatchConditionType.DeliveryRuleRequestHeaderConditionParameters
+        /// Serialized Name: RequestHeaderMatchConditionParametersTypeName.DeliveryRuleRequestHeaderConditionParameters
         /// </summary>
         public static RequestHeaderMatchConditionType RequestHeaderCondition { get; } = new RequestHeaderMatchConditionType(RequestHeaderConditionValue);
         /// <summary> Determines if two <see cref="RequestHeaderMatchConditionType"/> values are the same. </summary>

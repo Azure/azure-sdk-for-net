@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The HeaderActionType.
-    /// Serialized Name: HeaderActionType
+    /// Serialized Name: HeaderActionParametersTypeName
     /// </summary>
     public readonly partial struct HeaderActionType : IEquatable<HeaderActionType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// DeliveryRuleHeaderActionParameters
-        /// Serialized Name: HeaderActionType.DeliveryRuleHeaderActionParameters
+        /// Serialized Name: HeaderActionParametersTypeName.DeliveryRuleHeaderActionParameters
         /// </summary>
         public static HeaderActionType HeaderAction { get; } = new HeaderActionType(HeaderActionValue);
         /// <summary> Determines if two <see cref="HeaderActionType"/> values are the same. </summary>

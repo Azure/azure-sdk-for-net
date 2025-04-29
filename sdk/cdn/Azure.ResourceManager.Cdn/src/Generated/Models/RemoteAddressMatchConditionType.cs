@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The RemoteAddressMatchConditionType.
-    /// Serialized Name: RemoteAddressMatchConditionType
+    /// Serialized Name: RemoteAddressMatchConditionParametersTypeName
     /// </summary>
     public readonly partial struct RemoteAddressMatchConditionType : IEquatable<RemoteAddressMatchConditionType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// DeliveryRuleRemoteAddressConditionParameters
-        /// Serialized Name: RemoteAddressMatchConditionType.DeliveryRuleRemoteAddressConditionParameters
+        /// Serialized Name: RemoteAddressMatchConditionParametersTypeName.DeliveryRuleRemoteAddressConditionParameters
         /// </summary>
         public static RemoteAddressMatchConditionType RemoteAddressCondition { get; } = new RemoteAddressMatchConditionType(RemoteAddressConditionValue);
         /// <summary> Determines if two <see cref="RemoteAddressMatchConditionType"/> values are the same. </summary>

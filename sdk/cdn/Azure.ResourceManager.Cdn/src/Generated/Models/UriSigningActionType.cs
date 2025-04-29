@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The UriSigningActionType.
-    /// Serialized Name: UrlSigningActionType
+    /// Serialized Name: UrlSigningActionParametersTypeName
     /// </summary>
     public readonly partial struct UriSigningActionType : IEquatable<UriSigningActionType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// DeliveryRuleUrlSigningActionParameters
-        /// Serialized Name: UrlSigningActionType.DeliveryRuleUrlSigningActionParameters
+        /// Serialized Name: UrlSigningActionParametersTypeName.DeliveryRuleUrlSigningActionParameters
         /// </summary>
         public static UriSigningActionType UriSigningAction { get; } = new UriSigningActionType(UriSigningActionValue);
         /// <summary> Determines if two <see cref="UriSigningActionType"/> values are the same. </summary>

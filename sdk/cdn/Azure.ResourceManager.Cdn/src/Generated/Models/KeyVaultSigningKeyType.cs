@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The KeyVaultSigningKeyType.
-    /// Serialized Name: KeyVaultSigningKeyType
+    /// Serialized Name: KeyVaultSigningKeyParametersTypeName
     /// </summary>
     public readonly partial struct KeyVaultSigningKeyType : IEquatable<KeyVaultSigningKeyType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// KeyVaultSigningKeyParameters
-        /// Serialized Name: KeyVaultSigningKeyType.KeyVaultSigningKeyParameters
+        /// Serialized Name: KeyVaultSigningKeyParametersTypeName.KeyVaultSigningKeyParameters
         /// </summary>
         public static KeyVaultSigningKeyType KeyVaultSigningKey { get; } = new KeyVaultSigningKeyType(KeyVaultSigningKeyValue);
         /// <summary> Determines if two <see cref="KeyVaultSigningKeyType"/> values are the same. </summary>

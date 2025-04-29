@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The UriPathMatchConditionType.
-    /// Serialized Name: UrlPathMatchConditionType
+    /// Serialized Name: UrlPathMatchConditionParametersTypeName
     /// </summary>
     public readonly partial struct UriPathMatchConditionType : IEquatable<UriPathMatchConditionType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// DeliveryRuleUrlPathMatchConditionParameters
-        /// Serialized Name: UrlPathMatchConditionType.DeliveryRuleUrlPathMatchConditionParameters
+        /// Serialized Name: UrlPathMatchConditionParametersTypeName.DeliveryRuleUrlPathMatchConditionParameters
         /// </summary>
         public static UriPathMatchConditionType UriPathMatchCondition { get; } = new UriPathMatchConditionType(UriPathMatchConditionValue);
         /// <summary> Determines if two <see cref="UriPathMatchConditionType"/> values are the same. </summary>

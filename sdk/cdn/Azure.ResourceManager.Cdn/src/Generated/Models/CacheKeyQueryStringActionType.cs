@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The CacheKeyQueryStringActionType.
-    /// Serialized Name: CacheKeyQueryStringActionType
+    /// Serialized Name: CacheKeyQueryStringActionParametersTypeName
     /// </summary>
     public readonly partial struct CacheKeyQueryStringActionType : IEquatable<CacheKeyQueryStringActionType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// DeliveryRuleCacheKeyQueryStringBehaviorActionParameters
-        /// Serialized Name: CacheKeyQueryStringActionType.DeliveryRuleCacheKeyQueryStringBehaviorActionParameters
+        /// Serialized Name: CacheKeyQueryStringActionParametersTypeName.DeliveryRuleCacheKeyQueryStringBehaviorActionParameters
         /// </summary>
         public static CacheKeyQueryStringActionType CacheKeyQueryStringBehaviorAction { get; } = new CacheKeyQueryStringActionType(CacheKeyQueryStringBehaviorActionValue);
         /// <summary> Determines if two <see cref="CacheKeyQueryStringActionType"/> values are the same. </summary>

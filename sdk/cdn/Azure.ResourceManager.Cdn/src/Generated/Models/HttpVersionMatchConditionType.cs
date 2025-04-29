@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The HttpVersionMatchConditionType.
-    /// Serialized Name: HttpVersionMatchConditionType
+    /// Serialized Name: HttpVersionMatchConditionParametersTypeName
     /// </summary>
     public readonly partial struct HttpVersionMatchConditionType : IEquatable<HttpVersionMatchConditionType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// DeliveryRuleHttpVersionConditionParameters
-        /// Serialized Name: HttpVersionMatchConditionType.DeliveryRuleHttpVersionConditionParameters
+        /// Serialized Name: HttpVersionMatchConditionParametersTypeName.DeliveryRuleHttpVersionConditionParameters
         /// </summary>
         public static HttpVersionMatchConditionType HttpVersionCondition { get; } = new HttpVersionMatchConditionType(HttpVersionConditionValue);
         /// <summary> Determines if two <see cref="HttpVersionMatchConditionType"/> values are the same. </summary>

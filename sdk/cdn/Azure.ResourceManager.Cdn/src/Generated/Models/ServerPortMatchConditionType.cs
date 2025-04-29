@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The ServerPortMatchConditionType.
-    /// Serialized Name: ServerPortMatchConditionType
+    /// Serialized Name: ServerPortMatchConditionParametersTypeName
     /// </summary>
     public readonly partial struct ServerPortMatchConditionType : IEquatable<ServerPortMatchConditionType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// DeliveryRuleServerPortConditionParameters
-        /// Serialized Name: ServerPortMatchConditionType.DeliveryRuleServerPortConditionParameters
+        /// Serialized Name: ServerPortMatchConditionParametersTypeName.DeliveryRuleServerPortConditionParameters
         /// </summary>
         public static ServerPortMatchConditionType ServerPortCondition { get; } = new ServerPortMatchConditionType(ServerPortConditionValue);
         /// <summary> Determines if two <see cref="ServerPortMatchConditionType"/> values are the same. </summary>

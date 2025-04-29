@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The OriginGroupOverrideActionType.
-    /// Serialized Name: OriginGroupOverrideActionType
+    /// Serialized Name: OriginGroupOverrideActionParametersTypeName
     /// </summary>
     public readonly partial struct OriginGroupOverrideActionType : IEquatable<OriginGroupOverrideActionType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// DeliveryRuleOriginGroupOverrideActionParameters
-        /// Serialized Name: OriginGroupOverrideActionType.DeliveryRuleOriginGroupOverrideActionParameters
+        /// Serialized Name: OriginGroupOverrideActionParametersTypeName.DeliveryRuleOriginGroupOverrideActionParameters
         /// </summary>
         public static OriginGroupOverrideActionType OriginGroupOverrideAction { get; } = new OriginGroupOverrideActionType(OriginGroupOverrideActionValue);
         /// <summary> Determines if two <see cref="OriginGroupOverrideActionType"/> values are the same. </summary>

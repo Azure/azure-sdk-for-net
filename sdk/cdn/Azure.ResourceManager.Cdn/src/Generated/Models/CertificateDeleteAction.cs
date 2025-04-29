@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Describes the action that shall be taken when the certificate is removed from Key Vault.
-    /// Serialized Name: CertificateDeleteAction
+    /// Serialized Name: DeleteRule
     /// </summary>
     public readonly partial struct CertificateDeleteAction : IEquatable<CertificateDeleteAction>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// NoAction
-        /// Serialized Name: CertificateDeleteAction.NoAction
+        /// Serialized Name: DeleteRule.NoAction
         /// </summary>
         public static CertificateDeleteAction NoAction { get; } = new CertificateDeleteAction(NoActionValue);
         /// <summary> Determines if two <see cref="CertificateDeleteAction"/> values are the same. </summary>

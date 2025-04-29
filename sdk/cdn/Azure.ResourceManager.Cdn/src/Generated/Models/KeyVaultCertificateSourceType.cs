@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The KeyVaultCertificateSourceType.
-    /// Serialized Name: KeyVaultCertificateSourceType
+    /// Serialized Name: KeyVaultCertificateSourceParametersTypeName
     /// </summary>
     public readonly partial struct KeyVaultCertificateSourceType : IEquatable<KeyVaultCertificateSourceType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// KeyVaultCertificateSourceParameters
-        /// Serialized Name: KeyVaultCertificateSourceType.KeyVaultCertificateSourceParameters
+        /// Serialized Name: KeyVaultCertificateSourceParametersTypeName.KeyVaultCertificateSourceParameters
         /// </summary>
         public static KeyVaultCertificateSourceType KeyVaultCertificateSource { get; } = new KeyVaultCertificateSourceType(KeyVaultCertificateSourceValue);
         /// <summary> Determines if two <see cref="KeyVaultCertificateSourceType"/> values are the same. </summary>

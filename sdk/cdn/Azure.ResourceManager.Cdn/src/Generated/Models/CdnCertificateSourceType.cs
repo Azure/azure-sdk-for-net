@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The CdnCertificateSourceType.
-    /// Serialized Name: CdnCertificateSourceType
+    /// Serialized Name: CdnCertificateSourceParametersTypeName
     /// </summary>
     public readonly partial struct CdnCertificateSourceType : IEquatable<CdnCertificateSourceType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// CdnCertificateSourceParameters
-        /// Serialized Name: CdnCertificateSourceType.CdnCertificateSourceParameters
+        /// Serialized Name: CdnCertificateSourceParametersTypeName.CdnCertificateSourceParameters
         /// </summary>
         public static CdnCertificateSourceType CdnCertificateSource { get; } = new CdnCertificateSourceType(CdnCertificateSourceValue);
         /// <summary> Determines if two <see cref="CdnCertificateSourceType"/> values are the same. </summary>

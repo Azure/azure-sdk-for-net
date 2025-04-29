@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The RequestSchemeMatchConditionMatchValue.
-    /// Serialized Name: RequestSchemeMatchConditionMatchValue
+    /// Serialized Name: RequestSchemeMatchConditionParametersMatchValuesItem
     /// </summary>
     public readonly partial struct RequestSchemeMatchConditionMatchValue : IEquatable<RequestSchemeMatchConditionMatchValue>
     {
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// HTTP
-        /// Serialized Name: RequestSchemeMatchConditionMatchValue.HTTP
+        /// Serialized Name: RequestSchemeMatchConditionParametersMatchValuesItem.HTTP
         /// </summary>
         public static RequestSchemeMatchConditionMatchValue Http { get; } = new RequestSchemeMatchConditionMatchValue(HttpValue);
         /// <summary>
         /// HTTPS
-        /// Serialized Name: RequestSchemeMatchConditionMatchValue.HTTPS
+        /// Serialized Name: RequestSchemeMatchConditionParametersMatchValuesItem.HTTPS
         /// </summary>
         public static RequestSchemeMatchConditionMatchValue Https { get; } = new RequestSchemeMatchConditionMatchValue(HttpsValue);
         /// <summary> Determines if two <see cref="RequestSchemeMatchConditionMatchValue"/> values are the same. </summary>

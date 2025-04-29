@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Unit of the usage. e.g. count.
-    /// Serialized Name: CdnUsageUnit
+    /// Serialized Name: ResourceUsageUnit
     /// </summary>
     public readonly partial struct CdnUsageUnit : IEquatable<CdnUsageUnit>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// count
-        /// Serialized Name: CdnUsageUnit.count
+        /// Serialized Name: ResourceUsageUnit.count
         /// </summary>
         public static CdnUsageUnit Count { get; } = new CdnUsageUnit(CountValue);
         /// <summary> Determines if two <see cref="CdnUsageUnit"/> values are the same. </summary>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Defines the parameters for QueryString match conditions
-    /// Serialized Name: QueryStringMatchCondition
+    /// Serialized Name: QueryStringMatchConditionParameters
     /// </summary>
     public partial class QueryStringMatchCondition
     {
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="QueryStringMatchCondition"/>. </summary>
-        /// <param name="conditionType"> Serialized Name: QueryStringMatchCondition.typeName. </param>
+        /// <param name="conditionType"> Serialized Name: QueryStringMatchConditionParameters.typeName. </param>
         /// <param name="queryStringOperator">
         /// Describes operator to be matched
-        /// Serialized Name: QueryStringMatchCondition.operator
+        /// Serialized Name: QueryStringMatchConditionParameters.operator
         /// </param>
         public QueryStringMatchCondition(QueryStringMatchConditionType conditionType, QueryStringOperator queryStringOperator)
         {
@@ -63,22 +63,22 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="QueryStringMatchCondition"/>. </summary>
-        /// <param name="conditionType"> Serialized Name: QueryStringMatchCondition.typeName. </param>
+        /// <param name="conditionType"> Serialized Name: QueryStringMatchConditionParameters.typeName. </param>
         /// <param name="queryStringOperator">
         /// Describes operator to be matched
-        /// Serialized Name: QueryStringMatchCondition.operator
+        /// Serialized Name: QueryStringMatchConditionParameters.operator
         /// </param>
         /// <param name="negateCondition">
         /// Describes if this is negate condition or not
-        /// Serialized Name: QueryStringMatchCondition.negateCondition
+        /// Serialized Name: QueryStringMatchConditionParameters.negateCondition
         /// </param>
         /// <param name="matchValues">
         /// The match value for the condition of the delivery rule
-        /// Serialized Name: QueryStringMatchCondition.matchValues
+        /// Serialized Name: QueryStringMatchConditionParameters.matchValues
         /// </param>
         /// <param name="transforms">
         /// List of transforms
-        /// Serialized Name: QueryStringMatchCondition.transforms
+        /// Serialized Name: QueryStringMatchConditionParameters.transforms
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal QueryStringMatchCondition(QueryStringMatchConditionType conditionType, QueryStringOperator queryStringOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -96,26 +96,26 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Serialized Name: QueryStringMatchCondition.typeName. </summary>
+        /// <summary> Serialized Name: QueryStringMatchConditionParameters.typeName. </summary>
         public QueryStringMatchConditionType ConditionType { get; set; }
         /// <summary>
         /// Describes operator to be matched
-        /// Serialized Name: QueryStringMatchCondition.operator
+        /// Serialized Name: QueryStringMatchConditionParameters.operator
         /// </summary>
         public QueryStringOperator QueryStringOperator { get; set; }
         /// <summary>
         /// Describes if this is negate condition or not
-        /// Serialized Name: QueryStringMatchCondition.negateCondition
+        /// Serialized Name: QueryStringMatchConditionParameters.negateCondition
         /// </summary>
         public bool? NegateCondition { get; set; }
         /// <summary>
         /// The match value for the condition of the delivery rule
-        /// Serialized Name: QueryStringMatchCondition.matchValues
+        /// Serialized Name: QueryStringMatchConditionParameters.matchValues
         /// </summary>
         public IList<string> MatchValues { get; }
         /// <summary>
         /// List of transforms
-        /// Serialized Name: QueryStringMatchCondition.transforms
+        /// Serialized Name: QueryStringMatchConditionParameters.transforms
         /// </summary>
         public IList<PreTransformCategory> Transforms { get; }
     }

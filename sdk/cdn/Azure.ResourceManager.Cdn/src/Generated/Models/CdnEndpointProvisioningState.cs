@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Provisioning status of the endpoint.
-    /// Serialized Name: CdnEndpointProvisioningState
+    /// Serialized Name: EndpointProvisioningState
     /// </summary>
     public readonly partial struct CdnEndpointProvisioningState : IEquatable<CdnEndpointProvisioningState>
     {
@@ -33,27 +33,27 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// Succeeded
-        /// Serialized Name: CdnEndpointProvisioningState.Succeeded
+        /// Serialized Name: EndpointProvisioningState.Succeeded
         /// </summary>
         public static CdnEndpointProvisioningState Succeeded { get; } = new CdnEndpointProvisioningState(SucceededValue);
         /// <summary>
         /// Failed
-        /// Serialized Name: CdnEndpointProvisioningState.Failed
+        /// Serialized Name: EndpointProvisioningState.Failed
         /// </summary>
         public static CdnEndpointProvisioningState Failed { get; } = new CdnEndpointProvisioningState(FailedValue);
         /// <summary>
         /// Updating
-        /// Serialized Name: CdnEndpointProvisioningState.Updating
+        /// Serialized Name: EndpointProvisioningState.Updating
         /// </summary>
         public static CdnEndpointProvisioningState Updating { get; } = new CdnEndpointProvisioningState(UpdatingValue);
         /// <summary>
         /// Deleting
-        /// Serialized Name: CdnEndpointProvisioningState.Deleting
+        /// Serialized Name: EndpointProvisioningState.Deleting
         /// </summary>
         public static CdnEndpointProvisioningState Deleting { get; } = new CdnEndpointProvisioningState(DeletingValue);
         /// <summary>
         /// Creating
-        /// Serialized Name: CdnEndpointProvisioningState.Creating
+        /// Serialized Name: EndpointProvisioningState.Creating
         /// </summary>
         public static CdnEndpointProvisioningState Creating { get; } = new CdnEndpointProvisioningState(CreatingValue);
         /// <summary> Determines if two <see cref="CdnEndpointProvisioningState"/> values are the same. </summary>

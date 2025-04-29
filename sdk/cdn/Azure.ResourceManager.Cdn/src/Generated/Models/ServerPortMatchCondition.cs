@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Defines the parameters for ServerPort match conditions
-    /// Serialized Name: ServerPortMatchCondition
+    /// Serialized Name: ServerPortMatchConditionParameters
     /// </summary>
     public partial class ServerPortMatchCondition
     {
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ServerPortMatchCondition"/>. </summary>
-        /// <param name="conditionType"> Serialized Name: ServerPortMatchCondition.typeName. </param>
+        /// <param name="conditionType"> Serialized Name: ServerPortMatchConditionParameters.typeName. </param>
         /// <param name="serverPortOperator">
         /// Describes operator to be matched
-        /// Serialized Name: ServerPortMatchCondition.operator
+        /// Serialized Name: ServerPortMatchConditionParameters.operator
         /// </param>
         public ServerPortMatchCondition(ServerPortMatchConditionType conditionType, ServerPortOperator serverPortOperator)
         {
@@ -63,22 +63,22 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerPortMatchCondition"/>. </summary>
-        /// <param name="conditionType"> Serialized Name: ServerPortMatchCondition.typeName. </param>
+        /// <param name="conditionType"> Serialized Name: ServerPortMatchConditionParameters.typeName. </param>
         /// <param name="serverPortOperator">
         /// Describes operator to be matched
-        /// Serialized Name: ServerPortMatchCondition.operator
+        /// Serialized Name: ServerPortMatchConditionParameters.operator
         /// </param>
         /// <param name="negateCondition">
         /// Describes if this is negate condition or not
-        /// Serialized Name: ServerPortMatchCondition.negateCondition
+        /// Serialized Name: ServerPortMatchConditionParameters.negateCondition
         /// </param>
         /// <param name="matchValues">
         /// The match value for the condition of the delivery rule
-        /// Serialized Name: ServerPortMatchCondition.matchValues
+        /// Serialized Name: ServerPortMatchConditionParameters.matchValues
         /// </param>
         /// <param name="transforms">
         /// List of transforms
-        /// Serialized Name: ServerPortMatchCondition.transforms
+        /// Serialized Name: ServerPortMatchConditionParameters.transforms
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ServerPortMatchCondition(ServerPortMatchConditionType conditionType, ServerPortOperator serverPortOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -96,26 +96,26 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Serialized Name: ServerPortMatchCondition.typeName. </summary>
+        /// <summary> Serialized Name: ServerPortMatchConditionParameters.typeName. </summary>
         public ServerPortMatchConditionType ConditionType { get; set; }
         /// <summary>
         /// Describes operator to be matched
-        /// Serialized Name: ServerPortMatchCondition.operator
+        /// Serialized Name: ServerPortMatchConditionParameters.operator
         /// </summary>
         public ServerPortOperator ServerPortOperator { get; set; }
         /// <summary>
         /// Describes if this is negate condition or not
-        /// Serialized Name: ServerPortMatchCondition.negateCondition
+        /// Serialized Name: ServerPortMatchConditionParameters.negateCondition
         /// </summary>
         public bool? NegateCondition { get; set; }
         /// <summary>
         /// The match value for the condition of the delivery rule
-        /// Serialized Name: ServerPortMatchCondition.matchValues
+        /// Serialized Name: ServerPortMatchConditionParameters.matchValues
         /// </summary>
         public IList<string> MatchValues { get; }
         /// <summary>
         /// List of transforms
-        /// Serialized Name: ServerPortMatchCondition.transforms
+        /// Serialized Name: ServerPortMatchConditionParameters.transforms
         /// </summary>
         public IList<PreTransformCategory> Transforms { get; }
     }

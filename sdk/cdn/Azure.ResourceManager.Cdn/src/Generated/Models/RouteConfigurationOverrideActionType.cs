@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The RouteConfigurationOverrideActionType.
-    /// Serialized Name: RouteConfigurationOverrideActionType
+    /// Serialized Name: RouteConfigurationOverrideActionParametersTypeName
     /// </summary>
     public readonly partial struct RouteConfigurationOverrideActionType : IEquatable<RouteConfigurationOverrideActionType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// DeliveryRuleRouteConfigurationOverrideActionParameters
-        /// Serialized Name: RouteConfigurationOverrideActionType.DeliveryRuleRouteConfigurationOverrideActionParameters
+        /// Serialized Name: RouteConfigurationOverrideActionParametersTypeName.DeliveryRuleRouteConfigurationOverrideActionParameters
         /// </summary>
         public static RouteConfigurationOverrideActionType RouteConfigurationOverrideAction { get; } = new RouteConfigurationOverrideActionType(RouteConfigurationOverrideActionValue);
         /// <summary> Determines if two <see cref="RouteConfigurationOverrideActionType"/> values are the same. </summary>

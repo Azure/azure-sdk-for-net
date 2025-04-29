@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The QueryStringMatchConditionType.
-    /// Serialized Name: QueryStringMatchConditionType
+    /// Serialized Name: QueryStringMatchConditionParametersTypeName
     /// </summary>
     public readonly partial struct QueryStringMatchConditionType : IEquatable<QueryStringMatchConditionType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// DeliveryRuleQueryStringConditionParameters
-        /// Serialized Name: QueryStringMatchConditionType.DeliveryRuleQueryStringConditionParameters
+        /// Serialized Name: QueryStringMatchConditionParametersTypeName.DeliveryRuleQueryStringConditionParameters
         /// </summary>
         public static QueryStringMatchConditionType QueryStringCondition { get; } = new QueryStringMatchConditionType(QueryStringConditionValue);
         /// <summary> Determines if two <see cref="QueryStringMatchConditionType"/> values are the same. </summary>

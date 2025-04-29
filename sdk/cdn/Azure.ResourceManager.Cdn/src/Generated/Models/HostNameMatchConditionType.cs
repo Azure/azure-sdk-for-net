@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The HostNameMatchConditionType.
-    /// Serialized Name: HostNameMatchConditionType
+    /// Serialized Name: HostNameMatchConditionParametersTypeName
     /// </summary>
     public readonly partial struct HostNameMatchConditionType : IEquatable<HostNameMatchConditionType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// DeliveryRuleHostNameConditionParameters
-        /// Serialized Name: HostNameMatchConditionType.DeliveryRuleHostNameConditionParameters
+        /// Serialized Name: HostNameMatchConditionParametersTypeName.DeliveryRuleHostNameConditionParameters
         /// </summary>
         public static HostNameMatchConditionType HostNameCondition { get; } = new HostNameMatchConditionType(HostNameConditionValue);
         /// <summary> Determines if two <see cref="HostNameMatchConditionType"/> values are the same. </summary>

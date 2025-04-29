@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Defines the parameters for RequestHeader match conditions
-    /// Serialized Name: RequestHeaderMatchCondition
+    /// Serialized Name: RequestHeaderMatchConditionParameters
     /// </summary>
     public partial class RequestHeaderMatchCondition
     {
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RequestHeaderMatchCondition"/>. </summary>
-        /// <param name="conditionType"> Serialized Name: RequestHeaderMatchCondition.typeName. </param>
+        /// <param name="conditionType"> Serialized Name: RequestHeaderMatchConditionParameters.typeName. </param>
         /// <param name="requestHeaderOperator">
         /// Describes operator to be matched
-        /// Serialized Name: RequestHeaderMatchCondition.operator
+        /// Serialized Name: RequestHeaderMatchConditionParameters.operator
         /// </param>
         public RequestHeaderMatchCondition(RequestHeaderMatchConditionType conditionType, RequestHeaderOperator requestHeaderOperator)
         {
@@ -63,26 +63,26 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestHeaderMatchCondition"/>. </summary>
-        /// <param name="conditionType"> Serialized Name: RequestHeaderMatchCondition.typeName. </param>
+        /// <param name="conditionType"> Serialized Name: RequestHeaderMatchConditionParameters.typeName. </param>
         /// <param name="selector">
         /// Name of Header to be matched
-        /// Serialized Name: RequestHeaderMatchCondition.selector
+        /// Serialized Name: RequestHeaderMatchConditionParameters.selector
         /// </param>
         /// <param name="requestHeaderOperator">
         /// Describes operator to be matched
-        /// Serialized Name: RequestHeaderMatchCondition.operator
+        /// Serialized Name: RequestHeaderMatchConditionParameters.operator
         /// </param>
         /// <param name="negateCondition">
         /// Describes if this is negate condition or not
-        /// Serialized Name: RequestHeaderMatchCondition.negateCondition
+        /// Serialized Name: RequestHeaderMatchConditionParameters.negateCondition
         /// </param>
         /// <param name="matchValues">
         /// The match value for the condition of the delivery rule
-        /// Serialized Name: RequestHeaderMatchCondition.matchValues
+        /// Serialized Name: RequestHeaderMatchConditionParameters.matchValues
         /// </param>
         /// <param name="transforms">
         /// List of transforms
-        /// Serialized Name: RequestHeaderMatchCondition.transforms
+        /// Serialized Name: RequestHeaderMatchConditionParameters.transforms
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RequestHeaderMatchCondition(RequestHeaderMatchConditionType conditionType, string selector, RequestHeaderOperator requestHeaderOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -101,31 +101,31 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Serialized Name: RequestHeaderMatchCondition.typeName. </summary>
+        /// <summary> Serialized Name: RequestHeaderMatchConditionParameters.typeName. </summary>
         public RequestHeaderMatchConditionType ConditionType { get; set; }
         /// <summary>
         /// Name of Header to be matched
-        /// Serialized Name: RequestHeaderMatchCondition.selector
+        /// Serialized Name: RequestHeaderMatchConditionParameters.selector
         /// </summary>
         public string Selector { get; set; }
         /// <summary>
         /// Describes operator to be matched
-        /// Serialized Name: RequestHeaderMatchCondition.operator
+        /// Serialized Name: RequestHeaderMatchConditionParameters.operator
         /// </summary>
         public RequestHeaderOperator RequestHeaderOperator { get; set; }
         /// <summary>
         /// Describes if this is negate condition or not
-        /// Serialized Name: RequestHeaderMatchCondition.negateCondition
+        /// Serialized Name: RequestHeaderMatchConditionParameters.negateCondition
         /// </summary>
         public bool? NegateCondition { get; set; }
         /// <summary>
         /// The match value for the condition of the delivery rule
-        /// Serialized Name: RequestHeaderMatchCondition.matchValues
+        /// Serialized Name: RequestHeaderMatchConditionParameters.matchValues
         /// </summary>
         public IList<string> MatchValues { get; }
         /// <summary>
         /// List of transforms
-        /// Serialized Name: RequestHeaderMatchCondition.transforms
+        /// Serialized Name: RequestHeaderMatchConditionParameters.transforms
         /// </summary>
         public IList<PreTransformCategory> Transforms { get; }
     }

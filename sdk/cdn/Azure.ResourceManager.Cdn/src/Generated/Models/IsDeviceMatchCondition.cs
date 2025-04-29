@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Defines the parameters for IsDevice match conditions
-    /// Serialized Name: IsDeviceMatchCondition
+    /// Serialized Name: IsDeviceMatchConditionParameters
     /// </summary>
     public partial class IsDeviceMatchCondition
     {
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IsDeviceMatchCondition"/>. </summary>
-        /// <param name="conditionType"> Serialized Name: IsDeviceMatchCondition.typeName. </param>
+        /// <param name="conditionType"> Serialized Name: IsDeviceMatchConditionParameters.typeName. </param>
         /// <param name="isDeviceOperator">
         /// Describes operator to be matched
-        /// Serialized Name: IsDeviceMatchCondition.operator
+        /// Serialized Name: IsDeviceMatchConditionParameters.operator
         /// </param>
         public IsDeviceMatchCondition(IsDeviceMatchConditionType conditionType, IsDeviceOperator isDeviceOperator)
         {
@@ -63,22 +63,22 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IsDeviceMatchCondition"/>. </summary>
-        /// <param name="conditionType"> Serialized Name: IsDeviceMatchCondition.typeName. </param>
+        /// <param name="conditionType"> Serialized Name: IsDeviceMatchConditionParameters.typeName. </param>
         /// <param name="isDeviceOperator">
         /// Describes operator to be matched
-        /// Serialized Name: IsDeviceMatchCondition.operator
+        /// Serialized Name: IsDeviceMatchConditionParameters.operator
         /// </param>
         /// <param name="negateCondition">
         /// Describes if this is negate condition or not
-        /// Serialized Name: IsDeviceMatchCondition.negateCondition
+        /// Serialized Name: IsDeviceMatchConditionParameters.negateCondition
         /// </param>
         /// <param name="matchValues">
         /// The match value for the condition of the delivery rule
-        /// Serialized Name: IsDeviceMatchCondition.matchValues
+        /// Serialized Name: IsDeviceMatchConditionParameters.matchValues
         /// </param>
         /// <param name="transforms">
         /// List of transforms
-        /// Serialized Name: IsDeviceMatchCondition.transforms
+        /// Serialized Name: IsDeviceMatchConditionParameters.transforms
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IsDeviceMatchCondition(IsDeviceMatchConditionType conditionType, IsDeviceOperator isDeviceOperator, bool? negateCondition, IList<IsDeviceMatchConditionMatchValue> matchValues, IList<PreTransformCategory> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -96,26 +96,26 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Serialized Name: IsDeviceMatchCondition.typeName. </summary>
+        /// <summary> Serialized Name: IsDeviceMatchConditionParameters.typeName. </summary>
         public IsDeviceMatchConditionType ConditionType { get; set; }
         /// <summary>
         /// Describes operator to be matched
-        /// Serialized Name: IsDeviceMatchCondition.operator
+        /// Serialized Name: IsDeviceMatchConditionParameters.operator
         /// </summary>
         public IsDeviceOperator IsDeviceOperator { get; set; }
         /// <summary>
         /// Describes if this is negate condition or not
-        /// Serialized Name: IsDeviceMatchCondition.negateCondition
+        /// Serialized Name: IsDeviceMatchConditionParameters.negateCondition
         /// </summary>
         public bool? NegateCondition { get; set; }
         /// <summary>
         /// The match value for the condition of the delivery rule
-        /// Serialized Name: IsDeviceMatchCondition.matchValues
+        /// Serialized Name: IsDeviceMatchConditionParameters.matchValues
         /// </summary>
         public IList<IsDeviceMatchConditionMatchValue> MatchValues { get; }
         /// <summary>
         /// List of transforms
-        /// Serialized Name: IsDeviceMatchCondition.transforms
+        /// Serialized Name: IsDeviceMatchConditionParameters.transforms
         /// </summary>
         public IList<PreTransformCategory> Transforms { get; }
     }

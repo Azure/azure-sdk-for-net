@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The SocketAddressMatchConditionType.
-    /// Serialized Name: SocketAddressMatchConditionType
+    /// Serialized Name: SocketAddrMatchConditionParametersTypeName
     /// </summary>
     public readonly partial struct SocketAddressMatchConditionType : IEquatable<SocketAddressMatchConditionType>
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// DeliveryRuleSocketAddrConditionParameters
-        /// Serialized Name: SocketAddressMatchConditionType.DeliveryRuleSocketAddrConditionParameters
+        /// Serialized Name: SocketAddrMatchConditionParametersTypeName.DeliveryRuleSocketAddrConditionParameters
         /// </summary>
         public static SocketAddressMatchConditionType SocketAddressCondition { get; } = new SocketAddressMatchConditionType(SocketAddressConditionValue);
         /// <summary> Determines if two <see cref="SocketAddressMatchConditionType"/> values are the same. </summary>

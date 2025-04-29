@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The IsDeviceMatchConditionMatchValue.
-    /// Serialized Name: IsDeviceMatchConditionMatchValue
+    /// Serialized Name: IsDeviceMatchConditionParametersMatchValuesItem
     /// </summary>
     public readonly partial struct IsDeviceMatchConditionMatchValue : IEquatable<IsDeviceMatchConditionMatchValue>
     {
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// Mobile
-        /// Serialized Name: IsDeviceMatchConditionMatchValue.Mobile
+        /// Serialized Name: IsDeviceMatchConditionParametersMatchValuesItem.Mobile
         /// </summary>
         public static IsDeviceMatchConditionMatchValue Mobile { get; } = new IsDeviceMatchConditionMatchValue(MobileValue);
         /// <summary>
         /// Desktop
-        /// Serialized Name: IsDeviceMatchConditionMatchValue.Desktop
+        /// Serialized Name: IsDeviceMatchConditionParametersMatchValuesItem.Desktop
         /// </summary>
         public static IsDeviceMatchConditionMatchValue Desktop { get; } = new IsDeviceMatchConditionMatchValue(DesktopValue);
         /// <summary> Determines if two <see cref="IsDeviceMatchConditionMatchValue"/> values are the same. </summary>
