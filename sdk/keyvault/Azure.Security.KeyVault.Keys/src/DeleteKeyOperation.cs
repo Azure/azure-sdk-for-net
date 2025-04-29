@@ -116,7 +116,6 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
-        RehydrationToken IOperation.GetRehydrationToken() =>
-            throw new NotSupportedException("Rehydration token not supported.");
+        RehydrationToken IOperation.GetRehydrationToken() => default;
     }
 }

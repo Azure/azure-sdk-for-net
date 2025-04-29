@@ -321,6 +321,9 @@ namespace Azure.AI.TextAnalytics
             return OperationState<AsyncPageable<AnalyzeActionsResult>>.Failure(rawResponse, new RequestFailedException(rawResponse));
         }
 
+        // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
+        RehydrationToken IOperation<AsyncPageable<AnalyzeActionsResult>>.GetRehydrationToken() => default;
+
         private AsyncPageable<AnalyzeActionsResult> CreateOperationValueAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<AnalyzeActionsResult>> NextPageFunc(string nextLink, int? pageSizeHint)

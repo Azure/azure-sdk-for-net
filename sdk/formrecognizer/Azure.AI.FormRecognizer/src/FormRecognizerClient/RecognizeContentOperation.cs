@@ -173,6 +173,9 @@ namespace Azure.AI.FormRecognizer.Models
             return OperationState<FormPageCollection>.Pending(rawResponse);
         }
 
+        // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
+        RehydrationToken IOperation<FormPageCollection>.GetRehydrationToken() => default;
+
         private static FormPageCollection ConvertValue(IReadOnlyList<PageResult> pageResults, IReadOnlyList<ReadResult> readResults)
         {
             Debug.Assert(pageResults.Count == readResults.Count);

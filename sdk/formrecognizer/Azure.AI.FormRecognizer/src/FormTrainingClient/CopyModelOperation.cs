@@ -205,6 +205,9 @@ namespace Azure.AI.FormRecognizer.Training
             return OperationState<CustomFormModelInfo>.Pending(rawResponse);
         }
 
+        // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
+        RehydrationToken IOperation<CustomFormModelInfo>.GetRehydrationToken() => default;
+
         private static CustomFormModelInfo ConvertValue(CopyOperationResult result, string modelId, CustomFormModelStatus status)
         {
             return new CustomFormModelInfo(

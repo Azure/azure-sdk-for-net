@@ -206,6 +206,9 @@ namespace Azure.AI.FormRecognizer.Models
             return OperationState<RecognizedFormCollection>.Pending(rawResponse);
         }
 
+        // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
+        RehydrationToken IOperation<RecognizedFormCollection>.GetRehydrationToken() => default;
+
         private static RecognizedFormCollection ConvertToRecognizedForms(V2AnalyzeResult analyzeResult, string modelId)
         {
             return analyzeResult.DocumentResults?.Count == 0 ?

@@ -175,5 +175,8 @@ namespace Azure.AI.FormRecognizer.Training
 
             return OperationState<CustomFormModel>.Pending(rawResponse);
         }
+
+        // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
+        RehydrationToken IOperation<CustomFormModel>.GetRehydrationToken() => default;
     }
 }

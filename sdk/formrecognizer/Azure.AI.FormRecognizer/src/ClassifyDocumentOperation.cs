@@ -192,5 +192,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             return OperationState<AnalyzeResult>.Pending(rawResponse);
         }
+
+        // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
+        RehydrationToken IOperation<AnalyzeResult>.GetRehydrationToken() => default;
     }
 }

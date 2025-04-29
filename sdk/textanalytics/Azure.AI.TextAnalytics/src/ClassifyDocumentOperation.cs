@@ -294,5 +294,8 @@ namespace Azure.AI.TextAnalytics
 
             return OperationState<AsyncPageable<ClassifyDocumentResultCollection>>.Failure(rawResponse, new RequestFailedException(rawResponse));
         }
+
+        // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
+        RehydrationToken IOperation<AsyncPageable<ClassifyDocumentResultCollection>>.GetRehydrationToken() => default;
     }
 }
