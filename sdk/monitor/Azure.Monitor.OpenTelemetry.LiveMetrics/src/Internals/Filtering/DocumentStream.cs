@@ -92,6 +92,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             List<FilterConjunctionGroup<TTelemetry>> filterGroups,
             TTelemetry document,
             out CollectionConfigurationError[] errors)
+            where TTelemetry : DocumentIngress
         {
             var errorList = new List<CollectionConfigurationError>();
             bool leastOneConjunctionGroupPassed = false;
@@ -121,6 +122,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
         }
 
         private static bool CheckFiltersGeneric<TTelemetry>(TTelemetry document, FilterConjunctionGroup<TTelemetry> filterGroup, List<CollectionConfigurationError> errorList)
+            where TTelemetry : DocumentIngress
         {
             bool filterPassed = false;
 
