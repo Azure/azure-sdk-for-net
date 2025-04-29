@@ -39,7 +39,13 @@ public class ClientCache
         if (_clients.TryGetValue(clientId, out var cached))
         {
             cached.LastUsed = Stopwatch.GetTimestamp();
-            return (T)cached.Client;
+
+            if (cached.Client is T typedClient)
+            {
+                return typedClient;
+            }
+
+            throw new InvalidOperationException($"The clientId is associated with a client of type '{cached.Client.GetType()}', not '{typeof(T)}'.");
         }
 
         // Client not found in cache, create a new one.
