@@ -9,6 +9,7 @@
     <ProjectReference Include="..\..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
     <ProjectReference Include="..\..\src\System.ClientModel.csproj" />
     <ProjectReference Include="..\client\System.ClientModel.Tests.Client.csproj" />
+    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <ItemGroup>
