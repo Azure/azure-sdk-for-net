@@ -27,16 +27,21 @@ namespace Azure.AI.Inference
             return chatClient;
         }
 
-        private static ChatCompletionsClient CreateChatCompletionsClient(this ConnectionProvider provider)
+        private static ChatCompletionsClient CreateChatCompletionsClient(this ConnectionProvider provider, AzureAIInferenceClientOptions? options = null)
         {
             ClientConnection connection = provider.GetConnection(typeof(ChatCompletionsClient).FullName!);
+
             if (!connection.TryGetLocatorAsUri(out Uri? uri) || uri is null)
             {
                 throw new InvalidOperationException("Invalid URI.");
             }
-            return connection.Authentication == ClientAuthenticationMethod.Credential
-            ? new ChatCompletionsClient(uri, connection.Credential as TokenCredential)
-            : new ChatCompletionsClient(uri, new AzureKeyCredential(connection.ApiKeyCredential!));
+
+            return connection.CredentialKind switch
+            {
+                CredentialKind.ApiKeyString => new ChatCompletionsClient(uri, new AzureKeyCredential((string)connection.Credential!), options),
+                CredentialKind.TokenCredential => new ChatCompletionsClient(uri, (TokenCredential)connection.Credential!, options),
+                _ => throw new InvalidOperationException($"Unsupported credential kind: {connection.CredentialKind}")
+            };
         }
 
         /// <summary>
@@ -52,16 +57,21 @@ namespace Azure.AI.Inference
             return embeddingsClient;
         }
 
-        private static EmbeddingsClient CreateEmbeddingsClient(this ConnectionProvider provider)
+        private static EmbeddingsClient CreateEmbeddingsClient(this ConnectionProvider provider, AzureAIInferenceClientOptions? options = null)
         {
             ClientConnection connection = provider.GetConnection(typeof(ChatCompletionsClient).FullName!);
+
             if (!connection.TryGetLocatorAsUri(out Uri? uri) || uri is null)
             {
                 throw new InvalidOperationException("Invalid URI.");
             }
-            return connection.Authentication == ClientAuthenticationMethod.Credential
-            ? new EmbeddingsClient(uri, connection.Credential as TokenCredential)
-            : new EmbeddingsClient(uri, new AzureKeyCredential(connection.ApiKeyCredential!));
+
+            return connection.CredentialKind switch
+            {
+                CredentialKind.ApiKeyString => new EmbeddingsClient(uri, new AzureKeyCredential((string)connection.Credential!), options),
+                CredentialKind.TokenCredential => new EmbeddingsClient(uri, (TokenCredential)connection.Credential!, options),
+                _ => throw new InvalidOperationException($"Unsupported credential kind: {connection.CredentialKind}")
+            };
         }
 
         private record ChatCompletionsClientKey(AzureAIInferenceClientOptions? Options = null) : IEquatable<object>;

@@ -65,9 +65,12 @@ public static class AzureOpenAIExtensions
             throw new InvalidOperationException("Invalid URI.");
         }
 
-        return connection.Authentication == ClientAuthenticationMethod.Credential
-            ? new AzureOpenAIClient(uri, connection.Credential as TokenCredential, options)
-            : new AzureOpenAIClient(uri, new ApiKeyCredential(connection.ApiKeyCredential!), options);
+        return connection.CredentialKind switch
+        {
+            CredentialKind.ApiKeyString => new AzureOpenAIClient(uri, new ApiKeyCredential((string)connection.Credential!), options),
+            CredentialKind.TokenCredential => new AzureOpenAIClient(uri, (TokenCredential)connection.Credential!, options),
+            _ => throw new InvalidOperationException($"Unsupported credential kind: {connection.CredentialKind}")
+        };
     }
 
     private static ChatClient CreateChatClient(this ConnectionProvider provider, AzureOpenAIClient client, string? deploymentName = null)
