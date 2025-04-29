@@ -76,8 +76,8 @@ namespace Azure.Generator.Management
             systemType.Type.Update(@namespace: systemType._type.Namespace);
         }
 
-        private static HashSet<ModelProvider> _updated = new();
-        private static void Update(SystemObjectTypeProvider baseSystemType, ModelProvider model)
+        private HashSet<ModelProvider> _updated = new();
+        private void Update(SystemObjectTypeProvider baseSystemType, ModelProvider model)
         {
             // Add cache to avoid duplicated update of PreVisitModel and VisitType
             if (_updated.Contains(model))
