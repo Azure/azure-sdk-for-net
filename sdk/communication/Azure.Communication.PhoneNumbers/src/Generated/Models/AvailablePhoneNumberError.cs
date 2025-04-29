@@ -8,25 +8,12 @@
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> Contains error details in case of failure when reserving, releasing or purchasing the phone number. Note that this is ignored by the service when present in requests. </summary>
-    public partial class AvailablePhoneNumberError
+    internal partial class AvailablePhoneNumberError
     {
-        /// <summary> Initializes a new instance of <see cref="AvailablePhoneNumberError"/>. </summary>
-        internal AvailablePhoneNumberError()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AvailablePhoneNumberError"/>. </summary>
-        /// <param name="code"> The error code indicating the reason why the operation performed on the phone number failed. </param>
-        /// <param name="message"> The error message describing the failure that occurred. </param>
         internal AvailablePhoneNumberError(string code, string message)
         {
-            Code = code;
-            Message = message;
+            // Intentional no-op to avoid compile errors in the generated code.
+            // TODO: Find a way to fully suppress this class in the generated code.
         }
-
-        /// <summary> The error code indicating the reason why the operation performed on the phone number failed. </summary>
-        public string Code { get; }
-        /// <summary> The error message describing the failure that occurred. </summary>
-        public string Message { get; }
     }
 }

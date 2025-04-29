@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    public partial class AvailablePhoneNumberError
+    internal partial class AvailablePhoneNumberError
     {
         internal static AvailablePhoneNumberError DeserializeAvailablePhoneNumberError(JsonElement element)
         {

@@ -18,18 +18,14 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="expiresAt"> The time at which the reservation will expire. If a reservation is not purchased before this time, all of the reserved phone numbers will be released and made available for others to purchase. </param>
         /// <param name="phoneNumbers"> A dictionary containing the reservation phone numbers. The key is the ID of the phone number (digits only) and values are AvailablePhoneNumber objects. Not populated when retrieving PhoneNumbersReservation collections. </param>
         /// <param name="status"> Represents the status of the reservation. Possible values include: 'active', 'submitted', 'completed', 'expired'. </param>
-        internal PhoneNumbersReservation(Guid id, DateTimeOffset? expiresAt, IDictionary<string, AvailablePhoneNumber> phoneNumbers, ReservationStatus? status)
+        internal PhoneNumbersReservation(Guid id, DateTimeOffset expiresAt, IDictionary<string, AvailablePhoneNumber> phoneNumbers, ReservationStatus status)
         {
             Id = id;
             ExpiresAt = expiresAt;
             PhoneNumbers = phoneNumbers;
             Status = status;
         }
-        /// <summary> The time at which the reservation will expire. If a reservation is not purchased before this time, all of the reserved phone numbers will be released and made available for others to purchase. </summary>
-        public DateTimeOffset? ExpiresAt { get; }
         /// <summary> A dictionary containing the reservation phone numbers. The key is the ID of the phone number (digits only) and values are AvailablePhoneNumber objects. Not populated when retrieving PhoneNumbersReservation collections. </summary>
         public IDictionary<string, AvailablePhoneNumber> PhoneNumbers { get; }
-        /// <summary> Represents the status of the reservation. Possible values include: 'active', 'submitted', 'completed', 'expired'. </summary>
-        public ReservationStatus? Status { get; }
     }
 }

@@ -12,9 +12,18 @@ namespace Azure.Communication.PhoneNumbers.Models
     public class CreateOrUpdateReservationOptions
     {
         /// <summary>
-        /// The ID of an existing reservation.
+        /// Initializes a new instance of the <see cref="CreateOrUpdateReservationOptions"/> class.
         /// </summary>
-        public Guid? Id { get; set; }
+        /// <param name="reservationId"></param>
+        public CreateOrUpdateReservationOptions(Guid reservationId)
+        {
+            ReservationId = reservationId;
+        }
+
+        /// <summary>
+        /// The ID of the reservation. If a reservation with the given ID does not exist, a new reservation will be created.
+        /// </summary>
+        public Guid ReservationId { get; }
 
         /// <summary>
         /// The list of phone numbers to add to the reservation.

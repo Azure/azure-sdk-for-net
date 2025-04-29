@@ -53,7 +53,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="isAgreementToNotResellRequired"> Indicates if do not resell agreement is required. If true, the phone number cannot be acquired unless the customer provides explicit agreement to not resell it. </param>
         /// <param name="error"> Contains error details in case of failure when reserving, releasing or purchasing the phone number. Note that this is ignored by the service when present in requests. </param>
         /// <returns> A new <see cref="PhoneNumbers.AvailablePhoneNumber"/> instance for mocking. </returns>
-        public static AvailablePhoneNumber AvailablePhoneNumber(string id = null, string countryCode = null, string phoneNumber = null, PhoneNumberCapabilities capabilities = null, PhoneNumberType phoneNumberType = default, PhoneNumberAssignmentType assignmentType = default, PhoneNumberCost cost = null, AvailablePhoneNumberStatus? status = null, bool? isAgreementToNotResellRequired = null, AvailablePhoneNumberError error = null)
+        public static AvailablePhoneNumber AvailablePhoneNumber(string id = null, string countryCode = null, string phoneNumber = null, PhoneNumberCapabilities capabilities = null, PhoneNumberType phoneNumberType = default, PhoneNumberAssignmentType assignmentType = default, PhoneNumberCost cost = null, PhoneNumberAvailabilityStatus? status = null, bool? isAgreementToNotResellRequired = null, ResponseError error = null)
         {
             return new AvailablePhoneNumber(
                 id,
@@ -82,15 +82,6 @@ namespace Azure.Communication.PhoneNumbers
             }
 
             return new PhoneNumberCost(amount, isoCurrencySymbol, billingFrequency);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.AvailablePhoneNumberError"/>. </summary>
-        /// <param name="code"> The error code indicating the reason why the operation performed on the phone number failed. </param>
-        /// <param name="message"> The error message describing the failure that occurred. </param>
-        /// <returns> A new <see cref="PhoneNumbers.AvailablePhoneNumberError"/> instance for mocking. </returns>
-        public static AvailablePhoneNumberError AvailablePhoneNumberError(string code = null, string message = null)
-        {
-            return new AvailablePhoneNumberError(code, message);
         }
 
         /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PhoneNumberLocality"/>. </summary>
@@ -138,7 +129,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumbers"> A dictionary containing the reservation phone numbers. The key is the ID of the phone number (digits only) and values are AvailablePhoneNumber objects. Not populated when retrieving PhoneNumbersReservation collections. </param>
         /// <param name="status"> Represents the status of the reservation. Possible values include: 'active', 'submitted', 'completed', 'expired'. </param>
         /// <returns> A new <see cref="PhoneNumbers.PhoneNumbersReservation"/> instance for mocking. </returns>
-        public static PhoneNumbersReservation PhoneNumbersReservation(Guid id = default, DateTimeOffset? expiresAt = null, IDictionary<string, AvailablePhoneNumber> phoneNumbers = null, ReservationStatus? status = null)
+        public static PhoneNumbersReservation PhoneNumbersReservation(Guid id = default, DateTimeOffset expiresAt = default, IDictionary<string, AvailablePhoneNumber> phoneNumbers = null, ReservationStatus status = default)
         {
             phoneNumbers ??= new Dictionary<string, AvailablePhoneNumber>();
 

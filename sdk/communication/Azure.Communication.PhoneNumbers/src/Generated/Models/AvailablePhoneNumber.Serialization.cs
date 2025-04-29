@@ -18,7 +18,7 @@ namespace Azure.Communication.PhoneNumbers
             writer.WritePropertyName("countryCode"u8);
             writer.WriteStringValue(CountryCode);
             writer.WritePropertyName("capabilities"u8);
-            writer.WriteObjectValue(Capabilities);
+            writer.WriteObjectValue<PhoneNumberCapabilities>(Capabilities);
             writer.WritePropertyName("phoneNumberType"u8);
             writer.WriteStringValue(PhoneNumberType.ToString());
             writer.WritePropertyName("assignmentType"u8);
@@ -39,9 +39,9 @@ namespace Azure.Communication.PhoneNumbers
             PhoneNumberType phoneNumberType = default;
             PhoneNumberAssignmentType assignmentType = default;
             PhoneNumberCost cost = default;
-            AvailablePhoneNumberStatus? status = default;
+            PhoneNumberAvailabilityStatus? status = default;
             bool? isAgreementToNotResellRequired = default;
-            AvailablePhoneNumberError error = default;
+            ResponseError error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -89,7 +89,7 @@ namespace Azure.Communication.PhoneNumbers
                     {
                         continue;
                     }
-                    status = new AvailablePhoneNumberStatus(property.Value.GetString());
+                    status = new PhoneNumberAvailabilityStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isAgreementToNotResellRequired"u8))
@@ -107,7 +107,7 @@ namespace Azure.Communication.PhoneNumbers
                     {
                         continue;
                     }
-                    error = AvailablePhoneNumberError.DeserializeAvailablePhoneNumberError(property.Value);
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
             }

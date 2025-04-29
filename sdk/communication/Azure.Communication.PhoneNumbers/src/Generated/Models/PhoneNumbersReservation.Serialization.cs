@@ -38,9 +38,9 @@ namespace Azure.Communication.PhoneNumbers
                 return null;
             }
             Guid id = default;
-            DateTimeOffset? expiresAt = default;
+            DateTimeOffset expiresAt = default;
             IDictionary<string, AvailablePhoneNumber> phoneNumbers = default;
-            ReservationStatus? status = default;
+            ReservationStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

@@ -54,3 +54,12 @@ directive:
 modelerfour:
     remove-empty-child-schemas: true
 ```
+
+### Rename AvailablePhoneNumberStatus to PhoneNumberAvailabilityStatus
+```yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AvailablePhoneNumber.properties.status.x-ms-enum
+  transform: >
+    $["name"] = "PhoneNumberAvailabilityStatus";
+```

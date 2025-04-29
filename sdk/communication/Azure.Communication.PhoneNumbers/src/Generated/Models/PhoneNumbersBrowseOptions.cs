@@ -10,14 +10,22 @@ using System.Collections.Generic;
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> The parameters for the browse operation. </summary>
-    public partial class PhoneNumbersBrowseRequest
+    public partial class PhoneNumbersBrowseOptions
     {
-        /// <summary> Initializes a new instance of <see cref="PhoneNumbersBrowseRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbersBrowseOptions"/>. </summary>
+        /// <param name="phoneNumberType"> Represents the number type of the offering. </param>
+        public PhoneNumbersBrowseOptions(PhoneNumberType phoneNumberType)
+        {
+            PhoneNumberType = phoneNumberType;
+            PhoneNumberPrefixes = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbersBrowseOptions"/>. </summary>
         /// <param name="phoneNumberType"> Represents the number type of the offering. </param>
         /// <param name="capabilities"> The minimum desired capabilities for the browse operation request. </param>
         /// <param name="assignmentType"> Represents the assignment type of the offering. Also known as the use case. </param>
         /// <param name="phoneNumberPrefixes"> The phone number prefix to match. If specified, the search will be limited to phone numbers that start with the any of the given prefixes. </param>
-        internal PhoneNumbersBrowseRequest(PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType? assignmentType, IList<string> phoneNumberPrefixes)
+        internal PhoneNumbersBrowseOptions(PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType? assignmentType, IList<string> phoneNumberPrefixes)
         {
             PhoneNumberType = phoneNumberType;
             Capabilities = capabilities;

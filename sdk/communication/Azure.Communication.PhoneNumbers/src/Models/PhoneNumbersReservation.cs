@@ -23,7 +23,15 @@ namespace Azure.Communication.PhoneNumbers
             PhoneNumbers = new ChangeTrackingDictionary<string, AvailablePhoneNumber>(dict);
         }
 
+        // Removing nullability for these parameters.
+        // They are originally nullable because they are not required in service requests.
+        // However, they are never null when returned by the service.
+
         /// <summary> The id of the reservation. </summary>
-        public Guid Id { get; set; }
+        public Guid Id { get; }
+        /// <summary> The time at which the reservation will expire. If a reservation is not purchased before this time, all of the reserved phone numbers will be released and made available for others to purchase. </summary>
+        public DateTimeOffset ExpiresAt { get; }
+        /// <summary> Represents the status of the reservation. Possible values include: 'active', 'submitted', 'completed', 'expired'. </summary>
+        public ReservationStatus Status { get; }
     }
 }

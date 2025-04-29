@@ -63,10 +63,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             PhoneNumbersClient client = CreateClient();
             var reservationId = GetReservationId();
-            var request = new CreateOrUpdateReservationOptions
-            {
-                Id = reservationId,
-            };
+            var request = new CreateOrUpdateReservationOptions(reservationId);
 
             var reservationResponse = await client.CreateOrUpdateReservationAsync(request).ConfigureAwait(false);
 
@@ -91,10 +88,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             PhoneNumbersClient client = CreateClient();
             var reservationId = GetReservationId();
-            var request = new CreateOrUpdateReservationOptions
-            {
-                Id = reservationId,
-            };
+            var request = new CreateOrUpdateReservationOptions(reservationId);
 
             var reservationResponse = client.CreateOrUpdateReservation(request);
 
@@ -119,7 +113,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         public async Task BrowseAvailableNumbersAsync(AuthMethod authMethod)
         {
             PhoneNumbersClient client = CreateClient(authMethod);
-            var browseRequest = new PhoneNumbersBrowseRequest("US", PhoneNumberType.TollFree);
+            var browseRequest = new PhoneNumbersBrowseOptions("US", PhoneNumberType.TollFree);
 
             var response = await client.BrowseAvailableNumbersAsync(browseRequest);
 
@@ -134,7 +128,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         public void BrowseAvailableNumbers(AuthMethod authMethod)
         {
             PhoneNumbersClient client = CreateClient(authMethod);
-            var browseRequest = new PhoneNumbersBrowseRequest("US", PhoneNumberType.TollFree);
+            var browseRequest = new PhoneNumbersBrowseOptions("US", PhoneNumberType.TollFree);
 
             var response = client.BrowseAvailableNumbers(browseRequest);
 
@@ -151,7 +145,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             PhoneNumbersClient client = CreateClient(authMethod);
 
-            var reservationsPageable = client.GetPhoneNumbersReservationsAsync();
+            var reservationsPageable = client.GetReservationsAsync();
             var reservations = await reservationsPageable.ToEnumerableAsync();
 
             Assert.IsNotNull(reservations);
@@ -168,7 +162,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             PhoneNumbersClient client = CreateClient(authMethod);
 
-            var reservations = client.GetPhoneNumbersReservations();
+            var reservations = client.GetReservations();
 
             Assert.IsNotNull(reservations);
             Assert.Greater(reservations.Count(), 0);
@@ -219,16 +213,15 @@ namespace Azure.Communication.PhoneNumbers.Tests
         public async Task CreateOrUpdateReservationAsync(AuthMethod authMethod)
         {
             PhoneNumbersClient client = CreateClient(authMethod);
-            var browseRequest = new PhoneNumbersBrowseRequest("US", PhoneNumberType.TollFree);
+            var browseRequest = new PhoneNumbersBrowseOptions("US", PhoneNumberType.TollFree);
             var response = await client.BrowseAvailableNumbersAsync(browseRequest);
             var availablePhoneNumbers = response.Value;
 
             // Reserve the first available phone number.
             var phoneNumberToReserve = availablePhoneNumbers.First();
             var reservationBeforeAdd = _initialReservationState!;
-            var updateRequest = new CreateOrUpdateReservationOptions
+            var updateRequest = new CreateOrUpdateReservationOptions(_reservationId)
             {
-                Id = reservationBeforeAdd.Id,
                 PhoneNumbersToAdd = new List<AvailablePhoneNumber>() { phoneNumberToReserve },
             };
 
@@ -239,15 +232,14 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.AreEqual(_initialReservationState!.Id, reservationAfterAdd.Id);
             Assert.AreEqual(ReservationStatus.Active, reservationAfterAdd.Status);
             Assert.Greater(reservationAfterAdd.ExpiresAt, _initialReservationState.ExpiresAt);
-            Assert.IsTrue(reservationAfterAdd.PhoneNumbers.Values.All(number => number.Status != AvailablePhoneNumberStatus.Error));
+            Assert.IsTrue(reservationAfterAdd.PhoneNumbers.Values.All(number => number.Status != PhoneNumberAvailabilityStatus.Error));
             Assert.IsTrue(reservationAfterAdd.PhoneNumbers.ContainsKey(phoneNumberToReserve.Id));
 
             // Now remove the reserved number
             var phoneNumberIdToRemove = phoneNumberToReserve.Id;
             var reservationBeforeRemove = reservationAfterAdd;
-            var removeRequest = new CreateOrUpdateReservationOptions
+            var removeRequest = new CreateOrUpdateReservationOptions(_reservationId)
             {
-                Id = reservationBeforeRemove.Id,
                 PhoneNumbersToRemove = new List<string>() { phoneNumberIdToRemove },
             };
 
@@ -257,7 +249,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.AreEqual(_initialReservationState!.Id, reservationAfterRemove.Id);
             Assert.AreEqual(ReservationStatus.Active, reservationAfterRemove.Status);
             Assert.Greater(reservationAfterRemove.ExpiresAt, reservationAfterAdd.ExpiresAt);
-            Assert.IsTrue(reservationAfterRemove.PhoneNumbers.Values.All(number => number.Status != AvailablePhoneNumberStatus.Error));
+            Assert.IsTrue(reservationAfterRemove.PhoneNumbers.Values.All(number => number.Status != PhoneNumberAvailabilityStatus.Error));
             Assert.IsFalse(reservationAfterRemove.PhoneNumbers.ContainsKey(phoneNumberIdToRemove));
         }
 
@@ -269,16 +261,15 @@ namespace Azure.Communication.PhoneNumbers.Tests
         public void CreateOrUpdateReservation(AuthMethod authMethod)
         {
             PhoneNumbersClient client = CreateClient(authMethod);
-            var browseRequest = new PhoneNumbersBrowseRequest("US", PhoneNumberType.TollFree);
+            var browseRequest = new PhoneNumbersBrowseOptions("US", PhoneNumberType.TollFree);
             var response = client.BrowseAvailableNumbers(browseRequest);
             var availablePhoneNumbers = response.Value;
 
             // Reserve the first available phone number.
             var phoneNumberToReserve = availablePhoneNumbers.First();
             var reservationBeforeAdd = _initialReservationState!;
-            var updateRequest = new CreateOrUpdateReservationOptions
+            var updateRequest = new CreateOrUpdateReservationOptions(_reservationId)
             {
-                Id = reservationBeforeAdd.Id,
                 PhoneNumbersToAdd = new List<AvailablePhoneNumber>() { phoneNumberToReserve }
             };
 
@@ -289,15 +280,14 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.AreEqual(reservationBeforeAdd.Id, reservationAfterAdd.Id);
             Assert.AreEqual(ReservationStatus.Active, reservationAfterAdd.Status);
             Assert.Greater(reservationAfterAdd.ExpiresAt, reservationBeforeAdd.ExpiresAt);
-            Assert.IsTrue(reservationAfterAdd.PhoneNumbers.Values.All(number => number.Status != AvailablePhoneNumberStatus.Error));
+            Assert.IsTrue(reservationAfterAdd.PhoneNumbers.Values.All(number => number.Status != PhoneNumberAvailabilityStatus.Error));
             Assert.IsTrue(reservationAfterAdd.PhoneNumbers.ContainsKey(phoneNumberToReserve.Id));
 
             // Now remove the reserved number
             var phoneNumberIdToRemove = phoneNumberToReserve.Id;
             var reservationBeforeRemove = reservationAfterAdd;
-            var removeRequest = new CreateOrUpdateReservationOptions
+            var removeRequest = new CreateOrUpdateReservationOptions(_reservationId)
             {
-                Id = reservationBeforeRemove.Id,
                 PhoneNumbersToRemove = new List<string>() { phoneNumberIdToRemove }
             };
 
@@ -308,7 +298,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.AreEqual(reservationBeforeRemove.Id, reservationAfterRemove.Id);
             Assert.AreEqual(ReservationStatus.Active, reservationAfterRemove.Status);
             Assert.Greater(reservationAfterRemove.ExpiresAt, reservationBeforeRemove.ExpiresAt);
-            Assert.IsTrue(reservationAfterRemove.PhoneNumbers.Values.All(number => number.Status != AvailablePhoneNumberStatus.Error));
+            Assert.IsTrue(reservationAfterRemove.PhoneNumbers.Values.All(number => number.Status != PhoneNumberAvailabilityStatus.Error));
             Assert.IsFalse(reservationAfterRemove.PhoneNumbers.ContainsKey(phoneNumberIdToRemove));
         }
 
@@ -351,7 +341,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             PhoneNumbersClient client = CreateClient();
 
             // France doesn't allow reselling phone numbers.
-            var browseRequest = new PhoneNumbersBrowseRequest("FR", PhoneNumberType.TollFree);
+            var browseRequest = new PhoneNumbersBrowseOptions("FR", PhoneNumberType.TollFree);
             var response = await client.BrowseAvailableNumbersAsync(browseRequest);
             var availablePhoneNumbers = response.Value;
 
@@ -362,9 +352,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsTrue(phoneNumberToReserve.IsAgreementToNotResellRequired);
 
             var reservationId = GetReservationId();
-            var request = new CreateOrUpdateReservationOptions
+            var request = new CreateOrUpdateReservationOptions(reservationId)
             {
-                Id = reservationId,
                 PhoneNumbersToAdd = new List<AvailablePhoneNumber>() { phoneNumberToReserve }
             };
 
@@ -372,7 +361,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             // The phone number was successfully reserved.
             Assert.IsTrue(reservationResponse.Value.PhoneNumbers.ContainsKey(phoneNumberToReserve.Id));
-            Assert.AreNotEqual(AvailablePhoneNumberStatus.Error, reservationResponse.Value.PhoneNumbers[phoneNumberToReserve.Id]);
+            Assert.AreNotEqual(PhoneNumberAvailabilityStatus.Error, reservationResponse.Value.PhoneNumbers[phoneNumberToReserve.Id]);
 
             // The phone number should not be purchasable without agreeing to not resell.
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartPurchaseReservationAsync(reservationId, agreeToNotResell: false));
@@ -395,7 +384,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             PhoneNumbersClient client = CreateClient();
 
             // France doesn't allow reselling phone numbers.
-            var browseRequest = new PhoneNumbersBrowseRequest("FR", PhoneNumberType.TollFree);
+            var browseRequest = new PhoneNumbersBrowseOptions("FR", PhoneNumberType.TollFree);
             var response = client.BrowseAvailableNumbers(browseRequest);
             var availablePhoneNumbers = response.Value;
 
@@ -406,9 +395,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsTrue(phoneNumberToReserve.IsAgreementToNotResellRequired);
 
             var reservationId = GetReservationId();
-            var request = new CreateOrUpdateReservationOptions
+            var request = new CreateOrUpdateReservationOptions(reservationId)
             {
-                Id = reservationId,
                 PhoneNumbersToAdd = new List<AvailablePhoneNumber>() { phoneNumberToReserve }
             };
 
@@ -416,7 +404,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             // The phone number was successfully reserved.
             Assert.IsTrue(reservationResponse.Value.PhoneNumbers.ContainsKey(phoneNumberToReserve.Id));
-            Assert.AreNotEqual(AvailablePhoneNumberStatus.Error, reservationResponse.Value.PhoneNumbers[phoneNumberToReserve.Id]);
+            Assert.AreNotEqual(PhoneNumberAvailabilityStatus.Error, reservationResponse.Value.PhoneNumbers[phoneNumberToReserve.Id]);
 
             // The phone number should not be purchasable without agreeing to not resell.
             var exception = Assert.Throws<RequestFailedException>(() => client.StartPurchaseReservation(reservationId, agreeToNotResell: false));
@@ -437,7 +425,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
 
             PhoneNumbersClient client = CreateClient();
-            var browseRequest = new PhoneNumbersBrowseRequest("US", PhoneNumberType.TollFree);
+            var browseRequest = new PhoneNumbersBrowseOptions("US", PhoneNumberType.TollFree);
             var response = await client.BrowseAvailableNumbersAsync(browseRequest);
             var availablePhoneNumbers = response.Value;
 
@@ -445,9 +433,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var phoneNumberToReserve = availablePhoneNumbers.First();
 
             var reservationId = GetReservationId();
-            var request = new CreateOrUpdateReservationOptions
+            var request = new CreateOrUpdateReservationOptions(reservationId)
             {
-                Id = reservationId,
                 PhoneNumbersToAdd = new List<AvailablePhoneNumber>() { phoneNumberToReserve }
             };
 
@@ -455,7 +442,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             // The phone number was successfully reserved.
             Assert.IsTrue(reservationResponse.Value.PhoneNumbers.ContainsKey(phoneNumberToReserve.Id));
-            Assert.AreNotEqual(AvailablePhoneNumberStatus.Error, reservationResponse.Value.PhoneNumbers[phoneNumberToReserve.Id]);
+            Assert.AreNotEqual(PhoneNumberAvailabilityStatus.Error, reservationResponse.Value.PhoneNumbers[phoneNumberToReserve.Id]);
 
             // Purchase the reservation.
             var purchaseReservationOperation = await client.StartPurchaseReservationAsync(reservationId, agreeToNotResell: true);
@@ -490,16 +477,15 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             PhoneNumbersClient client = CreateClient();
 
-            var browseRequest = new PhoneNumbersBrowseRequest("US", PhoneNumberType.TollFree);
+            var browseRequest = new PhoneNumbersBrowseOptions("US", PhoneNumberType.TollFree);
             var response = client.BrowseAvailableNumbers(browseRequest);
             var availablePhoneNumbers = response.Value;
 
             // Reserve the first available phone number.
             var phoneNumberToReserve = availablePhoneNumbers.First();
             var reservationId = GetReservationId();
-            var request = new CreateOrUpdateReservationOptions
+            var request = new CreateOrUpdateReservationOptions(reservationId)
             {
-                Id = reservationId,
                 PhoneNumbersToAdd = new List<AvailablePhoneNumber>() { phoneNumberToReserve }
             };
 
@@ -507,7 +493,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             // The phone number was successfully reserved.
             Assert.IsTrue(reservationResponse.Value.PhoneNumbers.ContainsKey(phoneNumberToReserve.Id));
-            Assert.AreNotEqual(AvailablePhoneNumberStatus.Error, reservationResponse.Value.PhoneNumbers[phoneNumberToReserve.Id]);
+            Assert.AreNotEqual(PhoneNumberAvailabilityStatus.Error, reservationResponse.Value.PhoneNumbers[phoneNumberToReserve.Id]);
 
             // Purchase the reservation.
             var purchaseReservationOperation = client.StartPurchaseReservation(reservationId, agreeToNotResell: true);

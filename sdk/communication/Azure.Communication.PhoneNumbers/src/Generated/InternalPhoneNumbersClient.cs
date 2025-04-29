@@ -42,16 +42,16 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Browses for available phone numbers to purchase. </summary>
         /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
-        /// <param name="phoneNumbersBrowseRequest"> An object defining the criteria to browse for available phone numbers. </param>
+        /// <param name="phoneNumbersBrowseOptions"> An object defining the criteria to browse for available phone numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Browses for available phone numbers to purchase. The response will be a randomized list of phone numbers available to purchase matching the browsing criteria. This operation is not paginated. Since the results are randomized, repeating the same request will not guarantee the same results. </remarks>
-        public virtual async Task<Response<PhoneNumbersBrowseResult>> BrowseAvailableNumbersAsync(string countryCode, PhoneNumbersBrowseRequest phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PhoneNumbersBrowseResult>> BrowseAvailableNumbersAsync(string countryCode, PhoneNumbersBrowseOptions phoneNumbersBrowseOptions, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.BrowseAvailableNumbers");
             scope.Start();
             try
             {
-                return await RestClient.BrowseAvailableNumbersAsync(countryCode, phoneNumbersBrowseRequest, cancellationToken).ConfigureAwait(false);
+                return await RestClient.BrowseAvailableNumbersAsync(countryCode, phoneNumbersBrowseOptions, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -62,16 +62,16 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Browses for available phone numbers to purchase. </summary>
         /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
-        /// <param name="phoneNumbersBrowseRequest"> An object defining the criteria to browse for available phone numbers. </param>
+        /// <param name="phoneNumbersBrowseOptions"> An object defining the criteria to browse for available phone numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Browses for available phone numbers to purchase. The response will be a randomized list of phone numbers available to purchase matching the browsing criteria. This operation is not paginated. Since the results are randomized, repeating the same request will not guarantee the same results. </remarks>
-        public virtual Response<PhoneNumbersBrowseResult> BrowseAvailableNumbers(string countryCode, PhoneNumbersBrowseRequest phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
+        public virtual Response<PhoneNumbersBrowseResult> BrowseAvailableNumbers(string countryCode, PhoneNumbersBrowseOptions phoneNumbersBrowseOptions, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.BrowseAvailableNumbers");
             scope.Start();
             try
             {
-                return RestClient.BrowseAvailableNumbers(countryCode, phoneNumbersBrowseRequest, cancellationToken);
+                return RestClient.BrowseAvailableNumbers(countryCode, phoneNumbersBrowseOptions, cancellationToken);
             }
             catch (Exception e)
             {

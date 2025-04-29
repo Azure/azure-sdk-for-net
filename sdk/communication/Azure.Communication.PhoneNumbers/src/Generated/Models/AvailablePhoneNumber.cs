@@ -40,7 +40,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="status"> Represents the status of the phone number. Possible values include: 'available', 'reserved', 'expired', 'error', 'purchased'. </param>
         /// <param name="isAgreementToNotResellRequired"> Indicates if do not resell agreement is required. If true, the phone number cannot be acquired unless the customer provides explicit agreement to not resell it. </param>
         /// <param name="error"> Contains error details in case of failure when reserving, releasing or purchasing the phone number. Note that this is ignored by the service when present in requests. </param>
-        internal AvailablePhoneNumber(string id, string countryCode, string phoneNumber, PhoneNumberCapabilities capabilities, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCost cost, AvailablePhoneNumberStatus? status, bool? isAgreementToNotResellRequired, AvailablePhoneNumberError error)
+        internal AvailablePhoneNumber(string id, string countryCode, string phoneNumber, PhoneNumberCapabilities capabilities, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCost cost, PhoneNumberAvailabilityStatus? status, bool? isAgreementToNotResellRequired, ResponseError error)
         {
             Id = id;
             CountryCode = countryCode;
@@ -56,23 +56,13 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> The id of the phone number. </summary>
         public string Id { get; }
-        /// <summary> The ISO 3166-2 country code, e.g. US. </summary>
-        public string CountryCode { get; set; }
-        /// <summary> The phone number in E.164 format, e.g. +11234567890. </summary>
-        public string PhoneNumber { get; }
-        /// <summary> Capabilities of a phone number. </summary>
-        public PhoneNumberCapabilities Capabilities { get; set; }
-        /// <summary> Represents the number type of the offering. </summary>
-        public PhoneNumberType PhoneNumberType { get; set; }
         /// <summary> Represents the assignment type of the offering. Also known as the use case. </summary>
         public PhoneNumberAssignmentType AssignmentType { get; set; }
         /// <summary> The incurred cost for this phone number. </summary>
         public PhoneNumberCost Cost { get; }
         /// <summary> Represents the status of the phone number. Possible values include: 'available', 'reserved', 'expired', 'error', 'purchased'. </summary>
-        public AvailablePhoneNumberStatus? Status { get; }
+        public PhoneNumberAvailabilityStatus? Status { get; }
         /// <summary> Indicates if do not resell agreement is required. If true, the phone number cannot be acquired unless the customer provides explicit agreement to not resell it. </summary>
         public bool? IsAgreementToNotResellRequired { get; }
-        /// <summary> Contains error details in case of failure when reserving, releasing or purchasing the phone number. Note that this is ignored by the service when present in requests. </summary>
-        public AvailablePhoneNumberError Error { get; }
     }
 }

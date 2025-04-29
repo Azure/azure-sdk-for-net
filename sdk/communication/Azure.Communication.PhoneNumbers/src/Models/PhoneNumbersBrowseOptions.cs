@@ -9,18 +9,18 @@ namespace Azure.Communication.PhoneNumbers
     [CodeGenModel("PhoneNumbersBrowseRequest")]
     [CodeGenSuppress("PhoneNumbersBrowseRequest", typeof(PhoneNumberType))]
     [CodeGenSuppress("PhoneNumbersBrowseRequest", typeof(PhoneNumberType), typeof(PhoneNumberBrowseCapabilitiesRequest), typeof(PhoneNumberAssignmentType?), typeof(IList<string>))]
-    public partial class PhoneNumbersBrowseRequest
+    public partial class PhoneNumbersBrowseOptions
     {
         // For (de)serialization to work as expected with the generated client, we need a ChangeTrackingList.
         // However, we don't want to expose this type in the public API. Because of this, we use a private field and a public property backed by this field.
         private ChangeTrackingList<string> _phoneNumberPrefixes;
 
         /// <summary>
-        /// Creates a new instance of <see cref="PhoneNumbersBrowseRequest"/>.
+        /// Creates a new instance of <see cref="PhoneNumbersBrowseOptions"/>.
         /// </summary>
         /// <param name="countryCode"></param>
         /// <param name="phoneNumberType"></param>
-        public PhoneNumbersBrowseRequest(string countryCode, PhoneNumberType phoneNumberType)
+        public PhoneNumbersBrowseOptions(string countryCode, PhoneNumberType phoneNumberType)
         {
             CountryCode = countryCode;
             PhoneNumberType = phoneNumberType;

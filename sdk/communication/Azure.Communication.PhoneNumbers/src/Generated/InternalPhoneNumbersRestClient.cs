@@ -106,7 +106,7 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
-        internal HttpMessage CreateBrowseAvailableNumbersRequest(string countryCode, PhoneNumbersBrowseRequest phoneNumbersBrowseRequest)
+        internal HttpMessage CreateBrowseAvailableNumbersRequest(string countryCode, PhoneNumbersBrowseOptions phoneNumbersBrowseOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -121,29 +121,29 @@ namespace Azure.Communication.PhoneNumbers
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(phoneNumbersBrowseRequest);
+            content.JsonWriter.WriteObjectValue(phoneNumbersBrowseOptions);
             request.Content = content;
             return message;
         }
 
         /// <summary> Browses for available phone numbers to purchase. </summary>
         /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
-        /// <param name="phoneNumbersBrowseRequest"> An object defining the criteria to browse for available phone numbers. </param>
+        /// <param name="phoneNumbersBrowseOptions"> An object defining the criteria to browse for available phone numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> or <paramref name="phoneNumbersBrowseRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> or <paramref name="phoneNumbersBrowseOptions"/> is null. </exception>
         /// <remarks> Browses for available phone numbers to purchase. The response will be a randomized list of phone numbers available to purchase matching the browsing criteria. This operation is not paginated. Since the results are randomized, repeating the same request will not guarantee the same results. </remarks>
-        public async Task<Response<PhoneNumbersBrowseResult>> BrowseAvailableNumbersAsync(string countryCode, PhoneNumbersBrowseRequest phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<PhoneNumbersBrowseResult>> BrowseAvailableNumbersAsync(string countryCode, PhoneNumbersBrowseOptions phoneNumbersBrowseOptions, CancellationToken cancellationToken = default)
         {
             if (countryCode == null)
             {
                 throw new ArgumentNullException(nameof(countryCode));
             }
-            if (phoneNumbersBrowseRequest == null)
+            if (phoneNumbersBrowseOptions == null)
             {
-                throw new ArgumentNullException(nameof(phoneNumbersBrowseRequest));
+                throw new ArgumentNullException(nameof(phoneNumbersBrowseOptions));
             }
 
-            using var message = CreateBrowseAvailableNumbersRequest(countryCode, phoneNumbersBrowseRequest);
+            using var message = CreateBrowseAvailableNumbersRequest(countryCode, phoneNumbersBrowseOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -161,22 +161,22 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Browses for available phone numbers to purchase. </summary>
         /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
-        /// <param name="phoneNumbersBrowseRequest"> An object defining the criteria to browse for available phone numbers. </param>
+        /// <param name="phoneNumbersBrowseOptions"> An object defining the criteria to browse for available phone numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> or <paramref name="phoneNumbersBrowseRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> or <paramref name="phoneNumbersBrowseOptions"/> is null. </exception>
         /// <remarks> Browses for available phone numbers to purchase. The response will be a randomized list of phone numbers available to purchase matching the browsing criteria. This operation is not paginated. Since the results are randomized, repeating the same request will not guarantee the same results. </remarks>
-        public Response<PhoneNumbersBrowseResult> BrowseAvailableNumbers(string countryCode, PhoneNumbersBrowseRequest phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
+        public Response<PhoneNumbersBrowseResult> BrowseAvailableNumbers(string countryCode, PhoneNumbersBrowseOptions phoneNumbersBrowseOptions, CancellationToken cancellationToken = default)
         {
             if (countryCode == null)
             {
                 throw new ArgumentNullException(nameof(countryCode));
             }
-            if (phoneNumbersBrowseRequest == null)
+            if (phoneNumbersBrowseOptions == null)
             {
-                throw new ArgumentNullException(nameof(phoneNumbersBrowseRequest));
+                throw new ArgumentNullException(nameof(phoneNumbersBrowseOptions));
             }
 
-            using var message = CreateBrowseAvailableNumbersRequest(countryCode, phoneNumbersBrowseRequest);
+            using var message = CreateBrowseAvailableNumbersRequest(countryCode, phoneNumbersBrowseOptions);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
