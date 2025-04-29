@@ -121,13 +121,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             switch (format)
             {
                 case "J":
-<<<<<<< HEAD:sdk/containerregistry/Azure.ResourceManager.ContainerRegistry/src/Generated/Models/PipelineSourceTriggerDescriptor.Serialization.cs
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-=======
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticSanContext.Default);
->>>>>>> 5d5002694653c1319d8252e4ee12dde6c33461c8:sdk/elasticsan/Azure.ResourceManager.ElasticSan/src/Generated/Models/ElasticSanDeleteRetentionPolicy.Serialization.cs
                 default:
                     throw new FormatException($"The model {nameof(ElasticSanDeleteRetentionPolicy)} does not support writing '{options.Format}' format.");
             }

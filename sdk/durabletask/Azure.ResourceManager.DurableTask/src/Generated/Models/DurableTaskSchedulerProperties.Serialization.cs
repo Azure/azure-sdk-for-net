@@ -143,13 +143,7 @@ namespace Azure.ResourceManager.DurableTask.Models
             switch (format)
             {
                 case "J":
-<<<<<<< HEAD:sdk/containerregistry/Azure.ResourceManager.ContainerRegistry/src/Generated/Models/ArchivePackageSourceProperties.Serialization.cs
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-=======
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDurableTaskContext.Default);
->>>>>>> 5d5002694653c1319d8252e4ee12dde6c33461c8:sdk/durabletask/Azure.ResourceManager.DurableTask/src/Generated/Models/DurableTaskSchedulerProperties.Serialization.cs
                 default:
                     throw new FormatException($"The model {nameof(DurableTaskSchedulerProperties)} does not support writing '{options.Format}' format.");
             }
