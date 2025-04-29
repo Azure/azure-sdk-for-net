@@ -21,6 +21,8 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Memory" />
+    <!-- Can remove ref on System.Memory.Data when core releases with the new version -->
+    <PackageReference Include="System.Memory.Data" />
     <PackageReference Include="Microsoft.Identity.Client" />
     <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" />
   </ItemGroup>
