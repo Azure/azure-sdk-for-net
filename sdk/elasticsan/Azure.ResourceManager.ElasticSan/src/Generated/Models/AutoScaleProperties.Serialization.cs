@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            ScaleUpProperties scaleUpProperties = default;
+            ElasticSanScaleUpProperties scaleUpProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     {
                         continue;
                     }
-                    scaleUpProperties = ScaleUpProperties.DeserializeScaleUpProperties(property.Value, options);
+                    scaleUpProperties = ElasticSanScaleUpProperties.DeserializeElasticSanScaleUpProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

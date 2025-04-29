@@ -41,7 +41,8 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
             string assemblyName = "TestAssembly",
             bool includeSTJ = true,
             CSharpParseOptions? parseOptions = null,
-            string contextName = "LocalContext")
+            string contextName = "LocalContext",
+            HashSet<string>? additionalSuppress = null)
         {
             List<MetadataReference> references =
             [
@@ -90,6 +91,9 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
                     diag.ToString().EndsWith($"error CS0117: '{contextName}' does not contain a definition for 'Default'", StringComparison.Ordinal))
                     continue;
 
+                if (additionalSuppress is not null && additionalSuppress.Contains(diag.Id))
+                    continue;
+
                 Assert.Fail($"Compilation Error: {diag}");
             }
 
@@ -97,9 +101,12 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
         }
 
         public static GeneratorResult RunSourceGenerator(Compilation compilation, bool disableDiagnosticValidation = false)
-            => RunSourceGenerator(compilation, out _, disableDiagnosticValidation);
+            => RunSourceGenerator(compilation, out _, out _, disableDiagnosticValidation);
 
-        public static GeneratorResult RunSourceGenerator(Compilation compilation, out Compilation newCompilation, bool disableDiagnosticValidation = false)
+        public static GeneratorResult RunSourceGenerator(Compilation compilation, out Compilation newCompilation, bool disableDiagnosticValidation = false, HashSet<string>? additionalSuppress = null)
+            => RunSourceGenerator(compilation, out newCompilation, out _, disableDiagnosticValidation, additionalSuppress);
+
+        public static GeneratorResult RunSourceGenerator(Compilation compilation, out Compilation newCompilation, out ImmutableArray<GeneratedSourceResult> generatedSources, bool disableDiagnosticValidation = false, HashSet<string>? additionalSuppress = null)
         {
             ModelReaderWriterContextGenerationSpec? generatedSpecs = null;
             var generator = new ModelReaderWriterContextGenerator
@@ -110,6 +117,8 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
             CSharpGeneratorDriver driver = CreateJsonSourceGeneratorDriver(compilation, generator);
             var newDriver = driver.RunGeneratorsAndUpdateCompilation(compilation, out newCompilation, out ImmutableArray<Diagnostic> diagnostics);
             var runResult = newDriver.GetRunResult();
+            var contextSourceGenerator = runResult.Results.First(runResult => runResult.Generator.GetGeneratorType().Equals(typeof(ModelReaderWriterContextGenerator)));
+            generatedSources = contextSourceGenerator.GeneratedSources;
 
             var finalDiagnostics = newCompilation.GetDiagnostics().Where(d => !s_noWarn.Contains(d.Descriptor.Id));
             foreach (var diagnostic in finalDiagnostics)
@@ -131,6 +140,10 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
                         }
                     }
                 }
+
+                if (additionalSuppress is not null && additionalSuppress.Contains(diagnostic.Id))
+                    continue;
+
                 Assert.Fail($"Compilation Error: {diagnostic}");
             }
 

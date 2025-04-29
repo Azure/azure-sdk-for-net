@@ -11,7 +11,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
     /// <summary>
     /// Defines an AND group of filters.
     /// </summary>
-    internal class FilterConjunctionGroup<TTelemetry>
+    internal class FilterConjunctionGroup<TTelemetry> where TTelemetry : DocumentIngress
     {
         private readonly FilterConjunctionGroupInfo info;
 

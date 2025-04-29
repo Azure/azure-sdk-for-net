@@ -132,7 +132,7 @@ namespace Azure.Identity
 
             GetFileNameAndArguments(resource, tenantId, Subscription, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzureCliProcessStartInfo(fileName, argument);
-            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), ProcessTimeout, _logPII, cancellationToken);
+            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), ProcessTimeout, _logPII, redirectStandardInput: true, cancellationToken);
 
             string output;
             try

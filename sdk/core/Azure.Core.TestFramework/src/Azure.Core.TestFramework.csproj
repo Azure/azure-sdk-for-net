@@ -2,7 +2,6 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks);net47</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <IsPackable>true</IsPackable>
   </PropertyGroup>
   <ItemGroup>
     <!-- Should be swapped back to package reference after Azure.Core 1.46 goes live -->

@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             string version = default;
             ConnectedRegistryConnectionState? connectionState = default;
             DateTimeOffset? lastActivityTime = default;
-            ConnectedRegistryActivation activation = default;
+            ConnectedRegistryPropertiesActivation activation = default;
             ConnectedRegistryParent parent = default;
             IList<ResourceIdentifier> clientTokenIds = default;
             ConnectedRegistryLoginServer loginServer = default;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            activation = ConnectedRegistryActivation.DeserializeConnectedRegistryActivation(property0.Value, options);
+                            activation = ConnectedRegistryPropertiesActivation.DeserializeConnectedRegistryPropertiesActivation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("parent"u8))
