@@ -41,4 +41,10 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Projects\http\azure\client-generator-core\flatten-property\src\Generated\Models\" />
+    <Folder Include="Projects\http\azure\client-generator-core\usage\src\Generated\Models\" />
+    <Folder Include="Projects\http\azure\core\model\src\Generated\Models\" />
+  </ItemGroup>
+
 </Project>
