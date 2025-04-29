@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SpringAppDiscovery
 
         SpringBootServerData IJsonModel<SpringBootServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SpringBootServerData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SpringBootServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SpringBootServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SpringBootServerData>(Data, options, AzureResourceManagerSpringAppDiscoveryContext.Default);
 
-        SpringBootServerData IPersistableModel<SpringBootServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SpringBootServerData>(data, options);
+        SpringBootServerData IPersistableModel<SpringBootServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SpringBootServerData>(data, options, AzureResourceManagerSpringAppDiscoveryContext.Default);
 
         string IPersistableModel<SpringBootServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SpringBootServerData>)Data).GetFormatFromOptions(options);
     }

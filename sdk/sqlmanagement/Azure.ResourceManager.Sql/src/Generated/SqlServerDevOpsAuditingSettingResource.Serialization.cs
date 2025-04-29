@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerDevOpsAuditingSettingData IJsonModel<SqlServerDevOpsAuditingSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerDevOpsAuditingSettingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlServerDevOpsAuditingSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlServerDevOpsAuditingSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerDevOpsAuditingSettingData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlServerDevOpsAuditingSettingData IPersistableModel<SqlServerDevOpsAuditingSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerDevOpsAuditingSettingData>(data, options);
+        SqlServerDevOpsAuditingSettingData IPersistableModel<SqlServerDevOpsAuditingSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerDevOpsAuditingSettingData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<SqlServerDevOpsAuditingSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerDevOpsAuditingSettingData>)Data).GetFormatFromOptions(options);
     }

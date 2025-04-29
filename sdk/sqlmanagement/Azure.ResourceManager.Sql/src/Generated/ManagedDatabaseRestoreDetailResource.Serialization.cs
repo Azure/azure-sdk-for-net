@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         ManagedDatabaseRestoreDetailData IJsonModel<ManagedDatabaseRestoreDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedDatabaseRestoreDetailData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedDatabaseRestoreDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagedDatabaseRestoreDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedDatabaseRestoreDetailData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        ManagedDatabaseRestoreDetailData IPersistableModel<ManagedDatabaseRestoreDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedDatabaseRestoreDetailData>(data, options);
+        ManagedDatabaseRestoreDetailData IPersistableModel<ManagedDatabaseRestoreDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedDatabaseRestoreDetailData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<ManagedDatabaseRestoreDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedDatabaseRestoreDetailData>)Data).GetFormatFromOptions(options);
     }

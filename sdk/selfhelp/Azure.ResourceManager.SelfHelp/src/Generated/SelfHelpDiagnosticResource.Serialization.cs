@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SelfHelp
 
         SelfHelpDiagnosticData IJsonModel<SelfHelpDiagnosticData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SelfHelpDiagnosticData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SelfHelpDiagnosticData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SelfHelpDiagnosticData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SelfHelpDiagnosticData>(Data, options, AzureResourceManagerSelfHelpContext.Default);
 
-        SelfHelpDiagnosticData IPersistableModel<SelfHelpDiagnosticData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SelfHelpDiagnosticData>(data, options);
+        SelfHelpDiagnosticData IPersistableModel<SelfHelpDiagnosticData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SelfHelpDiagnosticData>(data, options, AzureResourceManagerSelfHelpContext.Default);
 
         string IPersistableModel<SelfHelpDiagnosticData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SelfHelpDiagnosticData>)Data).GetFormatFromOptions(options);
     }

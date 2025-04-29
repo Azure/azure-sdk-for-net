@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         WorkloadClassifierData IJsonModel<WorkloadClassifierData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadClassifierData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WorkloadClassifierData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WorkloadClassifierData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadClassifierData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        WorkloadClassifierData IPersistableModel<WorkloadClassifierData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadClassifierData>(data, options);
+        WorkloadClassifierData IPersistableModel<WorkloadClassifierData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadClassifierData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<WorkloadClassifierData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadClassifierData>)Data).GetFormatFromOptions(options);
     }

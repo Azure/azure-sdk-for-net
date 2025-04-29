@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.StorageCache
             {
                 return null;
             }
-            var lroDetails = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json).ToObjectFromJson<Dictionary<string, string>>();
+            var lroDetails = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json, AzureResourceManagerStorageCacheContext.Default).ToObjectFromJson<Dictionary<string, string>>();
             return lroDetails["id"];
         }
         /// <inheritdoc />

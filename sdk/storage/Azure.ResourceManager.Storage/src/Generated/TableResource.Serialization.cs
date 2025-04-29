@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Storage
 
         TableData IJsonModel<TableData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TableData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TableData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<TableData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TableData>(Data, options, AzureResourceManagerStorageContext.Default);
 
-        TableData IPersistableModel<TableData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TableData>(data, options);
+        TableData IPersistableModel<TableData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TableData>(data, options, AzureResourceManagerStorageContext.Default);
 
         string IPersistableModel<TableData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TableData>)Data).GetFormatFromOptions(options);
     }

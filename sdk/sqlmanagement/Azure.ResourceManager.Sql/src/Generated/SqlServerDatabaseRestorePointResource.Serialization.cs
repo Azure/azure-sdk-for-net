@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerDatabaseRestorePointData IJsonModel<SqlServerDatabaseRestorePointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerDatabaseRestorePointData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlServerDatabaseRestorePointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlServerDatabaseRestorePointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerDatabaseRestorePointData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlServerDatabaseRestorePointData IPersistableModel<SqlServerDatabaseRestorePointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerDatabaseRestorePointData>(data, options);
+        SqlServerDatabaseRestorePointData IPersistableModel<SqlServerDatabaseRestorePointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerDatabaseRestorePointData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<SqlServerDatabaseRestorePointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerDatabaseRestorePointData>)Data).GetFormatFromOptions(options);
     }

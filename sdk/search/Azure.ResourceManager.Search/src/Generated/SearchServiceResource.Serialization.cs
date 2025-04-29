@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Search
 
         SearchServiceData IJsonModel<SearchServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SearchServiceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SearchServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SearchServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SearchServiceData>(Data, options, AzureResourceManagerSearchContext.Default);
 
-        SearchServiceData IPersistableModel<SearchServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SearchServiceData>(data, options);
+        SearchServiceData IPersistableModel<SearchServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SearchServiceData>(data, options, AzureResourceManagerSearchContext.Default);
 
         string IPersistableModel<SearchServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SearchServiceData>)Data).GetFormatFromOptions(options);
     }
