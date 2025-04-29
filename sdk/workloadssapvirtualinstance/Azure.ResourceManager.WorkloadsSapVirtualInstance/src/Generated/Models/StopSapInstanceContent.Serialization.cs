@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
-    public partial class StopContent : IUtf8JsonSerializable, IJsonModel<StopContent>
+    public partial class StopSapInstanceContent : IUtf8JsonSerializable, IJsonModel<StopSapInstanceContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StopContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StopSapInstanceContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<StopContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StopSapInstanceContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StopContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StopSapInstanceContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StopContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StopSapInstanceContent)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(SoftStopTimeoutSeconds))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
-        StopContent IJsonModel<StopContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        StopSapInstanceContent IJsonModel<StopSapInstanceContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StopContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StopSapInstanceContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StopContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StopSapInstanceContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStopContent(document.RootElement, options);
+            return DeserializeStopSapInstanceContent(document.RootElement, options);
         }
 
-        internal static StopContent DeserializeStopContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static StopSapInstanceContent DeserializeStopSapInstanceContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StopContent(softStopTimeoutSeconds, deallocateVm, serializedAdditionalRawData);
+            return new StopSapInstanceContent(softStopTimeoutSeconds, deallocateVm, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<StopContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<StopSapInstanceContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StopContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StopSapInstanceContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StopContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StopSapInstanceContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        StopContent IPersistableModel<StopContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        StopSapInstanceContent IPersistableModel<StopSapInstanceContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StopContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StopSapInstanceContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeStopContent(document.RootElement, options);
+                        return DeserializeStopSapInstanceContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StopContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StopSapInstanceContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<StopContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StopSapInstanceContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

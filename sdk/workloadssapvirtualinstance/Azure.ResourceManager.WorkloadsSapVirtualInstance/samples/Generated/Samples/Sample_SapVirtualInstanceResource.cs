@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
             SapVirtualInstanceResource sapVirtualInstance = client.GetSapVirtualInstanceResource(sapVirtualInstanceResourceId);
 
             // invoke the operation
-            StartContent content = new StartContent
+            StartSapInstanceContent content = new StartSapInstanceContent
             {
                 StartVm = true,
             };
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
             SapVirtualInstanceResource sapVirtualInstance = client.GetSapVirtualInstanceResource(sapVirtualInstanceResourceId);
 
             // invoke the operation
-            StartContent content = new StartContent
+            StartSapInstanceContent content = new StartSapInstanceContent
             {
                 StartVm = true,
             };
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
             SapVirtualInstanceResource sapVirtualInstance = client.GetSapVirtualInstanceResource(sapVirtualInstanceResourceId);
 
             // invoke the operation
-            StopContent content = new StopContent
+            StopSapInstanceContent content = new StopSapInstanceContent
             {
                 SoftStopTimeoutSeconds = 300L,
             };
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
             SapVirtualInstanceResource sapVirtualInstance = client.GetSapVirtualInstanceResource(sapVirtualInstanceResourceId);
 
             // invoke the operation
-            StopContent content = new StopContent
+            StopSapInstanceContent content = new StopSapInstanceContent
             {
                 SoftStopTimeoutSeconds = 300L,
                 DeallocateVm = true,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
             SapVirtualInstanceResource sapVirtualInstance = client.GetSapVirtualInstanceResource(sapVirtualInstanceResourceId);
 
             // invoke the operation
-            StopContent content = new StopContent
+            StopSapInstanceContent content = new StopSapInstanceContent
             {
                 SoftStopTimeoutSeconds = 0L,
             };
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
             SapVirtualInstanceResource sapVirtualInstance = client.GetSapVirtualInstanceResource(sapVirtualInstanceResourceId);
 
             // invoke the operation
-            StopContent content = new StopContent
+            StopSapInstanceContent content = new StopSapInstanceContent
             {
                 SoftStopTimeoutSeconds = 0L,
                 DeallocateVm = true,

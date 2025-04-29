@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ECCValue = "ECC";
-        private const string S4HANAValue = "S4HANA";
+        private const string EccValue = "ECC";
+        private const string S4HanaValue = "S4HANA";
         private const string OtherValue = "Other";
 
         /// <summary> SAP Product ECC. </summary>
-        public static SapProductType ECC { get; } = new SapProductType(ECCValue);
+        public static SapProductType Ecc { get; } = new SapProductType(EccValue);
         /// <summary> SAP Product S4HANA. </summary>
-        public static SapProductType S4HANA { get; } = new SapProductType(S4HANAValue);
+        public static SapProductType S4Hana { get; } = new SapProductType(S4HanaValue);
         /// <summary> SAP Products other than the ones listed. </summary>
         public static SapProductType Other { get; } = new SapProductType(OtherValue);
         /// <summary> Determines if two <see cref="SapProductType"/> values are the same. </summary>

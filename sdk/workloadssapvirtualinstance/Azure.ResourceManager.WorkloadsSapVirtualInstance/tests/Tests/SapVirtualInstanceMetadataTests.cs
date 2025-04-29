@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
 {
-    public class SapVirtualInstanceMetadataTests : WorkloadsManagementTestBase
+    public class SapVirtualInstanceMetadataTests : WorkloadsSapVirtualInstanceManagementTestBase
     {
         /// <summary>
         /// Public cloud location for East US 2.
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                 await subscription.GetAvailabilityZoneDetailsSapVirtualInstanceAsync(
                     _location,
                     new SapAvailabilityZoneDetailsContent(
-                        _location, SapProductType.S4HANA, SapDatabaseType.HANA));
+                        _location, SapProductType.S4Hana, SapDatabaseType.Hana));
             Assert.NotNull(response);
             Console.WriteLine("Sap Availability Zone Details Response : " + getObjectAsString(response.Value));
         }
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                     new SapDiskConfigurationsContent(
                         _location,
                         SapEnvironmentType.NonProd,
-                        SapProductType.S4HANA,
-                        SapDatabaseType.HANA,
+                        SapProductType.S4Hana,
+                        SapDatabaseType.Hana,
                         SapDeploymentType.ThreeTier,
                         "Standard_M32ts"));
             Assert.NotNull(response);
@@ -67,9 +67,9 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
             SapSupportedSkusContent request = new SapSupportedSkusContent(
                 AzureLocation.EastUS2,
                 SapEnvironmentType.Prod,
-                SapProductType.S4HANA,
+                SapProductType.S4Hana,
                 SapDeploymentType.ThreeTier,
-                SapDatabaseType.HANA);
+                SapDatabaseType.Hana);
             request.HighAvailabilityType = "AvailabilitySet";
             Response<SapSupportedResourceSkusResult> response =
                 await subscription.GetSapSupportedSkuSapVirtualInstanceAsync(
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
             var request = new SapSizingRecommendationContent(
                 AzureLocation.EastUS2,
                 SapEnvironmentType.Prod,
-                SapProductType.S4HANA,
+                SapProductType.S4Hana,
                 SapDeploymentType.ThreeTier,
                 23622,
                 1024,
-                SapDatabaseType.HANA);
-            request.DbScaleMethod = "ScaleUp";
+                SapDatabaseType.Hana);
+            request.DBScaleMethod = "ScaleUp";
             request.HighAvailabilityType = "AvailabilitySet";
             Response<SapSizingRecommendationResult> response =
                 await subscription.GetSizingRecommendationsSapVirtualInstanceAsync(

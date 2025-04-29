@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
-    /// <summary> Start SAP instance(s) request body. </summary>
-    public partial class StartContent
+    /// <summary> Stop SAP instance(s) request body. </summary>
+    public partial class StopSapInstanceContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,25 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StartContent"/>. </summary>
-        public StartContent()
+        /// <summary> Initializes a new instance of <see cref="StopSapInstanceContent"/>. </summary>
+        public StopSapInstanceContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StartContent"/>. </summary>
-        /// <param name="startVm"> The boolean value indicates whether to start the virtual machines before starting the SAP instances. </param>
+        /// <summary> Initializes a new instance of <see cref="StopSapInstanceContent"/>. </summary>
+        /// <param name="softStopTimeoutSeconds"> This parameter defines how long (in seconds) the soft shutdown waits until the RFC/HTTP clients no longer consider the server for calls with load balancing. Value 0 means that the kernel does not wait, but goes directly into the next shutdown state, i.e. hard stop. </param>
+        /// <param name="deallocateVm"> The boolean value indicates whether to Stop and deallocate the virtual machines along with the SAP instances. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StartContent(bool? startVm, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StopSapInstanceContent(long? softStopTimeoutSeconds, bool? deallocateVm, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            StartVm = startVm;
+            SoftStopTimeoutSeconds = softStopTimeoutSeconds;
+            DeallocateVm = deallocateVm;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The boolean value indicates whether to start the virtual machines before starting the SAP instances. </summary>
-        public bool? StartVm { get; set; }
+        /// <summary> This parameter defines how long (in seconds) the soft shutdown waits until the RFC/HTTP clients no longer consider the server for calls with load balancing. Value 0 means that the kernel does not wait, but goes directly into the next shutdown state, i.e. hard stop. </summary>
+        public long? SoftStopTimeoutSeconds { get; set; }
+        /// <summary> The boolean value indicates whether to Stop and deallocate the virtual machines along with the SAP instances. </summary>
+        public bool? DeallocateVm { get; set; }
     }
 }

@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
             SapCentralServerInstanceResource sapCentralServerInstance = client.GetSapCentralServerInstanceResource(sapCentralServerInstanceResourceId);
 
             // invoke the operation
-            StartContent content = new StartContent();
+            StartSapInstanceContent content = new StartSapInstanceContent();
             ArmOperation<OperationStatusResult> lro = await sapCentralServerInstance.StartAsync(WaitUntil.Completed, content: content);
             OperationStatusResult result = lro.Value;
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
             SapCentralServerInstanceResource sapCentralServerInstance = client.GetSapCentralServerInstanceResource(sapCentralServerInstanceResourceId);
 
             // invoke the operation
-            StartContent content = new StartContent
+            StartSapInstanceContent content = new StartSapInstanceContent
             {
                 StartVm = true,
             };
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
             SapCentralServerInstanceResource sapCentralServerInstance = client.GetSapCentralServerInstanceResource(sapCentralServerInstanceResourceId);
 
             // invoke the operation
-            StopContent content = new StopContent
+            StopSapInstanceContent content = new StopSapInstanceContent
             {
                 SoftStopTimeoutSeconds = 1200L,
             };
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
             SapCentralServerInstanceResource sapCentralServerInstance = client.GetSapCentralServerInstanceResource(sapCentralServerInstanceResourceId);
 
             // invoke the operation
-            StopContent content = new StopContent
+            StopSapInstanceContent content = new StopSapInstanceContent
             {
                 DeallocateVm = true,
             };

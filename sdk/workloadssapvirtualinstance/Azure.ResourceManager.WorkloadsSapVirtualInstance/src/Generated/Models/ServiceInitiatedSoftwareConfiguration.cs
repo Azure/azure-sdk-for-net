@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="sapFqdn"> The FQDN to set for the SAP system during install. </param>
         /// <param name="sshPrivateKey"> The SSH private key. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bomUri"/>, <paramref name="softwareVersion"/>, <paramref name="sapBitsStorageAccountId"/>, <paramref name="sapFqdn"/> or <paramref name="sshPrivateKey"/> is null. </exception>
-        public ServiceInitiatedSoftwareConfiguration(string bomUri, string softwareVersion, string sapBitsStorageAccountId, string sapFqdn, string sshPrivateKey)
+        public ServiceInitiatedSoftwareConfiguration(Uri bomUri, string softwareVersion, string sapBitsStorageAccountId, string sapFqdn, string sshPrivateKey)
         {
             Argument.AssertNotNull(bomUri, nameof(bomUri));
             Argument.AssertNotNull(softwareVersion, nameof(softwareVersion));
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="sapFqdn"> The FQDN to set for the SAP system during install. </param>
         /// <param name="sshPrivateKey"> The SSH private key. </param>
         /// <param name="highAvailabilitySoftwareConfiguration"> Gets or sets the HA software configuration. </param>
-        internal ServiceInitiatedSoftwareConfiguration(SapSoftwareInstallationType softwareInstallationType, IDictionary<string, BinaryData> serializedAdditionalRawData, string bomUri, string softwareVersion, string sapBitsStorageAccountId, string sapFqdn, string sshPrivateKey, HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration) : base(softwareInstallationType, serializedAdditionalRawData)
+        internal ServiceInitiatedSoftwareConfiguration(SapSoftwareInstallationType softwareInstallationType, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri bomUri, string softwareVersion, string sapBitsStorageAccountId, string sapFqdn, string sshPrivateKey, HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration) : base(softwareInstallationType, serializedAdditionalRawData)
         {
             BomUri = bomUri;
             SoftwareVersion = softwareVersion;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         }
 
         /// <summary> The URL to the SAP Build of Materials(BOM) file. </summary>
-        public string BomUri { get; set; }
+        public Uri BomUri { get; set; }
         /// <summary> The software version to install. </summary>
         public string SoftwareVersion { get; set; }
         /// <summary> The SAP bits storage account id. </summary>

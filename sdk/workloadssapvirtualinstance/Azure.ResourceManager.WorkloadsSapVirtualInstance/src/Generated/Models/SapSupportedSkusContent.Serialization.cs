@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             {
                 return null;
             }
-            string appLocation = default;
+            AzureLocation appLocation = default;
             SapEnvironmentType environment = default;
             SapProductType sapProduct = default;
             SapDeploymentType deploymentType = default;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             {
                 if (property.NameEquals("appLocation"u8))
                 {
-                    appLocation = property.Value.GetString();
+                    appLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("environment"u8))

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         private const string DiscoveryInProgressValue = "DiscoveryInProgress";
         private const string DiscoveryFailedValue = "DiscoveryFailed";
         private const string RegistrationCompleteValue = "RegistrationComplete";
-        private const string ACSSInstallationBlockedValue = "ACSSInstallationBlocked";
+        private const string AcssInstallationBlockedValue = "ACSSInstallationBlocked";
 
         /// <summary> Infrastructure is not yet deployed. </summary>
         public static SapVirtualInstanceState InfrastructureDeploymentPending { get; } = new SapVirtualInstanceState(InfrastructureDeploymentPendingValue);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <summary> Registration is complete. </summary>
         public static SapVirtualInstanceState RegistrationComplete { get; } = new SapVirtualInstanceState(RegistrationCompleteValue);
         /// <summary> ACSS installation cannot proceed. </summary>
-        public static SapVirtualInstanceState ACSSInstallationBlocked { get; } = new SapVirtualInstanceState(ACSSInstallationBlockedValue);
+        public static SapVirtualInstanceState AcssInstallationBlocked { get; } = new SapVirtualInstanceState(AcssInstallationBlockedValue);
         /// <summary> Determines if two <see cref="SapVirtualInstanceState"/> values are the same. </summary>
         public static bool operator ==(SapVirtualInstanceState left, SapVirtualInstanceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapVirtualInstanceState"/> values are not the same. </summary>

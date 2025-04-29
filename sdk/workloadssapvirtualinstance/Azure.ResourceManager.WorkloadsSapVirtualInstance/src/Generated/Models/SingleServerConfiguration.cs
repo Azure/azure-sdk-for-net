@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="subnetId"> The subnet id. </param>
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appResourceGroup"/>, <paramref name="subnetId"/> or <paramref name="virtualMachineConfiguration"/> is null. </exception>
-        public SingleServerConfiguration(string appResourceGroup, string subnetId, SapVirtualMachineConfiguration virtualMachineConfiguration) : base(appResourceGroup)
+        public SingleServerConfiguration(string appResourceGroup, ResourceIdentifier subnetId, SapVirtualMachineConfiguration virtualMachineConfiguration) : base(appResourceGroup)
         {
             Argument.AssertNotNull(appResourceGroup, nameof(appResourceGroup));
             Argument.AssertNotNull(subnetId, nameof(subnetId));
@@ -43,13 +44,13 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// Please note <see cref="SingleServerCustomResourceNames"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SingleServerFullResourceNames"/>.
         /// </param>
-        internal SingleServerConfiguration(string appResourceGroup, SapDeploymentType deploymentType, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkConfiguration networkConfiguration, SapDatabaseType? databaseType, string subnetId, SapVirtualMachineConfiguration virtualMachineConfiguration, DiskConfiguration dbDiskConfiguration, SingleServerCustomResourceNames customResourceNames) : base(appResourceGroup, deploymentType, serializedAdditionalRawData)
+        internal SingleServerConfiguration(string appResourceGroup, SapDeploymentType deploymentType, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkConfiguration networkConfiguration, SapDatabaseType? databaseType, ResourceIdentifier subnetId, SapVirtualMachineConfiguration virtualMachineConfiguration, DiskConfiguration dbDiskConfiguration, SingleServerCustomResourceNames customResourceNames) : base(appResourceGroup, deploymentType, serializedAdditionalRawData)
         {
             NetworkConfiguration = networkConfiguration;
             DatabaseType = databaseType;
             SubnetId = subnetId;
             VirtualMachineConfiguration = virtualMachineConfiguration;
-            DbDiskConfiguration = dbDiskConfiguration;
+            DBDiskConfiguration = dbDiskConfiguration;
             CustomResourceNames = customResourceNames;
             DeploymentType = deploymentType;
         }
@@ -76,19 +77,19 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <summary> The database type. </summary>
         public SapDatabaseType? DatabaseType { get; set; }
         /// <summary> The subnet id. </summary>
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
         /// <summary> Gets or sets the virtual machine configuration. </summary>
         public SapVirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
         /// <summary> Gets or sets the disk configuration. </summary>
-        internal DiskConfiguration DbDiskConfiguration { get; set; }
+        internal DiskConfiguration DBDiskConfiguration { get; set; }
         /// <summary> The disk configuration for the db volume. For HANA, Required volumes are: ['hana/data', 'hana/log', hana/shared', 'usr/sap', 'os'], Optional volume : ['backup']. </summary>
         public IDictionary<string, DiskVolumeConfiguration> DiskVolumeConfigurations
         {
             get
             {
-                if (DbDiskConfiguration is null)
-                    DbDiskConfiguration = new DiskConfiguration();
-                return DbDiskConfiguration.DiskVolumeConfigurations;
+                if (DBDiskConfiguration is null)
+                    DBDiskConfiguration = new DiskConfiguration();
+                return DBDiskConfiguration.DiskVolumeConfigurations;
             }
         }
 

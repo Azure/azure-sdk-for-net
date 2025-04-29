@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             writer.WritePropertyName("deploymentType"u8);
             writer.WriteStringValue(DeploymentType.ToString());
             writer.WritePropertyName("dbVmSku"u8);
-            writer.WriteStringValue(DbVmSku);
+            writer.WriteStringValue(DBVmSku);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             {
                 return null;
             }
-            string appLocation = default;
+            AzureLocation appLocation = default;
             SapEnvironmentType environment = default;
             SapProductType sapProduct = default;
             SapDatabaseType databaseType = default;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             {
                 if (property.NameEquals("appLocation"u8))
                 {
-                    appLocation = property.Value.GetString();
+                    appLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("environment"u8))

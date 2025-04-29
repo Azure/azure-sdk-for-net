@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             writer.WriteStringValue(SubnetId);
             writer.WritePropertyName("virtualMachineConfiguration"u8);
             writer.WriteObjectValue(VirtualMachineConfiguration, options);
-            if (Optional.IsDefined(DbDiskConfiguration))
+            if (Optional.IsDefined(DBDiskConfiguration))
             {
                 writer.WritePropertyName("dbDiskConfiguration"u8);
-                writer.WriteObjectValue(DbDiskConfiguration, options);
+                writer.WriteObjectValue(DBDiskConfiguration, options);
             }
             if (Optional.IsDefined(CustomResourceNames))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
             NetworkConfiguration networkConfiguration = default;
             SapDatabaseType? databaseType = default;
-            string subnetId = default;
+            ResourceIdentifier subnetId = default;
             SapVirtualMachineConfiguration virtualMachineConfiguration = default;
             DiskConfiguration dbDiskConfiguration = default;
             SingleServerCustomResourceNames customResourceNames = default;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 }
                 if (property.NameEquals("subnetId"u8))
                 {
-                    subnetId = property.Value.GetString();
+                    subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("virtualMachineConfiguration"u8))

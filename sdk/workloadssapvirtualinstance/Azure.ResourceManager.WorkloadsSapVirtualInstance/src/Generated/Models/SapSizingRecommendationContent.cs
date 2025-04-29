@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -53,17 +54,14 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="saps"> The SAP Application Performance Standard measurement. </param>
         /// <param name="dbMemory"> The database memory configuration. </param>
         /// <param name="databaseType"> The database type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="appLocation"/> is null. </exception>
-        public SapSizingRecommendationContent(string appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDeploymentType deploymentType, long saps, long dbMemory, SapDatabaseType databaseType)
+        public SapSizingRecommendationContent(AzureLocation appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDeploymentType deploymentType, long saps, long dbMemory, SapDatabaseType databaseType)
         {
-            Argument.AssertNotNull(appLocation, nameof(appLocation));
-
             AppLocation = appLocation;
             Environment = environment;
             SapProduct = sapProduct;
             DeploymentType = deploymentType;
             Saps = saps;
-            DbMemory = dbMemory;
+            DBMemory = dbMemory;
             DatabaseType = databaseType;
         }
 
@@ -78,16 +76,16 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="dbScaleMethod"> The DB scale method. </param>
         /// <param name="highAvailabilityType"> The high availability type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SapSizingRecommendationContent(string appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDeploymentType deploymentType, long saps, long dbMemory, SapDatabaseType databaseType, SapDatabaseScaleMethod? dbScaleMethod, SapHighAvailabilityType? highAvailabilityType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SapSizingRecommendationContent(AzureLocation appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDeploymentType deploymentType, long saps, long dbMemory, SapDatabaseType databaseType, SapDatabaseScaleMethod? dbScaleMethod, SapHighAvailabilityType? highAvailabilityType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AppLocation = appLocation;
             Environment = environment;
             SapProduct = sapProduct;
             DeploymentType = deploymentType;
             Saps = saps;
-            DbMemory = dbMemory;
+            DBMemory = dbMemory;
             DatabaseType = databaseType;
-            DbScaleMethod = dbScaleMethod;
+            DBScaleMethod = dbScaleMethod;
             HighAvailabilityType = highAvailabilityType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -98,7 +96,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         }
 
         /// <summary> The geo-location where the resource is to be created. </summary>
-        public string AppLocation { get; }
+        public AzureLocation AppLocation { get; }
         /// <summary> Defines the environment type - Production/Non Production. </summary>
         public SapEnvironmentType Environment { get; }
         /// <summary> Defines the SAP Product type. </summary>
@@ -108,11 +106,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <summary> The SAP Application Performance Standard measurement. </summary>
         public long Saps { get; }
         /// <summary> The database memory configuration. </summary>
-        public long DbMemory { get; }
+        public long DBMemory { get; }
         /// <summary> The database type. </summary>
         public SapDatabaseType DatabaseType { get; }
         /// <summary> The DB scale method. </summary>
-        public SapDatabaseScaleMethod? DbScaleMethod { get; set; }
+        public SapDatabaseScaleMethod? DBScaleMethod { get; set; }
         /// <summary> The high availability type. </summary>
         public SapHighAvailabilityType? HighAvailabilityType { get; set; }
     }

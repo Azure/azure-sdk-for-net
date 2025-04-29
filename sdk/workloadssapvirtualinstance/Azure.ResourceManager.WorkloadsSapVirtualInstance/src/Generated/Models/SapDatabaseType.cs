@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string HANAValue = "HANA";
+        private const string HanaValue = "HANA";
         private const string DB2Value = "DB2";
 
         /// <summary> HANA Database type of SAP system. </summary>
-        public static SapDatabaseType HANA { get; } = new SapDatabaseType(HANAValue);
+        public static SapDatabaseType Hana { get; } = new SapDatabaseType(HanaValue);
         /// <summary> DB2 database type of the SAP system. </summary>
         public static SapDatabaseType DB2 { get; } = new SapDatabaseType(DB2Value);
         /// <summary> Determines if two <see cref="SapDatabaseType"/> values are the same. </summary>

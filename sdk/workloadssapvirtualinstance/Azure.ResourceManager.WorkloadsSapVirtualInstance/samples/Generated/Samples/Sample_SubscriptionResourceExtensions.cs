@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
             // invoke the operation
             AzureLocation location = new AzureLocation("centralus");
             SapSizingRecommendationContent content = new SapSizingRecommendationContent(
-                "eastus",
+                new AzureLocation("eastus"),
                 SapEnvironmentType.Prod,
-                SapProductType.S4HANA,
+                SapProductType.S4Hana,
                 SapDeploymentType.ThreeTier,
                 20000L,
                 1024L,
-                SapDatabaseType.HANA)
+                SapDatabaseType.Hana)
             {
-                DbScaleMethod = SapDatabaseScaleMethod.ScaleUp,
+                DBScaleMethod = SapDatabaseScaleMethod.ScaleUp,
             };
             SapSizingRecommendationResult result = await subscriptionResource.GetSizingRecommendationsSapVirtualInstanceAsync(location, content);
 
@@ -105,15 +105,15 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
             // invoke the operation
             AzureLocation location = new AzureLocation("centralus");
             SapSizingRecommendationContent content = new SapSizingRecommendationContent(
-                "eastus",
+                new AzureLocation("eastus"),
                 SapEnvironmentType.Prod,
-                SapProductType.S4HANA,
+                SapProductType.S4Hana,
                 SapDeploymentType.ThreeTier,
                 75000L,
                 1024L,
-                SapDatabaseType.HANA)
+                SapDatabaseType.Hana)
             {
-                DbScaleMethod = SapDatabaseScaleMethod.ScaleUp,
+                DBScaleMethod = SapDatabaseScaleMethod.ScaleUp,
                 HighAvailabilityType = SapHighAvailabilityType.AvailabilitySet,
             };
             SapSizingRecommendationResult result = await subscriptionResource.GetSizingRecommendationsSapVirtualInstanceAsync(location, content);
@@ -142,15 +142,15 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
             // invoke the operation
             AzureLocation location = new AzureLocation("centralus");
             SapSizingRecommendationContent content = new SapSizingRecommendationContent(
-                "eastus",
+                new AzureLocation("eastus"),
                 SapEnvironmentType.Prod,
-                SapProductType.S4HANA,
+                SapProductType.S4Hana,
                 SapDeploymentType.ThreeTier,
                 75000L,
                 1024L,
-                SapDatabaseType.HANA)
+                SapDatabaseType.Hana)
             {
-                DbScaleMethod = SapDatabaseScaleMethod.ScaleUp,
+                DBScaleMethod = SapDatabaseScaleMethod.ScaleUp,
                 HighAvailabilityType = SapHighAvailabilityType.AvailabilityZone,
             };
             SapSizingRecommendationResult result = await subscriptionResource.GetSizingRecommendationsSapVirtualInstanceAsync(location, content);
@@ -179,15 +179,15 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
             // invoke the operation
             AzureLocation location = new AzureLocation("centralus");
             SapSizingRecommendationContent content = new SapSizingRecommendationContent(
-                "eastus",
+                new AzureLocation("eastus"),
                 SapEnvironmentType.NonProd,
-                SapProductType.S4HANA,
+                SapProductType.S4Hana,
                 SapDeploymentType.SingleServer,
                 60000L,
                 2000L,
-                SapDatabaseType.HANA)
+                SapDatabaseType.Hana)
             {
-                DbScaleMethod = SapDatabaseScaleMethod.ScaleUp,
+                DBScaleMethod = SapDatabaseScaleMethod.ScaleUp,
             };
             SapSizingRecommendationResult result = await subscriptionResource.GetSizingRecommendationsSapVirtualInstanceAsync(location, content);
 
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("centralus");
-            SapSupportedSkusContent content = new SapSupportedSkusContent("eastus", SapEnvironmentType.Prod, SapProductType.S4HANA, SapDeploymentType.ThreeTier, SapDatabaseType.HANA);
+            SapSupportedSkusContent content = new SapSupportedSkusContent(new AzureLocation("eastus"), SapEnvironmentType.Prod, SapProductType.S4Hana, SapDeploymentType.ThreeTier, SapDatabaseType.Hana);
             SapSupportedResourceSkusResult result = await subscriptionResource.GetSapSupportedSkuSapVirtualInstanceAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("centralus");
-            SapSupportedSkusContent content = new SapSupportedSkusContent("eastus", SapEnvironmentType.Prod, SapProductType.S4HANA, SapDeploymentType.ThreeTier, SapDatabaseType.HANA)
+            SapSupportedSkusContent content = new SapSupportedSkusContent(new AzureLocation("eastus"), SapEnvironmentType.Prod, SapProductType.S4Hana, SapDeploymentType.ThreeTier, SapDatabaseType.Hana)
             {
                 HighAvailabilityType = SapHighAvailabilityType.AvailabilitySet,
             };
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("centralus");
-            SapSupportedSkusContent content = new SapSupportedSkusContent("eastus", SapEnvironmentType.Prod, SapProductType.S4HANA, SapDeploymentType.ThreeTier, SapDatabaseType.HANA)
+            SapSupportedSkusContent content = new SapSupportedSkusContent(new AzureLocation("eastus"), SapEnvironmentType.Prod, SapProductType.S4Hana, SapDeploymentType.ThreeTier, SapDatabaseType.Hana)
             {
                 HighAvailabilityType = SapHighAvailabilityType.AvailabilityZone,
             };
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("centralus");
-            SapSupportedSkusContent content = new SapSupportedSkusContent("eastus", SapEnvironmentType.NonProd, SapProductType.S4HANA, SapDeploymentType.SingleServer, SapDatabaseType.HANA);
+            SapSupportedSkusContent content = new SapSupportedSkusContent(new AzureLocation("eastus"), SapEnvironmentType.NonProd, SapProductType.S4Hana, SapDeploymentType.SingleServer, SapDatabaseType.Hana);
             SapSupportedResourceSkusResult result = await subscriptionResource.GetSapSupportedSkuSapVirtualInstanceAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -325,10 +325,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
             // invoke the operation
             AzureLocation location = new AzureLocation("centralus");
             SapDiskConfigurationsContent content = new SapDiskConfigurationsContent(
-                "eastus",
+                new AzureLocation("eastus"),
                 SapEnvironmentType.NonProd,
-                SapProductType.S4HANA,
-                SapDatabaseType.HANA,
+                SapProductType.S4Hana,
+                SapDatabaseType.Hana,
                 SapDeploymentType.ThreeTier,
                 "Standard_M32ts");
             SapDiskConfigurationsResult result = await subscriptionResource.GetDiskConfigurationsSapVirtualInstanceAsync(location, content);
@@ -357,10 +357,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
             // invoke the operation
             AzureLocation location = new AzureLocation("centralus");
             SapDiskConfigurationsContent content = new SapDiskConfigurationsContent(
-                "eastus",
+                new AzureLocation("eastus"),
                 SapEnvironmentType.Prod,
-                SapProductType.S4HANA,
-                SapDatabaseType.HANA,
+                SapProductType.S4Hana,
+                SapDatabaseType.Hana,
                 SapDeploymentType.ThreeTier,
                 "Standard_M32ts");
             SapDiskConfigurationsResult result = await subscriptionResource.GetDiskConfigurationsSapVirtualInstanceAsync(location, content);
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("eastus");
-            SapAvailabilityZoneDetailsContent content = new SapAvailabilityZoneDetailsContent(new AzureLocation("eastus"), SapProductType.S4HANA, SapDatabaseType.HANA);
+            SapAvailabilityZoneDetailsContent content = new SapAvailabilityZoneDetailsContent(new AzureLocation("eastus"), SapProductType.S4Hana, SapDatabaseType.Hana);
             SapAvailabilityZoneDetailsResult result = await subscriptionResource.GetAvailabilityZoneDetailsSapVirtualInstanceAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("northeurope");
-            SapAvailabilityZoneDetailsContent content = new SapAvailabilityZoneDetailsContent(new AzureLocation("northeurope"), SapProductType.S4HANA, SapDatabaseType.HANA);
+            SapAvailabilityZoneDetailsContent content = new SapAvailabilityZoneDetailsContent(new AzureLocation("northeurope"), SapProductType.S4Hana, SapDatabaseType.Hana);
             SapAvailabilityZoneDetailsResult result = await subscriptionResource.GetAvailabilityZoneDetailsSapVirtualInstanceAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="sapBitsStorageAccountId"> The SAP bits storage account id. </param>
         /// <param name="softwareVersion"> The software version to install. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bomUri"/>, <paramref name="sapBitsStorageAccountId"/> or <paramref name="softwareVersion"/> is null. </exception>
-        public SapInstallWithoutOSConfigSoftwareConfiguration(string bomUri, string sapBitsStorageAccountId, string softwareVersion)
+        public SapInstallWithoutOSConfigSoftwareConfiguration(Uri bomUri, string sapBitsStorageAccountId, string softwareVersion)
         {
             Argument.AssertNotNull(bomUri, nameof(bomUri));
             Argument.AssertNotNull(sapBitsStorageAccountId, nameof(sapBitsStorageAccountId));
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             BomUri = bomUri;
             SapBitsStorageAccountId = sapBitsStorageAccountId;
             SoftwareVersion = softwareVersion;
-            SoftwareInstallationType = SapSoftwareInstallationType.SAPInstallWithoutOSConfig;
+            SoftwareInstallationType = SapSoftwareInstallationType.SapInstallWithoutOSConfig;
         }
 
         /// <summary> Initializes a new instance of <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/>. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="sapBitsStorageAccountId"> The SAP bits storage account id. </param>
         /// <param name="softwareVersion"> The software version to install. </param>
         /// <param name="highAvailabilitySoftwareConfiguration"> Gets or sets the HA software configuration. </param>
-        internal SapInstallWithoutOSConfigSoftwareConfiguration(SapSoftwareInstallationType softwareInstallationType, IDictionary<string, BinaryData> serializedAdditionalRawData, string bomUri, string sapBitsStorageAccountId, string softwareVersion, HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration) : base(softwareInstallationType, serializedAdditionalRawData)
+        internal SapInstallWithoutOSConfigSoftwareConfiguration(SapSoftwareInstallationType softwareInstallationType, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri bomUri, string sapBitsStorageAccountId, string softwareVersion, HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration) : base(softwareInstallationType, serializedAdditionalRawData)
         {
             BomUri = bomUri;
             SapBitsStorageAccountId = sapBitsStorageAccountId;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         }
 
         /// <summary> The URL to the SAP Build of Materials(BOM) file. </summary>
-        public string BomUri { get; set; }
+        public Uri BomUri { get; set; }
         /// <summary> The SAP bits storage account id. </summary>
         public string SapBitsStorageAccountId { get; set; }
         /// <summary> The software version to install. </summary>

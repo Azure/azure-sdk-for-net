@@ -3,9 +3,9 @@
 
 using Azure.Core.TestFramework;
 
-namespace Azure.ResourceManager.SapVirtualInstances.Tests
+namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
 {
-    public class WorkloadsSapVirtualInstanceTestEnvironment : TestEnvironment
+    public class WorkloadsSapVirtualInstanceManagementTestEnvironment : TestEnvironment
     {
     }
 }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="applicationServerInstanceCount"> The application server instance count. </param>
         internal ThreeTierRecommendationResult(SapDeploymentType deploymentType, IDictionary<string, BinaryData> serializedAdditionalRawData, string dbVmSku, long? databaseInstanceCount, string centralServerVmSku, long? centralServerInstanceCount, string applicationServerVmSku, long? applicationServerInstanceCount) : base(deploymentType, serializedAdditionalRawData)
         {
-            DbVmSku = dbVmSku;
+            DBVmSku = dbVmSku;
             DatabaseInstanceCount = databaseInstanceCount;
             CentralServerVmSku = centralServerVmSku;
             CentralServerInstanceCount = centralServerInstanceCount;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         }
 
         /// <summary> The database VM SKU. </summary>
-        public string DbVmSku { get; }
+        public string DBVmSku { get; }
         /// <summary> The database server instance count. </summary>
         public long? DatabaseInstanceCount { get; }
         /// <summary> The central server VM SKU. </summary>

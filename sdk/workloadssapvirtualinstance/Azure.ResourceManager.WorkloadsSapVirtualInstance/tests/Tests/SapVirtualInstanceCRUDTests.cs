@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
 {
-    public class SapVirtualInstanceCRUDTests : WorkloadsManagementTestBase
+    public class SapVirtualInstanceCRUDTests : WorkloadsSapVirtualInstanceManagementTestBase
     {
         public SapVirtualInstanceCRUDTests(bool isAsync) : base(isAsync)
         {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
             // Create SAP VIS
             JsonDocument jsonElement = GetJsonElement(filePath);
             var sviData = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(jsonElement.RootElement);
-            sviData.Properties.ManagedResourceGroupConfiguration = new ManagedRGConfiguration
+            sviData.ManagedResourceGroupConfiguration = new ManagedRGConfiguration
             {
                 Name = Recording.GenerateAssetName(resourceName + "mrg-")
             };
 
             string appRgName = Recording.GenerateAssetName(resourceName + "appRg-");
             DeploymentWithOSConfiguration deploymentWithOSConfiguration =
-                (sviData.Properties.Configuration as DeploymentWithOSConfiguration);
+                (sviData.Configuration as DeploymentWithOSConfiguration);
             deploymentWithOSConfiguration.InfrastructureConfiguration.AppResourceGroup = appRgName;
 
             _ = await CreateResourceGroup(

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("bomUrl"u8);
-            writer.WriteStringValue(BomUri);
+            writer.WriteStringValue(BomUri.AbsoluteUri);
             writer.WritePropertyName("sapBitsStorageAccountId"u8);
             writer.WriteStringValue(SapBitsStorageAccountId);
             writer.WritePropertyName("softwareVersion"u8);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             {
                 return null;
             }
-            string bomUrl = default;
+            Uri bomUrl = default;
             string sapBitsStorageAccountId = default;
             string softwareVersion = default;
             HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration = default;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             {
                 if (property.NameEquals("bomUrl"u8))
                 {
-                    bomUrl = property.Value.GetString();
+                    bomUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sapBitsStorageAccountId"u8))

@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(DbVmSku))
+            if (Optional.IsDefined(DBVmSku))
             {
                 writer.WritePropertyName("dbVmSku"u8);
-                writer.WriteStringValue(DbVmSku);
+                writer.WriteStringValue(DBVmSku);
             }
             if (Optional.IsDefined(DatabaseInstanceCount))
             {

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -52,10 +53,9 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="databaseType"> The database type. Eg: HANA, DB2, etc. </param>
         /// <param name="deploymentType"> The deployment type. Eg: SingleServer/ThreeTier. </param>
         /// <param name="dbVmSku"> The VM SKU for database instance. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="appLocation"/> or <paramref name="dbVmSku"/> is null. </exception>
-        public SapDiskConfigurationsContent(string appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDatabaseType databaseType, SapDeploymentType deploymentType, string dbVmSku)
+        /// <exception cref="ArgumentNullException"> <paramref name="dbVmSku"/> is null. </exception>
+        public SapDiskConfigurationsContent(AzureLocation appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDatabaseType databaseType, SapDeploymentType deploymentType, string dbVmSku)
         {
-            Argument.AssertNotNull(appLocation, nameof(appLocation));
             Argument.AssertNotNull(dbVmSku, nameof(dbVmSku));
 
             AppLocation = appLocation;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             SapProduct = sapProduct;
             DatabaseType = databaseType;
             DeploymentType = deploymentType;
-            DbVmSku = dbVmSku;
+            DBVmSku = dbVmSku;
         }
 
         /// <summary> Initializes a new instance of <see cref="SapDiskConfigurationsContent"/>. </summary>
@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="deploymentType"> The deployment type. Eg: SingleServer/ThreeTier. </param>
         /// <param name="dbVmSku"> The VM SKU for database instance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SapDiskConfigurationsContent(string appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDatabaseType databaseType, SapDeploymentType deploymentType, string dbVmSku, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SapDiskConfigurationsContent(AzureLocation appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDatabaseType databaseType, SapDeploymentType deploymentType, string dbVmSku, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AppLocation = appLocation;
             Environment = environment;
             SapProduct = sapProduct;
             DatabaseType = databaseType;
             DeploymentType = deploymentType;
-            DbVmSku = dbVmSku;
+            DBVmSku = dbVmSku;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         }
 
         /// <summary> The geo-location where the SAP resources will be created. </summary>
-        public string AppLocation { get; }
+        public AzureLocation AppLocation { get; }
         /// <summary> Defines the environment type - Production/Non Production. </summary>
         public SapEnvironmentType Environment { get; }
         /// <summary> Defines the SAP Product type. </summary>
@@ -101,6 +101,6 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <summary> The deployment type. Eg: SingleServer/ThreeTier. </summary>
         public SapDeploymentType DeploymentType { get; }
         /// <summary> The VM SKU for database instance. </summary>
-        public string DbVmSku { get; }
+        public string DBVmSku { get; }
     }
 }

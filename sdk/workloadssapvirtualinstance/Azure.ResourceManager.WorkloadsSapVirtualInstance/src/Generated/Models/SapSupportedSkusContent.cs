@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -51,11 +52,8 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="sapProduct"> Defines the SAP Product type. </param>
         /// <param name="deploymentType"> The deployment type. Eg: SingleServer/ThreeTier. </param>
         /// <param name="databaseType"> The database type. Eg: HANA, DB2, etc. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="appLocation"/> is null. </exception>
-        public SapSupportedSkusContent(string appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDeploymentType deploymentType, SapDatabaseType databaseType)
+        public SapSupportedSkusContent(AzureLocation appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDeploymentType deploymentType, SapDatabaseType databaseType)
         {
-            Argument.AssertNotNull(appLocation, nameof(appLocation));
-
             AppLocation = appLocation;
             Environment = environment;
             SapProduct = sapProduct;
@@ -71,7 +69,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="databaseType"> The database type. Eg: HANA, DB2, etc. </param>
         /// <param name="highAvailabilityType"> The high availability type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SapSupportedSkusContent(string appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDeploymentType deploymentType, SapDatabaseType databaseType, SapHighAvailabilityType? highAvailabilityType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SapSupportedSkusContent(AzureLocation appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDeploymentType deploymentType, SapDatabaseType databaseType, SapHighAvailabilityType? highAvailabilityType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AppLocation = appLocation;
             Environment = environment;
@@ -88,7 +86,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         }
 
         /// <summary> The geo-location where the resource is to be created. </summary>
-        public string AppLocation { get; }
+        public AzureLocation AppLocation { get; }
         /// <summary> Defines the environment type - Production/Non Production. </summary>
         public SapEnvironmentType Environment { get; }
         /// <summary> Defines the SAP Product type. </summary>

@@ -11,19 +11,19 @@ using System.Text.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Azure.ResourceManager.SapVirtualInstances.Tests
+namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
 {
-    public class WorkloadsSapVirtualInstanceTestBase : ManagementRecordedTestBase<WorkloadsSapVirtualInstanceTestEnvironment>
+    public class WorkloadsSapVirtualInstanceManagementTestBase : ManagementRecordedTestBase<WorkloadsSapVirtualInstanceManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
-        protected WorkloadsSapVirtualInstanceTestBase(bool isAsync, RecordedTestMode mode)
+        protected WorkloadsSapVirtualInstanceManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
         }
 
-        protected WorkloadsSapVirtualInstanceTestBase(bool isAsync)
+        protected WorkloadsSapVirtualInstanceManagementTestBase(bool isAsync)
             : base(isAsync)
         {
         }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         }
 
         private const string ServiceInitiatedValue = "ServiceInitiated";
-        private const string SAPInstallWithoutOSConfigValue = "SAPInstallWithoutOSConfig";
+        private const string SapInstallWithoutOSConfigValue = "SAPInstallWithoutOSConfig";
         private const string ExternalValue = "External";
 
         /// <summary> SAP Install managed by service. </summary>
         public static SapSoftwareInstallationType ServiceInitiated { get; } = new SapSoftwareInstallationType(ServiceInitiatedValue);
         /// <summary> SAP Install without OS Config. </summary>
-        public static SapSoftwareInstallationType SAPInstallWithoutOSConfig { get; } = new SapSoftwareInstallationType(SAPInstallWithoutOSConfigValue);
+        public static SapSoftwareInstallationType SapInstallWithoutOSConfig { get; } = new SapSoftwareInstallationType(SapInstallWithoutOSConfigValue);
         /// <summary> External software installation type. </summary>
         public static SapSoftwareInstallationType External { get; } = new SapSoftwareInstallationType(ExternalValue);
         /// <summary> Determines if two <see cref="SapSoftwareInstallationType"/> values are the same. </summary>

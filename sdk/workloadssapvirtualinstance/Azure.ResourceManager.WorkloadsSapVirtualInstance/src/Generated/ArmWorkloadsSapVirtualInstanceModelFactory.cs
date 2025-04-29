@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="dbScaleMethod"> The DB scale method. </param>
         /// <param name="highAvailabilityType"> The high availability type. </param>
         /// <returns> A new <see cref="Models.SapSizingRecommendationContent"/> instance for mocking. </returns>
-        public static SapSizingRecommendationContent SapSizingRecommendationContent(string appLocation = null, SapEnvironmentType environment = default, SapProductType sapProduct = default, SapDeploymentType deploymentType = default, long saps = default, long dbMemory = default, SapDatabaseType databaseType = default, SapDatabaseScaleMethod? dbScaleMethod = null, SapHighAvailabilityType? highAvailabilityType = null)
+        public static SapSizingRecommendationContent SapSizingRecommendationContent(AzureLocation appLocation = default, SapEnvironmentType environment = default, SapProductType sapProduct = default, SapDeploymentType deploymentType = default, long saps = default, long dbMemory = default, SapDatabaseType databaseType = default, SapDatabaseScaleMethod? dbScaleMethod = null, SapHighAvailabilityType? highAvailabilityType = null)
         {
             return new SapSizingRecommendationContent(
                 appLocation,
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="databaseType"> The database type. Eg: HANA, DB2, etc. </param>
         /// <param name="highAvailabilityType"> The high availability type. </param>
         /// <returns> A new <see cref="Models.SapSupportedSkusContent"/> instance for mocking. </returns>
-        public static SapSupportedSkusContent SapSupportedSkusContent(string appLocation = null, SapEnvironmentType environment = default, SapProductType sapProduct = default, SapDeploymentType deploymentType = default, SapDatabaseType databaseType = default, SapHighAvailabilityType? highAvailabilityType = null)
+        public static SapSupportedSkusContent SapSupportedSkusContent(AzureLocation appLocation = default, SapEnvironmentType environment = default, SapProductType sapProduct = default, SapDeploymentType deploymentType = default, SapDatabaseType databaseType = default, SapHighAvailabilityType? highAvailabilityType = null)
         {
             return new SapSupportedSkusContent(
                 appLocation,
