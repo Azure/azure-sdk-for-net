@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the parameters for the url rewrite action.
-    /// Serialized Name: UrlRewriteActionParameters
-    /// </summary>
+    /// <summary> Defines the parameters for the url rewrite action. </summary>
     public partial class UriRewriteActionProperties
     {
         /// <summary>
@@ -49,15 +46,9 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="UriRewriteActionProperties"/>. </summary>
-        /// <param name="actionType"> Serialized Name: UrlRewriteActionParameters.typeName. </param>
-        /// <param name="sourcePattern">
-        /// define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched.
-        /// Serialized Name: UrlRewriteActionParameters.sourcePattern
-        /// </param>
-        /// <param name="destination">
-        /// Define the relative URL to which the above requests will be rewritten by.
-        /// Serialized Name: UrlRewriteActionParameters.destination
-        /// </param>
+        /// <param name="actionType"></param>
+        /// <param name="sourcePattern"> define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched. </param>
+        /// <param name="destination"> Define the relative URL to which the above requests will be rewritten by. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourcePattern"/> or <paramref name="destination"/> is null. </exception>
         public UriRewriteActionProperties(UriRewriteActionType actionType, string sourcePattern, string destination)
         {
@@ -70,19 +61,10 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UriRewriteActionProperties"/>. </summary>
-        /// <param name="actionType"> Serialized Name: UrlRewriteActionParameters.typeName. </param>
-        /// <param name="sourcePattern">
-        /// define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched.
-        /// Serialized Name: UrlRewriteActionParameters.sourcePattern
-        /// </param>
-        /// <param name="destination">
-        /// Define the relative URL to which the above requests will be rewritten by.
-        /// Serialized Name: UrlRewriteActionParameters.destination
-        /// </param>
-        /// <param name="preserveUnmatchedPath">
-        /// Whether to preserve unmatched path. Default value is true.
-        /// Serialized Name: UrlRewriteActionParameters.preserveUnmatchedPath
-        /// </param>
+        /// <param name="actionType"></param>
+        /// <param name="sourcePattern"> define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched. </param>
+        /// <param name="destination"> Define the relative URL to which the above requests will be rewritten by. </param>
+        /// <param name="preserveUnmatchedPath"> Whether to preserve unmatched path. Default value is true. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UriRewriteActionProperties(UriRewriteActionType actionType, string sourcePattern, string destination, bool? preserveUnmatchedPath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -98,22 +80,13 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Serialized Name: UrlRewriteActionParameters.typeName. </summary>
+        /// <summary> Gets or sets the action type. </summary>
         public UriRewriteActionType ActionType { get; set; }
-        /// <summary>
-        /// define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched.
-        /// Serialized Name: UrlRewriteActionParameters.sourcePattern
-        /// </summary>
+        /// <summary> define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched. </summary>
         public string SourcePattern { get; set; }
-        /// <summary>
-        /// Define the relative URL to which the above requests will be rewritten by.
-        /// Serialized Name: UrlRewriteActionParameters.destination
-        /// </summary>
+        /// <summary> Define the relative URL to which the above requests will be rewritten by. </summary>
         public string Destination { get; set; }
-        /// <summary>
-        /// Whether to preserve unmatched path. Default value is true.
-        /// Serialized Name: UrlRewriteActionParameters.preserveUnmatchedPath
-        /// </summary>
+        /// <summary> Whether to preserve unmatched path. Default value is true. </summary>
         public bool? PreserveUnmatchedPath { get; set; }
     }
 }

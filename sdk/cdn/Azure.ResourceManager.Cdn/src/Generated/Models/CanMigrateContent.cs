@@ -12,10 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Request body for CanMigrate operation.
-    /// Serialized Name: CanMigrateParameters
-    /// </summary>
+    /// <summary> Request body for CanMigrate operation. </summary>
     public partial class CanMigrateContent
     {
         /// <summary>
@@ -51,10 +48,7 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CanMigrateContent"/>. </summary>
-        /// <param name="classicResourceReference">
-        /// Resource reference of the classic cdn profile or classic frontdoor that need to be migrated.
-        /// Serialized Name: CanMigrateParameters.classicResourceReference
-        /// </param>
+        /// <param name="classicResourceReference"> Resource reference of the classic cdn profile or classic frontdoor that need to be migrated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classicResourceReference"/> is null. </exception>
         public CanMigrateContent(WritableSubResource classicResourceReference)
         {
@@ -64,10 +58,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CanMigrateContent"/>. </summary>
-        /// <param name="classicResourceReference">
-        /// Resource reference of the classic cdn profile or classic frontdoor that need to be migrated.
-        /// Serialized Name: CanMigrateParameters.classicResourceReference
-        /// </param>
+        /// <param name="classicResourceReference"> Resource reference of the classic cdn profile or classic frontdoor that need to be migrated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CanMigrateContent(WritableSubResource classicResourceReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,10 +71,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary>
-        /// Resource reference of the classic cdn profile or classic frontdoor that need to be migrated.
-        /// Serialized Name: CanMigrateParameters.classicResourceReference
-        /// </summary>
+        /// <summary> Resource reference of the classic cdn profile or classic frontdoor that need to be migrated. </summary>
         internal WritableSubResource ClassicResourceReference { get; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier ClassicResourceReferenceId

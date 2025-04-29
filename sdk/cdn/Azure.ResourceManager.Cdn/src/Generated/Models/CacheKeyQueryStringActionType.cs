@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The CacheKeyQueryStringActionType.
-    /// Serialized Name: CacheKeyQueryStringActionParametersTypeName
-    /// </summary>
+    /// <summary> The CacheKeyQueryStringActionType. </summary>
     public readonly partial struct CacheKeyQueryStringActionType : IEquatable<CacheKeyQueryStringActionType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string CacheKeyQueryStringBehaviorActionValue = "DeliveryRuleCacheKeyQueryStringBehaviorActionParameters";
 
-        /// <summary>
-        /// DeliveryRuleCacheKeyQueryStringBehaviorActionParameters
-        /// Serialized Name: CacheKeyQueryStringActionParametersTypeName.DeliveryRuleCacheKeyQueryStringBehaviorActionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleCacheKeyQueryStringBehaviorActionParameters. </summary>
         public static CacheKeyQueryStringActionType CacheKeyQueryStringBehaviorAction { get; } = new CacheKeyQueryStringActionType(CacheKeyQueryStringBehaviorActionValue);
         /// <summary> Determines if two <see cref="CacheKeyQueryStringActionType"/> values are the same. </summary>
         public static bool operator ==(CacheKeyQueryStringActionType left, CacheKeyQueryStringActionType right) => left.Equals(right);

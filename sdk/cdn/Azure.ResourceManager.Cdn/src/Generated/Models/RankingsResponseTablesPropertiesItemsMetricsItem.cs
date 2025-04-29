@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The RankingsResponseTablesPropertiesItemsMetricsItem.
-    /// Serialized Name: RankingsResponseTablesPropertiesItemsMetricsItem
-    /// </summary>
+    /// <summary> The RankingsResponseTablesPropertiesItemsMetricsItem. </summary>
     public partial class RankingsResponseTablesPropertiesItemsMetricsItem
     {
         /// <summary>
@@ -54,9 +51,9 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RankingsResponseTablesPropertiesItemsMetricsItem"/>. </summary>
-        /// <param name="metric"> Serialized Name: RankingsResponseTablesPropertiesItemsMetricsItem.metric. </param>
-        /// <param name="value"> Serialized Name: RankingsResponseTablesPropertiesItemsMetricsItem.value. </param>
-        /// <param name="percentage"> Serialized Name: RankingsResponseTablesPropertiesItemsMetricsItem.percentage. </param>
+        /// <param name="metric"></param>
+        /// <param name="value"></param>
+        /// <param name="percentage"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RankingsResponseTablesPropertiesItemsMetricsItem(string metric, long? value, float? percentage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,11 +63,11 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: RankingsResponseTablesPropertiesItemsMetricsItem.metric. </summary>
+        /// <summary> Gets the metric. </summary>
         public string Metric { get; }
-        /// <summary> Serialized Name: RankingsResponseTablesPropertiesItemsMetricsItem.value. </summary>
+        /// <summary> Gets the value. </summary>
         public long? Value { get; }
-        /// <summary> Serialized Name: RankingsResponseTablesPropertiesItemsMetricsItem.percentage. </summary>
+        /// <summary> Gets the percentage. </summary>
         public float? Percentage { get; }
     }
 }

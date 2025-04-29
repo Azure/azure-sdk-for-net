@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Resource status of the origin.
-    /// Serialized Name: OriginResourceState
-    /// </summary>
+    /// <summary> Resource status of the origin. </summary>
     public readonly partial struct OriginResourceState : IEquatable<OriginResourceState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string ActiveValue = "Active";
         private const string DeletingValue = "Deleting";
 
-        /// <summary>
-        /// Creating
-        /// Serialized Name: OriginResourceState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static OriginResourceState Creating { get; } = new OriginResourceState(CreatingValue);
-        /// <summary>
-        /// Active
-        /// Serialized Name: OriginResourceState.Active
-        /// </summary>
+        /// <summary> Active. </summary>
         public static OriginResourceState Active { get; } = new OriginResourceState(ActiveValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: OriginResourceState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static OriginResourceState Deleting { get; } = new OriginResourceState(DeletingValue);
         /// <summary> Determines if two <see cref="OriginResourceState"/> values are the same. </summary>
         public static bool operator ==(OriginResourceState left, OriginResourceState right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The name of the action for the delivery rule.
-    /// Serialized Name: DeliveryRuleActionType
-    /// </summary>
+    /// <summary> The name of the action for the delivery rule. </summary>
     internal readonly partial struct DeliveryRuleActionType : IEquatable<DeliveryRuleActionType>
     {
         private readonly string _value;
@@ -35,50 +32,23 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string OriginGroupOverrideValue = "OriginGroupOverride";
         private const string RouteConfigurationOverrideValue = "RouteConfigurationOverride";
 
-        /// <summary>
-        /// CacheExpiration
-        /// Serialized Name: DeliveryRuleActionType.CacheExpiration
-        /// </summary>
+        /// <summary> CacheExpiration. </summary>
         public static DeliveryRuleActionType CacheExpiration { get; } = new DeliveryRuleActionType(CacheExpirationValue);
-        /// <summary>
-        /// CacheKeyQueryString
-        /// Serialized Name: DeliveryRuleActionType.CacheKeyQueryString
-        /// </summary>
+        /// <summary> CacheKeyQueryString. </summary>
         public static DeliveryRuleActionType CacheKeyQueryString { get; } = new DeliveryRuleActionType(CacheKeyQueryStringValue);
-        /// <summary>
-        /// ModifyRequestHeader
-        /// Serialized Name: DeliveryRuleActionType.ModifyRequestHeader
-        /// </summary>
+        /// <summary> ModifyRequestHeader. </summary>
         public static DeliveryRuleActionType ModifyRequestHeader { get; } = new DeliveryRuleActionType(ModifyRequestHeaderValue);
-        /// <summary>
-        /// ModifyResponseHeader
-        /// Serialized Name: DeliveryRuleActionType.ModifyResponseHeader
-        /// </summary>
+        /// <summary> ModifyResponseHeader. </summary>
         public static DeliveryRuleActionType ModifyResponseHeader { get; } = new DeliveryRuleActionType(ModifyResponseHeaderValue);
-        /// <summary>
-        /// UrlRedirect
-        /// Serialized Name: DeliveryRuleActionType.UrlRedirect
-        /// </summary>
+        /// <summary> UrlRedirect. </summary>
         public static DeliveryRuleActionType UriRedirect { get; } = new DeliveryRuleActionType(UriRedirectValue);
-        /// <summary>
-        /// UrlRewrite
-        /// Serialized Name: DeliveryRuleActionType.UrlRewrite
-        /// </summary>
+        /// <summary> UrlRewrite. </summary>
         public static DeliveryRuleActionType UriRewrite { get; } = new DeliveryRuleActionType(UriRewriteValue);
-        /// <summary>
-        /// UrlSigning
-        /// Serialized Name: DeliveryRuleActionType.UrlSigning
-        /// </summary>
+        /// <summary> UrlSigning. </summary>
         public static DeliveryRuleActionType UriSigning { get; } = new DeliveryRuleActionType(UriSigningValue);
-        /// <summary>
-        /// OriginGroupOverride
-        /// Serialized Name: DeliveryRuleActionType.OriginGroupOverride
-        /// </summary>
+        /// <summary> OriginGroupOverride. </summary>
         public static DeliveryRuleActionType OriginGroupOverride { get; } = new DeliveryRuleActionType(OriginGroupOverrideValue);
-        /// <summary>
-        /// RouteConfigurationOverride
-        /// Serialized Name: DeliveryRuleActionType.RouteConfigurationOverride
-        /// </summary>
+        /// <summary> RouteConfigurationOverride. </summary>
         public static DeliveryRuleActionType RouteConfigurationOverride { get; } = new DeliveryRuleActionType(RouteConfigurationOverrideValue);
         /// <summary> Determines if two <see cref="DeliveryRuleActionType"/> values are the same. </summary>
         public static bool operator ==(DeliveryRuleActionType left, DeliveryRuleActionType right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines rules that scrub sensitive fields in the Azure Front Door profile logs.
-    /// Serialized Name: ProfileLogScrubbing
-    /// </summary>
+    /// <summary> Defines rules that scrub sensitive fields in the Azure Front Door profile logs. </summary>
     public partial class ProfileLogScrubbing
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProfileLogScrubbing"/>. </summary>
-        /// <param name="state">
-        /// State of the log scrubbing config. Default value is Enabled.
-        /// Serialized Name: ProfileLogScrubbing.state
-        /// </param>
-        /// <param name="scrubbingRules">
-        /// List of log scrubbing rules applied to the Azure Front Door profile logs.
-        /// Serialized Name: ProfileLogScrubbing.scrubbingRules
-        /// </param>
+        /// <param name="state"> State of the log scrubbing config. Default value is Enabled. </param>
+        /// <param name="scrubbingRules"> List of log scrubbing rules applied to the Azure Front Door profile logs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProfileLogScrubbing(ProfileScrubbingState? state, IList<ProfileScrubbingRules> scrubbingRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// State of the log scrubbing config. Default value is Enabled.
-        /// Serialized Name: ProfileLogScrubbing.state
-        /// </summary>
+        /// <summary> State of the log scrubbing config. Default value is Enabled. </summary>
         public ProfileScrubbingState? State { get; set; }
-        /// <summary>
-        /// List of log scrubbing rules applied to the Azure Front Door profile logs.
-        /// Serialized Name: ProfileLogScrubbing.scrubbingRules
-        /// </summary>
+        /// <summary> List of log scrubbing rules applied to the Azure Front Door profile logs. </summary>
         public IList<ProfileScrubbingRules> ScrubbingRules { get; }
     }
 }

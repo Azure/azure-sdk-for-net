@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The OriginGroupOverrideActionType.
-    /// Serialized Name: OriginGroupOverrideActionParametersTypeName
-    /// </summary>
+    /// <summary> The OriginGroupOverrideActionType. </summary>
     public readonly partial struct OriginGroupOverrideActionType : IEquatable<OriginGroupOverrideActionType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string OriginGroupOverrideActionValue = "DeliveryRuleOriginGroupOverrideActionParameters";
 
-        /// <summary>
-        /// DeliveryRuleOriginGroupOverrideActionParameters
-        /// Serialized Name: OriginGroupOverrideActionParametersTypeName.DeliveryRuleOriginGroupOverrideActionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleOriginGroupOverrideActionParameters. </summary>
         public static OriginGroupOverrideActionType OriginGroupOverrideAction { get; } = new OriginGroupOverrideActionType(OriginGroupOverrideActionValue);
         /// <summary> Determines if two <see cref="OriginGroupOverrideActionType"/> values are the same. </summary>
         public static bool operator ==(OriginGroupOverrideActionType left, OriginGroupOverrideActionType right) => left.Equals(right);

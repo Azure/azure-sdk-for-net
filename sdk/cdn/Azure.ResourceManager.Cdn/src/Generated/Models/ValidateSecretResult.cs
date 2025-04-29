@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Output of the validated secret.
-    /// Serialized Name: ValidateSecretOutput
-    /// </summary>
+    /// <summary> Output of the validated secret. </summary>
     public partial class ValidateSecretResult
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ValidateSecretResult"/>. </summary>
-        /// <param name="status">
-        /// The validation status.
-        /// Serialized Name: ValidateSecretOutput.status
-        /// </param>
-        /// <param name="message">
-        /// Detailed error message
-        /// Serialized Name: ValidateSecretOutput.message
-        /// </param>
+        /// <param name="status"> The validation status. </param>
+        /// <param name="message"> Detailed error message. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ValidateSecretResult(ValidationStatus? status, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The validation status.
-        /// Serialized Name: ValidateSecretOutput.status
-        /// </summary>
+        /// <summary> The validation status. </summary>
         public ValidationStatus? Status { get; }
-        /// <summary>
-        /// Detailed error message
-        /// Serialized Name: ValidateSecretOutput.message
-        /// </summary>
+        /// <summary> Detailed error message. </summary>
         public string Message { get; }
     }
 }

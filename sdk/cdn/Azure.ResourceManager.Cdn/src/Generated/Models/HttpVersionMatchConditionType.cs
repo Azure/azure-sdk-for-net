@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The HttpVersionMatchConditionType.
-    /// Serialized Name: HttpVersionMatchConditionParametersTypeName
-    /// </summary>
+    /// <summary> The HttpVersionMatchConditionType. </summary>
     public readonly partial struct HttpVersionMatchConditionType : IEquatable<HttpVersionMatchConditionType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string HttpVersionConditionValue = "DeliveryRuleHttpVersionConditionParameters";
 
-        /// <summary>
-        /// DeliveryRuleHttpVersionConditionParameters
-        /// Serialized Name: HttpVersionMatchConditionParametersTypeName.DeliveryRuleHttpVersionConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleHttpVersionConditionParameters. </summary>
         public static HttpVersionMatchConditionType HttpVersionCondition { get; } = new HttpVersionMatchConditionType(HttpVersionConditionValue);
         /// <summary> Determines if two <see cref="HttpVersionMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(HttpVersionMatchConditionType left, HttpVersionMatchConditionType right) => left.Equals(right);

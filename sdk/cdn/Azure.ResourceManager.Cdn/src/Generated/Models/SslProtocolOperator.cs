@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Describes operator to be matched
-    /// Serialized Name: SslProtocolOperator
-    /// </summary>
+    /// <summary> Describes operator to be matched. </summary>
     public readonly partial struct SslProtocolOperator : IEquatable<SslProtocolOperator>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string EqualValue = "Equal";
 
-        /// <summary>
-        /// Equal
-        /// Serialized Name: SslProtocolOperator.Equal
-        /// </summary>
+        /// <summary> Equal. </summary>
         public static SslProtocolOperator Equal { get; } = new SslProtocolOperator(EqualValue);
         /// <summary> Determines if two <see cref="SslProtocolOperator"/> values are the same. </summary>
         public static bool operator ==(SslProtocolOperator left, SslProtocolOperator right) => left.Equals(right);

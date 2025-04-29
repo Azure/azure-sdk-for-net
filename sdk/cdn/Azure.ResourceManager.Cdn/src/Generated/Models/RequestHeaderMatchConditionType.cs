@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The RequestHeaderMatchConditionType.
-    /// Serialized Name: RequestHeaderMatchConditionParametersTypeName
-    /// </summary>
+    /// <summary> The RequestHeaderMatchConditionType. </summary>
     public readonly partial struct RequestHeaderMatchConditionType : IEquatable<RequestHeaderMatchConditionType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string RequestHeaderConditionValue = "DeliveryRuleRequestHeaderConditionParameters";
 
-        /// <summary>
-        /// DeliveryRuleRequestHeaderConditionParameters
-        /// Serialized Name: RequestHeaderMatchConditionParametersTypeName.DeliveryRuleRequestHeaderConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleRequestHeaderConditionParameters. </summary>
         public static RequestHeaderMatchConditionType RequestHeaderCondition { get; } = new RequestHeaderMatchConditionType(RequestHeaderConditionValue);
         /// <summary> Determines if two <see cref="RequestHeaderMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(RequestHeaderMatchConditionType left, RequestHeaderMatchConditionType right) => left.Equals(right);

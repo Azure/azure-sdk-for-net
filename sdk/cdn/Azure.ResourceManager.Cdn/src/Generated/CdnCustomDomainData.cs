@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Cdn
     /// <summary>
     /// A class representing the CdnCustomDomain data model.
     /// Friendly domain name mapping to the endpoint hostname that the customer provides for branding purposes, e.g. www.contoso.com.
-    /// Serialized Name: CustomDomain
     /// </summary>
     public partial class CdnCustomDomainData : ResourceData
     {
@@ -62,36 +61,17 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="hostName">
-        /// The host name of the custom domain. Must be a domain name.
-        /// Serialized Name: CustomDomain.properties.hostName
-        /// </param>
-        /// <param name="resourceState">
-        /// Resource status of the custom domain.
-        /// Serialized Name: CustomDomain.properties.resourceState
-        /// </param>
-        /// <param name="customHttpsProvisioningState">
-        /// Provisioning status of the custom domain.
-        /// Serialized Name: CustomDomain.properties.customHttpsProvisioningState
-        /// </param>
-        /// <param name="customHttpsAvailabilityState">
-        /// Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step.
-        /// Serialized Name: CustomDomain.properties.customHttpsProvisioningSubstate
-        /// </param>
+        /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
+        /// <param name="resourceState"> Resource status of the custom domain. </param>
+        /// <param name="customHttpsProvisioningState"> Provisioning status of the custom domain. </param>
+        /// <param name="customHttpsAvailabilityState"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </param>
         /// <param name="customDomainHttpsContent">
         /// Certificate parameters for securing custom HTTPS
-        /// Serialized Name: CustomDomain.properties.customHttpsParameters
         /// Please note <see cref="Models.CustomDomainHttpsContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="UserManagedHttpsContent"/> and <see cref="CdnManagedHttpsContent"/>.
         /// </param>
-        /// <param name="validationData">
-        /// Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China.
-        /// Serialized Name: CustomDomain.properties.validationData
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning status of Custom Https of the custom domain.
-        /// Serialized Name: CustomDomain.properties.provisioningState
-        /// </param>
+        /// <param name="validationData"> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </param>
+        /// <param name="provisioningState"> Provisioning status of Custom Https of the custom domain. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CdnCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string hostName, CustomDomainResourceState? resourceState, CustomHttpsProvisioningState? customHttpsProvisioningState, CustomHttpsAvailabilityState? customHttpsAvailabilityState, CustomDomainHttpsContent customDomainHttpsContent, string validationData, CustomHttpsProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -105,42 +85,23 @@ namespace Azure.ResourceManager.Cdn
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The host name of the custom domain. Must be a domain name.
-        /// Serialized Name: CustomDomain.properties.hostName
-        /// </summary>
+        /// <summary> The host name of the custom domain. Must be a domain name. </summary>
         public string HostName { get; set; }
-        /// <summary>
-        /// Resource status of the custom domain.
-        /// Serialized Name: CustomDomain.properties.resourceState
-        /// </summary>
+        /// <summary> Resource status of the custom domain. </summary>
         public CustomDomainResourceState? ResourceState { get; }
-        /// <summary>
-        /// Provisioning status of the custom domain.
-        /// Serialized Name: CustomDomain.properties.customHttpsProvisioningState
-        /// </summary>
+        /// <summary> Provisioning status of the custom domain. </summary>
         public CustomHttpsProvisioningState? CustomHttpsProvisioningState { get; }
-        /// <summary>
-        /// Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step.
-        /// Serialized Name: CustomDomain.properties.customHttpsProvisioningSubstate
-        /// </summary>
+        /// <summary> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </summary>
         public CustomHttpsAvailabilityState? CustomHttpsAvailabilityState { get; }
         /// <summary>
         /// Certificate parameters for securing custom HTTPS
-        /// Serialized Name: CustomDomain.properties.customHttpsParameters
         /// Please note <see cref="Models.CustomDomainHttpsContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="UserManagedHttpsContent"/> and <see cref="CdnManagedHttpsContent"/>.
         /// </summary>
         public CustomDomainHttpsContent CustomDomainHttpsContent { get; set; }
-        /// <summary>
-        /// Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China.
-        /// Serialized Name: CustomDomain.properties.validationData
-        /// </summary>
+        /// <summary> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </summary>
         public string ValidationData { get; set; }
-        /// <summary>
-        /// Provisioning status of Custom Https of the custom domain.
-        /// Serialized Name: CustomDomain.properties.provisioningState
-        /// </summary>
+        /// <summary> Provisioning status of Custom Https of the custom domain. </summary>
         public CustomHttpsProvisioningState? ProvisioningState { get; }
     }
 }

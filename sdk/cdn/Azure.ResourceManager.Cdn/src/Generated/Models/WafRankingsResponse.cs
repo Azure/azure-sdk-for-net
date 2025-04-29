@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Waf Rankings Response
-    /// Serialized Name: WafRankingsResponse
-    /// </summary>
+    /// <summary> Waf Rankings Response. </summary>
     public partial class WafRankingsResponse
     {
         /// <summary>
@@ -56,10 +53,10 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WafRankingsResponse"/>. </summary>
-        /// <param name="dateTimeBegin"> Serialized Name: WafRankingsResponse.dateTimeBegin. </param>
-        /// <param name="dateTimeEnd"> Serialized Name: WafRankingsResponse.dateTimeEnd. </param>
-        /// <param name="groups"> Serialized Name: WafRankingsResponse.groups. </param>
-        /// <param name="data"> Serialized Name: WafRankingsResponse.data. </param>
+        /// <param name="dateTimeBegin"></param>
+        /// <param name="dateTimeEnd"></param>
+        /// <param name="groups"></param>
+        /// <param name="data"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WafRankingsResponse(DateTimeOffset? dateTimeBegin, DateTimeOffset? dateTimeEnd, IReadOnlyList<string> groups, IReadOnlyList<WafRankingsResponseDataItem> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,13 +67,13 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: WafRankingsResponse.dateTimeBegin. </summary>
+        /// <summary> Gets the date time begin. </summary>
         public DateTimeOffset? DateTimeBegin { get; }
-        /// <summary> Serialized Name: WafRankingsResponse.dateTimeEnd. </summary>
+        /// <summary> Gets the date time end. </summary>
         public DateTimeOffset? DateTimeEnd { get; }
-        /// <summary> Serialized Name: WafRankingsResponse.groups. </summary>
+        /// <summary> Gets the groups. </summary>
         public IReadOnlyList<string> Groups { get; }
-        /// <summary> Serialized Name: WafRankingsResponse.data. </summary>
+        /// <summary> Gets the data. </summary>
         public IReadOnlyList<WafRankingsResponseDataItem> Data { get; }
     }
 }

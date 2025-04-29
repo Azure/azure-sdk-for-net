@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Parameters required for content load.
-    /// Serialized Name: LoadParameters
-    /// </summary>
+    /// <summary> Parameters required for content load. </summary>
     public partial class LoadContent
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="LoadContent"/>. </summary>
-        /// <param name="contentPaths">
-        /// The path to the content to be loaded. Path should be a relative file URL of the origin.
-        /// Serialized Name: LoadParameters.contentPaths
-        /// </param>
+        /// <param name="contentPaths"> The path to the content to be loaded. Path should be a relative file URL of the origin. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentPaths"/> is null. </exception>
         public LoadContent(IEnumerable<string> contentPaths)
         {
@@ -63,10 +57,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadContent"/>. </summary>
-        /// <param name="contentPaths">
-        /// The path to the content to be loaded. Path should be a relative file URL of the origin.
-        /// Serialized Name: LoadParameters.contentPaths
-        /// </param>
+        /// <param name="contentPaths"> The path to the content to be loaded. Path should be a relative file URL of the origin. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LoadContent(IList<string> contentPaths, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -79,10 +70,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary>
-        /// The path to the content to be loaded. Path should be a relative file URL of the origin.
-        /// Serialized Name: LoadParameters.contentPaths
-        /// </summary>
+        /// <summary> The path to the content to be loaded. Path should be a relative file URL of the origin. </summary>
         public IList<string> ContentPaths { get; }
     }
 }

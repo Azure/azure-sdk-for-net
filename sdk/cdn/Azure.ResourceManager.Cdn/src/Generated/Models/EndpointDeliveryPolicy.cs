@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// A policy that specifies the delivery rules to be used for an endpoint.
-    /// Serialized Name: EndpointPropertiesUpdateParametersDeliveryPolicy
-    /// </summary>
+    /// <summary> A policy that specifies the delivery rules to be used for an endpoint. </summary>
     public partial class EndpointDeliveryPolicy
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EndpointDeliveryPolicy"/>. </summary>
-        /// <param name="rules">
-        /// A list of the delivery rules.
-        /// Serialized Name: EndpointPropertiesUpdateParametersDeliveryPolicy.rules
-        /// </param>
+        /// <param name="rules"> A list of the delivery rules. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rules"/> is null. </exception>
         public EndpointDeliveryPolicy(IEnumerable<DeliveryRule> rules)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EndpointDeliveryPolicy"/>. </summary>
-        /// <param name="description">
-        /// User-friendly description of the policy.
-        /// Serialized Name: EndpointPropertiesUpdateParametersDeliveryPolicy.description
-        /// </param>
-        /// <param name="rules">
-        /// A list of the delivery rules.
-        /// Serialized Name: EndpointPropertiesUpdateParametersDeliveryPolicy.rules
-        /// </param>
+        /// <param name="description"> User-friendly description of the policy. </param>
+        /// <param name="rules"> A list of the delivery rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EndpointDeliveryPolicy(string description, IList<DeliveryRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary>
-        /// User-friendly description of the policy.
-        /// Serialized Name: EndpointPropertiesUpdateParametersDeliveryPolicy.description
-        /// </summary>
+        /// <summary> User-friendly description of the policy. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// A list of the delivery rules.
-        /// Serialized Name: EndpointPropertiesUpdateParametersDeliveryPolicy.rules
-        /// </summary>
+        /// <summary> A list of the delivery rules. </summary>
         public IList<DeliveryRule> Rules { get; }
     }
 }

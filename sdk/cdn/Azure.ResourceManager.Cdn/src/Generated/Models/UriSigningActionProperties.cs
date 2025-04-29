@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the parameters for the Url Signing action.
-    /// Serialized Name: UrlSigningActionParameters
-    /// </summary>
+    /// <summary> Defines the parameters for the Url Signing action. </summary>
     public partial class UriSigningActionProperties
     {
         /// <summary>
@@ -49,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="UriSigningActionProperties"/>. </summary>
-        /// <param name="actionType"> Serialized Name: UrlSigningActionParameters.typeName. </param>
+        /// <param name="actionType"></param>
         public UriSigningActionProperties(UriSigningActionType actionType)
         {
             ActionType = actionType;
@@ -57,15 +54,9 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UriSigningActionProperties"/>. </summary>
-        /// <param name="actionType"> Serialized Name: UrlSigningActionParameters.typeName. </param>
-        /// <param name="algorithm">
-        /// Algorithm to use for URL signing
-        /// Serialized Name: UrlSigningActionParameters.algorithm
-        /// </param>
-        /// <param name="parameterNameOverride">
-        /// Defines which query string parameters in the url to be considered for expires, key id etc.
-        /// Serialized Name: UrlSigningActionParameters.parameterNameOverride
-        /// </param>
+        /// <param name="actionType"></param>
+        /// <param name="algorithm"> Algorithm to use for URL signing. </param>
+        /// <param name="parameterNameOverride"> Defines which query string parameters in the url to be considered for expires, key id etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UriSigningActionProperties(UriSigningActionType actionType, UriSigningAlgorithm? algorithm, IList<UriSigningParamIdentifier> parameterNameOverride, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,17 +71,11 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Serialized Name: UrlSigningActionParameters.typeName. </summary>
+        /// <summary> Gets or sets the action type. </summary>
         public UriSigningActionType ActionType { get; set; }
-        /// <summary>
-        /// Algorithm to use for URL signing
-        /// Serialized Name: UrlSigningActionParameters.algorithm
-        /// </summary>
+        /// <summary> Algorithm to use for URL signing. </summary>
         public UriSigningAlgorithm? Algorithm { get; set; }
-        /// <summary>
-        /// Defines which query string parameters in the url to be considered for expires, key id etc.
-        /// Serialized Name: UrlSigningActionParameters.parameterNameOverride
-        /// </summary>
+        /// <summary> Defines which query string parameters in the url to be considered for expires, key id etc. </summary>
         public IList<UriSigningParamIdentifier> ParameterNameOverride { get; }
     }
 }

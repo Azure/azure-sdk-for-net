@@ -12,10 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The JSON object that contains the properties to secure a domain.
-    /// Serialized Name: AFDDomainHttpsParameters
-    /// </summary>
+    /// <summary> The JSON object that contains the properties to secure a domain. </summary>
     public partial class FrontDoorCustomDomainHttpsContent
     {
         /// <summary>
@@ -51,28 +48,16 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainHttpsContent"/>. </summary>
-        /// <param name="certificateType">
-        /// Defines the source of the SSL certificate.
-        /// Serialized Name: AFDDomainHttpsParameters.certificateType
-        /// </param>
+        /// <param name="certificateType"> Defines the source of the SSL certificate. </param>
         public FrontDoorCustomDomainHttpsContent(FrontDoorCertificateType certificateType)
         {
             CertificateType = certificateType;
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainHttpsContent"/>. </summary>
-        /// <param name="certificateType">
-        /// Defines the source of the SSL certificate.
-        /// Serialized Name: AFDDomainHttpsParameters.certificateType
-        /// </param>
-        /// <param name="minimumTlsVersion">
-        /// TLS protocol version that will be used for Https
-        /// Serialized Name: AFDDomainHttpsParameters.minimumTlsVersion
-        /// </param>
-        /// <param name="secret">
-        /// Resource reference to the secret. ie. subs/rg/profile/secret
-        /// Serialized Name: AFDDomainHttpsParameters.secret
-        /// </param>
+        /// <param name="certificateType"> Defines the source of the SSL certificate. </param>
+        /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>
+        /// <param name="secret"> Resource reference to the secret. ie. subs/rg/profile/secret. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FrontDoorCustomDomainHttpsContent(FrontDoorCertificateType certificateType, FrontDoorMinimumTlsVersion? minimumTlsVersion, WritableSubResource secret, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -87,20 +72,11 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary>
-        /// Defines the source of the SSL certificate.
-        /// Serialized Name: AFDDomainHttpsParameters.certificateType
-        /// </summary>
+        /// <summary> Defines the source of the SSL certificate. </summary>
         public FrontDoorCertificateType CertificateType { get; set; }
-        /// <summary>
-        /// TLS protocol version that will be used for Https
-        /// Serialized Name: AFDDomainHttpsParameters.minimumTlsVersion
-        /// </summary>
+        /// <summary> TLS protocol version that will be used for Https. </summary>
         public FrontDoorMinimumTlsVersion? MinimumTlsVersion { get; set; }
-        /// <summary>
-        /// Resource reference to the secret. ie. subs/rg/profile/secret
-        /// Serialized Name: AFDDomainHttpsParameters.secret
-        /// </summary>
+        /// <summary> Resource reference to the secret. ie. subs/rg/profile/secret. </summary>
         internal WritableSubResource Secret { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SecretId

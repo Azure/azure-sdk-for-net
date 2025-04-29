@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The UriPathMatchConditionType.
-    /// Serialized Name: UrlPathMatchConditionParametersTypeName
-    /// </summary>
+    /// <summary> The UriPathMatchConditionType. </summary>
     public readonly partial struct UriPathMatchConditionType : IEquatable<UriPathMatchConditionType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string UriPathMatchConditionValue = "DeliveryRuleUrlPathMatchConditionParameters";
 
-        /// <summary>
-        /// DeliveryRuleUrlPathMatchConditionParameters
-        /// Serialized Name: UrlPathMatchConditionParametersTypeName.DeliveryRuleUrlPathMatchConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleUrlPathMatchConditionParameters. </summary>
         public static UriPathMatchConditionType UriPathMatchCondition { get; } = new UriPathMatchConditionType(UriPathMatchConditionValue);
         /// <summary> Determines if two <see cref="UriPathMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(UriPathMatchConditionType left, UriPathMatchConditionType right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Output of check name availability API.
-    /// Serialized Name: CheckNameAvailabilityOutput
-    /// </summary>
+    /// <summary> Output of check name availability API. </summary>
     public partial class CdnNameAvailabilityResult
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnNameAvailabilityResult"/>. </summary>
-        /// <param name="nameAvailable">
-        /// Indicates whether the name is available.
-        /// Serialized Name: CheckNameAvailabilityOutput.nameAvailable
-        /// </param>
-        /// <param name="reason">
-        /// The reason why the name is not available.
-        /// Serialized Name: CheckNameAvailabilityOutput.reason
-        /// </param>
-        /// <param name="message">
-        /// The detailed error message describing why the name is not available.
-        /// Serialized Name: CheckNameAvailabilityOutput.message
-        /// </param>
+        /// <param name="nameAvailable"> Indicates whether the name is available. </param>
+        /// <param name="reason"> The reason why the name is not available. </param>
+        /// <param name="message"> The detailed error message describing why the name is not available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CdnNameAvailabilityResult(bool? nameAvailable, string reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,20 +63,11 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Indicates whether the name is available.
-        /// Serialized Name: CheckNameAvailabilityOutput.nameAvailable
-        /// </summary>
+        /// <summary> Indicates whether the name is available. </summary>
         public bool? NameAvailable { get; }
-        /// <summary>
-        /// The reason why the name is not available.
-        /// Serialized Name: CheckNameAvailabilityOutput.reason
-        /// </summary>
+        /// <summary> The reason why the name is not available. </summary>
         public string Reason { get; }
-        /// <summary>
-        /// The detailed error message describing why the name is not available.
-        /// Serialized Name: CheckNameAvailabilityOutput.message
-        /// </summary>
+        /// <summary> The detailed error message describing why the name is not available. </summary>
         public string Message { get; }
     }
 }

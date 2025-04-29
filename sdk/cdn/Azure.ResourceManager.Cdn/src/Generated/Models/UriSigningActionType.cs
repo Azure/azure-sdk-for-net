@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The UriSigningActionType.
-    /// Serialized Name: UrlSigningActionParametersTypeName
-    /// </summary>
+    /// <summary> The UriSigningActionType. </summary>
     public readonly partial struct UriSigningActionType : IEquatable<UriSigningActionType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string UriSigningActionValue = "DeliveryRuleUrlSigningActionParameters";
 
-        /// <summary>
-        /// DeliveryRuleUrlSigningActionParameters
-        /// Serialized Name: UrlSigningActionParametersTypeName.DeliveryRuleUrlSigningActionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleUrlSigningActionParameters. </summary>
         public static UriSigningActionType UriSigningAction { get; } = new UriSigningActionType(UriSigningActionValue);
         /// <summary> Determines if two <see cref="UriSigningActionType"/> values are the same. </summary>
         public static bool operator ==(UriSigningActionType left, UriSigningActionType right) => left.Equals(right);

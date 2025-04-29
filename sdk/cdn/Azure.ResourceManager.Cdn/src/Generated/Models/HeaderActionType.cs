@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The HeaderActionType.
-    /// Serialized Name: HeaderActionParametersTypeName
-    /// </summary>
+    /// <summary> The HeaderActionType. </summary>
     public readonly partial struct HeaderActionType : IEquatable<HeaderActionType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string HeaderActionValue = "DeliveryRuleHeaderActionParameters";
 
-        /// <summary>
-        /// DeliveryRuleHeaderActionParameters
-        /// Serialized Name: HeaderActionParametersTypeName.DeliveryRuleHeaderActionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleHeaderActionParameters. </summary>
         public static HeaderActionType HeaderAction { get; } = new HeaderActionType(HeaderActionValue);
         /// <summary> Determines if two <see cref="HeaderActionType"/> values are the same. </summary>
         public static bool operator ==(HeaderActionType left, HeaderActionType right) => left.Equals(right);

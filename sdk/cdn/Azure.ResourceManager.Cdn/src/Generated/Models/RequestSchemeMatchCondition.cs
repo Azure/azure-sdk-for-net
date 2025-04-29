@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the parameters for RequestScheme match conditions
-    /// Serialized Name: RequestSchemeMatchConditionParameters
-    /// </summary>
+    /// <summary> Defines the parameters for RequestScheme match conditions. </summary>
     public partial class RequestSchemeMatchCondition
     {
         /// <summary>
@@ -49,11 +46,8 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RequestSchemeMatchCondition"/>. </summary>
-        /// <param name="conditionType"> Serialized Name: RequestSchemeMatchConditionParameters.typeName. </param>
-        /// <param name="requestSchemeOperator">
-        /// Describes operator to be matched
-        /// Serialized Name: RequestSchemeMatchConditionParameters.operator
-        /// </param>
+        /// <param name="conditionType"></param>
+        /// <param name="requestSchemeOperator"> Describes operator to be matched. </param>
         public RequestSchemeMatchCondition(RequestSchemeMatchConditionType conditionType, RequestSchemeOperator requestSchemeOperator)
         {
             ConditionType = conditionType;
@@ -63,23 +57,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestSchemeMatchCondition"/>. </summary>
-        /// <param name="conditionType"> Serialized Name: RequestSchemeMatchConditionParameters.typeName. </param>
-        /// <param name="requestSchemeOperator">
-        /// Describes operator to be matched
-        /// Serialized Name: RequestSchemeMatchConditionParameters.operator
-        /// </param>
-        /// <param name="negateCondition">
-        /// Describes if this is negate condition or not
-        /// Serialized Name: RequestSchemeMatchConditionParameters.negateCondition
-        /// </param>
-        /// <param name="transforms">
-        /// List of transforms
-        /// Serialized Name: RequestSchemeMatchConditionParameters.transforms
-        /// </param>
-        /// <param name="matchValues">
-        /// The match value for the condition of the delivery rule
-        /// Serialized Name: RequestSchemeMatchConditionParameters.matchValues
-        /// </param>
+        /// <param name="conditionType"></param>
+        /// <param name="requestSchemeOperator"> Describes operator to be matched. </param>
+        /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
+        /// <param name="transforms"> List of transforms. </param>
+        /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RequestSchemeMatchCondition(RequestSchemeMatchConditionType conditionType, RequestSchemeOperator requestSchemeOperator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestSchemeMatchConditionMatchValue> matchValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -96,27 +78,15 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Serialized Name: RequestSchemeMatchConditionParameters.typeName. </summary>
+        /// <summary> Gets or sets the condition type. </summary>
         public RequestSchemeMatchConditionType ConditionType { get; set; }
-        /// <summary>
-        /// Describes operator to be matched
-        /// Serialized Name: RequestSchemeMatchConditionParameters.operator
-        /// </summary>
+        /// <summary> Describes operator to be matched. </summary>
         public RequestSchemeOperator RequestSchemeOperator { get; set; }
-        /// <summary>
-        /// Describes if this is negate condition or not
-        /// Serialized Name: RequestSchemeMatchConditionParameters.negateCondition
-        /// </summary>
+        /// <summary> Describes if this is negate condition or not. </summary>
         public bool? NegateCondition { get; set; }
-        /// <summary>
-        /// List of transforms
-        /// Serialized Name: RequestSchemeMatchConditionParameters.transforms
-        /// </summary>
+        /// <summary> List of transforms. </summary>
         public IList<PreTransformCategory> Transforms { get; }
-        /// <summary>
-        /// The match value for the condition of the delivery rule
-        /// Serialized Name: RequestSchemeMatchConditionParameters.matchValues
-        /// </summary>
+        /// <summary> The match value for the condition of the delivery rule. </summary>
         public IList<RequestSchemeMatchConditionMatchValue> MatchValues { get; }
     }
 }

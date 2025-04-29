@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The WafRuleType.
-    /// Serialized Name: WafRuleType
-    /// </summary>
+    /// <summary> The WafRuleType. </summary>
     public readonly partial struct WafRuleType : IEquatable<WafRuleType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string CustomValue = "custom";
         private const string BotValue = "bot";
 
-        /// <summary>
-        /// managed
-        /// Serialized Name: WafRuleType.managed
-        /// </summary>
+        /// <summary> managed. </summary>
         public static WafRuleType Managed { get; } = new WafRuleType(ManagedValue);
-        /// <summary>
-        /// custom
-        /// Serialized Name: WafRuleType.custom
-        /// </summary>
+        /// <summary> custom. </summary>
         public static WafRuleType Custom { get; } = new WafRuleType(CustomValue);
-        /// <summary>
-        /// bot
-        /// Serialized Name: WafRuleType.bot
-        /// </summary>
+        /// <summary> bot. </summary>
         public static WafRuleType Bot { get; } = new WafRuleType(BotValue);
         /// <summary> Determines if two <see cref="WafRuleType"/> values are the same. </summary>
         public static bool operator ==(WafRuleType left, WafRuleType right) => left.Equals(right);

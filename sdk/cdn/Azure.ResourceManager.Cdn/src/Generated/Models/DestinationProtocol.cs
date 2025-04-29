@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Protocol to use for the redirect. The default value is MatchRequest
-    /// Serialized Name: DestinationProtocol
-    /// </summary>
+    /// <summary> Protocol to use for the redirect. The default value is MatchRequest. </summary>
     public readonly partial struct DestinationProtocol : IEquatable<DestinationProtocol>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string HttpValue = "Http";
         private const string HttpsValue = "Https";
 
-        /// <summary>
-        /// MatchRequest
-        /// Serialized Name: DestinationProtocol.MatchRequest
-        /// </summary>
+        /// <summary> MatchRequest. </summary>
         public static DestinationProtocol MatchRequest { get; } = new DestinationProtocol(MatchRequestValue);
-        /// <summary>
-        /// Http
-        /// Serialized Name: DestinationProtocol.Http
-        /// </summary>
+        /// <summary> Http. </summary>
         public static DestinationProtocol Http { get; } = new DestinationProtocol(HttpValue);
-        /// <summary>
-        /// Https
-        /// Serialized Name: DestinationProtocol.Https
-        /// </summary>
+        /// <summary> Https. </summary>
         public static DestinationProtocol Https { get; } = new DestinationProtocol(HttpsValue);
         /// <summary> Determines if two <see cref="DestinationProtocol"/> values are the same. </summary>
         public static bool operator ==(DestinationProtocol left, DestinationProtocol right) => left.Equals(right);

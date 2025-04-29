@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Cdn
     /// <summary>
     /// A class representing the FrontDoorSecret data model.
     /// Friendly Secret name mapping to the any Secret or secret related information.
-    /// Serialized Name: Secret
     /// </summary>
     public partial class FrontDoorSecretData : ResourceData
     {
@@ -62,18 +61,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState">
-        /// Provisioning status
-        /// Serialized Name: Secret.properties.provisioningState
-        /// </param>
-        /// <param name="deploymentStatus"> Serialized Name: Secret.properties.deploymentStatus. </param>
-        /// <param name="profileName">
-        /// The name of the profile which holds the secret.
-        /// Serialized Name: Secret.properties.profileName
-        /// </param>
+        /// <param name="provisioningState"> Provisioning status. </param>
+        /// <param name="deploymentStatus"></param>
+        /// <param name="profileName"> The name of the profile which holds the secret. </param>
         /// <param name="properties">
         /// object which contains secret parameters
-        /// Serialized Name: Secret.properties.parameters
         /// Please note <see cref="FrontDoorSecretProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureFirstPartyManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, <see cref="ManagedCertificateProperties"/> and <see cref="UriSigningKeyProperties"/>.
         /// </param>
@@ -87,21 +79,14 @@ namespace Azure.ResourceManager.Cdn
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Provisioning status
-        /// Serialized Name: Secret.properties.provisioningState
-        /// </summary>
+        /// <summary> Provisioning status. </summary>
         public FrontDoorProvisioningState? ProvisioningState { get; }
-        /// <summary> Serialized Name: Secret.properties.deploymentStatus. </summary>
+        /// <summary> Gets the deployment status. </summary>
         public FrontDoorDeploymentStatus? DeploymentStatus { get; }
-        /// <summary>
-        /// The name of the profile which holds the secret.
-        /// Serialized Name: Secret.properties.profileName
-        /// </summary>
+        /// <summary> The name of the profile which holds the secret. </summary>
         public string ProfileName { get; }
         /// <summary>
         /// object which contains secret parameters
-        /// Serialized Name: Secret.properties.parameters
         /// Please note <see cref="FrontDoorSecretProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureFirstPartyManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, <see cref="ManagedCertificateProperties"/> and <see cref="UriSigningKeyProperties"/>.
         /// </summary>

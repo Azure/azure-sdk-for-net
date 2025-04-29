@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Input of the custom domain to be validated for DNS mapping.
-    /// Serialized Name: ValidateCustomDomainInput
-    /// </summary>
+    /// <summary> Input of the custom domain to be validated for DNS mapping. </summary>
     public partial class ValidateCustomDomainContent
     {
         /// <summary>
@@ -49,10 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ValidateCustomDomainContent"/>. </summary>
-        /// <param name="hostName">
-        /// The host name of the custom domain. Must be a domain name.
-        /// Serialized Name: ValidateCustomDomainInput.hostName
-        /// </param>
+        /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public ValidateCustomDomainContent(string hostName)
         {
@@ -62,10 +56,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ValidateCustomDomainContent"/>. </summary>
-        /// <param name="hostName">
-        /// The host name of the custom domain. Must be a domain name.
-        /// Serialized Name: ValidateCustomDomainInput.hostName
-        /// </param>
+        /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ValidateCustomDomainContent(string hostName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -78,10 +69,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary>
-        /// The host name of the custom domain. Must be a domain name.
-        /// Serialized Name: ValidateCustomDomainInput.hostName
-        /// </summary>
+        /// <summary> The host name of the custom domain. Must be a domain name. </summary>
         public string HostName { get; }
     }
 }

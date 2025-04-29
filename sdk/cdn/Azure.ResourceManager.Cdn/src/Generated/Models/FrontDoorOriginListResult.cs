@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Result of the request to list origins. It contains a list of origin objects and a URL link to get the next set of results.
-    /// Serialized Name: AFDOriginListResult
-    /// </summary>
+    /// <summary> Result of the request to list origins. It contains a list of origin objects and a URL link to get the next set of results. </summary>
     internal partial class FrontDoorOriginListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorOriginListResult"/>. </summary>
-        /// <param name="value">
-        /// List of Azure Front Door origins within an Azure Front Door endpoint
-        /// Serialized Name: AFDOriginListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// URL to get the next set of origin objects if there are any.
-        /// Serialized Name: AFDOriginListResult.nextLink
-        /// </param>
+        /// <param name="value"> List of Azure Front Door origins within an Azure Front Door endpoint. </param>
+        /// <param name="nextLink"> URL to get the next set of origin objects if there are any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FrontDoorOriginListResult(IReadOnlyList<FrontDoorOriginData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of Azure Front Door origins within an Azure Front Door endpoint
-        /// Serialized Name: AFDOriginListResult.value
-        /// </summary>
+        /// <summary> List of Azure Front Door origins within an Azure Front Door endpoint. </summary>
         public IReadOnlyList<FrontDoorOriginData> Value { get; }
-        /// <summary>
-        /// URL to get the next set of origin objects if there are any.
-        /// Serialized Name: AFDOriginListResult.nextLink
-        /// </summary>
+        /// <summary> URL to get the next set of origin objects if there are any. </summary>
         public string NextLink { get; }
     }
 }

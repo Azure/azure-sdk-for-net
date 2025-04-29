@@ -12,10 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the parameters for the origin group override action.
-    /// Serialized Name: OriginGroupOverrideActionParameters
-    /// </summary>
+    /// <summary> Defines the parameters for the origin group override action. </summary>
     public partial class OriginGroupOverrideActionProperties
     {
         /// <summary>
@@ -51,11 +48,8 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideActionProperties"/>. </summary>
-        /// <param name="actionType"> Serialized Name: OriginGroupOverrideActionParameters.typeName. </param>
-        /// <param name="originGroup">
-        /// defines the OriginGroup that would override the DefaultOriginGroup.
-        /// Serialized Name: OriginGroupOverrideActionParameters.originGroup
-        /// </param>
+        /// <param name="actionType"></param>
+        /// <param name="originGroup"> defines the OriginGroup that would override the DefaultOriginGroup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroup"/> is null. </exception>
         public OriginGroupOverrideActionProperties(OriginGroupOverrideActionType actionType, WritableSubResource originGroup)
         {
@@ -66,11 +60,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideActionProperties"/>. </summary>
-        /// <param name="actionType"> Serialized Name: OriginGroupOverrideActionParameters.typeName. </param>
-        /// <param name="originGroup">
-        /// defines the OriginGroup that would override the DefaultOriginGroup.
-        /// Serialized Name: OriginGroupOverrideActionParameters.originGroup
-        /// </param>
+        /// <param name="actionType"></param>
+        /// <param name="originGroup"> defines the OriginGroup that would override the DefaultOriginGroup. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OriginGroupOverrideActionProperties(OriginGroupOverrideActionType actionType, WritableSubResource originGroup, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,12 +75,9 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Serialized Name: OriginGroupOverrideActionParameters.typeName. </summary>
+        /// <summary> Gets or sets the action type. </summary>
         public OriginGroupOverrideActionType ActionType { get; set; }
-        /// <summary>
-        /// defines the OriginGroup that would override the DefaultOriginGroup.
-        /// Serialized Name: OriginGroupOverrideActionParameters.originGroup
-        /// </summary>
+        /// <summary> defines the OriginGroup that would override the DefaultOriginGroup. </summary>
         internal WritableSubResource OriginGroup { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier OriginGroupId

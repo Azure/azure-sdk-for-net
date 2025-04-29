@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the parameters for using CDN managed certificate for securing custom domain.
-    /// Serialized Name: CdnCertificateSourceParameters
-    /// </summary>
+    /// <summary> Defines the parameters for using CDN managed certificate for securing custom domain. </summary>
     public partial class CdnCertificateSource
     {
         /// <summary>
@@ -49,11 +46,8 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CdnCertificateSource"/>. </summary>
-        /// <param name="sourceType"> Serialized Name: CdnCertificateSourceParameters.typeName. </param>
-        /// <param name="certificateType">
-        /// Type of certificate used
-        /// Serialized Name: CdnCertificateSourceParameters.certificateType
-        /// </param>
+        /// <param name="sourceType"></param>
+        /// <param name="certificateType"> Type of certificate used. </param>
         public CdnCertificateSource(CdnCertificateSourceType sourceType, CdnManagedCertificateType certificateType)
         {
             SourceType = sourceType;
@@ -61,11 +55,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnCertificateSource"/>. </summary>
-        /// <param name="sourceType"> Serialized Name: CdnCertificateSourceParameters.typeName. </param>
-        /// <param name="certificateType">
-        /// Type of certificate used
-        /// Serialized Name: CdnCertificateSourceParameters.certificateType
-        /// </param>
+        /// <param name="sourceType"></param>
+        /// <param name="certificateType"> Type of certificate used. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CdnCertificateSource(CdnCertificateSourceType sourceType, CdnManagedCertificateType certificateType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -79,12 +70,9 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Serialized Name: CdnCertificateSourceParameters.typeName. </summary>
+        /// <summary> Gets or sets the source type. </summary>
         public CdnCertificateSourceType SourceType { get; set; }
-        /// <summary>
-        /// Type of certificate used
-        /// Serialized Name: CdnCertificateSourceParameters.certificateType
-        /// </summary>
+        /// <summary> Type of certificate used. </summary>
         public CdnManagedCertificateType CertificateType { get; set; }
     }
 }

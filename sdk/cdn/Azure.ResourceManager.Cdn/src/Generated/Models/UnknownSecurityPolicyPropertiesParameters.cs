@@ -14,10 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
     internal partial class UnknownSecurityPolicyPropertiesParameters : SecurityPolicyProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSecurityPolicyPropertiesParameters"/>. </summary>
-        /// <param name="policyType">
-        /// The type of the Security policy to create.
-        /// Serialized Name: SecurityPolicyPropertiesParameters.type
-        /// </param>
+        /// <param name="policyType"> The type of the Security policy to create. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UnknownSecurityPolicyPropertiesParameters(SecurityPolicyType policyType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(policyType, serializedAdditionalRawData)
         {

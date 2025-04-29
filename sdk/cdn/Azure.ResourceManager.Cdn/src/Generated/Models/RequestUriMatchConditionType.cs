@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The RequestUriMatchConditionType.
-    /// Serialized Name: RequestUriMatchConditionParametersTypeName
-    /// </summary>
+    /// <summary> The RequestUriMatchConditionType. </summary>
     public readonly partial struct RequestUriMatchConditionType : IEquatable<RequestUriMatchConditionType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string RequestUriConditionValue = "DeliveryRuleRequestUriConditionParameters";
 
-        /// <summary>
-        /// DeliveryRuleRequestUriConditionParameters
-        /// Serialized Name: RequestUriMatchConditionParametersTypeName.DeliveryRuleRequestUriConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleRequestUriConditionParameters. </summary>
         public static RequestUriMatchConditionType RequestUriCondition { get; } = new RequestUriMatchConditionType(RequestUriConditionValue);
         /// <summary> Determines if two <see cref="RequestUriMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(RequestUriMatchConditionType left, RequestUriMatchConditionType right) => left.Equals(right);

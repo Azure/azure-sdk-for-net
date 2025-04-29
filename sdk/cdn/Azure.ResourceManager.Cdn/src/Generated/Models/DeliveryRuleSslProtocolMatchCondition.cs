@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the parameters for SslProtocol match conditions
-    /// Serialized Name: SslProtocolMatchConditionParameters
-    /// </summary>
+    /// <summary> Defines the parameters for SslProtocol match conditions. </summary>
     public partial class DeliveryRuleSslProtocolMatchCondition
     {
         /// <summary>
@@ -49,11 +46,8 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleSslProtocolMatchCondition"/>. </summary>
-        /// <param name="sslProtocolMatchConditionType"> Serialized Name: SslProtocolMatchConditionParameters.typeName. </param>
-        /// <param name="sslProtocolOperator">
-        /// Describes operator to be matched
-        /// Serialized Name: SslProtocolMatchConditionParameters.operator
-        /// </param>
+        /// <param name="sslProtocolMatchConditionType"></param>
+        /// <param name="sslProtocolOperator"> Describes operator to be matched. </param>
         public DeliveryRuleSslProtocolMatchCondition(SslProtocolMatchConditionType sslProtocolMatchConditionType, SslProtocolOperator sslProtocolOperator)
         {
             SslProtocolMatchConditionType = sslProtocolMatchConditionType;
@@ -63,23 +57,11 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleSslProtocolMatchCondition"/>. </summary>
-        /// <param name="sslProtocolMatchConditionType"> Serialized Name: SslProtocolMatchConditionParameters.typeName. </param>
-        /// <param name="sslProtocolOperator">
-        /// Describes operator to be matched
-        /// Serialized Name: SslProtocolMatchConditionParameters.operator
-        /// </param>
-        /// <param name="negateCondition">
-        /// Describes if this is negate condition or not
-        /// Serialized Name: SslProtocolMatchConditionParameters.negateCondition
-        /// </param>
-        /// <param name="matchValues">
-        /// The match value for the condition of the delivery rule
-        /// Serialized Name: SslProtocolMatchConditionParameters.matchValues
-        /// </param>
-        /// <param name="transforms">
-        /// List of transforms
-        /// Serialized Name: SslProtocolMatchConditionParameters.transforms
-        /// </param>
+        /// <param name="sslProtocolMatchConditionType"></param>
+        /// <param name="sslProtocolOperator"> Describes operator to be matched. </param>
+        /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
+        /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
+        /// <param name="transforms"> List of transforms. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DeliveryRuleSslProtocolMatchCondition(SslProtocolMatchConditionType sslProtocolMatchConditionType, SslProtocolOperator sslProtocolOperator, bool? negateCondition, IList<DeliveryRuleSslProtocol> matchValues, IList<PreTransformCategory> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -96,27 +78,15 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Serialized Name: SslProtocolMatchConditionParameters.typeName. </summary>
+        /// <summary> Gets or sets the ssl protocol match condition type. </summary>
         public SslProtocolMatchConditionType SslProtocolMatchConditionType { get; set; }
-        /// <summary>
-        /// Describes operator to be matched
-        /// Serialized Name: SslProtocolMatchConditionParameters.operator
-        /// </summary>
+        /// <summary> Describes operator to be matched. </summary>
         public SslProtocolOperator SslProtocolOperator { get; set; }
-        /// <summary>
-        /// Describes if this is negate condition or not
-        /// Serialized Name: SslProtocolMatchConditionParameters.negateCondition
-        /// </summary>
+        /// <summary> Describes if this is negate condition or not. </summary>
         public bool? NegateCondition { get; set; }
-        /// <summary>
-        /// The match value for the condition of the delivery rule
-        /// Serialized Name: SslProtocolMatchConditionParameters.matchValues
-        /// </summary>
+        /// <summary> The match value for the condition of the delivery rule. </summary>
         public IList<DeliveryRuleSslProtocol> MatchValues { get; }
-        /// <summary>
-        /// List of transforms
-        /// Serialized Name: SslProtocolMatchConditionParameters.transforms
-        /// </summary>
+        /// <summary> List of transforms. </summary>
         public IList<PreTransformCategory> Transforms { get; }
     }
 }

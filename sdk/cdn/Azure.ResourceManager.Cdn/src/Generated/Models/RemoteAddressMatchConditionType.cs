@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The RemoteAddressMatchConditionType.
-    /// Serialized Name: RemoteAddressMatchConditionParametersTypeName
-    /// </summary>
+    /// <summary> The RemoteAddressMatchConditionType. </summary>
     public readonly partial struct RemoteAddressMatchConditionType : IEquatable<RemoteAddressMatchConditionType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string RemoteAddressConditionValue = "DeliveryRuleRemoteAddressConditionParameters";
 
-        /// <summary>
-        /// DeliveryRuleRemoteAddressConditionParameters
-        /// Serialized Name: RemoteAddressMatchConditionParametersTypeName.DeliveryRuleRemoteAddressConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleRemoteAddressConditionParameters. </summary>
         public static RemoteAddressMatchConditionType RemoteAddressCondition { get; } = new RemoteAddressMatchConditionType(RemoteAddressConditionValue);
         /// <summary> Determines if two <see cref="RemoteAddressMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(RemoteAddressMatchConditionType left, RemoteAddressMatchConditionType right) => left.Equals(right);

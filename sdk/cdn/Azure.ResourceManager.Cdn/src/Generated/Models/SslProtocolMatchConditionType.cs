@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The SslProtocolMatchConditionType.
-    /// Serialized Name: SslProtocolMatchConditionParametersTypeName
-    /// </summary>
+    /// <summary> The SslProtocolMatchConditionType. </summary>
     public readonly partial struct SslProtocolMatchConditionType : IEquatable<SslProtocolMatchConditionType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string SslProtocolConditionValue = "DeliveryRuleSslProtocolConditionParameters";
 
-        /// <summary>
-        /// DeliveryRuleSslProtocolConditionParameters
-        /// Serialized Name: SslProtocolMatchConditionParametersTypeName.DeliveryRuleSslProtocolConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleSslProtocolConditionParameters. </summary>
         public static SslProtocolMatchConditionType SslProtocolCondition { get; } = new SslProtocolMatchConditionType(SslProtocolConditionValue);
         /// <summary> Determines if two <see cref="SslProtocolMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(SslProtocolMatchConditionType left, SslProtocolMatchConditionType right) => left.Equals(right);

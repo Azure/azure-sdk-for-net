@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The IsDeviceMatchConditionType.
-    /// Serialized Name: IsDeviceMatchConditionParametersTypeName
-    /// </summary>
+    /// <summary> The IsDeviceMatchConditionType. </summary>
     public readonly partial struct IsDeviceMatchConditionType : IEquatable<IsDeviceMatchConditionType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string IsDeviceConditionValue = "DeliveryRuleIsDeviceConditionParameters";
 
-        /// <summary>
-        /// DeliveryRuleIsDeviceConditionParameters
-        /// Serialized Name: IsDeviceMatchConditionParametersTypeName.DeliveryRuleIsDeviceConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleIsDeviceConditionParameters. </summary>
         public static IsDeviceMatchConditionType IsDeviceCondition { get; } = new IsDeviceMatchConditionType(IsDeviceConditionValue);
         /// <summary> Determines if two <see cref="IsDeviceMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(IsDeviceMatchConditionType left, IsDeviceMatchConditionType right) => left.Equals(right);

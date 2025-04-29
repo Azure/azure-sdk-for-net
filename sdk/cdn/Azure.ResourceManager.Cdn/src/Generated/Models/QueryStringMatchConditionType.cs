@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The QueryStringMatchConditionType.
-    /// Serialized Name: QueryStringMatchConditionParametersTypeName
-    /// </summary>
+    /// <summary> The QueryStringMatchConditionType. </summary>
     public readonly partial struct QueryStringMatchConditionType : IEquatable<QueryStringMatchConditionType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string QueryStringConditionValue = "DeliveryRuleQueryStringConditionParameters";
 
-        /// <summary>
-        /// DeliveryRuleQueryStringConditionParameters
-        /// Serialized Name: QueryStringMatchConditionParametersTypeName.DeliveryRuleQueryStringConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleQueryStringConditionParameters. </summary>
         public static QueryStringMatchConditionType QueryStringCondition { get; } = new QueryStringMatchConditionType(QueryStringConditionValue);
         /// <summary> Determines if two <see cref="QueryStringMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(QueryStringMatchConditionType left, QueryStringMatchConditionType right) => left.Equals(right);

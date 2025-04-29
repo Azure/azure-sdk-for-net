@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Parameters required for content purge.
-    /// Serialized Name: AfdPurgeParameters
-    /// </summary>
+    /// <summary> Parameters required for content purge. </summary>
     public partial class FrontDoorPurgeContent
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorPurgeContent"/>. </summary>
-        /// <param name="contentPaths">
-        /// The path to the content to be purged. Can describe a file path or a wild card directory.
-        /// Serialized Name: AfdPurgeParameters.contentPaths
-        /// </param>
+        /// <param name="contentPaths"> The path to the content to be purged. Can describe a file path or a wild card directory. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentPaths"/> is null. </exception>
         public FrontDoorPurgeContent(IEnumerable<string> contentPaths)
         {
@@ -64,14 +58,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorPurgeContent"/>. </summary>
-        /// <param name="contentPaths">
-        /// The path to the content to be purged. Can describe a file path or a wild card directory.
-        /// Serialized Name: AfdPurgeParameters.contentPaths
-        /// </param>
-        /// <param name="domains">
-        /// List of domains.
-        /// Serialized Name: AfdPurgeParameters.domains
-        /// </param>
+        /// <param name="contentPaths"> The path to the content to be purged. Can describe a file path or a wild card directory. </param>
+        /// <param name="domains"> List of domains. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FrontDoorPurgeContent(IList<string> contentPaths, IList<string> domains, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,15 +73,9 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary>
-        /// The path to the content to be purged. Can describe a file path or a wild card directory.
-        /// Serialized Name: AfdPurgeParameters.contentPaths
-        /// </summary>
+        /// <summary> The path to the content to be purged. Can describe a file path or a wild card directory. </summary>
         public IList<string> ContentPaths { get; }
-        /// <summary>
-        /// List of domains.
-        /// Serialized Name: AfdPurgeParameters.domains
-        /// </summary>
+        /// <summary> List of domains. </summary>
         public IList<string> Domains { get; }
     }
 }

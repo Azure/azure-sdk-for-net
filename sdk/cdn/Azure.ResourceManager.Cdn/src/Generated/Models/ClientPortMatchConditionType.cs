@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The ClientPortMatchConditionType.
-    /// Serialized Name: ClientPortMatchConditionParametersTypeName
-    /// </summary>
+    /// <summary> The ClientPortMatchConditionType. </summary>
     public readonly partial struct ClientPortMatchConditionType : IEquatable<ClientPortMatchConditionType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string ClientPortConditionValue = "DeliveryRuleClientPortConditionParameters";
 
-        /// <summary>
-        /// DeliveryRuleClientPortConditionParameters
-        /// Serialized Name: ClientPortMatchConditionParametersTypeName.DeliveryRuleClientPortConditionParameters
-        /// </summary>
+        /// <summary> DeliveryRuleClientPortConditionParameters. </summary>
         public static ClientPortMatchConditionType ClientPortCondition { get; } = new ClientPortMatchConditionType(ClientPortConditionValue);
         /// <summary> Determines if two <see cref="ClientPortMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(ClientPortMatchConditionType left, ClientPortMatchConditionType right) => left.Equals(right);
