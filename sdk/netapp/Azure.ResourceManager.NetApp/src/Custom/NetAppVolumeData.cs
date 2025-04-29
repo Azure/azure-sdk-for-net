@@ -16,8 +16,12 @@ namespace Azure.ResourceManager.NetApp
     [CodeGenSerialization(nameof(IsRestoring), "isRestoring")]
     public partial class NetAppVolumeData : TrackedResourceData
     {
-        /// <summary> Restoring. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? IsRestoring { get; set; }
+        /// <summary> Restoring. ReadOnly property indicating if volume is being resored </summary>
+        public bool? IsRestoring
+        {
+            get;
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            set;
+        }
     }
 }
