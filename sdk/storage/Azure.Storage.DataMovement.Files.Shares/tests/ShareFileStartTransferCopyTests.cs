@@ -778,10 +778,9 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [Combinatorial]
-        public async Task ValidateProtocolAsync_SmbShareFileToSmbShareFile_CompareProtocolSetToActual(
-            [Values(true, false)] bool sourceIsNfs,
-            [Values(true, false)] bool destIsNfs)
+        [TestCase(true, true)]
+        [TestCase(false, false)]
+        public async Task ValidateProtocolAsync_SmbShareFileToSmbShareFile_CompareProtocolSetToActual(bool sourceIsNfs, bool destIsNfs)
         {
             // Arrange
             await using IDisposingContainer<ShareClient> source = await GetSourceDisposingContainerAsync();
@@ -833,16 +832,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 var ex = Assert.ThrowsAsync<ArgumentException>(async () =>
                     await transferManager.StartTransferAsync(sourceResource, destinationResource, options));
-                string endpoint = destIsNfs ? "destination" : "source";
-                Assert.AreEqual($"The Protocol set on the {endpoint} '{ShareProtocols.Nfs}' does not match the actual Protocol of the share '{ShareProtocols.Smb}'.", ex.Message);
+                Assert.AreEqual($"The Protocol set on the source '{ShareProtocols.Nfs}' does not match the actual Protocol of the share '{ShareProtocols.Smb}'.", ex.Message);
             }
         }
 
         [RecordedTest]
-        [Combinatorial]
-        public async Task ValidateProtocolAsync_NfsShareFileToNfsShareFile_CompareProtocolSetToActual(
-            [Values(true, false)] bool sourceIsNfs,
-            [Values(true, false)] bool destIsNfs)
+        [TestCase(true, true)]
+        [TestCase(false, false)]
+        public async Task ValidateProtocolAsync_NfsShareFileToNfsShareFile_CompareProtocolSetToActual(bool sourceIsNfs, bool destIsNfs)
         {
             // Arrange
             await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareSasNfsAsync();
@@ -894,8 +891,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 var ex = Assert.ThrowsAsync<ArgumentException>(async () =>
                     await transferManager.StartTransferAsync(sourceResource, destinationResource, options));
-                string endpoint = destIsNfs ? "source" : "destination";
-                Assert.AreEqual($"The Protocol set on the {endpoint} '{ShareProtocols.Smb}' does not match the actual Protocol of the share '{ShareProtocols.Nfs}'.", ex.Message);
+                Assert.AreEqual($"The Protocol set on the source '{ShareProtocols.Smb}' does not match the actual Protocol of the share '{ShareProtocols.Nfs}'.", ex.Message);
             }
         }
 
@@ -964,7 +960,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 var ex = Assert.ThrowsAsync<UnauthorizedAccessException>(async () =>
                     await transferManager.StartTransferAsync(sourceResource, destinationResource, options));
-                Assert.AreEqual("Share-level permissions on the destination is required to validate the Protocol. " +
+                Assert.AreEqual("Share-level permissions on the source is required to validate the Protocol. " +
                     "Please enable SkipProtocolValidation if you wish to skip the validation.", ex.Message);
             }
         }

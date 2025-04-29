@@ -348,31 +348,58 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 directoryMetadata: _options?.DirectoryMetadata);
         }
 
-        protected override async Task<bool?> ValidateProtocolAsync(bool isDestination, CancellationToken cancellationToken = default)
+        protected override async Task ValidateTransferAsync(StorageResource sourceResource, CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            if (_options?.SkipProtocolValidation ?? false)
-            {
-                return (_options?.IsNfs ?? false);
-            }
 
-            string endpoint = isDestination ? "destination" : "source";
-            try
+            if (sourceResource is ShareFileStorageResource sourceShareFile)
             {
-                ShareClient parentShare = ShareFileClient.GetParentShareClient();
-                ShareProperties properties = await parentShare.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                ShareProtocols setProtocol = (_options?.IsNfs ?? false) ? ShareProtocols.Nfs : ShareProtocols.Smb;
-                ShareProtocols actualProtocol = properties.Protocols ?? ShareProtocols.Smb;
-                if (actualProtocol != setProtocol)
+                // Make sure the transfer is supported (NFS -> NFS and SMB -> SMB)
+                if ((_options?.IsNfs ?? false) != (sourceShareFile._options?.IsNfs ?? false))
                 {
-                    throw Errors.ProtocolSetMismatch(endpoint, setProtocol, actualProtocol);
+                    throw Errors.ShareTransferNotSupported();
+                }
+
+                // validate the source protocol
+                if (!sourceShareFile._options?.SkipProtocolValidation ?? true)
+                {
+                    try
+                    {
+                        ShareClient sourceParentShare = sourceShareFile.ShareFileClient.GetParentShareClient();
+                        ShareProperties sourceProperties = await sourceParentShare.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                        ShareProtocols setProtocolSource = (sourceShareFile._options?.IsNfs ?? false) ? ShareProtocols.Nfs : ShareProtocols.Smb;
+                        ShareProtocols actualProtocolSource = sourceProperties.Protocols ?? ShareProtocols.Smb;
+                        if (actualProtocolSource != setProtocolSource)
+                        {
+                            throw Errors.ProtocolSetMismatch("source", setProtocolSource, actualProtocolSource);
+                        }
+                    }
+                    catch (RequestFailedException ex) when (ex.Status == 403)
+                    {
+                        throw Errors.NoShareLevelPermissions("source");
+                    }
                 }
             }
-            catch (RequestFailedException ex) when (ex.Status == 403)
+
+            // validate the destination protocol
+            if (!_options?.SkipProtocolValidation ?? true)
             {
-                throw Errors.NoShareLevelPermissions(endpoint);
+                try
+                {
+                    ShareClient parentShare = ShareFileClient.GetParentShareClient();
+                    ShareProperties properties = await parentShare.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ShareProtocols setProtocol = (_options?.IsNfs ?? false) ? ShareProtocols.Nfs : ShareProtocols.Smb;
+                    ShareProtocols actualProtocol = properties.Protocols ?? ShareProtocols.Smb;
+                    if (actualProtocol != setProtocol)
+                    {
+                        throw Errors.ProtocolSetMismatch("destination", setProtocol, actualProtocol);
+                    }
+                }
+                catch (RequestFailedException ex) when (ex.Status == 403)
+                {
+                    throw Errors.NoShareLevelPermissions("destination");
+                }
             }
-            return (_options?.IsNfs ?? false);
         }
     }
 
@@ -389,5 +416,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public static UnauthorizedAccessException NoShareLevelPermissions(string endpoint)
             => new UnauthorizedAccessException($"Share-level permissions on the {endpoint} is required to validate the Protocol. " +
                 "Please enable SkipProtocolValidation if you wish to skip the validation.");
+
+        public static NotSupportedException ShareTransferNotSupported()
+            => new NotSupportedException("This Share transfer is not supported. " +
+                "Currently only NFS -> NFS and SMB -> SMB Share transfers are supported");
     }
 }

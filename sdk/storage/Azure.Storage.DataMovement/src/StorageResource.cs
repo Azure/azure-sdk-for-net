@@ -58,7 +58,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <returns>Whether the protocol of the resource is NFS. Returns null if the resource is not File Share.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        protected internal virtual Task<bool?> ValidateProtocolAsync(bool isDestination, CancellationToken cancellationToken = default)
-            => Task.FromResult<bool?>(null);
+        protected internal virtual Task ValidateTransferAsync(StorageResource sourceResource, CancellationToken cancellationToken = default)
+            => Task.CompletedTask;
     }
 }

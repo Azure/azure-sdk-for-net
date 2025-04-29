@@ -375,14 +375,7 @@ namespace Azure.Storage.DataMovement
             Argument.AssertNotNull(sourceResource, nameof(sourceResource));
             Argument.AssertNotNull(destinationResource, nameof(destinationResource));
 
-            // Perform protocol validation check on the destination and source
-            bool? destIsNfs = await destinationResource.ValidateProtocolAsync(true, cancellationToken).ConfigureAwait(false);
-            bool? sourceIsNfs = await sourceResource.ValidateProtocolAsync(false, cancellationToken).ConfigureAwait(false);
-            // NFS -> SMB and SMB -> NFS transfers are not supported
-            if (destIsNfs != null && sourceIsNfs != null && destIsNfs != sourceIsNfs)
-            {
-                throw Errors.ShareTransferNotSupported();
-            }
+            await destinationResource.ValidateTransferAsync(sourceResource, cancellationToken).ConfigureAwait(false);
 
             transferOptions ??= new TransferOptions();
 

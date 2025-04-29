@@ -115,8 +115,5 @@ namespace Azure.Storage
 
         public static InvalidOperationException SingleItemContainerNoGetProperties()
             => new InvalidOperationException("SingleItemStorageResourceContainer does not support GetPropertiesAsync");
-
-        public static NotSupportedException ShareTransferNotSupported()
-            => new NotSupportedException("This Share transfer is not supported. Currently only NFS -> NFS and SMB -> SMB Share transfers are supported");
     }
 }
