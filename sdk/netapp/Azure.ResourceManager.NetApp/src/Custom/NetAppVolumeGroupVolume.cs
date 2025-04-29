@@ -13,8 +13,12 @@ namespace Azure.ResourceManager.NetApp.Models
     [CodeGenSerialization(nameof(IsRestoring), "isRestoring")]
     public partial class NetAppVolumeGroupVolume
     {
-        /// <summary> Restoring. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? IsRestoring { get; set; }
+        /// <summary> Restoring. ReadOnly property indicating if volume is being resored </summary>
+        public bool? IsRestoring
+        {
+            get;
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            set;
+        }
     }
 }
