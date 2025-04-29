@@ -106,7 +106,7 @@
 		<PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="8.0.3"/>
 
     <!-- Azure SDK packages -->
-    <PackageReference Update="Azure.AI.Inference" Version="1.0.0-beta.2" />
+    <PackageReference Update="Azure.AI.Inference" Version="1.0.0-beta.4" />
     <PackageReference Update="Azure.AI.OpenAI" Version="2.0.0" />
     <PackageReference Update="Azure.AI.Projects" Version="1.0.0-beta.2" />
     <PackageReference Update="Azure.Communication.Identity" Version="1.3.1" />
