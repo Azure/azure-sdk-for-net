@@ -607,12 +607,12 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="UsageResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UsageResult> GetNetAppResourceUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetAppUsageResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetAppUsageResult> GetNetAppResourceUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetAppResourceUsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetAppResourceUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => UsageResult.DeserializeUsageResult(e), NetAppResourceUsagesClientDiagnostics, Pipeline, "MockableNetAppSubscriptionResource.GetNetAppResourceUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NetAppUsageResult.DeserializeNetAppUsageResult(e), NetAppResourceUsagesClientDiagnostics, Pipeline, "MockableNetAppSubscriptionResource.GetNetAppResourceUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -634,12 +634,12 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UsageResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UsageResult> GetNetAppResourceUsages(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppUsageResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetAppUsageResult> GetNetAppResourceUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetAppResourceUsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetAppResourceUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => UsageResult.DeserializeUsageResult(e), NetAppResourceUsagesClientDiagnostics, Pipeline, "MockableNetAppSubscriptionResource.GetNetAppResourceUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NetAppUsageResult.DeserializeNetAppUsageResult(e), NetAppResourceUsagesClientDiagnostics, Pipeline, "MockableNetAppSubscriptionResource.GetNetAppResourceUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="usageType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="usageType"/> is null. </exception>
-        public virtual async Task<Response<UsageResult>> GetNetAppResourceUsageAsync(AzureLocation location, string usageType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppUsageResult>> GetNetAppResourceUsageAsync(AzureLocation location, string usageType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(usageType, nameof(usageType));
 
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="usageType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="usageType"/> is null. </exception>
-        public virtual Response<UsageResult> GetNetAppResourceUsage(AzureLocation location, string usageType, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppUsageResult> GetNetAppResourceUsage(AzureLocation location, string usageType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(usageType, nameof(usageType));
 

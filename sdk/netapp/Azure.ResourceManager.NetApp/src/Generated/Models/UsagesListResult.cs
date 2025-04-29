@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="UsagesListResult"/>. </summary>
         internal UsagesListResult()
         {
-            Value = new ChangeTrackingList<UsageResult>();
+            Value = new ChangeTrackingList<NetAppUsageResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="UsagesListResult"/>. </summary>
         /// <param name="value"> A list of usages. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UsagesListResult(IReadOnlyList<UsageResult> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UsagesListResult(IReadOnlyList<NetAppUsageResult> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> A list of usages. </summary>
-        public IReadOnlyList<UsageResult> Value { get; }
+        public IReadOnlyList<NetAppUsageResult> Value { get; }
         /// <summary> URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

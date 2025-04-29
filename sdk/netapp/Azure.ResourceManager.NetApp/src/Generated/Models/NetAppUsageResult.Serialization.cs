@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class UsageResult : IUtf8JsonSerializable, IJsonModel<UsageResult>
+    public partial class NetAppUsageResult : IUtf8JsonSerializable, IJsonModel<NetAppUsageResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UsageResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppUsageResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<UsageResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetAppUsageResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UsageResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppUsageResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UsageResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppUsageResult)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(Id))
@@ -79,19 +79,19 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        UsageResult IJsonModel<UsageResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetAppUsageResult IJsonModel<NetAppUsageResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UsageResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppUsageResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UsageResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppUsageResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUsageResult(document.RootElement, options);
+            return DeserializeNetAppUsageResult(document.RootElement, options);
         }
 
-        internal static UsageResult DeserializeUsageResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetAppUsageResult DeserializeNetAppUsageResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UsageResult(
+            return new NetAppUsageResult(
                 id,
                 name,
                 currentValue,
@@ -172,35 +172,35 @@ namespace Azure.ResourceManager.NetApp.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<UsageResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetAppUsageResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UsageResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppUsageResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UsageResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppUsageResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        UsageResult IPersistableModel<UsageResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetAppUsageResult IPersistableModel<NetAppUsageResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UsageResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppUsageResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeUsageResult(document.RootElement, options);
+                        return DeserializeNetAppUsageResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UsageResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppUsageResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<UsageResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetAppUsageResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

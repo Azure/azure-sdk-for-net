@@ -38,16 +38,16 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppFilePathAvailabilityContent(name, subnetId, availabilityZone, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.UsageResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppUsageResult"/>. </summary>
         /// <param name="id"> The id of the usage. </param>
         /// <param name="name"> The name of the usage. </param>
         /// <param name="currentValue"> The current usage value for the subscription. </param>
         /// <param name="limit"> The limit of the usage. </param>
         /// <param name="unit"> The unit of the usage. </param>
-        /// <returns> A new <see cref="Models.UsageResult"/> instance for mocking. </returns>
-        public static UsageResult UsageResult(string id = null, UsageName name = null, int? currentValue = null, int? limit = null, string unit = null)
+        /// <returns> A new <see cref="Models.NetAppUsageResult"/> instance for mocking. </returns>
+        public static NetAppUsageResult NetAppUsageResult(string id = null, UsageName name = null, int? currentValue = null, int? limit = null, string unit = null)
         {
-            return new UsageResult(
+            return new NetAppUsageResult(
                 id,
                 name,
                 currentValue,

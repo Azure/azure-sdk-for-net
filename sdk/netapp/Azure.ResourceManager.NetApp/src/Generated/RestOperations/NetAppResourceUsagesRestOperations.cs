@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="usageType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="usageType"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UsageResult>> GetAsync(string subscriptionId, AzureLocation location, string usageType, CancellationToken cancellationToken = default)
+        public async Task<Response<NetAppUsageResult>> GetAsync(string subscriptionId, AzureLocation location, string usageType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(usageType, nameof(usageType));
@@ -172,9 +172,9 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        UsageResult value = default;
+                        NetAppUsageResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = UsageResult.DeserializeUsageResult(document.RootElement);
+                        value = NetAppUsageResult.DeserializeNetAppUsageResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="usageType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="usageType"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UsageResult> Get(string subscriptionId, AzureLocation location, string usageType, CancellationToken cancellationToken = default)
+        public Response<NetAppUsageResult> Get(string subscriptionId, AzureLocation location, string usageType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(usageType, nameof(usageType));
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.NetApp
             {
                 case 200:
                     {
-                        UsageResult value = default;
+                        NetAppUsageResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = UsageResult.DeserializeUsageResult(document.RootElement);
+                        value = NetAppUsageResult.DeserializeNetAppUsageResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

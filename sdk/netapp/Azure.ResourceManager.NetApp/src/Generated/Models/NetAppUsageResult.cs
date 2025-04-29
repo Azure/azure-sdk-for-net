@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Usages entity model. </summary>
-    public partial class UsageResult
+    public partial class NetAppUsageResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="UsageResult"/>. </summary>
-        internal UsageResult()
+        /// <summary> Initializes a new instance of <see cref="NetAppUsageResult"/>. </summary>
+        internal NetAppUsageResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UsageResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppUsageResult"/>. </summary>
         /// <param name="id"> The id of the usage. </param>
         /// <param name="name"> The name of the usage. </param>
         /// <param name="currentValue"> The current usage value for the subscription. </param>
         /// <param name="limit"> The limit of the usage. </param>
         /// <param name="unit"> The unit of the usage. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UsageResult(string id, UsageName name, int? currentValue, int? limit, string unit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppUsageResult(string id, UsageName name, int? currentValue, int? limit, string unit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;

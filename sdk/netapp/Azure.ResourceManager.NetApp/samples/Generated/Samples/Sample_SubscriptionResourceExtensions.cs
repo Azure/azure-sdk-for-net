@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("eastus");
-            await foreach (UsageResult item in subscriptionResource.GetNetAppResourceUsagesAsync(location))
+            await foreach (NetAppUsageResult item in subscriptionResource.GetNetAppResourceUsagesAsync(location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             AzureLocation location = new AzureLocation("eastus");
             string usageType = "totalTibsPerSubscription";
-            UsageResult result = await subscriptionResource.GetNetAppResourceUsageAsync(location, usageType);
+            NetAppUsageResult result = await subscriptionResource.GetNetAppResourceUsageAsync(location, usageType);
 
             Console.WriteLine($"Succeeded: {result}");
         }

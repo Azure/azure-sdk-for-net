@@ -867,8 +867,8 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="UsageResult"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<UsageResult> GetNetAppResourceUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetAppUsageResult"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetAppUsageResult> GetNetAppResourceUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -900,8 +900,8 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="UsageResult"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<UsageResult> GetNetAppResourceUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppUsageResult"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetAppUsageResult> GetNetAppResourceUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -935,7 +935,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="usageType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="usageType"/> is null. </exception>
-        public static async Task<Response<UsageResult>> GetNetAppResourceUsageAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string usageType, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetAppUsageResult>> GetNetAppResourceUsageAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string usageType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -969,7 +969,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="usageType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="usageType"/> is null. </exception>
-        public static Response<UsageResult> GetNetAppResourceUsage(this SubscriptionResource subscriptionResource, AzureLocation location, string usageType, CancellationToken cancellationToken = default)
+        public static Response<NetAppUsageResult> GetNetAppResourceUsage(this SubscriptionResource subscriptionResource, AzureLocation location, string usageType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
