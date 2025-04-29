@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppConfiguration
 
         AppConfigurationSnapshotData IJsonModel<AppConfigurationSnapshotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppConfigurationSnapshotData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppConfigurationSnapshotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AppConfigurationSnapshotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppConfigurationSnapshotData>(Data, options, AzureResourceManagerAppConfigurationContext.Default);
 
-        AppConfigurationSnapshotData IPersistableModel<AppConfigurationSnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppConfigurationSnapshotData>(data, options);
+        AppConfigurationSnapshotData IPersistableModel<AppConfigurationSnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppConfigurationSnapshotData>(data, options, AzureResourceManagerAppConfigurationContext.Default);
 
         string IPersistableModel<AppConfigurationSnapshotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppConfigurationSnapshotData>)Data).GetFormatFromOptions(options);
     }

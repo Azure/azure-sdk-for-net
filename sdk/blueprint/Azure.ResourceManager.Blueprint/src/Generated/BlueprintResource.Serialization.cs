@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Blueprint
 
         BlueprintData IJsonModel<BlueprintData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BlueprintData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BlueprintData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BlueprintData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BlueprintData>(Data, options, AzureResourceManagerBlueprintContext.Default);
 
-        BlueprintData IPersistableModel<BlueprintData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BlueprintData>(data, options);
+        BlueprintData IPersistableModel<BlueprintData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BlueprintData>(data, options, AzureResourceManagerBlueprintContext.Default);
 
         string IPersistableModel<BlueprintData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BlueprintData>)Data).GetFormatFromOptions(options);
     }

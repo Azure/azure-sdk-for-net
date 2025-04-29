@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ApiManagement
 
         ProductGroupLinkContractData IJsonModel<ProductGroupLinkContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProductGroupLinkContractData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ProductGroupLinkContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ProductGroupLinkContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProductGroupLinkContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        ProductGroupLinkContractData IPersistableModel<ProductGroupLinkContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProductGroupLinkContractData>(data, options);
+        ProductGroupLinkContractData IPersistableModel<ProductGroupLinkContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProductGroupLinkContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
         string IPersistableModel<ProductGroupLinkContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProductGroupLinkContractData>)Data).GetFormatFromOptions(options);
     }

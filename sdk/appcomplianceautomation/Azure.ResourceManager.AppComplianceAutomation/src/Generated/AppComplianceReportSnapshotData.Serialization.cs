@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppComplianceAutomationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AppComplianceReportSnapshotData)} does not support writing '{options.Format}' format.");
             }

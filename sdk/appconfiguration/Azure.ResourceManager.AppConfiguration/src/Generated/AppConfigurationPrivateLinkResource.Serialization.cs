@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppConfiguration
 
         AppConfigurationPrivateLinkResourceData IJsonModel<AppConfigurationPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppConfigurationPrivateLinkResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppConfigurationPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AppConfigurationPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppConfigurationPrivateLinkResourceData>(Data, options, AzureResourceManagerAppConfigurationContext.Default);
 
-        AppConfigurationPrivateLinkResourceData IPersistableModel<AppConfigurationPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppConfigurationPrivateLinkResourceData>(data, options);
+        AppConfigurationPrivateLinkResourceData IPersistableModel<AppConfigurationPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppConfigurationPrivateLinkResourceData>(data, options, AzureResourceManagerAppConfigurationContext.Default);
 
         string IPersistableModel<AppConfigurationPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppConfigurationPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Avs
 
         WorkloadNetworkData IJsonModel<WorkloadNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WorkloadNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WorkloadNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadNetworkData>(Data, options, AzureResourceManagerAvsContext.Default);
 
-        WorkloadNetworkData IPersistableModel<WorkloadNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkData>(data, options);
+        WorkloadNetworkData IPersistableModel<WorkloadNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkData>(data, options, AzureResourceManagerAvsContext.Default);
 
         string IPersistableModel<WorkloadNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkData>)Data).GetFormatFromOptions(options);
     }

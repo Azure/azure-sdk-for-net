@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ApiManagement
 
         ApiManagementDeletedServiceData IJsonModel<ApiManagementDeletedServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementDeletedServiceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiManagementDeletedServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApiManagementDeletedServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementDeletedServiceData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        ApiManagementDeletedServiceData IPersistableModel<ApiManagementDeletedServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementDeletedServiceData>(data, options);
+        ApiManagementDeletedServiceData IPersistableModel<ApiManagementDeletedServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementDeletedServiceData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
         string IPersistableModel<ApiManagementDeletedServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementDeletedServiceData>)Data).GetFormatFromOptions(options);
     }

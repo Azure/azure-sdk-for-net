@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Authorization
 
         AuthorizationProviderOperationsMetadataData IJsonModel<AuthorizationProviderOperationsMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AuthorizationProviderOperationsMetadataData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AuthorizationProviderOperationsMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AuthorizationProviderOperationsMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AuthorizationProviderOperationsMetadataData>(Data, options, AzureResourceManagerAuthorizationContext.Default);
 
-        AuthorizationProviderOperationsMetadataData IPersistableModel<AuthorizationProviderOperationsMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AuthorizationProviderOperationsMetadataData>(data, options);
+        AuthorizationProviderOperationsMetadataData IPersistableModel<AuthorizationProviderOperationsMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AuthorizationProviderOperationsMetadataData>(data, options, AzureResourceManagerAuthorizationContext.Default);
 
         string IPersistableModel<AuthorizationProviderOperationsMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AuthorizationProviderOperationsMetadataData>)Data).GetFormatFromOptions(options);
     }

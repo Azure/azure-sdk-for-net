@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.BillingBenefits
 
         BillingBenefitsReservationOrderAliasResource IOperationSource<BillingBenefitsReservationOrderAliasResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BillingBenefitsReservationOrderAliasData>(response.Content);
+            var data = ModelReaderWriter.Read<BillingBenefitsReservationOrderAliasData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingBenefitsContext.Default);
             return new BillingBenefitsReservationOrderAliasResource(_client, data);
         }
 
         async ValueTask<BillingBenefitsReservationOrderAliasResource> IOperationSource<BillingBenefitsReservationOrderAliasResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BillingBenefitsReservationOrderAliasData>(response.Content);
+            var data = ModelReaderWriter.Read<BillingBenefitsReservationOrderAliasData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingBenefitsContext.Default);
             return await Task.FromResult(new BillingBenefitsReservationOrderAliasResource(_client, data)).ConfigureAwait(false);
         }
     }

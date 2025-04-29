@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.Hci
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
