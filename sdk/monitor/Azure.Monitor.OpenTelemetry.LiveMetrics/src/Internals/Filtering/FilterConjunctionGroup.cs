@@ -5,13 +5,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
     /// <summary>
     /// Defines an AND group of filters.
     /// </summary>
-    internal class FilterConjunctionGroup<TTelemetry> where TTelemetry : DocumentIngress
+    internal class FilterConjunctionGroup<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] TTelemetry> where TTelemetry : DocumentIngress
     {
         private readonly FilterConjunctionGroupInfo info;
 
