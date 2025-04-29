@@ -27,25 +27,35 @@ namespace Azure.Generator.Mgmt.Primitives
             ["Azure.ResourceManager.CommonTypes.UserAssignedIdentity"] = typeof(UserAssignedIdentity),
         };
 
-        private static readonly HashSet<string> _azureTypeNamespaceWithName = new()
-        {
-            "Azure.ResourceManager.Models.ManagedServiceIdentity",
-            "Azure.ResourceManager.Models.ManagedServiceIdentityType",
-            "Azure.ResourceManager.Models.OperationStatusResult",
-            "Azure.ResourceManager.Models.ProxyResource",
-            "Azure.ResourceManager.Models.ResourceData",
-            "Azure.ResourceManager.Models.SystemData",
-            "Azure.ResourceManager.Models.TrackedResourceData",
-            "Azure.ResourceManager.Models.UserAssignedIdentity",
-            "Azure.ResourceManager.Resources.Models.ExtendedLocation",
-            "Azure.ResourceManager.Resources.Models.ExtendedLocationType",
-        };
+        private static readonly HashSet<CSharpType> _knownTypes = _idToTypeMap.Values.ToHashSet(new CSharpFullNameComparer());
 
-        private static readonly HashSet<Type> _knownTypes = _idToTypeMap.Values.Select(x => x.FrameworkType).ToHashSet();
-
-        public static bool IsKnownManagementType(Type type) => _knownTypes.Contains(type);
-        public static bool IsKnownManagementType(string typeNameSpaceWithName) => _azureTypeNamespaceWithName.Contains(typeNameSpaceWithName);
+        public static bool IsKnownManagementType(CSharpType type) => _knownTypes.Contains(type);
 
         public static bool TryGetManagementType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToTypeMap.TryGetValue(id, out type);
+
+        // We only care about the namesapce and name for known types
+        private class CSharpFullNameComparer : IEqualityComparer<CSharpType>
+        {
+            public bool Equals(CSharpType? x, CSharpType? y)
+            {
+                if (x is null)
+                {
+                    if (y is null)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                else
+                {
+                    return x.AreNamesEqual(y);
+                }
+            }
+
+            public int GetHashCode([DisallowNull] CSharpType obj)
+            {
+                return HashCode.Combine(obj.Namespace, obj.Name);
+            }
+        }
     }
 }

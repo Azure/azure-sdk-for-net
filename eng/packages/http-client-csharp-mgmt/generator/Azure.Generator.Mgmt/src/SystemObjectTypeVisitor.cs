@@ -61,7 +61,7 @@ namespace Azure.Generator.Management
             foreach (var method in modelFactory.Methods)
             {
                 var returnType = method.Signature.ReturnType;
-                if (returnType is not null && KnownManagementTypes.IsKnownManagementType($"{returnType.Namespace}.{returnType.Name}"))
+                if (returnType is not null && KnownManagementTypes.IsKnownManagementType(returnType))
                 {
                     continue;
                 }
