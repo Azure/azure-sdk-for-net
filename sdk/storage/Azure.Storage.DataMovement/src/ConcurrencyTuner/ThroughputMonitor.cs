@@ -79,7 +79,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ThroughputMonitor"/> class for testing
+        /// Initializes a new instance of the <see cref="ThroughputMonitor"/> class for testing.
         /// </summary>
 
         internal ThroughputMonitor() :

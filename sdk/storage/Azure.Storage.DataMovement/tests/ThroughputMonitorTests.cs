@@ -43,7 +43,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task ThroughputMonitor_ShouldTrackThroughput()
         {
             // Arrange
-            int timerInterval = 100;
+            int timerInterval = 500;
             ThroughputMonitor tm = new ThroughputMonitor(timerInterval);
             CancellationToken cancellationToken = new CancellationToken();
 
@@ -53,7 +53,7 @@ namespace Azure.Storage.DataMovement.Tests
                 await tm.QueueBytesTransferredAsync(i, cancellationToken);
             }
             // Wait from timerInterval to 2 * timerInterval milliseconds for first capture of throughput
-            await Task.Delay(150);
+            await Task.Delay(Convert.ToInt32(timerInterval * 1.5));
 
             // Assert
             var stopwatchField = typeof(ThroughputMonitor).GetField("_stopwatch", BindingFlags.NonPublic | BindingFlags.Instance);
