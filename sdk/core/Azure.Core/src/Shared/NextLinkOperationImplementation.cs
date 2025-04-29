@@ -60,7 +60,7 @@ namespace Azure.Core
             var headerSource = GetHeaderSource(requestMethod, startRequestUri, response, apiVersionStr, out string nextRequestUri, out bool isNextRequestPolling);
             if (headerSource == HeaderSource.None && IsFinalState(response, headerSource, out var failureState, out _))
             {
-                return new CompletedOperation(failureState ?? GetOperationStateFromFinalResponse(requestMethod, response), startRequestUri);
+                return new CompletedOperation(failureState ?? GetOperationStateFromFinalResponse(requestMethod, response), requestMethod, startRequestUri);
             }
 
             string? lastKnownLocation;
@@ -647,18 +647,21 @@ namespace Azure.Core
         {
             private readonly OperationState _operationState;
 
+            private readonly RequestMethod _requestMethod;
+
             private readonly Uri _startRequestUri;
 
-            public CompletedOperation(OperationState operationState, Uri startRequestUri)
+            public CompletedOperation(OperationState operationState, RequestMethod requestMethod, Uri startRequestUri)
             {
                 _operationState = operationState;
+                _requestMethod = requestMethod;
                 _startRequestUri = startRequestUri;
             }
 
             public ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken) => new(_operationState);
 
             public RehydrationToken GetRehydrationToken() =>
-                NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, _startRequestUri, _startRequestUri.AbsoluteUri, "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NextLinkOperationImplementation.GetRehydrationToken(_requestMethod, _startRequestUri, _startRequestUri.AbsoluteUri, "None", null, OperationFinalStateVia.OriginalUri.ToString());
         }
 
         private sealed class OperationToOperationOfT<T> : IOperation<T>
