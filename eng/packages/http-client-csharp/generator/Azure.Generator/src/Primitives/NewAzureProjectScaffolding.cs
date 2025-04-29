@@ -18,6 +18,7 @@ namespace Azure.Generator.Primitives
         private const string MSBuildThisFileDirectory = "$(MSBuildThisFileDirectory)";
         private const string RelativeCoreSegment = "sdk/core/Azure.Core/src/Shared/";
         private const string ParentDirectory = "../";
+        private const string SharedSourceLinkBase = "Shared/Core";
 
         /// <inheritdoc/>
         protected override string GetSourceProjectFileContent()
@@ -39,7 +40,7 @@ namespace Azure.Generator.Primitives
             int pathSegmentCount = GetPathSegmentCount();
             if (AzureClientGenerator.Instance.InputLibrary.InputNamespace.Auth?.ApiKey is not null)
             {
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("AzureKeyCredentialPolicy.cs", pathSegmentCount), "Shared/Core"));
+                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("AzureKeyCredentialPolicy.cs", pathSegmentCount), SharedSourceLinkBase));
             }
 
             bool hasOperation = false;
@@ -51,7 +52,9 @@ namespace Azure.Generator.Primitives
 
             if (hasOperation)
             {
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("RawRequestUriBuilder.cs", pathSegmentCount), "Shared/Core"));
+                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("RawRequestUriBuilder.cs", pathSegmentCount), SharedSourceLinkBase));
+                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("TypeFormatters.cs", pathSegmentCount), SharedSourceLinkBase));
+                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("RequestHeaderExtensions.cs", pathSegmentCount), SharedSourceLinkBase));
             }
 
             if (hasLongRunningOperation)

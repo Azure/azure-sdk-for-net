@@ -21,7 +21,7 @@ if (-not $LaunchOnly) {
 
         $mgmtTypespecTestProject = Join-Path $testProjectsLocalDir "Mgmt-TypeSpec"
 
-        Invoke (Get-Mgmt-TspCommand "$mgmtTypespecTestProject/main.tsp" $mgmtTypespecTestProject -forceNewProject $ForceNewProject)
+        Invoke (Get-Mgmt-TspCommand "$mgmtTypespecTestProject/main.tsp" $mgmtTypespecTestProject)
 
         # exit if the generation failed
         if ($LASTEXITCODE -ne 0) {
