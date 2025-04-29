@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.CodeAnalysis.Text;
@@ -31,6 +32,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
         {
             var contextName = contextGenerationSpec.Type.Name;
             var namespaces = GetNameSpaces(contextGenerationSpec);
+            namespaces.Add("System.Collections.Concurrent");
 
             var indent = 0;
             var builder = new StringBuilder();
@@ -59,7 +61,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             builder.AppendLine($"{s_modelReaderWriterTypeBuilder}>> _typeBuilderFactories = new();");
 
             builder.Append(indent, "private readonly ");
-            builder.AppendType(typeof(Dictionary<,>));
+            builder.AppendType(typeof(ConcurrentDictionary<,>));
             builder.Append("<");
             builder.AppendType(typeof(Type));
             builder.Append(", ");
@@ -134,7 +136,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             builder.AppendLine(indent, "{");
             indent++;
             builder.AppendLine(indent, "builder = factory();");
-            builder.AppendLine(indent, "_typeBuilders.Add(type, builder);");
+            builder.AppendLine(indent, "_typeBuilders.TryAdd(type, builder);");
             builder.AppendLine(indent, "return true;");
             indent--;
             builder.AppendLine(indent, "}");
@@ -147,7 +149,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
                 builder.AppendLine(indent, $"if (kvp.Value.TryGetTypeBuilder(type, out builder))");
                 builder.AppendLine(indent, "{");
                 indent++;
-                builder.AppendLine(indent, $"_typeBuilders.Add(type, builder);");
+                builder.AppendLine(indent, $"_typeBuilders.TryAdd(type, builder);");
                 builder.AppendLine(indent, "return true;");
                 indent--;
                 builder.AppendLine(indent, "}");
