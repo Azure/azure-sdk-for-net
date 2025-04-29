@@ -60,7 +60,7 @@ namespace Azure.Core
             var headerSource = GetHeaderSource(requestMethod, startRequestUri, response, apiVersionStr, out string nextRequestUri, out bool isNextRequestPolling);
             if (headerSource == HeaderSource.None && IsFinalState(response, headerSource, out var failureState, out _))
             {
-                return new CompletedOperation(failureState ?? GetOperationStateFromFinalResponse(requestMethod, response));
+                return new CompletedOperation(failureState ?? GetOperationStateFromFinalResponse(requestMethod, response), startRequestUri);
             }
 
             string? lastKnownLocation;
@@ -190,7 +190,7 @@ namespace Azure.Core
             }
         }
 
-        public RehydrationToken? GetRehydrationToken()
+        public RehydrationToken GetRehydrationToken()
             => GetRehydrationToken(RequestMethod, _startRequestUri, _nextRequestUri, _headerSource.ToString(), _lastKnownLocation, _finalStateVia.ToString(), OperationId);
 
         public static RehydrationToken GetRehydrationToken(
@@ -647,14 +647,18 @@ namespace Azure.Core
         {
             private readonly OperationState _operationState;
 
-            public CompletedOperation(OperationState operationState)
+            private readonly Uri _startRequestUri;
+
+            public CompletedOperation(OperationState operationState, Uri startRequestUri)
             {
                 _operationState = operationState;
+                _startRequestUri = startRequestUri;
             }
 
             public ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken) => new(_operationState);
 
-            public RehydrationToken? GetRehydrationToken() => null;
+            public RehydrationToken GetRehydrationToken() =>
+                NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, _startRequestUri, _startRequestUri.AbsoluteUri, "None", null, OperationFinalStateVia.OriginalUri.ToString());
         }
 
         private sealed class OperationToOperationOfT<T> : IOperation<T>

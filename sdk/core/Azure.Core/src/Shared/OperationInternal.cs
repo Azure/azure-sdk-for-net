@@ -178,7 +178,7 @@ namespace Azure.Core
         /// <summary>
         /// Get a token that can be used to rehydrate the operation.
         /// </summary>
-        RehydrationToken? GetRehydrationToken();
+        RehydrationToken GetRehydrationToken();
     }
 
     /// <summary>
