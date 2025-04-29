@@ -39,7 +39,7 @@ steps:
             -ArtifactPath '${{ parameters.DiffDirectory }}'
             -ExcludePaths ('${{ convertToJson(parameters.ExcludePaths) }}' | ConvertFrom-Json)
           pwsh: true
-          WorkingDirectory: '${{ parameters.WorkingDirectory }}'
+          workingDirectory: '${{ parameters.WorkingDirectory }}'
 
       # When running in PR mode, we want the detected changed services to be attached to the build as tags.
       # However, the public identity does not have the permissions to attach tags to the build.
@@ -53,7 +53,7 @@ steps:
             Write-Host '##vso[task.addattachment type=AdditionalTags;name=AdditionalTags;]$(System.DefaultWorkingDirectory)/tags.json'
           }
         displayName: Upload tags.json with changed services
-        WorkingDirectory: '${{ parameters.WorkingDirectory }}'
+        workingDirectory: '${{ parameters.WorkingDirectory }}'
 
       - task: Powershell@2
         displayName: Save package properties filtered for PR
@@ -63,7 +63,7 @@ steps:
             -PrDiff '${{ parameters.DiffDirectory }}/diff.json'
             -OutDirectory '${{ parameters.PackageInfoDirectory }}'
           pwsh: true
-          WorkingDirectory: '${{ parameters.WorkingDirectory }}'
+          workingDirectory: '${{ parameters.WorkingDirectory }}'
   - ${{ else }}:
       - task: Powershell@2
         displayName: Save package properties
@@ -74,4 +74,4 @@ steps:
             -OutDirectory '${{ parameters.PackageInfoDirectory }}'
             -AddDevVersion:($env:SETDEVVERSION -eq 'true')
           pwsh: true
-          WorkingDirectory: '${{ parameters.WorkingDirectory }}'
+          workingDirectory: '${{ parameters.WorkingDirectory }}'
