@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>This is the Azure.SpecialHeaders.XmsClientRequestId client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>SDK Code Generation Azure.SpecialHeaders.XmsClientRequestId</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Azure.SpecialHeaders.XmsClientRequestId</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../../sdk/core/Azure.Core/src/Shared/RawRequestUriBuilder.cs" LinkBase="Shared/Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+</Project>
