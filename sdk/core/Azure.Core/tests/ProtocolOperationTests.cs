@@ -65,7 +65,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual(RequestUri, token.Value.InitialUri);
             Assert.AreEqual(RequestMethod.Post, token.Value.RequestMethod);
             Assert.Null(token.Value.LastKnownLocation);
-            Assert.AreEqual("OriginalUri", token.Value.FinalStateVia);
+            Assert.AreEqual("Location", token.Value.FinalStateVia);
         }
 
         [Test]

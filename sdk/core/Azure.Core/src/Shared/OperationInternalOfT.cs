@@ -290,7 +290,7 @@ namespace Azure.Core
                 => throw new NotSupportedException("The operation has already completed");
 
             // Unreachable path. _operation.GetRehydrationToken() is never invoked.
-            public RehydrationToken? GetRehydrationToken()
+            public RehydrationToken GetRehydrationToken()
                 => throw new NotSupportedException($"Getting the rehydration token of a {nameof(FinalOperation)} is not supported");
         }
     }
@@ -336,7 +336,7 @@ namespace Azure.Core
         /// <summary>
         /// Get a token that can be used to rehydrate the operation.
         /// </summary>
-        RehydrationToken? GetRehydrationToken();
+        RehydrationToken GetRehydrationToken();
     }
 
     /// <summary>
