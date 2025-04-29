@@ -33,7 +33,6 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Designated checkpointer for the respective transfer manager.
-        ///
         /// If unspecified will default to LocalTransferCheckpointer at {currentpath}/.azstoragedml
         /// </summary>
         private readonly ITransferCheckpointer _checkpointer;
@@ -47,6 +46,46 @@ namespace Azure.Storage.DataMovement
         private CancellationToken _cancellationToken => _cancellationTokenSource.Token;
 
         private readonly Func<string> _generateTransferId;
+        private TransferOptions _transferOptions;
+        private TransferOptions TransferOptions
+        {
+            get => _transferOptions;
+            set
+            {
+                if (value is null)
+                {
+                    _transferOptions = new TransferOptions()
+                    {
+                        ProgressHandlerOptions = new()
+                        {
+                            TrackBytesTransferred = true
+                        }
+                    };
+                }
+                else if (value.ProgressHandlerOptions == null)
+                {
+                    value.ProgressHandlerOptions = new()
+                    {
+                        TrackBytesTransferred = true
+                    };
+                    _transferOptions = value;
+                }
+                else if (value.ProgressHandlerOptions.TrackBytesTransferred == false)
+                {
+                    value.ProgressHandlerOptions.TrackBytesTransferred = true;
+                    _transferOptions = value;
+                }
+                else
+                {
+                    _transferOptions = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the <see cref="ThroughputMonitor"/> instance used to monitor the throughput of data transfers.
+        /// </summary>
+        internal ThroughputMonitor ThroughputMonitor { get; private set; }
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -70,9 +109,9 @@ namespace Azure.Storage.DataMovement
             new(ArrayPool<byte>.Shared,
                 options?.ErrorMode ?? TransferErrorMode.StopOnAnyFailure,
                 new ClientDiagnostics(options?.ClientOptions ?? ClientOptions.Default)),
-                CheckpointerExtensions.BuildCheckpointer(options?.CheckpointStoreOptions),
-                options?.ProvidersForResuming != null ? new List<StorageResourceProvider>(options.ProvidersForResuming) : new(),
-                default)
+            CheckpointerExtensions.BuildCheckpointer(options?.CheckpointStoreOptions),
+            options?.ProvidersForResuming != null ? new List<StorageResourceProvider>(options.ProvidersForResuming) : new(),
+            default)
         {}
 
         /// <summary>
@@ -96,6 +135,7 @@ namespace Azure.Storage.DataMovement
             _checkpointer = checkpointer;
             _generateTransferId = generateTransferId ?? (() => Guid.NewGuid().ToString());
 
+            ThroughputMonitor ThroughputMonitor = new();
             ConfigureProcessorCallbacks();
         }
 
@@ -232,10 +272,12 @@ namespace Azure.Storage.DataMovement
                 throw Errors.CheckpointerDisabled("ResumeAllTransfersAsync");
             }
 
+            TransferOptions = transferOptions;
+
             List<TransferOperation> transfers = new();
             await foreach (TransferProperties properties in GetResumableTransfersAsync(cancellationToken).ConfigureAwait(false))
             {
-                transfers.Add(await ResumeTransferAsync(properties, transferOptions, cancellationToken).ConfigureAwait(false));
+                transfers.Add(await ResumeTransferAsync(properties, TransferOptions, cancellationToken).ConfigureAwait(false));
             }
             return transfers;
         }
@@ -268,10 +310,12 @@ namespace Azure.Storage.DataMovement
                 return null;
             }
 
+            TransferOptions = transferOptions;
+
             TransferProperties properties = await _checkpointer.GetTransferPropertiesAsync(
                     transferId, cancellationToken).ConfigureAwait(false);
 
-            return await ResumeTransferAsync(properties, transferOptions, cancellationToken).ConfigureAwait(false);
+            return await ResumeTransferAsync(properties, TransferOptions, cancellationToken).ConfigureAwait(false);
         }
 
         private async Task<TransferOperation> ResumeTransferAsync(
@@ -294,7 +338,7 @@ namespace Azure.Storage.DataMovement
                 return false;
             }
 
-            transferOptions ??= new TransferOptions();
+            TransferOptions = transferOptions;
 
             // Remove the stale TransferOperation so we can pass a new TransferOperation object
             // to the user and also track the transfer from the TransferOperation object
@@ -316,7 +360,7 @@ namespace Azure.Storage.DataMovement
             TransferOperation transferOperation = await BuildAndAddTransferJobAsync(
                 source,
                 destination,
-                transferOptions,
+                TransferOptions,
                 transferProperties.TransferId,
                 true,
                 cancellationToken).ConfigureAwait(false);
@@ -375,7 +419,7 @@ namespace Azure.Storage.DataMovement
             Argument.AssertNotNull(sourceResource, nameof(sourceResource));
             Argument.AssertNotNull(destinationResource, nameof(destinationResource));
 
-            transferOptions ??= new TransferOptions();
+            TransferOptions = transferOptions;
 
             string transferId = _generateTransferId();
             try
@@ -389,7 +433,7 @@ namespace Azure.Storage.DataMovement
                 TransferOperation transferOperation = await BuildAndAddTransferJobAsync(
                     sourceResource,
                     destinationResource,
-                    transferOptions,
+                    TransferOptions,
                     transferId,
                     false,
                     cancellationToken).ConfigureAwait(false);
@@ -424,13 +468,17 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken)
         {
             cancellationToken = LinkCancellation(cancellationToken);
+
+            TransferOptions = transferOptions;
+
             (TransferOperation transfer, TransferJobInternal transferJobInternal) = await _jobBuilder.BuildJobAsync(
                 sourceResource,
                 destinationResource,
-                transferOptions,
+                TransferOptions,
                 _checkpointer,
                 transferId,
                 resumeJob,
+                ThroughputMonitor,
                 cancellationToken)
                 .ConfigureAwait(false);
 

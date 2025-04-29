@@ -120,6 +120,7 @@ namespace Azure.Storage.DataMovement.Tests
             //Arrange
             string transferId = Guid.NewGuid().ToString();
             int length = Constants.KB;
+            var throughputMonitor = new Mock<ThroughputMonitor>();
 
             // Set up source with properties
             Mock<StorageResourceItem> mockSource = GetStorageResourceItem(length);
@@ -160,7 +161,8 @@ namespace Azure.Storage.DataMovement.Tests
                 checkpointer,
                 TransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
-                new ClientDiagnostics(ClientOptions.Default));
+                new ClientDiagnostics(ClientOptions.Default),
+                throughputMonitor.Object);
             ServiceToServiceJobPart jobPart = await ServiceToServiceJobPart.CreateJobPartAsync(
                 job,
                 1,
@@ -202,6 +204,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceItemProperties properties = GetResourceProperties(length);
             mockSource.Setup(r => r.GetPropertiesAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(properties));
+            var throughputMonitor = new Mock<ThroughputMonitor>();
 
             // Setup destination with small chunk size and a larger source total length
             // to cause chunked copy
@@ -235,7 +238,8 @@ namespace Azure.Storage.DataMovement.Tests
                 checkpointer,
                 TransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
-                new ClientDiagnostics(ClientOptions.Default));
+                new ClientDiagnostics(ClientOptions.Default),
+                throughputMonitor.Object);
             ServiceToServiceJobPart jobPart = await ServiceToServiceJobPart.CreateJobPartAsync(
                 job,
                 1,

@@ -33,9 +33,11 @@ namespace Azure.Storage.DataMovement
         private long _inProgressCount = 0;
         private long _queuedCount = 0;
         private long _bytesTransferred = 0;
+        private ThroughputMonitor _throughputMonitor;
 
-        public TransferProgressTracker(TransferProgressHandlerOptions options)
+        public TransferProgressTracker(ThroughputMonitor throughputMonitor, TransferProgressHandlerOptions options)
         {
+            _throughputMonitor = throughputMonitor;
             _options = options;
             _progressProcessor = ChannelProcessing.NewProcessor<ProgressEventArgs>(readers: 1);
             _progressProcessor.Process = ProcessProgressEvent;
