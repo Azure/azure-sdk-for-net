@@ -68,8 +68,6 @@ $failingSpecs = @(
     Join-Path 'http' 'client' 'structure' 'renamed-operation'
     Join-Path 'http' 'client' 'structure' 'multi-client'
     Join-Path 'http' 'client' 'structure' 'two-operation-group'
-    Join-Path 'http' 'encode' 'datetime'
-    Join-Path 'http' 'encode' 'duration'
     Join-Path 'http' 'parameters' 'collection-format'
     Join-Path 'http' 'response' 'status-code-range' # Response namespace conflicts with Azure.Response
     Join-Path 'http' 'routes'
