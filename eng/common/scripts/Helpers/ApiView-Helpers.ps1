@@ -132,8 +132,9 @@ function Set-ApiViewCommentForRelatedIssues {
   try {
     $issuesForCommit = Search-GitHubIssues -CommitHash $HeadCommitish
     if ($issuesForCommit.items.Count -eq 0) {
-      LogError "No issues found for commit: $HeadCommitish"
-      exit 1
+      LogInfo "No issues found for commit: $HeadCommitish"
+      Write-Host "##vso[task.complete result=SucceededWithIssues;]DONE"
+      exit 0
     }
   } catch {
     LogError "No issues found for commit: $HeadCommitish"
@@ -169,8 +170,9 @@ function Set-ApiViewCommentForPR {
   $commentText += "## API Change Check"
   try {
     $response = Invoke-WebRequest -Uri $apiviewEndpoint -Method Get -MaximumRetryCount 3
+    LogInfo "OperationId: $($response.Headers['X-Operation-Id'])"
     if ($response.StatusCode -ne 200) {
-      LogWarning "API changes are not detected in this pull request."
+      LogInfo "API changes are not detected in this pull request."
       exit 0
     }
     else {
