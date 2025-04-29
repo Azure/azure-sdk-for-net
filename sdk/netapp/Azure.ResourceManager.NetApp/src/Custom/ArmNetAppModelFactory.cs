@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.NetApp.Models
 
         public static NetAppBackupData NetAppBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, AzureLocation location = default, string backupId = null, DateTimeOffset? createdOn = null, string provisioningState = null, long? size = null, string label = null, NetAppBackupType? backupType = null, string failureReason = null, string volumeName = null, bool? useExistingSnapshot = null)
         {
-            return ArmNetAppModelFactory.NetAppBackupData(id, name, resourceType, systemData, backupId, createdOn: createdOn, snapshotCreationOn: null, completionOn: null, provisioningState: provisioningState, size: size, label: label, backupType: backupType, failureReason: failureReason, volumeResourceId: null, useExistingSnapshot: useExistingSnapshot, snapshotName: null, backupPolicyArmResourceId: null, isLargeVolume: null);
-            //return new NetAppBackupData(id, name, resourceType, systemData, backupId, createdOn: createdOn, snapshotCreationOn: null, completionOn: null, provisioningState: provisioningState, size: size, label: label, backupType: backupType, failureReason: failureReason, volumeResourceId: null, useExistingSnapshot: useExistingSnapshot, snapshotName: null, backupPolicyArmResourceId: null, isLargeVolume:null, serializedAdditionalRawData: null);
+           //return ArmNetAppModelFactory.NetAppBackupData(id, name, resourceType, systemData, backupId, createdOn: createdOn, snapshotCreationOn: null, completionOn: null, provisioningState: provisioningState, size: size, label: label, backupType: backupType, failureReason: failureReason, volumeResourceId: null, useExistingSnapshot: useExistingSnapshot, snapshotName: null, backupPolicyArmResourceId: null, isLargeVolume: null);
+           return new NetAppBackupData(id, name, resourceType, systemData, backupId, createdOn: createdOn, snapshotCreationOn: null, completionOn: null, provisioningState: provisioningState, size: size, label: label, backupType: backupType, failureReason: failureReason, volumeResourceId: null, useExistingSnapshot: useExistingSnapshot, snapshotName: null, backupPolicyArmResourceId: null, isLargeVolume:null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeGroupMetadata"/>. </summary>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppBackupData NetAppBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string backupId = null, DateTimeOffset? createdOn = null, string provisioningState = null, long? size = null, string label = null, NetAppBackupType? backupType = null, string failureReason = null, ResourceIdentifier volumeResourceId = null, bool? useExistingSnapshot = null, string snapshotName = null, string backupPolicyResourceId = null)
         {
             ResourceIdentifier backupPolicyArmResourceId = new ResourceIdentifier(backupPolicyResourceId);
-            return ArmNetAppModelFactory.NetAppBackupData(
+            return new NetAppBackupData(
                 id,
                 name,
                 resourceType,
@@ -161,7 +161,8 @@ namespace Azure.ResourceManager.NetApp.Models
                 useExistingSnapshot,
                 snapshotName,
                 backupPolicyArmResourceId,
-                isLargeVolume: null);
+                isLargeVolume: null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppKeyVaultProperties"/>. </summary>
