@@ -767,6 +767,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             return null;
         }
 
+        [UnconditionalSuppressMessage("AOT", "IL2075", Justification = "The DocumentIngress class and its derived classes have DynamicallyAccessedMembers attribute applied to preserve public properties.")]
         private Expression ProduceComparatorExpressionForAnyFieldCondition(ParameterExpression documentExpression)
         {
             // this.predicate is either Predicate.Contains or Predicate.DoesNotContain at this point
@@ -786,7 +787,16 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                     if (string.Equals(propertyInfo.Name, CustomDimensionsPropertyName, StringComparison.Ordinal))
                     {
                         // ScanList(document.<CustomDimensionsPropertyName>, <this.comparand>)
-                        MemberExpression customDimensionsProperty = Expression.Property(documentExpression, CustomDimensionsPropertyName);
+                        PropertyInfo customDimensionsPropertyInfo = documentExpression.Type.GetProperty(
+                            CustomDimensionsPropertyName, BindingFlags.Instance | BindingFlags.Public);
+
+                        if (customDimensionsPropertyInfo == null)
+                        {
+                            continue; // Skip if property doesn't exist
+                        }
+
+                        MemberExpression customDimensionsProperty = Expression.Property(documentExpression, customDimensionsPropertyInfo);
+
                         propertyComparatorExpression = Expression.Call(
                             null,
                             ListKeyValuePairStringScanMethodInfo,
@@ -801,7 +811,16 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                     else if (string.Equals(propertyInfo.Name, CustomMetricsPropertyName, StringComparison.Ordinal))
                     {
                         // ScanDictionary(document.<CustomMetricsPropertyName>, <this.comparand>)
-                        MemberExpression customMetricsProperty = Expression.Property(documentExpression, CustomMetricsPropertyName);
+                        PropertyInfo customMetricsPropertyInfo = documentExpression.Type.GetProperty(
+                            CustomMetricsPropertyName, BindingFlags.Instance | BindingFlags.Public);
+
+                        if (customMetricsPropertyInfo == null)
+                        {
+                            continue; // Skip if property doesn't exist
+                        }
+
+                        MemberExpression customMetricsProperty = Expression.Property(documentExpression, customMetricsPropertyInfo);
+
                         propertyComparatorExpression = Expression.Call(
                             null,
                             DictionaryStringDoubleScanMethodInfo,
