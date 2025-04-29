@@ -335,7 +335,7 @@ namespace Azure.AI.Vision.Face
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIVisionFaceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FaceLandmarks)} does not support writing '{options.Format}' format.");
             }

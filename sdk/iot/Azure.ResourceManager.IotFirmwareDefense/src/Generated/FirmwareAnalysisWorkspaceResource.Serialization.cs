@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 
         FirmwareAnalysisWorkspaceData IJsonModel<FirmwareAnalysisWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FirmwareAnalysisWorkspaceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FirmwareAnalysisWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<FirmwareAnalysisWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FirmwareAnalysisWorkspaceData>(Data, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
 
-        FirmwareAnalysisWorkspaceData IPersistableModel<FirmwareAnalysisWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FirmwareAnalysisWorkspaceData>(data, options);
+        FirmwareAnalysisWorkspaceData IPersistableModel<FirmwareAnalysisWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FirmwareAnalysisWorkspaceData>(data, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
 
         string IPersistableModel<FirmwareAnalysisWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FirmwareAnalysisWorkspaceData>)Data).GetFormatFromOptions(options);
     }

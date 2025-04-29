@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.IotHub
 
         IotHubPrivateEndpointConnectionData IJsonModel<IotHubPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotHubPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IotHubPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<IotHubPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotHubPrivateEndpointConnectionData>(Data, options, AzureResourceManagerIotHubContext.Default);
 
-        IotHubPrivateEndpointConnectionData IPersistableModel<IotHubPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotHubPrivateEndpointConnectionData>(data, options);
+        IotHubPrivateEndpointConnectionData IPersistableModel<IotHubPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotHubPrivateEndpointConnectionData>(data, options, AzureResourceManagerIotHubContext.Default);
 
         string IPersistableModel<IotHubPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotHubPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }
