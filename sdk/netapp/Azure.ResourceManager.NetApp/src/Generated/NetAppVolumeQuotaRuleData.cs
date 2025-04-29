@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="quotaType"> Type of quota. </param>
         /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeQuotaRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppProvisioningState? provisioningState, long? quotaSizeInKiBs, NetAppVolumeQuotaType? quotaType, string quotaTarget, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetAppVolumeQuotaRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BucketProvisioningState? provisioningState, long? quotaSizeInKiBs, NetAppVolumeQuotaType? quotaType, string quotaTarget, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             QuotaSizeInKiBs = quotaSizeInKiBs;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Gets the status of the VolumeQuotaRule at the time the operation was called. </summary>
-        public NetAppProvisioningState? ProvisioningState { get; }
+        public BucketProvisioningState? ProvisioningState { get; }
         /// <summary> Size of quota. </summary>
         public long? QuotaSizeInKiBs { get; set; }
         /// <summary> Type of quota. </summary>

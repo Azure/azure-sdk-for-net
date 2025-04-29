@@ -256,6 +256,7 @@ rename-mapping:
   ListQuotaReportResponse: NetAppVolumeQuotaReportListResult
   QuotaReport: NetAppVolumeQuotaReport
   GetKeyVaultStatusResponse: NetAppKeyVaultStatusResult
+  ProvisioningState: BucketProvisioningState
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties

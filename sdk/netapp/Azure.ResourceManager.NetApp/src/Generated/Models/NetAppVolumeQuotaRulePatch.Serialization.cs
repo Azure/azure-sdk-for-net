@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            NetAppProvisioningState? provisioningState = default;
+            BucketProvisioningState? provisioningState = default;
             long? quotaSizeInKiBs = default;
             NetAppVolumeQuotaType? quotaType = default;
             string quotaTarget = default;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             {
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToNetAppProvisioningState();
+                            provisioningState = property0.Value.GetString().ToBucketProvisioningState();
                             continue;
                         }
                         if (property0.NameEquals("quotaSizeInKiBs"u8))

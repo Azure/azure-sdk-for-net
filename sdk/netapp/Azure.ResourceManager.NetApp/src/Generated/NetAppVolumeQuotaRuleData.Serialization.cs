@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetApp
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            NetAppProvisioningState? provisioningState = default;
+            BucketProvisioningState? provisioningState = default;
             long? quotaSizeInKiBs = default;
             NetAppVolumeQuotaType? quotaType = default;
             string quotaTarget = default;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToNetAppProvisioningState();
+                            provisioningState = property0.Value.GetString().ToBucketProvisioningState();
                             continue;
                         }
                         if (property0.NameEquals("quotaSizeInKiBs"u8))
