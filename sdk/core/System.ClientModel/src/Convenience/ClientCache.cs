@@ -1,10 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading;
 
 namespace System.ClientModel.Primitives;
 
@@ -14,7 +11,7 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public class ClientCache
 {
-    private readonly Dictionary<(Type, IEquatable<object>?), ClientEntry> _clients = new();
+    private readonly Dictionary<IEquatable<object>, ClientEntry> _clients = new();
     private readonly ReaderWriterLockSlim _lock = new(LockRecursionPolicy.SupportsRecursion);
 
     private readonly int _maxSize;
@@ -33,15 +30,13 @@ public class ClientCache
     /// Updates the last-used timestamp on every hit.
     /// </summary>
     /// <typeparam name="T">The type of the client.</typeparam>
+    /// <param name="clientId">An equality-comparable key representing the client configuration.</param>
     /// <param name="createClient">A factory function to create the client if not cached.</param>
-    /// <param name="key">An equality-comparable key representing the client configuration.</param>
     /// <returns>The cached or newly created client instance.</returns>
-    public T GetClient<T>(Func<T> createClient, IEquatable<object>? key) where T : class
+    public T GetClient<T>(IEquatable<object> clientId, Func<T> createClient) where T : class
     {
-        var cacheKey = (typeof(T), key);
-
         // If the client exists, update its timestamp.
-        if (_clients.TryGetValue(cacheKey, out var cached))
+        if (_clients.TryGetValue(clientId, out var cached))
         {
             cached.LastUsed = Stopwatch.GetTimestamp();
             return (T)cached.Client;
@@ -52,7 +47,7 @@ public class ClientCache
         try
         {
             T created = createClient();
-            _clients[cacheKey] = new ClientEntry(created, Stopwatch.GetTimestamp());
+            _clients[clientId] = new ClientEntry(created, Stopwatch.GetTimestamp());
 
             // After insertion, if cache exceeds the limit, perform cleanup.
             if (_clients.Count > _maxSize)

@@ -23,11 +23,14 @@ public static class AzureOpenAIExtensions
     /// <returns></returns>
     public static ChatClient GetAzureOpenAIChatClient(this ConnectionProvider provider, string? deploymentName = null, AzureOpenAIClientOptions? options = null)
     {
-        ChatClient chatClient = provider.Subclients.GetClient(() =>
+        ChatClientKey chatClientKey = new(deploymentName, options);
+        AzureOpenAIClientKey openAIClientKey = new(options);
+
+        ChatClient chatClient = provider.Subclients.GetClient(chatClientKey, () =>
         {
-            AzureOpenAIClient aoaiClient = provider.Subclients.GetClient(() => CreateAzureOpenAIClient(provider, options), new AzureOpenAIClientKey(options));
+            AzureOpenAIClient aoaiClient = provider.Subclients.GetClient(openAIClientKey, () => CreateAzureOpenAIClient(provider, options));
             return provider.CreateChatClient(aoaiClient, deploymentName);
-        }, new ChatClientKey(deploymentName, options));
+        });
 
         return chatClient;
     }
@@ -41,11 +44,14 @@ public static class AzureOpenAIExtensions
     /// <returns></returns>
     public static EmbeddingClient GetAzureOpenAIEmbeddingClient(this ConnectionProvider provider, string? deploymentName = null, AzureOpenAIClientOptions? options = null)
     {
-        EmbeddingClient embeddingClient = provider.Subclients.GetClient(() =>
+        EmbeddingClientKey embeddingClientKey = new(deploymentName, options);
+        AzureOpenAIClientKey openAIClientKey = new(options);
+
+        EmbeddingClient embeddingClient = provider.Subclients.GetClient(embeddingClientKey, () =>
         {
-            AzureOpenAIClient aoaiClient = provider.Subclients.GetClient(() => CreateAzureOpenAIClient(provider, options), (IEquatable<object>)new AzureOpenAIClientKey(options));
+            AzureOpenAIClient aoaiClient = provider.Subclients.GetClient(openAIClientKey , () => CreateAzureOpenAIClient(provider, options));
             return provider.CreateEmbeddingClient(aoaiClient, deploymentName);
-        }, new EmbeddingClientKey(deploymentName, options));
+        });
 
         return embeddingClient;
     }

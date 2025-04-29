@@ -81,9 +81,9 @@ public class Sample_AzureOpenAI : SamplesBase<AIProjectsTestEnvironment>
         AIProjectClient client = new AIProjectClient(connectionString);
 
         var options1 = new AzureOpenAIClientOptions(ServiceVersion.V2024_06_01);
-        ChatClient chatClient1 = client.GetAzureOpenAIChatClient(modelDeploymentName, options1);
-
         var options2 = new AzureOpenAIClientOptions(ServiceVersion.V2024_10_21);
+
+        ChatClient chatClient1 = client.GetAzureOpenAIChatClient(modelDeploymentName, options1);
         ChatClient chatClient2 = client.GetAzureOpenAIChatClient(modelDeploymentName, options2);
 
         Assert.AreNotSame(chatClient1, chatClient2);

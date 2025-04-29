@@ -18,10 +18,12 @@ namespace Azure.AI.Inference
         /// Gets the chat completion client.
         /// </summary>
         /// <param name="provider"></param>
+        /// <param name="options"></param>
         /// <returns></returns>
-        public static ChatCompletionsClient GetChatCompletionsClient(this ConnectionProvider provider)
+        public static ChatCompletionsClient GetChatCompletionsClient(this ConnectionProvider provider, AzureAIInferenceClientOptions? options = null)
         {
-            ChatCompletionsClient chatClient = provider.Subclients.GetClient(() => CreateChatCompletionsClient(provider), null);
+            ChatCompletionsClientKey chatCompletionsClientKey = new(options);
+            ChatCompletionsClient chatClient = provider.Subclients.GetClient(chatCompletionsClientKey, () => CreateChatCompletionsClient(provider));
             return chatClient;
         }
 
@@ -41,10 +43,12 @@ namespace Azure.AI.Inference
         /// Gets the embeddings client.
         /// </summary>
         /// <param name="provider"></param>
+        /// <param name="options"></param>
         /// <returns></returns>
-        public static EmbeddingsClient GetEmbeddingsClient(this ConnectionProvider provider)
+        public static EmbeddingsClient GetEmbeddingsClient(this ConnectionProvider provider, AzureAIInferenceClientOptions? options = null)
         {
-            EmbeddingsClient embeddingsClient = provider.Subclients.GetClient(() => CreateEmbeddingsClient(provider), null);
+            EmbeddingsClientKey embeddingsClientKey = new(options);
+            EmbeddingsClient embeddingsClient = provider.Subclients.GetClient(embeddingsClientKey, () => CreateEmbeddingsClient(provider));
             return embeddingsClient;
         }
 
@@ -59,5 +63,9 @@ namespace Azure.AI.Inference
             ? new EmbeddingsClient(uri, connection.Credential as TokenCredential)
             : new EmbeddingsClient(uri, new AzureKeyCredential(connection.ApiKeyCredential!));
         }
+
+        private record ChatCompletionsClientKey(AzureAIInferenceClientOptions? Options = null) : IEquatable<object>;
+
+        private record EmbeddingsClientKey(AzureAIInferenceClientOptions? Options = null) : IEquatable<object>;
     }
 }
