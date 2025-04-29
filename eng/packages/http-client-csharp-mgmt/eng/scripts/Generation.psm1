@@ -39,12 +39,11 @@ function Get-Mgmt-TspCommand {
     if ($generateStub) {
         $command += " --option @azure-typespec/http-client-csharp-mgmt.plugin-name=AzureStubPlugin"
     }
-    
     if ($apiVersion) {
         $command += " --option @azure-typespec/http-client-csharp-mgmt.api-version=$apiVersion"
     }
 
-    #$command += " --option @azure-typespec/http-client-csharp-mgmt.new-project=true" TODO: https://github.com/Azure/azure-sdk-for-net/issues/49716
+    $command += " --option @azure-typespec/http-client-csharp-mgmt.new-project=true"
 
     return $command
 }
