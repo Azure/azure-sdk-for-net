@@ -3,14 +3,18 @@
 
 #nullable disable
 
+using System.ComponentModel;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Volume resource. </summary>
+    [CodeGenSerialization(nameof(IsRestoring), "isRestoring")]
     public partial class NetAppVolumeGroupVolume
     {
         /// <summary> Restoring. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsRestoring { get; set; }
     }
 }
