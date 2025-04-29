@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System.ComponentModel;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp
@@ -11,9 +13,11 @@ namespace Azure.ResourceManager.NetApp
     /// A class representing the NetAppVolume data model.
     /// Volume resource
     /// </summary>
+    [CodeGenSerialization(nameof(IsRestoring), "isRestoring")]
     public partial class NetAppVolumeData : TrackedResourceData
     {
         /// <summary> Restoring. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsRestoring { get; set; }
     }
 }
