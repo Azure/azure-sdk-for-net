@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
 
         [TestCase]
         [RecordedTest]
+        [LiveOnly(Reason = "Test regularly times out in playback.")]
         public async Task TestMetadataOperations()
         {
             await sapAvailabilityZoneDetails();
