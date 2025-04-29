@@ -1,0 +1,157 @@
+parameters:
+  Artifact: {}
+  Registry: ''
+  PathToArtifacts: ''
+  DependsOn: []
+  VarDependencies: {}
+  Environment: 'package-publish'
+
+jobs:
+- ${{ if eq(parameters.Registry, 'https://registry.npmjs.org/') }}:
+  - deployment: PublishPackage_${{ replace(parameters.Artifact.name, '-', '_') }}
+    variables:
+      - ${{ each var in parameters.VarDependencies }}:
+        - name: ${{ var.key }}
+          value: ${{ var.value }}
+    environment: ${{ parameters.Environment }}
+    dependsOn: ${{ parameters.DependsOn }}
+    condition: succeeded()
+    templateContext:
+      type: releaseJob
+      isProduction: ${{ eq(parameters.Registry, 'https://registry.npmjs.org/') }}
+      inputs:
+      - input: pipelineArtifact
+        artifactName: packages
+        targetPath: $(Pipeline.Workspace)/packages
+    pool:
+      name: azsdk-pool-mms-ubuntu-2004-general
+      image: azsdk-pool-mms-ubuntu-2004-1espt
+      os: linux
+    displayName: 'Publish ${{parameters.Artifact.name}} to ${{parameters.Registry}}'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
+          - pwsh: |
+              $tarFile = (Get-ChildItem -Path "${{parameters.PathToArtifacts}}/*.tgz").FullName
+              $tempDir = "$(System.DefaultWorkingDirectory)/temp_decompress"
+              New-Item -ItemType Directory -Force -Path $tempDir
+              tar -xzf $tarFile -C $tempDir
+              $packageJsonDir = "$tempDir/package/package.json"
+              $pkg = Get-Content -Raw "$packageJsonDir" | ConvertFrom-Json
+              $packageName = $pkg.Name
+              $packageVersion = $pkg.Version
+              Write-Host "npm view $packageName -json -silent"
+              $packageProps = npm view $packageName -json -silent | ConvertFrom-Json
+              $originalTags = "{}"
+              if ($packageProps.error) {
+                $LASTEXITCODE = 0
+                if ($packageProps.error.code -ne "E404") {
+                  Write-Error $packageProps.error
+                  exit 1
+                }
+              }
+              else {
+                $originalTags = $packageProps.'dist-tags' | ConvertTo-Json -Compress
+              }
+              
+              echo "##vso[task.setvariable variable=PackageName;isOutput=true]$packageName"
+              echo "##vso[task.setvariable variable=OriginalTags;isOutput=true]$originalTags"
+              echo "##vso[task.setvariable variable=IntendedTagVersion;isOutput=true]$packageVersion"
+            name: SetPackageVar
+            displayName: Get original tags
+          - task: EsrpRelease@9
+            displayName: 'Publish ${{parameters.Artifact.name}} to ESRP'
+            inputs:
+              ConnectedServiceName: 'Azure SDK PME Managed Identity'
+              ClientId: '5f81938c-2544-4f1f-9251-dd9de5b8a81b'
+              DomainTenantId: '975f013f-7f24-47e8-a7d3-abc4752bf346'
+              Usemanagedidentity: true
+              KeyVaultName: 'kv-azuresdk-codesign'
+              SignCertName: 'azure-sdk-esrp-release-certificate'
+              Intent: 'PackageDistribution'
+              ContentType: 'npm'
+              FolderLocation: ${{parameters.PathToArtifacts}}
+              Owners: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
+              Approvers: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
+              ServiceEndpointUrl: 'https://api.esrp.microsoft.com'
+              MainPublisher: 'ESRPRELPACMANTEST'
+              productstate: $(Tag)
+  - job: VerifyPackageTags_${{ replace(parameters.Artifact.name, '-', '_') }}
+    dependsOn:
+      - PublishPackage_${{ replace(parameters.Artifact.name, '-', '_') }}
+      - ${{ each dep in parameters.DependsOn }}:
+        - ${{ dep }}
+    condition: succeeded()
+    variables:
+      - template: /eng/pipelines/templates/variables/image.yml
+      - name: PackageName
+        value: $[dependencies.PublishPackage_${{ replace(parameters.Artifact.name, '-', '_') }}.outputs['PublishPackage_${{ replace(parameters.Artifact.name, '-', '_') }}.SetPackageVar.PackageName']]
+      - name: OriginalTags
+        value: $[dependencies.PublishPackage_${{ replace(parameters.Artifact.name, '-', '_') }}.outputs['PublishPackage_${{ replace(parameters.Artifact.name, '-', '_') }}.SetPackageVar.OriginalTags']]
+      - name: IntendedTagVersion
+        value: $[dependencies.PublishPackage_${{ replace(parameters.Artifact.name, '-', '_') }}.outputs['PublishPackage_${{ replace(parameters.Artifact.name, '-', '_') }}.SetPackageVar.IntendedTagVersion']]
+      - ${{ each var in parameters.VarDependencies }}:
+        - name: ${{ var.key }}
+          value: ${{ var.value }}
+    displayName: 'Verify package tags'
+    pool:
+      name: $(LINUXPOOL)
+      image: $(LINUXVMIMAGE)
+      os: linux
+    steps:
+    - checkout: self
+    - download: current
+    - pwsh: |
+        Write-Host "PackageName: $(PackageName)"
+        Write-Host "OriginalTags: $(OriginalTags)"
+        Write-Host "IntendedTagVersion: $(IntendedTagVersion)"
+      displayName: 'Display package variables'
+    - task: Powershell@2
+      displayName: Verify package tags
+      inputs:
+        targetType: filePath
+        filePath: /eng/common/scripts/Verify-Npm-Tags.ps1
+        arguments: -originalDistTags '$(OriginalTags)' -intendedTag "$(Tag)" -intendedTagVersion "$(IntendedTagVersion)" -packageName "$(PackageName)" -npmToken '$(azure-sdk-npm-token)'
+        pwsh: true
+    - task: PowerShell@2
+      displayName: Add Additional Tag
+      inputs:
+        targetType: filePath
+        filePath: /eng/common/scripts/Publish-to-Npm.ps1
+        arguments: -addTag $true -pathToArtifacts ${{parameters.PathToArtifacts}} -accessLevel "public" -tag "$(AdditionalTag)" -registry ${{parameters.Registry}} -npmToken '$(azure-sdk-npm-token)'
+        pwsh: true
+      condition: and(succeeded(), ne(variables['AdditionalTag'], ''))
+- ${{ else }}:
+  - job: PublishDevPackage_${{ replace(parameters.Artifact.name, '-', '_') }}
+    dependsOn: ${{ parameters.DependsOn }}
+    templateContext:
+      type: releaseJob
+      isProduction: false
+      inputs:
+      - input: pipelineArtifact
+        artifactName: packages
+        targetPath: $(Pipeline.Workspace)/packages
+    variables:
+      - template: /eng/pipelines/templates/variables/image.yml
+      - ${{ each var in parameters.VarDependencies }}:
+        - name: ${{ var.key }}
+          value: ${{ var.value }}
+    displayName: 'Publish ${{parameters.Artifact.name}} to Dev Feed'
+    pool:
+      name: $(LINUXPOOL)
+      image: $(LINUXVMIMAGE)
+      os: linux
+    steps:
+    - checkout: self
+    - download: current
+  - task: PowerShell@2
+    displayName: Publish to Dev Feed
+    inputs:
+      targetType: filePath
+      filePath: eng/tools/publish-to-npm.ps1
+      arguments: -pathToArtifacts ${{parameters.PathToArtifacts}} -accessLevel "public" -tag "${{parameters.Tag}}" -additionalTag "$(AdditionalTag)" -registry ${{parameters.Registry}} -npmToken $(azure-sdk-npm-token)
+      pwsh: true
+    condition: succeeded()
+  
