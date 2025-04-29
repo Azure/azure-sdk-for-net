@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Datadog
 
         DatadogMonitorResourceData IJsonModel<DatadogMonitorResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DatadogMonitorResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DatadogMonitorResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DatadogMonitorResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DatadogMonitorResourceData>(Data, options, AzureResourceManagerDatadogContext.Default);
 
-        DatadogMonitorResourceData IPersistableModel<DatadogMonitorResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatadogMonitorResourceData>(data, options);
+        DatadogMonitorResourceData IPersistableModel<DatadogMonitorResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatadogMonitorResourceData>(data, options, AzureResourceManagerDatadogContext.Default);
 
         string IPersistableModel<DatadogMonitorResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DatadogMonitorResourceData>)Data).GetFormatFromOptions(options);
     }

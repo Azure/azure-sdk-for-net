@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkServiceConnectionState)} does not support writing '{options.Format}' format.");
             }

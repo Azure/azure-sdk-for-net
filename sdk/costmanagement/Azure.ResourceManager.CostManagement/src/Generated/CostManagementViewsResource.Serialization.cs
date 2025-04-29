@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CostManagement
 
         CostManagementViewData IJsonModel<CostManagementViewData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CostManagementViewData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CostManagementViewData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CostManagementViewData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CostManagementViewData>(Data, options, AzureResourceManagerCostManagementContext.Default);
 
-        CostManagementViewData IPersistableModel<CostManagementViewData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CostManagementViewData>(data, options);
+        CostManagementViewData IPersistableModel<CostManagementViewData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CostManagementViewData>(data, options, AzureResourceManagerCostManagementContext.Default);
 
         string IPersistableModel<CostManagementViewData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CostManagementViewData>)Data).GetFormatFromOptions(options);
     }

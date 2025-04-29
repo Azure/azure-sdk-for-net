@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CustomerInsights
 
         InteractionResourceFormatData IJsonModel<InteractionResourceFormatData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InteractionResourceFormatData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<InteractionResourceFormatData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<InteractionResourceFormatData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<InteractionResourceFormatData>(Data, options, AzureResourceManagerCustomerInsightsContext.Default);
 
-        InteractionResourceFormatData IPersistableModel<InteractionResourceFormatData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InteractionResourceFormatData>(data, options);
+        InteractionResourceFormatData IPersistableModel<InteractionResourceFormatData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InteractionResourceFormatData>(data, options, AzureResourceManagerCustomerInsightsContext.Default);
 
         string IPersistableModel<InteractionResourceFormatData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InteractionResourceFormatData>)Data).GetFormatFromOptions(options);
     }

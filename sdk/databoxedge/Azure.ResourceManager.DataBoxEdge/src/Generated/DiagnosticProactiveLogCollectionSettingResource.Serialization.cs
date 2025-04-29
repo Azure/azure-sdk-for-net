@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         DiagnosticProactiveLogCollectionSettingData IJsonModel<DiagnosticProactiveLogCollectionSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticProactiveLogCollectionSettingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DiagnosticProactiveLogCollectionSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DiagnosticProactiveLogCollectionSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiagnosticProactiveLogCollectionSettingData>(Data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
-        DiagnosticProactiveLogCollectionSettingData IPersistableModel<DiagnosticProactiveLogCollectionSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiagnosticProactiveLogCollectionSettingData>(data, options);
+        DiagnosticProactiveLogCollectionSettingData IPersistableModel<DiagnosticProactiveLogCollectionSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiagnosticProactiveLogCollectionSettingData>(data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
         string IPersistableModel<DiagnosticProactiveLogCollectionSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiagnosticProactiveLogCollectionSettingData>)Data).GetFormatFromOptions(options);
     }

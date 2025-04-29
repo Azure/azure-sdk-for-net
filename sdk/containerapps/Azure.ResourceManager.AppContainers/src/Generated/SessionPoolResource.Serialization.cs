@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppContainers
 
         SessionPoolData IJsonModel<SessionPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SessionPoolData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SessionPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SessionPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SessionPoolData>(Data, options, AzureResourceManagerAppContainersContext.Default);
 
-        SessionPoolData IPersistableModel<SessionPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SessionPoolData>(data, options);
+        SessionPoolData IPersistableModel<SessionPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SessionPoolData>(data, options, AzureResourceManagerAppContainersContext.Default);
 
         string IPersistableModel<SessionPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SessionPoolData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CostManagement
 
         ScheduledActionData IJsonModel<ScheduledActionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScheduledActionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ScheduledActionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ScheduledActionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScheduledActionData>(Data, options, AzureResourceManagerCostManagementContext.Default);
 
-        ScheduledActionData IPersistableModel<ScheduledActionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScheduledActionData>(data, options);
+        ScheduledActionData IPersistableModel<ScheduledActionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScheduledActionData>(data, options, AzureResourceManagerCostManagementContext.Default);
 
         string IPersistableModel<ScheduledActionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScheduledActionData>)Data).GetFormatFromOptions(options);
     }

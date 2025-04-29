@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataFactory
 
         DataFactoryIntegrationRuntimeData IJsonModel<DataFactoryIntegrationRuntimeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryIntegrationRuntimeData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataFactoryIntegrationRuntimeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataFactoryIntegrationRuntimeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataFactoryIntegrationRuntimeData>(Data, options, AzureResourceManagerDataFactoryContext.Default);
 
-        DataFactoryIntegrationRuntimeData IPersistableModel<DataFactoryIntegrationRuntimeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataFactoryIntegrationRuntimeData>(data, options);
+        DataFactoryIntegrationRuntimeData IPersistableModel<DataFactoryIntegrationRuntimeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataFactoryIntegrationRuntimeData>(data, options, AzureResourceManagerDataFactoryContext.Default);
 
         string IPersistableModel<DataFactoryIntegrationRuntimeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataFactoryIntegrationRuntimeData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppContainers
 
         JavaComponentData IJsonModel<JavaComponentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<JavaComponentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<JavaComponentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<JavaComponentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<JavaComponentData>(Data, options, AzureResourceManagerAppContainersContext.Default);
 
-        JavaComponentData IPersistableModel<JavaComponentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<JavaComponentData>(data, options);
+        JavaComponentData IPersistableModel<JavaComponentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<JavaComponentData>(data, options, AzureResourceManagerAppContainersContext.Default);
 
         string IPersistableModel<JavaComponentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<JavaComponentData>)Data).GetFormatFromOptions(options);
     }
