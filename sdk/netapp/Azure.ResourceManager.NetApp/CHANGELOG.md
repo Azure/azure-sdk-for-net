@@ -11,7 +11,7 @@
 - Added `DestinationReplications` to `NetAppReplicationObject`
 - Added support for ANF Migration Assistant with operations `PeerExternalCluster`, `AuthorizeExternalReplication`, `FinalizeExternalReplication`, `PerformReplicationTransfer` on `NetAppVolumeResource`
 - Added `IsLargeVolume` to  `NetAppBackupData`
-- `IsRestoring` in `NetAppVolumeData` and `NetAppVolumeGroupVolume` is no longer a requred parameter
+- `IsRestoring` in `NetAppVolumeData` and `NetAppVolumeGroupVolume` is now a read only property indicating if volume is being resored 
 
 ### Breaking Changes
 
