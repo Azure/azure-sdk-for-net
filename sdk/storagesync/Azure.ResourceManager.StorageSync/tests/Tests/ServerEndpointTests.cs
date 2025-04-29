@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
 
         private string _serverEndpointName;
 
-        public ServerEndpointTests(bool async) : base(async) //, RecordedTestMode.Record)
+        public ServerEndpointTests(bool async) : base(async, ModeFromSourceCode )
         {
         }
 
