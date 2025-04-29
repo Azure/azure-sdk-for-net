@@ -567,8 +567,7 @@ namespace Azure.ResourceManager.NetApp
         public bool? IsKerberosEnabled { get { throw null; } set { } }
         public bool? IsLargeVolume { get { throw null; } set { } }
         public bool? IsLdapEnabled { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public bool? IsRestoring { get { throw null; } set { } }
+        public bool? IsRestoring { get { throw null; } [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)] set { } }
         public bool? IsSmbContinuouslyAvailable { get { throw null; } set { } }
         public bool? IsSmbEncryptionEnabled { get { throw null; } set { } }
         public bool? IsSnapshotDirectoryVisible { get { throw null; } set { } }
