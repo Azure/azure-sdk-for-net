@@ -190,7 +190,7 @@ namespace Azure.Core
             }
         }
 
-        public RehydrationToken GetRehydrationToken()
+        public RehydrationToken? GetRehydrationToken()
             => GetRehydrationToken(RequestMethod, _startRequestUri, _nextRequestUri, _headerSource.ToString(), _lastKnownLocation, _finalStateVia.ToString(), OperationId);
 
         public static RehydrationToken GetRehydrationToken(
@@ -660,7 +660,7 @@ namespace Azure.Core
 
             public ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken) => new(_operationState);
 
-            public RehydrationToken GetRehydrationToken() =>
+            public RehydrationToken? GetRehydrationToken() =>
                 NextLinkOperationImplementation.GetRehydrationToken(_requestMethod, _startRequestUri, _startRequestUri.AbsoluteUri, "None", null, OperationFinalStateVia.OriginalUri.ToString());
         }
 
