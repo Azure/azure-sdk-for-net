@@ -225,6 +225,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             TTelemetry telemetry,
             out CollectionConfigurationError[] filteringErrors,
             ref string projectionError)
+            where TTelemetry : DocumentIngress
         {
             filteringErrors = Array.Empty<CollectionConfigurationError>();
 

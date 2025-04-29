@@ -1,56 +1,43 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.CodeAnalysis;
-
 namespace System.ClientModel.SourceGeneration;
 
 internal sealed class TypeRef : IEquatable<TypeRef>
 {
-    public TypeRef(string name, string nameSpace, string assembly, IEnumerable<TypeRef>? genericArguments = default, int arrayRank = 0)
+    public TypeRef(
+        string name,
+        string nameSpace,
+        string assembly,
+        string fullyQualifiedName,
+        TypeRef? itemType = default,
+        int arrayRank = 0,
+        ObsoleteLevel obsoleteLevel = ObsoleteLevel.None)
     {
         Name = name;
         Namespace = nameSpace;
-        GenericArguments = genericArguments is null ? [] : genericArguments.ToList();
+        ItemType = itemType;
         Assembly = assembly;
         ArrayRank = arrayRank;
+        FullyQualifiedName = fullyQualifiedName;
+        ObsoleteLevel = obsoleteLevel;
     }
 
     public string Name { get; }
     public string Namespace { get; }
-    public IReadOnlyList<TypeRef> GenericArguments { get; }
+    public TypeRef? ItemType { get; }
     public string Assembly { get; }
     public int ArrayRank { get; }
+    public string FullyQualifiedName { get; }
+    public ObsoleteLevel ObsoleteLevel { get; init; }
 
-    internal static TypeRef FromINamedTypeSymbol(ISymbol symbol)
-    {
-        if (symbol is INamedTypeSymbol namedTypeSymbol)
-        {
-            var typeArguments = namedTypeSymbol.TypeArguments.OfType<INamedTypeSymbol>().Select(FromINamedTypeSymbol);
+    private string? _typeCaseName;
+    public string TypeCaseName => _typeCaseName ??= Name.ToIdentifier(false);
 
-            return new TypeRef(
-                symbol.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat),
-                symbol.ContainingNamespace.ToDisplayString(),
-                symbol.ContainingAssembly.ToDisplayString(),
-                typeArguments);
-        }
-        else if (symbol is IArrayTypeSymbol arrayTypeSymbol)
-        {
-            var elementType = FromINamedTypeSymbol(arrayTypeSymbol.ElementType);
-            return new TypeRef(
-                arrayTypeSymbol.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat).RemoveAsterisks(),
-                elementType.Namespace,
-                elementType.Assembly,
-                [elementType],
-                arrayTypeSymbol.Rank);
-        }
-        else
-        {
-            throw new NotSupportedException($"Unexpected type {symbol.GetType()}");
-        }
-    }
+    private string? _camelCaseName;
+    public string CamelCaseName => _camelCaseName ??= TypeCaseName.ToCamelCase();
+
+    internal bool IsSameAssembly(TypeRef other) => Assembly.Equals(other.Assembly, StringComparison.Ordinal);
 
     public bool Equals(TypeRef? other)
         => other != null && Name == other.Name && Namespace == other.Namespace;
@@ -63,4 +50,9 @@ internal sealed class TypeRef : IEquatable<TypeRef>
 
     public override string ToString()
         => $"{Namespace}.{Name}";
+
+    internal TypeRef GetInnerItemType()
+    {
+        return ItemType is null ? this : ItemType.GetInnerItemType();
+    }
 }

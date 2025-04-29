@@ -98,11 +98,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("anonymousPullEnabled"u8);
                 writer.WriteBooleanValue(IsAnonymousPullEnabled.Value);
             }
-            if (Optional.IsDefined(MetadataSearch))
-            {
-                writer.WritePropertyName("metadataSearch"u8);
-                writer.WriteStringValue(MetadataSearch.Value.ToString());
-            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -152,7 +147,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryPublicNetworkAccess? publicNetworkAccess = default;
             ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions = default;
             bool? anonymousPullEnabled = default;
-            ContainerRegistryMetadataSearch? metadataSearch = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -270,15 +264,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             anonymousPullEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("metadataSearch"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            metadataSearch = new ContainerRegistryMetadataSearch(property0.Value.GetString());
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -300,7 +285,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 publicNetworkAccess,
                 networkRuleBypassOptions,
                 anonymousPullEnabled,
-                metadataSearch,
                 serializedAdditionalRawData);
         }
 

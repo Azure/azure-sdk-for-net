@@ -40,14 +40,16 @@ public partial class Sample_Agents_Azure_AI_Search_Streaming : SamplesBase<AIPro
 
         ConnectionResponse connection = connections.Value[0];
 
-        AISearchIndexResource indexList = new(connection.Id, "sample_index");
-        indexList.QueryType = AzureAISearchQueryType.VectorSemanticHybrid;
-        ToolResources searchResource = new()
+        AzureAISearchResource searchResource = new(
+            connection.Id,
+            "sample_index",
+            5,
+            "category eq 'sleeping bag'",
+            AzureAISearchQueryType.Simple
+        );
+        ToolResources toolResource = new()
         {
-            AzureAISearch = new AzureAISearchResource
-            {
-                IndexList = { indexList }
-            }
+            AzureAISearch = searchResource
         };
 
         AgentsClient agentClient = projectClient.GetAgentsClient();
@@ -56,8 +58,8 @@ public partial class Sample_Agents_Azure_AI_Search_Streaming : SamplesBase<AIPro
            model: modelDeploymentName,
            name: "my-assistant",
            instructions: "You are a helpful assistant.",
-           tools: [ new AzureAISearchToolDefinition() ],
-           toolResources: searchResource);
+           tools: [new AzureAISearchToolDefinition()],
+           toolResources: toolResource);
         #endregion
         #region Snippet:AzureAISearchStreamingExample_CreateThread_Async
         // Create thread for communication
@@ -124,14 +126,16 @@ public partial class Sample_Agents_Azure_AI_Search_Streaming : SamplesBase<AIPro
 
         ConnectionResponse connection = connections.Value[0];
 
-        AISearchIndexResource indexList = new(connection.Id, "sample_index");
-        indexList.QueryType = AzureAISearchQueryType.VectorSemanticHybrid;
-        ToolResources searchResource = new ToolResources
+        AzureAISearchResource searchResource = new(
+            connection.Id,
+            "sample_index",
+            5,
+            "category eq 'sleeping bag'",
+            AzureAISearchQueryType.Simple
+        );
+        ToolResources toolResource = new()
         {
-            AzureAISearch = new AzureAISearchResource
-            {
-                IndexList = { indexList }
-            }
+            AzureAISearch = searchResource
         };
 
         AgentsClient agentClient = projectClient.GetAgentsClient();
@@ -141,7 +145,7 @@ public partial class Sample_Agents_Azure_AI_Search_Streaming : SamplesBase<AIPro
            name: "my-assistant",
            instructions: "You are a helpful assistant.",
            tools: [new AzureAISearchToolDefinition()],
-           toolResources: searchResource);
+           toolResources: toolResource);
         #endregion
         #region Snippet:AzureAISearchStreamingExample_CreateThread
         // Create thread for communication
