@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace _Type.Model.Visibility.Models
+namespace _Type.Model.Visibility
 {
     public partial class VisibilityModel : IJsonModel<VisibilityModel>
     {

@@ -44,8 +44,7 @@ namespace Azure.Generator.Management.Tests.TestHelpers
                 inputNsEnums,
                 inputNsModels,
                 inputNsClients,
-                inputNsAuth,
-                null);
+                inputNsAuth);
             var mockInputLibrary = new Mock<ManagementInputLibrary>(_configFilePath);
             mockInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNs.Object);
 
@@ -78,7 +77,11 @@ namespace Azure.Generator.Management.Tests.TestHelpers
 
             var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(null)) { CallBase = true };
             mockPluginInstance.Setup(p => p.SourceInputModel).Returns(sourceInputModel.Object);
-            mockPluginInstance.Object.Configure();
+            var configureMethod = typeof(CodeModelGenerator).GetMethod(
+                "Configure",
+                BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.InvokeMethod
+            );
+            configureMethod!.Invoke(mockPluginInstance.Object, null);
             return mockPluginInstance;
         }
     }

@@ -85,5 +85,10 @@ namespace Azure.Communication.CallAutomation
         /// ///
         /// </summary>
         public IList<ChannelAffinity> ChannelAffinity { get; set; }
+
+        /// <summary>
+        /// PostProcessingOptions for the Start Recording operation.
+        /// </summary>
+        public PostProcessingOptions PostProcessingOptions { get; set; }
     }
 }
