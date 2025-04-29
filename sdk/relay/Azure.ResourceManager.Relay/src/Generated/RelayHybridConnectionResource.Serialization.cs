@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Relay
 
         RelayHybridConnectionData IJsonModel<RelayHybridConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RelayHybridConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RelayHybridConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RelayHybridConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RelayHybridConnectionData>(Data, options, AzureResourceManagerRelayContext.Default);
 
-        RelayHybridConnectionData IPersistableModel<RelayHybridConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelayHybridConnectionData>(data, options);
+        RelayHybridConnectionData IPersistableModel<RelayHybridConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelayHybridConnectionData>(data, options, AzureResourceManagerRelayContext.Default);
 
         string IPersistableModel<RelayHybridConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RelayHybridConnectionData>)Data).GetFormatFromOptions(options);
     }

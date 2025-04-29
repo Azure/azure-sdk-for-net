@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.RecoveryServices
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RecoveryServicesVaultData)} does not support writing '{options.Format}' format.");
             }

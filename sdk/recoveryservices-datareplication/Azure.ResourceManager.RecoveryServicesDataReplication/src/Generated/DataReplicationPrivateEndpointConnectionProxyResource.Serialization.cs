@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 
         DataReplicationPrivateEndpointConnectionProxyData IJsonModel<DataReplicationPrivateEndpointConnectionProxyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationPrivateEndpointConnectionProxyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataReplicationPrivateEndpointConnectionProxyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataReplicationPrivateEndpointConnectionProxyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataReplicationPrivateEndpointConnectionProxyData>(Data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
 
-        DataReplicationPrivateEndpointConnectionProxyData IPersistableModel<DataReplicationPrivateEndpointConnectionProxyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataReplicationPrivateEndpointConnectionProxyData>(data, options);
+        DataReplicationPrivateEndpointConnectionProxyData IPersistableModel<DataReplicationPrivateEndpointConnectionProxyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataReplicationPrivateEndpointConnectionProxyData>(data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
 
         string IPersistableModel<DataReplicationPrivateEndpointConnectionProxyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataReplicationPrivateEndpointConnectionProxyData>)Data).GetFormatFromOptions(options);
     }

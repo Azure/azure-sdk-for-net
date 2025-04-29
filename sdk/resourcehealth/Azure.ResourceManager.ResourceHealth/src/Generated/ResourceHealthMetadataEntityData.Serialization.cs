@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ResourceHealth
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceHealthContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResourceHealthMetadataEntityData)} does not support writing '{options.Format}' format.");
             }

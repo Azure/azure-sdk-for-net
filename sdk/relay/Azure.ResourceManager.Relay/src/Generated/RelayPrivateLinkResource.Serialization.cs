@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Relay
 
         RelayPrivateLinkResourceData IJsonModel<RelayPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RelayPrivateLinkResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RelayPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RelayPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RelayPrivateLinkResourceData>(Data, options, AzureResourceManagerRelayContext.Default);
 
-        RelayPrivateLinkResourceData IPersistableModel<RelayPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelayPrivateLinkResourceData>(data, options);
+        RelayPrivateLinkResourceData IPersistableModel<RelayPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelayPrivateLinkResourceData>(data, options, AzureResourceManagerRelayContext.Default);
 
         string IPersistableModel<RelayPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RelayPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
     }
