@@ -2023,14 +2023,14 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<RefreshExternalGovernanceStatusOperationResultMI>> RefreshStatusAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>> RefreshStatusAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceResource.RefreshStatus");
             scope.Start();
             try
             {
                 var response = await _managedInstanceRestClient.RefreshStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<RefreshExternalGovernanceStatusOperationResultMI>(new RefreshExternalGovernanceStatusOperationResultMIOperationSource(), _managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateRefreshStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>(new SqlManagedInstanceRefreshExternalGovernanceStatusOperationResultOperationSource(), _managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateRefreshStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -2065,14 +2065,14 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<RefreshExternalGovernanceStatusOperationResultMI> RefreshStatus(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult> RefreshStatus(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _managedInstanceClientDiagnostics.CreateScope("ManagedInstanceResource.RefreshStatus");
             scope.Start();
             try
             {
                 var response = _managedInstanceRestClient.RefreshStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation<RefreshExternalGovernanceStatusOperationResultMI>(new RefreshExternalGovernanceStatusOperationResultMIOperationSource(), _managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateRefreshStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>(new SqlManagedInstanceRefreshExternalGovernanceStatusOperationResultOperationSource(), _managedInstanceClientDiagnostics, Pipeline, _managedInstanceRestClient.CreateRefreshStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -322,9 +322,9 @@ namespace Azure.ResourceManager.Sql
             Uri keyId = default;
             ManagedInstanceExternalAdministrator administrators = default;
             SqlServicePrincipal servicePrincipal = default;
-            string virtualClusterId = default;
+            ResourceIdentifier virtualClusterId = default;
             ExternalGovernanceStatus? externalGovernanceStatus = default;
-            PricingModel? pricingModel = default;
+            SqlManagedInstancePricingModel? pricingModel = default;
             DateTimeOffset? createTime = default;
             AuthMetadataLookupMode? authenticationMetadata = default;
             ManagedInstanceDatabaseFormat? databaseFormat = default;
@@ -684,7 +684,11 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("virtualClusterId"u8))
                         {
-                            virtualClusterId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            virtualClusterId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("externalGovernanceStatus"u8))
@@ -702,7 +706,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            pricingModel = new PricingModel(property0.Value.GetString());
+                            pricingModel = new SqlManagedInstancePricingModel(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("createTime"u8))
@@ -1535,15 +1539,7 @@ namespace Azure.ResourceManager.Sql
                 if (Optional.IsDefined(VirtualClusterId))
                 {
                     builder.Append("    virtualClusterId: ");
-                    if (VirtualClusterId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{VirtualClusterId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{VirtualClusterId}'");
-                    }
+                    builder.AppendLine($"'{VirtualClusterId.ToString()}'");
                 }
             }
 

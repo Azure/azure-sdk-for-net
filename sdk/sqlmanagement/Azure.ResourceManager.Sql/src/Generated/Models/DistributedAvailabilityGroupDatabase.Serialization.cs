@@ -182,8 +182,8 @@ namespace Azure.ResourceManager.Sql.Models
             Guid? partnerReplicaId = default;
             string replicaState = default;
             string seedingProgress = default;
-            ReplicaSynchronizationHealth? synchronizationHealth = default;
-            ReplicaConnectedState? connectedState = default;
+            SqlReplicaSynchronizationHealth? synchronizationHealth = default;
+            SqlReplicaConnectedState? connectedState = default;
             string lastReceivedLsn = default;
             DateTimeOffset? lastReceivedTime = default;
             string lastSentLsn = default;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Sql.Models
             string lastBackupLsn = default;
             DateTimeOffset? lastBackupTime = default;
             string mostRecentLinkError = default;
-            CertificateInfo partnerAuthCertValidity = default;
+            SqlServerCertificateInfo partnerAuthCertValidity = default;
             int? instanceSendReplicationLagSeconds = default;
             int? instanceRedoReplicationLagSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    synchronizationHealth = new ReplicaSynchronizationHealth(property.Value.GetString());
+                    synchronizationHealth = new SqlReplicaSynchronizationHealth(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("connectedState"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    connectedState = new ReplicaConnectedState(property.Value.GetString());
+                    connectedState = new SqlReplicaConnectedState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastReceivedLsn"u8))
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    partnerAuthCertValidity = CertificateInfo.DeserializeCertificateInfo(property.Value, options);
+                    partnerAuthCertValidity = SqlServerCertificateInfo.DeserializeSqlServerCertificateInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instanceSendReplicationLagSeconds"u8))

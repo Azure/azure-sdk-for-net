@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Sql.Models
         private const string NoneValue = "None";
         private const string NativeValue = "Native";
         private const string RecommendedValue = "Recommended";
-        private const string MIPValue = "MIP";
+        private const string MipValue = "MIP";
 
         /// <summary> None. </summary>
         public static ClientClassificationSource None { get; } = new ClientClassificationSource(NoneValue);
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Recommended. </summary>
         public static ClientClassificationSource Recommended { get; } = new ClientClassificationSource(RecommendedValue);
         /// <summary> MIP. </summary>
-        public static ClientClassificationSource MIP { get; } = new ClientClassificationSource(MIPValue);
+        public static ClientClassificationSource Mip { get; } = new ClientClassificationSource(MipValue);
         /// <summary> Determines if two <see cref="ClientClassificationSource"/> values are the same. </summary>
         public static bool operator ==(ClientClassificationSource left, ClientClassificationSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClientClassificationSource"/> values are not the same. </summary>

@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.Sql
             ManagedDatabaseCreateMode? createMode = default;
             Uri storageContainerUri = default;
             ResourceIdentifier sourceDatabaseId = default;
-            string crossSubscriptionSourceDatabaseId = default;
+            ResourceIdentifier crossSubscriptionSourceDatabaseId = default;
             ResourceIdentifier restorableDroppedDatabaseId = default;
-            string crossSubscriptionRestorableDroppedDatabaseId = default;
+            ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId = default;
             string storageContainerIdentity = default;
             string storageContainerSasToken = default;
             ResourceIdentifier failoverGroupId = default;
@@ -346,7 +346,11 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("crossSubscriptionSourceDatabaseId"u8))
                         {
-                            crossSubscriptionSourceDatabaseId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            crossSubscriptionSourceDatabaseId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("restorableDroppedDatabaseId"u8))
@@ -360,7 +364,11 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("crossSubscriptionRestorableDroppedDatabaseId"u8))
                         {
-                            crossSubscriptionRestorableDroppedDatabaseId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            crossSubscriptionRestorableDroppedDatabaseId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("storageContainerIdentity"u8))
@@ -760,15 +768,7 @@ namespace Azure.ResourceManager.Sql
                 if (Optional.IsDefined(CrossSubscriptionSourceDatabaseId))
                 {
                     builder.Append("    crossSubscriptionSourceDatabaseId: ");
-                    if (CrossSubscriptionSourceDatabaseId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CrossSubscriptionSourceDatabaseId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CrossSubscriptionSourceDatabaseId}'");
-                    }
+                    builder.AppendLine($"'{CrossSubscriptionSourceDatabaseId.ToString()}'");
                 }
             }
 
@@ -798,15 +798,7 @@ namespace Azure.ResourceManager.Sql
                 if (Optional.IsDefined(CrossSubscriptionRestorableDroppedDatabaseId))
                 {
                     builder.Append("    crossSubscriptionRestorableDroppedDatabaseId: ");
-                    if (CrossSubscriptionRestorableDroppedDatabaseId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CrossSubscriptionRestorableDroppedDatabaseId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CrossSubscriptionRestorableDroppedDatabaseId}'");
-                    }
+                    builder.AppendLine($"'{CrossSubscriptionRestorableDroppedDatabaseId.ToString()}'");
                 }
             }
 

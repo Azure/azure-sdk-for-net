@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Initializes a new instance of <see cref="DistributedAvailabilityGroupsFailoverContent"/>. </summary>
         /// <param name="failoverType"> The failover type, can be ForcedAllowDataLoss or Planned. </param>
-        public DistributedAvailabilityGroupsFailoverContent(FailoverType failoverType)
+        public DistributedAvailabilityGroupsFailoverContent(SqlServerFailoverType failoverType)
         {
             FailoverType = failoverType;
         }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="DistributedAvailabilityGroupsFailoverContent"/>. </summary>
         /// <param name="failoverType"> The failover type, can be ForcedAllowDataLoss or Planned. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DistributedAvailabilityGroupsFailoverContent(FailoverType failoverType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DistributedAvailabilityGroupsFailoverContent(SqlServerFailoverType failoverType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FailoverType = failoverType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -68,6 +68,6 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The failover type, can be ForcedAllowDataLoss or Planned. </summary>
         [WirePath("failoverType")]
-        public FailoverType FailoverType { get; }
+        public SqlServerFailoverType FailoverType { get; }
     }
 }

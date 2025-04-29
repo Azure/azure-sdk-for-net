@@ -73,14 +73,14 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            FailoverType failoverType = default;
+            SqlServerFailoverType failoverType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failoverType"u8))
                 {
-                    failoverType = new FailoverType(property.Value.GetString());
+                    failoverType = new SqlServerFailoverType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

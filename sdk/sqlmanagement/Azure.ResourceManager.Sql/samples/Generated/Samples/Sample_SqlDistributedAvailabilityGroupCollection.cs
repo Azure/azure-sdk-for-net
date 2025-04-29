@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.Sql.Samples
             {
                 PartnerAvailabilityGroupName = "BoxLocalAg1",
                 PartnerEndpoint = "TCP://SERVER:7022",
-                InstanceLinkRole = LinkRole.Primary,
+                InstanceLinkRole = SqlServerSideLinkRole.Primary,
                 InstanceAvailabilityGroupName = "testcl",
-                FailoverMode = FailoverModeType.None,
+                FailoverMode = SqlServerFailoverModeType.None,
                 SeedingMode = SeedingModeType.Automatic,
                 Databases = {new DistributedAvailabilityGroupDatabase
 {

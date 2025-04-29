@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql.Samples
                 {
                     PrincipalType = SqlServicePrincipalType.SystemAssigned,
                 },
-                AuthenticationMetadata = AuthMetadataLookupMode.AzureAD,
+                AuthenticationMetadata = AuthMetadataLookupMode.Aad,
                 DatabaseFormat = ManagedInstanceDatabaseFormat.AlwaysUpToDate,
                 Tags =
 {

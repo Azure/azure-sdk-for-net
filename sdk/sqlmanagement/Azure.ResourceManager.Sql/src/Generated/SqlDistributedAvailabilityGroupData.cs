@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="seedingMode"> Database seeding mode – can be Automatic (default), or Manual for supported scenarios. </param>
         /// <param name="databases"> Databases in the distributed availability group. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlDistributedAvailabilityGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string distributedAvailabilityGroupName, Guid? distributedAvailabilityGroupId, ReplicationModeType? replicationMode, LinkRole? partnerLinkRole, string partnerAvailabilityGroupName, string partnerEndpoint, LinkRole? instanceLinkRole, string instanceAvailabilityGroupName, FailoverModeType? failoverMode, SeedingModeType? seedingMode, IList<DistributedAvailabilityGroupDatabase> databases, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SqlDistributedAvailabilityGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string distributedAvailabilityGroupName, Guid? distributedAvailabilityGroupId, SqlReplicationModeType? replicationMode, SqlServerSideLinkRole? partnerLinkRole, string partnerAvailabilityGroupName, string partnerEndpoint, SqlServerSideLinkRole? instanceLinkRole, string instanceAvailabilityGroupName, SqlServerFailoverModeType? failoverMode, SeedingModeType? seedingMode, IList<DistributedAvailabilityGroupDatabase> databases, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DistributedAvailabilityGroupName = distributedAvailabilityGroupName;
             DistributedAvailabilityGroupId = distributedAvailabilityGroupId;
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Sql
         public Guid? DistributedAvailabilityGroupId { get; }
         /// <summary> Replication mode of the link. </summary>
         [WirePath("properties.replicationMode")]
-        public ReplicationModeType? ReplicationMode { get; set; }
+        public SqlReplicationModeType? ReplicationMode { get; set; }
         /// <summary> SQL server side link role. </summary>
         [WirePath("properties.partnerLinkRole")]
-        public LinkRole? PartnerLinkRole { get; }
+        public SqlServerSideLinkRole? PartnerLinkRole { get; }
         /// <summary> SQL server side availability group name. </summary>
         [WirePath("properties.partnerAvailabilityGroupName")]
         public string PartnerAvailabilityGroupName { get; set; }
@@ -110,13 +110,13 @@ namespace Azure.ResourceManager.Sql
         public string PartnerEndpoint { get; set; }
         /// <summary> Managed instance side link role. </summary>
         [WirePath("properties.instanceLinkRole")]
-        public LinkRole? InstanceLinkRole { get; set; }
+        public SqlServerSideLinkRole? InstanceLinkRole { get; set; }
         /// <summary> Managed instance side availability group name. </summary>
         [WirePath("properties.instanceAvailabilityGroupName")]
         public string InstanceAvailabilityGroupName { get; set; }
         /// <summary> The link failover mode - can be Manual if intended to be used for two-way failover with a supported SQL Server, or None for one-way failover to Azure. </summary>
         [WirePath("properties.failoverMode")]
-        public FailoverModeType? FailoverMode { get; set; }
+        public SqlServerFailoverModeType? FailoverMode { get; set; }
         /// <summary> Database seeding mode – can be Automatic (default), or Manual for supported scenarios. </summary>
         [WirePath("properties.seedingMode")]
         public SeedingModeType? SeedingMode { get; set; }

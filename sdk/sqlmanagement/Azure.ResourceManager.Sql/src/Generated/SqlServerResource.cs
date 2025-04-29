@@ -860,11 +860,11 @@ namespace Azure.ResourceManager.Sql
             return GetSqlServerJobAgents().Get(jobAgentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkSecurityPerimeterConfigurationResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of NetworkSecurityPerimeterConfigurationResources and their operations over a NetworkSecurityPerimeterConfigurationResource. </returns>
-        public virtual NetworkSecurityPerimeterConfigurationCollection GetNetworkSecurityPerimeterConfigurations()
+        /// <summary> Gets a collection of SqlNetworkSecurityPerimeterConfigurationResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of SqlNetworkSecurityPerimeterConfigurationResources and their operations over a SqlNetworkSecurityPerimeterConfigurationResource. </returns>
+        public virtual SqlNetworkSecurityPerimeterConfigurationCollection GetSqlNetworkSecurityPerimeterConfigurations()
         {
-            return GetCachedClient(client => new NetworkSecurityPerimeterConfigurationCollection(client, Id));
+            return GetCachedClient(client => new SqlNetworkSecurityPerimeterConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -884,7 +884,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterConfigurationResource"/></description>
+        /// <description><see cref="SqlNetworkSecurityPerimeterConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -893,9 +893,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="nspConfigName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nspConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkSecurityPerimeterConfigurationResource>> GetNetworkSecurityPerimeterConfigurationAsync(string nspConfigName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlNetworkSecurityPerimeterConfigurationResource>> GetSqlNetworkSecurityPerimeterConfigurationAsync(string nspConfigName, CancellationToken cancellationToken = default)
         {
-            return await GetNetworkSecurityPerimeterConfigurations().GetAsync(nspConfigName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlNetworkSecurityPerimeterConfigurations().GetAsync(nspConfigName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -915,7 +915,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterConfigurationResource"/></description>
+        /// <description><see cref="SqlNetworkSecurityPerimeterConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -924,9 +924,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="nspConfigName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nspConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NetworkSecurityPerimeterConfigurationResource> GetNetworkSecurityPerimeterConfiguration(string nspConfigName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlNetworkSecurityPerimeterConfigurationResource> GetSqlNetworkSecurityPerimeterConfiguration(string nspConfigName, CancellationToken cancellationToken = default)
         {
-            return GetNetworkSecurityPerimeterConfigurations().Get(nspConfigName, cancellationToken);
+            return GetSqlNetworkSecurityPerimeterConfigurations().Get(nspConfigName, cancellationToken);
         }
 
         /// <summary> Gets a collection of OutboundFirewallRuleResources in the SqlServer. </summary>

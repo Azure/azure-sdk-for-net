@@ -29,7 +29,7 @@ head-as-boolean: false
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-#mgmt-debug:
+# mgmt-debug:
 #  show-serialized-names: true
 
 # this is temporary, to be removed when we find the owner of this feature
@@ -367,6 +367,36 @@ rename-mapping:
   GeoBackupPolicy.properties.state: GeoBackupPolicyState
   DistributedAvailabilityGroup: SqlDistributedAvailabilityGroup
   RecommendedAction.properties.details: AdditionalDetails
+  ManagedDatabase.properties.crossSubscriptionSourceDatabaseId: -|arm-id
+  ManagedDatabase.properties.crossSubscriptionRestorableDroppedDatabaseId: -|arm-id
+  ManagedDatabaseUpdate.properties.crossSubscriptionSourceDatabaseId: -|arm-id
+  ManagedDatabaseUpdate.properties.crossSubscriptionRestorableDroppedDatabaseId: -|arm-id
+  ManagedInstanceUpdate.properties.virtualClusterId: -|arm-id
+  NetworkSecurityPerimeterConfiguration: SqlNetworkSecurityPerimeterConfiguration
+  NetworkSecurityPerimeterConfigurationListResult: SqlNetworkSecurityPerimeterConfigurationListResult
+  AuthMetadataLookupModes.AzureAD: Aad
+  CertificateInfo: SqlServerCertificateInfo
+  ClientClassificationSource.MIP: Mip
+  DataMaskingRule.properties.id: RuleId
+  FailoverModeType: SqlServerFailoverModeType
+  FailoverType: SqlServerFailoverType
+  InstanceRole: DistributedAvailabilityGroupManagedInstanceRole
+  LinkRole: SqlServerSideLinkRole
+  NSPConfigAccessRule: SqlNetworkSecurityPerimeterConfigAccessRule
+  NSPConfigAccessRuleProperties: SqlNetworkSecurityPerimeterConfigAccessRuleProperties
+  NSPConfigAssociation: SqlNetworkSecurityPerimeterConfigAssociation
+  NSPConfigNetworkSecurityPerimeterRule: SqlNetworkSecurityPerimeterConfigRule
+  NSPConfigPerimeter: SqlNetworkSecurityPerimeterConfigPerimeter
+  NSPConfigProfile: SqlNetworkSecurityPerimeterConfigProfile
+  NSPProvisioningIssue: SqlNetworkSecurityPerimeterProvisioningIssue
+  NSPProvisioningIssueProperties: SqlNetworkSecurityPerimeterProvisioningIssueProperties
+  PricingModel: SqlManagedInstancePricingModel
+  RefreshExternalGovernanceStatusOperationResultMI: SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult
+  ReplicaConnectedState: SqlReplicaConnectedState
+  ReplicaSynchronizationHealth.NOT_HEALTHY: NotHealthy
+  ReplicaSynchronizationHealth: SqlReplicaSynchronizationHealth
+  ReplicationModeType: SqlReplicationModeType
+  RoleChangeType: DistributedAvailabilityGroupRoleChangeType
 
 prompted-enum-values:
   - Default

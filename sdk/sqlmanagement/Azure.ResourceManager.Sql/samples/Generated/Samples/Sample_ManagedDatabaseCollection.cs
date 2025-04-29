@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Sql.Samples
             {
                 RestorePointInTime = DateTimeOffset.Parse("2017-07-14T05:35:31.503Z"),
                 CreateMode = ManagedDatabaseCreateMode.PointInTimeRestore,
-                CrossSubscriptionSourceDatabaseId = "/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/Default-SQL-SouthEastAsia/providers/Microsoft.Sql/managedInstances/testsvr2/databases/testdb",
+                CrossSubscriptionSourceDatabaseId = new ResourceIdentifier("/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/Default-SQL-SouthEastAsia/providers/Microsoft.Sql/managedInstances/testsvr2/databases/testdb"),
                 CrossSubscriptionTargetManagedInstanceId = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default-SQL-SouthEastAsia/providers/Microsoft.Sql/managedInstances/testsvr"),
             };
             ArmOperation<ManagedDatabaseResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, data);

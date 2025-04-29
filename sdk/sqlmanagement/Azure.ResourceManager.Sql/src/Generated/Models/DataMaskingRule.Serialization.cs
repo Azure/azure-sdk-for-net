@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Sql.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IdPropertiesId))
+            if (options.Format != "W" && Optional.IsDefined(RuleId))
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(IdPropertiesId);
+                writer.WriteStringValue(RuleId);
             }
             if (Optional.IsDefined(RuleState))
             {
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Sql.Models
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdPropertiesId), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleId), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    id: ");
@@ -412,17 +412,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
             else
             {
-                if (Optional.IsDefined(IdPropertiesId))
+                if (Optional.IsDefined(RuleId))
                 {
                     builder.Append("    id: ");
-                    if (IdPropertiesId.Contains(Environment.NewLine))
+                    if (RuleId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{IdPropertiesId}'''");
+                        builder.AppendLine($"{RuleId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{IdPropertiesId}'");
+                        builder.AppendLine($"'{RuleId}'");
                     }
                 }
             }

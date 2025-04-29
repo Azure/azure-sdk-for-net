@@ -75,20 +75,20 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            InstanceRole instanceRole = default;
-            RoleChangeType roleChangeType = default;
+            DistributedAvailabilityGroupManagedInstanceRole instanceRole = default;
+            DistributedAvailabilityGroupRoleChangeType roleChangeType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceRole"u8))
                 {
-                    instanceRole = new InstanceRole(property.Value.GetString());
+                    instanceRole = new DistributedAvailabilityGroupManagedInstanceRole(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("roleChangeType"u8))
                 {
-                    roleChangeType = new RoleChangeType(property.Value.GetString());
+                    roleChangeType = new DistributedAvailabilityGroupRoleChangeType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Sql.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AzureADValue = "AzureAD";
+        private const string AadValue = "AzureAD";
         private const string PairedValue = "Paired";
         private const string WindowsValue = "Windows";
 
         /// <summary> AzureAD. </summary>
-        public static AuthMetadataLookupMode AzureAD { get; } = new AuthMetadataLookupMode(AzureADValue);
+        public static AuthMetadataLookupMode Aad { get; } = new AuthMetadataLookupMode(AadValue);
         /// <summary> Paired. </summary>
         public static AuthMetadataLookupMode Paired { get; } = new AuthMetadataLookupMode(PairedValue);
         /// <summary> Windows. </summary>

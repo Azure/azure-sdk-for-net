@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="DistributedAvailabilityGroupSetRole"/>. </summary>
         /// <param name="instanceRole"> New role of managed instance in a distributed availability group, can be Primary or Secondary. </param>
         /// <param name="roleChangeType"> The type of the role change, can be Planned or Forced. </param>
-        public DistributedAvailabilityGroupSetRole(InstanceRole instanceRole, RoleChangeType roleChangeType)
+        public DistributedAvailabilityGroupSetRole(DistributedAvailabilityGroupManagedInstanceRole instanceRole, DistributedAvailabilityGroupRoleChangeType roleChangeType)
         {
             InstanceRole = instanceRole;
             RoleChangeType = roleChangeType;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="instanceRole"> New role of managed instance in a distributed availability group, can be Primary or Secondary. </param>
         /// <param name="roleChangeType"> The type of the role change, can be Planned or Forced. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DistributedAvailabilityGroupSetRole(InstanceRole instanceRole, RoleChangeType roleChangeType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DistributedAvailabilityGroupSetRole(DistributedAvailabilityGroupManagedInstanceRole instanceRole, DistributedAvailabilityGroupRoleChangeType roleChangeType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceRole = instanceRole;
             RoleChangeType = roleChangeType;
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> New role of managed instance in a distributed availability group, can be Primary or Secondary. </summary>
         [WirePath("instanceRole")]
-        public InstanceRole InstanceRole { get; }
+        public DistributedAvailabilityGroupManagedInstanceRole InstanceRole { get; }
         /// <summary> The type of the role change, can be Planned or Forced. </summary>
         [WirePath("roleChangeType")]
-        public RoleChangeType RoleChangeType { get; }
+        public DistributedAvailabilityGroupRoleChangeType RoleChangeType { get; }
     }
 }

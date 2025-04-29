@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Samples
             // invoke the operation
             SqlDistributedAvailabilityGroupData data = new SqlDistributedAvailabilityGroupData
             {
-                ReplicationMode = ReplicationModeType.Sync,
+                ReplicationMode = SqlReplicationModeType.Sync,
             };
             ArmOperation<SqlDistributedAvailabilityGroupResource> lro = await sqlDistributedAvailabilityGroup.UpdateAsync(WaitUntil.Completed, data);
             SqlDistributedAvailabilityGroupResource result = lro.Value;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlDistributedAvailabilityGroupResource sqlDistributedAvailabilityGroup = client.GetSqlDistributedAvailabilityGroupResource(sqlDistributedAvailabilityGroupResourceId);
 
             // invoke the operation
-            DistributedAvailabilityGroupsFailoverContent content = new DistributedAvailabilityGroupsFailoverContent(FailoverType.ForcedAllowDataLoss);
+            DistributedAvailabilityGroupsFailoverContent content = new DistributedAvailabilityGroupsFailoverContent(SqlServerFailoverType.ForcedAllowDataLoss);
             ArmOperation<SqlDistributedAvailabilityGroupResource> lro = await sqlDistributedAvailabilityGroup.FailoverAsync(WaitUntil.Completed, content);
             SqlDistributedAvailabilityGroupResource result = lro.Value;
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlDistributedAvailabilityGroupResource sqlDistributedAvailabilityGroup = client.GetSqlDistributedAvailabilityGroupResource(sqlDistributedAvailabilityGroupResourceId);
 
             // invoke the operation
-            DistributedAvailabilityGroupSetRole distributedAvailabilityGroupSetRole = new DistributedAvailabilityGroupSetRole(InstanceRole.Primary, RoleChangeType.Forced);
+            DistributedAvailabilityGroupSetRole distributedAvailabilityGroupSetRole = new DistributedAvailabilityGroupSetRole(DistributedAvailabilityGroupManagedInstanceRole.Primary, DistributedAvailabilityGroupRoleChangeType.Forced);
             ArmOperation<SqlDistributedAvailabilityGroupResource> lro = await sqlDistributedAvailabilityGroup.SetRoleAsync(WaitUntil.Completed, distributedAvailabilityGroupSetRole);
             SqlDistributedAvailabilityGroupResource result = lro.Value;
 

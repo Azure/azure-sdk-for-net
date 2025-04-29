@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="instanceSendReplicationLagSeconds"> Replication lag when Managed Instance link side is primary. </param>
         /// <param name="instanceRedoReplicationLagSeconds"> Redo lag when Managed Instance link side is primary. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DistributedAvailabilityGroupDatabase(string databaseName, Guid? instanceReplicaId, Guid? partnerReplicaId, string replicaState, string seedingProgress, ReplicaSynchronizationHealth? synchronizationHealth, ReplicaConnectedState? connectedState, string lastReceivedLsn, DateTimeOffset? lastReceivedOn, string lastSentLsn, DateTimeOffset? lastSentOn, string lastCommitLsn, DateTimeOffset? lastCommitOn, string lastHardenedLsn, DateTimeOffset? lastHardenedOn, string lastBackupLsn, DateTimeOffset? lastBackupOn, string mostRecentLinkError, CertificateInfo partnerAuthCertValidity, int? instanceSendReplicationLagSeconds, int? instanceRedoReplicationLagSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DistributedAvailabilityGroupDatabase(string databaseName, Guid? instanceReplicaId, Guid? partnerReplicaId, string replicaState, string seedingProgress, SqlReplicaSynchronizationHealth? synchronizationHealth, SqlReplicaConnectedState? connectedState, string lastReceivedLsn, DateTimeOffset? lastReceivedOn, string lastSentLsn, DateTimeOffset? lastSentOn, string lastCommitLsn, DateTimeOffset? lastCommitOn, string lastHardenedLsn, DateTimeOffset? lastHardenedOn, string lastBackupLsn, DateTimeOffset? lastBackupOn, string mostRecentLinkError, SqlServerCertificateInfo partnerAuthCertValidity, int? instanceSendReplicationLagSeconds, int? instanceRedoReplicationLagSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
             InstanceReplicaId = instanceReplicaId;
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.Sql.Models
         public string SeedingProgress { get; }
         /// <summary> Link health state. </summary>
         [WirePath("synchronizationHealth")]
-        public ReplicaSynchronizationHealth? SynchronizationHealth { get; }
+        public SqlReplicaSynchronizationHealth? SynchronizationHealth { get; }
         /// <summary> Link connected state. </summary>
         [WirePath("connectedState")]
-        public ReplicaConnectedState? ConnectedState { get; }
+        public SqlReplicaConnectedState? ConnectedState { get; }
         /// <summary> Last received LSN. </summary>
         [WirePath("lastReceivedLsn")]
         public string LastReceivedLsn { get; }
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql.Models
         public string MostRecentLinkError { get; }
         /// <summary> SQL server certificate validity. </summary>
         [WirePath("partnerAuthCertValidity")]
-        public CertificateInfo PartnerAuthCertValidity { get; }
+        public SqlServerCertificateInfo PartnerAuthCertValidity { get; }
         /// <summary> Replication lag when Managed Instance link side is primary. </summary>
         [WirePath("instanceSendReplicationLagSeconds")]
         public int? InstanceSendReplicationLagSeconds { get; }

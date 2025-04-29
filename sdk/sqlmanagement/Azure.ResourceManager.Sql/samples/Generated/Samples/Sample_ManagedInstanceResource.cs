@@ -402,8 +402,8 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
 
             // invoke the operation
-            ArmOperation<RefreshExternalGovernanceStatusOperationResultMI> lro = await managedInstance.RefreshStatusAsync(WaitUntil.Completed);
-            RefreshExternalGovernanceStatusOperationResultMI result = lro.Value;
+            ArmOperation<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult> lro = await managedInstance.RefreshStatusAsync(WaitUntil.Completed);
+            SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

@@ -130,13 +130,13 @@ namespace Azure.ResourceManager.Sql
             SystemData systemData = default;
             string distributedAvailabilityGroupName = default;
             Guid? distributedAvailabilityGroupId = default;
-            ReplicationModeType? replicationMode = default;
-            LinkRole? partnerLinkRole = default;
+            SqlReplicationModeType? replicationMode = default;
+            SqlServerSideLinkRole? partnerLinkRole = default;
             string partnerAvailabilityGroupName = default;
             string partnerEndpoint = default;
-            LinkRole? instanceLinkRole = default;
+            SqlServerSideLinkRole? instanceLinkRole = default;
             string instanceAvailabilityGroupName = default;
-            FailoverModeType? failoverMode = default;
+            SqlServerFailoverModeType? failoverMode = default;
             SeedingModeType? seedingMode = default;
             IList<DistributedAvailabilityGroupDatabase> databases = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            replicationMode = new ReplicationModeType(property0.Value.GetString());
+                            replicationMode = new SqlReplicationModeType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("partnerLinkRole"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            partnerLinkRole = new LinkRole(property0.Value.GetString());
+                            partnerLinkRole = new SqlServerSideLinkRole(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("partnerAvailabilityGroupName"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            instanceLinkRole = new LinkRole(property0.Value.GetString());
+                            instanceLinkRole = new SqlServerSideLinkRole(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("instanceAvailabilityGroupName"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            failoverMode = new FailoverModeType(property0.Value.GetString());
+                            failoverMode = new SqlServerFailoverModeType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("seedingMode"u8))
