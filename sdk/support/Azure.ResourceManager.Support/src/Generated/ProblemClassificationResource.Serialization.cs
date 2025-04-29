@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Support
 
         ProblemClassificationData IJsonModel<ProblemClassificationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProblemClassificationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ProblemClassificationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ProblemClassificationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProblemClassificationData>(Data, options, AzureResourceManagerSupportContext.Default);
 
-        ProblemClassificationData IPersistableModel<ProblemClassificationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProblemClassificationData>(data, options);
+        ProblemClassificationData IPersistableModel<ProblemClassificationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProblemClassificationData>(data, options, AzureResourceManagerSupportContext.Default);
 
         string IPersistableModel<ProblemClassificationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProblemClassificationData>)Data).GetFormatFromOptions(options);
     }

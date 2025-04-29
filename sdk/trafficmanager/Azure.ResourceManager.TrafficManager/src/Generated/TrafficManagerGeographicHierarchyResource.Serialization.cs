@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.TrafficManager
 
         TrafficManagerGeographicHierarchyData IJsonModel<TrafficManagerGeographicHierarchyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrafficManagerGeographicHierarchyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TrafficManagerGeographicHierarchyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<TrafficManagerGeographicHierarchyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TrafficManagerGeographicHierarchyData>(Data, options, AzureResourceManagerTrafficManagerContext.Default);
 
-        TrafficManagerGeographicHierarchyData IPersistableModel<TrafficManagerGeographicHierarchyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrafficManagerGeographicHierarchyData>(data, options);
+        TrafficManagerGeographicHierarchyData IPersistableModel<TrafficManagerGeographicHierarchyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrafficManagerGeographicHierarchyData>(data, options, AzureResourceManagerTrafficManagerContext.Default);
 
         string IPersistableModel<TrafficManagerGeographicHierarchyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrafficManagerGeographicHierarchyData>)Data).GetFormatFromOptions(options);
     }

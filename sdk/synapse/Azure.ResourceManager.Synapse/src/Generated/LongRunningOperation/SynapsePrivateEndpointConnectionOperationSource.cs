@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Synapse
 
         SynapsePrivateEndpointConnectionResource IOperationSource<SynapsePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SynapsePrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<SynapsePrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
             return new SynapsePrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<SynapsePrivateEndpointConnectionResource> IOperationSource<SynapsePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SynapsePrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<SynapsePrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
             return await Task.FromResult(new SynapsePrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }
