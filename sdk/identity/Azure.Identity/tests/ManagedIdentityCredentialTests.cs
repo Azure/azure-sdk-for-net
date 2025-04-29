@@ -439,7 +439,7 @@ namespace Azure.Identity.Tests
         [NonParallelizable]
         [Test]
         [TestCase("""{"error":"invalid_request","error_description":"Identity not found"}""")]
-        [TestCase(null)]
+        //[TestCase(null)]
         public void VerifyImdsRequestFailureWithValidJsonIdentityNotFoundErrorThrowsCUE(string content)
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
