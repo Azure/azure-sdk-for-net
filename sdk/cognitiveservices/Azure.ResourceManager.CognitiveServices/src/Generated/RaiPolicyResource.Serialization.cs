@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CognitiveServices
 
         RaiPolicyData IJsonModel<RaiPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RaiPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RaiPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RaiPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RaiPolicyData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
-        RaiPolicyData IPersistableModel<RaiPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RaiPolicyData>(data, options);
+        RaiPolicyData IPersistableModel<RaiPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RaiPolicyData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
         string IPersistableModel<RaiPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RaiPolicyData>)Data).GetFormatFromOptions(options);
     }

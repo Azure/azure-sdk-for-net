@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CognitiveServicesDomainAvailabilityContent)} does not support writing '{options.Format}' format.");
             }
