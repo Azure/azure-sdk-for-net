@@ -15,26 +15,26 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6260",
+        ["$id"] = "6215",
         ["name"] = "ASC"
     }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6262",
+        ["$id"] = "6217",
         ["updateTime"] = "DESC"
     })},
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6254",
+        ["$id"] = "6209",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6255",
+                ["$id"] = "6210",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6256",
+                ["$id"] = "6211",
                 ["entityType"] = "azure_blob_path"
             }
         }
@@ -94,17 +94,17 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6339",
+        ["$id"] = "6294",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6340",
+                ["$id"] = "6295",
                 ["entityType"] = "azure_blob_path"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6341",
+                ["$id"] = "6296",
                 ["attributeName"] = "qualifiedName",
                 ["operator"] = "contains",
                 ["attributeValue"] = ".csv"
@@ -125,36 +125,36 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6392",
+        ["$id"] = "6347",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6393",
+                ["$id"] = "6348",
                 ["entityType"] = "azure_blob_path"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6394",
+                ["$id"] = "6349",
                 ["attributeName"] = "qualifiedName",
                 ["operator"] = "contains",
                 ["attributeValue"] = ".csv"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6395",
+                ["$id"] = "6350",
                 ["or"] = new object[]
                 {
                     new Dictionary<string, object>
                     {
-                        ["$id"] = "6396",
+                        ["$id"] = "6351",
                         ["attributeName"] = "name",
                         ["operator"] = "eq",
                         ["attributeValue"] = "exampledata.csv"
                     },
                     new Dictionary<string, object>
                     {
-                        ["$id"] = "6397",
+                        ["$id"] = "6352",
                         ["attributeName"] = "qualifiedName",
                         ["operator"] = "prefix",
                         ["attributeValue"] = "https://"
@@ -177,142 +177,142 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6450",
+        ["$id"] = "6405",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6451",
+                ["$id"] = "6406",
                 ["assetType"] = "SQL Server"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6452",
+                ["$id"] = "6407",
                 ["assetType"] = "Azure SQL Server"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6453",
+                ["$id"] = "6408",
                 ["assetType"] = "Azure SQL Database"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6454",
+                ["$id"] = "6409",
                 ["assetType"] = "Azure SQL Data Warehouse"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6455",
+                ["$id"] = "6410",
                 ["assetType"] = "Azure SQL Managed Instance"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6456",
+                ["$id"] = "6411",
                 ["assetType"] = "Azure Storage Account"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6457",
+                ["$id"] = "6412",
                 ["assetType"] = "Azure Blob Storage"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6458",
+                ["$id"] = "6413",
                 ["assetType"] = "Azure Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6459",
+                ["$id"] = "6414",
                 ["assetType"] = "Azure Table Storage"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6460",
+                ["$id"] = "6415",
                 ["assetType"] = "Azure Data Lake Storage Gen1"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6461",
+                ["$id"] = "6416",
                 ["assetType"] = "Azure Data Lake Storage Gen2"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6462",
+                ["$id"] = "6417",
                 ["assetType"] = "Azure Cosmos DB"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6463",
+                ["$id"] = "6418",
                 ["assetType"] = "Azure Data Factory"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6464",
+                ["$id"] = "6419",
                 ["assetType"] = "Azure Cognitive Search"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6465",
+                ["$id"] = "6420",
                 ["assetType"] = "Power BI"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6466",
+                ["$id"] = "6421",
                 ["assetType"] = "Azure Data Explorer"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6467",
+                ["$id"] = "6422",
                 ["assetType"] = "Amazon S3"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6468",
+                ["$id"] = "6423",
                 ["assetType"] = "Azure Data Share"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6469",
+                ["$id"] = "6424",
                 ["assetType"] = "Teradata"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6470",
+                ["$id"] = "6425",
                 ["assetType"] = "SAP S4HANA"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6471",
+                ["$id"] = "6426",
                 ["assetType"] = "SAP ECC"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6472",
+                ["$id"] = "6427",
                 ["assetType"] = "SQL Server Integration Services"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6473",
+                ["$id"] = "6428",
                 ["assetType"] = "hive"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6474",
+                ["$id"] = "6429",
                 ["assetType"] = "Azure Database for MySQL"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6475",
+                ["$id"] = "6430",
                 ["assetType"] = "Azure Database for MariaDB"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6476",
+                ["$id"] = "6431",
                 ["assetType"] = "Azure Database for PostgreSQL"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6477",
+                ["$id"] = "6432",
                 ["assetType"] = "Azure Synapse Analytics"
             }
         }
@@ -331,26 +331,26 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6519",
+        ["$id"] = "6474",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6520",
+                ["$id"] = "6475",
                 ["attributeName"] = "name",
                 ["operator"] = "eq",
                 ["attributeValue"] = "exampledata.csv"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6521",
+                ["$id"] = "6476",
                 ["attributeName"] = "createTime",
                 ["operator"] = "ge",
                 ["attributeValue"] = 1545580800000L
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6522",
+                ["$id"] = "6477",
                 ["attributeName"] = "modifiedTime",
                 ["operator"] = "timerange",
                 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
@@ -371,33 +371,33 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6584",
+        ["$id"] = "6539",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6585",
+                ["$id"] = "6540",
                 ["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
                 ["operator"] = "eq|ne|contains|prefix",
                 ["attributeValue"] = "string value"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6586",
+                ["$id"] = "6541",
                 ["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
                 ["operator"] = "eq|ne|gt|ge|lt|le",
                 ["attributeValue"] = 123
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6587",
+                ["$id"] = "6542",
                 ["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
                 ["operator"] = "eq|ne",
                 ["attributeValue"] = true
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6588",
+                ["$id"] = "6543",
                 ["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
                 ["operator"] = "timerange",
                 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
@@ -418,7 +418,7 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6611",
+        ["$id"] = "6566",
         ["classification"] = "MICROSOFT.PERSONAL.EMAIL",
         ["includeSubClassifications"] = true
     }),
@@ -436,7 +436,7 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6661",
+        ["$id"] = "6616",
         ["collectionId"] = "collectionName"
     }),
 };
@@ -453,7 +453,7 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6710",
+        ["$id"] = "6665",
         ["objectType"] = "Tables"
     }),
     Facets = {new SearchFacetItem
@@ -487,12 +487,12 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6840",
+        ["$id"] = "6795",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6841",
+                ["$id"] = "6796",
                 ["fileExtension"] = "txt"
             }
         }
@@ -512,27 +512,27 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6884",
+        ["$id"] = "6839",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6885",
+                ["$id"] = "6840",
                 ["objectType"] = "Glossary terms"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6886",
+                ["$id"] = "6841",
                 ["or"] = new object[]
                 {
                     new Dictionary<string, object>
                     {
-                        ["$id"] = "6887",
+                        ["$id"] = "6842",
                         ["glossaryType"] = "AtlasGlossary"
                     },
                     new Dictionary<string, object>
                     {
-                        ["$id"] = "6888",
+                        ["$id"] = "6843",
                         ["glossaryType"] = "AtlasGlossaryTerm"
                     }
                 }
@@ -570,12 +570,12 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6956",
+        ["$id"] = "6911",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6957",
+                ["$id"] = "6912",
                 ["id"] = "bfecbcc3-1838-45fe-96d6-112de8a170f9"
             }
         }
@@ -594,10 +594,10 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6985",
+        ["$id"] = "6940",
         ["not"] = new Dictionary<string, object>
         {
-            ["$id"] = "6986",
+            ["$id"] = "6941",
             ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
         }
     }),
@@ -615,47 +615,47 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7028",
+        ["$id"] = "6983",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7029",
+                ["$id"] = "6984",
                 ["objectType"] = "Dashboards"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7030",
+                ["$id"] = "6985",
                 ["objectType"] = "Data pipelines"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7031",
+                ["$id"] = "6986",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7032",
+                ["$id"] = "6987",
                 ["objectType"] = "Folders"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7033",
+                ["$id"] = "6988",
                 ["objectType"] = "Glossary terms"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7034",
+                ["$id"] = "6989",
                 ["objectType"] = "Reports"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7035",
+                ["$id"] = "6990",
                 ["objectType"] = "Stored procedures"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7036",
+                ["$id"] = "6991",
                 ["objectType"] = "Tables"
             }
         }
@@ -676,26 +676,26 @@ QueryConfig body = new QueryConfig
     ContinuationToken = "<token>",
     Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7081",
+        ["$id"] = "7036",
         ["name"] = "ASC"
     }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7083",
+        ["$id"] = "7038",
         ["updateTime"] = "DESC"
     })},
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7074",
+        ["$id"] = "7029",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7075",
+                ["$id"] = "7030",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7076",
+                ["$id"] = "7031",
                 ["entityType"] = "azure_blob_path"
             }
         }
@@ -756,26 +756,26 @@ QueryConfig body = new QueryConfig
     Limit = 2,
     Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7167",
+        ["$id"] = "7122",
         ["name"] = "ASC"
     }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7169",
+        ["$id"] = "7124",
         ["updateTime"] = "DESC"
     })},
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7161",
+        ["$id"] = "7116",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7162",
+                ["$id"] = "7117",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7163",
+                ["$id"] = "7118",
                 ["entityType"] = "azure_blob_path"
             }
         }
@@ -837,26 +837,26 @@ QueryConfig body = new QueryConfig
     ContinuationToken = "<token>",
     Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7254",
+        ["$id"] = "7209",
         ["name"] = "ASC"
     }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7256",
+        ["$id"] = "7211",
         ["updateTime"] = "DESC"
     })},
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7247",
+        ["$id"] = "7202",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7248",
+                ["$id"] = "7203",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7249",
+                ["$id"] = "7204",
                 ["entityType"] = "azure_blob_path"
             }
         }
@@ -916,22 +916,22 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7333",
+        ["$id"] = "7288",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7334",
+                ["$id"] = "7289",
                 ["createTime"] = new Dictionary<string, object>
                 {
-                    ["$id"] = "7335",
+                    ["$id"] = "7290",
                     ["operator"] = "lt",
                     ["timeThreshold"] = 1545580800000L
                 }
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7336",
+                ["$id"] = "7291",
                 ["updateTime"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
             }
         }
@@ -951,32 +951,32 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7369",
+        ["$id"] = "7324",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7370",
+                ["$id"] = "7325",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7371",
+                ["$id"] = "7326",
                 ["not"] = new Dictionary<string, object>
                 {
-                    ["$id"] = "7372",
+                    ["$id"] = "7327",
                     ["or"] = new object[]
                     {
                         new Dictionary<string, object>
                         {
-                            ["$id"] = "7373",
+                            ["$id"] = "7328",
                             ["attributeName"] = "size",
                             ["operator"] = "eq",
                             ["attributeValue"] = 0
                         },
                         new Dictionary<string, object>
                         {
-                            ["$id"] = "7374",
+                            ["$id"] = "7329",
                             ["attributeName"] = "fileSize",
                             ["operator"] = "eq",
                             ["attributeValue"] = 0
@@ -986,10 +986,10 @@ QueryConfig body = new QueryConfig
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7375",
+                ["$id"] = "7330",
                 ["not"] = new Dictionary<string, object>
                 {
-                    ["$id"] = "7376",
+                    ["$id"] = "7331",
                     ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
                 }
             }
@@ -1022,23 +1022,23 @@ QueryConfig body = new QueryConfig
     Limit = 3,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7430",
+        ["$id"] = "7385",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7431",
+                ["$id"] = "7386",
                 ["term"] = "ExampleTerm"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7432",
+                ["$id"] = "7387",
                 ["term"] = "ExampleTerm",
                 ["glossary"] = "GlossaryName"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7433",
+                ["$id"] = "7388",
                 ["termGuid"] = "<term guid>"
             }
         }
@@ -1057,12 +1057,12 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7466",
+        ["$id"] = "7421",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7467",
+                ["$id"] = "7422",
                 ["entityType"] = "azure_blob_path",
                 ["includeSubTypes"] = false
             }
@@ -1086,26 +1086,26 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6260",
+        ["$id"] = "6215",
         ["name"] = "ASC"
     }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6262",
+        ["$id"] = "6217",
         ["updateTime"] = "DESC"
     })},
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6254",
+        ["$id"] = "6209",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6255",
+                ["$id"] = "6210",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6256",
+                ["$id"] = "6211",
                 ["entityType"] = "azure_blob_path"
             }
         }
@@ -1165,17 +1165,17 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6339",
+        ["$id"] = "6294",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6340",
+                ["$id"] = "6295",
                 ["entityType"] = "azure_blob_path"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6341",
+                ["$id"] = "6296",
                 ["attributeName"] = "qualifiedName",
                 ["operator"] = "contains",
                 ["attributeValue"] = ".csv"
@@ -1196,36 +1196,36 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6392",
+        ["$id"] = "6347",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6393",
+                ["$id"] = "6348",
                 ["entityType"] = "azure_blob_path"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6394",
+                ["$id"] = "6349",
                 ["attributeName"] = "qualifiedName",
                 ["operator"] = "contains",
                 ["attributeValue"] = ".csv"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6395",
+                ["$id"] = "6350",
                 ["or"] = new object[]
                 {
                     new Dictionary<string, object>
                     {
-                        ["$id"] = "6396",
+                        ["$id"] = "6351",
                         ["attributeName"] = "name",
                         ["operator"] = "eq",
                         ["attributeValue"] = "exampledata.csv"
                     },
                     new Dictionary<string, object>
                     {
-                        ["$id"] = "6397",
+                        ["$id"] = "6352",
                         ["attributeName"] = "qualifiedName",
                         ["operator"] = "prefix",
                         ["attributeValue"] = "https://"
@@ -1248,142 +1248,142 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6450",
+        ["$id"] = "6405",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6451",
+                ["$id"] = "6406",
                 ["assetType"] = "SQL Server"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6452",
+                ["$id"] = "6407",
                 ["assetType"] = "Azure SQL Server"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6453",
+                ["$id"] = "6408",
                 ["assetType"] = "Azure SQL Database"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6454",
+                ["$id"] = "6409",
                 ["assetType"] = "Azure SQL Data Warehouse"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6455",
+                ["$id"] = "6410",
                 ["assetType"] = "Azure SQL Managed Instance"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6456",
+                ["$id"] = "6411",
                 ["assetType"] = "Azure Storage Account"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6457",
+                ["$id"] = "6412",
                 ["assetType"] = "Azure Blob Storage"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6458",
+                ["$id"] = "6413",
                 ["assetType"] = "Azure Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6459",
+                ["$id"] = "6414",
                 ["assetType"] = "Azure Table Storage"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6460",
+                ["$id"] = "6415",
                 ["assetType"] = "Azure Data Lake Storage Gen1"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6461",
+                ["$id"] = "6416",
                 ["assetType"] = "Azure Data Lake Storage Gen2"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6462",
+                ["$id"] = "6417",
                 ["assetType"] = "Azure Cosmos DB"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6463",
+                ["$id"] = "6418",
                 ["assetType"] = "Azure Data Factory"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6464",
+                ["$id"] = "6419",
                 ["assetType"] = "Azure Cognitive Search"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6465",
+                ["$id"] = "6420",
                 ["assetType"] = "Power BI"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6466",
+                ["$id"] = "6421",
                 ["assetType"] = "Azure Data Explorer"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6467",
+                ["$id"] = "6422",
                 ["assetType"] = "Amazon S3"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6468",
+                ["$id"] = "6423",
                 ["assetType"] = "Azure Data Share"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6469",
+                ["$id"] = "6424",
                 ["assetType"] = "Teradata"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6470",
+                ["$id"] = "6425",
                 ["assetType"] = "SAP S4HANA"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6471",
+                ["$id"] = "6426",
                 ["assetType"] = "SAP ECC"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6472",
+                ["$id"] = "6427",
                 ["assetType"] = "SQL Server Integration Services"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6473",
+                ["$id"] = "6428",
                 ["assetType"] = "hive"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6474",
+                ["$id"] = "6429",
                 ["assetType"] = "Azure Database for MySQL"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6475",
+                ["$id"] = "6430",
                 ["assetType"] = "Azure Database for MariaDB"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6476",
+                ["$id"] = "6431",
                 ["assetType"] = "Azure Database for PostgreSQL"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6477",
+                ["$id"] = "6432",
                 ["assetType"] = "Azure Synapse Analytics"
             }
         }
@@ -1402,26 +1402,26 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6519",
+        ["$id"] = "6474",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6520",
+                ["$id"] = "6475",
                 ["attributeName"] = "name",
                 ["operator"] = "eq",
                 ["attributeValue"] = "exampledata.csv"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6521",
+                ["$id"] = "6476",
                 ["attributeName"] = "createTime",
                 ["operator"] = "ge",
                 ["attributeValue"] = 1545580800000L
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6522",
+                ["$id"] = "6477",
                 ["attributeName"] = "modifiedTime",
                 ["operator"] = "timerange",
                 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
@@ -1442,33 +1442,33 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6584",
+        ["$id"] = "6539",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6585",
+                ["$id"] = "6540",
                 ["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
                 ["operator"] = "eq|ne|contains|prefix",
                 ["attributeValue"] = "string value"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6586",
+                ["$id"] = "6541",
                 ["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
                 ["operator"] = "eq|ne|gt|ge|lt|le",
                 ["attributeValue"] = 123
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6587",
+                ["$id"] = "6542",
                 ["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
                 ["operator"] = "eq|ne",
                 ["attributeValue"] = true
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6588",
+                ["$id"] = "6543",
                 ["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
                 ["operator"] = "timerange",
                 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
@@ -1489,7 +1489,7 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6611",
+        ["$id"] = "6566",
         ["classification"] = "MICROSOFT.PERSONAL.EMAIL",
         ["includeSubClassifications"] = true
     }),
@@ -1507,7 +1507,7 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6661",
+        ["$id"] = "6616",
         ["collectionId"] = "collectionName"
     }),
 };
@@ -1524,7 +1524,7 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6710",
+        ["$id"] = "6665",
         ["objectType"] = "Tables"
     }),
     Facets = {new SearchFacetItem
@@ -1558,12 +1558,12 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6840",
+        ["$id"] = "6795",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6841",
+                ["$id"] = "6796",
                 ["fileExtension"] = "txt"
             }
         }
@@ -1583,27 +1583,27 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6884",
+        ["$id"] = "6839",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6885",
+                ["$id"] = "6840",
                 ["objectType"] = "Glossary terms"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6886",
+                ["$id"] = "6841",
                 ["or"] = new object[]
                 {
                     new Dictionary<string, object>
                     {
-                        ["$id"] = "6887",
+                        ["$id"] = "6842",
                         ["glossaryType"] = "AtlasGlossary"
                     },
                     new Dictionary<string, object>
                     {
-                        ["$id"] = "6888",
+                        ["$id"] = "6843",
                         ["glossaryType"] = "AtlasGlossaryTerm"
                     }
                 }
@@ -1641,12 +1641,12 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6956",
+        ["$id"] = "6911",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6957",
+                ["$id"] = "6912",
                 ["id"] = "bfecbcc3-1838-45fe-96d6-112de8a170f9"
             }
         }
@@ -1665,10 +1665,10 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "6985",
+        ["$id"] = "6940",
         ["not"] = new Dictionary<string, object>
         {
-            ["$id"] = "6986",
+            ["$id"] = "6941",
             ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
         }
     }),
@@ -1686,47 +1686,47 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7028",
+        ["$id"] = "6983",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7029",
+                ["$id"] = "6984",
                 ["objectType"] = "Dashboards"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7030",
+                ["$id"] = "6985",
                 ["objectType"] = "Data pipelines"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7031",
+                ["$id"] = "6986",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7032",
+                ["$id"] = "6987",
                 ["objectType"] = "Folders"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7033",
+                ["$id"] = "6988",
                 ["objectType"] = "Glossary terms"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7034",
+                ["$id"] = "6989",
                 ["objectType"] = "Reports"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7035",
+                ["$id"] = "6990",
                 ["objectType"] = "Stored procedures"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7036",
+                ["$id"] = "6991",
                 ["objectType"] = "Tables"
             }
         }
@@ -1747,26 +1747,26 @@ QueryConfig body = new QueryConfig
     ContinuationToken = "<token>",
     Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7081",
+        ["$id"] = "7036",
         ["name"] = "ASC"
     }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7083",
+        ["$id"] = "7038",
         ["updateTime"] = "DESC"
     })},
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7074",
+        ["$id"] = "7029",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7075",
+                ["$id"] = "7030",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7076",
+                ["$id"] = "7031",
                 ["entityType"] = "azure_blob_path"
             }
         }
@@ -1827,26 +1827,26 @@ QueryConfig body = new QueryConfig
     Limit = 2,
     Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7167",
+        ["$id"] = "7122",
         ["name"] = "ASC"
     }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7169",
+        ["$id"] = "7124",
         ["updateTime"] = "DESC"
     })},
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7161",
+        ["$id"] = "7116",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7162",
+                ["$id"] = "7117",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7163",
+                ["$id"] = "7118",
                 ["entityType"] = "azure_blob_path"
             }
         }
@@ -1908,26 +1908,26 @@ QueryConfig body = new QueryConfig
     ContinuationToken = "<token>",
     Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7254",
+        ["$id"] = "7209",
         ["name"] = "ASC"
     }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7256",
+        ["$id"] = "7211",
         ["updateTime"] = "DESC"
     })},
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7247",
+        ["$id"] = "7202",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7248",
+                ["$id"] = "7203",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7249",
+                ["$id"] = "7204",
                 ["entityType"] = "azure_blob_path"
             }
         }
@@ -1987,22 +1987,22 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7333",
+        ["$id"] = "7288",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7334",
+                ["$id"] = "7289",
                 ["createTime"] = new Dictionary<string, object>
                 {
-                    ["$id"] = "7335",
+                    ["$id"] = "7290",
                     ["operator"] = "lt",
                     ["timeThreshold"] = 1545580800000L
                 }
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7336",
+                ["$id"] = "7291",
                 ["updateTime"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
             }
         }
@@ -2022,32 +2022,32 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7369",
+        ["$id"] = "7324",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7370",
+                ["$id"] = "7325",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7371",
+                ["$id"] = "7326",
                 ["not"] = new Dictionary<string, object>
                 {
-                    ["$id"] = "7372",
+                    ["$id"] = "7327",
                     ["or"] = new object[]
                     {
                         new Dictionary<string, object>
                         {
-                            ["$id"] = "7373",
+                            ["$id"] = "7328",
                             ["attributeName"] = "size",
                             ["operator"] = "eq",
                             ["attributeValue"] = 0
                         },
                         new Dictionary<string, object>
                         {
-                            ["$id"] = "7374",
+                            ["$id"] = "7329",
                             ["attributeName"] = "fileSize",
                             ["operator"] = "eq",
                             ["attributeValue"] = 0
@@ -2057,10 +2057,10 @@ QueryConfig body = new QueryConfig
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7375",
+                ["$id"] = "7330",
                 ["not"] = new Dictionary<string, object>
                 {
-                    ["$id"] = "7376",
+                    ["$id"] = "7331",
                     ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
                 }
             }
@@ -2093,23 +2093,23 @@ QueryConfig body = new QueryConfig
     Limit = 3,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7430",
+        ["$id"] = "7385",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7431",
+                ["$id"] = "7386",
                 ["term"] = "ExampleTerm"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7432",
+                ["$id"] = "7387",
                 ["term"] = "ExampleTerm",
                 ["glossary"] = "GlossaryName"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7433",
+                ["$id"] = "7388",
                 ["termGuid"] = "<term guid>"
             }
         }
@@ -2128,12 +2128,12 @@ QueryConfig body = new QueryConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7466",
+        ["$id"] = "7421",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7467",
+                ["$id"] = "7422",
                 ["entityType"] = "azure_blob_path",
                 ["includeSubTypes"] = false
             }
@@ -2156,17 +2156,17 @@ using RequestContent content = RequestContent.Create(new
     keywords = "exampledata",
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6254",
+        ["$id"] = "6209",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6255",
+                ["$id"] = "6210",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6256",
+                ["$id"] = "6211",
                 ["entityType"] = "azure_blob_path"
             }
         }
@@ -2176,12 +2176,12 @@ using RequestContent content = RequestContent.Create(new
     {
         new Dictionary<string, object>
         {
-            ["$id"] = "6260",
+            ["$id"] = "6215",
             ["name"] = "ASC"
         },
         new Dictionary<string, object>
         {
-            ["$id"] = "6262",
+            ["$id"] = "6217",
             ["updateTime"] = "DESC"
         }
     },
@@ -2250,17 +2250,17 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6339",
+        ["$id"] = "6294",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6340",
+                ["$id"] = "6295",
                 ["entityType"] = "azure_blob_path"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6341",
+                ["$id"] = "6296",
                 ["attributeName"] = "qualifiedName",
                 ["operator"] = "contains",
                 ["attributeValue"] = ".csv"
@@ -2284,36 +2284,36 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6392",
+        ["$id"] = "6347",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6393",
+                ["$id"] = "6348",
                 ["entityType"] = "azure_blob_path"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6394",
+                ["$id"] = "6349",
                 ["attributeName"] = "qualifiedName",
                 ["operator"] = "contains",
                 ["attributeValue"] = ".csv"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6395",
+                ["$id"] = "6350",
                 ["or"] = new object[]
                 {
                     new Dictionary<string, object>
                     {
-                        ["$id"] = "6396",
+                        ["$id"] = "6351",
                         ["attributeName"] = "name",
                         ["operator"] = "eq",
                         ["attributeValue"] = "exampledata.csv"
                     },
                     new Dictionary<string, object>
                     {
-                        ["$id"] = "6397",
+                        ["$id"] = "6352",
                         ["attributeName"] = "qualifiedName",
                         ["operator"] = "prefix",
                         ["attributeValue"] = "https://"
@@ -2339,142 +2339,142 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6450",
+        ["$id"] = "6405",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6451",
+                ["$id"] = "6406",
                 ["assetType"] = "SQL Server"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6452",
+                ["$id"] = "6407",
                 ["assetType"] = "Azure SQL Server"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6453",
+                ["$id"] = "6408",
                 ["assetType"] = "Azure SQL Database"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6454",
+                ["$id"] = "6409",
                 ["assetType"] = "Azure SQL Data Warehouse"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6455",
+                ["$id"] = "6410",
                 ["assetType"] = "Azure SQL Managed Instance"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6456",
+                ["$id"] = "6411",
                 ["assetType"] = "Azure Storage Account"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6457",
+                ["$id"] = "6412",
                 ["assetType"] = "Azure Blob Storage"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6458",
+                ["$id"] = "6413",
                 ["assetType"] = "Azure Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6459",
+                ["$id"] = "6414",
                 ["assetType"] = "Azure Table Storage"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6460",
+                ["$id"] = "6415",
                 ["assetType"] = "Azure Data Lake Storage Gen1"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6461",
+                ["$id"] = "6416",
                 ["assetType"] = "Azure Data Lake Storage Gen2"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6462",
+                ["$id"] = "6417",
                 ["assetType"] = "Azure Cosmos DB"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6463",
+                ["$id"] = "6418",
                 ["assetType"] = "Azure Data Factory"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6464",
+                ["$id"] = "6419",
                 ["assetType"] = "Azure Cognitive Search"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6465",
+                ["$id"] = "6420",
                 ["assetType"] = "Power BI"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6466",
+                ["$id"] = "6421",
                 ["assetType"] = "Azure Data Explorer"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6467",
+                ["$id"] = "6422",
                 ["assetType"] = "Amazon S3"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6468",
+                ["$id"] = "6423",
                 ["assetType"] = "Azure Data Share"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6469",
+                ["$id"] = "6424",
                 ["assetType"] = "Teradata"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6470",
+                ["$id"] = "6425",
                 ["assetType"] = "SAP S4HANA"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6471",
+                ["$id"] = "6426",
                 ["assetType"] = "SAP ECC"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6472",
+                ["$id"] = "6427",
                 ["assetType"] = "SQL Server Integration Services"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6473",
+                ["$id"] = "6428",
                 ["assetType"] = "hive"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6474",
+                ["$id"] = "6429",
                 ["assetType"] = "Azure Database for MySQL"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6475",
+                ["$id"] = "6430",
                 ["assetType"] = "Azure Database for MariaDB"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6476",
+                ["$id"] = "6431",
                 ["assetType"] = "Azure Database for PostgreSQL"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6477",
+                ["$id"] = "6432",
                 ["assetType"] = "Azure Synapse Analytics"
             }
         }
@@ -2496,26 +2496,26 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6519",
+        ["$id"] = "6474",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6520",
+                ["$id"] = "6475",
                 ["attributeName"] = "name",
                 ["operator"] = "eq",
                 ["attributeValue"] = "exampledata.csv"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6521",
+                ["$id"] = "6476",
                 ["attributeName"] = "createTime",
                 ["operator"] = "ge",
                 ["attributeValue"] = 1545580800000L
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6522",
+                ["$id"] = "6477",
                 ["attributeName"] = "modifiedTime",
                 ["operator"] = "timerange",
                 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
@@ -2539,33 +2539,33 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6584",
+        ["$id"] = "6539",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6585",
+                ["$id"] = "6540",
                 ["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
                 ["operator"] = "eq|ne|contains|prefix",
                 ["attributeValue"] = "string value"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6586",
+                ["$id"] = "6541",
                 ["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
                 ["operator"] = "eq|ne|gt|ge|lt|le",
                 ["attributeValue"] = 123
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6587",
+                ["$id"] = "6542",
                 ["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
                 ["operator"] = "eq|ne",
                 ["attributeValue"] = true
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6588",
+                ["$id"] = "6543",
                 ["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
                 ["operator"] = "timerange",
                 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
@@ -2589,7 +2589,7 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6611",
+        ["$id"] = "6566",
         ["classification"] = "MICROSOFT.PERSONAL.EMAIL",
         ["includeSubClassifications"] = true
     },
@@ -2610,7 +2610,7 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6661",
+        ["$id"] = "6616",
         ["collectionId"] = "collectionName"
     },
 });
@@ -2629,7 +2629,7 @@ using RequestContent content = RequestContent.Create(new
 {
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6710",
+        ["$id"] = "6665",
         ["objectType"] = "Tables"
     },
     limit = 10,
@@ -2673,12 +2673,12 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6840",
+        ["$id"] = "6795",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6841",
+                ["$id"] = "6796",
                 ["fileExtension"] = "txt"
             }
         }
@@ -2701,27 +2701,27 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6884",
+        ["$id"] = "6839",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6885",
+                ["$id"] = "6840",
                 ["objectType"] = "Glossary terms"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6886",
+                ["$id"] = "6841",
                 ["or"] = new object[]
                 {
                     new Dictionary<string, object>
                     {
-                        ["$id"] = "6887",
+                        ["$id"] = "6842",
                         ["glossaryType"] = "AtlasGlossary"
                     },
                     new Dictionary<string, object>
                     {
-                        ["$id"] = "6888",
+                        ["$id"] = "6843",
                         ["glossaryType"] = "AtlasGlossaryTerm"
                     }
                 }
@@ -2766,12 +2766,12 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6956",
+        ["$id"] = "6911",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6957",
+                ["$id"] = "6912",
                 ["id"] = "bfecbcc3-1838-45fe-96d6-112de8a170f9"
             }
         }
@@ -2793,10 +2793,10 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6985",
+        ["$id"] = "6940",
         ["not"] = new Dictionary<string, object>
         {
-            ["$id"] = "6986",
+            ["$id"] = "6941",
             ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
         }
     },
@@ -2817,47 +2817,47 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "7028",
+        ["$id"] = "6983",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7029",
+                ["$id"] = "6984",
                 ["objectType"] = "Dashboards"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7030",
+                ["$id"] = "6985",
                 ["objectType"] = "Data pipelines"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7031",
+                ["$id"] = "6986",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7032",
+                ["$id"] = "6987",
                 ["objectType"] = "Folders"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7033",
+                ["$id"] = "6988",
                 ["objectType"] = "Glossary terms"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7034",
+                ["$id"] = "6989",
                 ["objectType"] = "Reports"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7035",
+                ["$id"] = "6990",
                 ["objectType"] = "Stored procedures"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7036",
+                ["$id"] = "6991",
                 ["objectType"] = "Tables"
             }
         }
@@ -2879,17 +2879,17 @@ using RequestContent content = RequestContent.Create(new
     keywords = "exampledata",
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "7074",
+        ["$id"] = "7029",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7075",
+                ["$id"] = "7030",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7076",
+                ["$id"] = "7031",
                 ["entityType"] = "azure_blob_path"
             }
         }
@@ -2900,12 +2900,12 @@ using RequestContent content = RequestContent.Create(new
     {
         new Dictionary<string, object>
         {
-            ["$id"] = "7081",
+            ["$id"] = "7036",
             ["name"] = "ASC"
         },
         new Dictionary<string, object>
         {
-            ["$id"] = "7083",
+            ["$id"] = "7038",
             ["updateTime"] = "DESC"
         }
     },
@@ -2974,17 +2974,17 @@ using RequestContent content = RequestContent.Create(new
     keywords = "exampledata",
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "7161",
+        ["$id"] = "7116",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7162",
+                ["$id"] = "7117",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7163",
+                ["$id"] = "7118",
                 ["entityType"] = "azure_blob_path"
             }
         }
@@ -2994,12 +2994,12 @@ using RequestContent content = RequestContent.Create(new
     {
         new Dictionary<string, object>
         {
-            ["$id"] = "7167",
+            ["$id"] = "7122",
             ["name"] = "ASC"
         },
         new Dictionary<string, object>
         {
-            ["$id"] = "7169",
+            ["$id"] = "7124",
             ["updateTime"] = "DESC"
         }
     },
@@ -3068,17 +3068,17 @@ using RequestContent content = RequestContent.Create(new
     keywords = "exampledata",
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "7247",
+        ["$id"] = "7202",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7248",
+                ["$id"] = "7203",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7249",
+                ["$id"] = "7204",
                 ["entityType"] = "azure_blob_path"
             }
         }
@@ -3089,12 +3089,12 @@ using RequestContent content = RequestContent.Create(new
     {
         new Dictionary<string, object>
         {
-            ["$id"] = "7254",
+            ["$id"] = "7209",
             ["name"] = "ASC"
         },
         new Dictionary<string, object>
         {
-            ["$id"] = "7256",
+            ["$id"] = "7211",
             ["updateTime"] = "DESC"
         }
     },
@@ -3163,22 +3163,22 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "7333",
+        ["$id"] = "7288",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7334",
+                ["$id"] = "7289",
                 ["createTime"] = new Dictionary<string, object>
                 {
-                    ["$id"] = "7335",
+                    ["$id"] = "7290",
                     ["operator"] = "lt",
                     ["timeThreshold"] = 1545580800000L
                 }
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7336",
+                ["$id"] = "7291",
                 ["updateTime"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
             }
         }
@@ -3200,32 +3200,32 @@ using RequestContent content = RequestContent.Create(new
     keywords = "exampledata",
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "7369",
+        ["$id"] = "7324",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7370",
+                ["$id"] = "7325",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7371",
+                ["$id"] = "7326",
                 ["not"] = new Dictionary<string, object>
                 {
-                    ["$id"] = "7372",
+                    ["$id"] = "7327",
                     ["or"] = new object[]
                     {
                         new Dictionary<string, object>
                         {
-                            ["$id"] = "7373",
+                            ["$id"] = "7328",
                             ["attributeName"] = "size",
                             ["operator"] = "eq",
                             ["attributeValue"] = 0
                         },
                         new Dictionary<string, object>
                         {
-                            ["$id"] = "7374",
+                            ["$id"] = "7329",
                             ["attributeName"] = "fileSize",
                             ["operator"] = "eq",
                             ["attributeValue"] = 0
@@ -3235,10 +3235,10 @@ using RequestContent content = RequestContent.Create(new
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7375",
+                ["$id"] = "7330",
                 ["not"] = new Dictionary<string, object>
                 {
-                    ["$id"] = "7376",
+                    ["$id"] = "7331",
                     ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
                 }
             }
@@ -3278,23 +3278,23 @@ using RequestContent content = RequestContent.Create(new
     limit = 3,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "7430",
+        ["$id"] = "7385",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7431",
+                ["$id"] = "7386",
                 ["term"] = "ExampleTerm"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7432",
+                ["$id"] = "7387",
                 ["term"] = "ExampleTerm",
                 ["glossary"] = "GlossaryName"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7433",
+                ["$id"] = "7388",
                 ["termGuid"] = "<term guid>"
             }
         }
@@ -3316,12 +3316,12 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "7466",
+        ["$id"] = "7421",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7467",
+                ["$id"] = "7422",
                 ["entityType"] = "azure_blob_path",
                 ["includeSubTypes"] = false
             }
@@ -3347,17 +3347,17 @@ using RequestContent content = RequestContent.Create(new
     keywords = "exampledata",
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6254",
+        ["$id"] = "6209",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6255",
+                ["$id"] = "6210",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6256",
+                ["$id"] = "6211",
                 ["entityType"] = "azure_blob_path"
             }
         }
@@ -3367,12 +3367,12 @@ using RequestContent content = RequestContent.Create(new
     {
         new Dictionary<string, object>
         {
-            ["$id"] = "6260",
+            ["$id"] = "6215",
             ["name"] = "ASC"
         },
         new Dictionary<string, object>
         {
-            ["$id"] = "6262",
+            ["$id"] = "6217",
             ["updateTime"] = "DESC"
         }
     },
@@ -3441,17 +3441,17 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6339",
+        ["$id"] = "6294",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6340",
+                ["$id"] = "6295",
                 ["entityType"] = "azure_blob_path"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6341",
+                ["$id"] = "6296",
                 ["attributeName"] = "qualifiedName",
                 ["operator"] = "contains",
                 ["attributeValue"] = ".csv"
@@ -3475,36 +3475,36 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6392",
+        ["$id"] = "6347",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6393",
+                ["$id"] = "6348",
                 ["entityType"] = "azure_blob_path"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6394",
+                ["$id"] = "6349",
                 ["attributeName"] = "qualifiedName",
                 ["operator"] = "contains",
                 ["attributeValue"] = ".csv"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6395",
+                ["$id"] = "6350",
                 ["or"] = new object[]
                 {
                     new Dictionary<string, object>
                     {
-                        ["$id"] = "6396",
+                        ["$id"] = "6351",
                         ["attributeName"] = "name",
                         ["operator"] = "eq",
                         ["attributeValue"] = "exampledata.csv"
                     },
                     new Dictionary<string, object>
                     {
-                        ["$id"] = "6397",
+                        ["$id"] = "6352",
                         ["attributeName"] = "qualifiedName",
                         ["operator"] = "prefix",
                         ["attributeValue"] = "https://"
@@ -3530,142 +3530,142 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6450",
+        ["$id"] = "6405",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6451",
+                ["$id"] = "6406",
                 ["assetType"] = "SQL Server"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6452",
+                ["$id"] = "6407",
                 ["assetType"] = "Azure SQL Server"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6453",
+                ["$id"] = "6408",
                 ["assetType"] = "Azure SQL Database"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6454",
+                ["$id"] = "6409",
                 ["assetType"] = "Azure SQL Data Warehouse"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6455",
+                ["$id"] = "6410",
                 ["assetType"] = "Azure SQL Managed Instance"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6456",
+                ["$id"] = "6411",
                 ["assetType"] = "Azure Storage Account"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6457",
+                ["$id"] = "6412",
                 ["assetType"] = "Azure Blob Storage"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6458",
+                ["$id"] = "6413",
                 ["assetType"] = "Azure Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6459",
+                ["$id"] = "6414",
                 ["assetType"] = "Azure Table Storage"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6460",
+                ["$id"] = "6415",
                 ["assetType"] = "Azure Data Lake Storage Gen1"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6461",
+                ["$id"] = "6416",
                 ["assetType"] = "Azure Data Lake Storage Gen2"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6462",
+                ["$id"] = "6417",
                 ["assetType"] = "Azure Cosmos DB"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6463",
+                ["$id"] = "6418",
                 ["assetType"] = "Azure Data Factory"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6464",
+                ["$id"] = "6419",
                 ["assetType"] = "Azure Cognitive Search"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6465",
+                ["$id"] = "6420",
                 ["assetType"] = "Power BI"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6466",
+                ["$id"] = "6421",
                 ["assetType"] = "Azure Data Explorer"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6467",
+                ["$id"] = "6422",
                 ["assetType"] = "Amazon S3"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6468",
+                ["$id"] = "6423",
                 ["assetType"] = "Azure Data Share"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6469",
+                ["$id"] = "6424",
                 ["assetType"] = "Teradata"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6470",
+                ["$id"] = "6425",
                 ["assetType"] = "SAP S4HANA"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6471",
+                ["$id"] = "6426",
                 ["assetType"] = "SAP ECC"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6472",
+                ["$id"] = "6427",
                 ["assetType"] = "SQL Server Integration Services"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6473",
+                ["$id"] = "6428",
                 ["assetType"] = "hive"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6474",
+                ["$id"] = "6429",
                 ["assetType"] = "Azure Database for MySQL"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6475",
+                ["$id"] = "6430",
                 ["assetType"] = "Azure Database for MariaDB"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6476",
+                ["$id"] = "6431",
                 ["assetType"] = "Azure Database for PostgreSQL"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6477",
+                ["$id"] = "6432",
                 ["assetType"] = "Azure Synapse Analytics"
             }
         }
@@ -3687,26 +3687,26 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6519",
+        ["$id"] = "6474",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6520",
+                ["$id"] = "6475",
                 ["attributeName"] = "name",
                 ["operator"] = "eq",
                 ["attributeValue"] = "exampledata.csv"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6521",
+                ["$id"] = "6476",
                 ["attributeName"] = "createTime",
                 ["operator"] = "ge",
                 ["attributeValue"] = 1545580800000L
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6522",
+                ["$id"] = "6477",
                 ["attributeName"] = "modifiedTime",
                 ["operator"] = "timerange",
                 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
@@ -3730,33 +3730,33 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6584",
+        ["$id"] = "6539",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6585",
+                ["$id"] = "6540",
                 ["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
                 ["operator"] = "eq|ne|contains|prefix",
                 ["attributeValue"] = "string value"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6586",
+                ["$id"] = "6541",
                 ["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
                 ["operator"] = "eq|ne|gt|ge|lt|le",
                 ["attributeValue"] = 123
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6587",
+                ["$id"] = "6542",
                 ["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
                 ["operator"] = "eq|ne",
                 ["attributeValue"] = true
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6588",
+                ["$id"] = "6543",
                 ["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
                 ["operator"] = "timerange",
                 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
@@ -3780,7 +3780,7 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6611",
+        ["$id"] = "6566",
         ["classification"] = "MICROSOFT.PERSONAL.EMAIL",
         ["includeSubClassifications"] = true
     },
@@ -3801,7 +3801,7 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6661",
+        ["$id"] = "6616",
         ["collectionId"] = "collectionName"
     },
 });
@@ -3820,7 +3820,7 @@ using RequestContent content = RequestContent.Create(new
 {
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6710",
+        ["$id"] = "6665",
         ["objectType"] = "Tables"
     },
     limit = 10,
@@ -3864,12 +3864,12 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6840",
+        ["$id"] = "6795",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6841",
+                ["$id"] = "6796",
                 ["fileExtension"] = "txt"
             }
         }
@@ -3892,27 +3892,27 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6884",
+        ["$id"] = "6839",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6885",
+                ["$id"] = "6840",
                 ["objectType"] = "Glossary terms"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "6886",
+                ["$id"] = "6841",
                 ["or"] = new object[]
                 {
                     new Dictionary<string, object>
                     {
-                        ["$id"] = "6887",
+                        ["$id"] = "6842",
                         ["glossaryType"] = "AtlasGlossary"
                     },
                     new Dictionary<string, object>
                     {
-                        ["$id"] = "6888",
+                        ["$id"] = "6843",
                         ["glossaryType"] = "AtlasGlossaryTerm"
                     }
                 }
@@ -3957,12 +3957,12 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6956",
+        ["$id"] = "6911",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "6957",
+                ["$id"] = "6912",
                 ["id"] = "bfecbcc3-1838-45fe-96d6-112de8a170f9"
             }
         }
@@ -3984,10 +3984,10 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "6985",
+        ["$id"] = "6940",
         ["not"] = new Dictionary<string, object>
         {
-            ["$id"] = "6986",
+            ["$id"] = "6941",
             ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
         }
     },
@@ -4008,47 +4008,47 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "7028",
+        ["$id"] = "6983",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7029",
+                ["$id"] = "6984",
                 ["objectType"] = "Dashboards"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7030",
+                ["$id"] = "6985",
                 ["objectType"] = "Data pipelines"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7031",
+                ["$id"] = "6986",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7032",
+                ["$id"] = "6987",
                 ["objectType"] = "Folders"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7033",
+                ["$id"] = "6988",
                 ["objectType"] = "Glossary terms"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7034",
+                ["$id"] = "6989",
                 ["objectType"] = "Reports"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7035",
+                ["$id"] = "6990",
                 ["objectType"] = "Stored procedures"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7036",
+                ["$id"] = "6991",
                 ["objectType"] = "Tables"
             }
         }
@@ -4070,17 +4070,17 @@ using RequestContent content = RequestContent.Create(new
     keywords = "exampledata",
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "7074",
+        ["$id"] = "7029",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7075",
+                ["$id"] = "7030",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7076",
+                ["$id"] = "7031",
                 ["entityType"] = "azure_blob_path"
             }
         }
@@ -4091,12 +4091,12 @@ using RequestContent content = RequestContent.Create(new
     {
         new Dictionary<string, object>
         {
-            ["$id"] = "7081",
+            ["$id"] = "7036",
             ["name"] = "ASC"
         },
         new Dictionary<string, object>
         {
-            ["$id"] = "7083",
+            ["$id"] = "7038",
             ["updateTime"] = "DESC"
         }
     },
@@ -4165,17 +4165,17 @@ using RequestContent content = RequestContent.Create(new
     keywords = "exampledata",
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "7161",
+        ["$id"] = "7116",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7162",
+                ["$id"] = "7117",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7163",
+                ["$id"] = "7118",
                 ["entityType"] = "azure_blob_path"
             }
         }
@@ -4185,12 +4185,12 @@ using RequestContent content = RequestContent.Create(new
     {
         new Dictionary<string, object>
         {
-            ["$id"] = "7167",
+            ["$id"] = "7122",
             ["name"] = "ASC"
         },
         new Dictionary<string, object>
         {
-            ["$id"] = "7169",
+            ["$id"] = "7124",
             ["updateTime"] = "DESC"
         }
     },
@@ -4259,17 +4259,17 @@ using RequestContent content = RequestContent.Create(new
     keywords = "exampledata",
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "7247",
+        ["$id"] = "7202",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7248",
+                ["$id"] = "7203",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7249",
+                ["$id"] = "7204",
                 ["entityType"] = "azure_blob_path"
             }
         }
@@ -4280,12 +4280,12 @@ using RequestContent content = RequestContent.Create(new
     {
         new Dictionary<string, object>
         {
-            ["$id"] = "7254",
+            ["$id"] = "7209",
             ["name"] = "ASC"
         },
         new Dictionary<string, object>
         {
-            ["$id"] = "7256",
+            ["$id"] = "7211",
             ["updateTime"] = "DESC"
         }
     },
@@ -4354,22 +4354,22 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "7333",
+        ["$id"] = "7288",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7334",
+                ["$id"] = "7289",
                 ["createTime"] = new Dictionary<string, object>
                 {
-                    ["$id"] = "7335",
+                    ["$id"] = "7290",
                     ["operator"] = "lt",
                     ["timeThreshold"] = 1545580800000L
                 }
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7336",
+                ["$id"] = "7291",
                 ["updateTime"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
             }
         }
@@ -4391,32 +4391,32 @@ using RequestContent content = RequestContent.Create(new
     keywords = "exampledata",
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "7369",
+        ["$id"] = "7324",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7370",
+                ["$id"] = "7325",
                 ["objectType"] = "Files"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7371",
+                ["$id"] = "7326",
                 ["not"] = new Dictionary<string, object>
                 {
-                    ["$id"] = "7372",
+                    ["$id"] = "7327",
                     ["or"] = new object[]
                     {
                         new Dictionary<string, object>
                         {
-                            ["$id"] = "7373",
+                            ["$id"] = "7328",
                             ["attributeName"] = "size",
                             ["operator"] = "eq",
                             ["attributeValue"] = 0
                         },
                         new Dictionary<string, object>
                         {
-                            ["$id"] = "7374",
+                            ["$id"] = "7329",
                             ["attributeName"] = "fileSize",
                             ["operator"] = "eq",
                             ["attributeValue"] = 0
@@ -4426,10 +4426,10 @@ using RequestContent content = RequestContent.Create(new
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7375",
+                ["$id"] = "7330",
                 ["not"] = new Dictionary<string, object>
                 {
-                    ["$id"] = "7376",
+                    ["$id"] = "7331",
                     ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
                 }
             }
@@ -4469,23 +4469,23 @@ using RequestContent content = RequestContent.Create(new
     limit = 3,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "7430",
+        ["$id"] = "7385",
         ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7431",
+                ["$id"] = "7386",
                 ["term"] = "ExampleTerm"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7432",
+                ["$id"] = "7387",
                 ["term"] = "ExampleTerm",
                 ["glossary"] = "GlossaryName"
             },
             new Dictionary<string, object>
             {
-                ["$id"] = "7433",
+                ["$id"] = "7388",
                 ["termGuid"] = "<term guid>"
             }
         }
@@ -4507,12 +4507,12 @@ using RequestContent content = RequestContent.Create(new
     limit = 10,
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "7466",
+        ["$id"] = "7421",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7467",
+                ["$id"] = "7422",
                 ["entityType"] = "azure_blob_path",
                 ["includeSubTypes"] = false
             }
@@ -4539,12 +4539,12 @@ SuggestConfig body = new SuggestConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7528",
+        ["$id"] = "7483",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7529",
+                ["$id"] = "7484",
                 ["entityType"] = "azure_blob_path",
                 ["includeSubTypes"] = false
             }
@@ -4568,12 +4568,12 @@ SuggestConfig body = new SuggestConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7528",
+        ["$id"] = "7483",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7529",
+                ["$id"] = "7484",
                 ["entityType"] = "azure_blob_path",
                 ["includeSubTypes"] = false
             }
@@ -4596,12 +4596,12 @@ using RequestContent content = RequestContent.Create(new
     keywords = "exampledata",
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "7528",
+        ["$id"] = "7483",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7529",
+                ["$id"] = "7484",
                 ["entityType"] = "azure_blob_path",
                 ["includeSubTypes"] = false
             }
@@ -4628,12 +4628,12 @@ using RequestContent content = RequestContent.Create(new
     keywords = "exampledata",
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "7528",
+        ["$id"] = "7483",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7529",
+                ["$id"] = "7484",
                 ["entityType"] = "azure_blob_path",
                 ["includeSubTypes"] = false
             }
@@ -4661,12 +4661,12 @@ AutoCompleteConfig body = new AutoCompleteConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7588",
+        ["$id"] = "7543",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7589",
+                ["$id"] = "7544",
                 ["entityType"] = "azure_blob_path",
                 ["includeSubTypes"] = false
             }
@@ -4690,12 +4690,12 @@ AutoCompleteConfig body = new AutoCompleteConfig
     Limit = 10,
     Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        ["$id"] = "7588",
+        ["$id"] = "7543",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7589",
+                ["$id"] = "7544",
                 ["entityType"] = "azure_blob_path",
                 ["includeSubTypes"] = false
             }
@@ -4718,12 +4718,12 @@ using RequestContent content = RequestContent.Create(new
     keywords = "exa",
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "7588",
+        ["$id"] = "7543",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7589",
+                ["$id"] = "7544",
                 ["entityType"] = "azure_blob_path",
                 ["includeSubTypes"] = false
             }
@@ -4750,12 +4750,12 @@ using RequestContent content = RequestContent.Create(new
     keywords = "exa",
     filter = new Dictionary<string, object>
     {
-        ["$id"] = "7588",
+        ["$id"] = "7543",
         ["and"] = new object[]
         {
             new Dictionary<string, object>
             {
-                ["$id"] = "7589",
+                ["$id"] = "7544",
                 ["entityType"] = "azure_blob_path",
                 ["includeSubTypes"] = false
             }
