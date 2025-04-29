@@ -1,10 +1,10 @@
-# Sample for Azure.AI.Projects.OneDP with `Evaluations`
+# Sample for Azure.AI.Projects with `Evaluations`
 
-In this example, we will demonstrate creating, listing and retrieving evaluations using the `Evaluations` client in `Azure.AI.Projects.OneDP`. This uses a Dataset as the input data for the evaluation and an Evaluator ID for the evaluation type.
+In this example, we will demonstrate creating, listing and retrieving evaluations using the `Evaluations` client in `Azure.AI.Projects`. This uses a Dataset as the input data for the evaluation and an Evaluator ID for the evaluation type.
 
 ## Prerequisites
 
-- Install the Azure.AI.Projects.OneDP package.
+- Install the Azure.AI.Projects package.
 - Set the following environment variables:
   - `PROJECT_ENDPOINT`: The Azure AI Project endpoint, as found in the overview page of your Azure AI Foundry project.
   - `DATASET_NAME`: The name of the dataset to use as input data.
