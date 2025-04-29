@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            IReadOnlyList<UsageResult> value = default;
+            IReadOnlyList<NetAppUsageResult> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    List<UsageResult> array = new List<UsageResult>();
+                    List<NetAppUsageResult> array = new List<NetAppUsageResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UsageResult.DeserializeUsageResult(item, options));
+                        array.Add(NetAppUsageResult.DeserializeNetAppUsageResult(item, options));
                     }
                     value = array;
                     continue;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UsagesListResult(value ?? new ChangeTrackingList<UsageResult>(), nextLink, serializedAdditionalRawData);
+            return new UsagesListResult(value ?? new ChangeTrackingList<NetAppUsageResult>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UsagesListResult>.Write(ModelReaderWriterOptions options)
