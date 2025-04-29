@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MachineLearning
 
         MachineLearningPrivateEndpointConnectionData IJsonModel<MachineLearningPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MachineLearningPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MachineLearningPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningPrivateEndpointConnectionData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        MachineLearningPrivateEndpointConnectionData IPersistableModel<MachineLearningPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningPrivateEndpointConnectionData>(data, options);
+        MachineLearningPrivateEndpointConnectionData IPersistableModel<MachineLearningPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningPrivateEndpointConnectionData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
         string IPersistableModel<MachineLearningPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

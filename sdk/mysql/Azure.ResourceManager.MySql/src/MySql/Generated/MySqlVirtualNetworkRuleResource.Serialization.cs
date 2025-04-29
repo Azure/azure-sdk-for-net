@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MySql
 
         MySqlVirtualNetworkRuleData IJsonModel<MySqlVirtualNetworkRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MySqlVirtualNetworkRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MySqlVirtualNetworkRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MySqlVirtualNetworkRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MySqlVirtualNetworkRuleData>(Data, options, AzureResourceManagerMySqlContext.Default);
 
-        MySqlVirtualNetworkRuleData IPersistableModel<MySqlVirtualNetworkRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MySqlVirtualNetworkRuleData>(data, options);
+        MySqlVirtualNetworkRuleData IPersistableModel<MySqlVirtualNetworkRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MySqlVirtualNetworkRuleData>(data, options, AzureResourceManagerMySqlContext.Default);
 
         string IPersistableModel<MySqlVirtualNetworkRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MySqlVirtualNetworkRuleData>)Data).GetFormatFromOptions(options);
     }

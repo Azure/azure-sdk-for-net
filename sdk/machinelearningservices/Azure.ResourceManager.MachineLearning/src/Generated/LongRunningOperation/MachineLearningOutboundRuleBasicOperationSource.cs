@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.MachineLearning
 
         MachineLearningOutboundRuleBasicResource IOperationSource<MachineLearningOutboundRuleBasicResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MachineLearningOutboundRuleBasicData>(response.Content);
+            var data = ModelReaderWriter.Read<MachineLearningOutboundRuleBasicData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMachineLearningContext.Default);
             return new MachineLearningOutboundRuleBasicResource(_client, data);
         }
 
         async ValueTask<MachineLearningOutboundRuleBasicResource> IOperationSource<MachineLearningOutboundRuleBasicResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MachineLearningOutboundRuleBasicData>(response.Content);
+            var data = ModelReaderWriter.Read<MachineLearningOutboundRuleBasicData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMachineLearningContext.Default);
             return await Task.FromResult(new MachineLearningOutboundRuleBasicResource(_client, data)).ConfigureAwait(false);
         }
     }

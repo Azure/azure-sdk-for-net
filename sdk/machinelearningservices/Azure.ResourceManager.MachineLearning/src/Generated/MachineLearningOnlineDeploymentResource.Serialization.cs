@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MachineLearning
 
         MachineLearningOnlineDeploymentData IJsonModel<MachineLearningOnlineDeploymentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningOnlineDeploymentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MachineLearningOnlineDeploymentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MachineLearningOnlineDeploymentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningOnlineDeploymentData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        MachineLearningOnlineDeploymentData IPersistableModel<MachineLearningOnlineDeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningOnlineDeploymentData>(data, options);
+        MachineLearningOnlineDeploymentData IPersistableModel<MachineLearningOnlineDeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningOnlineDeploymentData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
         string IPersistableModel<MachineLearningOnlineDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningOnlineDeploymentData>)Data).GetFormatFromOptions(options);
     }
