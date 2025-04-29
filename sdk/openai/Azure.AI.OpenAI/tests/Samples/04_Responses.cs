@@ -21,7 +21,7 @@ public partial class AzureOpenAISamples
             new DefaultAzureCredential());
 
         // Replace with your deployment name
-        OpenAIResponseClient client = azureClient.GetOpenAIResponseClient("gpt-4o-mini");
+        OpenAIResponseClient client = azureClient.GetOpenAIResponseClient("my-gpt-35-turbo-deployment");
 
         Uri imageUri = new("https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/512px-Microsoft_logo.svg.png");
         ResponseContentPart imagePart = ResponseContentPart.CreateInputImagePart(imageUri);
@@ -40,5 +40,27 @@ public partial class AzureOpenAISamples
 
         #endregion
 
+    }
+
+    public void ResponseChatbot()
+    {
+        #region Snippet:ResponseBasicChatbot
+
+        AzureOpenAIClient azureClient = new(
+                new Uri("https://your-azure-openai-resource.com"),
+                new DefaultAzureCredential());
+
+        // Replace with your deployment name
+        OpenAIResponseClient client = azureClient.GetOpenAIResponseClient("my-gpt-35-turbo-deployment");
+
+        OpenAIResponse response = client.CreateResponse(
+            inputItems: [
+                ResponseItem.CreateSystemMessageItem("You are a humorous assistant who tells jokes"),
+                    ResponseItem.CreateUserMessageItem("Please tell me 3 jokes about trains")
+                ]);
+
+        Console.WriteLine($"{response.Id}: {((MessageResponseItem)response.OutputItems[0]).Content[0].Text}");
+
+        #endregion
     }
 }
