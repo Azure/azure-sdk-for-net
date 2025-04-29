@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.EventGrid
 
         EventGridPrivateLinkResourceData IJsonModel<EventGridPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventGridPrivateLinkResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EventGridPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<EventGridPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventGridPrivateLinkResourceData>(Data, options, AzureResourceManagerEventGridContext.Default);
 
-        EventGridPrivateLinkResourceData IPersistableModel<EventGridPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventGridPrivateLinkResourceData>(data, options);
+        EventGridPrivateLinkResourceData IPersistableModel<EventGridPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventGridPrivateLinkResourceData>(data, options, AzureResourceManagerEventGridContext.Default);
 
         string IPersistableModel<EventGridPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventGridPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
     }
