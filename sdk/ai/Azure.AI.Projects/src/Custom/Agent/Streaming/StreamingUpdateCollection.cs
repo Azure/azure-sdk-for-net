@@ -6,8 +6,11 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.ServerSentEvents;
+using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 
 #nullable enable
 
@@ -20,15 +23,32 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
 {
     private readonly Func<Response> _sendRequest;
     private readonly CancellationToken _cancellationToken;
+    private readonly ToolCallsResolver? _toolCallsResolver;
+    private readonly Func<ThreadRun, IEnumerable<ToolOutput>, int, CollectionResult<StreamingUpdate>> _submitToolOutputsToStream;
+    private readonly int _maxRetry;
+    private int _currRetry;
+    private readonly Func<string, Response<ThreadRun>> _cancelRun;
 
     public StreamingUpdateCollection(
+        CancellationToken cancellationToken,
+        AutoFunctionCallOptions autoFunctionCallOptions,
+        int currentRetry,
         Func<Response> sendRequest,
-        CancellationToken cancellationToken)
+        Func<string, Response<ThreadRun>> cancelRun,
+        Func<ThreadRun, IEnumerable<ToolOutput>, int, CollectionResult<StreamingUpdate>> submitToolOutputsToStream)
     {
         Argument.AssertNotNull(sendRequest, nameof(sendRequest));
 
-        _sendRequest = sendRequest;
         _cancellationToken = cancellationToken;
+        _sendRequest = sendRequest;
+        _submitToolOutputsToStream = submitToolOutputsToStream;
+        if (autoFunctionCallOptions != null)
+        {
+            _toolCallsResolver = new(autoFunctionCallOptions.AutoFunctionCallDelegates);
+            _maxRetry = autoFunctionCallOptions.MaxRetry;
+        }
+        _currRetry = currentRetry;
+        _cancelRun = cancelRun;
     }
 
     public override ContinuationToken? GetContinuationToken(ClientResult page)
@@ -46,11 +66,55 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
     }
     protected override IEnumerable<StreamingUpdate> GetValuesFromPage(ClientResult page)
     {
-        using IEnumerator<StreamingUpdate> enumerator = new StreamingUpdateEnumerator(page, _cancellationToken);
-        while (enumerator.MoveNext())
+        ThreadRun? streamRun = null;
+        List<ToolOutput> toolOutputs = new();
+        do
         {
-            yield return enumerator.Current;
+            using IEnumerator<StreamingUpdate> enumerator = (toolOutputs.Count > 0 && streamRun != null) ?
+                _submitToolOutputsToStream(streamRun, toolOutputs, _currRetry).GetEnumerator() :
+                new StreamingUpdateEnumerator(page, _cancellationToken);
+            toolOutputs.Clear();
+            bool hasError = false;
+            while (enumerator.MoveNext())
+            {
+                var streamingUpdate = enumerator.Current;
+                if (streamingUpdate is RequiredActionUpdate newActionUpdate && _toolCallsResolver != null)
+                {
+                    ToolOutput toolOutput;
+                    try
+                    {
+                        toolOutput = _toolCallsResolver.GetResolvedToolOutput(
+                            newActionUpdate.FunctionName,
+                            newActionUpdate.ToolCallId,
+                            newActionUpdate.FunctionArguments
+                        );
+                    }
+                    catch (Exception ex)
+                    {
+                        string errorJson = JsonSerializer.Serialize(new { error = ex.GetBaseException().Message });
+                        toolOutput = new ToolOutput(newActionUpdate.ToolCallId, errorJson);
+                        hasError = true;
+                    }
+                    toolOutputs.Add(toolOutput);
+
+                    streamRun = newActionUpdate.Value;
+                }
+                else
+                {
+                    yield return streamingUpdate;
+                }
+            }
+            _currRetry = hasError ? _currRetry + 1 : _currRetry;
+
+            if (streamRun != null && _currRetry > _maxRetry)
+            {
+                // Cancel the run if the max retry is reached
+                var cancelRunResponse = _cancelRun(streamRun.Id);
+                yield return new StreamingUpdate<ThreadRun>(cancelRunResponse.Value, StreamingUpdateReason.RunCancelled);
+                yield break;
+            }
         }
+        while (toolOutputs.Count > 0);
     }
 
     private sealed class StreamingUpdateEnumerator : IEnumerator<StreamingUpdate>
