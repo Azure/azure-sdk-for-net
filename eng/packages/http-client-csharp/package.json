@@ -37,7 +37,7 @@
     "dist/**"
   ],
   "dependencies": {
-    "@typespec/http-client-csharp": "1.0.0-alpha.20250421.4"
+    "@typespec/http-client-csharp": "1.0.0-alpha.20250424.2"
   },
   "devDependencies": {
     "@azure-tools/azure-http-specs": "0.1.0-alpha.13",
@@ -74,6 +74,8 @@
   },
   "azure-sdk/emitter-package-json-pinning": [
     "@azure-tools/typespec-azure-core",
+    "@azure-tools/typespec-azure-resource-manager",
+    "@azure-tools/typespec-azure-rulesets",
     "@azure-tools/typespec-client-generator-core",
     "@typespec/compiler",
     "@typespec/http",

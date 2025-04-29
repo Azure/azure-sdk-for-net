@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_TasksGet()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/TasksGet.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/TasksGet.json
             // this example is just showing the usage of "Tasks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_TasksDelete()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/TasksDelete.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/TasksDelete.json
             // this example is just showing the usage of "Tasks_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_TasksUpdate()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/TasksUpdate.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/TasksUpdate.json
             // this example is just showing the usage of "Tasks_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -146,7 +146,8 @@ Identity = "[system]",
                 },
                 LogTemplate = "acr/tasks:{{.Run.OS}}",
             };
-            ContainerRegistryTaskResource result = await containerRegistryTask.UpdateAsync(patch);
+            ArmOperation<ContainerRegistryTaskResource> lro = await containerRegistryTask.UpdateAsync(WaitUntil.Completed, patch);
+            ContainerRegistryTaskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -159,7 +160,7 @@ Identity = "[system]",
         [Ignore("Only validating compilation of examples")]
         public async Task Update_TasksUpdateQuickTask()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/TasksUpdate_QuickTask.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/TasksUpdate_QuickTask.json
             // this example is just showing the usage of "Tasks_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -186,7 +187,8 @@ Identity = "[system]",
                 Status = ContainerRegistryTaskStatus.Enabled,
                 LogTemplate = "acr/tasks:{{.Run.OS}}",
             };
-            ContainerRegistryTaskResource result = await containerRegistryTask.UpdateAsync(patch);
+            ArmOperation<ContainerRegistryTaskResource> lro = await containerRegistryTask.UpdateAsync(WaitUntil.Completed, patch);
+            ContainerRegistryTaskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -199,7 +201,7 @@ Identity = "[system]",
         [Ignore("Only validating compilation of examples")]
         public async Task Update_TasksUpdateWithKeyVaultCustomCredentials()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/ManagedIdentity/TasksUpdate_WithKeyVaultCustomCredentials.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/ManagedIdentity/TasksUpdate_WithKeyVaultCustomCredentials.json
             // this example is just showing the usage of "Tasks_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -267,75 +269,8 @@ Identity = "[system]",
                 },
                 LogTemplate = null,
             };
-            ContainerRegistryTaskResource result = await containerRegistryTask.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ContainerRegistryTaskData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_TasksUpdateWithLoginIdentity()
-        {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/ManagedIdentity/TasksUpdate_WithLoginIdentity.json
-            // this example is just showing the usage of "Tasks_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerRegistryTaskResource created on azure
-            // for more information of creating ContainerRegistryTaskResource, please refer to the document of ContainerRegistryTaskResource
-            string subscriptionId = "4385cf00-2d3a-425a-832f-f4285b1c9dce";
-            string resourceGroupName = "myResourceGroup";
-            string registryName = "myRegistry";
-            string taskName = "myTask";
-            ResourceIdentifier containerRegistryTaskResourceId = ContainerRegistryTaskResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName, taskName);
-            ContainerRegistryTaskResource containerRegistryTask = client.GetContainerRegistryTaskResource(containerRegistryTaskResourceId);
-
-            // invoke the operation
-            ContainerRegistryTaskPatch patch = new ContainerRegistryTaskPatch
-            {
-                Tags =
-{
-["testkey"] = "value"
-},
-                Status = ContainerRegistryTaskStatus.Enabled,
-                AgentCpu = 3,
-                Step = new ContainerRegistryDockerBuildStepUpdateContent
-                {
-                    ImageNames = { "azurerest:testtag1" },
-                    DockerFilePath = "src/DockerFile",
-                },
-                Trigger = new ContainerRegistryTriggerUpdateContent
-                {
-                    SourceTriggers = {new ContainerRegistrySourceTriggerUpdateContent("mySourceTrigger")
-{
-SourceRepository = new SourceCodeRepoUpdateContent
-{
-SourceControlAuthProperties = new SourceCodeRepoAuthInfoUpdateContent
-{
-TokenType = SourceCodeRepoAuthTokenType.Pat,
-Token = "xxxxx",
-},
-},
-SourceTriggerEvents = {ContainerRegistrySourceTriggerEvent.Commit},
-}},
-                },
-                Credentials = new ContainerRegistryCredentials
-                {
-                    SourceRegistry = new SourceRegistryCredentials
-                    {
-                        Identity = "[system]",
-                    },
-                },
-                LogTemplate = null,
-            };
-            ContainerRegistryTaskResource result = await containerRegistryTask.UpdateAsync(patch);
+            ArmOperation<ContainerRegistryTaskResource> lro = await containerRegistryTask.UpdateAsync(WaitUntil.Completed, patch);
+            ContainerRegistryTaskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -348,7 +283,7 @@ SourceTriggerEvents = {ContainerRegistrySourceTriggerEvent.Commit},
         [Ignore("Only validating compilation of examples")]
         public async Task Update_TasksUpdateWithMSICustomCredentials()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/ManagedIdentity/TasksUpdate_WithMSICustomCredentials.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/ManagedIdentity/TasksUpdate_WithMSICustomCredentials.json
             // this example is just showing the usage of "Tasks_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -406,7 +341,8 @@ Identity = "[system]",
                 },
                 LogTemplate = null,
             };
-            ContainerRegistryTaskResource result = await containerRegistryTask.UpdateAsync(patch);
+            ArmOperation<ContainerRegistryTaskResource> lro = await containerRegistryTask.UpdateAsync(WaitUntil.Completed, patch);
+            ContainerRegistryTaskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -419,7 +355,7 @@ Identity = "[system]",
         [Ignore("Only validating compilation of examples")]
         public async Task Update_TasksUpdateWithOpaqueCustomCredentials()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/TasksUpdate_WithOpaqueCustomCredentials.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/TasksUpdate_WithOpaqueCustomCredentials.json
             // this example is just showing the usage of "Tasks_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -486,7 +422,8 @@ ObjectType = ContainerRegistrySecretObjectType.Opaque,
                 },
                 LogTemplate = null,
             };
-            ContainerRegistryTaskResource result = await containerRegistryTask.UpdateAsync(patch);
+            ArmOperation<ContainerRegistryTaskResource> lro = await containerRegistryTask.UpdateAsync(WaitUntil.Completed, patch);
+            ContainerRegistryTaskResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -499,7 +436,7 @@ ObjectType = ContainerRegistrySecretObjectType.Opaque,
         [Ignore("Only validating compilation of examples")]
         public async Task GetDetails_TasksGetDetails()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2025-03-01-preview/examples/TasksGetDetails.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/TasksGetDetails.json
             // this example is just showing the usage of "Tasks_GetDetails" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

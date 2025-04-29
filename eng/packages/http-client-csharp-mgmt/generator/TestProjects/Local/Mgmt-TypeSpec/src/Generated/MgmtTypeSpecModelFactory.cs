@@ -19,22 +19,22 @@ namespace MgmtTypeSpec.Models
 
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name"> The name of the private link associated with the Azure resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.PrivateLinkResourceData"/> instance for mocking. </returns>
-        public static PrivateLinkResourceData PrivateLinkResourceData(ResourceIdentifier id = default, string name = default, string @type = default, SystemData systemData = default, PrivateLinkResourceProperties properties = default, ManagedServiceIdentity identity = default)
+        public static PrivateLinkResourceData PrivateLinkResourceData(ResourceIdentifier id = default, string @type = default, SystemData systemData = default, PrivateLinkResourceProperties properties = default, string name = default, ManagedServiceIdentity identity = default)
         {
 
             return new PrivateLinkResourceData(
                 id,
-                name,
                 @type,
                 systemData,
                 additionalBinaryDataProperties: null,
                 properties,
+                name,
                 identity);
         }
 
@@ -121,27 +121,27 @@ namespace MgmtTypeSpec.Models
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name"> The name of the Foo. </param>
         /// <param name="extendedLocation"></param>
         /// <returns> A new <see cref="Models.FooData"/> instance for mocking. </returns>
-        public static FooData FooData(ResourceIdentifier id = default, string name = default, string @type = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, FooProperties properties = default, ExtendedLocation extendedLocation = default)
+        public static FooData FooData(ResourceIdentifier id = default, string @type = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, FooProperties properties = default, string name = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new FooData(
                 id,
-                name,
                 @type,
                 systemData,
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
                 properties,
+                name,
                 extendedLocation);
         }
 

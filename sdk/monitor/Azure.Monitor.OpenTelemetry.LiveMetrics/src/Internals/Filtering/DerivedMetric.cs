@@ -16,7 +16,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
     /// which defines which field to use as a value, and an aggregation which dictates the algorithm of arriving at
     /// a single reportable value within a second.
     /// </summary>
-    internal class DerivedMetric<TTelemetry>
+    internal class DerivedMetric<TTelemetry> where TTelemetry : DocumentIngress
     {
         private const string ProjectionCount = "Count()";
 
@@ -201,7 +201,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                             MethodInfo? parseMethod = typeof(TimeSpan).GetMethod("Parse", new[] { typeof(string) });
                             fieldExpression = Expression.Call(parseMethod!, fieldExpression);
                         }
-                        fieldExpression = Expression.Property(fieldExpression, "TotalMilliseconds");
+
+                        var totalMillisecondsProperty = typeof(TimeSpan).GetProperty(nameof(TimeSpan.TotalMilliseconds))!;
+                        fieldExpression = Expression.Property(fieldExpression, totalMillisecondsProperty);
                     }
                 }
 

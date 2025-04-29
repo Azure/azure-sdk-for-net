@@ -1,10 +1,12 @@
 {
   "main": "dist/src/index.js",
   "dependencies": {
-    "@azure-typespec/http-client-csharp": "1.0.0-alpha.20250419.1"
+    "@azure-typespec/http-client-csharp": "1.0.0-alpha.20250425.3"
   },
   "devDependencies": {
     "@azure-tools/typespec-azure-core": "0.54.0",
+    "@azure-tools/typespec-azure-resource-manager": "0.54.0",
+    "@azure-tools/typespec-azure-rulesets": "0.54.0",
     "@azure-tools/typespec-client-generator-core": "0.54.0",
     "@typespec/compiler": "1.0.0-rc.0",
     "@typespec/http": "1.0.0-rc.0",

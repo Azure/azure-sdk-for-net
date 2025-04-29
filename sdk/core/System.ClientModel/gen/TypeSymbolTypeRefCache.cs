@@ -26,13 +26,15 @@ namespace System.ClientModel.SourceGeneration
             if (symbol is INamedTypeSymbol namedTypeSymbol)
             {
                 var itemSymbol = namedTypeSymbol.GetItemSymbol(symbolToKindCache);
+                var itemType = itemSymbol is null ? null : Get(itemSymbol, symbolToKindCache);
 
                 return new TypeRef(
                     symbol.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat),
                     symbol.ContainingNamespace.ToDisplayString(),
                     symbol.ContainingAssembly.ToDisplayString(),
                     symbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
-                    itemSymbol is null ? null : Get(itemSymbol, symbolToKindCache));
+                    itemType,
+                    obsoleteLevel: itemType is not null ? itemType.ObsoleteLevel : GetObsoleteLevel(symbol));
             }
             else if (symbol is IArrayTypeSymbol arrayTypeSymbol)
             {
@@ -44,12 +46,35 @@ namespace System.ClientModel.SourceGeneration
                     elementType.Assembly,
                     arrayTypeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
                     elementType,
-                    arrayTypeSymbol.Rank);
+                    arrayTypeSymbol.Rank,
+                    obsoleteLevel: elementType.ObsoleteLevel);
             }
             else
             {
                 throw new NotSupportedException($"Unexpected type {symbol.GetType()}");
             }
+        }
+
+        public static ObsoleteLevel GetObsoleteLevel(ITypeSymbol typeSymbol)
+        {
+            foreach (var attribute in typeSymbol.GetAttributes())
+            {
+                if (attribute.AttributeClass?.ToDisplayString() == "System.ObsoleteAttribute")
+                {
+                    if (attribute.ConstructorArguments.Length == 2 &&
+                                    attribute.ConstructorArguments[1].Kind == TypedConstantKind.Primitive &&
+                                    attribute.ConstructorArguments[1].Value is bool isError)
+                    {
+                        return isError ? ObsoleteLevel.Error : ObsoleteLevel.Warning;
+                    }
+                    else
+                    {
+                        return ObsoleteLevel.Warning;
+                    }
+                }
+            }
+
+            return ObsoleteLevel.None;
         }
     }
 }
