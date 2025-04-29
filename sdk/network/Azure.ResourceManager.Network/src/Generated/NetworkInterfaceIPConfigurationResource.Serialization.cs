@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         NetworkInterfaceIPConfigurationData IJsonModel<NetworkInterfaceIPConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkInterfaceIPConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkInterfaceIPConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkInterfaceIPConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkInterfaceIPConfigurationData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        NetworkInterfaceIPConfigurationData IPersistableModel<NetworkInterfaceIPConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkInterfaceIPConfigurationData>(data, options);
+        NetworkInterfaceIPConfigurationData IPersistableModel<NetworkInterfaceIPConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkInterfaceIPConfigurationData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<NetworkInterfaceIPConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkInterfaceIPConfigurationData>)Data).GetFormatFromOptions(options);
     }

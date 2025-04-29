@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.OracleDatabase
 
         CloudExadataInfrastructureData IJsonModel<CloudExadataInfrastructureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudExadataInfrastructureData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CloudExadataInfrastructureData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CloudExadataInfrastructureData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CloudExadataInfrastructureData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        CloudExadataInfrastructureData IPersistableModel<CloudExadataInfrastructureData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudExadataInfrastructureData>(data, options);
+        CloudExadataInfrastructureData IPersistableModel<CloudExadataInfrastructureData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudExadataInfrastructureData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
         string IPersistableModel<CloudExadataInfrastructureData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudExadataInfrastructureData>)Data).GetFormatFromOptions(options);
     }

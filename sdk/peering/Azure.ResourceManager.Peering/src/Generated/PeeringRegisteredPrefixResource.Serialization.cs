@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Peering
 
         PeeringRegisteredPrefixData IJsonModel<PeeringRegisteredPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PeeringRegisteredPrefixData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PeeringRegisteredPrefixData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PeeringRegisteredPrefixData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PeeringRegisteredPrefixData>(Data, options, AzureResourceManagerPeeringContext.Default);
 
-        PeeringRegisteredPrefixData IPersistableModel<PeeringRegisteredPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PeeringRegisteredPrefixData>(data, options);
+        PeeringRegisteredPrefixData IPersistableModel<PeeringRegisteredPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PeeringRegisteredPrefixData>(data, options, AzureResourceManagerPeeringContext.Default);
 
         string IPersistableModel<PeeringRegisteredPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PeeringRegisteredPrefixData>)Data).GetFormatFromOptions(options);
     }

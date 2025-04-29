@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NotificationHubs
 
         NotificationHubNamespaceData IJsonModel<NotificationHubNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NotificationHubNamespaceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NotificationHubNamespaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NotificationHubNamespaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NotificationHubNamespaceData>(Data, options, AzureResourceManagerNotificationHubsContext.Default);
 
-        NotificationHubNamespaceData IPersistableModel<NotificationHubNamespaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NotificationHubNamespaceData>(data, options);
+        NotificationHubNamespaceData IPersistableModel<NotificationHubNamespaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NotificationHubNamespaceData>(data, options, AzureResourceManagerNotificationHubsContext.Default);
 
         string IPersistableModel<NotificationHubNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NotificationHubNamespaceData>)Data).GetFormatFromOptions(options);
     }

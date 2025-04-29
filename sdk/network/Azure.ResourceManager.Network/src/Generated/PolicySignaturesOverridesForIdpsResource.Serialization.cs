@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         PolicySignaturesOverridesForIdpsData IJsonModel<PolicySignaturesOverridesForIdpsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicySignaturesOverridesForIdpsData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PolicySignaturesOverridesForIdpsData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PolicySignaturesOverridesForIdpsData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PolicySignaturesOverridesForIdpsData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        PolicySignaturesOverridesForIdpsData IPersistableModel<PolicySignaturesOverridesForIdpsData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PolicySignaturesOverridesForIdpsData>(data, options);
+        PolicySignaturesOverridesForIdpsData IPersistableModel<PolicySignaturesOverridesForIdpsData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PolicySignaturesOverridesForIdpsData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<PolicySignaturesOverridesForIdpsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PolicySignaturesOverridesForIdpsData>)Data).GetFormatFromOptions(options);
     }

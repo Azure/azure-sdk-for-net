@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         ServerThreatProtectionSettingsModelResource IOperationSource<ServerThreatProtectionSettingsModelResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServerThreatProtectionSettingsModelData>(response.Content);
+            var data = ModelReaderWriter.Read<ServerThreatProtectionSettingsModelData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
             return new ServerThreatProtectionSettingsModelResource(_client, data);
         }
 
         async ValueTask<ServerThreatProtectionSettingsModelResource> IOperationSource<ServerThreatProtectionSettingsModelResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServerThreatProtectionSettingsModelData>(response.Content);
+            var data = ModelReaderWriter.Read<ServerThreatProtectionSettingsModelData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
             return await Task.FromResult(new ServerThreatProtectionSettingsModelResource(_client, data)).ConfigureAwait(false);
         }
     }

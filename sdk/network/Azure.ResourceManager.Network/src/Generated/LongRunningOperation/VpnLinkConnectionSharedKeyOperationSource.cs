@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         VpnLinkConnectionSharedKeyResource IOperationSource<VpnLinkConnectionSharedKeyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VpnLinkConnectionSharedKeyData>(response.Content);
+            var data = ModelReaderWriter.Read<VpnLinkConnectionSharedKeyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new VpnLinkConnectionSharedKeyResource(_client, data);
         }
 
         async ValueTask<VpnLinkConnectionSharedKeyResource> IOperationSource<VpnLinkConnectionSharedKeyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VpnLinkConnectionSharedKeyData>(response.Content);
+            var data = ModelReaderWriter.Read<VpnLinkConnectionSharedKeyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new VpnLinkConnectionSharedKeyResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         GlobalRulestackPrefixResource IOperationSource<GlobalRulestackPrefixResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GlobalRulestackPrefixData>(response.Content);
+            var data = ModelReaderWriter.Read<GlobalRulestackPrefixData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
             return new GlobalRulestackPrefixResource(_client, data);
         }
 
         async ValueTask<GlobalRulestackPrefixResource> IOperationSource<GlobalRulestackPrefixResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GlobalRulestackPrefixData>(response.Content);
+            var data = ModelReaderWriter.Read<GlobalRulestackPrefixData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
             return await Task.FromResult(new GlobalRulestackPrefixResource(_client, data)).ConfigureAwait(false);
         }
     }

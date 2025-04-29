@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         PreRulestackRuleData IJsonModel<PreRulestackRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PreRulestackRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PreRulestackRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PreRulestackRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PreRulestackRuleData>(Data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
-        PreRulestackRuleData IPersistableModel<PreRulestackRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PreRulestackRuleData>(data, options);
+        PreRulestackRuleData IPersistableModel<PreRulestackRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PreRulestackRuleData>(data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
         string IPersistableModel<PreRulestackRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PreRulestackRuleData>)Data).GetFormatFromOptions(options);
     }

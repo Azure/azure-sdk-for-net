@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ProviderHub
 
         ProviderRegistrationData IJsonModel<ProviderRegistrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProviderRegistrationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ProviderRegistrationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ProviderRegistrationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProviderRegistrationData>(Data, options, AzureResourceManagerProviderHubContext.Default);
 
-        ProviderRegistrationData IPersistableModel<ProviderRegistrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProviderRegistrationData>(data, options);
+        ProviderRegistrationData IPersistableModel<ProviderRegistrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProviderRegistrationData>(data, options, AzureResourceManagerProviderHubContext.Default);
 
         string IPersistableModel<ProviderRegistrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProviderRegistrationData>)Data).GetFormatFromOptions(options);
     }

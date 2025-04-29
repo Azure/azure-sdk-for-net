@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         NetworkManagerSecurityUserConfigurationData IJsonModel<NetworkManagerSecurityUserConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkManagerSecurityUserConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkManagerSecurityUserConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkManagerSecurityUserConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkManagerSecurityUserConfigurationData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        NetworkManagerSecurityUserConfigurationData IPersistableModel<NetworkManagerSecurityUserConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkManagerSecurityUserConfigurationData>(data, options);
+        NetworkManagerSecurityUserConfigurationData IPersistableModel<NetworkManagerSecurityUserConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkManagerSecurityUserConfigurationData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<NetworkManagerSecurityUserConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkManagerSecurityUserConfigurationData>)Data).GetFormatFromOptions(options);
     }

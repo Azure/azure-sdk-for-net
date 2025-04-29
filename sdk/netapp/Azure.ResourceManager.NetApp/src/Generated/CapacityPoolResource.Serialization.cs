@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NetApp
 
         CapacityPoolData IJsonModel<CapacityPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CapacityPoolData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CapacityPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CapacityPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CapacityPoolData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
-        CapacityPoolData IPersistableModel<CapacityPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CapacityPoolData>(data, options);
+        CapacityPoolData IPersistableModel<CapacityPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CapacityPoolData>(data, options, AzureResourceManagerNetAppContext.Default);
 
         string IPersistableModel<CapacityPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CapacityPoolData>)Data).GetFormatFromOptions(options);
     }

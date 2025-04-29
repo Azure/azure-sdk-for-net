@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         VpnSiteLinkData IJsonModel<VpnSiteLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VpnSiteLinkData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VpnSiteLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VpnSiteLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VpnSiteLinkData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        VpnSiteLinkData IPersistableModel<VpnSiteLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VpnSiteLinkData>(data, options);
+        VpnSiteLinkData IPersistableModel<VpnSiteLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VpnSiteLinkData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<VpnSiteLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VpnSiteLinkData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         PaloAltoNetworksFirewallStatusData IJsonModel<PaloAltoNetworksFirewallStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PaloAltoNetworksFirewallStatusData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PaloAltoNetworksFirewallStatusData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PaloAltoNetworksFirewallStatusData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PaloAltoNetworksFirewallStatusData>(Data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
-        PaloAltoNetworksFirewallStatusData IPersistableModel<PaloAltoNetworksFirewallStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PaloAltoNetworksFirewallStatusData>(data, options);
+        PaloAltoNetworksFirewallStatusData IPersistableModel<PaloAltoNetworksFirewallStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PaloAltoNetworksFirewallStatusData>(data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
         string IPersistableModel<PaloAltoNetworksFirewallStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PaloAltoNetworksFirewallStatusData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         CloudServiceSwapData IJsonModel<CloudServiceSwapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudServiceSwapData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CloudServiceSwapData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CloudServiceSwapData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CloudServiceSwapData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        CloudServiceSwapData IPersistableModel<CloudServiceSwapData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudServiceSwapData>(data, options);
+        CloudServiceSwapData IPersistableModel<CloudServiceSwapData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudServiceSwapData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<CloudServiceSwapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudServiceSwapData>)Data).GetFormatFromOptions(options);
     }
