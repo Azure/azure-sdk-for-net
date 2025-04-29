@@ -172,7 +172,7 @@ function Set-ApiViewCommentForPR {
     $response = Invoke-WebRequest -Uri $apiviewEndpoint -Method Get -MaximumRetryCount 3
     LogInfo "OperationId: $($response.Headers['X-Operation-Id'])"
     if ($response.StatusCode -ne 200) {
-      LogWarning "API changes are not detected in this pull request."
+      LogInfo "API changes are not detected in this pull request."
       exit 0
     }
     else {
