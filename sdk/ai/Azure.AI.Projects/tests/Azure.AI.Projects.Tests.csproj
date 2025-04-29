@@ -34,6 +34,9 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="Azure.ResourceManager" />
     <PackageReference Include="Azure.ResourceManager.CognitiveServices" />
+    <PackageReference Include="Azure.AI.Inference" />
+    <PackageReference Include="Azure.AI.OpenAI" />
+    <PackageReference Include="Azure.Search.Documents" />
   </ItemGroup>
 
 </Project>
