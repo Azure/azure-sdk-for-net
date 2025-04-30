@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.Agents.Persistent
 {
-    public partial class RunsClient
+    public partial class ThreadRunsClient
     {
         /// <summary>
         /// Begins a new streaming <see cref="ThreadRun"/> that evaluates a <see cref="PersistentAgentThread"/> using a specified

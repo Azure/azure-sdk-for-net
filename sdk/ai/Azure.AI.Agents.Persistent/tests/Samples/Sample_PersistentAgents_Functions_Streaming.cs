@@ -135,7 +135,7 @@ public partial class Sample_PersistentAgents_Functions_Streaming : SamplesBase<A
         #region Snippet:AgentsFunctionsWithStreamingUpdateCycle
         List<ToolOutput> toolOutputs = [];
         ThreadRun streamRun = null;
-        AsyncCollectionResult<StreamingUpdate> stream = client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id);
+        AsyncCollectionResult<StreamingUpdate> stream = client.ThreadRuns.CreateRunStreamingAsync(thread.Id, agent.Id);
         do
         {
             toolOutputs.Clear();
@@ -172,7 +172,7 @@ public partial class Sample_PersistentAgents_Functions_Streaming : SamplesBase<A
             }
             if (toolOutputs.Count > 0)
             {
-                stream = client.Runs.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs);
+                stream = client.ThreadRuns.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs);
             }
         }
         while (toolOutputs.Count > 0);
@@ -297,7 +297,7 @@ public partial class Sample_PersistentAgents_Functions_Streaming : SamplesBase<A
         #region Snippet:AgentsFunctionsWithStreamingSyncUpdateCycle
         List<ToolOutput> toolOutputs = [];
         ThreadRun streamRun = null;
-        CollectionResult<StreamingUpdate> stream = client.Runs.CreateRunStreaming(thread.Id, agent.Id);
+        CollectionResult<StreamingUpdate> stream = client.ThreadRuns.CreateRunStreaming(thread.Id, agent.Id);
         do
         {
             toolOutputs.Clear();
@@ -334,7 +334,7 @@ public partial class Sample_PersistentAgents_Functions_Streaming : SamplesBase<A
             }
             if (toolOutputs.Count > 0)
             {
-                stream = client.Runs.SubmitToolOutputsToStream(streamRun, toolOutputs);
+                stream = client.ThreadRuns.SubmitToolOutputsToStream(streamRun, toolOutputs);
             }
         }
         while (toolOutputs.Count > 0);

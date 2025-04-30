@@ -75,7 +75,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // Step 4: Run the agent against the thread that now has an image to analyze.
             #region Snippet:AgentImageUrlInMessageCreateRun
-            ThreadRun run = await client.Runs.CreateRunAsync(
+            ThreadRun run = await client.ThreadRuns.CreateRunAsync(
                 threadId: thread.Id,
                 assistantId: agent.Id
             );
@@ -86,7 +86,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             do
             {
                 await Task.Delay(TimeSpan.FromMilliseconds(500));
-                run = await client.Runs.GetRunAsync(thread.Id, run.Id);
+                run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
             }
             while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress);
 
@@ -178,7 +178,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // Step 4: Run the agent against the thread that has an image to analyze.
             #region Snippet:AgentImageUrlInMessageCreateRun_Sync
-            ThreadRun run = client.Runs.CreateRun(
+            ThreadRun run = client.ThreadRuns.CreateRun(
                 threadId: thread.Id,
                 assistantId: agent.Id
             );
@@ -189,7 +189,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             do
             {
                 Thread.Sleep(TimeSpan.FromMilliseconds(500));
-                run = client.Runs.GetRun(thread.Id, run.Id);
+                run = client.ThreadRuns.GetRun(thread.Id, run.Id);
             }
             while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress);
 

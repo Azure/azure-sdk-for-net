@@ -62,7 +62,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
             content: "What feature does Smart Eyewear offer?"
             );
 
-        ThreadRun run = await client.Runs.CreateRunAsync(
+        ThreadRun run = await client.ThreadRuns.CreateRunAsync(
             thread.Id,
             agent.Id
         );
@@ -70,7 +70,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            run = await client.Runs.GetRunAsync(thread.Id, run.Id);
+            run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
@@ -168,7 +168,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
             content: "What feature does Smart Eyewear offer?"
         );
 
-        ThreadRun run = client.Runs.CreateRun(
+        ThreadRun run = client.ThreadRuns.CreateRun(
             thread.Id,
             agent.Id
         );
@@ -176,7 +176,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            run = client.Runs.GetRun(thread.Id, run.Id);
+            run = client.ThreadRuns.GetRun(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);

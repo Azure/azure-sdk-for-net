@@ -138,13 +138,13 @@ public partial class Sample_PersistentAgents_Functions : SamplesBase<AIAgentsTes
             MessageRole.User,
             "What's the weather like in my favorite city?");
 
-        ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
+        ThreadRun run = await client.ThreadRuns.CreateRunAsync(thread, agent);
         #endregion
         #region Snippet:AgentsFunctionsHandlePollingWithRequiredAction
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            run = await client.Runs.GetRunAsync(thread.Id, run.Id);
+            run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
 
             if (run.Status == RunStatus.RequiresAction
                 && run.RequiredAction is SubmitToolOutputsAction submitToolOutputsAction)
@@ -154,7 +154,7 @@ public partial class Sample_PersistentAgents_Functions : SamplesBase<AIAgentsTes
                 {
                     toolOutputs.Add(GetResolvedToolOutput(toolCall));
                 }
-                run = await client.Runs.SubmitToolOutputsToRunAsync(run, toolOutputs);
+                run = await client.ThreadRuns.SubmitToolOutputsToRunAsync(run, toolOutputs);
             }
         }
         while (run.Status == RunStatus.Queued
@@ -311,13 +311,13 @@ public partial class Sample_PersistentAgents_Functions : SamplesBase<AIAgentsTes
             MessageRole.User,
             "What's the weather like in my favorite city?");
 
-        ThreadRun run = client.Runs.CreateRun(thread, agent);
+        ThreadRun run = client.ThreadRuns.CreateRun(thread, agent);
         #endregion
         #region Snippet:AgentsFunctionsSyncHandlePollingWithRequiredAction
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            run = client.Runs.GetRun(thread.Id, run.Id);
+            run = client.ThreadRuns.GetRun(thread.Id, run.Id);
 
             if (run.Status == RunStatus.RequiresAction
                 && run.RequiredAction is SubmitToolOutputsAction submitToolOutputsAction)
@@ -327,7 +327,7 @@ public partial class Sample_PersistentAgents_Functions : SamplesBase<AIAgentsTes
                 {
                     toolOutputs.Add(GetResolvedToolOutput(toolCall));
                 }
-                run = client.Runs.SubmitToolOutputsToRun(run, toolOutputs);
+                run = client.ThreadRuns.SubmitToolOutputsToRun(run, toolOutputs);
             }
         }
         while (run.Status == RunStatus.Queued

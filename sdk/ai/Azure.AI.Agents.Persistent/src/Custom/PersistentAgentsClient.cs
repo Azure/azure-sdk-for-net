@@ -17,18 +17,18 @@ namespace Azure.AI.Agents.Persistent
         protected PersistentAgentsClient()
         { }
 
-        internal PersistentAgentsClient(AgentsAdministrationClient client)
+        internal PersistentAgentsClient(PersistentAgentsAdministrationClient client)
         {
             _client = client;
         }
 
-        private AgentsAdministrationClient _client;
+        private PersistentAgentsAdministrationClient _client;
         /// <summary> Initializes a new instance of AzureAIClient. </summary>
         /// <param name="endpoint"> The Azure AI Foundry project endpoint, in the form `https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;`</param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> is an empty string, and was expected to be non-empty. </exception>
-        public PersistentAgentsClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new AgentsAdministrationClientOptions())
+        public PersistentAgentsClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new PersistentAgentsAdministrationClientOptions())
         {
         }
 
@@ -38,7 +38,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> is an empty string, and was expected to be non-empty. </exception>
-        public PersistentAgentsClient(string endpoint, TokenCredential credential, AgentsAdministrationClientOptions options)
+        public PersistentAgentsClient(string endpoint, TokenCredential credential, PersistentAgentsAdministrationClientOptions options)
         {
             _client = new(endpoint, credential, options);
         }
@@ -49,7 +49,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> is an empty string, and was expected to be non-empty. </exception>
-        public PersistentAgentsClient(string endpoint, AzureKeyCredential credential, AgentsAdministrationClientOptions options)
+        public PersistentAgentsClient(string endpoint, AzureKeyCredential credential, PersistentAgentsAdministrationClientOptions options)
         {
             _client = new(endpoint, credential, options);
         }
@@ -59,7 +59,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> is an empty string, and was expected to be non-empty. </exception>
-        public PersistentAgentsClient(string endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AgentsAdministrationClientOptions())
+        public PersistentAgentsClient(string endpoint, AzureKeyCredential credential) : this(endpoint, credential, new PersistentAgentsAdministrationClientOptions())
         {
         }
 
@@ -109,12 +109,12 @@ namespace Azure.AI.Agents.Persistent
             ).ConfigureAwait(false);
         }
 
-        public AgentsAdministrationClient AgentsAdministration { get => _client; }
-        public FilesClient Files { get => _client.GetFilesClient(); }
+        public PersistentAgentsAdministrationClient AgentsAdministration { get => _client; }
+        public PersistentAgentsFilesClient Files { get => _client.GetPersistentAgentsFilesClient(); }
         public ThreadMessagesClient Messages { get => _client.GetThreadMessagesClient();}
         public ThreadsClient Threads { get => _client.GetThreadsClient(); }
-        public RunsClient Runs { get => _client.GetRunsClient(); }
-        public RunStepsClient RunSteps { get => _client.GetRunStepsClient(); }
+        public ThreadRunsClient ThreadRuns { get => _client.GetThreadRunsClient(); }
+        public ThreadRunStepsClient ThreadRunSteps { get => _client.GetThreadRunStepsClient(); }
         public VectorStoresClient VectorStores { get => _client.GetVectorStoresClient(); }
         public VectorStoreFileBatchesClient VectorStoreFileBatches { get => _client.GetVectorStoreFileBatchesClient(); }
         public VectorStoreFilesClient VectorStoreFiles { get => _client.GetVectorStoreFilesClient(); }

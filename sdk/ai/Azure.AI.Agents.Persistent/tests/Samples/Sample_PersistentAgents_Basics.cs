@@ -58,7 +58,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
 
         // Step 4: Run the agent
         #region Snippet:AgentsOverviewCreateRun
-        ThreadRun run = await client.Runs.CreateRunAsync(
+        ThreadRun run = await client.ThreadRuns.CreateRunAsync(
             thread.Id,
             agent.Id,
             additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
@@ -68,7 +68,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            run = await client.Runs.GetRunAsync(thread.Id, run.Id);
+            run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
@@ -149,7 +149,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
 
         // Step 4: Run the agent
         #region Snippet:AgentsOverviewCreateRunSync
-        ThreadRun run = client.Runs.CreateRun(
+        ThreadRun run = client.ThreadRuns.CreateRun(
             thread.Id,
             agent.Id,
             additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
@@ -159,7 +159,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            run = client.Runs.GetRun(thread.Id, run.Id);
+            run = client.ThreadRuns.GetRun(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);

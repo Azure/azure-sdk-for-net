@@ -62,14 +62,14 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
             attachments: [ attachment ]
         );
 
-        ThreadRun run = await client.Runs.CreateRunAsync(
+        ThreadRun run = await client.ThreadRuns.CreateRunAsync(
             thread.Id,
             agent.Id
         );
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            run = await client.Runs.GetRunAsync(thread.Id, run.Id);
+            run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
@@ -136,14 +136,14 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
             attachments: [attachment]
         );
 
-        ThreadRun run = client.Runs.CreateRun(
+        ThreadRun run = client.ThreadRuns.CreateRun(
             thread.Id,
             agent.Id
         );
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            run = client.Runs.GetRun(thread.Id, run.Id);
+            run = client.ThreadRuns.GetRun(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);

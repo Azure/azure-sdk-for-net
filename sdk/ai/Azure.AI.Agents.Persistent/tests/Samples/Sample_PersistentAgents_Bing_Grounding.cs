@@ -54,11 +54,11 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
             "How does wikipedia explain Euler's Identity?");
 
         // Run the agent
-        ThreadRun run = await agentClient.Runs.CreateRunAsync(thread, agent);
+        ThreadRun run = await agentClient.ThreadRuns.CreateRunAsync(thread, agent);
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            run = await agentClient.Runs.GetRunAsync(thread.Id, run.Id);
+            run = await agentClient.ThreadRuns.GetRunAsync(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
@@ -148,11 +148,11 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
             "How does wikipedia explain Euler's Identity?");
 
         // Run the agent
-        ThreadRun run = agentClient.Runs.CreateRun(thread, agent);
+        ThreadRun run = agentClient.ThreadRuns.CreateRun(thread, agent);
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            run = agentClient.Runs.GetRun(thread.Id, run.Id);
+            run = agentClient.ThreadRuns.GetRun(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);

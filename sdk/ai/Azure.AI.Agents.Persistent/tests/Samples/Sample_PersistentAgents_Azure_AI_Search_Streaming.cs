@@ -61,7 +61,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search_Streaming : Samples
             "What is the temperature rating of the cozynights sleeping bag?");
         #endregion
         #region Snippet:AgentsAzureAISearchStreamingExample_PrintMessages_Async
-        await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id))
+        await foreach (StreamingUpdate streamingUpdate in client.ThreadRuns.CreateRunStreamingAsync(thread.Id, agent.Id))
         {
             if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
             {
@@ -139,7 +139,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search_Streaming : Samples
             "What is the temperature rating of the cozynights sleeping bag?");
         #endregion
         #region Snippet:AgentsAzureAISearchStreamingExample_PrintMessages
-        foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreaming(thread.Id, agent.Id))
+        foreach (StreamingUpdate streamingUpdate in client.ThreadRuns.CreateRunStreaming(thread.Id, agent.Id))
         {
             if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
             {

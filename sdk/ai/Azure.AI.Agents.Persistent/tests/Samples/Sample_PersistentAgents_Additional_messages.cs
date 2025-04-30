@@ -42,7 +42,7 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
             MessageRole.User,
             "What is the impedance formula?");
 
-        ThreadRun agentRun = await agentClient.Runs.CreateRunAsync(
+        ThreadRun agentRun = await agentClient.ThreadRuns.CreateRunAsync(
             threadId: thread.Id,
             agent.Id,
             additionalMessages: [
@@ -60,7 +60,7 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            agentRun = await agentClient.Runs.GetRunAsync(thread.Id, agentRun.Id);
+            agentRun = await agentClient.ThreadRuns.GetRunAsync(thread.Id, agentRun.Id);
         }
         while (agentRun.Status == RunStatus.Queued
             || agentRun.Status == RunStatus.InProgress);
@@ -116,7 +116,7 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
             MessageRole.User,
             "What is the impedance formula?");
 
-        ThreadRun agentRun = agentClient.Runs.CreateRun(
+        ThreadRun agentRun = agentClient.ThreadRuns.CreateRun(
             threadId: thread.Id,
             agent.Id,
             additionalMessages: [
@@ -134,7 +134,7 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            agentRun = agentClient.Runs.GetRun(thread.Id, agentRun.Id);
+            agentRun = agentClient.ThreadRuns.GetRun(thread.Id, agentRun.Id);
         }
         while (agentRun.Status == RunStatus.Queued
             || agentRun.Status == RunStatus.InProgress);

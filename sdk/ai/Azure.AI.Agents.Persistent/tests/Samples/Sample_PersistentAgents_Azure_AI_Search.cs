@@ -62,12 +62,12 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
             "What is the temperature rating of the cozynights sleeping bag?");
 
         // Run the agent
-        ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
+        ThreadRun run = await client.ThreadRuns.CreateRunAsync(thread, agent);
 
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            run = await client.Runs.GetRunAsync(thread.Id, run.Id);
+            run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
@@ -170,12 +170,12 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
             "What is the temperature rating of the cozynights sleeping bag?");
 
         // Run the agent
-        Response<ThreadRun> runResponse = client.Runs.CreateRun(thread, agent);
+        Response<ThreadRun> runResponse = client.ThreadRuns.CreateRun(thread, agent);
 
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            runResponse = client.Runs.GetRun(thread.Id, runResponse.Value.Id);
+            runResponse = client.ThreadRuns.GetRun(thread.Id, runResponse.Value.Id);
         }
         while (runResponse.Value.Status == RunStatus.Queued
             || runResponse.Value.Status == RunStatus.InProgress);

@@ -9,14 +9,14 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Agents.Persistent
 {
-    public partial class AgentsAdministrationClient
+    public partial class PersistentAgentsAdministrationClient
     {
         /// <summary> Initializes a new instance of AzureAIClient. </summary>
         /// <param name="endpoint"> The Azure AI Foundry project endpoint, in the form `https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;`</param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> is an empty string, and was expected to be non-empty. </exception>
-        public AgentsAdministrationClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new AgentsAdministrationClientOptions())
+        public PersistentAgentsAdministrationClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new PersistentAgentsAdministrationClientOptions())
         {
         }
 
@@ -26,7 +26,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> is an empty string, and was expected to be non-empty. </exception>
-        public AgentsAdministrationClient(string endpoint, AzureKeyCredential credential, AgentsAdministrationClientOptions options) : this(new Uri(endpoint), credential, options)
+        public PersistentAgentsAdministrationClient(string endpoint, AzureKeyCredential credential, PersistentAgentsAdministrationClientOptions options) : this(new Uri(endpoint), credential, options)
         {
         }
 
@@ -35,7 +35,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> is an empty string, and was expected to be non-empty. </exception>
-        public AgentsAdministrationClient(string endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AgentsAdministrationClientOptions())
+        public PersistentAgentsAdministrationClient(string endpoint, AzureKeyCredential credential) : this(endpoint, credential, new PersistentAgentsAdministrationClientOptions())
         {
         }
         /// <summary> Initializes a new instance of AzureAIClient. </summary>
@@ -44,12 +44,12 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> is an empty string, and was expected to be non-empty. </exception>
-        public AgentsAdministrationClient(string endpoint, TokenCredential credential, AgentsAdministrationClientOptions options) //: this(new Uri(endpoint), credential, options)
+        public PersistentAgentsAdministrationClient(string endpoint, TokenCredential credential, PersistentAgentsAdministrationClientOptions options) //: this(new Uri(endpoint), credential, options)
         {
             // TODO: Remve this code when 1DP endpoint will be available and just call the upsteam constructor.
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AgentsAdministrationClientOptions();
+            options ??= new PersistentAgentsAdministrationClientOptions();
 
             if (endpoint.Split(';').Length != 4)
             {
@@ -158,21 +158,21 @@ namespace Azure.AI.Agents.Persistent
         }
 
         /// <summary> Initializes a new instance of RunsClient. </summary>
-        internal virtual RunsClient GetRunsClient()
+        internal virtual ThreadRunsClient GetThreadRunsClient()
         {
-            return Volatile.Read(ref _cachedRunsClient) ?? Interlocked.CompareExchange(ref _cachedRunsClient, new RunsClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedRunsClient;
+            return Volatile.Read(ref _cachedThreadRunsClient) ?? Interlocked.CompareExchange(ref _cachedThreadRunsClient, new ThreadRunsClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedThreadRunsClient;
         }
 
         /// <summary> Initializes a new instance of RunStepsClient. </summary>
-        internal virtual RunStepsClient GetRunStepsClient()
+        internal virtual ThreadRunStepsClient GetThreadRunStepsClient()
         {
-            return Volatile.Read(ref _cachedRunStepsClient) ?? Interlocked.CompareExchange(ref _cachedRunStepsClient, new RunStepsClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedRunStepsClient;
+            return Volatile.Read(ref _cachedThreadRunStepsClient) ?? Interlocked.CompareExchange(ref _cachedThreadRunStepsClient, new ThreadRunStepsClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedThreadRunStepsClient;
         }
 
         /// <summary> Initializes a new instance of FilesClient. </summary>
-        internal virtual FilesClient GetFilesClient()
+        internal virtual PersistentAgentsFilesClient GetPersistentAgentsFilesClient()
         {
-            return Volatile.Read(ref _cachedFilesClient) ?? Interlocked.CompareExchange(ref _cachedFilesClient, new FilesClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFilesClient;
+            return Volatile.Read(ref _cachedPersistentAgentsFilesClient) ?? Interlocked.CompareExchange(ref _cachedPersistentAgentsFilesClient, new PersistentAgentsFilesClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPersistentAgentsFilesClient;
         }
 
         /// <summary> Initializes a new instance of VectorStoresClient. </summary>

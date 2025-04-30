@@ -19,7 +19,7 @@ namespace Azure.AI.Agents.Persistent
     /// A collection of run‐step operations under
     /// `/threads/{threadId}/runs/{runId}/steps`.
     /// </summary>
-    public partial class RunStepsClient
+    public partial class ThreadRunStepsClient
     {
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
@@ -36,19 +36,19 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of RunStepsClient for mocking. </summary>
-        protected RunStepsClient()
+        /// <summary> Initializes a new instance of ThreadRunStepsClient for mocking. </summary>
+        protected ThreadRunStepsClient()
         {
         }
 
-        /// <summary> Initializes a new instance of RunStepsClient. </summary>
+        /// <summary> Initializes a new instance of ThreadRunStepsClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal RunStepsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal ThreadRunStepsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -135,7 +135,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNullOrEmpty(stepId, nameof(stepId));
 
-            using var scope = ClientDiagnostics.CreateScope("RunStepsClient.GetRunStep");
+            using var scope = ClientDiagnostics.CreateScope("ThreadRunStepsClient.GetRunStep");
             scope.Start();
             try
             {
@@ -182,7 +182,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNullOrEmpty(stepId, nameof(stepId));
 
-            using var scope = ClientDiagnostics.CreateScope("RunStepsClient.GetRunStep");
+            using var scope = ClientDiagnostics.CreateScope("ThreadRunStepsClient.GetRunStep");
             scope.Start();
             try
             {
@@ -279,7 +279,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("RunStepsClient.InternalGetRunSteps");
+            using var scope = ClientDiagnostics.CreateScope("ThreadRunStepsClient.InternalGetRunSteps");
             scope.Start();
             try
             {
@@ -328,7 +328,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("RunStepsClient.InternalGetRunSteps");
+            using var scope = ClientDiagnostics.CreateScope("ThreadRunStepsClient.InternalGetRunSteps");
             scope.Start();
             try
             {

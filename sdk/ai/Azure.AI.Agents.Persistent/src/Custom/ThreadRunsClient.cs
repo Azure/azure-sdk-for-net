@@ -12,7 +12,7 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Agents.Persistent
 {
     [CodeGenClient("Runs")]
-    public partial class RunsClient
+    public partial class ThreadRunsClient
     {
         /// <summary>
         /// Creates a new run of the specified thread using a specified agent.

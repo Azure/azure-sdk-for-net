@@ -19,13 +19,13 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        public static AgentsAdministrationClient GetAgentsClient(this ConnectionProvider provider)
+        public static PersistentAgentsAdministrationClient GetPersistentAgentAdministrationClient(this ConnectionProvider provider)
         {
-            AgentsAdministrationClient agentsClient = provider.Subclients.GetClient(() => CreateAdministrationAgentsClient(provider), null);
+            PersistentAgentsAdministrationClient agentsClient = provider.Subclients.GetClient(() => CreateAdministrationAgentsClient(provider), null);
             return agentsClient;
         }
 
-        private static AgentsAdministrationClient CreateAdministrationAgentsClient(this ConnectionProvider provider)
+        private static PersistentAgentsAdministrationClient CreateAdministrationAgentsClient(this ConnectionProvider provider)
         {
             ClientConnection connection = provider.GetConnection(typeof(PersistentAgentsClient).FullName!);
             if (!connection.TryGetLocatorAsUri(out Uri? uri) || uri is null)
@@ -33,8 +33,8 @@ namespace Azure.AI.Agents.Persistent
                 throw new InvalidOperationException("Invalid URI.");
             }
             return connection.Authentication == ClientAuthenticationMethod.Credential
-            ? new AgentsAdministrationClient(uri, connection.Credential as TokenCredential)
-            : new AgentsAdministrationClient(uri, new AzureKeyCredential(connection.ApiKeyCredential!));
+            ? new PersistentAgentsAdministrationClient(uri, connection.Credential as TokenCredential)
+            : new PersistentAgentsAdministrationClient(uri, new AzureKeyCredential(connection.ApiKeyCredential!));
         }
     }
 }

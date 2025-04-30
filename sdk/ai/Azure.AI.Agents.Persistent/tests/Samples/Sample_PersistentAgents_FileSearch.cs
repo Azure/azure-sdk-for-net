@@ -74,12 +74,12 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
             "Can you give me the documented codes for 'banana' and 'orange'?");
 
         // Run the agent
-        ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
+        ThreadRun run = await client.ThreadRuns.CreateRunAsync(thread, agent);
 
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            run = await client.Runs.GetRunAsync(thread.Id, run.Id);
+            run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
@@ -159,12 +159,12 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
             "Can you give me the documented codes for 'banana' and 'orange'?");
 
         // Run the agent
-        ThreadRun run = client.Runs.CreateRun(thread, agent);
+        ThreadRun run = client.ThreadRuns.CreateRun(thread, agent);
 
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            run = client.Runs.GetRun(thread.Id, run.Id);
+            run = client.ThreadRuns.GetRun(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
