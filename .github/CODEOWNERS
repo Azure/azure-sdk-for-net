@@ -189,10 +189,10 @@
 # ServiceLabel: %Bot Service
 # ServiceOwners:                                                   @sgellock
 
-# PRLabel: %Cloud Machine
+# PRLabel: %Azure Projects
 /sdk/cloudmachine/                                                 @christothes @KrzysztofCwalina
 
-# ServiceLabel: %Cloud Machine
+# ServiceLabel: %Azure Projects
 # AzureSdkOwners:                                                  @christothes @KrzysztofCwalina
 
 # PRLabel: %Cognitive - Language
