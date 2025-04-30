@@ -60,8 +60,9 @@ namespace Azure.Storage.Tests
                 .Returns<Stream, object, IProgress<long>, UploadTransferValidationOptions, string, bool, CancellationToken>((stream, obj, progress, validationOptions, operation, async, cancellation) =>
                 {
                     Assert.IsTrue(stream.CanSeek, "PartitionedUploader sent non-seekable stream to the REST client");
-                    Assert.AreEqual(expectedSize, stream.Read(new byte[expectedSize], 0, expectedSize));
+                    Assert.AreEqual(expectedSize, stream.Length);
                     validationOptionsAssertion?.Invoke(validationOptions);
+                    stream.CopyTo(Stream.Null);
                     return Task.FromResult(new Mock<Response<object>>(MockBehavior.Loose).Object);
                 });
 
@@ -207,7 +208,9 @@ namespace Azure.Storage.Tests
         }
 
         [Test]
-        public async Task InterpretsLengthNonSeekableStream([Values(true, false)] bool oneshot)
+        public async Task InterpretsLengthNonSeekableStream(
+            [Values(true, false)] bool oneshot,
+            [Values(true, false)] bool providePredictedLength)
         {
             // Arrange
             const int dataSize = Constants.KB;
@@ -239,7 +242,8 @@ namespace Azure.Storage.Tests
 
             // Act
             // give uploader an expected content length for unseekable stream
-            Response<object> result = await partitionedUploader.UploadInternal(stream.Object, dataSize, s_objectArgs, s_progress, IsAsync, s_cancellation);
+            long? providedLen = providePredictedLength ? dataSize : default(long?);
+            Response<object> result = await partitionedUploader.UploadInternal(stream.Object, providedLen, s_objectArgs, s_progress, IsAsync, s_cancellation);
 
             // Assert
             if (oneshot)
@@ -261,6 +265,7 @@ namespace Azure.Storage.Tests
         public async Task AlwaysObeysOneshotThreshold(
             [Values(true, false)] bool overThreshold,
             [Values(true, false)] bool seekable,
+            [Values(true, false)] bool providePredictedLength,
             [Values(1, 8)] int concurrency)
         {
             const int threshold = 123;
@@ -291,7 +296,8 @@ namespace Azure.Storage.Tests
                 s_validationOptions,
                 operationName: s_operationName);
 
-            await partitionedUploader.UploadInternal(content.Object, dataSize, s_objectArgs, s_progress, IsAsync, s_cancellation);
+            long? providedLen = providePredictedLength ? dataSize : default(long?);
+            await partitionedUploader.UploadInternal(content.Object, providedLen, s_objectArgs, s_progress, IsAsync, s_cancellation);
 
             if (overThreshold)
             {
@@ -384,8 +390,10 @@ namespace Azure.Storage.Tests
             Assert.AreEqual(0, mocks.PartitionUploadStream.Invocations.Count);
         }
 
-        [TestCase(Constants.KB)]
-        public async Task ReleasesMemoryOnKnownLengthUnseekableStream(int dataLength)
+        [Test]
+        public async Task ReleasesMemoryOnKnownLengthUnseekableStream(
+            [Values(Constants.KB)] int dataLength,
+            [Values(true, false)] bool providePredictedLength)
         {
             // Given mock array pool that actually calls to a real one
             var arraypool = new Mock<ArrayPool<byte>>();
@@ -406,9 +414,10 @@ namespace Azure.Storage.Tests
             // upload a nonseekable stream with provided length and properly dispose after
             using (var stream = new NonSeekableMemoryStream(TestHelper.GetRandomBuffer(dataLength)))
             {
+                long? providedLen = providePredictedLength ? dataLength : default(long?);
                 Response<object> result = await partitionedUploader.UploadInternal(
                     content: stream,
-                    expectedContentLength: dataLength,
+                    expectedContentLength: providedLen,
                     s_objectArgs,
                     s_progress,
                     IsAsync,
@@ -456,7 +465,7 @@ namespace Azure.Storage.Tests
             {
                 DataType.SeekableStream => partitionedUploader.UploadInternal(new MemoryStream(data), default,
                     s_objectArgs, s_progress, IsAsync, s_cancellation),
-                DataType.UnseekableStream => partitionedUploader.UploadInternal(new NonSeekableMemoryStream(data), data.Length,
+                DataType.UnseekableStream => partitionedUploader.UploadInternal(new NonSeekableMemoryStream(data), default,
                     s_objectArgs, s_progress, IsAsync, s_cancellation),
                 DataType.BinaryData => partitionedUploader.UploadInternal(BinaryData.FromBytes(data),
                     s_objectArgs, s_progress, IsAsync, s_cancellation),
