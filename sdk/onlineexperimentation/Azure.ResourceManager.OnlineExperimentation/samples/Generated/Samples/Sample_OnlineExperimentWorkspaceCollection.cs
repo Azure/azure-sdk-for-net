@@ -7,11 +7,13 @@
 
 using System;
 using System.Threading.Tasks;
+
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OnlineExperimentation.Models;
 using Azure.ResourceManager.Resources;
+
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.OnlineExperimentation.Samples
@@ -48,16 +50,16 @@ namespace Azure.ResourceManager.OnlineExperimentation.Samples
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {
                     UserAssignedIdentities =
-{
-[new ResourceIdentifier("/subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/eu2cgroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity(),
-[new ResourceIdentifier("/subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/eu2cgroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id2")] = new UserAssignedIdentity()
-},
+                    {
+                        [new ResourceIdentifier("/subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/eu2cgroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity(),
+                        [new ResourceIdentifier("/subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/eu2cgroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id2")] = new UserAssignedIdentity()
+                    },
                 },
                 Sku = new OnlineExperimentationWorkspaceSku(OnlineExperimentationWorkspaceSkuName.F0),
                 Tags =
-{
-["newKey"] = "newVal"
-},
+                {
+                    ["newKey"] = "newVal"
+                },
             };
             ArmOperation<OnlineExperimentWorkspaceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName, data);
             OnlineExperimentWorkspaceResource result = lro.Value;
@@ -110,16 +112,16 @@ namespace Azure.ResourceManager.OnlineExperimentation.Samples
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {
                     UserAssignedIdentities =
-{
-[new ResourceIdentifier("/subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/eu2cgroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity(),
-[new ResourceIdentifier("/subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/eu2cgroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id2")] = new UserAssignedIdentity()
-},
+                    {
+                        [new ResourceIdentifier("/subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/eu2cgroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity(),
+                        [new ResourceIdentifier("/subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/eu2cgroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id2")] = new UserAssignedIdentity()
+                    },
                 },
                 Sku = new OnlineExperimentationWorkspaceSku(OnlineExperimentationWorkspaceSkuName.F0),
                 Tags =
-{
-["newKey"] = "newVal"
-},
+                {
+                    ["newKey"] = "newVal"
+                },
             };
             ArmOperation<OnlineExperimentWorkspaceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName, data);
             OnlineExperimentWorkspaceResource result = lro.Value;
