@@ -12,14 +12,14 @@ namespace TestProjects.Spector.Tests.Http.Authentication.Union
 {
     public class AuthenticationUnionTests : SpectorTestBase
     {
-        [Test]
+        [SpectorTest]
         public Task Authentication_Union_validKey() => Test(async (host) =>
         {
             Response response = await new UnionClient(host, new AzureKeyCredential("valid-key"), null).ValidKeyAsync();
             Assert.AreEqual(204, response.Status);
         });
 
-        [Test]
+        [SpectorTest]
         public Task Authentication_Union_validToken() => Test(async (host) =>
         {
             var options = new UnionClientOptions();
