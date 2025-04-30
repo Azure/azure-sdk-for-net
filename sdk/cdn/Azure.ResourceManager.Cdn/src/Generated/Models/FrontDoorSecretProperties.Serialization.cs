@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    [PersistableModelProxy(typeof(UnknownSecretParameters))]
+    [PersistableModelProxy(typeof(UnknownSecretProperties))]
     public partial class FrontDoorSecretProperties : IUtf8JsonSerializable, IJsonModel<FrontDoorSecretProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorSecretProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     case "UrlSigningKey": return UriSigningKeyProperties.DeserializeUriSigningKeyProperties(element, options);
                 }
             }
-            return UnknownSecretParameters.DeserializeUnknownSecretParameters(element, options);
+            return UnknownSecretProperties.DeserializeUnknownSecretProperties(element, options);
         }
 
         BinaryData IPersistableModel<FrontDoorSecretProperties>.Write(ModelReaderWriterOptions options)

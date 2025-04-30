@@ -11,18 +11,18 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Unknown version of SecurityPolicyPropertiesParameters. </summary>
-    internal partial class UnknownSecurityPolicyPropertiesParameters : SecurityPolicyProperties
+    internal partial class UnknownSecurityPolicyProperties : SecurityPolicyProperties
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownSecurityPolicyPropertiesParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSecurityPolicyProperties"/>. </summary>
         /// <param name="policyType"> The type of the Security policy to create. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownSecurityPolicyPropertiesParameters(SecurityPolicyType policyType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(policyType, serializedAdditionalRawData)
+        internal UnknownSecurityPolicyProperties(SecurityPolicyType policyType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(policyType, serializedAdditionalRawData)
         {
             PolicyType = policyType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnknownSecurityPolicyPropertiesParameters"/> for deserialization. </summary>
-        internal UnknownSecurityPolicyPropertiesParameters()
+        /// <summary> Initializes a new instance of <see cref="UnknownSecurityPolicyProperties"/> for deserialization. </summary>
+        internal UnknownSecurityPolicyProperties()
         {
         }
     }

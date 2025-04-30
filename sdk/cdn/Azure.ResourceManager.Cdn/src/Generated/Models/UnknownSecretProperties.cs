@@ -11,18 +11,18 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Unknown version of SecretParameters. </summary>
-    internal partial class UnknownSecretParameters : FrontDoorSecretProperties
+    internal partial class UnknownSecretProperties : FrontDoorSecretProperties
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownSecretParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSecretProperties"/>. </summary>
         /// <param name="secretType"> The type of the secret resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownSecretParameters(SecretType secretType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(secretType, serializedAdditionalRawData)
+        internal UnknownSecretProperties(SecretType secretType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(secretType, serializedAdditionalRawData)
         {
             SecretType = secretType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnknownSecretParameters"/> for deserialization. </summary>
-        internal UnknownSecretParameters()
+        /// <summary> Initializes a new instance of <see cref="UnknownSecretProperties"/> for deserialization. </summary>
+        internal UnknownSecretProperties()
         {
         }
     }

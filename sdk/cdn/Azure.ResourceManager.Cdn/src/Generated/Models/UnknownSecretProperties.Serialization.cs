@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    internal partial class UnknownSecretParameters : IUtf8JsonSerializable, IJsonModel<FrontDoorSecretProperties>
+    internal partial class UnknownSecretProperties : IUtf8JsonSerializable, IJsonModel<FrontDoorSecretProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorSecretProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
             return DeserializeFrontDoorSecretProperties(document.RootElement, options);
         }
 
-        internal static UnknownSecretParameters DeserializeUnknownSecretParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownSecretProperties DeserializeUnknownSecretProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownSecretParameters(type, serializedAdditionalRawData);
+            return new UnknownSecretProperties(type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorSecretProperties>.Write(ModelReaderWriterOptions options)
