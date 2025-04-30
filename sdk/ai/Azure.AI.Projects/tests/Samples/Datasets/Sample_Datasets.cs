@@ -33,29 +33,29 @@ namespace Azure.AI.Projects.Tests
             Datasets datasets = projectClient.GetDatasetsClient();
 
             Console.WriteLine("Uploading a single file to create Dataset version '1'...");
-            var dataset = datasets.UploadFileAndCreate(
+            var datasetResponse = datasets.UploadFile(
                 name: datasetName,
                 version: "1",
                 filePath: "sample_folder/sample_file1.txt"
                 );
-            Console.WriteLine(dataset);
+            Console.WriteLine(datasetResponse);
 
             Console.WriteLine("Uploading folder to create Dataset version '2'...");
-            dataset = datasets.UploadFolderAndCreate(
+            datasetResponse = datasets.UploadFolder(
                 name: datasetName,
                 version: "2",
                 folderPath: "sample_folder"
             );
-            Console.WriteLine(dataset.DatasetUri);
+            Console.WriteLine(datasetResponse);
 
             Console.WriteLine("Retrieving Dataset version '1'...");
-            dataset = datasets.GetVersion(datasetName, "1");
-            Console.WriteLine(dataset.DatasetUri);
+            DatasetVersion dataset = datasets.GetDataset(datasetName, "1");
+            Console.WriteLine(dataset);
 
             Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
             foreach (var ds in datasets.GetVersions(datasetName))
             {
-                Console.WriteLine(ds.DatasetUri);
+                Console.WriteLine(ds);
             }
 
             Console.WriteLine("Retrieving Dataset version '1' credentials...");
@@ -63,8 +63,8 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(credentials);
 
             Console.WriteLine("Deleting Dataset versions '1' and '2'...");
-            datasets.DeleteVersion(datasetName, "1");
-            datasets.DeleteVersion(datasetName, "2");
+            datasets.Delete(datasetName, "1");
+            datasets.Delete(datasetName, "2");
             #endregion
         }
 
@@ -84,29 +84,29 @@ namespace Azure.AI.Projects.Tests
             Datasets datasets = projectClient.GetDatasetsClient();
 
             Console.WriteLine("Uploading a single file to create Dataset version '1'...");
-            var dataset = datasets.UploadFileAndCreate(
+            var datasetResponse = datasets.UploadFile(
                 name: datasetName,
                 version: "1",
                 filePath: "sample_folder/sample_file1.txt"
                 );
-            Console.WriteLine(dataset);
+            Console.WriteLine(datasetResponse);
 
             Console.WriteLine("Uploading folder to create Dataset version '2'...");
-            dataset = datasets.UploadFolderAndCreate(
+            datasetResponse = datasets.UploadFolder(
                 name: datasetName,
                 version: "2",
                 folderPath: "sample_folder"
             );
-            Console.WriteLine(dataset.DatasetUri);
+            Console.WriteLine(datasetResponse);
 
             Console.WriteLine("Retrieving Dataset version '1'...");
-            dataset = await datasets.GetVersionAsync(datasetName, "1");
-            Console.WriteLine(dataset.DatasetUri);
+            DatasetVersion dataset = await datasets.GetDatasetAsync(datasetName, "1");
+            Console.WriteLine(dataset);
 
             Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
             await foreach (var ds in datasets.GetVersionsAsync(datasetName))
             {
-                Console.WriteLine(ds.DatasetUri);
+                Console.WriteLine(ds);
             }
 
             Console.WriteLine("Retrieving Dataset version '1' credentials...");
@@ -114,8 +114,8 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(credentials);
 
             Console.WriteLine("Deleting Dataset versions '1' and '2'...");
-            await datasets.DeleteVersionAsync(datasetName, "1");
-            await datasets.DeleteVersionAsync(datasetName, "2");
+            await datasets.DeleteAsync(datasetName, "1");
+            await datasets.DeleteAsync(datasetName, "2");
             #endregion
         }
     }

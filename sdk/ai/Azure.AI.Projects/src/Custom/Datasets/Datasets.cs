@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.AI.Projects;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace Azure.AI.Projects
 {
@@ -19,10 +19,10 @@ namespace Azure.AI.Projects
         /// </summary>
         private (BlobContainerClient ContainerClient, string OutputVersion) CreateDatasetAndGetContainerClient(string name, string inputVersion)
         {
-            var pendingUploadResponse = StartPendingUploadVersion(
+            var pendingUploadResponse = PendingUpload(
                 name,
                 inputVersion,
-                new PendingUploadRequest(null, null, PendingUploadType.TemporaryBlobReference, null)
+                new PendingUploadRequest(null, null, PendingUploadType.BlobReference, null)
             );
 
             string outputVersion = inputVersion;
@@ -34,14 +34,14 @@ namespace Azure.AI.Projects
             //    throw new InvalidOperationException("Invalid blob reference for consumption.");
             //}
 
-            var containerClient = new BlobContainerClient(new Uri(pendingUploadResponse.Value.BlobReferenceForConsumption.BlobUri));
+            var containerClient = new BlobContainerClient(new Uri(pendingUploadResponse.Value.BlobReference.BlobUri));
             return (containerClient, outputVersion);
         }
 
         /// <summary>
         /// Uploads a file to blob storage and creates a dataset that references this file.
         /// </summary>
-        public DatasetVersion UploadFileAndCreate(string name, string version, string filePath)
+        public Response UploadFile(string name, string version, string filePath)
         {
             if (!File.Exists(filePath))
             {
@@ -57,14 +57,12 @@ namespace Azure.AI.Projects
                 var blobClient = containerClient.GetBlobClient(blobName);
                 blobClient.Upload(fileStream);
 
-                return CreateVersion(
+                RequestContent content = RequestContent.Create(new FileDatasetVersion(dataUri: blobClient.Uri.AbsoluteUri));
+
+                return CreateOrUpdate(
                     name,
                     outputVersion,
-                    new FileDatasetVersion
-                    {
-                        DatasetUri = blobClient.Uri.AbsoluteUri,
-                        Type = DatasetType.UriFile
-                    }
+                    content
                 );
             }
         }
@@ -72,7 +70,7 @@ namespace Azure.AI.Projects
         /// <summary>
         /// Uploads all files in a folder to blob storage and creates a dataset that references this folder.
         /// </summary>
-        public DatasetVersion UploadFolderAndCreate(string name, string version, string folderPath)
+        public Response UploadFolder(string name, string version, string folderPath)
         {
             if (!Directory.Exists(folderPath))
             {
@@ -99,14 +97,11 @@ namespace Azure.AI.Projects
                 throw new ArgumentException("The provided folder is empty.");
             }
 
-            return CreateVersion(
+            RequestContent content = RequestContent.Create(new FolderDatasetVersion(dataUri: containerClient.Uri.AbsoluteUri));
+            return CreateOrUpdate(
                 name,
                 outputVersion,
-                new FolderDatasetVersion
-                {
-                    DatasetUri = containerClient.Uri.AbsoluteUri,
-                    Type = DatasetType.UriFolder
-                }
+                content
             );
         }
         public static string GetRelativePath(string folderPath, string filePath)

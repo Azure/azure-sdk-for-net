@@ -59,7 +59,7 @@ public class Sample_Evaluations : SamplesBase<AIProjectsTestEnvironment>
         Console.WriteLine(evaluationResponse);
 
         Console.WriteLine("Get evaluation");
-        Evaluation getEvaluationResponse = evaluations.GetEvaluation(evaluationResponse.Id);
+        Evaluation getEvaluationResponse = evaluations.GetEvaluation(evaluationResponse.Name);
         Console.WriteLine(getEvaluationResponse);
 
         Console.WriteLine("List evaluations");
@@ -113,7 +113,7 @@ public class Sample_Evaluations : SamplesBase<AIProjectsTestEnvironment>
         Console.WriteLine(evaluationResponse);
 
         Console.WriteLine("Get evaluation");
-        Evaluation getEvaluationResponse = await evaluations.GetEvaluationAsync(evaluationResponse.Id);
+        Evaluation getEvaluationResponse = await evaluations.GetEvaluationAsync(evaluationResponse.Name);
         Console.WriteLine(getEvaluationResponse);
 
         Console.WriteLine("List evaluations");

@@ -6,6 +6,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -34,16 +35,26 @@ namespace Azure.AI.Projects.Tests
             AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
             Indexes indexesClient = projectClient.GetIndexesClient();
 
+            RequestContent content = RequestContent.Create(new
+            {
+                connectionName = aiSearchConnectionName,
+                indexName = aiSearchIndexName,
+                indexVersion = indexVersion,
+                //indexType = IndexType.AzureSearch,
+                description = "Sample Index for testing",
+                displayName = "Sample Index"
+            });
+
             Console.WriteLine($"Create an Index named `{indexName}` referencing an existing AI Search resource:");
-            var index = indexesClient.CreateVersion(
+            var index = indexesClient.CreateOrUpdate(
                 name: indexName,
                 version: indexVersion,
-                body: new AzureAISearchIndex(connectionName: aiSearchConnectionName, indexName: aiSearchIndexName)
-                );
+                content: content
+            );
             Console.WriteLine(index);
 
             Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
-            var retrievedIndex = indexesClient.GetVersion(name: indexName, version: indexVersion);
+            var retrievedIndex = indexesClient.GetIndex(name: indexName, version: indexVersion);
             Console.WriteLine(retrievedIndex);
 
             Console.WriteLine($"Listing all versions of the Index named `{indexName}`:");
@@ -52,14 +63,8 @@ namespace Azure.AI.Projects.Tests
                 Console.WriteLine(version);
             }
 
-            Console.WriteLine("List latest versions of all Indexes:");
-            foreach (var latestIndex in indexesClient.GetLatests())
-            {
-                Console.WriteLine(latestIndex);
-            }
-
-            Console.WriteLine("Delete the Index versions created above:");
-            indexesClient.DeleteVersion(name: indexName, version: indexVersion);
+            Console.WriteLine("Delete the Index version created above:");
+            indexesClient.Delete(name: indexName, version: indexVersion);
             #endregion
         }
     }
