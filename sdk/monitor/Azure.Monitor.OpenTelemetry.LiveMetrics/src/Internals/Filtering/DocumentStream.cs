@@ -6,6 +6,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Diagnostics.CodeAnalysis;
     using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
     using ExceptionDocument = Models.Exception;
 
@@ -88,7 +89,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             return CheckFilters(traceFilterGroups, document, out errors);
         }
 
-        private static bool CheckFilters<TTelemetry>(
+        private static bool CheckFilters<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] TTelemetry>(
             List<FilterConjunctionGroup<TTelemetry>> filterGroups,
             TTelemetry document,
             out CollectionConfigurationError[] errors)
@@ -121,7 +122,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             return leastOneConjunctionGroupPassed;
         }
 
-        private static bool CheckFiltersGeneric<TTelemetry>(TTelemetry document, FilterConjunctionGroup<TTelemetry> filterGroup, List<CollectionConfigurationError> errorList)
+        private static bool CheckFiltersGeneric<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] TTelemetry>(
+            TTelemetry document,
+            FilterConjunctionGroup<TTelemetry> filterGroup,
+            List<CollectionConfigurationError> errorList)
             where TTelemetry : DocumentIngress
         {
             bool filterPassed = false;
