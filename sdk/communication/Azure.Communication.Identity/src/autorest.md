@@ -8,7 +8,7 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 ``` yaml
 tag: package-2025-03-02-preview
 require:
-    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/83dd09e1d8d6ef2b1fd9edbff96816a832084d12/specification/communication/data-plane/Identity/readme.md
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/52a8a4477ea168f175bf73ba64a58543fb0f038b/specification/communication/data-plane/Identity/readme.md
 payload-flattening-threshold: 3
 generation1-convenience-client: true
 ```
