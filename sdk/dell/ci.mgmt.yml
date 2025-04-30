@@ -8,8 +8,8 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/dell.storage/ci.mgmt.yml
-    - sdk/dell.storage/Azure.ResourceManager.Dell.Storage/
+    - sdk/dell/ci.mgmt.yml
+    - sdk/dell/Azure.ResourceManager.Dell.Storage/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
