@@ -9,7 +9,6 @@ using Azure.AI.OpenAI;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using OpenAI.Chat;
-using static Azure.AI.OpenAI.AzureOpenAIClientOptions;
 
 namespace Azure.AI.Projects.Tests;
 
