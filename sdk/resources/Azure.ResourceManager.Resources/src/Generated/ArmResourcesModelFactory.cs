@@ -233,25 +233,39 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="templateLink"> The URI of the template. Use either the templateLink property or the template property, but not both. </param>
         /// <param name="parameters"> Name and value pairs that define the deployment parameters for the template. You use this element when you want to provide the parameter values directly in the request rather than link to an existing parameter file. Use either the parametersLink property or the parameters property, but not both. It can be a JObject or a well formed JSON string. </param>
         /// <param name="parametersLink"> The URI of parameters file. You use this element to link to an existing parameters file. Use either the parametersLink property or the parameters property, but not both. </param>
+        /// <param name="extensionConfigs"> The configurations to use for deployment extensions. The keys of this object are deployment extension aliases as defined in the deployment template. </param>
         /// <param name="mode"> The mode that is used to deploy resources. This value can be either Incremental or Complete. In Incremental mode, resources are deployed without deleting existing resources that are not included in the template. In Complete mode, resources are deployed and existing resources in the resource group that are not included in the template are deleted. Be careful when using Complete mode as you may unintentionally delete resources. </param>
         /// <param name="debugSettingDetailLevel"> The debug setting of the deployment. </param>
         /// <param name="errorDeployment"> The deployment on error behavior. </param>
         /// <param name="expressionEvaluationScope"> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. Only applicable to nested templates. If not specified, default value is outer. </param>
         /// <param name="validationLevel"> The validation level of the deployment. </param>
         /// <returns> A new <see cref="Models.ArmDeploymentProperties"/> instance for mocking. </returns>
-        public static ArmDeploymentProperties ArmDeploymentProperties(BinaryData template = null, ArmDeploymentTemplateLink templateLink = null, BinaryData parameters = null, ArmDeploymentParametersLink parametersLink = null, ArmDeploymentMode mode = default, string debugSettingDetailLevel = null, ErrorDeployment errorDeployment = null, ExpressionEvaluationScope? expressionEvaluationScope = null, ValidationLevel? validationLevel = null)
+        public static ArmDeploymentProperties ArmDeploymentProperties(BinaryData template = null, ArmDeploymentTemplateLink templateLink = null, BinaryData parameters = null, ArmDeploymentParametersLink parametersLink = null, IDictionary<string, IDictionary<string, DeploymentExtensionConfigItem>> extensionConfigs = null, ArmDeploymentMode mode = default, string debugSettingDetailLevel = null, ErrorDeployment errorDeployment = null, ExpressionEvaluationScope? expressionEvaluationScope = null, ValidationLevel? validationLevel = null)
         {
+            extensionConfigs ??= new Dictionary<string, IDictionary<string, DeploymentExtensionConfigItem>>();
+
             return new ArmDeploymentProperties(
                 template,
                 templateLink,
                 parameters,
                 parametersLink,
+                extensionConfigs,
                 mode,
                 debugSettingDetailLevel != null ? new DebugSetting(debugSettingDetailLevel, serializedAdditionalRawData: null) : null,
                 errorDeployment,
                 expressionEvaluationScope != null ? new ExpressionEvaluationOptions(expressionEvaluationScope, serializedAdditionalRawData: null) : null,
                 validationLevel,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeploymentExtensionConfigItem"/>. </summary>
+        /// <param name="extensionConfigPropertyType"> The value type of the extension config property. </param>
+        /// <param name="value"> The value of the extension config property. </param>
+        /// <param name="keyVaultReference"> The Azure Key Vault reference used to retrieve the secret value of the extension config property. </param>
+        /// <returns> A new <see cref="Models.DeploymentExtensionConfigItem"/> instance for mocking. </returns>
+        public static DeploymentExtensionConfigItem DeploymentExtensionConfigItem(ExtensionConfigPropertyType? extensionConfigPropertyType = null, BinaryData value = null, KeyVaultParameterReference keyVaultReference = null)
+        {
+            return new DeploymentExtensionConfigItem(extensionConfigPropertyType, value, keyVaultReference, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.ArmDeploymentData"/>. </summary>
@@ -289,6 +303,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="templateLink"> The URI referencing the template. </param>
         /// <param name="parameters"> Deployment parameters. </param>
         /// <param name="parametersLink"> The URI referencing the parameters. </param>
+        /// <param name="extensions"> The extensions used in this deployment. </param>
         /// <param name="mode"> The deployment mode. Possible values are Incremental and Complete. </param>
         /// <param name="debugSettingDetailLevel"> The debug setting of the deployment. </param>
         /// <param name="errorDeployment"> The deployment on error behavior. </param>
@@ -299,12 +314,13 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="diagnostics"> Contains diagnostic information collected during validation process. </param>
         /// <param name="validationLevel"> The validation level of the deployment. </param>
         /// <returns> A new <see cref="Models.ArmDeploymentPropertiesExtended"/> instance for mocking. </returns>
-        public static ArmDeploymentPropertiesExtended ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState = null, string correlationId = null, DateTimeOffset? timestamp = null, TimeSpan? duration = null, BinaryData outputs = null, IEnumerable<ResourceProviderData> providers = null, IEnumerable<ArmDependency> dependencies = null, ArmDeploymentTemplateLink templateLink = null, BinaryData parameters = null, ArmDeploymentParametersLink parametersLink = null, ArmDeploymentMode? mode = null, string debugSettingDetailLevel = null, ErrorDeploymentExtended errorDeployment = null, string templateHash = null, IEnumerable<SubResource> outputResources = null, IEnumerable<SubResource> validatedResources = null, ResponseError error = null, IEnumerable<DeploymentDiagnosticsDefinition> diagnostics = null, ValidationLevel? validationLevel = null)
+        public static ArmDeploymentPropertiesExtended ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState = null, string correlationId = null, DateTimeOffset? timestamp = null, TimeSpan? duration = null, BinaryData outputs = null, IEnumerable<ResourceProviderData> providers = null, IEnumerable<ArmDependency> dependencies = null, ArmDeploymentTemplateLink templateLink = null, BinaryData parameters = null, ArmDeploymentParametersLink parametersLink = null, IEnumerable<DeploymentExtensionDefinition> extensions = null, ArmDeploymentMode? mode = null, string debugSettingDetailLevel = null, ErrorDeploymentExtended errorDeployment = null, string templateHash = null, IEnumerable<ResourceReference> outputResources = null, IEnumerable<ResourceReference> validatedResources = null, ResponseError error = null, IEnumerable<DeploymentDiagnosticsDefinition> diagnostics = null, ValidationLevel? validationLevel = null)
         {
             providers ??= new List<ResourceProviderData>();
             dependencies ??= new List<ArmDependency>();
-            outputResources ??= new List<SubResource>();
-            validatedResources ??= new List<SubResource>();
+            extensions ??= new List<DeploymentExtensionDefinition>();
+            outputResources ??= new List<ResourceReference>();
+            validatedResources ??= new List<ResourceReference>();
             diagnostics ??= new List<DeploymentDiagnosticsDefinition>();
 
             return new ArmDeploymentPropertiesExtended(
@@ -318,6 +334,7 @@ namespace Azure.ResourceManager.Resources.Models
                 templateLink,
                 parameters,
                 parametersLink,
+                extensions?.ToList(),
                 mode,
                 debugSettingDetailLevel != null ? new DebugSetting(debugSettingDetailLevel, serializedAdditionalRawData: null) : null,
                 errorDeployment,
@@ -353,6 +370,26 @@ namespace Azure.ResourceManager.Resources.Models
             return new BasicArmDependency(id, resourceType, resourceName, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DeploymentExtensionDefinition"/>. </summary>
+        /// <param name="alias"> The alias of the extension as defined in the deployment template. </param>
+        /// <param name="name"> The extension name. </param>
+        /// <param name="version"> The extension version. </param>
+        /// <param name="configId"> The extension configuration ID. It uniquely identifies a deployment control plane within an extension. </param>
+        /// <param name="config"> The extension configuration. </param>
+        /// <returns> A new <see cref="Models.DeploymentExtensionDefinition"/> instance for mocking. </returns>
+        public static DeploymentExtensionDefinition DeploymentExtensionDefinition(string @alias = null, string name = null, string version = null, string configId = null, IReadOnlyDictionary<string, DeploymentExtensionConfigItem> config = null)
+        {
+            config ??= new Dictionary<string, DeploymentExtensionConfigItem>();
+
+            return new DeploymentExtensionDefinition(
+                @alias,
+                name,
+                version,
+                configId,
+                config,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ErrorDeploymentExtended"/>. </summary>
         /// <param name="provisioningState"> The state of the provisioning for the on error deployment. </param>
         /// <param name="deploymentType"> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </param>
@@ -361,6 +398,24 @@ namespace Azure.ResourceManager.Resources.Models
         public static ErrorDeploymentExtended ErrorDeploymentExtended(string provisioningState = null, ErrorDeploymentType? deploymentType = null, string deploymentName = null)
         {
             return new ErrorDeploymentExtended(provisioningState, deploymentType, deploymentName, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceReference"/>. </summary>
+        /// <param name="id"> The fully qualified Azure resource ID. </param>
+        /// <param name="extension"> The key of the extension the resource was deployed with. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="identifiers"> The extensible resource identifiers. </param>
+        /// <param name="apiVersion"> The API version the resource was deployed with. </param>
+        /// <returns> A new <see cref="Models.ResourceReference"/> instance for mocking. </returns>
+        public static ResourceReference ResourceReference(string id = null, DeploymentExtensionDefinition extension = null, string resourceType = null, BinaryData identifiers = null, string apiVersion = null)
+        {
+            return new ResourceReference(
+                id,
+                extension,
+                resourceType,
+                identifiers,
+                apiVersion,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeploymentDiagnosticsDefinition"/>. </summary>
@@ -425,6 +480,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="templateLink"> The URI of the template. Use either the templateLink property or the template property, but not both. </param>
         /// <param name="parameters"> Name and value pairs that define the deployment parameters for the template. You use this element when you want to provide the parameter values directly in the request rather than link to an existing parameter file. Use either the parametersLink property or the parameters property, but not both. It can be a JObject or a well formed JSON string. </param>
         /// <param name="parametersLink"> The URI of parameters file. You use this element to link to an existing parameters file. Use either the parametersLink property or the parameters property, but not both. </param>
+        /// <param name="extensionConfigs"> The configurations to use for deployment extensions. The keys of this object are deployment extension aliases as defined in the deployment template. </param>
         /// <param name="mode"> The mode that is used to deploy resources. This value can be either Incremental or Complete. In Incremental mode, resources are deployed without deleting existing resources that are not included in the template. In Complete mode, resources are deployed and existing resources in the resource group that are not included in the template are deleted. Be careful when using Complete mode as you may unintentionally delete resources. </param>
         /// <param name="debugSettingDetailLevel"> The debug setting of the deployment. </param>
         /// <param name="errorDeployment"> The deployment on error behavior. </param>
@@ -432,13 +488,16 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="validationLevel"> The validation level of the deployment. </param>
         /// <param name="whatIfResultFormat"> Optional What-If operation settings. </param>
         /// <returns> A new <see cref="Models.ArmDeploymentWhatIfProperties"/> instance for mocking. </returns>
-        public static ArmDeploymentWhatIfProperties ArmDeploymentWhatIfProperties(BinaryData template = null, ArmDeploymentTemplateLink templateLink = null, BinaryData parameters = null, ArmDeploymentParametersLink parametersLink = null, ArmDeploymentMode mode = default, string debugSettingDetailLevel = null, ErrorDeployment errorDeployment = null, ExpressionEvaluationScope? expressionEvaluationScope = null, ValidationLevel? validationLevel = null, WhatIfResultFormat? whatIfResultFormat = null)
+        public static ArmDeploymentWhatIfProperties ArmDeploymentWhatIfProperties(BinaryData template = null, ArmDeploymentTemplateLink templateLink = null, BinaryData parameters = null, ArmDeploymentParametersLink parametersLink = null, IDictionary<string, IDictionary<string, DeploymentExtensionConfigItem>> extensionConfigs = null, ArmDeploymentMode mode = default, string debugSettingDetailLevel = null, ErrorDeployment errorDeployment = null, ExpressionEvaluationScope? expressionEvaluationScope = null, ValidationLevel? validationLevel = null, WhatIfResultFormat? whatIfResultFormat = null)
         {
+            extensionConfigs ??= new Dictionary<string, IDictionary<string, DeploymentExtensionConfigItem>>();
+
             return new ArmDeploymentWhatIfProperties(
                 template,
                 templateLink,
                 parameters,
                 parametersLink,
+                extensionConfigs,
                 mode,
                 debugSettingDetailLevel != null ? new DebugSetting(debugSettingDetailLevel, serializedAdditionalRawData: null) : null,
                 errorDeployment,
@@ -566,13 +625,25 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TargetResource"/>. </summary>
-        /// <param name="id"> The ID of the resource. </param>
+        /// <param name="id"> The Azure resource ID of the resource. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="extension"> The extension the resource was deployed with. </param>
+        /// <param name="identifiers"> The extensible resource identifiers. </param>
+        /// <param name="apiVersion"> The API version the resource was deployed with. </param>
+        /// <param name="symbolicName"> The symbolic name of the resource as defined in the deployment template. </param>
         /// <returns> A new <see cref="Models.TargetResource"/> instance for mocking. </returns>
-        public static TargetResource TargetResource(string id = null, string resourceName = null, ResourceType? resourceType = null)
+        public static TargetResource TargetResource(string id = null, string resourceName = null, ResourceType? resourceType = null, DeploymentExtensionDefinition extension = null, BinaryData identifiers = null, string apiVersion = null, string symbolicName = null)
         {
-            return new TargetResource(id, resourceName, resourceType, serializedAdditionalRawData: null);
+            return new TargetResource(
+                id,
+                resourceName,
+                resourceType,
+                extension,
+                identifiers,
+                apiVersion,
+                symbolicName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TemplateHashResult"/>. </summary>
@@ -1209,36 +1280,57 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="debugSettingDetailLevel"> The debug setting of the deployment. </param>
         /// <param name="errorDeployment"> The deployment on error behavior. </param>
         /// <param name="expressionEvaluationScope"> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. Only applicable to nested templates. If not specified, default value is outer. </param>
+        /// <param name="validationLevel"> The validation level of the deployment. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Resources.Models.ArmDeploymentProperties" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ArmDeploymentProperties ArmDeploymentProperties(BinaryData template, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, ArmDeploymentMode mode, string debugSettingDetailLevel, ErrorDeployment errorDeployment, ExpressionEvaluationScope? expressionEvaluationScope, ValidationLevel? validationLevel)
+        {
+            return ArmDeploymentProperties(template: template, templateLink: templateLink, parameters: parameters, parametersLink: parametersLink, extensionConfigs: default, mode: mode, debugSettingDetailLevel: debugSettingDetailLevel, errorDeployment: errorDeployment, expressionEvaluationScope: expressionEvaluationScope, validationLevel: validationLevel);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties" />. </summary>
+        /// <param name="template"> The template content. You use this element when you want to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both. </param>
+        /// <param name="templateLink"> The URI of the template. Use either the templateLink property or the template property, but not both. </param>
+        /// <param name="parameters"> Name and value pairs that define the deployment parameters for the template. You use this element when you want to provide the parameter values directly in the request rather than link to an existing parameter file. Use either the parametersLink property or the parameters property, but not both. It can be a JObject or a well formed JSON string. </param>
+        /// <param name="parametersLink"> The URI of parameters file. You use this element to link to an existing parameters file. Use either the parametersLink property or the parameters property, but not both. </param>
+        /// <param name="mode"> The mode that is used to deploy resources. This value can be either Incremental or Complete. In Incremental mode, resources are deployed without deleting existing resources that are not included in the template. In Complete mode, resources are deployed and existing resources in the resource group that are not included in the template are deleted. Be careful when using Complete mode as you may unintentionally delete resources. </param>
+        /// <param name="debugSettingDetailLevel"> The debug setting of the deployment. </param>
+        /// <param name="errorDeployment"> The deployment on error behavior. </param>
+        /// <param name="expressionEvaluationScope"> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. Only applicable to nested templates. If not specified, default value is outer. </param>
+        /// <param name="validationLevel"> The validation level of the deployment. </param>
+        /// <param name="whatIfResultFormat"> Optional What-If operation settings. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ArmDeploymentWhatIfProperties ArmDeploymentWhatIfProperties(BinaryData template, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, ArmDeploymentMode mode, string debugSettingDetailLevel, ErrorDeployment errorDeployment, ExpressionEvaluationScope? expressionEvaluationScope, ValidationLevel? validationLevel, WhatIfResultFormat? whatIfResultFormat)
+        {
+            return ArmDeploymentWhatIfProperties(template: template, templateLink: templateLink, parameters: parameters, parametersLink: parametersLink, extensionConfigs: default, mode: mode, debugSettingDetailLevel: debugSettingDetailLevel, errorDeployment: errorDeployment, expressionEvaluationScope: expressionEvaluationScope, validationLevel: validationLevel, whatIfResultFormat: whatIfResultFormat);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Resources.Models.TargetResource" />. </summary>
+        /// <param name="id"> The ID of the resource. </param>
+        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Resources.Models.TargetResource" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static TargetResource TargetResource(string id, string resourceName, ResourceType? resourceType)
+        {
+            return TargetResource(id: id, resourceName: resourceName, resourceType: resourceType, extension: default, identifiers: default, apiVersion: default, symbolicName: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Resources.Models.ArmDeploymentProperties" />. </summary>
+        /// <param name="template"> The template content. You use this element when you want to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both. </param>
+        /// <param name="templateLink"> The URI of the template. Use either the templateLink property or the template property, but not both. </param>
+        /// <param name="parameters"> Name and value pairs that define the deployment parameters for the template. You use this element when you want to provide the parameter values directly in the request rather than link to an existing parameter file. Use either the parametersLink property or the parameters property, but not both. It can be a JObject or a well formed JSON string. </param>
+        /// <param name="parametersLink"> The URI of parameters file. You use this element to link to an existing parameters file. Use either the parametersLink property or the parameters property, but not both. </param>
+        /// <param name="mode"> The mode that is used to deploy resources. This value can be either Incremental or Complete. In Incremental mode, resources are deployed without deleting existing resources that are not included in the template. In Complete mode, resources are deployed and existing resources in the resource group that are not included in the template are deleted. Be careful when using Complete mode as you may unintentionally delete resources. </param>
+        /// <param name="debugSettingDetailLevel"> The debug setting of the deployment. </param>
+        /// <param name="errorDeployment"> The deployment on error behavior. </param>
+        /// <param name="expressionEvaluationScope"> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. Only applicable to nested templates. If not specified, default value is outer. </param>
         /// <returns> A new <see cref="T:Azure.ResourceManager.Resources.Models.ArmDeploymentProperties" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ArmDeploymentProperties ArmDeploymentProperties(BinaryData template, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, ArmDeploymentMode mode, string debugSettingDetailLevel, ErrorDeployment errorDeployment, ExpressionEvaluationScope? expressionEvaluationScope)
         {
-            return ArmDeploymentProperties(template: template, templateLink: templateLink, parameters: parameters, parametersLink: parametersLink, mode: mode, debugSettingDetailLevel: debugSettingDetailLevel, errorDeployment: errorDeployment, expressionEvaluationScope: expressionEvaluationScope, validationLevel: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended" />. </summary>
-        /// <param name="provisioningState"> Denotes the state of provisioning. </param>
-        /// <param name="correlationId"> The correlation ID of the deployment. </param>
-        /// <param name="timestamp"> The timestamp of the template deployment. </param>
-        /// <param name="duration"> The duration of the template deployment. </param>
-        /// <param name="outputs"> Key/value pairs that represent deployment output. </param>
-        /// <param name="providers"> The list of resource providers needed for the deployment. </param>
-        /// <param name="dependencies"> The list of deployment dependencies. </param>
-        /// <param name="templateLink"> The URI referencing the template. </param>
-        /// <param name="parameters"> Deployment parameters. </param>
-        /// <param name="parametersLink"> The URI referencing the parameters. </param>
-        /// <param name="mode"> The deployment mode. Possible values are Incremental and Complete. </param>
-        /// <param name="debugSettingDetailLevel"> The debug setting of the deployment. </param>
-        /// <param name="errorDeployment"> The deployment on error behavior. </param>
-        /// <param name="templateHash"> The hash produced for the template. </param>
-        /// <param name="outputResources"> Array of provisioned resources. </param>
-        /// <param name="validatedResources"> Array of validated resources. </param>
-        /// <param name="error"> The deployment error. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ArmDeploymentPropertiesExtended ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, TimeSpan? duration, BinaryData outputs, IEnumerable<ResourceProviderData> providers, IEnumerable<ArmDependency> dependencies, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, ArmDeploymentMode? mode, string debugSettingDetailLevel, ErrorDeploymentExtended errorDeployment, string templateHash, IEnumerable<SubResource> outputResources, IEnumerable<SubResource> validatedResources, ResponseError error)
-        {
-            return ArmDeploymentPropertiesExtended(provisioningState: provisioningState, correlationId: correlationId, timestamp: timestamp, duration: duration, outputs: outputs, providers: providers, dependencies: dependencies, templateLink: templateLink, parameters: parameters, parametersLink: parametersLink, mode: mode, debugSettingDetailLevel: debugSettingDetailLevel, errorDeployment: errorDeployment, templateHash: templateHash, outputResources: outputResources, validatedResources: validatedResources, error: error, diagnostics: default, validationLevel: default);
+            return ArmDeploymentProperties(template: template, templateLink: templateLink, parameters: parameters, parametersLink: parametersLink, extensionConfigs: default, mode: mode, debugSettingDetailLevel: debugSettingDetailLevel, errorDeployment: errorDeployment, expressionEvaluationScope: expressionEvaluationScope, validationLevel: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Resources.Models.ArmDeploymentValidateResult" />. </summary>
@@ -1265,7 +1357,7 @@ namespace Azure.ResourceManager.Resources.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ArmDeploymentWhatIfProperties ArmDeploymentWhatIfProperties(BinaryData template, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, ArmDeploymentMode mode, string debugSettingDetailLevel, ErrorDeployment errorDeployment, ExpressionEvaluationScope? expressionEvaluationScope, WhatIfResultFormat? whatIfResultFormat)
         {
-            return ArmDeploymentWhatIfProperties(template: template, templateLink: templateLink, parameters: parameters, parametersLink: parametersLink, mode: mode, debugSettingDetailLevel: debugSettingDetailLevel, errorDeployment: errorDeployment, expressionEvaluationScope: expressionEvaluationScope, validationLevel: default, whatIfResultFormat: whatIfResultFormat);
+            return ArmDeploymentWhatIfProperties(template: template, templateLink: templateLink, parameters: parameters, parametersLink: parametersLink, extensionConfigs: default, mode: mode, debugSettingDetailLevel: debugSettingDetailLevel, errorDeployment: errorDeployment, expressionEvaluationScope: expressionEvaluationScope, validationLevel: default, whatIfResultFormat: whatIfResultFormat);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Resources.Models.WhatIfOperationResult" />. </summary>
