@@ -7,8 +7,7 @@ using Azure.Core;
 namespace Azure.Communication.PhoneNumbers
 {
     [CodeGenModel("PhoneNumbersBrowseRequest")]
-    [CodeGenSuppress("PhoneNumbersBrowseRequest", typeof(PhoneNumberType))]
-    [CodeGenSuppress("PhoneNumbersBrowseRequest", typeof(PhoneNumberType), typeof(PhoneNumberBrowseCapabilitiesRequest), typeof(PhoneNumberAssignmentType?), typeof(IList<string>))]
+    [CodeGenSuppress("PhoneNumbersBrowseOptions", typeof(PhoneNumberType))]
     public partial class PhoneNumbersBrowseOptions
     {
         // For (de)serialization to work as expected with the generated client, we need a ChangeTrackingList.
@@ -30,7 +29,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary>
         /// Two-letter ISO 3166-1 alpha-2 country code.
         /// </summary>
-        public string CountryCode { get; set; }
+        public string CountryCode { get; }
 
         /// <summary>
         /// The phone number prefix to match. If specified, the search will be limited to phone numbers that start with the any of the given prefixes.

@@ -118,7 +118,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var response = await client.BrowseAvailableNumbersAsync(browseRequest);
 
             Assert.IsNotNull(response.Value);
-            Assert.Greater(response.Value.Count, 0);
+            Assert.Greater(response.Value.PhoneNumbers.Count, 0);
         }
 
         [TestCase(AuthMethod.ConnectionString, TestName = "BrowseAvailableNumbersUsingConnectionString")]
@@ -133,7 +133,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var response = client.BrowseAvailableNumbers(browseRequest);
 
             Assert.IsNotNull(response.Value);
-            Assert.Greater(response.Value.Count, 0);
+            Assert.Greater(response.Value.PhoneNumbers.Count, 0);
         }
 
         [TestCase(AuthMethod.ConnectionString, TestName = "GetPhoneNumbersReservationsAsyncWithConnectionString")]
@@ -215,7 +215,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             PhoneNumbersClient client = CreateClient(authMethod);
             var browseRequest = new PhoneNumbersBrowseOptions("US", PhoneNumberType.TollFree);
             var response = await client.BrowseAvailableNumbersAsync(browseRequest);
-            var availablePhoneNumbers = response.Value;
+            var availablePhoneNumbers = response.Value.PhoneNumbers;
 
             // Reserve the first available phone number.
             var phoneNumberToReserve = availablePhoneNumbers.First();
@@ -263,7 +263,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             PhoneNumbersClient client = CreateClient(authMethod);
             var browseRequest = new PhoneNumbersBrowseOptions("US", PhoneNumberType.TollFree);
             var response = client.BrowseAvailableNumbers(browseRequest);
-            var availablePhoneNumbers = response.Value;
+            var availablePhoneNumbers = response.Value.PhoneNumbers;
 
             // Reserve the first available phone number.
             var phoneNumberToReserve = availablePhoneNumbers.First();
@@ -343,7 +343,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             // France doesn't allow reselling phone numbers.
             var browseRequest = new PhoneNumbersBrowseOptions("FR", PhoneNumberType.TollFree);
             var response = await client.BrowseAvailableNumbersAsync(browseRequest);
-            var availablePhoneNumbers = response.Value;
+            var availablePhoneNumbers = response.Value.PhoneNumbers;
 
             // Reserve the first available phone number.
             var phoneNumberToReserve = availablePhoneNumbers.First();
@@ -386,7 +386,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             // France doesn't allow reselling phone numbers.
             var browseRequest = new PhoneNumbersBrowseOptions("FR", PhoneNumberType.TollFree);
             var response = client.BrowseAvailableNumbers(browseRequest);
-            var availablePhoneNumbers = response.Value;
+            var availablePhoneNumbers = response.Value.PhoneNumbers;
 
             // Reserve the first available phone number.
             var phoneNumberToReserve = availablePhoneNumbers.First();
@@ -427,7 +427,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             PhoneNumbersClient client = CreateClient();
             var browseRequest = new PhoneNumbersBrowseOptions("US", PhoneNumberType.TollFree);
             var response = await client.BrowseAvailableNumbersAsync(browseRequest);
-            var availablePhoneNumbers = response.Value;
+            var availablePhoneNumbers = response.Value.PhoneNumbers;
 
             // Reserve the first available phone number.
             var phoneNumberToReserve = availablePhoneNumbers.First();
@@ -479,7 +479,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             var browseRequest = new PhoneNumbersBrowseOptions("US", PhoneNumberType.TollFree);
             var response = client.BrowseAvailableNumbers(browseRequest);
-            var availablePhoneNumbers = response.Value;
+            var availablePhoneNumbers = response.Value.PhoneNumbers;
 
             // Reserve the first available phone number.
             var phoneNumberToReserve = availablePhoneNumbers.First();

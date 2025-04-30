@@ -41,6 +41,16 @@ namespace Azure.Communication.PhoneNumbers
             return new PhoneNumberCountry(localizedName, countryCode);
         }
 
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PhoneNumbersBrowseResult"/>. </summary>
+        /// <param name="phoneNumbers"> The phone numbers that are available for purchase. </param>
+        /// <returns> A new <see cref="PhoneNumbers.PhoneNumbersBrowseResult"/> instance for mocking. </returns>
+        public static PhoneNumbersBrowseResult PhoneNumbersBrowseResult(IEnumerable<AvailablePhoneNumber> phoneNumbers = null)
+        {
+            phoneNumbers ??= new List<AvailablePhoneNumber>();
+
+            return new PhoneNumbersBrowseResult(phoneNumbers?.ToList());
+        }
+
         /// <summary> Initializes a new instance of <see cref="PhoneNumbers.AvailablePhoneNumber"/>. </summary>
         /// <param name="id"> The id of the phone number. </param>
         /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
@@ -53,7 +63,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="isAgreementToNotResellRequired"> Indicates if do not resell agreement is required. If true, the phone number cannot be acquired unless the customer provides explicit agreement to not resell it. </param>
         /// <param name="error"> Contains error details in case of failure when reserving, releasing or purchasing the phone number. Note that this is ignored by the service when present in requests. </param>
         /// <returns> A new <see cref="PhoneNumbers.AvailablePhoneNumber"/> instance for mocking. </returns>
-        public static AvailablePhoneNumber AvailablePhoneNumber(string id = null, string countryCode = null, string phoneNumber = null, PhoneNumberCapabilities capabilities = null, PhoneNumberType phoneNumberType = default, PhoneNumberAssignmentType assignmentType = default, PhoneNumberCost cost = null, PhoneNumberAvailabilityStatus? status = null, bool? isAgreementToNotResellRequired = null, ResponseError error = null)
+        public static AvailablePhoneNumber AvailablePhoneNumber(string id = null, string countryCode = null, string phoneNumber = null, PhoneNumberCapabilities capabilities = null, PhoneNumberType phoneNumberType = default, PhoneNumberAssignmentType assignmentType = default, PhoneNumberCost cost = null, PhoneNumberAvailabilityStatus status = default, bool isAgreementToNotResellRequired = default, ResponseError error = null)
         {
             return new AvailablePhoneNumber(
                 id,

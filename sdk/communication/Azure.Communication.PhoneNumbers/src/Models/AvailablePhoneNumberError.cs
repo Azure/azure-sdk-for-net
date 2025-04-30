@@ -11,5 +11,10 @@ namespace Azure.Communication.PhoneNumbers
     [CodeGenSuppress("AvailablePhoneNumberError", typeof(string), typeof(string))]
     internal partial class AvailablePhoneNumberError
     {
+        internal AvailablePhoneNumberError(string code, string message)
+        {
+            // Intentional no-op to prevent failures with the generated client.
+            // TODO: Find a way to fully suppress this type.
+        }
     }
 }

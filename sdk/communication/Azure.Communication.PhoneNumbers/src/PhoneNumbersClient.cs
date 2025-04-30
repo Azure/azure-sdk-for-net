@@ -802,17 +802,17 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary>
         /// Browse available phone numbers.
         /// </summary>
-        /// <param name="phoneNumbersBrowseRequest"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<IReadOnlyList<AvailablePhoneNumber>>> BrowseAvailableNumbersAsync(PhoneNumbersBrowseOptions phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PhoneNumbersBrowseResult>> BrowseAvailableNumbersAsync(PhoneNumbersBrowseOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(BrowseAvailableNumbers)}");
             scope.Start();
             try
             {
-                var response = await InternalClient.BrowseAvailableNumbersAsync(phoneNumbersBrowseRequest.CountryCode, phoneNumbersBrowseRequest, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.PhoneNumbers, response.GetRawResponse());
+                var response = await InternalClient.BrowseAvailableNumbersAsync(options.CountryCode, options, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -824,17 +824,17 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary>
         /// Browse available phone numbers.
         /// </summary>
-        /// <param name="phoneNumbersBrowseRequest"></param>
+        /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<IReadOnlyList<AvailablePhoneNumber>> BrowseAvailableNumbers(PhoneNumbersBrowseOptions phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
+        public virtual Response<PhoneNumbersBrowseResult> BrowseAvailableNumbers(PhoneNumbersBrowseOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(BrowseAvailableNumbers)}");
             scope.Start();
             try
             {
-                var response =  InternalClient.BrowseAvailableNumbers(phoneNumbersBrowseRequest.CountryCode, phoneNumbersBrowseRequest, cancellationToken);
-                return Response.FromValue(response.Value.PhoneNumbers, response.GetRawResponse());
+                var response =  InternalClient.BrowseAvailableNumbers(options.CountryCode, options, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {

@@ -39,8 +39,8 @@ namespace Azure.Communication.PhoneNumbers
             PhoneNumberType phoneNumberType = default;
             PhoneNumberAssignmentType assignmentType = default;
             PhoneNumberCost cost = default;
-            PhoneNumberAvailabilityStatus? status = default;
-            bool? isAgreementToNotResellRequired = default;
+            PhoneNumberAvailabilityStatus status = default;
+            bool isAgreementToNotResellRequired = default;
             ResponseError error = default;
             foreach (var property in element.EnumerateObject())
             {
