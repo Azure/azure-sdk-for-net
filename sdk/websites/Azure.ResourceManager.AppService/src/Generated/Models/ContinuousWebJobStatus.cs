@@ -18,13 +18,12 @@ namespace Azure.ResourceManager.AppService.Models
         Running,
         /// <summary> PendingRestart. </summary>
         PendingRestart,
+        /// <summary> Stopped. </summary>
+        Stopped,
         /// <summary> Stopping. </summary>
         Stopping,
         /// <summary> Disabling. </summary>
         Disabling,
-        /// <summary> Stopped. </summary>
-        Stopped,
         /// <summary> Success. </summary>
         Success
-    }
 }
