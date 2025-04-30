@@ -64,7 +64,7 @@ namespace System.ClientModel.Primitives
 {
     public static partial class ActivityExtensions
     {
-        public static System.Diagnostics.Activity MarkFailed(this System.Diagnostics.Activity activity, System.Exception? exception) { throw null; }
+        public static System.Diagnostics.Activity MarkClientActivityFailed(this System.Diagnostics.Activity activity, System.Exception? exception) { throw null; }
         public static System.Diagnostics.Activity? StartClientActivity(this System.Diagnostics.ActivitySource activitySource, System.ClientModel.Primitives.ClientPipelineOptions options, string name, System.Diagnostics.ActivityKind kind = System.Diagnostics.ActivityKind.Internal, System.Diagnostics.ActivityContext parentContext = default(System.Diagnostics.ActivityContext), System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object?>>? tags = null) { throw null; }
     }
     public partial class ApiKeyAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
