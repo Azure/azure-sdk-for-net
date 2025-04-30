@@ -26,4 +26,5 @@ namespace Azure.ResourceManager.AppService.Models
         Disabling,
         /// <summary> Success. </summary>
         Success
+    }
 }
