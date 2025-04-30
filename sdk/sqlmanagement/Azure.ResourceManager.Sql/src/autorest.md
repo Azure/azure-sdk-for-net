@@ -19,6 +19,7 @@ sample-gen:
   - SensitivityLabels_CreateOrUpdate
   - SensitivityLabels_Delete
   - ManagedDatabaseSecurityEvents_ListByDatabase
+  - OutboundFirewallRules_CreateOrUpdate
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
