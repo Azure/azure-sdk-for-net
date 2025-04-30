@@ -24,6 +24,7 @@ use-model-reader-writer: true
 
 rename-mapping:
   DataCollectionOptions: DiagnosticCollectionConfig
+  DBActionResponse: DBActionResult
   DbNode: CloudVmClusterDBNode
   DbNodeProperties: CloudVmClusterDbNodeProperties
   DbServer: OracleDBServer
