@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="localCacheMode"> Policy for enabling follow-the-sun business models: link local cache to cloud behavior to pre-populate before local access. </param>
         /// <param name="initialUploadPolicy"> Policy for how the initial upload sync session is performed. </param>
         /// <param name="serverName"> Server name. </param>
+        /// <param name="serverEndpointProvisioningStatus"> Server Endpoint provisioning status. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageSyncServerEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverLocalPath, StorageSyncFeatureStatus? cloudTiering, int? volumeFreeSpacePercent, int? tierFilesOlderThanDays, string friendlyName, ResourceIdentifier serverResourceId, string provisioningState, string lastWorkflowId, string lastOperationName, ServerEndpointSyncStatus syncStatus, StorageSyncFeatureStatus? offlineDataTransfer, ResourceIdentifier offlineDataTransferStorageAccountResourceId, Guid? offlineDataTransferStorageAccountTenantId, string offlineDataTransferShareName, ServerEndpointCloudTieringStatus cloudTieringStatus, ServerEndpointRecallStatus recallStatus, InitialDownloadPolicy? initialDownloadPolicy, LocalCacheMode? localCacheMode, InitialUploadPolicy? initialUploadPolicy, string serverName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StorageSyncServerEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverLocalPath, StorageSyncFeatureStatus? cloudTiering, int? volumeFreeSpacePercent, int? tierFilesOlderThanDays, string friendlyName, ResourceIdentifier serverResourceId, string provisioningState, string lastWorkflowId, string lastOperationName, ServerEndpointSyncStatus syncStatus, StorageSyncFeatureStatus? offlineDataTransfer, ResourceIdentifier offlineDataTransferStorageAccountResourceId, Guid? offlineDataTransferStorageAccountTenantId, string offlineDataTransferShareName, ServerEndpointCloudTieringStatus cloudTieringStatus, ServerEndpointRecallStatus recallStatus, InitialDownloadPolicy? initialDownloadPolicy, LocalCacheMode? localCacheMode, InitialUploadPolicy? initialUploadPolicy, string serverName, StorageSyncServerEndpointProvisioningStatus serverEndpointProvisioningStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ServerLocalPath = serverLocalPath;
             CloudTiering = cloudTiering;
@@ -104,6 +105,7 @@ namespace Azure.ResourceManager.StorageSync
             LocalCacheMode = localCacheMode;
             InitialUploadPolicy = initialUploadPolicy;
             ServerName = serverName;
+            ServerEndpointProvisioningStatus = serverEndpointProvisioningStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -147,5 +149,7 @@ namespace Azure.ResourceManager.StorageSync
         public InitialUploadPolicy? InitialUploadPolicy { get; set; }
         /// <summary> Server name. </summary>
         public string ServerName { get; }
+        /// <summary> Server Endpoint provisioning status. </summary>
+        public StorageSyncServerEndpointProvisioningStatus ServerEndpointProvisioningStatus { get; set; }
     }
 }

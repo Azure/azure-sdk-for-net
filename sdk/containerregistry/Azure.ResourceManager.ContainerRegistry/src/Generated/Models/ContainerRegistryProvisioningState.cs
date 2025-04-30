@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    /// <summary> The provisioning state of the archive at the time the operation was called. </summary>
+    /// <summary> The provisioning state of this agent pool. </summary>
     public readonly partial struct ContainerRegistryProvisioningState : IEquatable<ContainerRegistryProvisioningState>
     {
         private readonly string _value;

@@ -93,7 +93,7 @@ namespace Azure.Storage.Shared
             {
                 _buffer = new PooledMemoryStream(
                     arrayPool: _bufferPool,
-                    maxArraySize: (int)Math.Min(Constants.MB, bufferSize));
+                    bufferSize: (int)Math.Min(Constants.MB, bufferSize));
                 _accumulatedDisposables.Add(_buffer);
             }
             _bufferChecksumer = ContentHasher.GetHasherFromAlgorithmId(_checksumAlgorithm);
