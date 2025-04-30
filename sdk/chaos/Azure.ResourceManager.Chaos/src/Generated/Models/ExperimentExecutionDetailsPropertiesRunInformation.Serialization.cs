@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    internal partial class ChaosExperimentRunInformation : IUtf8JsonSerializable, IJsonModel<ChaosExperimentRunInformation>
+    internal partial class ExperimentExecutionDetailsPropertiesRunInformation : IUtf8JsonSerializable, IJsonModel<ExperimentExecutionDetailsPropertiesRunInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosExperimentRunInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExperimentExecutionDetailsPropertiesRunInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ChaosExperimentRunInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ExperimentExecutionDetailsPropertiesRunInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosExperimentRunInformation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExperimentExecutionDetailsPropertiesRunInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosExperimentRunInformation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ExperimentExecutionDetailsPropertiesRunInformation)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsCollectionDefined(Steps))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Chaos.Models
             }
         }
 
-        ChaosExperimentRunInformation IJsonModel<ChaosExperimentRunInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ExperimentExecutionDetailsPropertiesRunInformation IJsonModel<ExperimentExecutionDetailsPropertiesRunInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosExperimentRunInformation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExperimentExecutionDetailsPropertiesRunInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosExperimentRunInformation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ExperimentExecutionDetailsPropertiesRunInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeChaosExperimentRunInformation(document.RootElement, options);
+            return DeserializeExperimentExecutionDetailsPropertiesRunInformation(document.RootElement, options);
         }
 
-        internal static ChaosExperimentRunInformation DeserializeChaosExperimentRunInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ExperimentExecutionDetailsPropertiesRunInformation DeserializeExperimentExecutionDetailsPropertiesRunInformation(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -106,38 +106,38 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ChaosExperimentRunInformation(steps ?? new ChangeTrackingList<ChaosExperimentRunStepStatus>(), serializedAdditionalRawData);
+            return new ExperimentExecutionDetailsPropertiesRunInformation(steps ?? new ChangeTrackingList<ChaosExperimentRunStepStatus>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ChaosExperimentRunInformation>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ExperimentExecutionDetailsPropertiesRunInformation>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosExperimentRunInformation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExperimentExecutionDetailsPropertiesRunInformation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChaosExperimentRunInformation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExperimentExecutionDetailsPropertiesRunInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ChaosExperimentRunInformation IPersistableModel<ChaosExperimentRunInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ExperimentExecutionDetailsPropertiesRunInformation IPersistableModel<ExperimentExecutionDetailsPropertiesRunInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosExperimentRunInformation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExperimentExecutionDetailsPropertiesRunInformation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeChaosExperimentRunInformation(document.RootElement, options);
+                        return DeserializeExperimentExecutionDetailsPropertiesRunInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChaosExperimentRunInformation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExperimentExecutionDetailsPropertiesRunInformation)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ChaosExperimentRunInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ExperimentExecutionDetailsPropertiesRunInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

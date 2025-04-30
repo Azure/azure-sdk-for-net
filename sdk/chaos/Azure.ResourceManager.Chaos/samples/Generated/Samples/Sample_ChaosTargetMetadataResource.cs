@@ -13,34 +13,34 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Chaos.Samples
 {
-    public partial class Sample_ChaosTargetTypeResource
+    public partial class Sample_ChaosTargetMetadataResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetATargetTypeForWestus2Location()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetTargetType.json
-            // this example is just showing the usage of "TargetTypes_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/TargetTypes_Get.json
+            // this example is just showing the usage of "TargetType_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ChaosTargetTypeResource created on azure
-            // for more information of creating ChaosTargetTypeResource, please refer to the document of ChaosTargetTypeResource
+            // this example assumes you already have this ChaosTargetMetadataResource created on azure
+            // for more information of creating ChaosTargetMetadataResource, please refer to the document of ChaosTargetMetadataResource
             string subscriptionId = "6b052e15-03d3-4f17-b2e1-be7f07588291";
-            string locationName = "westus2";
+            AzureLocation location = new AzureLocation("westus2");
             string targetTypeName = "Microsoft-Agent";
-            ResourceIdentifier chaosTargetTypeResourceId = ChaosTargetTypeResource.CreateResourceIdentifier(subscriptionId, locationName, targetTypeName);
-            ChaosTargetTypeResource chaosTargetType = client.GetChaosTargetTypeResource(chaosTargetTypeResourceId);
+            ResourceIdentifier chaosTargetMetadataResourceId = ChaosTargetMetadataResource.CreateResourceIdentifier(subscriptionId, location, targetTypeName);
+            ChaosTargetMetadataResource chaosTargetMetadata = client.GetChaosTargetMetadataResource(chaosTargetMetadataResourceId);
 
             // invoke the operation
-            ChaosTargetTypeResource result = await chaosTargetType.GetAsync();
+            ChaosTargetMetadataResource result = await chaosTargetMetadata.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ChaosTargetTypeData resourceData = result.Data;
+            ChaosTargetMetadataData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

@@ -14,14 +14,14 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Chaos.Samples
 {
-    public partial class Sample_ChaosTargetTypeCollection
+    public partial class Sample_ChaosTargetMetadataCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetATargetTypeForWestus2Location()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetTargetType.json
-            // this example is just showing the usage of "TargetTypes_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/TargetTypes_Get.json
+            // this example is just showing the usage of "TargetType_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.Chaos.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this ChaosTargetTypeResource
-            string locationName = "westus2";
-            ChaosTargetTypeCollection collection = subscriptionResource.GetChaosTargetTypes(locationName);
+            // get the collection of this ChaosTargetMetadataResource
+            AzureLocation location = new AzureLocation("westus2");
+            ChaosTargetMetadataCollection collection = subscriptionResource.GetAllChaosTargetMetadata(location);
 
             // invoke the operation
             string targetTypeName = "Microsoft-Agent";
-            ChaosTargetTypeResource result = await collection.GetAsync(targetTypeName);
+            ChaosTargetMetadataResource result = await collection.GetAsync(targetTypeName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ChaosTargetTypeData resourceData = result.Data;
+            ChaosTargetMetadataData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllTargetTypesForWestus2Location()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/ListTargetTypes.json
-            // this example is just showing the usage of "TargetTypes_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/TargetTypes_List.json
+            // this example is just showing the usage of "TargetType_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -67,17 +67,16 @@ namespace Azure.ResourceManager.Chaos.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this ChaosTargetTypeResource
-            string locationName = "westus2";
-            ChaosTargetTypeCollection collection = subscriptionResource.GetChaosTargetTypes(locationName);
+            // get the collection of this ChaosTargetMetadataResource
+            AzureLocation location = new AzureLocation("westus2");
+            ChaosTargetMetadataCollection collection = subscriptionResource.GetAllChaosTargetMetadata(location);
 
             // invoke the operation and iterate over the result
-            string continuationToken = null;
-            await foreach (ChaosTargetTypeResource item in collection.GetAllAsync(continuationToken: continuationToken))
+            await foreach (ChaosTargetMetadataResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ChaosTargetTypeData resourceData = item.Data;
+                ChaosTargetMetadataData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -89,8 +88,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetATargetTypeForWestus2Location()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetTargetType.json
-            // this example is just showing the usage of "TargetTypes_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/TargetTypes_Get.json
+            // this example is just showing the usage of "TargetType_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -103,9 +102,9 @@ namespace Azure.ResourceManager.Chaos.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this ChaosTargetTypeResource
-            string locationName = "westus2";
-            ChaosTargetTypeCollection collection = subscriptionResource.GetChaosTargetTypes(locationName);
+            // get the collection of this ChaosTargetMetadataResource
+            AzureLocation location = new AzureLocation("westus2");
+            ChaosTargetMetadataCollection collection = subscriptionResource.GetAllChaosTargetMetadata(location);
 
             // invoke the operation
             string targetTypeName = "Microsoft-Agent";
@@ -118,8 +117,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetATargetTypeForWestus2Location()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetTargetType.json
-            // this example is just showing the usage of "TargetTypes_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/TargetTypes_Get.json
+            // this example is just showing the usage of "TargetType_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -132,14 +131,14 @@ namespace Azure.ResourceManager.Chaos.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this ChaosTargetTypeResource
-            string locationName = "westus2";
-            ChaosTargetTypeCollection collection = subscriptionResource.GetChaosTargetTypes(locationName);
+            // get the collection of this ChaosTargetMetadataResource
+            AzureLocation location = new AzureLocation("westus2");
+            ChaosTargetMetadataCollection collection = subscriptionResource.GetAllChaosTargetMetadata(location);
 
             // invoke the operation
             string targetTypeName = "Microsoft-Agent";
-            NullableResponse<ChaosTargetTypeResource> response = await collection.GetIfExistsAsync(targetTypeName);
-            ChaosTargetTypeResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ChaosTargetMetadataResource> response = await collection.GetIfExistsAsync(targetTypeName);
+            ChaosTargetMetadataResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -149,7 +148,7 @@ namespace Azure.ResourceManager.Chaos.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ChaosTargetTypeData resourceData = result.Data;
+                ChaosTargetMetadataData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
