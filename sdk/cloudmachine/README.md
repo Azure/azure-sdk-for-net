@@ -16,8 +16,8 @@ In other words, Azure.Projects will never block you from using the full power of
 ### Prerequisites
 
 * You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
-* You must have [.NET 8](https://dotnet.microsoft.com/en-us/download) (or higher) installed
-* You must have [Azure Developer CLI](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd) (azd) installed
+* You must have [.NET 8](https://dotnet.microsoft.com/download) (or higher) installed
+* You must have [Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd) (azd) installed
 * You must be logged into Azure Developer CLI (`azd auth login`)
 
 ### Walkthrough
