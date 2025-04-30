@@ -8,7 +8,7 @@ csharp: true
 library-name: OracleDatabase
 namespace: Azure.ResourceManager.OracleDatabase
 require: https://github.com/Azure/azure-rest-api-specs/blob/67aef4a58261c9485a320c0d5abb52c377aee72d/specification/oracle/resource-manager/readme.md
-#tag: package-2025-03-01
+tag: package-2025-03-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -24,7 +24,7 @@ use-model-reader-writer: true
 
 rename-mapping:
   DataCollectionOptions: DiagnosticCollectionConfig
-  DBActionResponse: DBActionResult
+  DbActionResponse: DbActionResult
   DbNode: CloudVmClusterDBNode
   DbNodeProperties: CloudVmClusterDbNodeProperties
   DbServer: OracleDBServer
