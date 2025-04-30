@@ -20,16 +20,15 @@ public static class SearchExtensions
     /// </summary>
     /// <param name="provider"></param>
     /// <param name="indexName"></param>
-    /// <param name="options"></param>
     /// <returns></returns>
-    public static SearchClient GetSearchClient(this ConnectionProvider provider, string indexName, SearchClientOptions? options = null)
+    public static SearchClient GetSearchClient(this ConnectionProvider provider, string indexName)
     {
-        SearchClientKey searchClientKey = new(indexName, options);
+        SearchClientKey searchClientKey = new(indexName);
         SearchClient searchClient = provider.Subclients.GetClient(searchClientKey, () => CreateSearchClient(provider, indexName));
         return searchClient;
     }
 
-    private static SearchClient CreateSearchClient(this ConnectionProvider provider, string indexName, SearchClientOptions? options = null)
+    private static SearchClient CreateSearchClient(this ConnectionProvider provider, string indexName)
     {
         ClientConnection connection = provider.GetConnection(typeof(SearchClient).FullName!);
 
@@ -40,8 +39,8 @@ public static class SearchExtensions
 
         return connection.CredentialKind switch
         {
-            CredentialKind.ApiKeyString => new SearchClient(uri, indexName, new AzureKeyCredential((string)connection.Credential!), options),
-            CredentialKind.TokenCredential => new SearchClient(uri, indexName, (TokenCredential)connection.Credential!, options),
+            CredentialKind.ApiKeyString => new SearchClient(uri, indexName, new AzureKeyCredential((string)connection.Credential!)),
+            CredentialKind.TokenCredential => new SearchClient(uri, indexName, (TokenCredential)connection.Credential!),
             _ => throw new InvalidOperationException($"Unsupported credential kind: {connection.CredentialKind}")
         };
     }
@@ -50,16 +49,15 @@ public static class SearchExtensions
     /// Gets the search client.
     /// </summary>
     /// <param name="provider"></param>
-    /// <param name="options"></param>
     /// <returns></returns>
-    public static SearchIndexClient GetSearchIndexClient(this ConnectionProvider provider, SearchClientOptions? options = null)
+    public static SearchIndexClient GetSearchIndexClient(this ConnectionProvider provider)
     {
-        SearchIndexClientKey searchIndexClientKey = new(options);
+        SearchIndexClientKey searchIndexClientKey = new();
         SearchIndexClient searchIndexClient = provider.Subclients.GetClient(searchIndexClientKey, () => CreateSearchIndexClient(provider));
         return searchIndexClient;
     }
 
-    private static SearchIndexClient CreateSearchIndexClient(this ConnectionProvider provider, SearchClientOptions? options = null)
+    private static SearchIndexClient CreateSearchIndexClient(this ConnectionProvider provider)
     {
         ClientConnection connection = provider.GetConnection(typeof(SearchIndexClient).FullName!);
 
@@ -70,8 +68,8 @@ public static class SearchExtensions
 
         return connection.CredentialKind switch
         {
-            CredentialKind.ApiKeyString => new SearchIndexClient(uri, new AzureKeyCredential((string)connection.Credential!), options),
-            CredentialKind.TokenCredential => new SearchIndexClient(uri, (TokenCredential)connection.Credential!, options),
+            CredentialKind.ApiKeyString => new SearchIndexClient(uri, new AzureKeyCredential((string)connection.Credential!)),
+            CredentialKind.TokenCredential => new SearchIndexClient(uri, (TokenCredential)connection.Credential!),
             _ => throw new InvalidOperationException($"Unsupported credential kind: {connection.CredentialKind}")
         };
     }
@@ -80,16 +78,15 @@ public static class SearchExtensions
     /// Gets the search client.
     /// </summary>
     /// <param name="provider"></param>
-    /// <param name="options"></param>
     /// <returns></returns>
-    public static SearchIndexerClient GetSearchIndexerClient(this ConnectionProvider provider, SearchClientOptions? options = null)
+    public static SearchIndexerClient GetSearchIndexerClient(this ConnectionProvider provider)
     {
-        SearchIndexerClientKey searchIndexerClientKey = new(options);
+        SearchIndexerClientKey searchIndexerClientKey = new();
         SearchIndexerClient searchIndexerClient = provider.Subclients.GetClient(searchIndexerClientKey, () => CreateSearchIndexerClient(provider));
         return searchIndexerClient;
     }
 
-    private static SearchIndexerClient CreateSearchIndexerClient(this ConnectionProvider provider, SearchClientOptions? options = null)
+    private static SearchIndexerClient CreateSearchIndexerClient(this ConnectionProvider provider)
     {
         ClientConnection connection = provider.GetConnection(typeof(SearchIndexClient).FullName!);
 
@@ -100,15 +97,15 @@ public static class SearchExtensions
 
         return connection.CredentialKind switch
         {
-            CredentialKind.ApiKeyString => new SearchIndexerClient(uri, new AzureKeyCredential((string)connection.Credential!), options),
-            CredentialKind.TokenCredential => new SearchIndexerClient(uri, (TokenCredential)connection.Credential!, options),
+            CredentialKind.ApiKeyString => new SearchIndexerClient(uri, new AzureKeyCredential((string)connection.Credential!)),
+            CredentialKind.TokenCredential => new SearchIndexerClient(uri, (TokenCredential)connection.Credential!),
             _ => throw new InvalidOperationException($"Unsupported credential kind: {connection.CredentialKind}")
         };
     }
 
-    private record SearchClientKey(string IndexName, SearchClientOptions? Options = null) : IEquatable<object>;
+    private record SearchClientKey(string IndexName) : IEquatable<object>;
 
-    private record SearchIndexClientKey(SearchClientOptions? Options = null) : IEquatable<object>;
+    private record SearchIndexClientKey() : IEquatable<object>;
 
-    private record SearchIndexerClientKey(SearchClientOptions? Options = null) : IEquatable<object>;
+    private record SearchIndexerClientKey() : IEquatable<object>;
 }

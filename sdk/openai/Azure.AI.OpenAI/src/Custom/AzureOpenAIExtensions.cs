@@ -19,16 +19,15 @@ public static class AzureOpenAIExtensions
     /// </summary>
     /// <param name="provider"></param>
     /// <param name="deploymentName"></param>
-    /// <param name="options"></param>
     /// <returns></returns>
-    public static ChatClient GetAzureOpenAIChatClient(this ConnectionProvider provider, string? deploymentName = null, AzureOpenAIClientOptions? options = null)
+    public static ChatClient GetAzureOpenAIChatClient(this ConnectionProvider provider, string? deploymentName = null)
     {
-        ChatClientKey chatClientKey = new(deploymentName, options);
-        AzureOpenAIClientKey openAIClientKey = new(options);
+        ChatClientKey chatClientKey = new(deploymentName);
+        AzureOpenAIClientKey openAIClientKey = new();
 
         ChatClient chatClient = provider.Subclients.GetClient(chatClientKey, () =>
         {
-            AzureOpenAIClient aoaiClient = provider.Subclients.GetClient(openAIClientKey, () => CreateAzureOpenAIClient(provider, options));
+            AzureOpenAIClient aoaiClient = provider.Subclients.GetClient(openAIClientKey, () => CreateAzureOpenAIClient(provider));
             return provider.CreateChatClient(aoaiClient, deploymentName);
         });
 
@@ -40,23 +39,22 @@ public static class AzureOpenAIExtensions
     /// </summary>
     /// <param name="provider"></param>
     /// <param name="deploymentName"></param>
-    /// <param name="options"></param>
     /// <returns></returns>
-    public static EmbeddingClient GetAzureOpenAIEmbeddingClient(this ConnectionProvider provider, string? deploymentName = null, AzureOpenAIClientOptions? options = null)
+    public static EmbeddingClient GetAzureOpenAIEmbeddingClient(this ConnectionProvider provider, string? deploymentName = null)
     {
-        EmbeddingClientKey embeddingClientKey = new(deploymentName, options);
-        AzureOpenAIClientKey openAIClientKey = new(options);
+        EmbeddingClientKey embeddingClientKey = new(deploymentName);
+        AzureOpenAIClientKey openAIClientKey = new();
 
         EmbeddingClient embeddingClient = provider.Subclients.GetClient(embeddingClientKey, () =>
         {
-            AzureOpenAIClient aoaiClient = provider.Subclients.GetClient(openAIClientKey , () => CreateAzureOpenAIClient(provider, options));
+            AzureOpenAIClient aoaiClient = provider.Subclients.GetClient(openAIClientKey , () => CreateAzureOpenAIClient(provider));
             return provider.CreateEmbeddingClient(aoaiClient, deploymentName);
         });
 
         return embeddingClient;
     }
 
-    private static AzureOpenAIClient CreateAzureOpenAIClient(this ConnectionProvider provider, AzureOpenAIClientOptions? options = null)
+    private static AzureOpenAIClient CreateAzureOpenAIClient(this ConnectionProvider provider)
     {
         ClientConnection connection = provider.GetConnection(typeof(AzureOpenAIClient).FullName!);
 
@@ -67,8 +65,8 @@ public static class AzureOpenAIExtensions
 
         return connection.CredentialKind switch
         {
-            CredentialKind.ApiKeyString => new AzureOpenAIClient(uri, new ApiKeyCredential((string)connection.Credential!), options),
-            CredentialKind.TokenCredential => new AzureOpenAIClient(uri, (TokenCredential)connection.Credential!, options),
+            CredentialKind.ApiKeyString => new AzureOpenAIClient(uri, new ApiKeyCredential((string)connection.Credential!)),
+            CredentialKind.TokenCredential => new AzureOpenAIClient(uri, (TokenCredential)connection.Credential!),
             _ => throw new InvalidOperationException($"Unsupported credential kind: {connection.CredentialKind}")
         };
     }
@@ -87,9 +85,9 @@ public static class AzureOpenAIExtensions
         return embedding;
     }
 
-    private record AzureOpenAIClientKey(AzureOpenAIClientOptions? Options) : IEquatable<object>;
+    private record AzureOpenAIClientKey() : IEquatable<object>;
 
-    private record ChatClientKey(string? DeploymentName, AzureOpenAIClientOptions? Options) : IEquatable<object>;
+    private record ChatClientKey(string? DeploymentName) : IEquatable<object>;
 
-    private record EmbeddingClientKey(string? DeploymentName, AzureOpenAIClientOptions? Options) : IEquatable<object>;
+    private record EmbeddingClientKey(string? DeploymentName) : IEquatable<object>;
 }

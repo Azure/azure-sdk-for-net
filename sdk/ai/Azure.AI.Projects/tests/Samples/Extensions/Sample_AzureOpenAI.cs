@@ -72,35 +72,4 @@ public class Sample_AzureOpenAI : SamplesBase<AIProjectsTestEnvironment>
             ex.Message);
         Console.WriteLine(ex.Message);
     }
-
-    [Test]
-    public void ReturnsDistinctClientsWhenOptionsDiffer()
-    {
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
-        AIProjectClient client = new AIProjectClient(connectionString);
-
-        var options1 = new AzureOpenAIClientOptions(ServiceVersion.V2024_06_01);
-        var options2 = new AzureOpenAIClientOptions(ServiceVersion.V2024_10_21);
-
-        ChatClient chatClient1 = client.GetAzureOpenAIChatClient(modelDeploymentName, options1);
-        ChatClient chatClient2 = client.GetAzureOpenAIChatClient(modelDeploymentName, options2);
-
-        Assert.AreNotSame(chatClient1, chatClient2);
-    }
-
-    [Test]
-    public void ReturnsSameClientWhenOptionsAreSame()
-    {
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
-        AIProjectClient client = new AIProjectClient(connectionString);
-
-        var options = new AzureOpenAIClientOptions();
-
-        ChatClient chatClient1 = client.GetAzureOpenAIChatClient(modelDeploymentName, options);
-        ChatClient chatClient2 = client.GetAzureOpenAIChatClient(modelDeploymentName, options);
-
-        Assert.AreSame(chatClient1, chatClient2);
-    }
 }

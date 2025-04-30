@@ -18,16 +18,15 @@ namespace Azure.AI.Inference
         /// Gets the chat completion client.
         /// </summary>
         /// <param name="provider"></param>
-        /// <param name="options"></param>
         /// <returns></returns>
-        public static ChatCompletionsClient GetChatCompletionsClient(this ConnectionProvider provider, AzureAIInferenceClientOptions? options = null)
+        public static ChatCompletionsClient GetChatCompletionsClient(this ConnectionProvider provider)
         {
-            ChatCompletionsClientKey chatCompletionsClientKey = new(options);
+            ChatCompletionsClientKey chatCompletionsClientKey = new();
             ChatCompletionsClient chatClient = provider.Subclients.GetClient(chatCompletionsClientKey, () => CreateChatCompletionsClient(provider));
             return chatClient;
         }
 
-        private static ChatCompletionsClient CreateChatCompletionsClient(this ConnectionProvider provider, AzureAIInferenceClientOptions? options = null)
+        private static ChatCompletionsClient CreateChatCompletionsClient(this ConnectionProvider provider)
         {
             ClientConnection connection = provider.GetConnection(typeof(ChatCompletionsClient).FullName!);
 
@@ -38,8 +37,8 @@ namespace Azure.AI.Inference
 
             return connection.CredentialKind switch
             {
-                CredentialKind.ApiKeyString => new ChatCompletionsClient(uri, new AzureKeyCredential((string)connection.Credential!), options),
-                CredentialKind.TokenCredential => new ChatCompletionsClient(uri, (TokenCredential)connection.Credential!, options),
+                CredentialKind.ApiKeyString => new ChatCompletionsClient(uri, new AzureKeyCredential((string)connection.Credential!)),
+                CredentialKind.TokenCredential => new ChatCompletionsClient(uri, (TokenCredential)connection.Credential!),
                 _ => throw new InvalidOperationException($"Unsupported credential kind: {connection.CredentialKind}")
             };
         }
@@ -48,16 +47,15 @@ namespace Azure.AI.Inference
         /// Gets the embeddings client.
         /// </summary>
         /// <param name="provider"></param>
-        /// <param name="options"></param>
         /// <returns></returns>
-        public static EmbeddingsClient GetEmbeddingsClient(this ConnectionProvider provider, AzureAIInferenceClientOptions? options = null)
+        public static EmbeddingsClient GetEmbeddingsClient(this ConnectionProvider provider)
         {
-            EmbeddingsClientKey embeddingsClientKey = new(options);
+            EmbeddingsClientKey embeddingsClientKey = new();
             EmbeddingsClient embeddingsClient = provider.Subclients.GetClient(embeddingsClientKey, () => CreateEmbeddingsClient(provider));
             return embeddingsClient;
         }
 
-        private static EmbeddingsClient CreateEmbeddingsClient(this ConnectionProvider provider, AzureAIInferenceClientOptions? options = null)
+        private static EmbeddingsClient CreateEmbeddingsClient(this ConnectionProvider provider)
         {
             ClientConnection connection = provider.GetConnection(typeof(ChatCompletionsClient).FullName!);
 
@@ -68,14 +66,14 @@ namespace Azure.AI.Inference
 
             return connection.CredentialKind switch
             {
-                CredentialKind.ApiKeyString => new EmbeddingsClient(uri, new AzureKeyCredential((string)connection.Credential!), options),
-                CredentialKind.TokenCredential => new EmbeddingsClient(uri, (TokenCredential)connection.Credential!, options),
+                CredentialKind.ApiKeyString => new EmbeddingsClient(uri, new AzureKeyCredential((string)connection.Credential!)),
+                CredentialKind.TokenCredential => new EmbeddingsClient(uri, (TokenCredential)connection.Credential!),
                 _ => throw new InvalidOperationException($"Unsupported credential kind: {connection.CredentialKind}")
             };
         }
 
-        private record ChatCompletionsClientKey(AzureAIInferenceClientOptions? Options = null) : IEquatable<object>;
+        private record ChatCompletionsClientKey() : IEquatable<object>;
 
-        private record EmbeddingsClientKey(AzureAIInferenceClientOptions? Options = null) : IEquatable<object>;
+        private record EmbeddingsClientKey() : IEquatable<object>;
     }
 }
