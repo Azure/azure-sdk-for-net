@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed an issue where `TimeSpan` properties in strongly typed table entities were not being deserialized.
 
 ### Other Changes
 
