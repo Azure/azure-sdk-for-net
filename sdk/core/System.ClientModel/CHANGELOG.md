@@ -1,5 +1,15 @@
 # Release History
 
+## 1.4.0-beta.7 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.4.0-beta.6 (2025-04-28)
 
 ### Features Added
