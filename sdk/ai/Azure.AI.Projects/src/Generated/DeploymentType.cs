@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> The DeploymentType. </summary>
-    internal readonly partial struct DeploymentType : IEquatable<DeploymentType>
+    public readonly partial struct DeploymentType : IEquatable<DeploymentType>
     {
         private readonly string _value;
 

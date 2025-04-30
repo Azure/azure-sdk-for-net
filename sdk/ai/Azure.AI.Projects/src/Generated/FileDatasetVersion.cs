@@ -14,41 +14,32 @@ namespace Azure.AI.Projects
     public partial class FileDatasetVersion : DatasetVersion
     {
         /// <summary> Initializes a new instance of <see cref="FileDatasetVersion"/>. </summary>
-        /// <param name="datasetUri"> [Required] Uri of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
-        /// <param name="openAIPurpose"> Indicates OpenAI Purpose. FileDatasets created with this field will be compatible with OpenAI-specific features. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="datasetUri"/> or <paramref name="openAIPurpose"/> is null. </exception>
-        public FileDatasetVersion(string datasetUri, string openAIPurpose) : base(datasetUri)
+        /// <param name="dataUri"> URI of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
+        public FileDatasetVersion(string dataUri) : base(dataUri)
         {
-            Argument.AssertNotNull(datasetUri, nameof(datasetUri));
-            Argument.AssertNotNull(openAIPurpose, nameof(openAIPurpose));
+            Argument.AssertNotNull(dataUri, nameof(dataUri));
 
             Type = DatasetType.UriFile;
-            OpenAIPurpose = openAIPurpose;
         }
 
         /// <summary> Initializes a new instance of <see cref="FileDatasetVersion"/>. </summary>
-        /// <param name="datasetUri"> [Required] Uri of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
+        /// <param name="dataUri"> URI of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
         /// <param name="type"> Dataset type. </param>
         /// <param name="isReference"> Indicates if dataset is reference only or managed by dataset service. If true, the underlying data will be deleted when the dataset version is deleted. </param>
-        /// <param name="stage"> Asset stage. </param>
-        /// <param name="id"> A unique identifier for the asset, assetId probably?. </param>
+        /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="openAIPurpose"> Indicates OpenAI Purpose. FileDatasets created with this field will be compatible with OpenAI-specific features. </param>
-        internal FileDatasetVersion(string datasetUri, DatasetType type, bool? isReference, string stage, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string openAIPurpose) : base(datasetUri, type, isReference, stage, id, name, version, description, tags, serializedAdditionalRawData)
+        internal FileDatasetVersion(string dataUri, DatasetType type, bool? isReference, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(dataUri, type, isReference, id, name, version, description, tags, serializedAdditionalRawData)
         {
-            OpenAIPurpose = openAIPurpose;
         }
 
         /// <summary> Initializes a new instance of <see cref="FileDatasetVersion"/> for deserialization. </summary>
         internal FileDatasetVersion()
         {
         }
-
-        /// <summary> Indicates OpenAI Purpose. FileDatasets created with this field will be compatible with OpenAI-specific features. </summary>
-        public string OpenAIPurpose { get; set; }
     }
 }

@@ -35,6 +35,17 @@ namespace Azure.AI.Projects
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("keys"u8);
+                writer.WriteStartObject();
+                foreach (var item in Keys)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
         }
 
         CustomCredential IJsonModel<CustomCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -57,14 +68,25 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            CredentialType authType = default;
+            IReadOnlyDictionary<string, string> keys = default;
+            CredentialType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("authType"u8))
+                if (property.NameEquals("keys"u8))
                 {
-                    authType = new CredentialType(property.Value.GetString());
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    keys = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new CredentialType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -73,7 +95,7 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CustomCredential(authType, serializedAdditionalRawData);
+            return new CustomCredential(type, serializedAdditionalRawData, keys);
         }
 
         BinaryData IPersistableModel<CustomCredential>.Write(ModelReaderWriterOptions options)

@@ -35,8 +35,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBIndex"/>. </summary>
         /// <param name="type"> Type of index. </param>
-        /// <param name="stage"> Asset stage. </param>
-        /// <param name="id"> A unique identifier for the asset, assetId probably?. </param>
+        /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
@@ -46,7 +45,7 @@ namespace Azure.AI.Projects
         /// <param name="databaseName"> Name of the CosmosDB Database. </param>
         /// <param name="containerName"> Name of CosmosDB Container. </param>
         /// <param name="embeddingConfiguration"> Embedding model configuration. </param>
-        internal CosmosDBIndex(IndexType type, string stage, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string connectionName, string databaseName, string containerName, EmbeddingConfiguration embeddingConfiguration) : base(type, stage, id, name, version, description, tags, serializedAdditionalRawData)
+        internal CosmosDBIndex(IndexType type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string connectionName, string databaseName, string containerName, EmbeddingConfiguration embeddingConfiguration) : base(type, id, name, version, description, tags, serializedAdditionalRawData)
         {
             ConnectionName = connectionName;
             DatabaseName = databaseName;

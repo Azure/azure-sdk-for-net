@@ -16,14 +16,14 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="SASCredentials"/>. </summary>
         internal SASCredentials()
         {
-            AuthType = CredentialType.SAS;
+            Type = CredentialType.SAS;
         }
 
         /// <summary> Initializes a new instance of <see cref="SASCredentials"/>. </summary>
-        /// <param name="authType"> The type of credential used by the connection. </param>
+        /// <param name="type"> The type of credential used by the connection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sasToken"> SAS token. </param>
-        internal SASCredentials(CredentialType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, string sasToken) : base(authType, serializedAdditionalRawData)
+        internal SASCredentials(CredentialType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string sasToken) : base(type, serializedAdditionalRawData)
         {
             SasToken = sasToken;
         }

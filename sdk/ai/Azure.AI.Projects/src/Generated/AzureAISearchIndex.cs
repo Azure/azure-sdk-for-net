@@ -29,8 +29,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="AzureAISearchIndex"/>. </summary>
         /// <param name="type"> Type of index. </param>
-        /// <param name="stage"> Asset stage. </param>
-        /// <param name="id"> A unique identifier for the asset, assetId probably?. </param>
+        /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
@@ -38,7 +37,7 @@ namespace Azure.AI.Projects
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="connectionName"> Name of connection to Azure AI Search. </param>
         /// <param name="indexName"> Name of index in Azure AI Search resource to attach. </param>
-        internal AzureAISearchIndex(IndexType type, string stage, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string connectionName, string indexName) : base(type, stage, id, name, version, description, tags, serializedAdditionalRawData)
+        internal AzureAISearchIndex(IndexType type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string connectionName, string indexName) : base(type, id, name, version, description, tags, serializedAdditionalRawData)
         {
             ConnectionName = connectionName;
             IndexName = indexName;

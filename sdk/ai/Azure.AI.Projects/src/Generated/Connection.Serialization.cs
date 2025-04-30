@@ -7,12 +7,12 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    [PersistableModelProxy(typeof(UnknownConnection))]
     public partial class Connection : IUtf8JsonSerializable, IJsonModel<Connection>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Connection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -34,8 +34,6 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(Connection)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("authType"u8);
-            writer.WriteStringValue(AuthType);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("name"u8);
@@ -109,7 +107,65 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            return UnknownConnection.DeserializeUnknownConnection(element, options);
+            string name = default;
+            ConnectionType type = default;
+            string target = default;
+            bool isDefault = default;
+            BaseCredentials credentials = default;
+            IReadOnlyDictionary<string, string> metadata = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ConnectionType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("target"u8))
+                {
+                    target = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("isDefault"u8))
+                {
+                    isDefault = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("credentials"u8))
+                {
+                    credentials = BaseCredentials.DeserializeBaseCredentials(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("metadata"u8))
+                {
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    metadata = dictionary;
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new Connection(
+                name,
+                type,
+                target,
+                isDefault,
+                credentials,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Connection>.Write(ModelReaderWriterOptions options)

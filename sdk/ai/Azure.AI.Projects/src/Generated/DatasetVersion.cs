@@ -50,33 +50,31 @@ namespace Azure.AI.Projects
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DatasetVersion"/>. </summary>
-        /// <param name="datasetUri"> [Required] Uri of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="datasetUri"/> is null. </exception>
-        protected DatasetVersion(string datasetUri)
+        /// <param name="dataUri"> URI of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
+        protected DatasetVersion(string dataUri)
         {
-            Argument.AssertNotNull(datasetUri, nameof(datasetUri));
+            Argument.AssertNotNull(dataUri, nameof(dataUri));
 
-            DatasetUri = datasetUri;
+            DataUri = dataUri;
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DatasetVersion"/>. </summary>
-        /// <param name="datasetUri"> [Required] Uri of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
+        /// <param name="dataUri"> URI of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
         /// <param name="type"> Dataset type. </param>
         /// <param name="isReference"> Indicates if dataset is reference only or managed by dataset service. If true, the underlying data will be deleted when the dataset version is deleted. </param>
-        /// <param name="stage"> Asset stage. </param>
-        /// <param name="id"> A unique identifier for the asset, assetId probably?. </param>
+        /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatasetVersion(string datasetUri, DatasetType type, bool? isReference, string stage, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DatasetVersion(string dataUri, DatasetType type, bool? isReference, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            DatasetUri = datasetUri;
+            DataUri = dataUri;
             Type = type;
             IsReference = isReference;
-            Stage = stage;
             Id = id;
             Name = name;
             Version = version;
@@ -90,15 +88,13 @@ namespace Azure.AI.Projects
         {
         }
 
-        /// <summary> [Required] Uri of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </summary>
-        public string DatasetUri { get; set; }
+        /// <summary> URI of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </summary>
+        public string DataUri { get; set; }
         /// <summary> Dataset type. </summary>
         internal DatasetType Type { get; set; }
         /// <summary> Indicates if dataset is reference only or managed by dataset service. If true, the underlying data will be deleted when the dataset version is deleted. </summary>
         public bool? IsReference { get; }
-        /// <summary> Asset stage. </summary>
-        public string Stage { get; set; }
-        /// <summary> A unique identifier for the asset, assetId probably?. </summary>
+        /// <summary> Asset ID, a unique identifier for the asset. </summary>
         public string Id { get; }
         /// <summary> The name of the resource. </summary>
         public string Name { get; }

@@ -51,11 +51,17 @@ namespace Azure.AI.Projects
         /// <param name="attackStrategies"> List of attack strategies or nested lists of attack strategies. </param>
         /// <param name="simulationOnly"> Simulation-only or Simulation + Evaluation. Default false, if true the scan outputs conversation not evaluation result. </param>
         /// <param name="riskCategories"> List of risk categories to generate attack objectives for. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="attackStrategies"/> or <paramref name="riskCategories"/> is null. </exception>
-        public RedTeam(int numTurns, IEnumerable<AttackStrategy> attackStrategies, bool simulationOnly, IEnumerable<RiskCategory> riskCategories)
+        /// <param name="targetConfig">
+        /// Target configuration for the red-team run.
+        /// Please note <see cref="Projects.TargetConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureOpenAIModelConfiguration"/>.
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="attackStrategies"/>, <paramref name="riskCategories"/> or <paramref name="targetConfig"/> is null. </exception>
+        public RedTeam(int numTurns, IEnumerable<AttackStrategy> attackStrategies, bool simulationOnly, IEnumerable<RiskCategory> riskCategories, TargetConfig targetConfig)
         {
             Argument.AssertNotNull(attackStrategies, nameof(attackStrategies));
             Argument.AssertNotNull(riskCategories, nameof(riskCategories));
+            Argument.AssertNotNull(targetConfig, nameof(targetConfig));
 
             NumTurns = numTurns;
             AttackStrategies = attackStrategies.ToList();
@@ -63,6 +69,7 @@ namespace Azure.AI.Projects
             RiskCategories = riskCategories.ToList();
             Tags = new ChangeTrackingDictionary<string, string>();
             Properties = new ChangeTrackingDictionary<string, string>();
+            TargetConfig = targetConfig;
         }
 
         /// <summary> Initializes a new instance of <see cref="RedTeam"/>. </summary>
@@ -76,8 +83,13 @@ namespace Azure.AI.Projects
         /// <param name="tags"> Red team's tags. Unlike properties, tags are fully mutable. </param>
         /// <param name="properties"> Red team's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </param>
         /// <param name="status"> Status of the red-team. It is set by service and is read-only. </param>
+        /// <param name="targetConfig">
+        /// Target configuration for the red-team run.
+        /// Please note <see cref="Projects.TargetConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureOpenAIModelConfiguration"/>.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedTeam(string id, string scanName, int numTurns, IList<AttackStrategy> attackStrategies, bool simulationOnly, IList<RiskCategory> riskCategories, string applicationScenario, IDictionary<string, string> tags, IDictionary<string, string> properties, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedTeam(string id, string scanName, int numTurns, IList<AttackStrategy> attackStrategies, bool simulationOnly, IList<RiskCategory> riskCategories, string applicationScenario, IDictionary<string, string> tags, IDictionary<string, string> properties, string status, TargetConfig targetConfig, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ScanName = scanName;
@@ -89,6 +101,7 @@ namespace Azure.AI.Projects
             Tags = tags;
             Properties = properties;
             Status = status;
+            TargetConfig = targetConfig;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -117,5 +130,11 @@ namespace Azure.AI.Projects
         public IDictionary<string, string> Properties { get; }
         /// <summary> Status of the red-team. It is set by service and is read-only. </summary>
         public string Status { get; }
+        /// <summary>
+        /// Target configuration for the red-team run.
+        /// Please note <see cref="Projects.TargetConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureOpenAIModelConfiguration"/>.
+        /// </summary>
+        public TargetConfig TargetConfig { get; set; }
     }
 }

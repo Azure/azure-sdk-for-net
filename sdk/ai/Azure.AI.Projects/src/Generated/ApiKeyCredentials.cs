@@ -16,14 +16,14 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="ApiKeyCredentials"/>. </summary>
         internal ApiKeyCredentials()
         {
-            AuthType = CredentialType.ApiKey;
+            Type = CredentialType.ApiKey;
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiKeyCredentials"/>. </summary>
-        /// <param name="authType"> The type of credential used by the connection. </param>
+        /// <param name="type"> The type of credential used by the connection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="apiKey"> API Key. </param>
-        internal ApiKeyCredentials(CredentialType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, string apiKey) : base(authType, serializedAdditionalRawData)
+        internal ApiKeyCredentials(CredentialType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string apiKey) : base(type, serializedAdditionalRawData)
         {
             ApiKey = apiKey;
         }

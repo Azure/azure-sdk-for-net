@@ -37,7 +37,7 @@ namespace Azure.AI.Projects
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("data"u8);
             writer.WriteObjectValue(Data, options);

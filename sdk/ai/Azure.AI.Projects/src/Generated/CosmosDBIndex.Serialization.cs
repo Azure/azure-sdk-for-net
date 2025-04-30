@@ -70,7 +70,6 @@ namespace Azure.AI.Projects
             string containerName = default;
             EmbeddingConfiguration embeddingConfiguration = default;
             IndexType type = default;
-            string stage = default;
             string id = default;
             string name = default;
             string version = default;
@@ -103,11 +102,6 @@ namespace Azure.AI.Projects
                 if (property.NameEquals("type"u8))
                 {
                     type = new IndexType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("stage"u8))
-                {
-                    stage = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -152,7 +146,6 @@ namespace Azure.AI.Projects
             serializedAdditionalRawData = rawDataDictionary;
             return new CosmosDBIndex(
                 type,
-                stage,
                 id,
                 name,
                 version,

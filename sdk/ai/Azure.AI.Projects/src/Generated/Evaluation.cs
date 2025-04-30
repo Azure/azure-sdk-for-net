@@ -65,7 +65,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of <see cref="Evaluation"/>. </summary>
-        /// <param name="id"> Identifier of the evaluation. </param>
+        /// <param name="name"> Identifier of the evaluation. </param>
         /// <param name="data">
         /// Data for evaluation.
         /// Please note <see cref="InputData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -78,9 +78,9 @@ namespace Azure.AI.Projects
         /// <param name="properties"> Evaluation's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </param>
         /// <param name="evaluators"> Evaluators to be used for the evaluation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Evaluation(string id, InputData data, string displayName, string description, string status, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, EvaluatorConfiguration> evaluators, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Evaluation(string name, InputData data, string displayName, string description, string status, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, EvaluatorConfiguration> evaluators, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
+            Name = name;
             Data = data;
             DisplayName = displayName;
             Description = description;
@@ -97,7 +97,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Identifier of the evaluation. </summary>
-        public string Id { get; }
+        public string Name { get; }
         /// <summary>
         /// Data for evaluation.
         /// Please note <see cref="InputData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

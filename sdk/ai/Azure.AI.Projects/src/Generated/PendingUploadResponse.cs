@@ -46,29 +46,29 @@ namespace Azure.AI.Projects
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PendingUploadResponse"/>. </summary>
-        /// <param name="blobReferenceForConsumption"> Container-level read, write, list SAS. </param>
+        /// <param name="blobReference"> Container-level read, write, list SAS. </param>
         /// <param name="pendingUploadId"> ID for this upload request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blobReferenceForConsumption"/> or <paramref name="pendingUploadId"/> is null. </exception>
-        internal PendingUploadResponse(BlobReferenceForConsumption blobReferenceForConsumption, string pendingUploadId)
+        /// <exception cref="ArgumentNullException"> <paramref name="blobReference"/> or <paramref name="pendingUploadId"/> is null. </exception>
+        internal PendingUploadResponse(BlobReference blobReference, string pendingUploadId)
         {
-            Argument.AssertNotNull(blobReferenceForConsumption, nameof(blobReferenceForConsumption));
+            Argument.AssertNotNull(blobReference, nameof(blobReference));
             Argument.AssertNotNull(pendingUploadId, nameof(pendingUploadId));
 
-            BlobReferenceForConsumption = blobReferenceForConsumption;
+            BlobReference = blobReference;
             PendingUploadId = pendingUploadId;
         }
 
         /// <summary> Initializes a new instance of <see cref="PendingUploadResponse"/>. </summary>
-        /// <param name="blobReferenceForConsumption"> Container-level read, write, list SAS. </param>
+        /// <param name="blobReference"> Container-level read, write, list SAS. </param>
         /// <param name="pendingUploadId"> ID for this upload request. </param>
-        /// <param name="datasetVersion"> Version of dataset to be created if user did not specify version when initially creating upload. </param>
-        /// <param name="pendingUploadType"> TemporaryBlobReference is the only supported type. </param>
+        /// <param name="version"> Version of asset to be created if user did not specify version when initially creating upload. </param>
+        /// <param name="pendingUploadType"> BlobReference is the only supported type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PendingUploadResponse(BlobReferenceForConsumption blobReferenceForConsumption, string pendingUploadId, string datasetVersion, PendingUploadType pendingUploadType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PendingUploadResponse(BlobReference blobReference, string pendingUploadId, string version, PendingUploadType pendingUploadType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            BlobReferenceForConsumption = blobReferenceForConsumption;
+            BlobReference = blobReference;
             PendingUploadId = pendingUploadId;
-            DatasetVersion = datasetVersion;
+            Version = version;
             PendingUploadType = pendingUploadType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -79,12 +79,12 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Container-level read, write, list SAS. </summary>
-        public BlobReferenceForConsumption BlobReferenceForConsumption { get; }
+        public BlobReference BlobReference { get; }
         /// <summary> ID for this upload request. </summary>
         public string PendingUploadId { get; }
-        /// <summary> Version of dataset to be created if user did not specify version when initially creating upload. </summary>
-        public string DatasetVersion { get; }
-        /// <summary> TemporaryBlobReference is the only supported type. </summary>
-        public PendingUploadType PendingUploadType { get; } = PendingUploadType.TemporaryBlobReference;
+        /// <summary> Version of asset to be created if user did not specify version when initially creating upload. </summary>
+        public string Version { get; }
+        /// <summary> BlobReference is the only supported type. </summary>
+        public PendingUploadType PendingUploadType { get; } = PendingUploadType.BlobReference;
     }
 }

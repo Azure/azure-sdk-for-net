@@ -10,20 +10,26 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Custom credential defintion. </summary>
+    /// <summary> Custom credential definition. </summary>
     public partial class CustomCredential : BaseCredentials
     {
         /// <summary> Initializes a new instance of <see cref="CustomCredential"/>. </summary>
         internal CustomCredential()
         {
-            AuthType = CredentialType.Custom;
+            Type = CredentialType.Custom;
+            Keys = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomCredential"/>. </summary>
-        /// <param name="authType"> The type of credential used by the connection. </param>
+        /// <param name="type"> The type of credential used by the connection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomCredential(CredentialType authType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(authType, serializedAdditionalRawData)
+        /// <param name="keys"> The credential type. </param>
+        internal CustomCredential(CredentialType type, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, string> keys) : base(type, serializedAdditionalRawData)
         {
+            Keys = keys;
         }
+
+        /// <summary> The credential type. </summary>
+        public IReadOnlyDictionary<string, string> Keys { get; }
     }
 }

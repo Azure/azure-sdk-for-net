@@ -34,14 +34,14 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(PendingUploadResponse)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("blobReferenceForConsumption"u8);
-            writer.WriteObjectValue(BlobReferenceForConsumption, options);
+            writer.WritePropertyName("blobReference"u8);
+            writer.WriteObjectValue(BlobReference, options);
             writer.WritePropertyName("pendingUploadId"u8);
             writer.WriteStringValue(PendingUploadId);
-            if (Optional.IsDefined(DatasetVersion))
+            if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("datasetVersion"u8);
-                writer.WriteStringValue(DatasetVersion);
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
             }
             writer.WritePropertyName("pendingUploadType"u8);
             writer.WriteStringValue(PendingUploadType.ToString());
@@ -82,17 +82,17 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            BlobReferenceForConsumption blobReferenceForConsumption = default;
+            BlobReference blobReference = default;
             string pendingUploadId = default;
-            string datasetVersion = default;
+            string version = default;
             PendingUploadType pendingUploadType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("blobReferenceForConsumption"u8))
+                if (property.NameEquals("blobReference"u8))
                 {
-                    blobReferenceForConsumption = BlobReferenceForConsumption.DeserializeBlobReferenceForConsumption(property.Value, options);
+                    blobReference = BlobReference.DeserializeBlobReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("pendingUploadId"u8))
@@ -100,9 +100,9 @@ namespace Azure.AI.Projects
                     pendingUploadId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("datasetVersion"u8))
+                if (property.NameEquals("version"u8))
                 {
-                    datasetVersion = property.Value.GetString();
+                    version = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("pendingUploadType"u8))
@@ -116,7 +116,7 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PendingUploadResponse(blobReferenceForConsumption, pendingUploadId, datasetVersion, pendingUploadType, serializedAdditionalRawData);
+            return new PendingUploadResponse(blobReference, pendingUploadId, version, pendingUploadType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PendingUploadResponse>.Write(ModelReaderWriterOptions options)

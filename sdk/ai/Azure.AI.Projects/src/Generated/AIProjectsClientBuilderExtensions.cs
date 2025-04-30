@@ -6,30 +6,14 @@
 #nullable disable
 
 using System;
-using Azure;
 using Azure.AI.Projects;
 using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="AIProjectClient"/> to client builder. </summary>
-    public static partial class AIProjectsOneDPClientBuilderExtensions
+    public static partial class AIProjectsClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="AIProjectClient"/> instance. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint">
-        /// Project endpoint. In the form "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/_project"
-        /// if your Foundry Hub has only one Project, or to use the default Project in your Hub. Or in the form
-        /// "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/&lt;your-project-name&gt;" if you want to explicitly
-        /// specify the Foundry Project name.
-        /// </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        public static IAzureClientBuilder<AIProjectClient, AIProjectClientOptions> AddAIProjectClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
-        where TBuilder : IAzureClientFactoryBuilder
-        {
-            return builder.RegisterClientFactory<AIProjectClient, AIProjectClientOptions>((options) => new AIProjectClient(endpoint, credential, options));
-        }
-
         /// <summary> Registers a <see cref="AIProjectClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint">

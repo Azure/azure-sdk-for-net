@@ -57,14 +57,14 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            CredentialType authType = default;
+            CredentialType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("authType"u8))
+                if (property.NameEquals("type"u8))
                 {
-                    authType = new CredentialType(property.Value.GetString());
+                    type = new CredentialType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -73,7 +73,7 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NoAuthenticationCredentials(authType, serializedAdditionalRawData);
+            return new NoAuthenticationCredentials(type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NoAuthenticationCredentials>.Write(ModelReaderWriterOptions options)

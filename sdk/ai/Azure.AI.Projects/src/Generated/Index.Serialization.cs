@@ -36,11 +36,6 @@ namespace Azure.AI.Projects
 
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Optional.IsDefined(Stage))
-            {
-                writer.WritePropertyName("stage"u8);
-                writer.WriteStringValue(Stage);
-            }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);

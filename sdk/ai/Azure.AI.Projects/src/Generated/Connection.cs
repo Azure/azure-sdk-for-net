@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Response from the list and get connections operations. </summary>
-    public abstract partial class Connection
+    public partial class Connection
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -43,16 +43,15 @@ namespace Azure.AI.Projects
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="Connection"/>. </summary>
-        protected Connection()
+        internal Connection()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="Connection"/>. </summary>
-        /// <param name="authType"> Discriminator property for Connection. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> Category of the connection. </param>
         /// <param name="target"> The connection URL to be used for this service. </param>
@@ -64,9 +63,8 @@ namespace Azure.AI.Projects
         /// </param>
         /// <param name="metadata"> Metadata of the connection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Connection(string authType, string name, ConnectionType type, string target, bool isDefault, BaseCredentials credentials, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Connection(string name, ConnectionType type, string target, bool isDefault, BaseCredentials credentials, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AuthType = authType;
             Name = name;
             Type = type;
             Target = target;
@@ -76,8 +74,6 @@ namespace Azure.AI.Projects
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Discriminator property for Connection. </summary>
-        internal string AuthType { get; set; }
         /// <summary> The name of the resource. </summary>
         public string Name { get; }
         /// <summary> Category of the connection. </summary>

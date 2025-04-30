@@ -58,7 +58,6 @@ namespace Azure.AI.Projects
                 return null;
             }
             IndexType type = "Unknown";
-            string stage = default;
             string id = default;
             string name = default;
             string version = default;
@@ -71,11 +70,6 @@ namespace Azure.AI.Projects
                 if (property.NameEquals("type"u8))
                 {
                     type = new IndexType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("stage"u8))
-                {
-                    stage = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -120,7 +114,6 @@ namespace Azure.AI.Projects
             serializedAdditionalRawData = rawDataDictionary;
             return new UnknownIndex(
                 type,
-                stage,
                 id,
                 name,
                 version,

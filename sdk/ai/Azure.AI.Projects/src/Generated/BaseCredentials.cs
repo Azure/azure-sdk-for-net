@@ -55,15 +55,15 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of <see cref="BaseCredentials"/>. </summary>
-        /// <param name="authType"> The type of credential used by the connection. </param>
+        /// <param name="type"> The type of credential used by the connection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BaseCredentials(CredentialType authType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BaseCredentials(CredentialType type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AuthType = authType;
+            Type = type;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of credential used by the connection. </summary>
-        internal CredentialType AuthType { get; set; }
+        internal CredentialType Type { get; set; }
     }
 }

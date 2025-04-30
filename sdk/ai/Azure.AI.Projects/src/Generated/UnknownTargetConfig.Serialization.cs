@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class UnknownBaseCredentials : IUtf8JsonSerializable, IJsonModel<BaseCredentials>
+    internal partial class UnknownTargetConfig : IUtf8JsonSerializable, IJsonModel<TargetConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BaseCredentials>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TargetConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<BaseCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TargetConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,28 +28,28 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BaseCredentials>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TargetConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BaseCredentials)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetConfig)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
         }
 
-        BaseCredentials IJsonModel<BaseCredentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TargetConfig IJsonModel<TargetConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BaseCredentials>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TargetConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BaseCredentials)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBaseCredentials(document.RootElement, options);
+            return DeserializeTargetConfig(document.RootElement, options);
         }
 
-        internal static UnknownBaseCredentials DeserializeUnknownBaseCredentials(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownTargetConfig DeserializeUnknownTargetConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -57,14 +57,14 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            CredentialType type = "Unknown";
+            string type = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new CredentialType(property.Value.GetString());
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -73,53 +73,53 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownBaseCredentials(type, serializedAdditionalRawData);
+            return new UnknownTargetConfig(type, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<BaseCredentials>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TargetConfig>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BaseCredentials>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TargetConfig>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BaseCredentials)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
-        BaseCredentials IPersistableModel<BaseCredentials>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TargetConfig IPersistableModel<TargetConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BaseCredentials>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TargetConfig>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBaseCredentials(document.RootElement, options);
+                        return DeserializeTargetConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BaseCredentials)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BaseCredentials>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TargetConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new UnknownBaseCredentials FromResponse(Response response)
+        internal static new UnknownTargetConfig FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeUnknownBaseCredentials(document.RootElement);
+            return DeserializeUnknownTargetConfig(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BaseCredentials>(this, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue<TargetConfig>(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

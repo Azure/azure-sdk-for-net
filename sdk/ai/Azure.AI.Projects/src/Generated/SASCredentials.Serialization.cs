@@ -37,7 +37,7 @@ namespace Azure.AI.Projects
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(SasToken))
             {
-                writer.WritePropertyName("sasToken"u8);
+                writer.WritePropertyName("SAS"u8);
                 writer.WriteStringValue(SasToken);
             }
         }
@@ -62,20 +62,20 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            string sasToken = default;
-            CredentialType authType = default;
+            string sas = default;
+            CredentialType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sasToken"u8))
+                if (property.NameEquals("SAS"u8))
                 {
-                    sasToken = property.Value.GetString();
+                    sas = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authType"u8))
+                if (property.NameEquals("type"u8))
                 {
-                    authType = new CredentialType(property.Value.GetString());
+                    type = new CredentialType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -84,7 +84,7 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SASCredentials(authType, serializedAdditionalRawData, sasToken);
+            return new SASCredentials(type, serializedAdditionalRawData, sas);
         }
 
         BinaryData IPersistableModel<SASCredentials>.Write(ModelReaderWriterOptions options)

@@ -14,9 +14,9 @@ namespace Azure.AI.Projects
     internal partial class UnknownBaseCredentials : BaseCredentials
     {
         /// <summary> Initializes a new instance of <see cref="UnknownBaseCredentials"/>. </summary>
-        /// <param name="authType"> The type of credential used by the connection. </param>
+        /// <param name="type"> The type of credential used by the connection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownBaseCredentials(CredentialType authType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(authType, serializedAdditionalRawData)
+        internal UnknownBaseCredentials(CredentialType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
         {
         }
 

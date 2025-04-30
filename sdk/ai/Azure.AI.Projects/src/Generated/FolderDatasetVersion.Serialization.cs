@@ -57,10 +57,9 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            string datasetUri = default;
+            string dataUri = default;
             DatasetType type = default;
             bool? isReference = default;
-            string stage = default;
             string id = default;
             string name = default;
             string version = default;
@@ -70,9 +69,9 @@ namespace Azure.AI.Projects
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("datasetUri"u8))
+                if (property.NameEquals("dataUri"u8))
                 {
-                    datasetUri = property.Value.GetString();
+                    dataUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -87,11 +86,6 @@ namespace Azure.AI.Projects
                         continue;
                     }
                     isReference = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("stage"u8))
-                {
-                    stage = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -135,10 +129,9 @@ namespace Azure.AI.Projects
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new FolderDatasetVersion(
-                datasetUri,
+                dataUri,
                 type,
                 isReference,
-                stage,
                 id,
                 name,
                 version,

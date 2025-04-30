@@ -34,8 +34,8 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(AssetCredentialResponse)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("blobReferenceForConsumption"u8);
-            writer.WriteObjectValue(BlobReferenceForConsumption, options);
+            writer.WritePropertyName("blobReference"u8);
+            writer.WriteObjectValue(BlobReference, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -73,14 +73,14 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            BlobReferenceForConsumption blobReferenceForConsumption = default;
+            BlobReference blobReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("blobReferenceForConsumption"u8))
+                if (property.NameEquals("blobReference"u8))
                 {
-                    blobReferenceForConsumption = BlobReferenceForConsumption.DeserializeBlobReferenceForConsumption(property.Value, options);
+                    blobReference = BlobReference.DeserializeBlobReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AssetCredentialResponse(blobReferenceForConsumption, serializedAdditionalRawData);
+            return new AssetCredentialResponse(blobReference, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssetCredentialResponse>.Write(ModelReaderWriterOptions options)

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    public partial class BlobReferenceForConsumption : IUtf8JsonSerializable, IJsonModel<BlobReferenceForConsumption>
+    public partial class BlobReference : IUtf8JsonSerializable, IJsonModel<BlobReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobReferenceForConsumption>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<BlobReferenceForConsumption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BlobReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BlobReferenceForConsumption>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BlobReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlobReferenceForConsumption)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobReference)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("blobUri"u8);
@@ -57,19 +57,19 @@ namespace Azure.AI.Projects
             }
         }
 
-        BlobReferenceForConsumption IJsonModel<BlobReferenceForConsumption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BlobReference IJsonModel<BlobReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BlobReferenceForConsumption>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BlobReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlobReferenceForConsumption)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBlobReferenceForConsumption(document.RootElement, options);
+            return DeserializeBlobReference(document.RootElement, options);
         }
 
-        internal static BlobReferenceForConsumption DeserializeBlobReferenceForConsumption(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BlobReference DeserializeBlobReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -105,46 +105,46 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BlobReferenceForConsumption(blobUri, storageAccountArmId, credential, serializedAdditionalRawData);
+            return new BlobReference(blobUri, storageAccountArmId, credential, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<BlobReferenceForConsumption>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BlobReference>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BlobReferenceForConsumption>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BlobReference>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BlobReferenceForConsumption)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobReference)} does not support writing '{options.Format}' format.");
             }
         }
 
-        BlobReferenceForConsumption IPersistableModel<BlobReferenceForConsumption>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BlobReference IPersistableModel<BlobReference>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BlobReferenceForConsumption>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BlobReference>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBlobReferenceForConsumption(document.RootElement, options);
+                        return DeserializeBlobReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BlobReferenceForConsumption)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobReference)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BlobReferenceForConsumption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BlobReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static BlobReferenceForConsumption FromResponse(Response response)
+        internal static BlobReference FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBlobReferenceForConsumption(document.RootElement);
+            return DeserializeBlobReference(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

@@ -16,13 +16,13 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="EntraIDCredentials"/>. </summary>
         internal EntraIDCredentials()
         {
-            AuthType = CredentialType.EntraId;
+            Type = CredentialType.EntraId;
         }
 
         /// <summary> Initializes a new instance of <see cref="EntraIDCredentials"/>. </summary>
-        /// <param name="authType"> The type of credential used by the connection. </param>
+        /// <param name="type"> The type of credential used by the connection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EntraIDCredentials(CredentialType authType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(authType, serializedAdditionalRawData)
+        internal EntraIDCredentials(CredentialType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
         {
         }
     }

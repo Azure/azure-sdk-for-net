@@ -18,9 +18,6 @@ namespace Azure.AI.Projects
     /// <summary> The Evaluations sub-client. </summary>
     public partial class Evaluations
     {
-        private const string AuthorizationHeader = "Authorization";
-        private readonly AzureKeyCredential _keyCredential;
-        private const string AuthorizationApiKeyPrefix = "Bearer";
         private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
@@ -41,7 +38,6 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of Evaluations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint">
         /// Project endpoint. In the form "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/_project"
@@ -50,11 +46,10 @@ namespace Azure.AI.Projects
         /// specify the Foundry Project name.
         /// </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal Evaluations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal Evaluations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
-            _keyCredential = keyCredential;
             _tokenCredential = tokenCredential;
             _endpoint = endpoint;
             _apiVersion = apiVersion;
@@ -65,6 +60,7 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluationAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<Evaluation>> GetEvaluationAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -79,6 +75,7 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluation(string,CancellationToken)']/*" />
         public virtual Response<Evaluation> GetEvaluation(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -109,6 +106,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluationAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetEvaluationAsync(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -148,6 +146,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluation(string,RequestContext)']/*" />
         public virtual Response GetEvaluation(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -170,6 +169,7 @@ namespace Azure.AI.Projects
         /// <param name="evaluation"> Evaluation to be run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluation"/> is null. </exception>
+        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateRunAsync(Evaluation,CancellationToken)']/*" />
         public virtual async Task<Response<Evaluation>> CreateRunAsync(Evaluation evaluation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(evaluation, nameof(evaluation));
@@ -184,6 +184,7 @@ namespace Azure.AI.Projects
         /// <param name="evaluation"> Evaluation to be run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluation"/> is null. </exception>
+        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateRun(Evaluation,CancellationToken)']/*" />
         public virtual Response<Evaluation> CreateRun(Evaluation evaluation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(evaluation, nameof(evaluation));
@@ -214,6 +215,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateRunAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateRunAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -252,6 +254,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateRun(RequestContent,RequestContext)']/*" />
         public virtual Response CreateRun(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -270,11 +273,120 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <summary> Creates an agent evaluation run. </summary>
+        /// <param name="evaluation"> Agent evaluation to be run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="evaluation"/> is null. </exception>
+        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateAgentEvaluationAsync(AgentEvaluationRequest,CancellationToken)']/*" />
+        public virtual async Task<Response<AgentEvaluation>> CreateAgentEvaluationAsync(AgentEvaluationRequest evaluation, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(evaluation, nameof(evaluation));
+
+            using RequestContent content = evaluation.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await CreateAgentEvaluationAsync(content, context).ConfigureAwait(false);
+            return Response.FromValue(AgentEvaluation.FromResponse(response), response);
+        }
+
+        /// <summary> Creates an agent evaluation run. </summary>
+        /// <param name="evaluation"> Agent evaluation to be run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="evaluation"/> is null. </exception>
+        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateAgentEvaluation(AgentEvaluationRequest,CancellationToken)']/*" />
+        public virtual Response<AgentEvaluation> CreateAgentEvaluation(AgentEvaluationRequest evaluation, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(evaluation, nameof(evaluation));
+
+            using RequestContent content = evaluation.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = CreateAgentEvaluation(content, context);
+            return Response.FromValue(AgentEvaluation.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates an agent evaluation run.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateAgentEvaluationAsync(AgentEvaluationRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateAgentEvaluationAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateAgentEvaluationAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Evaluations.CreateAgentEvaluation");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateAgentEvaluationRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates an agent evaluation run.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateAgentEvaluation(AgentEvaluationRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateAgentEvaluation(RequestContent,RequestContext)']/*" />
+        public virtual Response CreateAgentEvaluation(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Evaluations.CreateAgentEvaluation");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateAgentEvaluationRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> List evaluation runs. </summary>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluationsAsync(int?,int?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<Evaluation> GetEvaluationsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -288,6 +400,7 @@ namespace Azure.AI.Projects
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluations(int?,int?,int?,CancellationToken)']/*" />
         public virtual Pageable<Evaluation> GetEvaluations(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -317,6 +430,7 @@ namespace Azure.AI.Projects
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluationsAsync(int?,int?,int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetEvaluationsAsync(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEvaluationsRequest(maxCount, skip, pageSizeHint, context);
@@ -345,6 +459,7 @@ namespace Azure.AI.Projects
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluations(int?,int?,int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetEvaluations(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEvaluationsRequest(maxCount, skip, pageSizeHint, context);
@@ -401,6 +516,22 @@ namespace Azure.AI.Projects
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/evaluations/runs:run", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateCreateAgentEvaluationRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier201);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/evaluations/runs:runAgent", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

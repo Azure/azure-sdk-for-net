@@ -16,9 +16,6 @@ namespace Azure.AI.Projects
     /// <summary> The ServicePatterns sub-client. </summary>
     public partial class ServicePatterns
     {
-        private const string AuthorizationHeader = "Authorization";
-        private readonly AzureKeyCredential _keyCredential;
-        private const string AuthorizationApiKeyPrefix = "Bearer";
         private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
@@ -38,7 +35,6 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of ServicePatterns. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint">
         /// Project endpoint. In the form "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/_project"
@@ -46,11 +42,10 @@ namespace Azure.AI.Projects
         /// "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/&lt;your-project-name&gt;" if you want to explicitly
         /// specify the Foundry Project name.
         /// </param>
-        internal ServicePatterns(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint)
+        internal ServicePatterns(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
-            _keyCredential = keyCredential;
             _tokenCredential = tokenCredential;
             _endpoint = endpoint;
         }
@@ -60,7 +55,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of ServicePatternsBuildingBlocks. </summary>
         public virtual ServicePatternsBuildingBlocks GetServicePatternsBuildingBlocksClient()
         {
-            return Volatile.Read(ref _cachedServicePatternsBuildingBlocks) ?? Interlocked.CompareExchange(ref _cachedServicePatternsBuildingBlocks, new ServicePatternsBuildingBlocks(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint), null) ?? _cachedServicePatternsBuildingBlocks;
+            return Volatile.Read(ref _cachedServicePatternsBuildingBlocks) ?? Interlocked.CompareExchange(ref _cachedServicePatternsBuildingBlocks, new ServicePatternsBuildingBlocks(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint), null) ?? _cachedServicePatternsBuildingBlocks;
         }
     }
 }

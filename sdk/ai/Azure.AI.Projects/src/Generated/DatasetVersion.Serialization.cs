@@ -34,19 +34,14 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(DatasetVersion)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("datasetUri"u8);
-            writer.WriteStringValue(DatasetUri);
+            writer.WritePropertyName("dataUri"u8);
+            writer.WriteStringValue(DataUri);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             if (options.Format != "W" && Optional.IsDefined(IsReference))
             {
                 writer.WritePropertyName("isReference"u8);
                 writer.WriteBooleanValue(IsReference.Value);
-            }
-            if (Optional.IsDefined(Stage))
-            {
-                writer.WritePropertyName("stage"u8);
-                writer.WriteStringValue(Stage);
             }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {

@@ -10,8 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Represents a reference to a blob for consumption. </summary>
-    public partial class AssetCredentialResponse
+    /// <summary>
+    /// Abstract class for target configuration.
+    /// Please note <see cref="TargetConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AzureOpenAIModelConfiguration"/>.
+    /// </summary>
+    public abstract partial class TargetConfig
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -43,33 +47,23 @@ namespace Azure.AI.Projects
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AssetCredentialResponse"/>. </summary>
-        /// <param name="blobReference"> Credential info to access the storage account. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blobReference"/> is null. </exception>
-        internal AssetCredentialResponse(BlobReference blobReference)
+        /// <summary> Initializes a new instance of <see cref="TargetConfig"/>. </summary>
+        protected TargetConfig()
         {
-            Argument.AssertNotNull(blobReference, nameof(blobReference));
-
-            BlobReference = blobReference;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssetCredentialResponse"/>. </summary>
-        /// <param name="blobReference"> Credential info to access the storage account. </param>
+        /// <summary> Initializes a new instance of <see cref="TargetConfig"/>. </summary>
+        /// <param name="type"> Type of the model configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssetCredentialResponse(BlobReference blobReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TargetConfig(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            BlobReference = blobReference;
+            Type = type;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssetCredentialResponse"/> for deserialization. </summary>
-        internal AssetCredentialResponse()
-        {
-        }
-
-        /// <summary> Credential info to access the storage account. </summary>
-        public BlobReference BlobReference { get; }
+        /// <summary> Type of the model configuration. </summary>
+        internal string Type { get; set; }
     }
 }

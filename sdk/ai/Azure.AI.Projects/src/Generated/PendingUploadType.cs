@@ -23,12 +23,12 @@ namespace Azure.AI.Projects
         }
 
         private const string NoneValue = "None";
-        private const string TemporaryBlobReferenceValue = "TemporaryBlobReference";
+        private const string BlobReferenceValue = "BlobReference";
 
         /// <summary> No pending upload. </summary>
         public static PendingUploadType None { get; } = new PendingUploadType(NoneValue);
-        /// <summary> Temporary Blob Reference is the only supported type. </summary>
-        public static PendingUploadType TemporaryBlobReference { get; } = new PendingUploadType(TemporaryBlobReferenceValue);
+        /// <summary> Blob Reference is the only supported type. </summary>
+        public static PendingUploadType BlobReference { get; } = new PendingUploadType(BlobReferenceValue);
         /// <summary> Determines if two <see cref="PendingUploadType"/> values are the same. </summary>
         public static bool operator ==(PendingUploadType left, PendingUploadType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PendingUploadType"/> values are not the same. </summary>

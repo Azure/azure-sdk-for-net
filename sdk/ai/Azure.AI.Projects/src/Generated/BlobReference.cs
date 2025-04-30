@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Represents a reference to a blob for consumption. </summary>
-    public partial class BlobReferenceForConsumption
+    /// <summary> Blob reference details. </summary>
+    public partial class BlobReference
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.AI.Projects
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BlobReferenceForConsumption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobReference"/>. </summary>
         /// <param name="blobUri"> Blob URI path for client to upload data. Example: https://blob.windows.core.net/Container/Path. </param>
         /// <param name="storageAccountArmId"> ARM ID of the storage account to use. </param>
         /// <param name="credential"> Credential info to access the storage account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobUri"/>, <paramref name="storageAccountArmId"/> or <paramref name="credential"/> is null. </exception>
-        internal BlobReferenceForConsumption(string blobUri, string storageAccountArmId, SasCredential credential)
+        internal BlobReference(string blobUri, string storageAccountArmId, SasCredential credential)
         {
             Argument.AssertNotNull(blobUri, nameof(blobUri));
             Argument.AssertNotNull(storageAccountArmId, nameof(storageAccountArmId));
@@ -61,12 +61,12 @@ namespace Azure.AI.Projects
             Credential = credential;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BlobReferenceForConsumption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobReference"/>. </summary>
         /// <param name="blobUri"> Blob URI path for client to upload data. Example: https://blob.windows.core.net/Container/Path. </param>
         /// <param name="storageAccountArmId"> ARM ID of the storage account to use. </param>
         /// <param name="credential"> Credential info to access the storage account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BlobReferenceForConsumption(string blobUri, string storageAccountArmId, SasCredential credential, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BlobReference(string blobUri, string storageAccountArmId, SasCredential credential, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BlobUri = blobUri;
             StorageAccountArmId = storageAccountArmId;
@@ -74,8 +74,8 @@ namespace Azure.AI.Projects
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BlobReferenceForConsumption"/> for deserialization. </summary>
-        internal BlobReferenceForConsumption()
+        /// <summary> Initializes a new instance of <see cref="BlobReference"/> for deserialization. </summary>
+        internal BlobReference()
         {
         }
 

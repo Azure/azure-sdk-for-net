@@ -26,9 +26,6 @@ namespace Azure.AI.Projects
         private const string ViolenceValue = "Violence";
         private const string SexualValue = "Sexual";
         private const string SelfHarmValue = "SelfHarm";
-        private const string ProtectedMaterialValue = "ProtectedMaterial";
-        private const string CodeVulnerabilityValue = "CodeVulnerability";
-        private const string UngroundedAttributesValue = "UngroundedAttributes";
 
         /// <summary> Represents content related to hate or unfairness. </summary>
         public static RiskCategory HateUnfairness { get; } = new RiskCategory(HateUnfairnessValue);
@@ -38,12 +35,6 @@ namespace Azure.AI.Projects
         public static RiskCategory Sexual { get; } = new RiskCategory(SexualValue);
         /// <summary> Represents content related to self-harm. </summary>
         public static RiskCategory SelfHarm { get; } = new RiskCategory(SelfHarmValue);
-        /// <summary> Represents content involving protected material. </summary>
-        public static RiskCategory ProtectedMaterial { get; } = new RiskCategory(ProtectedMaterialValue);
-        /// <summary> Represents content related to code vulnerabilities. </summary>
-        public static RiskCategory CodeVulnerability { get; } = new RiskCategory(CodeVulnerabilityValue);
-        /// <summary> Represents content with ungrounded attributes. </summary>
-        public static RiskCategory UngroundedAttributes { get; } = new RiskCategory(UngroundedAttributesValue);
         /// <summary> Determines if two <see cref="RiskCategory"/> values are the same. </summary>
         public static bool operator ==(RiskCategory left, RiskCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RiskCategory"/> values are not the same. </summary>

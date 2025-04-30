@@ -26,15 +26,14 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="ManagedAzureAISearchIndex"/>. </summary>
         /// <param name="type"> Type of index. </param>
-        /// <param name="stage"> Asset stage. </param>
-        /// <param name="id"> A unique identifier for the asset, assetId probably?. </param>
+        /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vectorStoreId"> Vector store id of managed index. </param>
-        internal ManagedAzureAISearchIndex(IndexType type, string stage, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string vectorStoreId) : base(type, stage, id, name, version, description, tags, serializedAdditionalRawData)
+        internal ManagedAzureAISearchIndex(IndexType type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string vectorStoreId) : base(type, id, name, version, description, tags, serializedAdditionalRawData)
         {
             VectorStoreId = vectorStoreId;
         }

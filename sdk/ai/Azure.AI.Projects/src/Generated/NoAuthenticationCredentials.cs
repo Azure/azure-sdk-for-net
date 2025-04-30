@@ -16,13 +16,13 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="NoAuthenticationCredentials"/>. </summary>
         internal NoAuthenticationCredentials()
         {
-            AuthType = CredentialType.None;
+            Type = CredentialType.None;
         }
 
         /// <summary> Initializes a new instance of <see cref="NoAuthenticationCredentials"/>. </summary>
-        /// <param name="authType"> The type of credential used by the connection. </param>
+        /// <param name="type"> The type of credential used by the connection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NoAuthenticationCredentials(CredentialType authType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(authType, serializedAdditionalRawData)
+        internal NoAuthenticationCredentials(CredentialType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
         {
         }
     }

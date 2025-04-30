@@ -36,7 +36,7 @@ namespace Azure.AI.Projects
         public static ConnectionType AzureOpenAI { get; } = new ConnectionType(AzureOpenAIValue);
         /// <summary> Azure Blob Storage, with specified container. </summary>
         public static ConnectionType AzureBlobStorage { get; } = new ConnectionType(AzureBlobStorageValue);
-        /// <summary> Azure Blob Storage, with container not specified (used by Assistants). </summary>
+        /// <summary> Azure Blob Storage, with container not specified (used by Agents). </summary>
         public static ConnectionType AzureStorageAccount { get; } = new ConnectionType(AzureStorageAccountValue);
         /// <summary> Azure AI Search. </summary>
         public static ConnectionType AzureAISearch { get; } = new ConnectionType(AzureAISearchValue);
