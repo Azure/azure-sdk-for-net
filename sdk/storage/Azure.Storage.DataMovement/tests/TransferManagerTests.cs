@@ -15,6 +15,7 @@ using Azure.Storage.DataMovement.Tests.Shared;
 using Moq;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
+using NUnit.Framework.Interfaces;
 
 namespace Azure.Storage.DataMovement.Tests;
 
@@ -653,6 +654,9 @@ internal static partial class MockExtensions
                 });
             });
 
+        items.Destination.Setup(r => r.ValidateTransferAsync(It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+
         items.Source.Setup(r => r.ReadStreamAsync(It.IsAny<long>(), It.IsAny<long?>(), It.IsAny<CancellationToken>()))
             .Returns<long, long?, CancellationToken>((position, length, cancellationToken) =>
             {
@@ -722,6 +726,9 @@ internal static partial class MockExtensions
 
         containers.Source.SetupGet(r => r.Uri).Returns(srcUri);
         containers.Destination.SetupGet(r => r.Uri).Returns(dstUri);
+
+        containers.Destination.Setup(r => r.ValidateTransferAsync(It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
 
         containers.Source.Setup(r => r.GetStorageResourcesAsync(It.IsAny<StorageResourceContainer>(), It.IsAny<CancellationToken>()))
             .Returns(SubResourcesAsAsyncEnumerable);
