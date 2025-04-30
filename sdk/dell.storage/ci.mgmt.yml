@@ -1,5 +1,3 @@
-# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
-
 trigger: none
 pr:
   branches:
@@ -12,6 +10,7 @@ pr:
     include:
     - sdk/dell/ci.mgmt.yml
     - sdk/dell/Azure.ResourceManager.Dell.Storage/
+
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
