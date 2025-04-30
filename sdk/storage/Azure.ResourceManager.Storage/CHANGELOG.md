@@ -1,14 +1,10 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
-
-### Features Added
+## 1.4.2 (2025-04-25)
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Fixed issue https://github.com/Azure/azure-sdk-for-net/issues/49612.
 
 ## 1.4.1 (2025-04-24)
 
