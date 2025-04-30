@@ -3,20 +3,19 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
+
 using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.OnlineExperimentation.Tests
 {
     public class OnlineExperimentationManagementTestBase : ManagementRecordedTestBase<OnlineExperimentationManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
-        protected SubscriptionResource DefaultSubscription { get; private set; }
+        public OnlineExperimentWorkspaceResource TestWorkspaceResource { get; private set; }
 
         protected OnlineExperimentationManagementTestBase(bool isAsync, RecordedTestMode mode)
-        : base(isAsync, mode)
+            : base(isAsync, mode)
         {
         }
 
@@ -25,19 +24,19 @@ namespace Azure.ResourceManager.OnlineExperimentation.Tests
         {
         }
 
-        [SetUp]
-        public async Task CreateCommonClient()
+        [OneTimeTearDown]
+        public void Cleanup()
         {
-            Client = GetArmClient();
-            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
+            CleanupResourceGroups();
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        [SetUp]
+        public void CreateCommonClient()
         {
-            string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(location);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
-            return lro.Value;
+            Client = GetArmClient();
+
+            var workspaceResourceId = ResourceIdentifier.Parse(TestEnvironment.OnlineExperimentationWorkspaceResourceId);
+            TestWorkspaceResource = Client.GetOnlineExperimentWorkspaceResource(workspaceResourceId);
         }
     }
 }
