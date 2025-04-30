@@ -29,7 +29,9 @@ parameters:
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    oneESTemplateTag: ${{ parameters.oneESTemplateTag }}
     ServiceDirectory: ${{ parameters.Service }}
     CheckAOTCompat: true
     BuildSnippets: true
-    oneESTemplateTag: ${{ parameters.oneESTemplateTag }}
+    ExcludePaths:
+      - eng/packages/http-client-csharp/
