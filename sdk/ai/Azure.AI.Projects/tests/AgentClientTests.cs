@@ -9,6 +9,7 @@ using System.Net.Security;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -641,6 +642,129 @@ namespace Azure.AI.Projects.Tests
         }
 
         [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task TestAutomaticSubmitToolOutputs(bool correctDefinition)
+        {
+            if (!IsAsync)
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
+
+            string GetHumidityByAddress(string address)
+            {
+                return address.Contains("Seattle")? "80" : "60";
+            }
+
+            FunctionToolDefinition correctGeHhumidityByAddressTool = new(
+                 name: "GetHumidityByAddress",
+                 description: "Get humidity by address",
+                 parameters: BinaryData.FromObjectAsJson(
+                 new
+                 {
+                     Type = "object",
+                     Properties = new
+                     {
+                         Address = new
+                         {
+                             Type = "string",
+                             Description = "Address"
+                         }
+                     },
+                     Required = new[] { "address" }
+                 },
+                 new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+
+            FunctionToolDefinition incorrectGeHhumidityByAddressTool = new(
+                 name: "GetHumidityByAddress",
+                 description: "Get humidity by address",
+                 parameters: BinaryData.FromObjectAsJson(
+                 new
+                 {
+                     Type = "object",
+                     Properties = new
+                     {
+                         Addresses = new
+                         {
+                             Type = "array",
+                             Description = "A list of addresses",
+                             Items = new
+                             {
+                                 Type = "object",
+                                 Properties = new
+                                 {
+                                     Street = new
+                                     {
+                                         Type = "string",
+                                         Description = "Street"
+                                     },
+                                     City = new
+                                     {
+                                         Type = "string",
+                                         description = "city"
+                                     },
+                                 },
+                                 Required = new[] { "street", "city" }
+                             }
+                         },
+                     },
+                     Required = new[] { "address" }
+                 },
+                 new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+
+            Dictionary<string, Delegate> toolDelegates = new();
+            toolDelegates.Add(nameof(GetHumidityByAddress), GetHumidityByAddress);
+
+            AgentsClient client = GetClient();
+            string output = "";
+            bool completed = false;
+            bool cancelled = false;
+            List<ToolDefinition> tools = new();
+            AutoFunctionCallOptions autoFunctionCallOptions = new(toolDelegates, 0);
+            if (correctDefinition)
+                tools.Add(correctGeHhumidityByAddressTool);
+            else
+                tools.Add(incorrectGeHhumidityByAddressTool);
+
+            Agent agent = await client.CreateAgentAsync(
+                    model: "gpt-4o-mini",
+                    name: AGENT_NAME,
+                    instructions: "Use the provided functions to help answer questions.",
+                    tools: tools
+                );
+            AgentThread thread = await client.CreateThreadAsync();
+
+            ThreadMessage message = await client.CreateMessageAsync(
+                thread.Id,
+                MessageRole.User,
+                "Get humidity for address, 456 2nd Ave in city, Seattle");
+
+            await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id, autoFunctionCallOptions: autoFunctionCallOptions))
+            {
+                if (streamingUpdate is MessageContentUpdate contentUpdate)
+                {
+                    output += contentUpdate.Text;
+                }
+                else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
+                {
+                    completed = true;
+                }
+                else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCancelled)
+                {
+                    cancelled = true;
+                }
+            }
+
+            if (correctDefinition)
+            {
+                Assert.True(output.Contains("80"));
+                Assert.True(completed);
+            }
+            else
+            {
+                Assert.True(cancelled);
+            }
+        }
+
+        [RecordedTest]
         [TestCase(VecrorStoreTestType.JustVectorStore, true, false)]
         [TestCase(VecrorStoreTestType.Batch, true, false)]
         [TestCase(VecrorStoreTestType.File, true, false)]
@@ -915,6 +1039,7 @@ namespace Azure.AI.Projects.Tests
             {
                 FileSearch=fileSearch
             };
+
             Agent agent = await client.CreateAgentAsync(
                 model: "gpt-4",
                 name: AGENT_NAME,
@@ -1356,13 +1481,14 @@ namespace Azure.AI.Projects.Tests
             return tempDir;
         }
 
-        private AgentsClient GetClient()
+        private AgentsClient GetClient(AIProjectClientOptions options = null)
         {
+            options ??= new AIProjectClientOptions();
             var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
             // If we are in the Playback, do not ask for authentication.
             if (Mode == RecordedTestMode.Playback)
             {
-                return InstrumentClient(new AgentsClient(connectionString, new MockCredential(), InstrumentClientOptions(new AIProjectClientOptions())));
+                return InstrumentClient(new AgentsClient(connectionString, new MockCredential(), InstrumentClientOptions(options)));
             }
             // For local testing if you are using non default account
             // add USE_CLI_CREDENTIAL into the .runsettings and set it to true,
@@ -1371,11 +1497,11 @@ namespace Azure.AI.Projects.Tests
             var cli = System.Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL");
             if (!string.IsNullOrEmpty(cli) && string.Compare(cli, "true", StringComparison.OrdinalIgnoreCase) == 0)
             {
-                return InstrumentClient(new AgentsClient(connectionString, new AzureCliCredential(), InstrumentClientOptions(new AIProjectClientOptions())));
+                return InstrumentClient(new AgentsClient(connectionString,  new AzureCliCredential(), InstrumentClientOptions(options)));
             }
             else
             {
-                return InstrumentClient(new AgentsClient(connectionString, new DefaultAzureCredential(), InstrumentClientOptions(new AIProjectClientOptions())));
+                return InstrumentClient(new AgentsClient(connectionString, new DefaultAzureCredential(), InstrumentClientOptions(options)));
             }
         }
 
