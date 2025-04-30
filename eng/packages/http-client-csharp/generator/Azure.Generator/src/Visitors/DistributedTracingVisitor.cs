@@ -138,8 +138,13 @@ namespace Azure.Generator.Visitors
             }
         }
 
-        private static void UpdateProtocolMethodsWithDistributedTracing(MethodProvider method)
+        private static void UpdateProtocolMethodsWithDistributedTracing(ScmMethodProvider method)
         {
+            if (method.BodyStatements == null && method.BodyExpression == null)
+            {
+                return;
+            }
+
             string scopeName = $"{method.EnclosingType.Name}.{method.Signature.Name}";
             PropertyProvider clientDiagnosticsProperty = method.EnclosingType.Properties.First(p => p.Name == ClientDiagnosticsPropertyName);
 
@@ -153,28 +158,23 @@ namespace Azure.Generator.Visitors
             var scopeStart = scope.Invoke(nameof(DiagnosticScope.Start)).Terminate();
             // wrap existing statements in try / catch
             var tryStatement = new TryStatement
-                {
-                    method.BodyStatements ?? MethodBodyStatement.EmptyLine
-                };
+            {
+                method.BodyStatements ?? new ExpressionStatement(method.BodyExpression!)
+            };
+
             var catchBlock = new CatchStatement(Declare("e", typeof(Exception), out var exception))
                 {
                     scope.Invoke(nameof(DiagnosticScope.Failed), [exception]).Terminate(),
                     Throw()
                 };
             var tryCatchRequestBlock = new TryCatchFinallyStatement(tryStatement, catchBlock);
-            List<MethodBodyStatement> updatedBodyStatements = [scopeDeclaration, scopeStart, MethodBodyStatement.EmptyLine, tryCatchRequestBlock];
+            List<MethodBodyStatement> updatedBodyStatements = [scopeDeclaration, scopeStart, tryCatchRequestBlock];
 
             method.Update(bodyStatements: updatedBodyStatements);
         }
 
         private static void AddDistributedTracingProperty(ClientProvider client)
         {
-            // Enable distributed tracing if the ClientDiagnostics property is not already present
-            if (client.CanonicalView.Properties.Any(p => p.Name == ClientDiagnosticsPropertyName))
-            {
-                return;
-            }
-
             var existingCount = client.Properties.Count;
             List<PropertyProvider> updatedProperties = new(existingCount + 1);
             updatedProperties.AddRange(client.Properties);

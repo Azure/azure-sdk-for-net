@@ -109,7 +109,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.SayHi");
             scope.Start();
-
             try
             {
                 Argument.AssertNotNull(headParameter, nameof(headParameter));
@@ -144,7 +143,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.SayHiAsync");
             scope.Start();
-
             try
             {
                 Argument.AssertNotNull(headParameter, nameof(headParameter));
@@ -211,7 +209,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HelloAgain");
             scope.Start();
-
             try
             {
                 Argument.AssertNotNull(p2, nameof(p2));
@@ -247,7 +244,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HelloAgainAsync");
             scope.Start();
-
             try
             {
                 Argument.AssertNotNull(p2, nameof(p2));
@@ -317,7 +313,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.NoContentType");
             scope.Start();
-
             try
             {
                 Argument.AssertNotNull(p2, nameof(p2));
@@ -353,7 +348,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.NoContentTypeAsync");
             scope.Start();
-
             try
             {
                 Argument.AssertNotNull(p2, nameof(p2));
@@ -385,7 +379,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HelloDemo2");
             scope.Start();
-
             try
             {
                 using HttpMessage message = CreateHelloDemo2Request(context);
@@ -413,7 +406,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HelloDemo2Async");
             scope.Start();
-
             try
             {
                 using HttpMessage message = CreateHelloDemo2Request(context);
@@ -461,7 +453,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.CreateLiteral");
             scope.Start();
-
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
@@ -493,7 +484,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.CreateLiteralAsync");
             scope.Start();
-
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
@@ -549,7 +539,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HelloLiteral");
             scope.Start();
-
             try
             {
                 using HttpMessage message = CreateHelloLiteralRequest(context);
@@ -577,7 +566,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HelloLiteralAsync");
             scope.Start();
-
             try
             {
                 using HttpMessage message = CreateHelloLiteralRequest(context);
@@ -624,7 +612,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.TopAction");
             scope.Start();
-
             try
             {
                 using HttpMessage message = CreateTopActionRequest(action, context);
@@ -653,7 +640,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.TopActionAsync");
             scope.Start();
-
             try
             {
                 using HttpMessage message = CreateTopActionRequest(action, context);
@@ -701,7 +687,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.TopAction2");
             scope.Start();
-
             try
             {
                 using HttpMessage message = CreateTopAction2Request(context);
@@ -729,7 +714,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.TopAction2Async");
             scope.Start();
-
             try
             {
                 using HttpMessage message = CreateTopAction2Request(context);
@@ -759,7 +743,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.PatchAction");
             scope.Start();
-
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
@@ -791,7 +774,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.PatchActionAsync");
             scope.Start();
-
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
@@ -823,7 +805,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.AnonymousBody");
             scope.Start();
-
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
@@ -855,7 +836,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.AnonymousBodyAsync");
             scope.Start();
-
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
@@ -971,7 +951,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.FriendlyModel");
             scope.Start();
-
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
@@ -1003,7 +982,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.FriendlyModelAsync");
             scope.Start();
-
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
@@ -1061,7 +1039,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.AddTimeHeader");
             scope.Start();
-
             try
             {
                 using HttpMessage message = CreateAddTimeHeaderRequest(context);
@@ -1089,7 +1066,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.AddTimeHeaderAsync");
             scope.Start();
-
             try
             {
                 using HttpMessage message = CreateAddTimeHeaderRequest(context);
@@ -1135,7 +1111,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ProjectedNameModel");
             scope.Start();
-
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
@@ -1167,7 +1142,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ProjectedNameModelAsync");
             scope.Start();
-
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
@@ -1225,7 +1199,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ReturnsAnonymousModel");
             scope.Start();
-
             try
             {
                 using HttpMessage message = CreateReturnsAnonymousModelRequest(context);
@@ -1253,7 +1226,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ReturnsAnonymousModelAsync");
             scope.Start();
-
             try
             {
                 using HttpMessage message = CreateReturnsAnonymousModelRequest(context);
@@ -1301,7 +1273,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetUnknownValue");
             scope.Start();
-
             try
             {
                 Argument.AssertNotNull(accept, nameof(accept));
@@ -1333,7 +1304,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetUnknownValueAsync");
             scope.Start();
-
             try
             {
                 Argument.AssertNotNull(accept, nameof(accept));
@@ -1391,7 +1361,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.InternalProtocol");
             scope.Start();
-
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
@@ -1423,7 +1392,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.InternalProtocolAsync");
             scope.Start();
-
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
@@ -1479,7 +1447,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.StillConvenient");
             scope.Start();
-
             try
             {
                 using HttpMessage message = CreateStillConvenientRequest(context);
@@ -1507,7 +1474,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.StillConvenientAsync");
             scope.Start();
-
             try
             {
                 using HttpMessage message = CreateStillConvenientRequest(context);
@@ -1553,7 +1519,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HeadAsBoolean");
             scope.Start();
-
             try
             {
                 Argument.AssertNotNull(id, nameof(id));
@@ -1585,7 +1550,6 @@ namespace BasicTypeSpec
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HeadAsBooleanAsync");
             scope.Start();
-
             try
             {
                 Argument.AssertNotNull(id, nameof(id));
