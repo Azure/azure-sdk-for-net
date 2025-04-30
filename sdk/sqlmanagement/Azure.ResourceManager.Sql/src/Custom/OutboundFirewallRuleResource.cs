@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,6 +14,8 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Sql
 {
     // Add this custom code beacuse the new version doesn't have body data in the PUT operation.
+    [CodeGenSuppress("UpdateAsync", typeof(WaitUntil), typeof(CancellationToken))]
+    [CodeGenSuppress("Update", typeof(WaitUntil), typeof(CancellationToken))]
     public partial class OutboundFirewallRuleResource
     {
         /// <summary>
@@ -40,9 +43,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The <see cref="OutboundFirewallRuleData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public virtual async Task<ArmOperation<OutboundFirewallRuleResource>> UpdateAsync(WaitUntil waitUntil, OutboundFirewallRuleData data, CancellationToken cancellationToken = default)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            return await UpdateAsync(waitUntil, cancellationToken).ConfigureAwait(false);
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -70,9 +76,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The <see cref="OutboundFirewallRuleData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<OutboundFirewallRuleResource> Update(WaitUntil waitUntil, OutboundFirewallRuleData data, CancellationToken cancellationToken = default)
         {
-            return Update(waitUntil, cancellationToken);
+            throw new NotSupportedException();
         }
     }
 }
