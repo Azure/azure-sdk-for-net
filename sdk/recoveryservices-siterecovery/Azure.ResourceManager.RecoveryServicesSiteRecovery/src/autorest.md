@@ -44,7 +44,6 @@ rename-mapping:
   A2AProtectedManagedDiskDetails.recoveryTargetDiskId: -|arm-id
   A2AProtectedManagedDiskDetails.recoveryReplicaDiskId: -|arm-id
   A2AProtectedManagedDiskDetails.recoveryOrignalTargetDiskId: -|arm-id
-  A2AProtectedManagedDiskDetails.diskId: -|arm-id
   A2AReplicationDetails.protectionClusterId: -|arm-id
   A2AReplicationProtectionClusterDetails.clusterManagementId: -|uuid
   A2AReplicationProtectionClusterDetails.multiVmGroupId: -|uuid
