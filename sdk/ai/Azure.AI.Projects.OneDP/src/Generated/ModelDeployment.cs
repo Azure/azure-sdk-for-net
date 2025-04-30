@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     /// <summary> Model Deployment Definition. </summary>
     public partial class ModelDeployment : Deployment

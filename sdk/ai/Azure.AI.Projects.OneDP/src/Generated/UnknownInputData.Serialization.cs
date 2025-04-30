@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     internal partial class UnknownInputData : IUtf8JsonSerializable, IJsonModel<InputData>
     {

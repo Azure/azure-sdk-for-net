@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     /// <summary> Strategies for attacks. </summary>
     public readonly partial struct AttackStrategy : IEquatable<AttackStrategy>

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     /// <summary> Dataset as source for evaluation. </summary>
     public partial class InputDataset : InputData

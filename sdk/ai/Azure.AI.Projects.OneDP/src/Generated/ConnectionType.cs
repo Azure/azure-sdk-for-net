@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     /// <summary> The Type (or category) of the connection. </summary>
     public readonly partial struct ConnectionType : IEquatable<ConnectionType>

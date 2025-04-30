@@ -12,7 +12,7 @@ using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     // Data plane generated sub-client.
     /// <summary> The Deployments sub-client. </summary>

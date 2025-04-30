@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     /// <summary> The credential type used by the connection. </summary>
     internal readonly partial struct CredentialType : IEquatable<CredentialType>

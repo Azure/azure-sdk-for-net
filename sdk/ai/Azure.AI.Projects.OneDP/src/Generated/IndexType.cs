@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     /// <summary> The IndexType. </summary>
     internal readonly partial struct IndexType : IEquatable<IndexType>

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     /// <summary> Shared Access Signature (SAS) credential definition. </summary>
     public partial class SASCredentials : BaseCredentials

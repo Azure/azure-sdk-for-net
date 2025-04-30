@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     /// <summary> Managed Azure AI Search Index Definition. </summary>
     public partial class ManagedAzureAISearchIndex : Index

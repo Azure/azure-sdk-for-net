@@ -13,7 +13,7 @@ using Azure.Core.TestFramework;
 using System.IO;
 using System.Reflection;
 
-namespace Azure.AI.Projects.OneDP.Tests
+namespace Azure.AI.Projects.Tests
 {
     public class Sample_Datasets : SamplesBase<AIProjectsTestEnvironment>
     {

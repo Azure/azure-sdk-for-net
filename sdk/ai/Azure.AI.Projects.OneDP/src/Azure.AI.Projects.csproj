@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Azure.AI.Projects.OneDP client library for developing .NET applications with rich experience.</Description>
-    <AssemblyTitle>Microsoft Azure.AI.Projects.OneDP client library</AssemblyTitle>
+    <Description>This is the Azure.AI.Projects client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>Microsoft Azure.AI.Projects client library</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
-    <PackageTags>Azure.AI.Projects.OneDP</PackageTags>
+    <PackageTags>Azure.AI.Projects</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>

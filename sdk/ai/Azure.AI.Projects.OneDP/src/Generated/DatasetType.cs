@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     /// <summary> Enum to determine the type of data. </summary>
     internal readonly partial struct DatasetType : IEquatable<DatasetType>

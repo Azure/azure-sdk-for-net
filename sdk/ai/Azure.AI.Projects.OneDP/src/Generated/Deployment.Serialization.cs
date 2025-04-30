@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     [PersistableModelProxy(typeof(UnknownDeployment))]
     public partial class Deployment : IUtf8JsonSerializable, IJsonModel<Deployment>

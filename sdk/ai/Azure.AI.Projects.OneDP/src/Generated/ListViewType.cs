@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     /// <summary> List View Type Definition. </summary>
     public readonly partial struct ListViewType : IEquatable<ListViewType>

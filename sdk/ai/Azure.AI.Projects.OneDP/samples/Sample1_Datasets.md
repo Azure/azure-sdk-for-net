@@ -1,10 +1,10 @@
-# Sample using Datasets in Azure.AI.Projects.OneDP
+# Sample using Datasets in Azure.AI.Projects
 
 In this example, we will demonstrate how to upload files and folders to create new dataset versions, list and retrieve dataset versions, and delete them.
 
 ## Prerequisites
 
-- Install the Azure.AI.Projects.OneDP package.
+- Install the Azure.AI.Projects package.
 - Set the following environment variables:
   - `PROJECT_ENDPOINT`: The Azure AI Project endpoint, as found in the overview page of your Azure AI Foundry project.
   - `DATASET_NAME`: The name of the dataset to retrieve.

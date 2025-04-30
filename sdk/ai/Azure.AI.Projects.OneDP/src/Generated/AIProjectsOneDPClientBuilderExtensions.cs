@@ -7,7 +7,7 @@
 
 using System;
 using Azure;
-using Azure.AI.Projects.OneDP;
+using Azure.AI.Projects;
 using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure

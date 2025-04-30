@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.AI.Projects.OneDP;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     public partial class Datasets
     {

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     /// <summary> The SasCredential_type. </summary>
     public readonly partial struct SasCredentialType : IEquatable<SasCredentialType>

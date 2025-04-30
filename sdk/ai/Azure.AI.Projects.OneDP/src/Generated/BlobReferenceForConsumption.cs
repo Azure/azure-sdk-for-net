@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     /// <summary> Represents a reference to a blob for consumption. </summary>
     public partial class BlobReferenceForConsumption

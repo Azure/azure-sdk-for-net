@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     /// <summary> The type of pending upload. </summary>
     public readonly partial struct PendingUploadType : IEquatable<PendingUploadType>

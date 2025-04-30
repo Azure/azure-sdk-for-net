@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Projects.OneDP", "src\Azure.AI.Projects.OneDP.csproj", "{DA6BE53A-84BB-4207-9DDA-4F5BAF29B367}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Projects", "src\Azure.AI.Projects.csproj", "{DA6BE53A-84BB-4207-9DDA-4F5BAF29B367}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0AB3BF05-4346-4AA6-1389-037BE0695223}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Projects.OneDP.Tests", "tests\Azure.AI.Projects.OneDP.Tests.csproj", "{9F017D00-4FA6-4862-B659-421DDB3A664B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Projects.Tests", "tests\Azure.AI.Projects.Tests.csproj", "{9F017D00-4FA6-4862-B659-421DDB3A664B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

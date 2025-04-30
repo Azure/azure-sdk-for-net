@@ -9,7 +9,7 @@ using Azure.AI.Projects;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.Projects.OneDP.Tests
+namespace Azure.AI.Projects.Tests
 {
     public class Sample_Connections : SamplesBase<AIProjectsTestEnvironment>
     {

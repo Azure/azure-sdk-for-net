@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     /// <summary> Entra ID credential definition. </summary>
     public partial class EntraIDCredentials : BaseCredentials

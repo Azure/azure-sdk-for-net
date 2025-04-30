@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     public partial class BlobReferenceForConsumption : IUtf8JsonSerializable, IJsonModel<BlobReferenceForConsumption>
     {

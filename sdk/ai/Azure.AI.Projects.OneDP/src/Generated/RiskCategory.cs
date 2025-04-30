@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     /// <summary> Risk category for the attack objective. </summary>
     public readonly partial struct RiskCategory : IEquatable<RiskCategory>

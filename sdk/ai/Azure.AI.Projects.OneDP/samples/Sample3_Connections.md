@@ -1,10 +1,10 @@
-# Sample for Azure.AI.Projects.OneDP with `Connections`
+# Sample for Azure.AI.Projects with `Connections`
 
-In this example, we will demonstrate listing and retrieving connections using the `Connections` client in `Azure.AI.Projects.OneDP`. This includes listing all connections, filtering by connection type, and retrieving specific connection details.
+In this example, we will demonstrate listing and retrieving connections using the `Connections` client in `Azure.AI.Projects`. This includes listing all connections, filtering by connection type, and retrieving specific connection details.
 
 ## Prerequisites
 
-- Install the Azure.AI.Projects.OneDP package.
+- Install the Azure.AI.Projects package.
 - Set the following environment variables:
   - `PROJECT_ENDPOINT`: The Azure AI Project endpoint, as found in the overview page of your Azure AI Foundry project.
   - `CONNECTION_NAME`: The name of the connection to retrieve.

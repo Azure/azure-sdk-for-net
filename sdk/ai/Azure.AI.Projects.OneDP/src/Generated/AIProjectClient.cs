@@ -10,7 +10,7 @@ using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     // Data plane generated client.
     /// <summary> The AIProject service client. </summary>

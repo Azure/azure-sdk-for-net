@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     /// <summary> Client options for AIProjectClient. </summary>
     public partial class AIProjectClientOptions : ClientOptions

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     /// <summary> The DeploymentType. </summary>
     internal readonly partial struct DeploymentType : IEquatable<DeploymentType>

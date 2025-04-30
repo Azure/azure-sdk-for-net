@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using Azure.AI.OpenAI;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     /// <summary>
     /// Evaluator IDs for built-in evaluators.

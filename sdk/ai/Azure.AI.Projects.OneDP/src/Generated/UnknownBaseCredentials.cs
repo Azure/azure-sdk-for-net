@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     /// <summary> Unknown version of BaseCredentials. </summary>
     internal partial class UnknownBaseCredentials : BaseCredentials

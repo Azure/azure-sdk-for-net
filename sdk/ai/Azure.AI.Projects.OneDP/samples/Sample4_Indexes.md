@@ -1,4 +1,4 @@
-# Sample2: Using Indexes in Azure.AI.Projects.OneDP
+# Sample2: Using Indexes in Azure.AI.Projects
 
 This sample demonstrates how to use the synchronous and asynchronous `.indexes` methods.
 

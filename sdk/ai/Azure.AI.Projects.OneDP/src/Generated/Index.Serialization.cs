@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     [PersistableModelProxy(typeof(UnknownIndex))]
     public partial class Index : IUtf8JsonSerializable, IJsonModel<Index>

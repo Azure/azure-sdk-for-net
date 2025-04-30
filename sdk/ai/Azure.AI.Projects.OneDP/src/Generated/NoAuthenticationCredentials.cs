@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     /// <summary> Credentials that do not require authentication. </summary>
     public partial class NoAuthenticationCredentials : BaseCredentials

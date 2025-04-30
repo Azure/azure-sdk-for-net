@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.AI.Projects.OneDP
+namespace Azure.AI.Projects
 {
     internal static class Optional
     {
