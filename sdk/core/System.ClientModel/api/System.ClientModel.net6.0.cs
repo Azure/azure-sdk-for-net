@@ -82,16 +82,10 @@ namespace System.ClientModel.Primitives
         public abstract System.ClientModel.ContinuationToken? GetContinuationToken(System.ClientModel.ClientResult page);
         public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientResult> GetRawPagesAsync();
     }
-    public enum ClientAuthenticationMethod
-    {
-        Credential = 0,
-        ApiKey = 1,
-        NoAuth = 2,
-    }
     public partial class ClientCache
     {
         public ClientCache(int maxSize = 100) { }
-        public T GetClient<T>(System.Func<T> createClient, string? id) where T : class { throw null; }
+        public T GetClient<T>(System.IEquatable<object> clientId, System.Func<T> createClient) where T : class { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ClientConnection
@@ -99,11 +93,9 @@ namespace System.ClientModel.Primitives
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ClientConnection(string id, string locator) { throw null; }
-        public ClientConnection(string id, string locator, object credential) { throw null; }
-        public ClientConnection(string id, string locator, string apiKey) { throw null; }
-        public string? ApiKeyCredential { get { throw null; } }
-        public System.ClientModel.Primitives.ClientAuthenticationMethod Authentication { get { throw null; } }
+        public ClientConnection(string id, string locator, object credential, System.ClientModel.Primitives.CredentialKind credentialKind) { throw null; }
         public object? Credential { get { throw null; } }
+        public System.ClientModel.Primitives.CredentialKind CredentialKind { get { throw null; } }
         public string Id { get { throw null; } }
         public string Locator { get { throw null; } }
         public override string ToString() { throw null; }
@@ -187,6 +179,12 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.ClientCache Subclients { get { throw null; } }
         public abstract System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> GetAllConnections();
         public abstract System.ClientModel.Primitives.ClientConnection GetConnection(string connectionId);
+    }
+    public enum CredentialKind
+    {
+        None = 0,
+        ApiKeyString = 1,
+        TokenCredential = 2,
     }
     public partial class HttpClientPipelineTransport : System.ClientModel.Primitives.PipelineTransport, System.IDisposable
     {
