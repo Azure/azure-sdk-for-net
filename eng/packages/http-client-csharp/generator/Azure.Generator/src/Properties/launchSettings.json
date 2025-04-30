@@ -80,11 +80,6 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
-    "http-parameters-path": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/parameters/path -g AzureStubGenerator",
-      "commandName": "Executable",
-      "executablePath": "dotnet"
-    },
     "http-parameters-spread": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/parameters/spread -g AzureStubGenerator",
       "commandName": "Executable",
@@ -102,6 +97,11 @@
     },
     "http-payload-media-type": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/payload/media-type -g AzureStubGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
+    "http-payload-multipart": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/payload/multipart -g AzureStubGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
