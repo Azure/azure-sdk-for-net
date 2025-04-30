@@ -13,7 +13,7 @@ tag: package-preview-2024-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   sample: false # Disable generate samples due to https://github.com/Azure/azure-sdk-for-net/issues/45877
   skipped-operations:
