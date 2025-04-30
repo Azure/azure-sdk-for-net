@@ -10,6 +10,7 @@
 - Create Neon Branch
 - Get Neon Database Connection URI
 - List Neon Projects, Branches, Databases, Roles, Endpoints
+- Updated to Stable version 2025-03-01
 
 
 ## 1.0.0-beta.1 (2024-11-22)
