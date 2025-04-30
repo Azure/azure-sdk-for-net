@@ -1567,6 +1567,15 @@
       ]
     },
     {
+      "filename": "**/sdk/workloadssapvirtualinstance/**/*.cs",
+      "words": [
+        "acss",
+        "ascs",
+        "hana",
+        "mbps"
+      ]
+    },
+    {
       "filename": "**/sdk/containerinstance/**/*.cs",
       "words": [
         "Noreuse",
