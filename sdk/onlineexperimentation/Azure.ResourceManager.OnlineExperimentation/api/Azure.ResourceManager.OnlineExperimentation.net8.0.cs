@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.OnlineExperimentation
         Azure.ResourceManager.OnlineExperimentation.OnlineExperimentWorkspaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OnlineExperimentation.OnlineExperimentWorkspaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OnlineExperimentation.OnlineExperimentWorkspaceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OnlineExperimentation.OnlineExperimentWorkspaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.OnlineExperimentation.OnlineExperimentWorkspaceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.OnlineExperimentation.OnlineExperimentWorkspaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.OnlineExperimentation.OnlineExperimentWorkspaceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.OnlineExperimentation.OnlineExperimentWorkspaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.OnlineExperimentation.OnlineExperimentWorkspaceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentWorkspacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.OnlineExperimentation.OnlineExperimentWorkspaceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentWorkspacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.OnlineExperimentation.Mocking
@@ -188,6 +188,33 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         public static implicit operator Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuTier (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuTier left, Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuTier right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class OnlineExperimentWorkspacePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentWorkspacePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentWorkspacePatch>
+    {
+        public OnlineExperimentWorkspacePatch() { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentWorkspacePatchProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSku Sku { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentWorkspacePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentWorkspacePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentWorkspacePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentWorkspacePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentWorkspacePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentWorkspacePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentWorkspacePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OnlineExperimentWorkspacePatchProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentWorkspacePatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentWorkspacePatchProperties>
+    {
+        public OnlineExperimentWorkspacePatchProperties() { }
+        public Azure.ResourceManager.OnlineExperimentation.Models.CustomerManagedKeyEncryption CustomerManagedKeyEncryption { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier LogAnalyticsWorkspaceResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier LogsExporterStorageAccountResourceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentWorkspacePatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentWorkspacePatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentWorkspacePatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentWorkspacePatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentWorkspacePatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentWorkspacePatchProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentWorkspacePatchProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class OnlineExperimentWorkspaceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentWorkspaceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentWorkspaceProperties>
     {
