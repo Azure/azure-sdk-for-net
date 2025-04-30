@@ -7,6 +7,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+    using System.Diagnostics.CodeAnalysis;
     using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
     using ExceptionDocument = Models.Exception;
@@ -118,7 +119,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
         public string ETag => info.ETag;
 
-        private static void AddMetric<TTelemetry>(
+        private static void AddMetric<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] TTelemetry>(
           DerivedMetricInfo metricInfo,
           List<DerivedMetric<TTelemetry>> metrics,
           out CollectionConfigurationError[] errors)
