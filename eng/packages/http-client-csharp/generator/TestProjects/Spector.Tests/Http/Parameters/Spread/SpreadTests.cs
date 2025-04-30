@@ -19,7 +19,7 @@ namespace TestProjects.Spector.Tests.Http.Parameters.Spread
 {
     public class SpreadTests : SpectorTestBase
     {
-        [Test]
+        [SpectorTest]
         public void VerifySpreadParameterWithInnerModelMethod()
         {
             var expected = new[]
@@ -31,7 +31,7 @@ namespace TestProjects.Spector.Tests.Http.Parameters.Spread
             ValidateConvenienceMethod(typeof(Alias), "SpreadParameterWithInnerModel", expected);
         }
 
-        [Test]
+        [SpectorTest]
         public void VerifySpreadParameterWithInnerAliasMethod()
         {
             var expected = new[]
@@ -44,7 +44,7 @@ namespace TestProjects.Spector.Tests.Http.Parameters.Spread
             ValidateConvenienceMethod(typeof(Alias), "SpreadParameterWithInnerAlias", expected);
         }
 
-        [Test]
+        [SpectorTest]
         public void VerifySpreadAsRequestBodyInModelMethod()
         {
             var expected = new[]
@@ -54,7 +54,7 @@ namespace TestProjects.Spector.Tests.Http.Parameters.Spread
             ValidateConvenienceMethod(typeof(Model), "SpreadAsRequestBody", expected);
         }
 
-        [Test]
+        [SpectorTest]
         public void VerifySpreadAsRequestBodyInAliasMethod()
         {
             var expected = new[]
