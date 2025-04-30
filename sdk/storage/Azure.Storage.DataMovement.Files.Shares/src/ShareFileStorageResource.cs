@@ -276,8 +276,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
             if (sourceResource is ShareFileStorageResource)
             {
                 ShareFileStorageResource sourceShareFile = (ShareFileStorageResource)sourceResource;
-                // destination must be SMB and destination FilePermission option must be set.
-                if ((!_options?.IsNfs ?? true) && (_options?.FilePermissions ?? false))
+                // both source and destination must be SMB and destination FilePermission option must be set.
+                if ((!sourceShareFile._options?.IsNfs ?? true) && (!_options?.IsNfs ?? true) && (_options?.FilePermissions ?? false))
                 {
                     string permissionsValue = sourceProperties?.RawProperties?.GetPermission();
                     string destinationPermissionKey = sourceProperties?.RawProperties?.GetDestinationPermissionKey();

@@ -65,8 +65,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 ShareDirectoryStorageResourceContainer destinationStorageResourceContainer
                     = destinationContainer as ShareDirectoryStorageResourceContainer;
                 ShareFileStorageResourceOptions destinationOptions = destinationStorageResourceContainer.ResourceOptions;
-                // destination must be SMB
-                if ((!destinationOptions?.IsNfs ?? true))
+                // both source and destination must be SMB
+                if ((!ResourceOptions?.IsNfs ?? true) && (!destinationOptions?.IsNfs ?? true))
                 {
                     traits = ShareFileTraits.Attributes;
                     if (destinationOptions?.FilePermissions ?? false)
