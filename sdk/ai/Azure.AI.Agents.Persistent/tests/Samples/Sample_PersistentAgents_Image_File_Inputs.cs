@@ -57,7 +57,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // The file might be an image or any relevant binary.
             // Make sure the server or container is set up for "Agents" usage if required.
-            PersistentAgentFile uploadedFile = await client.Files.UploadFileAsync(
+            PersistentAgentFileInfo uploadedFile = await client.PersistentAgentsFiles.UploadFileAsync(
                 filePath: pathToImage,
                 purpose: PersistentAgentFilePurpose.Agents
             );
@@ -171,7 +171,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // The file might be an image or any relevant binary.
             // Make sure the server or container is set up for "Agents" usage if required.
-            PersistentAgentFile uploadedFile = client.Files.UploadFile(
+            PersistentAgentFileInfo uploadedFile = client.PersistentAgentsFiles.UploadFile(
                 filePath: pathToImage,
                 purpose: PersistentAgentFilePurpose.Agents
             );

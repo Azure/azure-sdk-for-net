@@ -20,7 +20,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="filePath"> The local file path. </param>
         /// <param name="purpose"> The intended purpose of the uploaded file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PersistentAgentFile> UploadFile(
+        public virtual Response<PersistentAgentFileInfo> UploadFile(
             string filePath,
             PersistentAgentFilePurpose purpose,
             CancellationToken cancellationToken = default)
@@ -37,7 +37,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="filePath"> The local file path. </param>
         /// <param name="purpose"> The intended purpose of the uploaded file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PersistentAgentFile>> UploadFileAsync(
+        public virtual async Task<Response<PersistentAgentFileInfo>> UploadFileAsync(
             string filePath,
             PersistentAgentFilePurpose purpose,
             CancellationToken cancellationToken = default)
@@ -54,7 +54,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="filename"> The name of the file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<PersistentAgentFile>> UploadFileAsync(Stream data, PersistentAgentFilePurpose purpose, string filename, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersistentAgentFileInfo>> UploadFileAsync(Stream data, PersistentAgentFilePurpose purpose, string filename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNullOrEmpty(filename, nameof(filename));
@@ -64,7 +64,7 @@ namespace Azure.AI.Agents.Persistent
             using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UploadFileAsync(content, content.ContentType, context).ConfigureAwait(false);
-            return Response.FromValue(PersistentAgentFile.FromResponse(response), response);
+            return Response.FromValue(PersistentAgentFileInfo.FromResponse(response), response);
         }
 
         /// <summary> Uploads a file for use by other operations. </summary>
@@ -73,7 +73,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="filename"> The name of the file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<PersistentAgentFile> UploadFile(Stream data, PersistentAgentFilePurpose purpose, string filename, CancellationToken cancellationToken = default)
+        public virtual Response<PersistentAgentFileInfo> UploadFile(Stream data, PersistentAgentFilePurpose purpose, string filename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNullOrEmpty(filename, nameof(filename));
@@ -83,41 +83,41 @@ namespace Azure.AI.Agents.Persistent
             using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UploadFile(content, content.ContentType, context);
-            return Response.FromValue(PersistentAgentFile.FromResponse(response), response);
+            return Response.FromValue(PersistentAgentFileInfo.FromResponse(response), response);
         }
 
         /// <summary> Uploads a file for use by other operations. </summary>
         /// <param name="body"> Multipart body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        internal virtual async Task<Response<PersistentAgentFile>> UploadFileAsync(UploadFileRequest body, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<PersistentAgentFileInfo>> UploadFileAsync(UploadFileRequest body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
             using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UploadFileAsync(content, content.ContentType, context).ConfigureAwait(false);
-            return Response.FromValue(PersistentAgentFile.FromResponse(response), response);
+            return Response.FromValue(PersistentAgentFileInfo.FromResponse(response), response);
         }
 
         /// <summary> Uploads a file for use by other operations. </summary>
         /// <param name="body"> Multipart body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        internal virtual Response<PersistentAgentFile> UploadFile(UploadFileRequest body, CancellationToken cancellationToken = default)
+        internal virtual Response<PersistentAgentFileInfo> UploadFile(UploadFileRequest body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
             using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UploadFile(content, content.ContentType, context);
-            return Response.FromValue(PersistentAgentFile.FromResponse(response), response);
+            return Response.FromValue(PersistentAgentFileInfo.FromResponse(response), response);
         }
 
         /// <summary> Returns a list of files that belong to the user's organization. </summary>
         /// <param name="purpose"> Limits files in the response to those with the specified purpose. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<PersistentAgentFile>> GetFiles(PersistentAgentFilePurpose? purpose = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<PersistentAgentFileInfo>> GetFiles(PersistentAgentFilePurpose? purpose = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.GetFiles");
             scope.Start();
@@ -128,7 +128,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Returns a list of files that belong to the user's organization. </summary>
         /// <param name="purpose"> Limits files in the response to those with the specified purpose. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyList<PersistentAgentFile>>> GetFilesAsync(
+        public virtual async Task<Response<IReadOnlyList<PersistentAgentFileInfo>>> GetFilesAsync(
             PersistentAgentFilePurpose? purpose = null,
             CancellationToken cancellationToken = default)
         {

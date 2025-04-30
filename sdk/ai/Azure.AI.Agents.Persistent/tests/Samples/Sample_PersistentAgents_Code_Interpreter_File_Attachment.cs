@@ -40,7 +40,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_File_Attachment : 
         System.IO.File.WriteAllText(
             path: "sample_file_for_upload.txt",
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-        PersistentAgentFile uploadedAgentFile = await client.Files.UploadFileAsync(
+        PersistentAgentFileInfo uploadedAgentFile = await client.PersistentAgentsFiles.UploadFileAsync(
             filePath: "sample_file_for_upload.txt",
             purpose: PersistentAgentFilePurpose.Agents);
         var fileId = uploadedAgentFile.Id;
@@ -115,7 +115,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_File_Attachment : 
         System.IO.File.WriteAllText(
             path: "sample_file_for_upload.txt",
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-        PersistentAgentFile uploadedAgentFile = client.Files.UploadFile(
+        PersistentAgentFileInfo uploadedAgentFile = client.PersistentAgentsFiles.UploadFile(
             filePath: "sample_file_for_upload.txt",
             purpose: PersistentAgentFilePurpose.Agents);
         var fileId = uploadedAgentFile.Id;

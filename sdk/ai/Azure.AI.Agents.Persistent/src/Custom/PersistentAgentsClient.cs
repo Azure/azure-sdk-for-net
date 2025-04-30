@@ -110,7 +110,7 @@ namespace Azure.AI.Agents.Persistent
         }
 
         public PersistentAgentsAdministrationClient AgentsAdministration { get => _client; }
-        public PersistentAgentsFilesClient Files { get => _client.GetPersistentAgentsFilesClient(); }
+        public PersistentAgentsFilesClient PersistentAgentsFiles { get => _client.GetPersistentAgentsFilesClient(); }
         public ThreadMessagesClient Messages { get => _client.GetThreadMessagesClient();}
         public ThreadsClient Threads { get => _client.GetThreadsClient(); }
         public ThreadRunsClient ThreadRuns { get => _client.GetThreadRunsClient(); }

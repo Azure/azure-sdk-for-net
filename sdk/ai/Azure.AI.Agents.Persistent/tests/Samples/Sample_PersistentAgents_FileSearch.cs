@@ -33,7 +33,7 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
         System.IO.File.WriteAllText(
             path: "sample_file_for_upload.txt",
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-        PersistentAgentFile uploadedAgentFile = await client.Files.UploadFileAsync(
+        PersistentAgentFileInfo uploadedAgentFile = await client.PersistentAgentsFiles.UploadFileAsync(
             filePath: "sample_file_for_upload.txt",
             purpose: PersistentAgentFilePurpose.Agents);
         Dictionary<string, string> fileIds = new()
@@ -95,7 +95,7 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
         #endregion
         #region Snippet:AgentsFilesSearchExample_Cleanup
         await client.VectorStores.DeleteVectorStoreAsync(vectorStore.Id);
-        await client.Files.DeleteFileAsync(uploadedAgentFile.Id);
+        await client.PersistentAgentsFiles.DeleteFileAsync(uploadedAgentFile.Id);
         await client.Threads.DeleteThreadAsync(thread.Id);
         await client.AgentsAdministration.DeleteAgentAsync(agent.Id);
         #endregion
@@ -118,7 +118,7 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
         System.IO.File.WriteAllText(
             path: "sample_file_for_upload.txt",
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-        PersistentAgentFile uploadedAgentFile = client.Files.UploadFile(
+        PersistentAgentFileInfo uploadedAgentFile = client.PersistentAgentsFiles.UploadFile(
             filePath: "sample_file_for_upload.txt",
             purpose: PersistentAgentFilePurpose.Agents);
         Dictionary<string, string> fileIds = new()
@@ -180,7 +180,7 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
         #endregion
         #region Snippet:AgentsFilesSearchExample_Cleanup_Sync
         client.VectorStores.DeleteVectorStore(vectorStore.Id);
-        client.Files.DeleteFile(uploadedAgentFile.Id);
+        client.PersistentAgentsFiles.DeleteFile(uploadedAgentFile.Id);
         client.Threads.DeleteThread(thread.Id);
         client.AgentsAdministration.DeleteAgent(agent.Id);
         #endregion

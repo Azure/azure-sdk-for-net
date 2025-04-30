@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Agents.Persistent
 {
-    public partial class PersistentAgentFile : IUtf8JsonSerializable, IJsonModel<PersistentAgentFile>
+    public partial class PersistentAgentFileInfo : IUtf8JsonSerializable, IJsonModel<PersistentAgentFileInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PersistentAgentFile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PersistentAgentFileInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PersistentAgentFile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PersistentAgentFileInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PersistentAgentFile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PersistentAgentFileInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PersistentAgentFile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PersistentAgentFileInfo)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("object"u8);
@@ -73,19 +73,19 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
-        PersistentAgentFile IJsonModel<PersistentAgentFile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PersistentAgentFileInfo IJsonModel<PersistentAgentFileInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PersistentAgentFile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PersistentAgentFileInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PersistentAgentFile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PersistentAgentFileInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePersistentAgentFile(document.RootElement, options);
+            return DeserializePersistentAgentFileInfo(document.RootElement, options);
         }
 
-        internal static PersistentAgentFile DeserializePersistentAgentFile(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PersistentAgentFileInfo DeserializePersistentAgentFileInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -155,7 +155,7 @@ namespace Azure.AI.Agents.Persistent
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PersistentAgentFile(
+            return new PersistentAgentFileInfo(
                 @object,
                 id,
                 bytes,
@@ -167,43 +167,43 @@ namespace Azure.AI.Agents.Persistent
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PersistentAgentFile>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PersistentAgentFileInfo>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PersistentAgentFile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PersistentAgentFileInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PersistentAgentFile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PersistentAgentFileInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PersistentAgentFile IPersistableModel<PersistentAgentFile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PersistentAgentFileInfo IPersistableModel<PersistentAgentFileInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PersistentAgentFile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PersistentAgentFileInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePersistentAgentFile(document.RootElement, options);
+                        return DeserializePersistentAgentFileInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PersistentAgentFile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PersistentAgentFileInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PersistentAgentFile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PersistentAgentFileInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static PersistentAgentFile FromResponse(Response response)
+        internal static PersistentAgentFileInfo FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePersistentAgentFile(document.RootElement);
+            return DeserializePersistentAgentFileInfo(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

@@ -629,13 +629,13 @@ namespace Azure.AI.Agents.Persistent.Tests
             PersistentAgentsClient client = GetClient();
             VectorStore vectorStore;
 
-            PersistentAgentFile fileDataSource = null;
+            PersistentAgentFileInfo fileDataSource = null;
             VectorStoreDataSource vectorStoreDataSource = null;
             VectorStoreConfiguration vectorStoreConf = null;
             List<string> fileIds = null;
             if (useFileSource)
             {
-                fileDataSource = await client.Files.UploadFileAsync(GetFile(), PersistentAgentFilePurpose.Agents);
+                fileDataSource = await client.PersistentAgentsFiles.UploadFileAsync(GetFile(), PersistentAgentFilePurpose.Agents);
                 fileIds = [ fileDataSource.Id ];
             }
             else
@@ -765,7 +765,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             string fileId = default;
             if (useFileSource)
             {
-                PersistentAgentFile fileDataSource = await client.Files.UploadFileAsync(GetFile(), PersistentAgentFilePurpose.Agents);
+                PersistentAgentFileInfo fileDataSource = await client.PersistentAgentsFiles.UploadFileAsync(GetFile(), PersistentAgentFilePurpose.Agents);
                 fileId = fileDataSource.Id;
                 attachment = new MessageAttachment(fileDataSource.Id, tools);
             }
@@ -825,7 +825,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             CodeInterpreterToolResource toolRes = new();
             if (useFileSource)
             {
-                PersistentAgentFile fileDataSource = await client.Files.UploadFileAsync(GetFile(), PersistentAgentFilePurpose.Agents);
+                PersistentAgentFileInfo fileDataSource = await client.PersistentAgentsFiles.UploadFileAsync(GetFile(), PersistentAgentFilePurpose.Agents);
                 toolRes.FileIds.Add(fileDataSource.Id);
             }
             else
@@ -1104,7 +1104,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             };
 
             PersistentAgentsClient client = GetClient();
-            PersistentAgentFile fileDataSource = await client.Files.UploadFileAsync(file.FullName, PersistentAgentFilePurpose.Agents);
+            PersistentAgentFileInfo fileDataSource = await client.PersistentAgentsFiles.UploadFileAsync(file.FullName, PersistentAgentFilePurpose.Agents);
 
             CodeInterpreterToolResource cdResource = new();
             cdResource.FileIds.Add(fileDataSource.Id);
@@ -1455,11 +1455,11 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
 
             // Remove all files
-            IReadOnlyList<PersistentAgentFile> files = client.Files.GetFiles().Value;
-            foreach (PersistentAgentFile af in files)
+            IReadOnlyList<PersistentAgentFileInfo> files = client.PersistentAgentsFiles.GetFiles().Value;
+            foreach (PersistentAgentFileInfo af in files)
             {
                 if (af.Filename.Equals(FILE_NAME) || af.Filename.Equals(FILE_NAME2))
-                    client.Files.DeleteFile(af.Id);
+                    client.PersistentAgentsFiles.DeleteFile(af.Id);
             }
 
             // Remove all vector stores

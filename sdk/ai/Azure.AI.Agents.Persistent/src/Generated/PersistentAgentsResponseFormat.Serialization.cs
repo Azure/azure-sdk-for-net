@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Agents.Persistent
 {
-    public partial class PersistentAgentsApiResponseFormat : IUtf8JsonSerializable, IJsonModel<PersistentAgentsApiResponseFormat>
+    public partial class PersistentAgentsResponseFormat : IUtf8JsonSerializable, IJsonModel<PersistentAgentsResponseFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PersistentAgentsApiResponseFormat>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PersistentAgentsResponseFormat>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PersistentAgentsApiResponseFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PersistentAgentsResponseFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PersistentAgentsApiResponseFormat>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PersistentAgentsResponseFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PersistentAgentsApiResponseFormat)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PersistentAgentsResponseFormat)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Type))
@@ -56,19 +56,19 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
-        PersistentAgentsApiResponseFormat IJsonModel<PersistentAgentsApiResponseFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PersistentAgentsResponseFormat IJsonModel<PersistentAgentsResponseFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PersistentAgentsApiResponseFormat>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PersistentAgentsResponseFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PersistentAgentsApiResponseFormat)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PersistentAgentsResponseFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePersistentAgentsApiResponseFormat(document.RootElement, options);
+            return DeserializePersistentAgentsResponseFormat(document.RootElement, options);
         }
 
-        internal static PersistentAgentsApiResponseFormat DeserializePersistentAgentsApiResponseFormat(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PersistentAgentsResponseFormat DeserializePersistentAgentsResponseFormat(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -96,46 +96,46 @@ namespace Azure.AI.Agents.Persistent
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PersistentAgentsApiResponseFormat(type, serializedAdditionalRawData);
+            return new PersistentAgentsResponseFormat(type, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PersistentAgentsApiResponseFormat>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PersistentAgentsResponseFormat>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PersistentAgentsApiResponseFormat>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PersistentAgentsResponseFormat>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PersistentAgentsApiResponseFormat)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PersistentAgentsResponseFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PersistentAgentsApiResponseFormat IPersistableModel<PersistentAgentsApiResponseFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PersistentAgentsResponseFormat IPersistableModel<PersistentAgentsResponseFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PersistentAgentsApiResponseFormat>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PersistentAgentsResponseFormat>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePersistentAgentsApiResponseFormat(document.RootElement, options);
+                        return DeserializePersistentAgentsResponseFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PersistentAgentsApiResponseFormat)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PersistentAgentsResponseFormat)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PersistentAgentsApiResponseFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PersistentAgentsResponseFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static PersistentAgentsApiResponseFormat FromResponse(Response response)
+        internal static PersistentAgentsResponseFormat FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePersistentAgentsApiResponseFormat(document.RootElement);
+            return DeserializePersistentAgentsResponseFormat(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

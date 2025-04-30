@@ -17,8 +17,7 @@ namespace Azure.AI.Agents.Persistent;
  */
 
 [CodeGenSerialization(nameof(Size), DeserializationValueHook = nameof(DeserializeNullableSize))]
-[CodeGenModel("OpenAIFile")]
-public partial class PersistentAgentFile
+public partial class PersistentAgentFileInfo
 {
     /*
     * CUSTOM CODE DESCRIPTION: This change allows us to complete the customization of hiding an unnecessary "Object" discriminator.

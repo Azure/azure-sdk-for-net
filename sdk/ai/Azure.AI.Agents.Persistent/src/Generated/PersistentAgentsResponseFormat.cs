@@ -14,7 +14,7 @@ namespace Azure.AI.Agents.Persistent
     /// An object describing the expected output of the model. If `json_object` only `function` type `tools` are allowed to be passed to the Run.
     /// If `text` the model can return text or any value needed.
     /// </summary>
-    public partial class PersistentAgentsApiResponseFormat
+    public partial class PersistentAgentsResponseFormat
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,15 +48,15 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PersistentAgentsApiResponseFormat"/>. </summary>
-        public PersistentAgentsApiResponseFormat()
+        /// <summary> Initializes a new instance of <see cref="PersistentAgentsResponseFormat"/>. </summary>
+        public PersistentAgentsResponseFormat()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PersistentAgentsApiResponseFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PersistentAgentsResponseFormat"/>. </summary>
         /// <param name="type"> Must be one of `text` or `json_object`. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PersistentAgentsApiResponseFormat(ResponseFormat? type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PersistentAgentsResponseFormat(ResponseFormat? type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             _serializedAdditionalRawData = serializedAdditionalRawData;

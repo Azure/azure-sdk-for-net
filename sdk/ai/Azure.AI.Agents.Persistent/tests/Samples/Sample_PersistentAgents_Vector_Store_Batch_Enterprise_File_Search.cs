@@ -99,7 +99,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_Enterprise_File_
             after = storeFiles.LastId;
             foreach (VectorStoreFile fle in storeFiles.Data)
             {
-                PersistentAgentFile agentFile = await client.Files.GetFileAsync(fle.Id);
+                PersistentAgentFileInfo agentFile = await client.PersistentAgentsFiles.GetFileAsync(fle.Id);
                 Uri uriFile = new(agentFile.Filename);
                 dtFiles.Add(fle.Id, uriFile.Segments[uriFile.Segments.Length - 1]);
             }
@@ -207,7 +207,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_Enterprise_File_
             after = storeFiles.LastId;
             foreach (VectorStoreFile fle in storeFiles.Data)
             {
-                PersistentAgentFile agentFile = client.Files.GetFile(fle.Id);
+                PersistentAgentFileInfo agentFile = client.PersistentAgentsFiles.GetFile(fle.Id);
                 Uri uriFile = new(agentFile.Filename);
                 dtFiles.Add(fle.Id, uriFile.Segments[uriFile.Segments.Length - 1]);
             }

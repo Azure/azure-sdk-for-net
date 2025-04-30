@@ -39,7 +39,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_File_Search : Sa
             name: "sample_vector_store"
         );
 
-        PersistentAgentFile file = await client.Files.UploadFileAsync(filePath, PersistentAgentFilePurpose.Agents);
+        PersistentAgentFileInfo file = await client.PersistentAgentsFiles.UploadFileAsync(filePath, PersistentAgentFilePurpose.Agents);
         Dictionary<string, string> dtReferences = new()
         {
             {file.Id, Path.GetFileName(file.Filename)}
@@ -127,7 +127,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_File_Search : Sa
             name: "sample_vector_store"
         );
 
-        PersistentAgentFile file = client.Files.UploadFile(filePath, PersistentAgentFilePurpose.Agents);
+        PersistentAgentFileInfo file = client.PersistentAgentsFiles.UploadFile(filePath, PersistentAgentFilePurpose.Agents);
         Dictionary<string, string> dtReferences = new()
         {
             {file.Id, Path.GetFileName(file.Filename)}

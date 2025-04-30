@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Persistent;
  * visibility adjustments.
  */
 
-public static partial class AIClientModelFactory
+public static partial class AIAgentsPersistentModelFactory
 {
     /// <summary> Initializes a new instance of <see cref="Azure.AI.Agents.Persistent.PersistentAgent"/>. </summary>
     /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
@@ -68,7 +68,7 @@ public static partial class AIClientModelFactory
             serializedAdditionalRawData: null);
     }
 
-    /// <summary> Initializes a new instance of <see cref="PersistentAgentThread"/>. </summary>
+    /// <summary> Initializes a new instance of <see cref="o:PersistentAgentThread"/>. </summary>
     /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
     /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
     /// <param name="toolResources">
@@ -136,16 +136,16 @@ public static partial class AIClientModelFactory
         return new ThreadRun(id, @object: null, threadId, agentId, status, requiredAction, lastError, model, instructions, tools.ToList(), createdAt, expiresAt, startedAt, completedAt, cancelledAt, failedAt, incompleteDetails, usage, temperature, topP, maxPromptTokens, maxCompletionTokens, truncationStrategy, toolChoice, responseFormat, metadata, toolResources, parallelToolCalls ?? true, serializedAdditionalRawData: null);
     }
 
-    /// <summary> Initializes a new instance of <see cref="Azure.AI.Agents.Persistent.PersistentAgentFile"/>. </summary>
+    /// <summary> Initializes a new instance of <see cref="Azure.AI.Agents.Persistent.PersistentAgentFileInfo"/>. </summary>
     /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
     /// <param name="size"> The size of the file, in bytes. </param>
     /// <param name="filename"> The name of the file. </param>
     /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
     /// <param name="purpose"> The intended purpose of a file. </param>
-    /// <returns> A new <see cref="Azure.AI.Agents.Persistent.PersistentAgentFile"/> instance for mocking. </returns>
-    public static PersistentAgentFile PersistentAgentFile(string id = null, int size = default, string filename = null, DateTimeOffset createdAt = default, PersistentAgentFilePurpose purpose = default)
+    /// <returns> A new <see cref="Azure.AI.Agents.Persistent.PersistentAgentFileInfo"/> instance for mocking. </returns>
+    public static PersistentAgentFileInfo PersistentAgentFile(string id = null, int size = default, string filename = null, DateTimeOffset createdAt = default, PersistentAgentFilePurpose purpose = default)
     {
-        return new PersistentAgentFile(id, size, filename, createdAt, purpose);
+        return new PersistentAgentFileInfo(id, size, filename, createdAt, purpose);
     }
 
     /// <summary> Initializes a new instance of <see cref="Azure.AI.Agents.Persistent.RunStep"/>. </summary>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Represents an agent that can call the model and use tools. </summary>
-    public partial class PersistentAgentFile
+    public partial class PersistentAgentFileInfo
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,14 +45,14 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PersistentAgentFile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PersistentAgentFileInfo"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="size"> The size of the file, in bytes. </param>
         /// <param name="filename"> The name of the file. </param>
         /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
         /// <param name="purpose"> The intended purpose of a file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="filename"/> is null. </exception>
-        internal PersistentAgentFile(string id, int size, string filename, DateTimeOffset createdAt, PersistentAgentFilePurpose purpose)
+        internal PersistentAgentFileInfo(string id, int size, string filename, DateTimeOffset createdAt, PersistentAgentFilePurpose purpose)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(filename, nameof(filename));
@@ -64,7 +64,7 @@ namespace Azure.AI.Agents.Persistent
             Purpose = purpose;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PersistentAgentFile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PersistentAgentFileInfo"/>. </summary>
         /// <param name="object"> The object type, which is always 'file'. </param>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="size"> The size of the file, in bytes. </param>
@@ -74,7 +74,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="status"> The state of the file. This field is available in Azure OpenAI only. </param>
         /// <param name="statusDetails"> The error message with details in case processing of this file failed. This field is available in Azure OpenAI only. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PersistentAgentFile(string @object, string id, int size, string filename, DateTimeOffset createdAt, PersistentAgentFilePurpose purpose, FileState? status, string statusDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PersistentAgentFileInfo(string @object, string id, int size, string filename, DateTimeOffset createdAt, PersistentAgentFilePurpose purpose, FileState? status, string statusDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Object = @object;
             Id = id;
@@ -87,8 +87,8 @@ namespace Azure.AI.Agents.Persistent
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PersistentAgentFile"/> for deserialization. </summary>
-        internal PersistentAgentFile()
+        /// <summary> Initializes a new instance of <see cref="PersistentAgentFileInfo"/> for deserialization. </summary>
+        internal PersistentAgentFileInfo()
         {
         }
 

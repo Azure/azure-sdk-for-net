@@ -333,13 +333,13 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PersistentAgentFile>> GetFileAsync(string fileId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersistentAgentFileInfo>> GetFileAsync(string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetFileAsync(fileId, context).ConfigureAwait(false);
-            return Response.FromValue(PersistentAgentFile.FromResponse(response), response);
+            return Response.FromValue(PersistentAgentFileInfo.FromResponse(response), response);
         }
 
         /// <summary> Returns information about a specific file. Does not retrieve file content. </summary>
@@ -347,13 +347,13 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PersistentAgentFile> GetFile(string fileId, CancellationToken cancellationToken = default)
+        public virtual Response<PersistentAgentFileInfo> GetFile(string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetFile(fileId, context);
-            return Response.FromValue(PersistentAgentFile.FromResponse(response), response);
+            return Response.FromValue(PersistentAgentFileInfo.FromResponse(response), response);
         }
 
         /// <summary>
