@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADnsPrivateViewByName()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/dnsPrivateViews_get.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2025-03-01/examples/dnsPrivateViews_get.json
             // this example is just showing the usage of "DnsPrivateViews_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListDnsPrivateViewsByLocation()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/dnsPrivateViews_listByLocation.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2025-03-01/examples/dnsPrivateViews_listByLocation.json
             // this example is just showing the usage of "DnsPrivateViews_ListByLocation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetADnsPrivateViewByName()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/dnsPrivateViews_get.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2025-03-01/examples/dnsPrivateViews_get.json
             // this example is just showing the usage of "DnsPrivateViews_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetADnsPrivateViewByName()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/dnsPrivateViews_get.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2025-03-01/examples/dnsPrivateViews_get.json
             // this example is just showing the usage of "DnsPrivateViews_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

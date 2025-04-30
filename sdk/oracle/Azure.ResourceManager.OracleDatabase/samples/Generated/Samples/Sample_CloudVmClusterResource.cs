@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVMCluster()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/vmClusters_get.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2025-03-01/examples/vmClusters_get.json
             // this example is just showing the usage of "CloudVmClusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteVMCluster()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/vmClusters_delete.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2025-03-01/examples/vmClusters_delete.json
             // this example is just showing the usage of "CloudVmClusters_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchVMCluster()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/vmClusters_patch.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2025-03-01/examples/vmClusters_patch.json
             // this example is just showing the usage of "CloudVmClusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task AddVms_AddVMsToVMCluster()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/vmClusters_addVms.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2025-03-01/examples/vmClusters_addVms.json
             // this example is just showing the usage of "CloudVmClusters_AddVms" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateIPAddresses_ListPrivateIPAddressesForVMCluster()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/vmClusters_listPrivateIpAddresses.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2025-03-01/examples/vmClusters_listPrivateIpAddresses.json
             // this example is just showing the usage of "CloudVmClusters_ListPrivateIPAddresses" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RemoveVms_RemoveVMsFromVMCluster()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/vmClusters_removeVms.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2025-03-01/examples/vmClusters_removeVms.json
             // this example is just showing the usage of "CloudVmClusters_RemoveVms" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

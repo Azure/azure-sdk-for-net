@@ -48,14 +48,23 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Initializes a new instance of <see cref="OracleDnsPrivateViewProperties"/>. </summary>
         /// <param name="ocid"> The OCID of the view. </param>
+        /// <param name="displayName"> The display name of the view resource. </param>
         /// <param name="isProtected"> A Boolean flag indicating whether or not parts of the resource are unable to be explicitly managed. </param>
+        /// <param name="lifecycleState"> Views lifecycleState. </param>
         /// <param name="self"> The canonical absolute URL of the resource. </param>
         /// <param name="createdOn"> views timeCreated. </param>
         /// <param name="updatedOn"> views timeCreated. </param>
-        public OracleDnsPrivateViewProperties(ResourceIdentifier ocid, bool isProtected, string self, DateTimeOffset createdOn, DateTimeOffset updatedOn)
+        /// <exception cref="ArgumentNullException"> <paramref name="ocid"/>, <paramref name="displayName"/> or <paramref name="self"/> is null. </exception>
+        public OracleDnsPrivateViewProperties(ResourceIdentifier ocid, string displayName, bool isProtected, DnsPrivateViewsLifecycleState lifecycleState, string self, DateTimeOffset createdOn, DateTimeOffset updatedOn)
         {
+            Argument.AssertNotNull(ocid, nameof(ocid));
+            Argument.AssertNotNull(displayName, nameof(displayName));
+            Argument.AssertNotNull(self, nameof(self));
+
             Ocid = ocid;
+            DisplayName = displayName;
             IsProtected = isProtected;
+            LifecycleState = lifecycleState;
             Self = self;
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
@@ -71,7 +80,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="updatedOn"> views timeCreated. </param>
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OracleDnsPrivateViewProperties(ResourceIdentifier ocid, string displayName, bool isProtected, DnsPrivateViewsLifecycleState? lifecycleState, string self, DateTimeOffset createdOn, DateTimeOffset updatedOn, OracleDatabaseResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OracleDnsPrivateViewProperties(ResourceIdentifier ocid, string displayName, bool isProtected, DnsPrivateViewsLifecycleState lifecycleState, string self, DateTimeOffset createdOn, DateTimeOffset updatedOn, OracleDatabaseResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Ocid = ocid;
             DisplayName = displayName;
@@ -90,19 +99,19 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> The OCID of the view. </summary>
-        public ResourceIdentifier Ocid { get; }
+        public ResourceIdentifier Ocid { get; set; }
         /// <summary> The display name of the view resource. </summary>
-        public string DisplayName { get; }
+        public string DisplayName { get; set; }
         /// <summary> A Boolean flag indicating whether or not parts of the resource are unable to be explicitly managed. </summary>
-        public bool IsProtected { get; }
+        public bool IsProtected { get; set; }
         /// <summary> Views lifecycleState. </summary>
-        public DnsPrivateViewsLifecycleState? LifecycleState { get; }
+        public DnsPrivateViewsLifecycleState LifecycleState { get; set; }
         /// <summary> The canonical absolute URL of the resource. </summary>
-        public string Self { get; }
+        public string Self { get; set; }
         /// <summary> views timeCreated. </summary>
-        public DateTimeOffset CreatedOn { get; }
+        public DateTimeOffset CreatedOn { get; set; }
         /// <summary> views timeCreated. </summary>
-        public DateTimeOffset UpdatedOn { get; }
+        public DateTimeOffset UpdatedOn { get; set; }
         /// <summary> Azure resource provisioning state. </summary>
         public OracleDatabaseResourceProvisioningState? ProvisioningState { get; }
     }

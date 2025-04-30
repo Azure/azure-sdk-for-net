@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDbNode()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/dbNodes_get.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2025-03-01/examples/dbNodes_get.json
             // this example is just showing the usage of "DbNodes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Action_DbNodesAction()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/dbNodes_action.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2025-03-01/examples/dbNodes_action.json
             // this example is just showing the usage of "DbNodes_Action" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Action_VMActionsOnDbNodesOfVMCluster()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/dbNodes_action.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2025-03-01/examples/dbNodes_action.json
             // this example is just showing the usage of "DbNodes_Action" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

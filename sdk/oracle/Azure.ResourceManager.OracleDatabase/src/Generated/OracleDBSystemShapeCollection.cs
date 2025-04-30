@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary>
-        /// List DbSystemShape resources by Location
+        /// List DbSystemShape resources by SubscriptionLocationResource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -166,17 +166,18 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OracleDBSystemShapeResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OracleDBSystemShapeResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OracleDBSystemShapeResource> GetAllAsync(string zone = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleDBSystemShapeDBSystemShapesRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleDBSystemShapeDBSystemShapesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleDBSystemShapeDBSystemShapesRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location), zone);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleDBSystemShapeDBSystemShapesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), zone);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OracleDBSystemShapeResource(Client, OracleDBSystemShapeData.DeserializeOracleDBSystemShapeData(e)), _oracleDBSystemShapeDBSystemShapesClientDiagnostics, Pipeline, "OracleDBSystemShapeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// List DbSystemShape resources by Location
+        /// List DbSystemShape resources by SubscriptionLocationResource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -188,7 +189,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -196,12 +197,13 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OracleDBSystemShapeResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OracleDBSystemShapeResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<OracleDBSystemShapeResource> GetAll(string zone = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleDBSystemShapeDBSystemShapesRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleDBSystemShapeDBSystemShapesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleDBSystemShapeDBSystemShapesRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location), zone);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleDBSystemShapeDBSystemShapesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), zone);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OracleDBSystemShapeResource(Client, OracleDBSystemShapeData.DeserializeOracleDBSystemShapeData(e)), _oracleDBSystemShapeDBSystemShapesClientDiagnostics, Pipeline, "OracleDBSystemShapeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -218,7 +220,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -261,7 +263,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -304,7 +306,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -349,7 +351,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

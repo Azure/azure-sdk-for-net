@@ -141,6 +141,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("localDisasterRecoveryType"u8);
                 writer.WriteStringValue(LocalDisasterRecoveryType.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(TimeDisasterRecoveryRoleChanged))
+            {
+                writer.WritePropertyName("timeDisasterRecoveryRoleChanged"u8);
+                writer.WriteStringValue(TimeDisasterRecoveryRoleChanged.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(RemoteDisasterRecoveryConfiguration))
+            {
+                writer.WritePropertyName("remoteDisasterRecoveryConfiguration"u8);
+                writer.WriteObjectValue(RemoteDisasterRecoveryConfiguration, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(LocalStandbyDB))
             {
                 writer.WritePropertyName("localStandbyDb"u8);
@@ -478,6 +488,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 switch (discriminator.GetString())
                 {
                     case "Clone": return AutonomousDatabaseCloneProperties.DeserializeAutonomousDatabaseCloneProperties(element, options);
+                    case "CloneFromBackupTimestamp": return AutonomousDatabaseFromBackupTimestampProperties.DeserializeAutonomousDatabaseFromBackupTimestampProperties(element, options);
+                    case "CrossRegionDisasterRecovery": return AutonomousDatabaseCrossRegionDisasterRecoveryProperties.DeserializeAutonomousDatabaseCrossRegionDisasterRecoveryProperties(element, options);
                     case "Regular": return AutonomousDatabaseProperties.DeserializeAutonomousDatabaseProperties(element, options);
                 }
             }

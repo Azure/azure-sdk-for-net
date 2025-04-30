@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2025-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListByCloudExadataInfrastructureRequestUri(string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename)
+        internal RequestUriBuilder CreateListByParentRequestUri(string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return uri;
         }
 
-        internal HttpMessage CreateListByCloudExadataInfrastructureRequest(string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename)
+        internal HttpMessage CreateListByParentRequest(string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudexadatainfrastructurename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudexadatainfrastructurename"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DBServerListResult>> ListByCloudExadataInfrastructureAsync(string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename, CancellationToken cancellationToken = default)
+        public async Task<Response<DBServerListResult>> ListByParentAsync(string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudexadatainfrastructurename, nameof(cloudexadatainfrastructurename));
 
-            using var message = CreateListByCloudExadataInfrastructureRequest(subscriptionId, resourceGroupName, cloudexadatainfrastructurename);
+            using var message = CreateListByParentRequest(subscriptionId, resourceGroupName, cloudexadatainfrastructurename);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -108,13 +108,13 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudexadatainfrastructurename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudexadatainfrastructurename"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DBServerListResult> ListByCloudExadataInfrastructure(string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename, CancellationToken cancellationToken = default)
+        public Response<DBServerListResult> ListByParent(string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudexadatainfrastructurename, nameof(cloudexadatainfrastructurename));
 
-            using var message = CreateListByCloudExadataInfrastructureRequest(subscriptionId, resourceGroupName, cloudexadatainfrastructurename);
+            using var message = CreateListByParentRequest(subscriptionId, resourceGroupName, cloudexadatainfrastructurename);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        internal RequestUriBuilder CreateListByCloudExadataInfrastructureNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename)
+        internal RequestUriBuilder CreateListByParentNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return uri;
         }
 
-        internal HttpMessage CreateListByCloudExadataInfrastructureNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename)
+        internal HttpMessage CreateListByParentNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -264,14 +264,14 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudexadatainfrastructurename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudexadatainfrastructurename"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DBServerListResult>> ListByCloudExadataInfrastructureNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename, CancellationToken cancellationToken = default)
+        public async Task<Response<DBServerListResult>> ListByParentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudexadatainfrastructurename, nameof(cloudexadatainfrastructurename));
 
-            using var message = CreateListByCloudExadataInfrastructureNextPageRequest(nextLink, subscriptionId, resourceGroupName, cloudexadatainfrastructurename);
+            using var message = CreateListByParentNextPageRequest(nextLink, subscriptionId, resourceGroupName, cloudexadatainfrastructurename);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -295,14 +295,14 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudexadatainfrastructurename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudexadatainfrastructurename"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DBServerListResult> ListByCloudExadataInfrastructureNextPage(string nextLink, string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename, CancellationToken cancellationToken = default)
+        public Response<DBServerListResult> ListByParentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudexadatainfrastructurename, nameof(cloudexadatainfrastructurename));
 
-            using var message = CreateListByCloudExadataInfrastructureNextPageRequest(nextLink, subscriptionId, resourceGroupName, cloudexadatainfrastructurename);
+            using var message = CreateListByParentNextPageRequest(nextLink, subscriptionId, resourceGroupName, cloudexadatainfrastructurename);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

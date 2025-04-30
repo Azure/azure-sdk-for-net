@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             Argument.AssertNotNull(subnetId, nameof(subnetId));
             Argument.AssertNotNull(displayName, nameof(displayName));
 
+            FileSystemConfigurationDetails = new ChangeTrackingList<FileSystemConfigurationDetails>();
             Hostname = hostname;
             CpuCoreCount = cpuCoreCount;
             CloudExadataInfrastructureId = cloudExadataInfrastructureId;
@@ -87,6 +88,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="listenerPort"> The port number configured for the listener on the cloud VM cluster. </param>
         /// <param name="nodeCount"> The number of nodes in the cloud VM cluster. </param>
         /// <param name="storageSizeInGbs"> The data disk group size to be allocated in GBs per VM. </param>
+        /// <param name="fileSystemConfigurationDetails"> Array of mount path and size. </param>
         /// <param name="dataStorageSizeInTbs"> The data disk group size to be allocated in TBs. </param>
         /// <param name="dbNodeStorageSizeInGbs"> The local node storage to be allocated in GBs. </param>
         /// <param name="memorySizeInGbs"> The memory to be allocated in GBs. </param>
@@ -131,13 +133,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="dbServers"> The list of DB servers. </param>
         /// <param name="compartmentId"> Cluster compartmentId. </param>
         /// <param name="subnetOcid"> Cluster subnet ocid. </param>
+        /// <param name="computeModel"> The compute model of the VM Cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudVmClusterProperties(ResourceIdentifier ocid, long? listenerPort, int? nodeCount, int? storageSizeInGbs, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, DateTimeOffset? createdOn, string lifecycleDetails, string timeZone, ResourceIdentifier zoneId, string hostname, string domain, int cpuCoreCount, float? ocpuCount, string clusterName, int? dataStoragePercentage, bool? isLocalBackupEnabled, ResourceIdentifier cloudExadataInfrastructureId, bool? isSparseDiskgroupEnabled, string systemVersion, IList<string> sshPublicKeys, OracleLicenseModel? licenseModel, CloudVmClusterDiskRedundancy? diskRedundancy, IReadOnlyList<string> scanIPIds, IReadOnlyList<string> vipIds, string scanDnsName, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, ResourceIdentifier scanDnsRecordId, string shape, OracleDatabaseProvisioningState? provisioningState, CloudVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, string giVersion, Uri ociUri, Uri nsgUri, ResourceIdentifier subnetId, string backupSubnetCidr, IList<CloudVmClusterNsgCidr> nsgCidrs, DiagnosticCollectionConfig dataCollectionOptions, string displayName, IList<ResourceIdentifier> computeNodes, ExadataIormConfig iormConfigCache, ResourceIdentifier lastUpdateHistoryEntryId, IList<ResourceIdentifier> dbServers, ResourceIdentifier compartmentId, ResourceIdentifier subnetOcid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudVmClusterProperties(ResourceIdentifier ocid, long? listenerPort, int? nodeCount, int? storageSizeInGbs, IList<FileSystemConfigurationDetails> fileSystemConfigurationDetails, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, DateTimeOffset? createdOn, string lifecycleDetails, string timeZone, ResourceIdentifier zoneId, string hostname, string domain, int cpuCoreCount, float? ocpuCount, string clusterName, int? dataStoragePercentage, bool? isLocalBackupEnabled, ResourceIdentifier cloudExadataInfrastructureId, bool? isSparseDiskgroupEnabled, string systemVersion, IList<string> sshPublicKeys, OracleLicenseModel? licenseModel, CloudVmClusterDiskRedundancy? diskRedundancy, IReadOnlyList<string> scanIPIds, IReadOnlyList<string> vipIds, string scanDnsName, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, ResourceIdentifier scanDnsRecordId, string shape, OracleDatabaseProvisioningState? provisioningState, CloudVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, string giVersion, Uri ociUri, Uri nsgUri, ResourceIdentifier subnetId, string backupSubnetCidr, IList<CloudVmClusterNsgCidr> nsgCidrs, DiagnosticCollectionConfig dataCollectionOptions, string displayName, IList<ResourceIdentifier> computeNodes, ExadataIormConfig iormConfigCache, ResourceIdentifier lastUpdateHistoryEntryId, IList<ResourceIdentifier> dbServers, ResourceIdentifier compartmentId, ResourceIdentifier subnetOcid, AutonomousDatabaseComputeModel? computeModel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Ocid = ocid;
             ListenerPort = listenerPort;
             NodeCount = nodeCount;
             StorageSizeInGbs = storageSizeInGbs;
+            FileSystemConfigurationDetails = fileSystemConfigurationDetails;
             DataStorageSizeInTbs = dataStorageSizeInTbs;
             DBNodeStorageSizeInGbs = dbNodeStorageSizeInGbs;
             MemorySizeInGbs = memorySizeInGbs;
@@ -182,6 +186,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             DBServers = dbServers;
             CompartmentId = compartmentId;
             SubnetOcid = subnetOcid;
+            ComputeModel = computeModel;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -198,6 +203,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public int? NodeCount { get; }
         /// <summary> The data disk group size to be allocated in GBs per VM. </summary>
         public int? StorageSizeInGbs { get; set; }
+        /// <summary> Array of mount path and size. </summary>
+        public IList<FileSystemConfigurationDetails> FileSystemConfigurationDetails { get; }
         /// <summary> The data disk group size to be allocated in TBs. </summary>
         public double? DataStorageSizeInTbs { get; set; }
         /// <summary> The local node storage to be allocated in GBs. </summary>
@@ -286,5 +293,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public ResourceIdentifier CompartmentId { get; }
         /// <summary> Cluster subnet ocid. </summary>
         public ResourceIdentifier SubnetOcid { get; }
+        /// <summary> The compute model of the VM Cluster. </summary>
+        public AutonomousDatabaseComputeModel? ComputeModel { get; }
     }
 }

@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The updatable properties of the AutonomousDatabaseBackup. </summary>
-    internal partial class AutonomousDatabaseBackupUpdateProperties
+    /// <summary> The response of a ExascaleDbNode list operation. </summary>
+    internal partial class ExascaleDBNodeListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +46,35 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseBackupUpdateProperties"/>. </summary>
-        public AutonomousDatabaseBackupUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="ExascaleDBNodeListResult"/>. </summary>
+        /// <param name="value"> The ExascaleDbNode items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ExascaleDBNodeListResult(IEnumerable<ExascaleDBNodeData> value)
         {
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseBackupUpdateProperties"/>. </summary>
-        /// <param name="retentionPeriodInDays"> Retention period, in days, for long-term backups. </param>
+        /// <summary> Initializes a new instance of <see cref="ExascaleDBNodeListResult"/>. </summary>
+        /// <param name="value"> The ExascaleDbNode items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDatabaseBackupUpdateProperties(int? retentionPeriodInDays, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExascaleDBNodeListResult(IReadOnlyList<ExascaleDBNodeData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            RetentionPeriodInDays = retentionPeriodInDays;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Retention period, in days, for long-term backups. </summary>
-        public int? RetentionPeriodInDays { get; set; }
+        /// <summary> Initializes a new instance of <see cref="ExascaleDBNodeListResult"/> for deserialization. </summary>
+        internal ExascaleDBNodeListResult()
+        {
+        }
+
+        /// <summary> The ExascaleDbNode items on this page. </summary>
+        public IReadOnlyList<ExascaleDBNodeData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

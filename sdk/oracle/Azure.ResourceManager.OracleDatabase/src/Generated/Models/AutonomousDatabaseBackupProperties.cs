@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="isRestorable"> Indicates whether the backup can be used to restore the associated Autonomous Database. </param>
         /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
         /// <param name="lifecycleState"> The current state of the backup. </param>
-        /// <param name="retentionPeriodInDays"> Retention period, in days, for long-term backups. </param>
+        /// <param name="retentionPeriodInDays"> Retention period, in days. </param>
         /// <param name="sizeInTbs"> The backup size in terabytes (TB). </param>
         /// <param name="timeAvailableTil"> Timestamp until when the backup will be available. </param>
         /// <param name="timeStarted"> The date and time the backup started. </param>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public string LifecycleDetails { get; }
         /// <summary> The current state of the backup. </summary>
         public AutonomousDatabaseBackupLifecycleState? LifecycleState { get; }
-        /// <summary> Retention period, in days, for long-term backups. </summary>
+        /// <summary> Retention period, in days. </summary>
         public int? RetentionPeriodInDays { get; set; }
         /// <summary> The backup size in terabytes (TB). </summary>
         public double? SizeInTbs { get; }

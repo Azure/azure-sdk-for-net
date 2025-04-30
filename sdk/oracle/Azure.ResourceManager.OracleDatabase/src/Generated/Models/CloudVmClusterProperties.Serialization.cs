@@ -54,6 +54,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("storageSizeInGbs"u8);
                 writer.WriteNumberValue(StorageSizeInGbs.Value);
             }
+            if (Optional.IsCollectionDefined(FileSystemConfigurationDetails))
+            {
+                writer.WritePropertyName("fileSystemConfigurationDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in FileSystemConfigurationDetails)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(DataStorageSizeInTbs))
             {
                 writer.WritePropertyName("dataStorageSizeInTbs"u8);
@@ -290,6 +300,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("subnetOcid"u8);
                 writer.WriteStringValue(SubnetOcid);
             }
+            if (options.Format != "W" && Optional.IsDefined(ComputeModel))
+            {
+                writer.WritePropertyName("computeModel"u8);
+                writer.WriteStringValue(ComputeModel.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -331,6 +346,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             long? listenerPort = default;
             int? nodeCount = default;
             int? storageSizeInGbs = default;
+            IList<FileSystemConfigurationDetails> fileSystemConfigurationDetails = default;
             double? dataStorageSizeInTbs = default;
             int? dbNodeStorageSizeInGbs = default;
             int? memorySizeInGbs = default;
@@ -375,6 +391,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             IList<ResourceIdentifier> dbServers = default;
             ResourceIdentifier compartmentId = default;
             ResourceIdentifier subnetOcid = default;
+            AutonomousDatabaseComputeModel? computeModel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -413,6 +430,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                         continue;
                     }
                     storageSizeInGbs = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("fileSystemConfigurationDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<FileSystemConfigurationDetails> array = new List<FileSystemConfigurationDetails>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Models.FileSystemConfigurationDetails.DeserializeFileSystemConfigurationDetails(item, options));
+                    }
+                    fileSystemConfigurationDetails = array;
                     continue;
                 }
                 if (property.NameEquals("dataStorageSizeInTbs"u8))
@@ -791,6 +822,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     subnetOcid = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("computeModel"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    computeModel = new AutonomousDatabaseComputeModel(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -802,6 +842,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 listenerPort,
                 nodeCount,
                 storageSizeInGbs,
+                fileSystemConfigurationDetails ?? new ChangeTrackingList<FileSystemConfigurationDetails>(),
                 dataStorageSizeInTbs,
                 dbNodeStorageSizeInGbs,
                 memorySizeInGbs,
@@ -846,6 +887,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 dbServers ?? new ChangeTrackingList<ResourceIdentifier>(),
                 compartmentId,
                 subnetOcid,
+                computeModel,
                 serializedAdditionalRawData);
         }
 

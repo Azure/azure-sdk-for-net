@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Initializes a new instance of <see cref="OracleSubscriptionProperties"/>. </summary>
         public OracleSubscriptionProperties()
         {
+            AzureSubscriptionIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OracleSubscriptionProperties"/>. </summary>
@@ -59,8 +60,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="termUnit"> Term Unit. P1Y, P3Y, etc, see Durations https://en.wikipedia.org/wiki/ISO_8601. </param>
         /// <param name="productCode"> Product code for the term unit. </param>
         /// <param name="intent"> Intent for the update operation. </param>
+        /// <param name="azureSubscriptionIds"> Azure subscriptions to be added. </param>
+        /// <param name="addSubscriptionOperationState"> State of the add Azure subscription operation on Oracle subscription. </param>
+        /// <param name="lastOperationStatusDetail"> Status details of the last operation on Oracle subscription. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OracleSubscriptionProperties(OracleSubscriptionProvisioningState? provisioningState, string saasSubscriptionId, ResourceIdentifier cloudAccountId, CloudAccountProvisioningState? cloudAccountState, string termUnit, string productCode, OracleSubscriptionUpdateIntent? intent, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OracleSubscriptionProperties(OracleSubscriptionProvisioningState? provisioningState, string saasSubscriptionId, ResourceIdentifier cloudAccountId, CloudAccountProvisioningState? cloudAccountState, string termUnit, string productCode, OracleSubscriptionUpdateIntent? intent, IReadOnlyList<string> azureSubscriptionIds, AddSubscriptionOperationState? addSubscriptionOperationState, string lastOperationStatusDetail, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             SaasSubscriptionId = saasSubscriptionId;
@@ -69,6 +73,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             TermUnit = termUnit;
             ProductCode = productCode;
             Intent = intent;
+            AzureSubscriptionIds = azureSubscriptionIds;
+            AddSubscriptionOperationState = addSubscriptionOperationState;
+            LastOperationStatusDetail = lastOperationStatusDetail;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -86,5 +93,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public string ProductCode { get; set; }
         /// <summary> Intent for the update operation. </summary>
         public OracleSubscriptionUpdateIntent? Intent { get; set; }
+        /// <summary> Azure subscriptions to be added. </summary>
+        public IReadOnlyList<string> AzureSubscriptionIds { get; }
+        /// <summary> State of the add Azure subscription operation on Oracle subscription. </summary>
+        public AddSubscriptionOperationState? AddSubscriptionOperationState { get; }
+        /// <summary> Status details of the last operation on Oracle subscription. </summary>
+        public string LastOperationStatusDetail { get; }
     }
 }

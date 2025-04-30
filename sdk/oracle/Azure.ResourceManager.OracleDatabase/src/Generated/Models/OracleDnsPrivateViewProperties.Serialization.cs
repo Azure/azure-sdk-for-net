@@ -34,41 +34,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 throw new FormatException($"The model {nameof(OracleDnsPrivateViewProperties)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("ocid"u8);
-                writer.WriteStringValue(Ocid);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
-            {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("isProtected"u8);
-                writer.WriteBooleanValue(IsProtected);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LifecycleState))
-            {
-                writer.WritePropertyName("lifecycleState"u8);
-                writer.WriteStringValue(LifecycleState.Value.ToString());
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("self"u8);
-                writer.WriteStringValue(Self);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("timeCreated"u8);
-                writer.WriteStringValue(CreatedOn, "O");
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("timeUpdated"u8);
-                writer.WriteStringValue(UpdatedOn, "O");
-            }
+            writer.WritePropertyName("ocid"u8);
+            writer.WriteStringValue(Ocid);
+            writer.WritePropertyName("displayName"u8);
+            writer.WriteStringValue(DisplayName);
+            writer.WritePropertyName("isProtected"u8);
+            writer.WriteBooleanValue(IsProtected);
+            writer.WritePropertyName("lifecycleState"u8);
+            writer.WriteStringValue(LifecycleState.ToString());
+            writer.WritePropertyName("self"u8);
+            writer.WriteStringValue(Self);
+            writer.WritePropertyName("timeCreated"u8);
+            writer.WriteStringValue(CreatedOn, "O");
+            writer.WritePropertyName("timeUpdated"u8);
+            writer.WriteStringValue(UpdatedOn, "O");
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -114,7 +93,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             ResourceIdentifier ocid = default;
             string displayName = default;
             bool isProtected = default;
-            DnsPrivateViewsLifecycleState? lifecycleState = default;
+            DnsPrivateViewsLifecycleState lifecycleState = default;
             string self = default;
             DateTimeOffset timeCreated = default;
             DateTimeOffset timeUpdated = default;
@@ -140,10 +119,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("lifecycleState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lifecycleState = new DnsPrivateViewsLifecycleState(property.Value.GetString());
                     continue;
                 }

@@ -76,8 +76,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="shape"> The shape of the Db server. The shape determines the amount of CPU, storage, and memory resources available. </param>
         /// <param name="createdOn"> The date and time that the Db Server was created. </param>
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
+        /// <param name="computeModel"> The compute model of the Exadata Infrastructure. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OracleDBServerProperties(ResourceIdentifier ocid, string displayName, ResourceIdentifier compartmentId, ResourceIdentifier exadataInfrastructureId, int? cpuCoreCount, DBServerPatchingDetails dbServerPatchingDetails, int? maxMemoryInGbs, int? dbNodeStorageSizeInGbs, IReadOnlyList<ResourceIdentifier> vmClusterIds, IReadOnlyList<ResourceIdentifier> dbNodeIds, string lifecycleDetails, DBServerProvisioningState? lifecycleState, int? maxCpuCount, IReadOnlyList<ResourceIdentifier> autonomousVmClusterIds, IReadOnlyList<ResourceIdentifier> autonomousVirtualMachineIds, int? maxDBNodeStorageInGbs, int? memorySizeInGbs, string shape, DateTimeOffset? createdOn, OracleDatabaseResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OracleDBServerProperties(ResourceIdentifier ocid, string displayName, ResourceIdentifier compartmentId, ResourceIdentifier exadataInfrastructureId, int? cpuCoreCount, DBServerPatchingDetails dbServerPatchingDetails, int? maxMemoryInGbs, int? dbNodeStorageSizeInGbs, IReadOnlyList<ResourceIdentifier> vmClusterIds, IReadOnlyList<ResourceIdentifier> dbNodeIds, string lifecycleDetails, DBServerProvisioningState? lifecycleState, int? maxCpuCount, IReadOnlyList<ResourceIdentifier> autonomousVmClusterIds, IReadOnlyList<ResourceIdentifier> autonomousVirtualMachineIds, int? maxDBNodeStorageInGbs, int? memorySizeInGbs, string shape, DateTimeOffset? createdOn, OracleDatabaseResourceProvisioningState? provisioningState, AutonomousDatabaseComputeModel? computeModel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Ocid = ocid;
             DisplayName = displayName;
@@ -99,6 +100,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             Shape = shape;
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
+            ComputeModel = computeModel;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -142,5 +144,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Azure resource provisioning state. </summary>
         public OracleDatabaseResourceProvisioningState? ProvisioningState { get; }
+        /// <summary> The compute model of the Exadata Infrastructure. </summary>
+        public AutonomousDatabaseComputeModel? ComputeModel { get; }
     }
 }
