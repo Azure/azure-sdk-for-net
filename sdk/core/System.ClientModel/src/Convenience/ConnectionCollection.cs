@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text.Json;
@@ -67,14 +66,14 @@ internal class ConnectionCollectionConverter : JsonConverter<ConnectionCollectio
 
         foreach (JsonElement connectionJson in json.EnumerateArray())
         {
-            // Retrieve 'id', 'locator', and 'auth' properties from the JSON
+            // Retrieve 'id', 'locator', and 'credentialKind' properties from the JSON
             string id = connectionJson.GetProperty("id").GetString();
             string locator = connectionJson.GetProperty("locator").GetString();
-            string auth = connectionJson.GetProperty("auth").GetString();
+            string credentialKind = connectionJson.GetProperty("credentialKind").GetString();
 
-            ClientAuthenticationMethod authMethod = (ClientAuthenticationMethod)Enum.Parse(typeof(ClientAuthenticationMethod), auth);
+            CredentialKind kind = (CredentialKind)Enum.Parse(typeof(CredentialKind), credentialKind);
 
-            ClientConnection connection = new ClientConnection(id, locator, authMethod);
+            ClientConnection connection = new ClientConnection(id, locator, kind);
             connections.Add(connection);
         }
 
@@ -89,7 +88,7 @@ internal class ConnectionCollectionConverter : JsonConverter<ConnectionCollectio
             writer.WriteStartObject();
             writer.WriteString("id", connection.Id);
             writer.WriteString("locator", connection.Locator);
-            writer.WriteString("auth", connection.Authentication.ToString());
+            writer.WriteString("credentialKind", connection.CredentialKind.ToString());
             writer.WriteEndObject();
         }
         writer.WriteEndArray();

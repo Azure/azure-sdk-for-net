@@ -35,6 +35,7 @@
     <!--TODO: remove VersionOverride https://github.com/Azure/azure-sdk-for-net/issues/49730 -->
     <PackageReference Include="Azure.AI.OpenAI" VersionOverride="2.2.0-beta.4"/>
     <PackageReference Include="Azure.Search.Documents" VersionOverride="11.7.0-beta.3" />
+    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
 </Project>

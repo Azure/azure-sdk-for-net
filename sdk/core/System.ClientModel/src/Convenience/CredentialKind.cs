@@ -5,20 +5,20 @@ namespace System.ClientModel.Primitives;
 /// <summary>
 /// Specifies the kind of connection used by the client.
 /// </summary>
-public enum ClientAuthenticationMethod
+public enum CredentialKind
 {
-    /// <summary>
-    /// Represents a connection using Credential.
-    /// </summary>
-    Credential,
-
-    /// <summary>
-    /// Represents a connection using an API key.
-    /// </summary>
-    ApiKey,
-
     /// <summary>
     /// Represents a connection using an out-of-band method.
     /// </summary>
-    NoAuth
+    None = 0,
+
+    /// <summary>
+    /// Represents a connection using an API key as a string.
+    /// </summary>
+    ApiKeyString = 1,
+
+    /// <summary>
+    /// Represents a connection using Token Credential.
+    /// </summary>
+    TokenCredential = 2,
 }
