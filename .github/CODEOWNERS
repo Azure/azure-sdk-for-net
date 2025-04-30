@@ -1145,7 +1145,7 @@
 /sdk/servicebus/tests.data.yml                                     @shankarsama @EldertGrootenboer
 
 # Add owners for package dependency changes
-/eng/Packages.Data.props                                           @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @tg-msft @jsquire @m-nash @ArthurMa1978
+/eng/Packages.Data.props                                           @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @tg-msft @jsquire @m-nash @ArthurMa1978 @jorgerangel-msft
 
 # Add owners for emitter version changes
 /eng/http-client-csharp-emitter-package.json                       @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @nisha-bhatia
