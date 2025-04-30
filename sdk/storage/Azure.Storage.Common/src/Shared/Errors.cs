@@ -80,6 +80,12 @@ namespace Azure.Storage
             }
         }
 
+        public static ArgumentException SeekOutsideBufferRange(long index, long inclusiveRangeStart, long exclusiveRangeEnd)
+            => new ArgumentException($"Tried to seek outside buffer range. Gave index {index}, range is [{inclusiveRangeStart},{exclusiveRangeEnd}).");
+
+        public static ArgumentException SeekOutsideStreamRange(long position, long streamLength)
+            => new ArgumentException($"Tried to seek outside Stream range. Gave position {position}, range is [0,{streamLength}].");
+
         public static void ThrowIfParamNull(object obj, string paramName)
         {
             if (obj == null)

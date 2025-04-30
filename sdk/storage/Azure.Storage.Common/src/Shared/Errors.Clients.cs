@@ -102,9 +102,6 @@ namespace Azure.Storage
         public static AuthenticationException InvalidCredentials(string fullName)
             => new AuthenticationException($"Cannot authenticate credentials with {fullName}");
 
-        public static ArgumentException SeekOutsideBufferRange(long index, long inclusiveRangeStart, long exclusiveRangeEnd)
-            => new ArgumentException($"Tried to seek ouside buffer range. Gave index {index}, range is [{inclusiveRangeStart},{exclusiveRangeEnd}).");
-
         public static ArgumentException VersionNotSupported(string paramName)
             => new ArgumentException($"The version specified by {paramName} is not supported by this library.");
 

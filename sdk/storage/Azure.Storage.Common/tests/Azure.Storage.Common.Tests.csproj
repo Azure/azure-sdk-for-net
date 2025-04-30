@@ -37,6 +37,7 @@
     <Compile Include="$(AzureStorageSharedSources)ContentHasher.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)CompatSwitches.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)DisposableBucket.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)EnumerableExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ExpectContinuePolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ExpectContinueOnThrottlePolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)HashAlgorithmHasher.cs" LinkBase="Shared" />
