@@ -19,7 +19,7 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
   if (context.options["model-namespace"] && !context.options["namespace"]) {
     $lib.reportDiagnostic(context.program, {
       code: "invalid-model-namespace-usage",
-      target: NoTarget,
+      target: NoTarget
     });
   }
 
