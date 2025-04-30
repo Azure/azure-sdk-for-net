@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
             ContinuousWebJobStatus.Running => "Running",
             ContinuousWebJobStatus.PendingRestart => "PendingRestart",
             ContinuousWebJobStatus.Stopped => "Stopped",
+            ContinuousWebJobStatus.Stopping => "Stopping",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContinuousWebJobStatus value.")
         };
 
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Running")) return ContinuousWebJobStatus.Running;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "PendingRestart")) return ContinuousWebJobStatus.PendingRestart;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Stopped")) return ContinuousWebJobStatus.Stopped;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Stopping")) return ContinuousWebJobStatus.Stopping;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContinuousWebJobStatus value.");
         }
     }
