@@ -143,38 +143,31 @@ namespace Azure.EventGrid.Messaging.SourceGeneration
 
         private static string ExtractEventTypeFromDocumentation(string documentationCommentXml)
         {
-            try
-            {
-                if (string.IsNullOrEmpty(documentationCommentXml))
-                {
-                    return null;
-                }
-
-                ReadOnlySpan<char> docSpan = documentationCommentXml.AsSpan();
-
-                int summaryStartIndex = docSpan.IndexOf(SummaryStartTag);
-                if (summaryStartIndex < 0)
-                {
-                    return null;
-                }
-
-                summaryStartIndex += SummaryStartTag.Length;
-
-                int summaryEndIndex = docSpan.Slice(summaryStartIndex).IndexOf(SummaryEndTag);
-                if (summaryEndIndex < 0)
-                {
-                    return null;
-                }
-
-                var summaryContent = docSpan.Slice(summaryStartIndex, summaryEndIndex);
-
-                var match = EventTypeRegex.Match(summaryContent.ToString());
-                return match.Success ? match.Value : null;
-            }
-            catch
+            if (string.IsNullOrEmpty(documentationCommentXml))
             {
                 return null;
             }
+
+            ReadOnlySpan<char> docSpan = documentationCommentXml.AsSpan();
+
+            int summaryStartIndex = docSpan.IndexOf(SummaryStartTag);
+            if (summaryStartIndex < 0)
+            {
+                return null;
+            }
+
+            summaryStartIndex += SummaryStartTag.Length;
+
+            int summaryEndIndex = docSpan.Slice(summaryStartIndex).IndexOf(SummaryEndTag);
+            if (summaryEndIndex < 0)
+            {
+                return null;
+            }
+
+            var summaryContent = docSpan.Slice(summaryStartIndex, summaryEndIndex);
+
+            var match = EventTypeRegex.Match(summaryContent.ToString());
+            return match.Success ? match.Value : null;
         }
 
         private static string ConstructSystemEventNames(List<SystemEventNode> systemEvents, bool isSystemEventsLibrary)
