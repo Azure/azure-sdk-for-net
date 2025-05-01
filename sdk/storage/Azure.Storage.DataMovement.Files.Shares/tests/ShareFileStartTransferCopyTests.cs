@@ -207,6 +207,44 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             return InstrumentClient(fileClient);
         }
 
+        private async Task<ShareFileClient> CreateFileClientWithoutShareLevelPermissionsAsync(
+            ShareClient container,
+            long? objectLength = null,
+            bool createResource = false,
+            string objectName = null,
+            ShareFileCreateOptions options = null,
+            Stream contents = null)
+        {
+            objectName ??= GetNewObjectName();
+            ShareFileClient fileClient = container.GetRootDirectoryClient().GetFileClient(objectName);
+            if (createResource)
+            {
+                if (!objectLength.HasValue)
+                {
+                    throw new InvalidOperationException($"Cannot create share file without size specified. Either set {nameof(createResource)} to false or specify a {nameof(objectLength)}.");
+                }
+                await fileClient.CreateAsync(
+                    maxSize: objectLength.Value,
+                    options: options);
+
+                if (contents != default)
+                {
+                    await fileClient.UploadAsync(contents);
+                }
+            }
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(fileClient.Uri);
+            ShareSasBuilder sasBuilder = new ShareSasBuilder
+            {
+                ShareName = container.Name,
+                FilePath = uriBuilder.DirectoryOrFilePath,
+                Resource = "f", // "f" for file-level
+                ExpiresOn = Recording.UtcNow.AddHours(1)
+            };
+            sasBuilder.SetPermissions(ShareFileSasPermissions.All);
+            Uri sasUri = fileClient.GenerateSasUri(sasBuilder);
+            return InstrumentClient(new ShareFileClient(sasUri, GetOptions()));
+        }
+
         protected override Task<ShareFileClient> GetSourceObjectClientAsync(
             ShareClient container,
             long? objectLength = null,
@@ -913,20 +951,18 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             sasBuilder.SetPermissions(ShareFileSasPermissions.All);
 
             // Create Source with no share-level permissions
-            ShareFileClient sourceClient = await CreateFileClientWithShortPermissionsAsync(
+            ShareFileClient sourceClient = await CreateFileClientWithoutShareLevelPermissionsAsync(
                 container: source.Container,
                 objectLength: DataMovementTestConstants.KB,
                 createResource: true);
-            ShareFileClient restrictedSourceClient = new ShareFileClient(sourceClient.GenerateSasUri(sasBuilder));
-            StorageResourceItem sourceResource = new ShareFileStorageResource(restrictedSourceClient,
+            StorageResourceItem sourceResource = new ShareFileStorageResource(sourceClient,
                 new ShareFileStorageResourceOptions() { SkipProtocolValidation = skipProtocolValidation });
 
             // Create Destination with no share-level permissions
-            ShareFileClient destinationClient = await CreateFileClientWithOptionsAsync(
+            ShareFileClient destinationClient = await CreateFileClientWithoutShareLevelPermissionsAsync(
                 container: destination.Container,
                 createResource: false);
-            ShareFileClient restrictedDestClient = new ShareFileClient(destinationClient.GenerateSasUri(sasBuilder));
-            StorageResourceItem destinationResource = new ShareFileStorageResource(restrictedDestClient,
+            StorageResourceItem destinationResource = new ShareFileStorageResource(destinationClient,
                 new ShareFileStorageResourceOptions() { SkipProtocolValidation = skipProtocolValidation });
 
             TransferOptions options = new TransferOptions();
