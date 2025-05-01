@@ -30,7 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 if (_configuration != null)
                 {
-                    BindOptionsSectionWithSuppression(_configuration, options);
+                    BindIConfigurationOptions(_configuration, options);
 
                     // IConfiguration can read from EnvironmentVariables or InMemoryCollection if configured to do so.
                     var connectionStringFromIConfig = _configuration[EnvironmentVariableConstants.APPLICATIONINSIGHTS_CONNECTION_STRING];
@@ -55,7 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         [UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "Binding options is a known source of trim warnings; this is a deliberate usage.")]
         [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "Binding options is a known source of AOT warnings; this is a deliberate usage.")]
-        private static void BindOptionsSectionWithSuppression(IConfiguration configuration, AzureMonitorExporterOptions options)
+        private static void BindIConfigurationOptions(IConfiguration configuration, AzureMonitorExporterOptions options)
         {
             configuration.GetSection(AzureMonitorExporterSectionFromConfig).Bind(options);
         }
