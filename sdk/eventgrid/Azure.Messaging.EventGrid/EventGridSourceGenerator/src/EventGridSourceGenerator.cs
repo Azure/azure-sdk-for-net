@@ -37,28 +37,11 @@ namespace Azure.EventGrid.Messaging.SourceGeneration
                     transform: static (ctx, cancellationToken) =>
                     {
                         var semanticModel = ctx.SemanticModel;
-                        var classDecl = (ClassDeclarationSyntax)ctx.Node;
+                        var classDeclaration = (ClassDeclarationSyntax)ctx.Node;
 
-                        // Get the symbol for the class declaration
-                        var symbol = semanticModel.GetDeclaredSymbol(classDecl, cancellationToken);
-                        if (symbol == null)
-                        {
-                            return null;
-                        }
+                        var declaredSymbol = semanticModel.GetDeclaredSymbol(classDeclaration, cancellationToken);
 
-                        // Check if the symbol is in the SystemEvents namespace
-                        var containingNamespace = symbol.ContainingNamespace;
-                        while (containingNamespace != null)
-                        {
-                            if (containingNamespace.Name == "SystemEvents")
-                            {
-                                return classDecl;
-                            }
-                            containingNamespace = containingNamespace.ContainingNamespace;
-                        }
-
-                        // Not in the SystemEvents namespace
-                        return null;
+                        return declaredSymbol?.ContainingNamespace is { Name: "SystemEvents" } ? classDeclaration : null;
                     })
                 .Where(static cls => cls != null);
 
