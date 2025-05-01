@@ -29,7 +29,13 @@ parameters:
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: ${{ parameters.Service }}
+    oneESTemplateTag: ${{ parameters.oneESTemplateTag }}
+    # Short term hack to get 1es canary validation working until we can fix manual runs with 'auto'
+    ${{ if and(eq(parameters.oneESTemplateTag, 'canary'), eq(parameters.Service, 'auto')) }}:
+      ServiceDirectory: template
+    ${{ else }}:
+      ServiceDirectory: ${{ parameters.Service }}
     CheckAOTCompat: true
     BuildSnippets: true
-    oneESTemplateTag: ${{ parameters.oneESTemplateTag }}
+    ExcludePaths:
+      - eng/packages/http-client-csharp/
