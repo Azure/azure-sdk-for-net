@@ -3,7 +3,7 @@
 Azure.Projects is an set of libraries and tools for rapid application development on Azure.
 If you cannot get an app running in 10 minutes, let us know that we failed!
 
-These libraries and tools make it easy to get apps off the ground, by:
+These libraries and tools make it easier to start building an application, by:
 - Relying on opinionated defaults whenever possible.
 - Using the Azure.Provisioning libraries for provisioning resources in code (in C#).
 - Exposing simplified APIs for the most commonly used Azure services.
