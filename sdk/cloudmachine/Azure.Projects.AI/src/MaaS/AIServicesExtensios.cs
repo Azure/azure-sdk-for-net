@@ -21,14 +21,14 @@ public static partial class AIModelsExtensions
     /// <param name="provider"></param>
     /// <param name="deploymentName"></param>
     /// <returns></returns>
-    public static ModelsClient GetModelsClient(this ConnectionProvider provider, string? deploymentName = null)
+    public static ModelsClient GetModelsClient(this ClientConnectionProvider provider, string? deploymentName = null)
     {
         ModelsClientKey modelsClientKey = new(deploymentName);
         ModelsClient client = provider.Subclients.GetClient(modelsClientKey, () => CreateModelsClient(provider));
         return client;
     }
 
-    private static ModelsClient CreateModelsClient(this ConnectionProvider provider)
+    private static ModelsClient CreateModelsClient(this ClientConnectionProvider provider)
     {
         ClientConnection connection = provider.GetConnection(typeof(ModelsClient).FullName!);
 

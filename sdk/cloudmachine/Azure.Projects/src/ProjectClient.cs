@@ -13,10 +13,10 @@ namespace Azure.Projects;
 /// <summary>
 /// The project client.
 /// </summary>
-public partial class ProjectClient : ConnectionProvider
+public partial class ProjectClient : ClientConnectionProvider
 {
     private readonly TokenCredential _credential = BuildCredential(default);
-    private readonly ConnectionProvider _connections;
+    private readonly ClientConnectionProvider _connections;
 
     /// <summary>
     /// The project ID.
@@ -40,7 +40,7 @@ public partial class ProjectClient : ConnectionProvider
     /// <param name="projectId"></param>
     /// <param name="connections"></param>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public ProjectClient(string projectId, ConnectionProvider connections) : base(maxCacheSize: 100)
+    public ProjectClient(string projectId, ClientConnectionProvider connections) : base(maxCacheSize: 100)
     {
         if (connections == null)
         {

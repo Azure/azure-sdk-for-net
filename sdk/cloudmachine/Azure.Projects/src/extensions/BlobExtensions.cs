@@ -22,7 +22,7 @@ public static class BlobExtensions
     /// <param name="provider"></param>
     /// <param name="containerName"></param>
     /// <returns></returns>
-    public static  BlobContainerClient GetBlobContainerClient(this ConnectionProvider provider, string containerName = "default")
+    public static  BlobContainerClient GetBlobContainerClient(this ClientConnectionProvider provider, string containerName = "default")
     {
         BlobContainerClientKey blobContainerClientKey = new(containerName);
         BlobContainerClient client = provider.Subclients.GetClient(blobContainerClientKey, () =>
@@ -30,7 +30,7 @@ public static class BlobExtensions
         return client;
     }
 
-    private static BlobContainerClient CreateClient(ConnectionProvider project, string containerName)
+    private static BlobContainerClient CreateClient(ClientConnectionProvider project, string containerName)
     {
         string id = $"{typeof(BlobContainerClient).FullName}@{containerName}";
         ClientConnection connection = project.GetConnection(id);

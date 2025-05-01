@@ -23,7 +23,7 @@ public static partial class AzureOpenAIExtensions
     /// <param name="provider"></param>
     /// <param name="deploymentName"></param>
     /// <returns></returns>
-    public static ChatClient GetOpenAIChatClient(this ConnectionProvider provider, string? deploymentName = null)
+    public static ChatClient GetOpenAIChatClient(this ClientConnectionProvider provider, string? deploymentName = null)
     {
         ChatClientKey chatClientKey = new(deploymentName);
         AzureOpenAIClientKey openAIClientKey = new();
@@ -43,7 +43,7 @@ public static partial class AzureOpenAIExtensions
     /// <param name="provider"></param>
     /// <param name="deploymentName"></param>
     /// <returns></returns>
-    public static EmbeddingClient GetOpenAIEmbeddingClient(this ConnectionProvider provider, string? deploymentName = null)
+    public static EmbeddingClient GetOpenAIEmbeddingClient(this ClientConnectionProvider provider, string? deploymentName = null)
     {
         EmbeddingClientKey embeddingClientKey = new(deploymentName);
         AzureOpenAIClientKey openAIClientKey = new();
@@ -57,7 +57,7 @@ public static partial class AzureOpenAIExtensions
         return embeddingClient;
     }
 
-    private static AzureOpenAIClient CreateAzureOpenAIClient(this ConnectionProvider provider)
+    private static AzureOpenAIClient CreateAzureOpenAIClient(this ClientConnectionProvider provider)
     {
         ClientConnection connection = provider.GetConnection(typeof(AzureOpenAIClient).FullName!);
 
@@ -71,14 +71,14 @@ public static partial class AzureOpenAIExtensions
             : new AzureOpenAIClient(uri, new ApiKeyCredential((string)connection.Credential!));
     }
 
-    private static ChatClient CreateChatClient(this ConnectionProvider provider, AzureOpenAIClient client, string? deploymentName = null)
+    private static ChatClient CreateChatClient(this ClientConnectionProvider provider, AzureOpenAIClient client, string? deploymentName = null)
     {
         ClientConnection connection = provider.GetConnection(typeof(ChatClient).FullName!);
         ChatClient chat = client.GetChatClient(deploymentName ?? connection.Locator);
         return chat;
     }
 
-    private static EmbeddingClient CreateEmbeddingClient(this ConnectionProvider provider, AzureOpenAIClient client, string? deploymentName = null)
+    private static EmbeddingClient CreateEmbeddingClient(this ClientConnectionProvider provider, AzureOpenAIClient client, string? deploymentName = null)
     {
         ClientConnection connection = provider.GetConnection(typeof(EmbeddingClient).FullName!);
         EmbeddingClient embedding = client.GetEmbeddingClient(deploymentName ?? connection.Locator);

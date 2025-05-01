@@ -9,10 +9,10 @@ using Azure.Data.AppConfiguration;
 
 namespace Azure.Projects;
 
-internal class AppConfigConnectionProvider : ConnectionProvider
+internal class AppConfigConnectionProvider : ClientConnectionProvider
 {
     private readonly ConfigurationClient _config;
-    private readonly ConnectionCollection _connectionCache = new();
+    private readonly ClientConnectionCollection _connectionCache = new();
     private readonly TokenCredential _credential;
 
     public AppConfigConnectionProvider(Uri endpoint, TokenCredential credential) : base(maxCacheSize: 100)

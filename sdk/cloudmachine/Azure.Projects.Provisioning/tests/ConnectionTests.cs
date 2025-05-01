@@ -86,9 +86,9 @@ internal class TestConnectionStore : ConnectionStore
     {
         _provider.AddConnection(connectionId, new ClientConnection(connectionId, endpoint));
     }
-    public ConnectionProvider Provider => _provider;
+    public ClientConnectionProvider Provider => _provider;
 }
-internal class TestConnectionProvider : ConnectionProvider
+internal class TestConnectionProvider : ClientConnectionProvider
 {
     private readonly Dictionary<string, ClientConnection> _connections = new();
     private readonly TokenCredential _credential;

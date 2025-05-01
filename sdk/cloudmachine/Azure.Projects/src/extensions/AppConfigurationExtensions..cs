@@ -19,7 +19,7 @@ public static class AppConfigurationExtensions
     /// </summary>
     /// <param name="provider"></param>
     /// <returns></returns>
-    public static ConfigurationClient GetConfigurationClient(this ConnectionProvider provider)
+    public static ConfigurationClient GetConfigurationClient(this ClientConnectionProvider provider)
     {
         ConfigurationClientKey configurationClientKey = new();
         ConfigurationClient client = provider.Subclients.GetClient(configurationClientKey, () =>
@@ -27,7 +27,7 @@ public static class AppConfigurationExtensions
         return client;
     }
 
-    private static ConfigurationClient CreateClient(ConnectionProvider provider)
+    private static ConfigurationClient CreateClient(ClientConnectionProvider provider)
     {
         ClientConnection connection = provider.GetConnection(typeof(ConfigurationClient).FullName);
         if (connection.TryGetLocatorAsUri(out Uri uri))
