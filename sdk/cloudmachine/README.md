@@ -22,7 +22,7 @@ In other words, Azure.Projects provides smart, simplified APIs but will never bl
 
 ### Walkthrough
 
-#### Create C# Project
+#### Create a console application
 
 In a command line window type
 
