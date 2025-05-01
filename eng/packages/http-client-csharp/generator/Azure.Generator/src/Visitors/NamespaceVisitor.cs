@@ -6,7 +6,7 @@ using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
 
-namespace Azure.Generator
+namespace Azure.Generator.Visitors
 {
     internal class NamespaceVisitor : ScmLibraryVisitor
     {
