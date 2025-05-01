@@ -12,10 +12,15 @@ namespace Azure.AI.Projects
 {
     // Data plane generated client.
     /// <summary> The AzureAI service client. </summary>
-    public partial class AIProjectClient : ConnectionProvider
+    public partial class AIProjectClient : ClientConnectionProvider
     {
         private readonly ConnectionCacheManager _cacheManager;
         private readonly ConnectionsClient _connectionsClient;
+
+        /// <summary> Initializes a new instance of AIProjectClient for mocking. </summary>
+        protected AIProjectClient() : base(maxCacheSize: 100)
+        {
+        }
 
         /// <summary> Initializes a new instance of AzureAIClient. </summary>
         /// <param name="connectionString">The Azure AI Foundry project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
