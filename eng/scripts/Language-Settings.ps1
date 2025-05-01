@@ -11,7 +11,8 @@ $PackageRepositoryUri = "https://www.nuget.org/packages"
 
 $DependencyCalculationPackages = @(
   "Azure.Core",
-  "Azure.ResourceManager"
+  "Azure.ResourceManager",
+  "System.ClientModel"
 )
 
 function processTestProject($projPath) {
