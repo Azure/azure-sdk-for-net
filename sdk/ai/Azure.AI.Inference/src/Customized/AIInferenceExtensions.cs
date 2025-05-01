@@ -19,14 +19,14 @@ namespace Azure.AI.Inference
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        public static ChatCompletionsClient GetChatCompletionsClient(this ConnectionProvider provider)
+        public static ChatCompletionsClient GetChatCompletionsClient(this ClientConnectionProvider provider)
         {
             ChatCompletionsClientKey chatCompletionsClientKey = new();
             ChatCompletionsClient chatClient = provider.Subclients.GetClient(chatCompletionsClientKey, () => CreateChatCompletionsClient(provider));
             return chatClient;
         }
 
-        private static ChatCompletionsClient CreateChatCompletionsClient(this ConnectionProvider provider)
+        private static ChatCompletionsClient CreateChatCompletionsClient(this ClientConnectionProvider provider)
         {
             ClientConnection connection = provider.GetConnection(typeof(ChatCompletionsClient).FullName!);
 
@@ -48,14 +48,14 @@ namespace Azure.AI.Inference
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        public static EmbeddingsClient GetEmbeddingsClient(this ConnectionProvider provider)
+        public static EmbeddingsClient GetEmbeddingsClient(this ClientConnectionProvider provider)
         {
             EmbeddingsClientKey embeddingsClientKey = new();
             EmbeddingsClient embeddingsClient = provider.Subclients.GetClient(embeddingsClientKey, () => CreateEmbeddingsClient(provider));
             return embeddingsClient;
         }
 
-        private static EmbeddingsClient CreateEmbeddingsClient(this ConnectionProvider provider)
+        private static EmbeddingsClient CreateEmbeddingsClient(this ClientConnectionProvider provider)
         {
             ClientConnection connection = provider.GetConnection(typeof(ChatCompletionsClient).FullName!);
 
@@ -72,8 +72,8 @@ namespace Azure.AI.Inference
             };
         }
 
-        private record ChatCompletionsClientKey() : IEquatable<object>;
+        private record ChatCompletionsClientKey();
 
-        private record EmbeddingsClientKey() : IEquatable<object>;
+        private record EmbeddingsClientKey();
     }
 }
