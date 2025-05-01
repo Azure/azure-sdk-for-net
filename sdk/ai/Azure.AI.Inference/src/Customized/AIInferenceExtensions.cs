@@ -72,8 +72,8 @@ namespace Azure.AI.Inference
             };
         }
 
-        private record ChatCompletionsClientKey() : IEquatable<object>;
+        private record ChatCompletionsClientKey();
 
-        private record EmbeddingsClientKey() : IEquatable<object>;
+        private record EmbeddingsClientKey();
     }
 }

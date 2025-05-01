@@ -85,9 +85,9 @@ public static class AzureOpenAIExtensions
         return embedding;
     }
 
-    private record AzureOpenAIClientKey() : IEquatable<object>;
+    private record AzureOpenAIClientKey();
 
-    private record ChatClientKey(string? DeploymentName) : IEquatable<object>;
+    private record ChatClientKey(string? DeploymentName);
 
-    private record EmbeddingClientKey(string? DeploymentName) : IEquatable<object>;
+    private record EmbeddingClientKey(string? DeploymentName);
 }

@@ -103,9 +103,9 @@ public static class SearchExtensions
         };
     }
 
-    private record SearchClientKey(string IndexName) : IEquatable<object>;
+    private record SearchClientKey(string IndexName);
 
-    private record SearchIndexClientKey() : IEquatable<object>;
+    private record SearchIndexClientKey();
 
-    private record SearchIndexerClientKey() : IEquatable<object>;
+    private record SearchIndexerClientKey();
 }

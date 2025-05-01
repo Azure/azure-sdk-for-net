@@ -18,7 +18,7 @@ public abstract class ConnectionProvider
     /// Initializes a new instance of the ConnectionProvider class.
     /// </summary>
     /// <param name="maxCacheSize">The maximum number of subclients to store in the cache.</param>
-    protected ConnectionProvider(int maxCacheSize = 100)
+    protected ConnectionProvider(int maxCacheSize)
     {
         _subclients = new ClientCache(maxCacheSize);
     }
