@@ -942,14 +942,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareAsync();
             await using IDisposingContainer<ShareClient> destination = await DestinationClientBuilder.GetTestShareAsync();
 
-            // Only File-level access
-            ShareSasBuilder sasBuilder = new ShareSasBuilder
-            {
-                Resource = "f", // "f" for file-level
-                ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
-            };
-            sasBuilder.SetPermissions(ShareFileSasPermissions.All);
-
             // Create Source with no share-level permissions
             ShareFileClient sourceClient = await CreateFileClientWithoutShareLevelPermissionsAsync(
                 container: source.Container,
