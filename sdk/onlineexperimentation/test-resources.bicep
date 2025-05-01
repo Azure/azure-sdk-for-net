@@ -5,6 +5,8 @@ param location string = resourceGroup().location
 @description('The base resource name.')
 param baseName string = resourceGroup().name
 
+param testApplicationOid string
+
 param keyVaultIsSoftDeleted bool = false
 
 param storageAccountName string = uniqueString(baseName, 'storage')
@@ -135,6 +137,18 @@ resource onlineExperimentationWorkspace 'Microsoft.OnlineExperimentation/workspa
     appConfigurationResourceId: appConfig.id
   }
 }
+
+resource onlineExperimentationWorkspaceAssignments 'Microsoft.Authorization/roleAssignments@2022-04-01' = [for roleDefinitionId in [
+  '2c7a01fe-5518-4a42-93c2-658e45441691' // Online Experimentation Contributor
+  '53747cdd-e97c-477a-948c-b587d0e514b2' // Online Experimentation Data Owner
+]: {
+  name: guid(onlineExperimentationWorkspace.id, testApplicationOid, resourceId('Microsoft.Authorization/roleDefinitions', roleDefinitionId))
+  scope: onlineExperimentationWorkspace
+  properties: {
+    principalId: testApplicationOid
+    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', roleDefinitionId)
+  }
+}]
 
 module roleAssignments './test-resources-role-assignments.bicep' = {
   name: '${deployment().name}-ra'

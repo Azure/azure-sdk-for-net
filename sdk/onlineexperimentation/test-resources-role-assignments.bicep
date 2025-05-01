@@ -8,14 +8,14 @@ resource keyVault 'Microsoft.KeyVault/vaults@2023-02-01' existing = {
   name: keyVaultName
 }
 
-var keyVaultCryptoServiceEncryptionUserRoleId = 'e147488a-f6f5-4113-8e2d-b22465e65bf6' // Key Vault Crypto Service Encryption User
+var keyVaultCryptoServiceEncryptionUserRoleId = resourceId('Microsoft.Authorization/roleDefinitions', 'e147488a-f6f5-4113-8e2d-b22465e65bf6')
 resource keyVaultroleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(keyVault.id, principalId, keyVaultCryptoServiceEncryptionUserRoleId)
   scope: keyVault
   properties: {
     principalId: principalId
     principalType: 'ServicePrincipal'
-    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', keyVaultCryptoServiceEncryptionUserRoleId)
+    roleDefinitionId: keyVaultCryptoServiceEncryptionUserRoleId
   }
 }
 
@@ -24,14 +24,14 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' existing 
 }
 
 // Allow Online Experiment Workspace read access to logs storage account
-var storageDataReaderRoleId = '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1' // Storage Blob Data Reader
+var storageDataReaderRoleId = resourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1')
 resource storageAccountExpAccess 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(storageAccount.id, principalId, storageDataReaderRoleId)
   scope: storageAccount
   properties: {
     principalId: principalId
     principalType: 'ServicePrincipal'
-    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', storageDataReaderRoleId)
+    roleDefinitionId: storageDataReaderRoleId
   }
 }
 
@@ -41,14 +41,14 @@ resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2021-12-01-previ
 }
 
 // Allow Online Experiment Workspace read access to log analytics workspace
-var logAnalyticsReaderRoleId = '73c42c96-874c-492b-b04d-ab87d138a893'  // Log Analytics Reader
+var logAnalyticsReaderRoleId = resourceId('Microsoft.Authorization/roleDefinitions', '73c42c96-874c-492b-b04d-ab87d138a893')
 resource logAnalyticsExpAccess 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(logAnalytics.id, principalId, logAnalyticsReaderRoleId)
   scope: logAnalytics
   properties: {
     principalId: principalId
     principalType: 'ServicePrincipal'
-    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', logAnalyticsReaderRoleId)
+    roleDefinitionId: logAnalyticsReaderRoleId
   }
 }
 
@@ -58,13 +58,13 @@ resource appConfig 'Microsoft.AppConfiguration/configurationStores@2022-05-01' e
 }
 
 // Allow input principal read/write access to app configuration
-var appConfigDataOwnerRoleId = '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b' // App Configuration Data Owner
+var appConfigDataOwnerRoleId = resourceId('Microsoft.Authorization/roleDefinitions', '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b')
 resource appConfigAccess 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(appConfig.id, principalId, appConfigDataOwnerRoleId)
   scope: appConfig
   properties: {
     principalId: principalId
     principalType: 'ServicePrincipal'
-    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', appConfigDataOwnerRoleId)
+    roleDefinitionId: appConfigDataOwnerRoleId
   }
 }
