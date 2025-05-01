@@ -655,13 +655,86 @@ namespace Azure.Communication.CallAutomation
                 @from == null ? null : CommunicationIdentifierSerializer.Serialize(@from),
                 callerDisplayName,
                 serverCallId,
-                customContext == null ? null : new CustomCallingContextInternal(customContext.VoipHeaders, customContext.SipHeaders),
+                customContext == null ? null : new CustomCallingContextInternal(
+                    customContext.VoipHeaders,
+                    customContext.SipHeaders,
+                    CreateTeamsPhoneCallDetailsInternal(customContext.TeamsPhoneCallDetails)),
                 incomingCallContext,
                 onBehalfOfCallee == null ? null : CommunicationIdentifierSerializer.Serialize(onBehalfOfCallee),
                 correlationId
                 );
 
             return new IncomingCall(internalObject);
+        }
+        /// <summary>
+        /// Converts a public TeamsPhoneCallDetails instance to an internal TeamsPhoneCallDetailsInternal instance.
+        /// </summary>
+        /// <param name="teamsPhoneCallDetails">The public TeamsPhoneCallDetails instance to convert.</param>
+        /// <returns>
+        /// A new TeamsPhoneCallDetailsInternal instance containing the converted data, or null if the input is null.
+        /// </returns>
+        private static TeamsPhoneCallDetailsInternal CreateTeamsPhoneCallDetailsInternal(TeamsPhoneCallDetails teamsPhoneCallDetails)
+        {
+            if (teamsPhoneCallDetails == null)
+            {
+                return null;
+            }
+
+            return new TeamsPhoneCallDetailsInternal(
+                CreateTeamsPhoneCallerDetailsInternal(teamsPhoneCallDetails.TeamsPhoneCallerDetails),
+                CreateTeamsPhoneSourceDetailsInternal(teamsPhoneCallDetails.TeamsPhoneSourceDetails),
+                teamsPhoneCallDetails.SessionId,
+                teamsPhoneCallDetails.Intent,
+                teamsPhoneCallDetails.CallTopic,
+                teamsPhoneCallDetails.CallContext,
+                teamsPhoneCallDetails.TranscriptUrl,
+                teamsPhoneCallDetails.CallSentiment,
+                teamsPhoneCallDetails.SuggestedActions);
+        }
+
+        /// <summary>
+        /// Converts a public TeamsPhoneCallerDetails instance to an internal TeamsPhoneCallerDetailsInternal instance.
+        /// </summary>
+        /// <param name="teamsPhoneCallerDetails">The public TeamsPhoneCallerDetails instance to convert.</param>
+        /// <returns>
+        /// A new TeamsPhoneCallerDetailsInternal instance containing the converted data, or null if the input is null.
+        /// </returns>
+        private static TeamsPhoneCallerDetailsInternal CreateTeamsPhoneCallerDetailsInternal(TeamsPhoneCallerDetails teamsPhoneCallerDetails)
+        {
+            if (teamsPhoneCallerDetails == null)
+            {
+                return null;
+            }
+
+            return new TeamsPhoneCallerDetailsInternal(
+                teamsPhoneCallerDetails.Caller,
+                teamsPhoneCallerDetails.Name,
+                teamsPhoneCallerDetails.PhoneNumber,
+                teamsPhoneCallerDetails.RecordId,
+                teamsPhoneCallerDetails.ScreenPopUrl,
+                teamsPhoneCallerDetails.IsAuthenticated,
+                teamsPhoneCallerDetails.AdditionalCallerInformation);
+        }
+
+        /// <summary>
+        /// Converts a public TeamsPhoneSourceDetails instance to an internal TeamsPhoneSourceDetailsInternal instance.
+        /// </summary>
+        /// <param name="teamsPhoneSourceDetails">The public TeamsPhoneSourceDetails instance to convert.</param>
+        /// <returns>
+        /// A new TeamsPhoneSourceDetailsInternal instance containing the converted data, or null if the input is null.
+        /// </returns>
+        private static TeamsPhoneSourceDetailsInternal CreateTeamsPhoneSourceDetailsInternal(TeamsPhoneSourceDetails teamsPhoneSourceDetails)
+        {
+            if (teamsPhoneSourceDetails == null)
+            {
+                return null;
+            }
+
+            return new TeamsPhoneSourceDetailsInternal(
+                teamsPhoneSourceDetails.Source,
+                teamsPhoneSourceDetails.Language,
+                teamsPhoneSourceDetails.Status,
+                teamsPhoneSourceDetails.IntendedTargets);
         }
     }
 }

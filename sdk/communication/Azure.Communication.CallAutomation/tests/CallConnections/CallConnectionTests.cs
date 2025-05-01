@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
+using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
 
 namespace Azure.Communication.CallAutomation.Tests.CallConnections
@@ -213,6 +214,25 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             verifyOperationContext(response);
         }
 
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsAppTarget_TeamsCallContext))]
+        public async Task TransferCallToParticipantAsync_simpleMethod_MicrosoftTeamsAppAsTarget_WithTeamsCallDetails_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+
+            var response = await callConnection.TransferCallToParticipantAsync(callInvite.Target as MicrosoftTeamsAppIdentifier).ConfigureAwait(false);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyOperationContext(response);
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsAppTarget_TeamsCallContext))]
+        public void TransferCallToParticipant_simpleMethod_MicrosoftTeamsAppAsTarget_WithTeamsCallDetails_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+
+            var response = callConnection.TransferCallToParticipant(callInvite.Target as MicrosoftTeamsAppIdentifier);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyOperationContext(response);
+        }
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
         public void TransferCallToParticipantAsync_404NotFound(CallInvite callInvite)
         {
@@ -586,6 +606,44 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callInvite = new CallInvite(new MicrosoftTeamsAppIdentifier("userId"));
             callInvite.CustomCallingContext.AddVoip("key1", "value1");
+            return new[]
+            {
+                new object?[]
+                {
+                    callInvite
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_TransferCallToParticipant_MicrosoftTeamsAppTarget_TeamsCallContext()
+        {
+            var callInvite = new CallInvite(new MicrosoftTeamsAppIdentifier("teamsAppId123"));
+            callInvite.CustomCallingContext.AddVoip("teamsKey", "teamsValue");
+
+            // Create TeamsPhoneCallerDetails
+            var teamsPhoneCallerDetails = new TeamsPhoneCallerDetails((new MicrosoftTeamsAppIdentifier("teamsAppId123")), name: "John Doe", phoneNumber: "+14255551234");
+            teamsPhoneCallerDetails.AdditionalCallerInformation.Add("Department", "Sales");
+            teamsPhoneCallerDetails.AdditionalCallerInformation.Add("Priority", "High");
+
+            // Create TeamsPhoneSourceDetails
+            var teamsPhoneSourceDetails = new TeamsPhoneSourceDetails((new MicrosoftTeamsAppIdentifier("teamsAppId123")), language: "en-US", status: "Active");
+
+            // Create TeamsPhoneCallDetails
+            var teamsPhoneCallDetails = new TeamsPhoneCallDetails()
+            {
+                TeamsPhoneCallerDetails = teamsPhoneCallerDetails,
+                TeamsPhoneSourceDetails = teamsPhoneSourceDetails,
+                SessionId = "session-123-abc",
+                Intent = "Sales Inquiry",
+                CallTopic = "New Product Information",
+                CallContext = "Customer is interested in our latest product line",
+                TranscriptUrl = "https://transcripts.example.com/call/123",
+                CallSentiment = "Positive",
+                SuggestedActions = "Offer product demo, Schedule follow-up"
+            };
+
+            callInvite.CustomCallingContext.SetTeamsPhoneCallDetails(teamsPhoneCallDetails);
+
             return new[]
             {
                 new object?[]

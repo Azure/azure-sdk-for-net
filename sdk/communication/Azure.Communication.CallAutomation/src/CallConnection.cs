@@ -284,7 +284,8 @@ namespace Azure.Communication.CallAutomation
             {
                 CustomCallingContext = new CustomCallingContextInternal(
                 options.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>(),
-                options.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>()),
+                options.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
+                CreateTeamsPhoneCallDetailsInternal(options.CustomCallingContext?.TeamsPhoneCallDetails)),
                 OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
                 Transferee = options.Transferee == default ? null : CommunicationIdentifierSerializer.Serialize(options.Transferee),
                 OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
@@ -387,8 +388,8 @@ namespace Azure.Communication.CallAutomation
             {
                 CustomCallingContext = new CustomCallingContextInternal(
                     options.ParticipantToAdd.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>(),
-                    options.ParticipantToAdd.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>()
-                    ),
+                    options.ParticipantToAdd.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
+                    CreateTeamsPhoneCallDetailsInternal(options.ParticipantToAdd.CustomCallingContext?.TeamsPhoneCallDetails)),
                 SourceCallerIdNumber = options.ParticipantToAdd.SourceCallerIdNumber == null
                     ? null
                     : new PhoneNumberIdentifierModel(options.ParticipantToAdd.SourceCallerIdNumber.PhoneNumber),
@@ -930,6 +931,77 @@ namespace Azure.Communication.CallAutomation
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Converts a public TeamsPhoneCallDetails instance to an internal TeamsPhoneCallDetailsInternal instance.
+        /// </summary>
+        /// <param name="teamsPhoneCallDetails">The public TeamsPhoneCallDetails instance to convert.</param>
+        /// <returns>
+        /// A new TeamsPhoneCallDetailsInternal instance containing the converted data, or null if the input is null.
+        /// </returns>
+        private static TeamsPhoneCallDetailsInternal CreateTeamsPhoneCallDetailsInternal(TeamsPhoneCallDetails teamsPhoneCallDetails)
+        {
+            if (teamsPhoneCallDetails == null)
+            {
+                return null;
+            }
+
+            return new TeamsPhoneCallDetailsInternal(
+                CreateTeamsPhoneCallerDetailsInternal(teamsPhoneCallDetails.TeamsPhoneCallerDetails),
+                CreateTeamsPhoneSourceDetailsInternal(teamsPhoneCallDetails.TeamsPhoneSourceDetails),
+                teamsPhoneCallDetails.SessionId,
+                teamsPhoneCallDetails.Intent,
+                teamsPhoneCallDetails.CallTopic,
+                teamsPhoneCallDetails.CallContext,
+                teamsPhoneCallDetails.TranscriptUrl,
+                teamsPhoneCallDetails.CallSentiment,
+                teamsPhoneCallDetails.SuggestedActions);
+        }
+
+        /// <summary>
+        /// Converts a public TeamsPhoneCallerDetails instance to an internal TeamsPhoneCallerDetailsInternal instance.
+        /// </summary>
+        /// <param name="teamsPhoneCallerDetails">The public TeamsPhoneCallerDetails instance to convert.</param>
+        /// <returns>
+        /// A new TeamsPhoneCallerDetailsInternal instance containing the converted data, or null if the input is null.
+        /// </returns>
+        private static TeamsPhoneCallerDetailsInternal CreateTeamsPhoneCallerDetailsInternal(TeamsPhoneCallerDetails teamsPhoneCallerDetails)
+        {
+            if (teamsPhoneCallerDetails == null)
+            {
+                return null;
+            }
+
+            return new TeamsPhoneCallerDetailsInternal(
+                teamsPhoneCallerDetails.Caller,
+                teamsPhoneCallerDetails.Name,
+                teamsPhoneCallerDetails.PhoneNumber,
+                teamsPhoneCallerDetails.RecordId,
+                teamsPhoneCallerDetails.ScreenPopUrl,
+                teamsPhoneCallerDetails.IsAuthenticated,
+                teamsPhoneCallerDetails.AdditionalCallerInformation);
+        }
+
+        /// <summary>
+        /// Converts a public TeamsPhoneSourceDetails instance to an internal TeamsPhoneSourceDetailsInternal instance.
+        /// </summary>
+        /// <param name="teamsPhoneSourceDetails">The public TeamsPhoneSourceDetails instance to convert.</param>
+        /// <returns>
+        /// A new TeamsPhoneSourceDetailsInternal instance containing the converted data, or null if the input is null.
+        /// </returns>
+        private static TeamsPhoneSourceDetailsInternal CreateTeamsPhoneSourceDetailsInternal(TeamsPhoneSourceDetails teamsPhoneSourceDetails)
+        {
+            if (teamsPhoneSourceDetails == null)
+            {
+                return null;
+            }
+
+            return new TeamsPhoneSourceDetailsInternal(
+                teamsPhoneSourceDetails.Source,
+                teamsPhoneSourceDetails.Language,
+                teamsPhoneSourceDetails.Status,
+                teamsPhoneSourceDetails.IntendedTargets);
         }
     }
 }
