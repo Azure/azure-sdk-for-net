@@ -197,8 +197,7 @@ namespace Azure.Generator.Visitors
                 new CSharpType(typeof(ClientDiagnostics)),
                 ClientDiagnosticsPropertyName,
                 new AutoPropertyBody(false),
-                client
-                );
+                client);
 
             updatedProperties.Add(clientDiagnosticsProperty);
 
