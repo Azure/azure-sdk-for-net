@@ -270,12 +270,16 @@ While AOT is supported, automatic configuration binding from `appsettings.json` 
 This is due to .NET limitations on reflection-based binding APIs (such as `ConfigurationBinder.Bind` and `Get<T>()`) in AOT scenarios.  
   
 **Workaround:**  
-In AOT scenarios, you must configure `AzureMonitorExporterOptions` programmatically in your application code. For example:
-```csharp
-builder.Services.AddOpenTelemetry()
-    .UseAzureMonitorExporter(options =>
-    {
-        options.ConnectionString = "<your-connection-string>";
-        // Set other options as needed
-    });
-```
+In AOT scenarios, you can configure the Azure Monitor Exporter using one of the following approaches:
+
+- **Environment Variable:** Set the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable to configure the connection string.
+
+- **Programmatic Configuration:** Set the `AzureMonitorExporterOptions` directly in your application code:
+    ```csharp
+    builder.Services.AddOpenTelemetry()
+        .UseAzureMonitorExporter(options =>
+        {
+            options.ConnectionString = "<your-connection-string>";
+            // Set other options as needed
+        });
+    ```
