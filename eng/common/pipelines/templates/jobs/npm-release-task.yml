@@ -5,6 +5,7 @@ parameters:
   DependsOn: []
   VarDependencies: {}
   Environment: 'package-publish'
+  TopLevelArtifactName: 'packages'
 
 jobs:
 - ${{ if eq(parameters.Registry, 'https://registry.npmjs.org/') }}:
@@ -21,8 +22,8 @@ jobs:
       isProduction: ${{ eq(parameters.Registry, 'https://registry.npmjs.org/') }}
       inputs:
       - input: pipelineArtifact
-        artifactName: packages
-        targetPath: $(Pipeline.Workspace)/packages
+        artifactName: ${{ parameters.TopLevelArtifactName }}
+        targetPath: $(Pipeline.Workspace)/${{ parameters.TopLevelArtifactName }}
     pool:
       name: azsdk-pool-mms-ubuntu-2004-general
       image: azsdk-pool-mms-ubuntu-2004-1espt
