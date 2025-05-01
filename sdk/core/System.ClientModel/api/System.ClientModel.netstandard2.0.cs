@@ -84,8 +84,8 @@ namespace System.ClientModel.Primitives
     }
     public partial class ClientCache
     {
-        public ClientCache(int maxSize = 100) { }
-        public T GetClient<T>(System.IEquatable<object> clientId, System.Func<T> createClient) where T : class { throw null; }
+        public ClientCache(int maxSize) { }
+        public T GetClient<T>(object clientId, System.Func<T> createClient) where T : class { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ClientConnection
@@ -174,7 +174,7 @@ namespace System.ClientModel.Primitives
     }
     public abstract partial class ConnectionProvider
     {
-        protected ConnectionProvider(int maxCacheSize = 100) { }
+        protected ConnectionProvider(int maxCacheSize) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.ClientModel.Primitives.ClientCache Subclients { get { throw null; } }
         public abstract System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> GetAllConnections();
