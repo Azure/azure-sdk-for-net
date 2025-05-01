@@ -182,21 +182,21 @@ namespace {ns}
                 SystemEventNode sysEvent = systemEvents[i];
 
                 // Add the ref docs for each constant
-                sourceBuilder.AppendLine($"{Indent}{Indent}/// <summary>");
-                sourceBuilder.AppendLine(
+                sourceBuilder.AppendIndentedLine(2, "/// <summary>");
+                sourceBuilder.AppendIndentedLine(2,
                     !isSystemEventsLibrary
-                        ? $"{Indent}{Indent}/// The value of the Event Type stored in <see cref=\"EventGridEvent.EventType\"/> and <see cref=\"CloudEvent.Type\"/> "
-                        : $"{Indent}{Indent}/// The value of the Event Type stored in <see cref=\"CloudEvent.Type\"/> ");
+                        ? "/// The value of the Event Type stored in <see cref=\"EventGridEvent.EventType\"/> and <see cref=\"CloudEvent.Type\"/> "
+                        : "/// The value of the Event Type stored in <see cref=\"CloudEvent.Type\"/> ");
 
-                sourceBuilder.AppendLine($"{Indent}{Indent}/// for the <see cref=\"{sysEvent.EventName}\"/> system event.");
-                sourceBuilder.AppendLine($"{Indent}{Indent}/// </summary>");
+                sourceBuilder.AppendIndentedLine(2, $"/// for the <see cref=\"{sysEvent.EventName}\"/> system event.");
+                sourceBuilder.AppendIndentedLine(2, "/// </summary>");
 
                 // Add the constant
-                sourceBuilder.AppendLine($"{Indent}{Indent}public const string {sysEvent.EventConstantName} = {sysEvent.EventType};");
+                sourceBuilder.AppendIndentedLine(2, $"public const string {sysEvent.EventConstantName} = {sysEvent.EventType};");
             }
 
-            sourceBuilder.Append($@"{Indent}}}
-}}");
+            sourceBuilder.AppendIndentedLine(1, @"}
+}");
             return sourceBuilder.ToString();
         }
 
@@ -225,14 +225,14 @@ namespace Azure.Messaging.EventGrid
             foreach (SystemEventNode sysEvent in systemEvents)
             {
                 // Add each an entry for each system event to the dictionary containing a mapping from constant name to deserialization method.
-                sourceBuilder.AppendLine(
-                    $"{Indent}{Indent}{Indent}if (eventTypeSpan.Equals(SystemEventNames.{sysEvent.EventConstantName}.AsSpan(), StringComparison.OrdinalIgnoreCase))");
-                sourceBuilder.AppendLine(
-                    $"{Indent}{Indent}{Indent}{Indent}return {sysEvent.EventName}.{sysEvent.DeserializeMethod}(data{(isSystemEventsLibrary ? ", null" : string.Empty)});");
+                sourceBuilder.AppendIndentedLine(3,
+                    $"if (eventTypeSpan.Equals(SystemEventNames.{sysEvent.EventConstantName}.AsSpan(), StringComparison.OrdinalIgnoreCase))");
+                sourceBuilder.AppendIndentedLine(4,
+                    $"return {sysEvent.EventName}.{sysEvent.DeserializeMethod}(data{(isSystemEventsLibrary ? ", null" : string.Empty)});");
             }
-            sourceBuilder.AppendLine($"{Indent}{Indent}{Indent}return null;");
-            sourceBuilder.AppendLine($"{Indent}{Indent}}}");
-            sourceBuilder.AppendLine($"{Indent}}}");
+            sourceBuilder.AppendIndentedLine(3, "return null;");
+            sourceBuilder.AppendIndentedLine(2, "}");
+            sourceBuilder.AppendIndentedLine(1, "}");
             sourceBuilder.AppendLine("}");
 
             return sourceBuilder.ToString();
