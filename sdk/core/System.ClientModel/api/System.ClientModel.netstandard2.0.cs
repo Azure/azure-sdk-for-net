@@ -262,11 +262,11 @@ namespace System.ClientModel.Primitives
         protected ModelReaderWriterTypeBuilder() { }
         protected abstract System.Type BuilderType { get; }
         protected virtual System.Type? ItemType { get { throw null; } }
-        protected virtual void AddItem(object collection, object? item) { }
-        protected virtual void AddKeyValuePair(object collection, string key, object? item) { }
+        protected virtual void AddItem(object collectionBuilder, object? item) { }
+        protected virtual void AddItemWithKey(object collectionBuilder, string key, object? item) { }
+        protected virtual object ConvertCollectionBuilder(object collectionBuilder) { throw null; }
         protected abstract object CreateInstance();
-        protected virtual System.Collections.IEnumerable? GetItems(object obj) { throw null; }
-        protected virtual object ToCollection(object builder) { throw null; }
+        protected virtual System.Collections.IEnumerable? GetItems(object collection) { throw null; }
     }
     public abstract partial class OperationResult
     {
