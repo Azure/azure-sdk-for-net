@@ -52,7 +52,7 @@ namespace Azure.EventGrid.Messaging.SourceGeneration
                         {
                             if (containingNamespace.Name == "SystemEvents")
                             {
-                                return (ClassDeclarationSyntax)ctx.Node;
+                                return classDecl;
                             }
                             containingNamespace = containingNamespace.ContainingNamespace;
                         }
