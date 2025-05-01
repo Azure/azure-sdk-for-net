@@ -49,7 +49,7 @@ namespace Azure.AI.Projects
         /// <param name="data">
         /// Data for evaluation.
         /// Please note <see cref="InputData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ApplicationInsightsConfiguration"/> and <see cref="Dataset"/>.
+        /// The available derived classes include <see cref="InputDataset"/>.
         /// </param>
         /// <param name="evaluators"> Evaluators to be used for the evaluation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> or <paramref name="evaluators"/> is null. </exception>
@@ -65,29 +65,25 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of <see cref="Evaluation"/>. </summary>
-        /// <param name="id"> Identifier of the evaluation. </param>
+        /// <param name="name"> Identifier of the evaluation. </param>
         /// <param name="data">
         /// Data for evaluation.
         /// Please note <see cref="InputData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ApplicationInsightsConfiguration"/> and <see cref="Dataset"/>.
+        /// The available derived classes include <see cref="InputDataset"/>.
         /// </param>
-        /// <param name="target"> Evaluation target specifying the model config and parameters. </param>
         /// <param name="displayName"> Display Name for evaluation. It helps to find the evaluation easily in AI Foundry. It does not need to be unique. </param>
         /// <param name="description"> Description of the evaluation. It can be used to store additional information about the evaluation and is mutable. </param>
-        /// <param name="systemData"> Metadata containing createdBy and modifiedBy information. </param>
         /// <param name="status"> Status of the evaluation. It is set by service and is read-only. </param>
         /// <param name="tags"> Evaluation's tags. Unlike properties, tags are fully mutable. </param>
         /// <param name="properties"> Evaluation's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </param>
         /// <param name="evaluators"> Evaluators to be used for the evaluation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Evaluation(string id, InputData data, EvaluationTarget target, string displayName, string description, SystemData systemData, string status, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, EvaluatorConfiguration> evaluators, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Evaluation(string name, InputData data, string displayName, string description, string status, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, EvaluatorConfiguration> evaluators, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
+            Name = name;
             Data = data;
-            Target = target;
             DisplayName = displayName;
             Description = description;
-            SystemData = systemData;
             Status = status;
             Tags = tags;
             Properties = properties;
@@ -101,21 +97,17 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Identifier of the evaluation. </summary>
-        public string Id { get; }
+        public string Name { get; }
         /// <summary>
         /// Data for evaluation.
         /// Please note <see cref="InputData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ApplicationInsightsConfiguration"/> and <see cref="Dataset"/>.
+        /// The available derived classes include <see cref="InputDataset"/>.
         /// </summary>
         public InputData Data { get; set; }
-        /// <summary> Evaluation target specifying the model config and parameters. </summary>
-        public EvaluationTarget Target { get; set; }
         /// <summary> Display Name for evaluation. It helps to find the evaluation easily in AI Foundry. It does not need to be unique. </summary>
         public string DisplayName { get; set; }
         /// <summary> Description of the evaluation. It can be used to store additional information about the evaluation and is mutable. </summary>
         public string Description { get; set; }
-        /// <summary> Metadata containing createdBy and modifiedBy information. </summary>
-        public SystemData SystemData { get; }
         /// <summary> Status of the evaluation. It is set by service and is read-only. </summary>
         public string Status { get; }
         /// <summary> Evaluation's tags. Unlike properties, tags are fully mutable. </summary>
