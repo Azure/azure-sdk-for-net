@@ -7,6 +7,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 
 namespace Azure.Generator.Primitives
 {
@@ -54,7 +55,15 @@ namespace Azure.Generator.Primitives
             {
                 foreach (var file in _operationSharedFiles)
                 {
-                    builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude(file, pathSegmentCount), "Shared/Core"));
+                    builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude(file, pathSegmentCount), SharedSourceLinkBase));
+                }
+            }
+
+            if (hasLongRunningOperation)
+            {
+                foreach (var file in _lroSharedFiles)
+                {
+                    builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude(file, pathSegmentCount), SharedSourceLinkBase));
                 }
             }
 
@@ -64,13 +73,20 @@ namespace Azure.Generator.Primitives
         private static readonly IReadOnlyList<string> _operationSharedFiles =
         [
             "RawRequestUriBuilder.cs",
+            "TypeFormatters.cs",
+            "RequestHeaderExtensions.cs",
             "AppContextSwitchHelper.cs",
-            "AsyncLockWithValue.cs",
-            "FixedDelayWithNoJitterStrategy.cs",
             "ClientDiagnostics.cs",
             "DiagnosticScopeFactory.cs",
             "DiagnosticScope.cs",
             "HttpMessageSanitizer.cs",
+            "TrimmingAttribute.cs",
+        ];
+
+        private static readonly IReadOnlyList<string> _lroSharedFiles =
+        [
+            "AsyncLockWithValue.cs",
+            "FixedDelayWithNoJitterStrategy.cs",
             "IOperationSource.cs",
             "NextLinkOperationImplementation.cs",
             "OperationFinalStateVia.cs",
@@ -78,12 +94,9 @@ namespace Azure.Generator.Primitives
             "OperationInternalBase.cs",
             "OperationInternalOfT.cs",
             "OperationPoller.cs",
-            "RequestHeaderExtensions.cs",
             "SequentialDelayStrategy.cs",
             "TaskExtensions.cs",
-            "TrimmingAttribute.cs",
-            "TypeFormatters.cs",
-            "VoidValue.cs",
+            "VoidValue.cs"
         ];
 
         private static void TraverseInput(InputClient rootClient, ref bool hasOperation, ref bool hasLongRunningOperation)

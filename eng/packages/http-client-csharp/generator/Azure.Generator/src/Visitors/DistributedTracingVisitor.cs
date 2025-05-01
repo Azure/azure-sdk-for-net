@@ -34,6 +34,13 @@ namespace Azure.Generator.Visitors
                 return base.Visit(client, clientProvider);
             }
 
+            bool hasExistingProperty = clientProvider.CanonicalView.Properties
+                    .Any(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
+            if (hasExistingProperty)
+            {
+                return base.Visit(client, clientProvider);
+            }
+
             AddDistributedTracingProperty(clientProvider);
 
             return clientProvider;
@@ -46,8 +53,8 @@ namespace Azure.Generator.Visitors
                 return base.VisitConstructor(constructor);
             }
 
-            PropertyProvider clientDiagnosticsProperty = constructor.EnclosingType
-               .Properties.First(p => p.Name == ClientDiagnosticsPropertyName);
+            PropertyProvider clientDiagnosticsProperty = constructor.EnclosingType.CanonicalView.Properties
+                .First(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
             ParameterProvider? endpoint = constructor.Signature.Parameters.FirstOrDefault(p => p.Name == "endpoint");
             ParameterProvider? options = constructor.Signature.Parameters.FirstOrDefault(p => p.Name == "options");
             bool hasNoInitializer = constructor.Signature.Initializer == null;
@@ -86,38 +93,32 @@ namespace Azure.Generator.Visitors
             return constructor;
         }
 
-        protected override MethodProvider? VisitMethod(MethodProvider method)
-        {
-            if (ShouldSkip(method.EnclosingType) || !IsSubClientFactoryMethod(method))
-            {
-                return base.VisitMethod(method);
-            }
-
-            UpdateDistributedTracingRefInSubClientFactoryMethod(method);
-
-            return method;
-        }
-
         protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
         {
-            if (ShouldSkip(method.EnclosingType) || !method.IsProtocolMethod)
+            if (ShouldSkip(method.EnclosingType))
             {
                 return base.VisitMethod(method);
             }
 
-            // Wrap protocol methods with distributed tracing
-            UpdateProtocolMethodsWithDistributedTracing(method);
+            if (IsSubClientFactoryMethod(method))
+            {
+                UpdateDistributedTracingRefInSubClientFactoryMethod(method);
+            }
+            else if (method.IsProtocolMethod)
+            {
+                UpdateProtocolMethodsWithDistributedTracing(method);
+            }
 
             return method;
         }
 
         private static void UpdateDistributedTracingRefInSubClientFactoryMethod(
-            MethodProvider method)
+            ScmMethodProvider method)
         {
             if (method.BodyStatements != null)
             {
-                PropertyProvider clientDiagnosticsProperty = method.EnclosingType.Properties
-                    .First(p => p.Name == ClientDiagnosticsPropertyName);
+                PropertyProvider clientDiagnosticsProperty = method.EnclosingType.CanonicalView.Properties
+                    .First(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
                 List<MethodBodyStatement> updatedFactoryMethodStatements = [];
                 foreach (var statement in method.BodyStatements.Flatten())
                 {
@@ -146,7 +147,8 @@ namespace Azure.Generator.Visitors
             }
 
             string scopeName = $"{method.EnclosingType.Name}.{method.Signature.Name}";
-            PropertyProvider clientDiagnosticsProperty = method.EnclosingType.Properties.First(p => p.Name == ClientDiagnosticsPropertyName);
+            PropertyProvider clientDiagnosticsProperty = method.EnclosingType.CanonicalView.Properties
+                .First(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
 
             // declare scope
             var scopeDeclaration = UsingDeclare(
@@ -252,13 +254,18 @@ namespace Azure.Generator.Visitors
 
         private static bool ShouldSkip(TypeProvider typeProvider)
         {
-            return typeProvider is not ClientProvider || !typeProvider.Properties.Any(p => p.Name == ClientDiagnosticsPropertyName);
+            return typeProvider is not ClientProvider ||
+                !typeProvider.CanonicalView.Properties
+                    .Any(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
         }
 
-        private static bool IsSubClientFactoryMethod(MethodProvider method)
+        private static bool IsSubClientFactoryMethod(ScmMethodProvider method)
         {
-            return method.Signature.ReturnType?.IsFrameworkType == false &&
-                method.Signature.Name.StartsWith("Get") && method.Signature.Name.EndsWith("Client");
+            ClientProvider clientProvider = (ClientProvider)method.EnclosingType;
+            var methodReturnType = method.Signature.ReturnType;
+
+            return methodReturnType != null &&
+                clientProvider.SubClients.Any(subClient => methodReturnType.Equals(subClient.Type));
         }
     }
 }
