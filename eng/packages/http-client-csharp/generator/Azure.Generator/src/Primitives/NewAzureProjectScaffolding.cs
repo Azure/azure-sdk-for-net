@@ -7,6 +7,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 
 namespace Azure.Generator.Primitives
 {
@@ -52,31 +53,40 @@ namespace Azure.Generator.Primitives
 
             if (hasOperation)
             {
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("RawRequestUriBuilder.cs", pathSegmentCount), SharedSourceLinkBase));
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("TypeFormatters.cs", pathSegmentCount), SharedSourceLinkBase));
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("RequestHeaderExtensions.cs", pathSegmentCount), SharedSourceLinkBase));
+                foreach (var file in _operationSharedFiles)
+                {
+                    builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude(file, pathSegmentCount), SharedSourceLinkBase));
+                }
             }
 
             if (hasLongRunningOperation)
             {
                 foreach (var file in _lroSharedFiles)
                 {
-                    builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude(file, pathSegmentCount), "Shared/Core"));
+                    builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude(file, pathSegmentCount), SharedSourceLinkBase));
                 }
             }
 
             return builder.Write();
         }
 
-        private static readonly IReadOnlyList<string> _lroSharedFiles =
+        private static readonly IReadOnlyList<string> _operationSharedFiles =
         [
+            "RawRequestUriBuilder.cs",
+            "TypeFormatters.cs",
+            "RequestHeaderExtensions.cs",
             "AppContextSwitchHelper.cs",
-            "AsyncLockWithValue.cs",
-            "FixedDelayWithNoJitterStrategy.cs",
             "ClientDiagnostics.cs",
             "DiagnosticScopeFactory.cs",
             "DiagnosticScope.cs",
             "HttpMessageSanitizer.cs",
+            "TrimmingAttribute.cs",
+        ];
+
+        private static readonly IReadOnlyList<string> _lroSharedFiles =
+        [
+            "AsyncLockWithValue.cs",
+            "FixedDelayWithNoJitterStrategy.cs",
             "IOperationSource.cs",
             "NextLinkOperationImplementation.cs",
             "OperationFinalStateVia.cs",
@@ -86,7 +96,6 @@ namespace Azure.Generator.Primitives
             "OperationPoller.cs",
             "SequentialDelayStrategy.cs",
             "TaskExtensions.cs",
-            "TrimmingAttribute.cs",
             "VoidValue.cs"
         ];
 

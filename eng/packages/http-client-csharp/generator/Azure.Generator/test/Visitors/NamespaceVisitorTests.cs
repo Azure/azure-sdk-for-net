@@ -3,11 +3,12 @@
 
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
+using Azure.Generator.Visitors;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 
-namespace Azure.Generator.Tests
+namespace Azure.Generator.Tests.Visitors
 {
     public class NamespaceVisitorTests
     {
