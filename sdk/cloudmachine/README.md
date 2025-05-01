@@ -9,7 +9,7 @@ These libraries and tools make it easy to get apps off the ground, by:
 - exposing simplified APIs for the most commonly used Azure services.
 
 At the same time, Azure.Projects supports break-glass scenarios where, if needed, you can override the defaults, use powerful tools (like bicep, azd), or the full featured Azure SDK libraries. 
-In other words, Azure.Projects will never block you from using the full power of the Azure platform, if you choose to. 
+In other words, Azure.Projects provides smart, simplified APIs but will never block you from using the full power of the Azure platform, if you choose to. 
 
 ## Getting started
 
