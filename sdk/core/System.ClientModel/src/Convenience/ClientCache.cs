@@ -38,7 +38,6 @@ public class ClientCache
         _lock.EnterReadLock();
         try
         {
-            // If the client exists, update its timestamp.
             if (_clients.TryGetValue(clientId, out var cached))
             {
                 cached.LastUsed = Stopwatch.GetTimestamp();
@@ -56,18 +55,32 @@ public class ClientCache
             _lock.ExitReadLock();
         }
 
-        // Client not found in cache, create a new one.
+        // Client not found, enter write lock
         _lock.EnterWriteLock();
         try
         {
+            // Double-check inside write lock to avoid race condition
+            if (_clients.TryGetValue(clientId, out var existing))
+            {
+                existing.LastUsed = Stopwatch.GetTimestamp();
+
+                if (existing.Client is T typedClient)
+                {
+                    return typedClient;
+                }
+
+                throw new InvalidOperationException($"The clientId is associated with a client of type '{existing.Client.GetType()}', not '{typeof(T)}'.");
+            }
+
+            // Client not found in cache, create a new one.
             T created = createClient();
             _clients[clientId] = new ClientEntry(created, Stopwatch.GetTimestamp());
 
-            // After insertion, if cache exceeds the limit, perform cleanup.
             if (_clients.Count > _maxSize)
             {
                 Cleanup();
             }
+
             return created;
         }
         finally
