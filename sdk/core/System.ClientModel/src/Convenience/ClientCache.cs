@@ -38,6 +38,7 @@ public class ClientCache
         _lock.EnterReadLock();
         try
         {
+            // If the client exists, update its timestamp.
             if (_clients.TryGetValue(clientId, out var cached))
             {
                 cached.LastUsed = Stopwatch.GetTimestamp();
