@@ -190,7 +190,7 @@ namespace Azure.Core
             AppendRaw(nextLink, escape);
         }
 
-        public void AppendQuery(string name, bool value, bool escape = false) => AppendQuery(name, TypeFormatters.ConvertToString(value), escape);
+        public void AppendQuery(string name, bool value, bool escape = true) => AppendQuery(name, TypeFormatters.ConvertToString(value), escape);
 
         public void AppendQuery(string name, float value, bool escape = true) => AppendQuery(name, TypeFormatters.ConvertToString(value), escape);
 
