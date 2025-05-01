@@ -64,12 +64,16 @@ namespace Azure.AI.Inference
         /// <param name="completionTokens"> The number of tokens generated across all completions emissions. </param>
         /// <param name="promptTokens"> The number of tokens in the provided prompts for the completions request. </param>
         /// <param name="totalTokens"> The total number of tokens processed for the completions request and response. </param>
+        /// <param name="completionTokensDetails"> Breakdown of tokens used in a completion. </param>
+        /// <param name="promptTokensDetails"> Breakdown of tokens used in the prompt/chat history. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CompletionsUsage(int completionTokens, int promptTokens, int totalTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CompletionsUsage(int completionTokens, int promptTokens, int totalTokens, CompletionsUsageDetails completionTokensDetails, PromptUsageDetails promptTokensDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CompletionTokens = completionTokens;
             PromptTokens = promptTokens;
             TotalTokens = totalTokens;
+            CompletionTokensDetails = completionTokensDetails;
+            PromptTokensDetails = promptTokensDetails;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -84,5 +88,9 @@ namespace Azure.AI.Inference
         public int PromptTokens { get; }
         /// <summary> The total number of tokens processed for the completions request and response. </summary>
         public int TotalTokens { get; }
+        /// <summary> Breakdown of tokens used in a completion. </summary>
+        public CompletionsUsageDetails CompletionTokensDetails { get; }
+        /// <summary> Breakdown of tokens used in the prompt/chat history. </summary>
+        public PromptUsageDetails PromptTokensDetails { get; }
     }
 }

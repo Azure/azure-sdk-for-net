@@ -23,7 +23,7 @@ namespace Azure.AI.Inference.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ImageEmbeddingsClient client = new ImageEmbeddingsClient(endpoint, credential);
 
-            Response response = client.GetModelInfo(null);
+            Response response = client.GetModelInfo(null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("model_name").ToString());
@@ -39,7 +39,7 @@ namespace Azure.AI.Inference.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ImageEmbeddingsClient client = new ImageEmbeddingsClient(endpoint, credential);
 
-            Response response = await client.GetModelInfoAsync(null);
+            Response response = await client.GetModelInfoAsync(null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("model_name").ToString());
@@ -77,7 +77,7 @@ namespace Azure.AI.Inference.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ImageEmbeddingsClient client = new ImageEmbeddingsClient(endpoint, credential);
 
-            Response response = client.GetModelInfo(null);
+            Response response = client.GetModelInfo("<model>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("model_name").ToString());
@@ -93,7 +93,7 @@ namespace Azure.AI.Inference.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ImageEmbeddingsClient client = new ImageEmbeddingsClient(endpoint, credential);
 
-            Response response = await client.GetModelInfoAsync(null);
+            Response response = await client.GetModelInfoAsync("<model>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("model_name").ToString());
@@ -109,7 +109,7 @@ namespace Azure.AI.Inference.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ImageEmbeddingsClient client = new ImageEmbeddingsClient(endpoint, credential);
 
-            Response<ModelInfo> response = client.GetModelInfo();
+            Response<ModelInfo> response = client.GetModelInfo(model: "<model>");
         }
 
         [Test]
@@ -120,7 +120,7 @@ namespace Azure.AI.Inference.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ImageEmbeddingsClient client = new ImageEmbeddingsClient(endpoint, credential);
 
-            Response<ModelInfo> response = await client.GetModelInfoAsync();
+            Response<ModelInfo> response = await client.GetModelInfoAsync(model: "<model>");
         }
     }
 }

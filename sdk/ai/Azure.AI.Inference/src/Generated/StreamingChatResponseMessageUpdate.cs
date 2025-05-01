@@ -58,12 +58,14 @@ namespace Azure.AI.Inference
         /// The tool calls that must be resolved and have their outputs appended to subsequent input messages for the chat
         /// completions request to resolve as configured.
         /// </param>
+        /// <param name="reasoningContent"> The reasoning content the model used for generating the response. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StreamingChatResponseMessageUpdate(ChatRole? role, string content, IReadOnlyList<StreamingChatResponseToolCallUpdate> toolCalls, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StreamingChatResponseMessageUpdate(ChatRole? role, string content, IReadOnlyList<StreamingChatResponseToolCallUpdate> toolCalls, string reasoningContent, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Role = role;
             Content = content;
             ToolCalls = toolCalls;
+            ReasoningContent = reasoningContent;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -71,5 +73,7 @@ namespace Azure.AI.Inference
         public ChatRole? Role { get; }
         /// <summary> The content of the message. </summary>
         public string Content { get; }
+        /// <summary> The reasoning content the model used for generating the response. </summary>
+        public string ReasoningContent { get; }
     }
 }

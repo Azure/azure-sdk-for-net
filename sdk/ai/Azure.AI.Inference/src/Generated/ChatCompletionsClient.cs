@@ -20,7 +20,7 @@ namespace Azure.AI.Inference
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
         private const string AuthorizationApiKeyPrefix = "Bearer";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://ml.azure.com/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -75,14 +75,15 @@ namespace Azure.AI.Inference
         /// Returns information about the AI model.
         /// The method makes a REST API call to the `/info` route on the given endpoint.
         /// This method will only work when using Serverless API or Managed Compute endpoint.
-        /// It will not work for GitHub Models endpoint or Azure OpenAI endpoint.
+        /// It will not work for Azure OpenAI endpoints.
         /// </summary>
+        /// <param name="model"> The model deployment name you want information from. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/ChatCompletionsClient.xml" path="doc/members/member[@name='GetModelInfoAsync(CancellationToken)']/*" />
-        public virtual async Task<Response<ModelInfo>> GetModelInfoAsync(CancellationToken cancellationToken = default)
+        /// <include file="Docs/ChatCompletionsClient.xml" path="doc/members/member[@name='GetModelInfoAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<ModelInfo>> GetModelInfoAsync(string model = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetModelInfoAsync(context).ConfigureAwait(false);
+            Response response = await GetModelInfoAsync(model, context).ConfigureAwait(false);
             return Response.FromValue(ModelInfo.FromResponse(response), response);
         }
 
@@ -90,14 +91,15 @@ namespace Azure.AI.Inference
         /// Returns information about the AI model.
         /// The method makes a REST API call to the `/info` route on the given endpoint.
         /// This method will only work when using Serverless API or Managed Compute endpoint.
-        /// It will not work for GitHub Models endpoint or Azure OpenAI endpoint.
+        /// It will not work for Azure OpenAI endpoints.
         /// </summary>
+        /// <param name="model"> The model deployment name you want information from. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/ChatCompletionsClient.xml" path="doc/members/member[@name='GetModelInfo(CancellationToken)']/*" />
-        public virtual Response<ModelInfo> GetModelInfo(CancellationToken cancellationToken = default)
+        /// <include file="Docs/ChatCompletionsClient.xml" path="doc/members/member[@name='GetModelInfo(string,CancellationToken)']/*" />
+        public virtual Response<ModelInfo> GetModelInfo(string model = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetModelInfo(context);
+            Response response = GetModelInfo(model, context);
             return Response.FromValue(ModelInfo.FromResponse(response), response);
         }
 
@@ -105,7 +107,7 @@ namespace Azure.AI.Inference
         /// [Protocol Method] Returns information about the AI model.
         /// The method makes a REST API call to the `/info` route on the given endpoint.
         /// This method will only work when using Serverless API or Managed Compute endpoint.
-        /// It will not work for GitHub Models endpoint or Azure OpenAI endpoint.
+        /// It will not work for Azure OpenAI endpoints.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -114,22 +116,23 @@ namespace Azure.AI.Inference
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetModelInfoAsync(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetModelInfoAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="model"> The model deployment name you want information from. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ChatCompletionsClient.xml" path="doc/members/member[@name='GetModelInfoAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetModelInfoAsync(RequestContext context)
+        /// <include file="Docs/ChatCompletionsClient.xml" path="doc/members/member[@name='GetModelInfoAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetModelInfoAsync(string model, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("ChatCompletionsClient.GetModelInfo");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetModelInfoRequest(context);
+                using HttpMessage message = CreateGetModelInfoRequest(model, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -143,7 +146,7 @@ namespace Azure.AI.Inference
         /// [Protocol Method] Returns information about the AI model.
         /// The method makes a REST API call to the `/info` route on the given endpoint.
         /// This method will only work when using Serverless API or Managed Compute endpoint.
-        /// It will not work for GitHub Models endpoint or Azure OpenAI endpoint.
+        /// It will not work for Azure OpenAI endpoints.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -152,22 +155,23 @@ namespace Azure.AI.Inference
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetModelInfo(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetModelInfo(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="model"> The model deployment name you want information from. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ChatCompletionsClient.xml" path="doc/members/member[@name='GetModelInfo(RequestContext)']/*" />
-        public virtual Response GetModelInfo(RequestContext context)
+        /// <include file="Docs/ChatCompletionsClient.xml" path="doc/members/member[@name='GetModelInfo(string,RequestContext)']/*" />
+        public virtual Response GetModelInfo(string model, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("ChatCompletionsClient.GetModelInfo");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetModelInfoRequest(context);
+                using HttpMessage message = CreateGetModelInfoRequest(model, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -197,7 +201,7 @@ namespace Azure.AI.Inference
             return message;
         }
 
-        internal HttpMessage CreateGetModelInfoRequest(RequestContext context)
+        internal HttpMessage CreateGetModelInfoRequest(string model, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -206,6 +210,10 @@ namespace Azure.AI.Inference
             uri.Reset(_endpoint);
             uri.AppendPath("/info", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (model != null)
+            {
+                uri.AppendQuery("model", model, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetModelInfoAsync(CancellationToken)">
+    <member name="GetModelInfoAsync(string,CancellationToken)">
       <example>
 This sample shows how to call GetModelInfoAsync.
 <code><![CDATA[
@@ -17,10 +17,10 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
-Response<ModelInfo> response = await client.GetModelInfoAsync();
+Response<ModelInfo> response = await client.GetModelInfoAsync(model: "<model>");
 ]]></code></example>
     </member>
-    <member name="GetModelInfo(CancellationToken)">
+    <member name="GetModelInfo(string,CancellationToken)">
       <example>
 This sample shows how to call GetModelInfo.
 <code><![CDATA[
@@ -36,10 +36,10 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
-Response<ModelInfo> response = client.GetModelInfo();
+Response<ModelInfo> response = client.GetModelInfo(model: "<model>");
 ]]></code></example>
     </member>
-    <member name="GetModelInfoAsync(RequestContext)">
+    <member name="GetModelInfoAsync(string,RequestContext)">
       <example>
 This sample shows how to call GetModelInfoAsync and parse the result.
 <code><![CDATA[
@@ -47,7 +47,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
-Response response = await client.GetModelInfoAsync(null);
+Response response = await client.GetModelInfoAsync(null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("model_name").ToString());
@@ -60,7 +60,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
-Response response = await client.GetModelInfoAsync(null);
+Response response = await client.GetModelInfoAsync("<model>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("model_name").ToString());
@@ -68,7 +68,7 @@ Console.WriteLine(result.GetProperty("model_type").ToString());
 Console.WriteLine(result.GetProperty("model_provider_name").ToString());
 ]]></code></example>
     </member>
-    <member name="GetModelInfo(RequestContext)">
+    <member name="GetModelInfo(string,RequestContext)">
       <example>
 This sample shows how to call GetModelInfo and parse the result.
 <code><![CDATA[
@@ -76,7 +76,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
-Response response = client.GetModelInfo(null);
+Response response = client.GetModelInfo(null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("model_name").ToString());
@@ -89,7 +89,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
-Response response = client.GetModelInfo(null);
+Response response = client.GetModelInfo("<model>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("model_name").ToString());
