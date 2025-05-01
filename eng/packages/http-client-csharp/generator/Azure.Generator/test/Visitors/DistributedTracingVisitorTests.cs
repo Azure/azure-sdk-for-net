@@ -152,7 +152,7 @@ namespace Azure.Generator.Tests.Visitors
             var methodSignature = new MethodSignature(
                 "Foo",
                 null,
-                MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async,
                 AzureClientGenerator.Instance.TypeFactory.ClientResponseApi.ClientResponseType,
                 $"The response returned from the service.",
                 [new ParameterProvider("p1", $"p1", AzureClientGenerator.Instance.TypeFactory.RequestContentApi.RequestContentType)]);

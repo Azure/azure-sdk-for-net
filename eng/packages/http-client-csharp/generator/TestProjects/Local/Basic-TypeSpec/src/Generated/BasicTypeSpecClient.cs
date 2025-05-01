@@ -141,7 +141,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> SayHiAsync(string headParameter, string queryParameter, string optionalQuery, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.SayHiAsync");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.SayHi");
             scope.Start();
             try
             {
@@ -242,7 +242,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> HelloAgainAsync(string p2, string p1, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HelloAgainAsync");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HelloAgain");
             scope.Start();
             try
             {
@@ -346,7 +346,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> NoContentTypeAsync(string p2, string p1, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.NoContentTypeAsync");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.NoContentType");
             scope.Start();
             try
             {
@@ -404,7 +404,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> HelloDemo2Async(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HelloDemo2Async");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HelloDemo2");
             scope.Start();
             try
             {
@@ -482,7 +482,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> CreateLiteralAsync(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.CreateLiteralAsync");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.CreateLiteral");
             scope.Start();
             try
             {
@@ -564,7 +564,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> HelloLiteralAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HelloLiteralAsync");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HelloLiteral");
             scope.Start();
             try
             {
@@ -638,7 +638,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> TopActionAsync(DateTimeOffset action, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.TopActionAsync");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.TopAction");
             scope.Start();
             try
             {
@@ -712,7 +712,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> TopAction2Async(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.TopAction2Async");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.TopAction2");
             scope.Start();
             try
             {
@@ -772,7 +772,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> PatchActionAsync(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.PatchActionAsync");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.PatchAction");
             scope.Start();
             try
             {
@@ -834,7 +834,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> AnonymousBodyAsync(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.AnonymousBodyAsync");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.AnonymousBody");
             scope.Start();
             try
             {
@@ -980,7 +980,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> FriendlyModelAsync(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.FriendlyModelAsync");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.FriendlyModel");
             scope.Start();
             try
             {
@@ -1064,7 +1064,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> AddTimeHeaderAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.AddTimeHeaderAsync");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.AddTimeHeader");
             scope.Start();
             try
             {
@@ -1140,7 +1140,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> ProjectedNameModelAsync(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ProjectedNameModelAsync");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ProjectedNameModel");
             scope.Start();
             try
             {
@@ -1224,7 +1224,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> ReturnsAnonymousModelAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ReturnsAnonymousModelAsync");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ReturnsAnonymousModel");
             scope.Start();
             try
             {
@@ -1302,7 +1302,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetUnknownValueAsync(string accept, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetUnknownValueAsync");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetUnknownValue");
             scope.Start();
             try
             {
@@ -1390,7 +1390,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> InternalProtocolAsync(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.InternalProtocolAsync");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.InternalProtocol");
             scope.Start();
             try
             {
@@ -1472,7 +1472,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> StillConvenientAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.StillConvenientAsync");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.StillConvenient");
             scope.Start();
             try
             {
@@ -1548,7 +1548,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> HeadAsBooleanAsync(string id, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HeadAsBooleanAsync");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.HeadAsBoolean");
             scope.Start();
             try
             {

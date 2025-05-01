@@ -100,13 +100,13 @@ namespace Azure.Generator.Visitors
                 return base.VisitMethod(method);
             }
 
-            if (IsSubClientFactoryMethod(method))
-            {
-                UpdateDistributedTracingRefInSubClientFactoryMethod(method);
-            }
-            else if (method.IsProtocolMethod)
+            if (method.IsProtocolMethod)
             {
                 UpdateProtocolMethodsWithDistributedTracing(method);
+            }
+            else if (IsSubClientFactoryMethod(method))
+            {
+                UpdateDistributedTracingRefInSubClientFactoryMethod(method);
             }
 
             return method;
@@ -115,28 +115,32 @@ namespace Azure.Generator.Visitors
         private static void UpdateDistributedTracingRefInSubClientFactoryMethod(
             ScmMethodProvider method)
         {
-            if (method.BodyStatements != null)
+            if (method.BodyStatements == null && method.BodyExpression == null)
             {
-                PropertyProvider clientDiagnosticsProperty = method.EnclosingType.CanonicalView.Properties
-                    .First(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
-                List<MethodBodyStatement> updatedFactoryMethodStatements = [];
-                foreach (var statement in method.BodyStatements.Flatten())
-                {
-                    if (TryUpdateSubClientFactoryMethodReturnStatement(
-                        statement,
-                        clientDiagnosticsProperty,
-                        out MethodBodyStatement? updatedStatement))
-                    {
-                        updatedFactoryMethodStatements.Add(updatedStatement);
-                    }
-                    else
-                    {
-                        updatedFactoryMethodStatements.Add(statement);
-                    }
-                }
-
-                method.Update(bodyStatements: updatedFactoryMethodStatements);
+                return;
             }
+
+            PropertyProvider clientDiagnosticsProperty = method.EnclosingType.CanonicalView.Properties
+                    .First(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
+            List<MethodBodyStatement> updatedFactoryMethodStatements = [];
+
+            var statementsToVisit = method.BodyStatements ?? new ExpressionStatement(method.BodyExpression!);
+            foreach (var statement in statementsToVisit.Flatten())
+            {
+                if (TryUpdateSubClientFactoryMethodReturnStatement(
+                    statement,
+                    clientDiagnosticsProperty,
+                    out MethodBodyStatement? updatedStatement))
+                {
+                    updatedFactoryMethodStatements.Add(updatedStatement);
+                }
+                else
+                {
+                    updatedFactoryMethodStatements.Add(statement);
+                }
+            }
+
+            method.Update(bodyStatements: updatedFactoryMethodStatements);
         }
 
         private static void UpdateProtocolMethodsWithDistributedTracing(ScmMethodProvider method)
@@ -147,6 +151,12 @@ namespace Azure.Generator.Visitors
             }
 
             string scopeName = $"{method.EnclosingType.Name}.{method.Signature.Name}";
+            const string asyncSuffix = "Async";
+            if (scopeName.EndsWith(asyncSuffix))
+            {
+                scopeName = scopeName[..^asyncSuffix.Length];
+            }
+
             PropertyProvider clientDiagnosticsProperty = method.EnclosingType.CanonicalView.Properties
                 .First(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
 
