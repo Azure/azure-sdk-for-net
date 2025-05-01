@@ -12,7 +12,7 @@ namespace Azure.AI.Projects
 {
     // Data plane generated client.
     /// <summary> The AzureAI service client. </summary>
-    public partial class AIProjectClient : ConnectionProvider
+    public partial class AIProjectClient : ClientConnectionProvider
     {
         private readonly ConnectionCacheManager _cacheManager;
         private readonly ConnectionsClient _connectionsClient;

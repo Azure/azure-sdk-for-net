@@ -12,12 +12,12 @@ namespace System.ClientModel.Primitives.Tests;
 /// <summary>
 /// Unit tests for ConnectionCollection.
 /// </summary>
-public class ConnectionCollectionTests
+public class ClientConnectionCollectionTests
 {
     [Test]
     public void AddConnectionShouldStoreCorrectly()
     {
-        var collection = new ConnectionCollection();
+        var collection = new ClientConnectionCollection();
         var connection = new ClientConnection("conn1", "https://example.com", "myAPIKey", CredentialKind.ApiKeyString);
 
         collection.Add(connection);
@@ -32,7 +32,7 @@ public class ConnectionCollectionTests
     [Test]
     public void SerializeShouldMatchExpectedJson()
     {
-        var collection = new ConnectionCollection();
+        var collection = new ClientConnectionCollection();
         collection.Add(new ClientConnection("conn1", "https://example.com", "myAPIKey", CredentialKind.ApiKeyString));
 
         string json = JsonSerializer.Serialize(collection);
@@ -50,7 +50,7 @@ public class ConnectionCollectionTests
     {
         string json = "[ { \"id\": \"conn1\", \"locator\": \"https://example.com\", \"credentialKind\": \"ApiKeyString\" } ]";
 
-        ConnectionCollection? collection = JsonSerializer.Deserialize<ConnectionCollection>(json);
+        ClientConnectionCollection? collection = JsonSerializer.Deserialize<ClientConnectionCollection>(json);
 
         Assert.AreEqual(1, collection!.Count);
         Assert.AreEqual("conn1", collection["conn1"].Id);
@@ -61,11 +61,11 @@ public class ConnectionCollectionTests
     [Test]
     public void SerializeAndDeserializeShouldBeEqual()
     {
-        var collection = new ConnectionCollection();
+        var collection = new ClientConnectionCollection();
         collection.Add(new ClientConnection("id1", "locator1", "myAPIKey", CredentialKind.ApiKeyString));
 
         string json = JsonSerializer.Serialize(collection);
-        ConnectionCollection? deserializedCollection = JsonSerializer.Deserialize<ConnectionCollection>(json);
+        ClientConnectionCollection? deserializedCollection = JsonSerializer.Deserialize<ClientConnectionCollection>(json);
 
         Assert.IsNotNull(deserializedCollection);
         Assert.AreEqual(1, deserializedCollection!.Count);

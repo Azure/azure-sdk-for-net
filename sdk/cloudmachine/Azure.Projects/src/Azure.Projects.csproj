@@ -9,7 +9,14 @@
     <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
     <NoWarn>CS1591</NoWarn>
     <NoWarn>OPENAI001</NoWarn>
+    <NoWarn>AZC0007</NoWarn>
   </PropertyGroup>
+
+<!-- TODO: TEMP until SCM is released https://github.com/Azure/azure-sdk-for-net/issues/49774 -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\System.ClientModel\src\System.ClientModel.csproj" />
+  </ItemGroup>
+<!-- ==============================================================-->
 
   <ItemGroup>
     <PackageReference Include="Azure.Data.AppConfiguration" />
@@ -24,7 +31,6 @@
     <PackageReference Include="Azure.AI.Inference" />
     <PackageReference Include="Azure.Search.Documents" />
     <PackageReference Include="System.Memory.Data" />
-    <PackageReference Include="System.ClientModel" VersionOverride="1.4.0-beta.1" />
   </ItemGroup>
 
 </Project>

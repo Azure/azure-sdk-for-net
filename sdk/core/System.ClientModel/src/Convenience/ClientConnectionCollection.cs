@@ -15,7 +15,7 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 [JsonConverter(typeof(ConnectionCollectionConverter))]
 [DebuggerTypeProxy(typeof(ConnectionCollectionViewer))]
-public class ConnectionCollection : KeyedCollection<string, ClientConnection>
+public class ClientConnectionCollection : KeyedCollection<string, ClientConnection>
 {
     /// <summary>
     /// Gets the key for a given <see cref="ClientConnection"/>.
@@ -36,9 +36,9 @@ public class ConnectionCollection : KeyedCollection<string, ClientConnection>
 }
 
 /// <summary>
-/// Provides a debugger-friendly view of <see cref="ConnectionCollection"/>.
+/// Provides a debugger-friendly view of <see cref="ClientConnectionCollection"/>.
 /// </summary>
-internal class ConnectionCollectionViewer(ConnectionCollection connections)
+internal class ConnectionCollectionViewer(ClientConnectionCollection connections)
 {
     [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
     public ClientConnection[] Items
@@ -53,16 +53,16 @@ internal class ConnectionCollectionViewer(ConnectionCollection connections)
 }
 
 /// <summary>
-/// Handles JSON serialization and deserialization of <see cref="ConnectionCollection"/>.
+/// Handles JSON serialization and deserialization of <see cref="ClientConnectionCollection"/>.
 /// </summary>
-internal class ConnectionCollectionConverter : JsonConverter<ConnectionCollection>
+internal class ConnectionCollectionConverter : JsonConverter<ClientConnectionCollection>
 {
-    public override ConnectionCollection Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override ClientConnectionCollection Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         using JsonDocument document = JsonDocument.ParseValue(ref reader);
         JsonElement json = document.RootElement;
 
-        ConnectionCollection connections = [];
+        ClientConnectionCollection connections = [];
 
         foreach (JsonElement connectionJson in json.EnumerateArray())
         {
@@ -80,7 +80,7 @@ internal class ConnectionCollectionConverter : JsonConverter<ConnectionCollectio
         return connections;
     }
 
-    public override void Write(Utf8JsonWriter writer, ConnectionCollection value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, ClientConnectionCollection value, JsonSerializerOptions options)
     {
         writer.WriteStartArray();
         foreach (ClientConnection connection in value)

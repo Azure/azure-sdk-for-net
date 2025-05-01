@@ -101,6 +101,20 @@ namespace System.ClientModel.Primitives
         public override string ToString() { throw null; }
         public bool TryGetLocatorAsUri(out System.Uri? uri) { throw null; }
     }
+    public partial class ClientConnectionCollection : System.Collections.ObjectModel.KeyedCollection<string, System.ClientModel.Primitives.ClientConnection>
+    {
+        public ClientConnectionCollection() { }
+        public void AddRange(System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> connections) { }
+        protected override string GetKeyForItem(System.ClientModel.Primitives.ClientConnection item) { throw null; }
+    }
+    public abstract partial class ClientConnectionProvider
+    {
+        protected ClientConnectionProvider(int maxCacheSize) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public System.ClientModel.Primitives.ClientCache Subclients { get { throw null; } }
+        public abstract System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> GetAllConnections();
+        public abstract System.ClientModel.Primitives.ClientConnection GetConnection(string connectionId);
+    }
     [System.FlagsAttribute]
     public enum ClientErrorBehaviors
     {
@@ -165,20 +179,6 @@ namespace System.ClientModel.Primitives
         protected CollectionResult() { }
         public abstract System.ClientModel.ContinuationToken? GetContinuationToken(System.ClientModel.ClientResult page);
         public abstract System.Collections.Generic.IEnumerable<System.ClientModel.ClientResult> GetRawPages();
-    }
-    public partial class ConnectionCollection : System.Collections.ObjectModel.KeyedCollection<string, System.ClientModel.Primitives.ClientConnection>
-    {
-        public ConnectionCollection() { }
-        public void AddRange(System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> connections) { }
-        protected override string GetKeyForItem(System.ClientModel.Primitives.ClientConnection item) { throw null; }
-    }
-    public abstract partial class ConnectionProvider
-    {
-        protected ConnectionProvider(int maxCacheSize) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public System.ClientModel.Primitives.ClientCache Subclients { get { throw null; } }
-        public abstract System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> GetAllConnections();
-        public abstract System.ClientModel.Primitives.ClientConnection GetConnection(string connectionId);
     }
     public enum CredentialKind
     {
