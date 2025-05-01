@@ -768,6 +768,7 @@ internal static partial class MockExtensions
     public static void VerifyDestinationResourceOnQueue(this Mock<StorageResourceItem> dstResource)
     {
         dstResource.VerifyGet(r => r.Uri);
+        dstResource.Verify(b => b.ValidateTransferAsync(It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()), Times.Once());
     }
 
     public static void VerifySourceResourceOnQueue(this Mock<StorageResourceContainer> srcResource)
@@ -778,6 +779,7 @@ internal static partial class MockExtensions
     public static void VerifyDestinationResourceOnQueue(this Mock<StorageResourceContainer> dstResource)
     {
         dstResource.VerifyGet(r => r.Uri);
+        dstResource.Verify(b => b.ValidateTransferAsync(It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()), Times.Once());
     }
 
     public static void VerifySourceResourceOnJobProcess(this Mock<StorageResourceItem> srcResource)
