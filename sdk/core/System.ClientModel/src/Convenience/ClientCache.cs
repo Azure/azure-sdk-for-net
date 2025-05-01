@@ -11,7 +11,7 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public class ClientCache
 {
-    private readonly Dictionary<IEquatable<object>, ClientEntry> _clients = new();
+    private readonly Dictionary<object, ClientEntry> _clients = new();
     private readonly ReaderWriterLockSlim _lock = new(LockRecursionPolicy.SupportsRecursion);
 
     private readonly int _maxSize;
@@ -20,7 +20,7 @@ public class ClientCache
     /// Initializes the ClientCache with a configurable cache size.
     /// </summary>
     /// <param name="maxSize">The maximum number of clients to store in the cache.</param>
-    public ClientCache(int maxSize = 100)
+    public ClientCache(int maxSize)
     {
         _maxSize = maxSize;
     }
@@ -30,36 +30,58 @@ public class ClientCache
     /// Updates the last-used timestamp on every hit.
     /// </summary>
     /// <typeparam name="T">The type of the client.</typeparam>
-    /// <param name="clientId">An equality-comparable key representing the client configuration.</param>
+    /// <param name="clientId">A key representing the client configuration.</param>
     /// <param name="createClient">A factory function to create the client if not cached.</param>
     /// <returns>The cached or newly created client instance.</returns>
-    public T GetClient<T>(IEquatable<object> clientId, Func<T> createClient) where T : class
+    public T GetClient<T>(object clientId, Func<T> createClient) where T : class
     {
-        // If the client exists, update its timestamp.
-        if (_clients.TryGetValue(clientId, out var cached))
+        _lock.EnterReadLock();
+        try
         {
-            cached.LastUsed = Stopwatch.GetTimestamp();
-
-            if (cached.Client is T typedClient)
+            // If the client exists, update its timestamp.
+            if (_clients.TryGetValue(clientId, out var cached))
             {
-                return typedClient;
-            }
+                cached.LastUsed = Stopwatch.GetTimestamp();
 
-            throw new InvalidOperationException($"The clientId is associated with a client of type '{cached.Client.GetType()}', not '{typeof(T)}'.");
+                if (cached.Client is T typedClient)
+                {
+                    return typedClient;
+                }
+
+                throw new InvalidOperationException($"The clientId is associated with a client of type '{cached.Client.GetType()}', not '{typeof(T)}'.");
+            }
+        }
+        finally
+        {
+            _lock.ExitReadLock();
         }
 
-        // Client not found in cache, create a new one.
+        // Client not found, enter write lock
         _lock.EnterWriteLock();
         try
         {
+            // Double-check inside write lock to avoid race condition
+            if (_clients.TryGetValue(clientId, out var existing))
+            {
+                existing.LastUsed = Stopwatch.GetTimestamp();
+
+                if (existing.Client is T typedClient)
+                {
+                    return typedClient;
+                }
+
+                throw new InvalidOperationException($"The clientId is associated with a client of type '{existing.Client.GetType()}', not '{typeof(T)}'.");
+            }
+
+            // Client not found in cache, create a new one.
             T created = createClient();
             _clients[clientId] = new ClientEntry(created, Stopwatch.GetTimestamp());
 
-            // After insertion, if cache exceeds the limit, perform cleanup.
             if (_clients.Count > _maxSize)
             {
                 Cleanup();
             }
+
             return created;
         }
         finally

@@ -39,7 +39,8 @@ public readonly struct StorageServices
         string blobContainerClientId = $"{typeof(BlobContainerClient).FullName}@{containerName}";
 
         ProjectClient project = _project;
-        BlobContainerClient container = project.Subclients.GetClient(() =>
+        BlobContainerClientKey blobContainerClientKey = new(containerName);
+        BlobContainerClient container = project.Subclients.GetClient(blobContainerClientKey, () =>
         {
             ClientConnection connection = project.GetConnection(blobContainerClientId);
 
@@ -50,7 +51,7 @@ public readonly struct StorageServices
 
             BlobContainerClient container = new(uri, (TokenCredential)connection.Credential);
             return container;
-        }, null);
+        });
         return container;
     }
 
@@ -290,4 +291,6 @@ public readonly struct StorageServices
             function(data);
         });
     }
+
+    private record BlobContainerClientKey(string ContainerName);
 }

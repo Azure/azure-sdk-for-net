@@ -13,7 +13,7 @@ public class ClientCacheTests
     [Test]
     public void CacheShouldCleanupWhenExceedsLimit()
     {
-        var clientCache = new ClientCache();
+        var clientCache = new ClientCache(100);
 
         // Add 110 clients to trigger the cleanup.
         for (int i = 0; i < 110; i++)
@@ -23,7 +23,7 @@ public class ClientCacheTests
         }
 
         var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as Dictionary<IEquatable<object>, ClientEntry>;
+        var clients = clientsField?.GetValue(clientCache) as Dictionary<object, ClientEntry>;
 
         Assert.IsNotNull(clients, "The _clients field is null.");
         Assert.AreEqual(100, clients!.Count, "Cache did not cleanup correctly.");
@@ -32,7 +32,7 @@ public class ClientCacheTests
     [Test]
     public void CacheShouldNotCleanupWhenUnderLimit()
     {
-        var clientCache = new ClientCache();
+        var clientCache = new ClientCache(100);
 
         // Add 50 clients, which is below the limit.
         for (int i = 0; i < 50; i++)
@@ -42,7 +42,7 @@ public class ClientCacheTests
         }
 
         var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as Dictionary<IEquatable<object>, ClientEntry>;
+        var clients = clientsField?.GetValue(clientCache) as Dictionary<object, ClientEntry>;
 
         Assert.IsNotNull(clients, "The _clients field is null.");
         Assert.AreEqual(50, clients!.Count, "Cache should not have cleaned up when under the limit.");
@@ -51,7 +51,7 @@ public class ClientCacheTests
     [Test]
     public void CacheShouldCleanupOldestClients()
     {
-        var clientCache = new ClientCache();
+        var clientCache = new ClientCache(100);
 
         // Add 110 clients to trigger cleanup (exceeds _maxClients = 100)
         for (int i = 0; i < 110; i++)
@@ -66,7 +66,7 @@ public class ClientCacheTests
         clientCache.GetClient(new DummyClientKey("client1"), () => new object());
 
         var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as Dictionary<IEquatable<object>, ClientEntry>;
+        var clients = clientsField?.GetValue(clientCache) as Dictionary<object, ClientEntry>;
 
         Assert.IsNotNull(clients, "The _clients field is null.");
         Assert.AreEqual(100, clients!.Count, "Cache did not cleanup correctly.");
@@ -88,7 +88,7 @@ public class ClientCacheTests
     [Test]
     public void LRUShouldNotBeRemoved()
     {
-        var clientCache = new ClientCache();
+        var clientCache = new ClientCache(100);
 
         for (int i = 0; i <= 100; i++)
         {
@@ -104,7 +104,7 @@ public class ClientCacheTests
         clientCache.GetClient(new DummyClientKey("client102"), () => new object());
 
         var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as Dictionary<IEquatable<object>, ClientEntry>;
+        var clients = clientsField?.GetValue(clientCache) as Dictionary<object, ClientEntry>;
 
         Assert.IsNotNull(clients, "The _clients field is null.");
         Assert.AreEqual(100, clients!.Count, "Cache did not cleanup correctly.");
@@ -121,7 +121,7 @@ public class ClientCacheTests
     [Test]
     public void CacheShouldDisposeClientsWhenRemoved()
     {
-        var clientCache = new ClientCache();
+        var clientCache = new ClientCache(100);
 
         // Create a disposable client
         var disposableClient = new DisposableClient();
@@ -135,7 +135,7 @@ public class ClientCacheTests
         }
 
         var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as Dictionary<IEquatable<object>, ClientEntry>;
+        var clients = clientsField?.GetValue(clientCache) as Dictionary<object, ClientEntry>;
 
         Assert.IsNotNull(clients, "The _clients field is null.");
         Assert.IsTrue(disposableClient.IsDisposed, "Disposable client was not disposed correctly.");
@@ -144,7 +144,7 @@ public class ClientCacheTests
     [Test]
     public void CacheShouldHandleDifferentClientIdsSeparately()
     {
-        var clientCache = new ClientCache();
+        var clientCache = new ClientCache(100);
 
         // Add clients with the same type but different IDs
         var client1 = new object();
@@ -154,7 +154,7 @@ public class ClientCacheTests
         clientCache.GetClient(new DummyClientKey("client2"), () => client2);
 
         var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as Dictionary<IEquatable<object>, ClientEntry>;
+        var clients = clientsField?.GetValue(clientCache) as Dictionary<object, ClientEntry>;
 
         Assert.IsNotNull(clients, "The _clients field is null.");
         Assert.IsTrue(clients!.ContainsKey(new DummyClientKey("client1")), "Client1 should be in the cache.");
@@ -192,7 +192,7 @@ public class ClientCacheTests
         Assert.False(wasRecreated, "Client A was unexpectedly recreated");
 
         var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as IDictionary<IEquatable<object>, ClientEntry>;
+        var clients = clientsField?.GetValue(clientCache) as Dictionary<object, ClientEntry>;
 
         Assert.IsNotNull(clients, "_clients dictionary should not be null");
 
@@ -209,7 +209,7 @@ public class ClientCacheTests
     [Test]
     public void CacheShouldHandleDifferentOptionsSeparately()
     {
-        var clientCache = new ClientCache();
+        var clientCache = new ClientCache(100);
 
         // Define two different options as DummyClientKeys
         var options1 = new ClientPipelineOptions() { EnableDistributedTracing = true };
@@ -226,7 +226,7 @@ public class ClientCacheTests
         Assert.AreNotSame(client1, client2, "Clients should be distinct when options are different.");
 
         var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as IDictionary<IEquatable<object>, ClientEntry>;
+        var clients = clientsField?.GetValue(clientCache) as Dictionary<object, ClientEntry>;
 
         // Assert that both clients are in the cache with the expected keys
         Assert.IsTrue(clients!.ContainsKey(new DummyClientKey("abc", options1)), "Client with options1 should be in the cache.");
@@ -234,7 +234,7 @@ public class ClientCacheTests
     }
 }
 
-internal record DummyClientKey(string Key, ClientPipelineOptions? options = null) : IEquatable<object>;
+internal record DummyClientKey(string Key, ClientPipelineOptions? options = null);
 
 // Helper class to simulate a disposable client
 internal class DisposableClient : IDisposable
