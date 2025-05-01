@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://fd03a0aa-5843-4c83-8b89-0ddc18abf2df.eastus2.exp.azure.net/experiment-metrics:validate?api-version=2025-05-31-preview",
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics:validate?api-version=2025-05-31-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "287",
         "Content-Type": "application/json",
-        "traceparent": "00-4f2af4cfe0c97be82293dfa7251b7b12-c6472da871fa3c2c-00",
-        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250407.1 (.NET 8.0.14; Microsoft Windows 10.0.26100)",
+        "traceparent": "00-9fa06cabb2466b419fad948a8b6e86e8-87d178677eeb8052-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -33,10 +33,10 @@
       "ResponseHeaders": {
         "api-supported-versions": "2025-05-31-preview",
         "Connection": "keep-alive",
-        "Content-Length": "1243",
+        "Content-Length": "1240",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 08 Apr 2025 01:25:01 GMT",
-        "mise-correlation-id": "33188a70-02d2-44b4-a2ce-c8899cdeb24c",
+        "Date": "Thu, 01 May 2025 04:36:20 GMT",
+        "mise-correlation-id": "9b0c2575-8a3e-40c5-9c67-3844d3ff4652",
         "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000",
@@ -45,11 +45,10 @@
           "nosniff"
         ],
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-request-id": "e38483cf-f70e-4f0b-8c85-c2e00494794c",
+        "x-ms-request-id": "999cfa98-9691-4f89-8896-deed9b3e01ea",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
-        "result": "Invalid",
         "diagnostics": [
           {
             "code": "InvalidEventCondition",
@@ -115,12 +114,13 @@
             "code": "UnsupportedEventCondition",
             "message": "NameReference '' is not supported"
           }
-        ]
+        ],
+        "isValid": false
       }
     }
   ],
   "Variables": {
-    "ENDPOINT": "https://fd03a0aa-5843-4c83-8b89-0ddc18abf2df.eastus2.exp.azure.net",
-    "RandomSeed": "1104315077"
+    "ENDPOINT": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net",
+    "RandomSeed": "1844972334"
   }
 }

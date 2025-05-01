@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://fd03a0aa-5843-4c83-8b89-0ddc18abf2df.eastus2.exp.azure.net/experiment-metrics/test_metric_list_0?api-version=2025-05-31-preview",
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics/test_metric_list_0?api-version=2025-05-31-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "355",
         "Content-Type": "application/merge-patch+json",
-        "traceparent": "00-6dc8c025f4d605b0fffea5892d2a5015-f46716d91e3844bc-00",
-        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250407.1 (.NET 8.0.14; Microsoft Windows 10.0.26100)",
+        "traceparent": "00-202b52b53dfa631f46fb64111cb93541-6b1254e628249de4-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -32,12 +32,12 @@
       "ResponseHeaders": {
         "api-supported-versions": "2025-05-31-preview",
         "Connection": "keep-alive",
-        "Content-Length": "456",
+        "Content-Length": "460",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 08 Apr 2025 01:23:56 GMT",
+        "Date": "Thu, 01 May 2025 04:35:02 GMT",
         "ETag": "\"bRJg3wQuaLY=\"",
-        "Last-Modified": "Tue, 08 Apr 2025 01:23:56 GMT",
-        "mise-correlation-id": "0fdfa868-450b-44c4-85b7-d4d2fa960862",
+        "Last-Modified": "Thu, 01 May 2025 04:35:02 GMT",
+        "mise-correlation-id": "3cbbda52-cce3-4767-a97e-c3c708a7ed15",
         "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000",
@@ -46,7 +46,7 @@
           "nosniff"
         ],
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-request-id": "b526c263-591d-4bfb-82f0-eb615eee8409",
+        "x-ms-request-id": "961caa33-2501-45dc-b1fd-5036c74bde4a",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -64,20 +64,20 @@
           },
           "type": "EventCount"
         },
-        "eTag": "bRJg3wQuaLY=",
-        "lastModifiedAt": "2025-04-08T01:23:56.4909155+00:00"
+        "eTag": "\"bRJg3wQuaLY=\"",
+        "lastModifiedAt": "2025-05-01T04:35:02.2043379+00:00"
       }
     },
     {
-      "RequestUri": "https://fd03a0aa-5843-4c83-8b89-0ddc18abf2df.eastus2.exp.azure.net/experiment-metrics/test_metric_list_1?api-version=2025-05-31-preview",
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics/test_metric_list_1?api-version=2025-05-31-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "355",
         "Content-Type": "application/merge-patch+json",
-        "traceparent": "00-e5b90804b17d09d4ac8d4ee325966f1e-34342fa5949aeb2e-00",
-        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250407.1 (.NET 8.0.14; Microsoft Windows 10.0.26100)",
+        "traceparent": "00-64b7c185e6141cbd71d0cb79e9a444d1-c517cf2d367a55b1-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -100,12 +100,12 @@
       "ResponseHeaders": {
         "api-supported-versions": "2025-05-31-preview",
         "Connection": "keep-alive",
-        "Content-Length": "456",
+        "Content-Length": "460",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 08 Apr 2025 01:23:56 GMT",
+        "Date": "Thu, 01 May 2025 04:35:02 GMT",
         "ETag": "\"asly93vPnnE=\"",
-        "Last-Modified": "Tue, 08 Apr 2025 01:23:56 GMT",
-        "mise-correlation-id": "c31a3e67-9633-4704-b5c9-0083eed372ca",
+        "Last-Modified": "Thu, 01 May 2025 04:35:02 GMT",
+        "mise-correlation-id": "b6e173b4-18ac-477d-846e-607ef8b127d7",
         "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000",
@@ -114,7 +114,7 @@
           "nosniff"
         ],
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-request-id": "61c57197-3b65-40a9-bae3-4beedf30f722",
+        "x-ms-request-id": "24c183dd-7607-473b-9912-8b4a11747469",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -132,20 +132,20 @@
           },
           "type": "EventCount"
         },
-        "eTag": "asly93vPnnE=",
-        "lastModifiedAt": "2025-04-08T01:23:56.6471171+00:00"
+        "eTag": "\"asly93vPnnE=\"",
+        "lastModifiedAt": "2025-05-01T04:35:02.3668282+00:00"
       }
     },
     {
-      "RequestUri": "https://fd03a0aa-5843-4c83-8b89-0ddc18abf2df.eastus2.exp.azure.net/experiment-metrics/test_metric_list_2?api-version=2025-05-31-preview",
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics/test_metric_list_2?api-version=2025-05-31-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "355",
         "Content-Type": "application/merge-patch+json",
-        "traceparent": "00-c341994eecab51cb4c260159cfedcf75-f2fde6fea7039ccf-00",
-        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250407.1 (.NET 8.0.14; Microsoft Windows 10.0.26100)",
+        "traceparent": "00-938b452df8ed5159b72ea94687e36088-8abd41de3c9ae5dd-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -168,12 +168,12 @@
       "ResponseHeaders": {
         "api-supported-versions": "2025-05-31-preview",
         "Connection": "keep-alive",
-        "Content-Length": "456",
+        "Content-Length": "460",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 08 Apr 2025 01:23:56 GMT",
+        "Date": "Thu, 01 May 2025 04:35:02 GMT",
         "ETag": "\"vYRtmVl8tHU=\"",
-        "Last-Modified": "Tue, 08 Apr 2025 01:23:56 GMT",
-        "mise-correlation-id": "b5d16676-2d38-4c3c-b989-7c0730cec719",
+        "Last-Modified": "Thu, 01 May 2025 04:35:02 GMT",
+        "mise-correlation-id": "f7e14919-f1d1-4dc8-bb8d-0b95e6a43cbc",
         "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000",
@@ -182,7 +182,7 @@
           "nosniff"
         ],
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-request-id": "61d0422e-85f3-49b1-a89b-761ad659a924",
+        "x-ms-request-id": "ed563cf9-f7bd-498c-b7dd-b2ebbc648813",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -200,18 +200,18 @@
           },
           "type": "EventCount"
         },
-        "eTag": "vYRtmVl8tHU=",
-        "lastModifiedAt": "2025-04-08T01:23:56.7992371+00:00"
+        "eTag": "\"vYRtmVl8tHU=\"",
+        "lastModifiedAt": "2025-05-01T04:35:02.5459419+00:00"
       }
     },
     {
-      "RequestUri": "https://fd03a0aa-5843-4c83-8b89-0ddc18abf2df.eastus2.exp.azure.net/experiment-metrics?api-version=2025-05-31-preview",
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics?api-version=2025-05-31-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-25511d50875264310e9d4f3123f758c2-c900dcd88f9ea68f-00",
-        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250407.1 (.NET 8.0.14; Microsoft Windows 10.0.26100)",
+        "traceparent": "00-5b39d163fb7823ed9eb37f9262b142c9-1e730d7c7b6978a4-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -220,10 +220,10 @@
       "ResponseHeaders": {
         "api-supported-versions": "2025-05-31-preview",
         "Connection": "keep-alive",
-        "Content-Length": "23779",
+        "Content-Length": "8618",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 08 Apr 2025 01:23:56 GMT",
-        "mise-correlation-id": "65e57a9e-c0cc-46e8-b9c5-ecc069e955a8",
+        "Date": "Thu, 01 May 2025 04:35:02 GMT",
+        "mise-correlation-id": "df358c01-9b5f-43f9-8078-d8450cef978d",
         "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000",
@@ -232,557 +232,11 @@
           "nosniff"
         ],
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-request-id": "3e6d5e82-368d-4161-af58-e0daee25d5c7",
+        "x-ms-request-id": "e767b67c-a6c9-4bcc-b571-c0fb4bac6c90",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "value": [
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "testsummetric",
-            "displayName": "testSumMetric",
-            "description": "testSumMetric",
-            "categories": [],
-            "definition": {
-              "value": {
-                "eventName": "UserFeedback",
-                "eventProperty": "Score"
-              },
-              "type": "Sum"
-            },
-            "eTag": "U5InZqZyS/A=",
-            "lastModifiedAt": "2025-03-24T19:33:13.5981324+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "f7340f73a51c4942",
-            "displayName": "Updated Metric",
-            "description": "This metric has been updated",
-            "categories": [
-              "Test",
-              "Updated"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "UpdatedTestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "gLu0GMAYkEg=",
-            "lastModifiedAt": "2025-04-02T21:53:27.9297411+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "dc36905864324757",
-            "displayName": "If-None-Match Test Metric",
-            "description": "A metric created with If-None-Match header",
-            "categories": [
-              "Test",
-              "Conditional"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "ConditionalCreateEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "tCDOadumZoQ=",
-            "lastModifiedAt": "2025-04-02T21:53:31.0807192+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "fff64f6469994a180",
-            "displayName": "Metric 0",
-            "description": "Test metric for testing top parameter #0",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "BJwcJGaMD/g=",
-            "lastModifiedAt": "2025-04-02T21:53:32.6570346+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "fff64f6469994a181",
-            "displayName": "Metric 1",
-            "description": "Test metric for testing top parameter #1",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "Yic8JMPpkdU=",
-            "lastModifiedAt": "2025-04-02T21:53:32.8251484+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "fff64f6469994a182",
-            "displayName": "Metric 2",
-            "description": "Test metric for testing top parameter #2",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "TIpJDTK5JtQ=",
-            "lastModifiedAt": "2025-04-02T21:53:32.9882226+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "fff64f6469994a183",
-            "displayName": "Metric 3",
-            "description": "Test metric for testing top parameter #3",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "hJfy5lRR1gY=",
-            "lastModifiedAt": "2025-04-02T21:53:33.145272+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "fff64f6469994a184",
-            "displayName": "Metric 4",
-            "description": "Test metric for testing top parameter #4",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "yACl4RdQKTA=",
-            "lastModifiedAt": "2025-04-02T21:53:33.3014149+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "c7f7d33d77b242f1",
-            "displayName": "Updated With ETag",
-            "description": "This metric has been updated with ETag condition",
-            "categories": [
-              "Test",
-              "Conditional"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "ConditionalUpdateEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "9dGHluX6Jx0=",
-            "lastModifiedAt": "2025-04-02T22:03:41.491279+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "a7c4e09568a2457a0",
-            "displayName": "Metric 0",
-            "description": "Test metric for listing #0",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "LNY3D832VlE=",
-            "lastModifiedAt": "2025-04-02T22:03:44.6833794+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "a7c4e09568a2457a1",
-            "displayName": "Metric 1",
-            "description": "Test metric for listing #1",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "sBULbYsdFq0=",
-            "lastModifiedAt": "2025-04-02T22:03:44.8540379+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "a7c4e09568a2457a2",
-            "displayName": "Metric 2",
-            "description": "Test metric for listing #2",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "mPeUEsAbCPE=",
-            "lastModifiedAt": "2025-04-02T22:03:44.9973603+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "fe6da7ec3e024d82",
-            "displayName": "Updated Metric",
-            "description": "This metric has been updated",
-            "categories": [
-              "Test",
-              "Updated"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "UpdatedTestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "+SbxSwArops=",
-            "lastModifiedAt": "2025-04-02T22:03:48.1738879+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "da3a005837a34f1f",
-            "displayName": "This Should Not Update",
-            "description": "This update should fail due to ETag mismatch",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "4k1JpYTtHHU=",
-            "lastModifiedAt": "2025-04-02T22:03:55.8343805+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "b962a261d8da4f0d",
-            "displayName": "Updated With ETag",
-            "description": "This metric has been updated with ETag condition",
-            "categories": [
-              "Test",
-              "Conditional"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "ConditionalUpdateEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "h9wnbTyU2eI=",
-            "lastModifiedAt": "2025-04-03T00:58:59.6012757+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "a793e61a2b004c10",
-            "displayName": "Get Test Metric",
-            "description": "A metric to be retrieved",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "KKWi8flegdY=",
-            "lastModifiedAt": "2025-04-03T00:59:04.1135202+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "b64ab44ee1a94625",
-            "displayName": "Updated Metric",
-            "description": "This metric has been updated",
-            "categories": [
-              "Test",
-              "Updated"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "UpdatedTestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "W7bMIOHKPSc=",
-            "lastModifiedAt": "2025-04-03T00:59:05.8537181+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "be3a2591d8f349100",
-            "displayName": "Metric 0",
-            "description": "Test metric for testing top parameter #0",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "GMwPXFnP35I=",
-            "lastModifiedAt": "2025-04-03T00:59:10.1683906+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "be3a2591d8f349101",
-            "displayName": "Metric 1",
-            "description": "Test metric for testing top parameter #1",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "QMWYSOUk350=",
-            "lastModifiedAt": "2025-04-03T00:59:10.3271813+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "be3a2591d8f349102",
-            "displayName": "Metric 2",
-            "description": "Test metric for testing top parameter #2",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "ybNZh0dXeG4=",
-            "lastModifiedAt": "2025-04-03T00:59:10.4731896+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "be3a2591d8f349103",
-            "displayName": "Metric 3",
-            "description": "Test metric for testing top parameter #3",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "JW/rERMGWJM=",
-            "lastModifiedAt": "2025-04-03T00:59:10.6221334+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "be3a2591d8f349104",
-            "displayName": "Metric 4",
-            "description": "Test metric for testing top parameter #4",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "JHbAb02uPU4=",
-            "lastModifiedAt": "2025-04-03T00:59:10.777015+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "f2751d7936b54480",
-            "displayName": "This Should Not Update",
-            "description": "This update should fail due to ETag mismatch",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "nPWou17b45s=",
-            "lastModifiedAt": "2025-04-03T00:59:14.2808438+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "bd33dad3826442d0",
-            "displayName": "New Test Metric",
-            "description": "A metric created for testing purposes",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "Ego/YlpIPcw=",
-            "lastModifiedAt": "2025-04-03T01:11:59.5890149+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "c6ee1666f01144ae",
-            "displayName": "New Test Metric",
-            "description": "A metric created for testing purposes",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "5dx1tZCRhuY=",
-            "lastModifiedAt": "2025-04-03T01:16:35.8202396+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "efce260b57604ca30",
-            "displayName": "Metric 0",
-            "description": "Test metric for listing #0",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "Nx45cKEADuM=",
-            "lastModifiedAt": "2025-04-03T01:16:37.235142+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "efce260b57604ca31",
-            "displayName": "Metric 1",
-            "description": "Test metric for listing #1",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "OQ8+OYd0leM=",
-            "lastModifiedAt": "2025-04-03T01:16:37.4132905+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "efce260b57604ca32",
-            "displayName": "Metric 2",
-            "description": "Test metric for listing #2",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "GHQyNi669WE=",
-            "lastModifiedAt": "2025-04-03T01:16:37.5628445+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "eb1c28ade1ee4223",
-            "displayName": "Get Test Metric",
-            "description": "A metric to be retrieved",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "rK1b4nLouts=",
-            "lastModifiedAt": "2025-04-03T01:16:39.1279723+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "test_metric_conditional_update",
-            "displayName": "Updated With ETag",
-            "description": "This metric has been updated with ETag condition",
-            "categories": [
-              "Test",
-              "Conditional"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "ConditionalUpdateEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "CZAWQM+lSHs=",
-            "lastModifiedAt": "2025-04-08T01:16:15.5427015+00:00"
-          },
           {
             "lifecycle": "Active",
             "desiredDirection": "Increase",
@@ -798,297 +252,8 @@
               },
               "type": "EventCount"
             },
-            "eTag": "qOF7bCW8W7s=",
-            "lastModifiedAt": "2025-04-03T01:21:46.1771518+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "test_metric_retrieve",
-            "displayName": "Test Metric GetExperimentMetricById",
-            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(False).GetExperimentMetricById)",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "cfeqG0VqwBk=",
-            "lastModifiedAt": "2025-04-08T01:23:51.4229875+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "test_metric_update_existing",
-            "displayName": "Updated Metric",
-            "description": "This metric has been updated",
-            "categories": [
-              "Test",
-              "Updated"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "UpdatedTestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "cyvztNL0w2g=",
-            "lastModifiedAt": "2025-04-08T01:16:12.874881+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "f597effe0b2d4eda0",
-            "displayName": "Metric 0",
-            "description": "Test metric for listing #0",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "UboRxZfEyRA=",
-            "lastModifiedAt": "2025-04-03T01:21:57.4801426+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "f597effe0b2d4eda1",
-            "displayName": "Metric 1",
-            "description": "Test metric for listing #1",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "QKJhbrmAOmQ=",
-            "lastModifiedAt": "2025-04-03T01:21:57.6367651+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "f597effe0b2d4eda2",
-            "displayName": "Metric 2",
-            "description": "Test metric for listing #2",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "aF3y1MQpLoI=",
-            "lastModifiedAt": "2025-04-03T01:21:57.8167066+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "test_metric_if_match_fail",
-            "displayName": "Test Metric UpdateExperimentMetricWithETagPreconditionFailed",
-            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).UpdateExperimentMetricWithETagPreconditionFailed)",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "gb4lJU9RxE8=",
-            "lastModifiedAt": "2025-04-08T01:16:18.0250594+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "dbaceb9dc9f141410",
-            "displayName": "Metric 0",
-            "description": "Test metric for testing top parameter #0",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "IQqWrZpmjUk=",
-            "lastModifiedAt": "2025-04-03T01:24:25.1537235+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "dbaceb9dc9f141411",
-            "displayName": "Metric 1",
-            "description": "Test metric for testing top parameter #1",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "0HeF9IDvPds=",
-            "lastModifiedAt": "2025-04-03T01:24:25.3447116+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "dbaceb9dc9f141412",
-            "displayName": "Metric 2",
-            "description": "Test metric for testing top parameter #2",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "uwDT55zbQo0=",
-            "lastModifiedAt": "2025-04-03T01:24:25.5654218+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "dbaceb9dc9f141413",
-            "displayName": "Metric 3",
-            "description": "Test metric for testing top parameter #3",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "/VssJ9NkbEg=",
-            "lastModifiedAt": "2025-04-03T01:24:25.7859255+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "dbaceb9dc9f141414",
-            "displayName": "Metric 4",
-            "description": "Test metric for testing top parameter #4",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "4Mmagy97/OQ=",
-            "lastModifiedAt": "2025-04-03T01:24:25.9533593+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "test_metric_list_0",
-            "displayName": "Test Metric ListExperimentMetrics",
-            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(False).ListExperimentMetrics)",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "bRJg3wQuaLY=",
-            "lastModifiedAt": "2025-04-08T01:23:56.4909155+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "test_metric_list_1",
-            "displayName": "Test Metric ListExperimentMetrics",
-            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(False).ListExperimentMetrics)",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "asly93vPnnE=",
-            "lastModifiedAt": "2025-04-08T01:23:56.6471171+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "test_metric_list_2",
-            "displayName": "Test Metric ListExperimentMetrics",
-            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(False).ListExperimentMetrics)",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "vYRtmVl8tHU=",
-            "lastModifiedAt": "2025-04-08T01:23:56.7992371+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "test_metric_list_3",
-            "displayName": "Test Metric ListExperimentMetricsWithTopParameter",
-            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).ListExperimentMetricsWithTopParameter)",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "j2psW0U8l5w=",
-            "lastModifiedAt": "2025-04-04T19:29:32.5437822+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "test_metric_list_4",
-            "displayName": "Test Metric ListExperimentMetricsWithTopParameter",
-            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).ListExperimentMetricsWithTopParameter)",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "6ld3jtUKHCw=",
-            "lastModifiedAt": "2025-04-04T19:29:32.6809265+00:00"
+            "eTag": "\"qOF7bCW8W7s=\"",
+            "lastModifiedAt": "2025-05-01T02:21:49.158338+00:00"
           },
           {
             "lifecycle": "Active",
@@ -1105,8 +270,8 @@
               },
               "type": "EventCount"
             },
-            "eTag": "JutorBLJ9OY=",
-            "lastModifiedAt": "2025-04-08T01:23:18.851564+00:00"
+            "eTag": "\"JutorBLJ9OY=\"",
+            "lastModifiedAt": "2025-05-01T04:34:23.9770525+00:00"
           },
           {
             "lifecycle": "Active",
@@ -1123,8 +288,8 @@
               },
               "type": "EventCount"
             },
-            "eTag": "zUPCwfvmxh0=",
-            "lastModifiedAt": "2025-04-08T01:23:22.0109014+00:00"
+            "eTag": "\"zUPCwfvmxh0=\"",
+            "lastModifiedAt": "2025-05-01T04:34:27.6438691+00:00"
           },
           {
             "lifecycle": "Inactive",
@@ -1141,8 +306,8 @@
               },
               "type": "EventCount"
             },
-            "eTag": "R2DHqnWRi+4=",
-            "lastModifiedAt": "2025-04-08T01:23:24.53223+00:00"
+            "eTag": "\"R2DHqnWRi+4=\"",
+            "lastModifiedAt": "2025-05-01T04:34:30.1618885+00:00"
           },
           {
             "lifecycle": "Inactive",
@@ -1159,8 +324,8 @@
               },
               "type": "EventCount"
             },
-            "eTag": "upt1shNNgZo=",
-            "lastModifiedAt": "2025-04-08T01:23:35.1351808+00:00"
+            "eTag": "\"upt1shNNgZo=\"",
+            "lastModifiedAt": "2025-05-01T04:34:41.0174278+00:00"
           },
           {
             "lifecycle": "Active",
@@ -1177,8 +342,8 @@
               },
               "type": "EventCount"
             },
-            "eTag": "JR6UkVIRbKo=",
-            "lastModifiedAt": "2025-04-08T01:23:37.6321882+00:00"
+            "eTag": "\"JR6UkVIRbKo=\"",
+            "lastModifiedAt": "2025-05-01T04:34:43.4752277+00:00"
           },
           {
             "lifecycle": "Inactive",
@@ -1195,163 +360,8 @@
               },
               "type": "EventCount"
             },
-            "eTag": "/BC2QWRqGyY=",
-            "lastModifiedAt": "2025-04-08T01:23:40.3863746+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "avg_revenue_per_purchase",
-            "displayName": "Average revenue per purchase [USD]",
-            "description": "The average revenue per purchase transaction in USD. Refund transactions are excluded.",
-            "categories": [
-              "Business"
-            ],
-            "definition": {
-              "value": {
-                "eventName": "Purchase",
-                "eventProperty": "Revenue"
-              },
-              "type": "Average"
-            },
-            "eTag": "Qh23sDcC1Ec=",
-            "lastModifiedAt": "2025-04-04T21:07:34.8787421+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "prompt_sent_count",
-            "displayName": "Total number of prompts sent",
-            "description": "Counts the total number of prompts sent by users to the chatbot",
-            "categories": [
-              "Usage"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "PromptSent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "+fXmJ7Cjswg=",
-            "lastModifiedAt": "2025-04-04T21:07:09.038722+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "momo_pct_relevance_good",
-            "displayName": "% evaluated conversations with good relevance",
-            "description": "Percentage of evaluated conversations where the LLM response has good relevance (score >= 4)",
-            "categories": [
-              "Quality"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "EvaluateLLM"
-              },
-              "rateCondition": "Relevance > 4",
-              "type": "EventRate"
-            },
-            "eTag": "dXslOuuMbq4=",
-            "lastModifiedAt": "2025-04-04T21:07:12.3184829+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Decrease",
-            "id": "p95_response_time_seconds",
-            "displayName": "P95 LLM response time [seconds]",
-            "description": "The 95th percentile of response time in seconds for LLM responses",
-            "categories": [
-              "Performance"
-            ],
-            "definition": {
-              "value": {
-                "eventName": "ResponseReceived",
-                "eventProperty": "ResponseTimeSeconds"
-              },
-              "percentile": 95,
-              "type": "Percentile"
-            },
-            "eTag": "kVNEt5pTUCY=",
-            "lastModifiedAt": "2025-04-04T21:07:15.2726784+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "total_revenue",
-            "displayName": "Total revenue",
-            "description": "Sum of revenue from all purchase transactions",
-            "categories": [
-              "Business"
-            ],
-            "definition": {
-              "value": {
-                "eventName": "Purchase",
-                "filter": "Revenue > 0",
-                "eventProperty": "Revenue"
-              },
-              "type": "Sum"
-            },
-            "eTag": "WMGp4ROfETI=",
-            "lastModifiedAt": "2025-04-04T21:07:18.0020503+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "users_prompt_sent",
-            "displayName": "Users with at least one prompt sent on checkout page",
-            "description": "Counts unique users who sent at least one prompt while on the checkout page",
-            "categories": [
-              "Usage"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "PromptSent",
-                "filter": "Page == 'checkout.html'"
-              },
-              "type": "UserCount"
-            },
-            "eTag": "nG+iY/QZW+0=",
-            "lastModifiedAt": "2025-04-04T21:07:20.7718166+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "pct_chat_to_high_value_purchase_conversion",
-            "displayName": "% users with LLM interaction who made a high-value purchase",
-            "description": "Percentage of users who received a response from the LLM and then made a purchase of $100 or more",
-            "categories": [
-              "Business"
-            ],
-            "definition": {
-              "startEvent": {
-                "eventName": "ResponseReceived"
-              },
-              "endEvent": {
-                "eventName": "Purchase",
-                "filter": "Revenue > 100"
-              },
-              "type": "UserRate"
-            },
-            "eTag": "8EYyUvpl+YE=",
-            "lastModifiedAt": "2025-04-04T21:07:23.6092489+00:00"
-          },
-          {
-            "lifecycle": "Active",
-            "desiredDirection": "Increase",
-            "id": "test_metric_id",
-            "displayName": "Test metric for validation",
-            "description": "This metric definition will be validated before creation",
-            "categories": [
-              "Test"
-            ],
-            "definition": {
-              "event": {
-                "eventName": "TestEvent"
-              },
-              "type": "EventCount"
-            },
-            "eTag": "x3/AkNmdULM=",
-            "lastModifiedAt": "2025-04-04T21:07:37.8803966+00:00"
+            "eTag": "\"/BC2QWRqGyY=\"",
+            "lastModifiedAt": "2025-05-01T04:34:46.335715+00:00"
           },
           {
             "lifecycle": "Active",
@@ -1368,8 +378,188 @@
               },
               "type": "EventCount"
             },
-            "eTag": "qv09oLOHyCo=",
-            "lastModifiedAt": "2025-04-08T01:23:45.7502728+00:00"
+            "eTag": "\"qv09oLOHyCo=\"",
+            "lastModifiedAt": "2025-05-01T04:34:51.6601683+00:00"
+          },
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_retrieve",
+            "displayName": "Test Metric GetExperimentMetricById",
+            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(False).GetExperimentMetricById)",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"cfeqG0VqwBk=\"",
+            "lastModifiedAt": "2025-05-01T04:34:57.1816873+00:00"
+          },
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_list_0",
+            "displayName": "Test Metric ListExperimentMetrics",
+            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(False).ListExperimentMetrics)",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"bRJg3wQuaLY=\"",
+            "lastModifiedAt": "2025-05-01T04:35:02.2043379+00:00"
+          },
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_list_1",
+            "displayName": "Test Metric ListExperimentMetrics",
+            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(False).ListExperimentMetrics)",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"asly93vPnnE=\"",
+            "lastModifiedAt": "2025-05-01T04:35:02.3668282+00:00"
+          },
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_list_2",
+            "displayName": "Test Metric ListExperimentMetrics",
+            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(False).ListExperimentMetrics)",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"vYRtmVl8tHU=\"",
+            "lastModifiedAt": "2025-05-01T04:35:02.5459419+00:00"
+          },
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_update_existing",
+            "displayName": "Updated Metric",
+            "description": "This metric has been updated",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"69TxF6wMaWY=\"",
+            "lastModifiedAt": "2025-05-01T04:34:06.5364634+00:00"
+          },
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_conditional_update",
+            "displayName": "Updated With ETag",
+            "description": "This metric has been updated with ETag condition",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"AlhYUb/g3Iw=\"",
+            "lastModifiedAt": "2025-05-01T04:34:09.1264599+00:00"
+          },
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_if_match_fail",
+            "displayName": "Test Metric UpdateExperimentMetricWithETagPreconditionFailed",
+            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).UpdateExperimentMetricWithETagPreconditionFailed)",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"gb4lJU9RxE8=\"",
+            "lastModifiedAt": "2025-05-01T04:34:11.5812701+00:00"
+          },
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_list_3",
+            "displayName": "Test Metric ListExperimentMetricsWithTopParameter",
+            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).ListExperimentMetricsWithTopParameter)",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"j2psW0U8l5w=\"",
+            "lastModifiedAt": "2025-05-01T04:34:02.1407069+00:00"
+          },
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metric_list_4",
+            "displayName": "Test Metric ListExperimentMetricsWithTopParameter",
+            "description": "A metric created for testing purposes (Azure.Analytics.OnlineExperimentation.Tests.OnlineExperimentationClientTests(True).ListExperimentMetricsWithTopParameter)",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"6ld3jtUKHCw=\"",
+            "lastModifiedAt": "2025-05-01T04:34:02.3316789+00:00"
+          },
+          {
+            "lifecycle": "Active",
+            "desiredDirection": "Increase",
+            "id": "test_metri",
+            "displayName": "New Test Metric",
+            "description": "A metric created for testing purposes",
+            "categories": [
+              "Test"
+            ],
+            "definition": {
+              "event": {
+                "eventName": "TestEvent"
+              },
+              "type": "EventCount"
+            },
+            "eTag": "\"YG7X7NypAo8=\"",
+            "lastModifiedAt": "2025-05-01T04:34:33.0330161+00:00"
           },
           {
             "lifecycle": "Active",
@@ -1387,15 +577,15 @@
               },
               "type": "EventCount"
             },
-            "eTag": "NyoM+7py4jQ=",
-            "lastModifiedAt": "2025-04-08T01:23:29.8694318+00:00"
+            "eTag": "\"NyoM+7py4jQ=\"",
+            "lastModifiedAt": "2025-05-01T04:34:35.7269418+00:00"
           }
         ]
       }
     }
   ],
   "Variables": {
-    "ENDPOINT": "https://fd03a0aa-5843-4c83-8b89-0ddc18abf2df.eastus2.exp.azure.net",
-    "RandomSeed": "669426811"
+    "ENDPOINT": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net",
+    "RandomSeed": "17605172"
   }
 }

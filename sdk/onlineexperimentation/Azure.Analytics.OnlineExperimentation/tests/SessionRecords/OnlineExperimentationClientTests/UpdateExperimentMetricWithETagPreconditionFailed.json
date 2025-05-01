@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://fd03a0aa-5843-4c83-8b89-0ddc18abf2df.eastus2.exp.azure.net/experiment-metrics/test_metric_if_match_fail?api-version=2025-05-31-preview",
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics/test_metric_if_match_fail?api-version=2025-05-31-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "409",
         "Content-Type": "application/merge-patch+json",
-        "traceparent": "00-c78e5d6f2ca21c029098a94d74a99c1c-743f00037c327f21-00",
-        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250407.1 (.NET 8.0.14; Microsoft Windows 10.0.26100)",
+        "traceparent": "00-dc1708fc2c0e33c70a3e2c47a1aec71f-1b149044ae9b40a5-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -32,12 +32,12 @@
       "ResponseHeaders": {
         "api-supported-versions": "2025-05-31-preview",
         "Connection": "keep-alive",
-        "Content-Length": "517",
+        "Content-Length": "521",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 08 Apr 2025 01:24:05 GMT",
+        "Date": "Thu, 01 May 2025 04:35:15 GMT",
         "ETag": "\"aO89ZnioWaM=\"",
-        "Last-Modified": "Tue, 08 Apr 2025 01:24:05 GMT",
-        "mise-correlation-id": "6968893f-5bcb-4f39-b6f4-dec79e531836",
+        "Last-Modified": "Thu, 01 May 2025 04:35:15 GMT",
+        "mise-correlation-id": "7fb00945-5c7b-45f0-ae2e-52d8271a91a1",
         "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000",
@@ -46,7 +46,7 @@
           "nosniff"
         ],
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-request-id": "1e259e7c-0b0c-43b1-8ac3-f8c8bcb86f27",
+        "x-ms-request-id": "13b8b962-979f-41d6-b132-f1fb40584f39",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -64,46 +64,35 @@
           },
           "type": "EventCount"
         },
-        "eTag": "aO89ZnioWaM=",
-        "lastModifiedAt": "2025-04-08T01:24:05.0373194+00:00"
+        "eTag": "\"aO89ZnioWaM=\"",
+        "lastModifiedAt": "2025-05-01T04:35:15.1874465+00:00"
       }
     },
     {
-      "RequestUri": "https://fd03a0aa-5843-4c83-8b89-0ddc18abf2df.eastus2.exp.azure.net/experiment-metrics/test_metric_if_match_fail?api-version=2025-05-31-preview",
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics/test_metric_if_match_fail?api-version=2025-05-31-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "243",
+        "Content-Length": "101",
         "Content-Type": "application/merge-patch+json",
         "If-Match": "\"incorrect-etag-value\"",
-        "traceparent": "00-8aad8d0fdd1650458d8b5c9c96ced98d-53c959dbc255975e-00",
-        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250407.1 (.NET 8.0.14; Microsoft Windows 10.0.26100)",
+        "traceparent": "00-429a00e7601f0290a6bdbee8813615b2-8d173a44b96ac6f9-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "lifecycle": "Active",
         "displayName": "This Should Not Update",
-        "description": "This update should fail due to ETag mismatch",
-        "categories": [
-          "Test"
-        ],
-        "desiredDirection": "Increase",
-        "definition": {
-          "type": "EventCount",
-          "event": {
-            "eventName": "TestEvent"
-          }
-        }
+        "description": "This update should fail due to ETag mismatch"
       },
       "StatusCode": 412,
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Length": "161",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 08 Apr 2025 01:24:05 GMT",
-        "mise-correlation-id": "b31d4f84-e833-4645-a33f-88e898328dcf",
+        "Date": "Thu, 01 May 2025 04:35:15 GMT",
+        "mise-correlation-id": "f9e37cd4-69e2-4dd5-8fd4-592369420fcd",
         "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000",
@@ -112,13 +101,13 @@
           "nosniff"
         ],
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-error-code": "conditionNotMet",
-        "x-ms-request-id": "aa74c904-6ece-4791-9010-c5bfbc5d82d2",
+        "x-ms-error-code": "ConditionNotMet",
+        "x-ms-request-id": "187194fd-3491-4185-acb8-fbf0b07d9dd5",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "error": {
-          "code": "conditionNotMet",
+          "code": "ConditionNotMet",
           "message": "The condition specified in the If-Match request header was not met.",
           "target": null,
           "details": [],
@@ -128,7 +117,7 @@
     }
   ],
   "Variables": {
-    "ENDPOINT": "https://fd03a0aa-5843-4c83-8b89-0ddc18abf2df.eastus2.exp.azure.net",
-    "RandomSeed": "1765434525"
+    "ENDPOINT": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net",
+    "RandomSeed": "1920920635"
   }
 }

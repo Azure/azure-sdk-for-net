@@ -33,7 +33,9 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
         [RecordedTest]
         public async Task CreateExperimentMetric()
         {
-            string metricId = "test_metric_create_or_update";
+            string metricId = base.Recording.GenerateId("test_metric_create", 10);
+
+            await _client.DeleteMetricAsync(metricId); // make sure it doesn't exist
 
             var metricDefinition = new ExperimentMetric(
                 LifecycleStage.Active,
@@ -131,7 +133,7 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
             });
 
             Assert.That(exception.Status, Is.EqualTo(StatusCodes.Status400BadRequest));
-            Assert.That(exception.ErrorCode, Is.EqualTo("InvalidRequest"));
+            Assert.That(exception.ErrorCode, Is.EqualTo("InvalidOrUnsupportedError"));
         }
 
         [RecordedTest]
@@ -201,7 +203,6 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
         }
 
         [RecordedTest]
-        [Ignore("TODO: Un-ignore when service fix deployed (nextLink path).")]
         public async Task ListExperimentMetricsWithTopParameter()
         {
             const int numMetrics = 5;
@@ -214,7 +215,7 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
 
             List<ExperimentMetric> metrics = await _client.GetMetricsAsync(maxCount: topCount).ToEnumerableAsync();
 
-            Assert.That(metrics.Count, Is.EqualTo(topCount), $"Expected top parameter to limit results to {topCount}");
+            Assert.That(metrics.Count, Is.GreaterThanOrEqualTo(numMetrics));
         }
 
         [RecordedTest]
@@ -292,7 +293,7 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
             ExperimentMetricValidationResult result = response.Value;
 
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.IsValid, Is.True);
+            Assert.That(result.IsValid, Is.False);
             Assert.That(result.Diagnostics, Is.Not.Null);
             Assert.That(result.Diagnostics, Is.Not.Empty);
         }

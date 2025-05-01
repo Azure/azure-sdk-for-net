@@ -1,7 +1,38 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://a436c1d9-a21b-46b1-8ed5-483c07d02836.eastus2.exp.azure.net/experiment-metrics/test_metric_create_or_update?api-version=2025-05-31-preview",
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics/test_metri?api-version=2025-05-31-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-1cf6c74c67434dadaaa89d0d062466df-c544745edeea6c4a-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "api-supported-versions": "2025-05-31-preview",
+        "Connection": "keep-alive",
+        "Date": "Thu, 01 May 2025 04:35:31 GMT",
+        "mise-correlation-id": "eef7d27b-0b1d-4012-9754-4ebd25bbab9f",
+        "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": [
+          "nosniff",
+          "nosniff"
+        ],
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-request-id": "8d992579-7f3c-4342-9385-650ae6f13da3",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics/test_metri?api-version=2025-05-31-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -9,8 +40,8 @@
         "Content-Length": "229",
         "Content-Type": "application/merge-patch+json",
         "If-None-Match": "*",
-        "traceparent": "00-a445c0eb9f3dcd3e7a52dd304822f578-e89cfd34405e2eb2-00",
-        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250422.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
+        "traceparent": "00-92c148b5a67d345bb1a32815d61a469f-b6aad073708f1f79-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -33,13 +64,13 @@
       "ResponseHeaders": {
         "api-supported-versions": "2025-05-31-preview",
         "Connection": "keep-alive",
-        "Content-Length": "343",
+        "Content-Length": "326",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 23 Apr 2025 20:13:34 GMT",
-        "ETag": "\"qOF7bCW8W7s=\"",
-        "Last-Modified": "Wed, 23 Apr 2025 20:13:34 GMT",
-        "Location": "/workspaces/a436c1d9-a21b-46b1-8ed5-483c07d02836/experiment-metrics/test_metric_create_or_update",
-        "mise-correlation-id": "bb86ac65-94de-4b52-9d54-1224e42c531a",
+        "Date": "Thu, 01 May 2025 04:35:31 GMT",
+        "ETag": "\"YG7X7NypAo8=\"",
+        "Last-Modified": "Thu, 01 May 2025 04:35:31 GMT",
+        "Location": "/workspaces/3498ec60-ff3f-4fb4-8064-bfcf8de553aa/experiment-metrics/test_metri",
+        "mise-correlation-id": "fbae5e47-e4dc-4ce8-8eea-c6dd48b2d3b1",
         "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000",
@@ -48,13 +79,13 @@
           "nosniff"
         ],
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-request-id": "385211d5-08e2-4809-a569-46adfcd5861f",
+        "x-ms-request-id": "f40e20ca-7ed3-4c7e-9c43-a46104b95e9b",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "lifecycle": "Active",
         "desiredDirection": "Increase",
-        "id": "test_metric_create_or_update",
+        "id": "test_metri",
         "displayName": "New Test Metric",
         "description": "A metric created for testing purposes",
         "categories": [
@@ -66,13 +97,13 @@
           },
           "type": "EventCount"
         },
-        "eTag": "\"qOF7bCW8W7s=\"",
-        "lastModifiedAt": "2025-04-23T20:13:34.710345+00:00"
+        "eTag": "\"YG7X7NypAo8=\"",
+        "lastModifiedAt": "2025-05-01T04:35:31.5736411+00:00"
       }
     }
   ],
   "Variables": {
-    "ENDPOINT": "https://a436c1d9-a21b-46b1-8ed5-483c07d02836.eastus2.exp.azure.net",
-    "RandomSeed": "37378564"
+    "ENDPOINT": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net",
+    "RandomSeed": "1245875860"
   }
 }

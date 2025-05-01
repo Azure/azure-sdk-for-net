@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://fd03a0aa-5843-4c83-8b89-0ddc18abf2df.eastus2.exp.azure.net/experiment-metrics:validate?api-version=2025-05-31-preview",
+      "RequestUri": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net/experiment-metrics:validate?api-version=2025-05-31-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "245",
         "Content-Type": "application/json",
-        "traceparent": "00-0f9c3f7b349b8ca15fcbd73c5a5a219e-4a0d86234ccad9c9-00",
-        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250407.1 (.NET 8.0.14; Microsoft Windows 10.0.26100)",
+        "traceparent": "00-e9968af210af96d39e7c49824d007124-fe213b1a72f4da9c-00",
+        "User-Agent": "azsdk-net-Analytics.OnlineExperimentation/1.0.0-alpha.20250430.1 (.NET 9.0.4; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -33,10 +33,10 @@
       "ResponseHeaders": {
         "api-supported-versions": "2025-05-31-preview",
         "Connection": "keep-alive",
-        "Content-Length": "35",
+        "Content-Length": "33",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 08 Apr 2025 01:25:03 GMT",
-        "mise-correlation-id": "cda8e91c-a983-4549-86a0-1f531e76ecf4",
+        "Date": "Thu, 01 May 2025 04:36:24 GMT",
+        "mise-correlation-id": "807558b2-2853-4826-9d8a-4497b7e3ce0f",
         "Request-Context": "appId=cid-v1:4ae78417-7f25-4068-bd96-557cb165ec62",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000",
@@ -45,17 +45,17 @@
           "nosniff"
         ],
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-request-id": "edbcd3ee-7dce-43c6-ae4d-311b01349b22",
+        "x-ms-request-id": "fc5cb947-5eeb-4fa9-a1c2-da77c31ba383",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
-        "result": "Valid",
-        "diagnostics": []
+        "diagnostics": [],
+        "isValid": true
       }
     }
   ],
   "Variables": {
-    "ENDPOINT": "https://fd03a0aa-5843-4c83-8b89-0ddc18abf2df.eastus2.exp.azure.net",
-    "RandomSeed": "1002662555"
+    "ENDPOINT": "https://3498ec60-ff3f-4fb4-8064-bfcf8de553aa.eastus2.exp.azure.net",
+    "RandomSeed": "230707760"
   }
 }
