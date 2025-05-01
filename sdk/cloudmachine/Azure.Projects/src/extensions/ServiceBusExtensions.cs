@@ -21,7 +21,8 @@ public static class ServiceBusExtensions
     /// <returns></returns>
     public static  ServiceBusClient GetServiceBusClient(this ConnectionProvider provider, string namespaceName = default)
     {
-        ServiceBusClient client = provider.Subclients.GetClient(() => CreateClient(provider, namespaceName), namespaceName);
+        ServiceBusClientKey serviceBusClientKey = new(namespaceName);
+        ServiceBusClient client = provider.Subclients.GetClient(serviceBusClientKey, () => CreateClient(provider, namespaceName));
         return client;
     }
 
@@ -34,7 +35,8 @@ public static class ServiceBusExtensions
     /// <returns></returns>
     public static ServiceBusSender GetServiceBusSender(this ConnectionProvider project, string namespaceName, string topicName)
     {
-        ServiceBusSender sender = project.Subclients.GetClient(() => CreateSender(project, namespaceName, topicName), null);
+        ServiceBusSenderKey serviceBusSenderKey = new(namespaceName, topicName);
+        ServiceBusSender sender = project.Subclients.GetClient(serviceBusSenderKey, () => CreateSender(project, namespaceName, topicName));
         return sender;
     }
 
@@ -47,9 +49,9 @@ public static class ServiceBusExtensions
     /// <returns></returns>
     public static ServiceBusProcessor GetServiceBusProcessor(this ConnectionProvider project, string namespaceName, string subscriptionName)
     {
-        ServiceBusProcessor processor = project.Subclients.GetClient(() =>
-            CreateProcessor(project, namespaceName, subscriptionName),
-            subscriptionName
+        ServiceBusProcessorKey serviceBusProcessorKey = new(namespaceName, subscriptionName);
+        ServiceBusProcessor processor = project.Subclients.GetClient(serviceBusProcessorKey, () =>
+            CreateProcessor(project, namespaceName, subscriptionName)
         );
         return processor;
     }
@@ -82,4 +84,10 @@ public static class ServiceBusExtensions
         processor.ProcessErrorAsync += (args) => throw new Exception("error processing event", args.Exception);
         return processor;
     }
+
+    private record ServiceBusClientKey(string NamespaceName);
+
+    private record ServiceBusSenderKey(string NamespaceName, string TopicName);
+
+    private record ServiceBusProcessorKey(string NamespaceName, string SubscriptionName);
 }

@@ -23,7 +23,8 @@ public static partial class AIModelsExtensions
     /// <returns></returns>
     public static ModelsClient GetModelsClient(this ConnectionProvider provider, string? deploymentName = null)
     {
-        ModelsClient client = provider.Subclients.GetClient(() => CreateModelsClient(provider), null!);
+        ModelsClientKey modelsClientKey = new(deploymentName);
+        ModelsClient client = provider.Subclients.GetClient(modelsClientKey, () => CreateModelsClient(provider));
         return client;
     }
 
@@ -36,8 +37,10 @@ public static partial class AIModelsExtensions
             throw new InvalidOperationException("Invalid URI.");
         }
 
-        return connection.Authentication == ClientAuthenticationMethod.Credential
+        return connection.CredentialKind == CredentialKind.TokenCredential
             ? new ModelsClient(uri, (connection.Credential as TokenCredential)!)
-            : new ModelsClient(uri, new ApiKeyCredential(connection.ApiKeyCredential!));
+            : new ModelsClient(uri, new ApiKeyCredential((string)connection.Credential!));
     }
+
+    private record ModelsClientKey(string? DeploymentName);
 }

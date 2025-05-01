@@ -19,10 +19,11 @@ public static class AppConfigurationExtensions
     /// </summary>
     /// <param name="provider"></param>
     /// <returns></returns>
-    public static  ConfigurationClient GetConfigurationClient(this ConnectionProvider provider)
+    public static ConfigurationClient GetConfigurationClient(this ConnectionProvider provider)
     {
-        ConfigurationClient client = provider.Subclients.GetClient(() =>
-            CreateClient(provider), default);
+        ConfigurationClientKey configurationClientKey = new();
+        ConfigurationClient client = provider.Subclients.GetClient(configurationClientKey, () =>
+            CreateClient(provider));
         return client;
     }
 
@@ -35,4 +36,6 @@ public static class AppConfigurationExtensions
         }
         throw new InvalidOperationException("ConfigurationClient connection not found");
     }
+
+    private record ConfigurationClientKey();
 }

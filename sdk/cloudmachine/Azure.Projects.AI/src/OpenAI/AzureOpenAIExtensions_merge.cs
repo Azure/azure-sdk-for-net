@@ -25,11 +25,14 @@ public static partial class AzureOpenAIExtensions
     /// <returns></returns>
     public static ChatClient GetOpenAIChatClient(this ConnectionProvider provider, string? deploymentName = null)
     {
-        AzureOpenAIClient aoaiClient = provider.Subclients.GetClient(() => CreateAzureOpenAIClient(provider), null!);
-        ChatClient chatClient = provider.Subclients.GetClient(() =>
+        ChatClientKey chatClientKey = new(deploymentName);
+        AzureOpenAIClientKey openAIClientKey = new();
+
+        ChatClient chatClient = provider.Subclients.GetClient(chatClientKey, () =>
         {
+            AzureOpenAIClient aoaiClient = provider.Subclients.GetClient(openAIClientKey, () => CreateAzureOpenAIClient(provider));
             return provider.CreateChatClient(aoaiClient, deploymentName);
-        }, deploymentName!);
+        });
 
         return chatClient;
     }
@@ -42,11 +45,14 @@ public static partial class AzureOpenAIExtensions
     /// <returns></returns>
     public static EmbeddingClient GetOpenAIEmbeddingClient(this ConnectionProvider provider, string? deploymentName = null)
     {
-        AzureOpenAIClient aoaiClient = provider.Subclients.GetClient(() => CreateAzureOpenAIClient(provider), null!);
-        EmbeddingClient embeddingClient = provider.Subclients.GetClient(() =>
+        EmbeddingClientKey embeddingClientKey = new(deploymentName);
+        AzureOpenAIClientKey openAIClientKey = new();
+
+        EmbeddingClient embeddingClient = provider.Subclients.GetClient(embeddingClientKey, () =>
         {
+            AzureOpenAIClient aoaiClient = provider.Subclients.GetClient(openAIClientKey, () => CreateAzureOpenAIClient(provider));
             return provider.CreateEmbeddingClient(aoaiClient, deploymentName);
-        }, deploymentName!);
+        });
 
         return embeddingClient;
     }
@@ -60,9 +66,9 @@ public static partial class AzureOpenAIExtensions
             throw new InvalidOperationException("Invalid URI.");
         }
 
-        return connection.Authentication == ClientAuthenticationMethod.Credential
+        return connection.CredentialKind == CredentialKind.TokenCredential
             ? new AzureOpenAIClient(uri, connection.Credential as TokenCredential)
-            : new AzureOpenAIClient(uri, new ApiKeyCredential(connection.ApiKeyCredential!));
+            : new AzureOpenAIClient(uri, new ApiKeyCredential((string)connection.Credential!));
     }
 
     private static ChatClient CreateChatClient(this ConnectionProvider provider, AzureOpenAIClient client, string? deploymentName = null)
@@ -78,4 +84,10 @@ public static partial class AzureOpenAIExtensions
         EmbeddingClient embedding = client.GetEmbeddingClient(deploymentName ?? connection.Locator);
         return embedding;
     }
+
+    private record AzureOpenAIClientKey();
+
+    private record ChatClientKey(string? DeploymentName);
+
+    private record EmbeddingClientKey(string? DeploymentName);
 }

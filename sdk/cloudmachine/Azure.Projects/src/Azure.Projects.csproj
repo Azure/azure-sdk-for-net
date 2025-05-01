@@ -12,6 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\core\System.ClientModel\src\System.ClientModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Azure.Data.AppConfiguration" />
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Identity" />
@@ -24,7 +28,6 @@
     <PackageReference Include="Azure.AI.Inference" />
     <PackageReference Include="Azure.Search.Documents" />
     <PackageReference Include="System.Memory.Data" />
-    <PackageReference Include="System.ClientModel" VersionOverride="1.4.0-beta.1" />
   </ItemGroup>
 
 </Project>

@@ -22,7 +22,7 @@ public static class KeyVaultExtensions
     public static SecretClient GetSecretClient(this ConnectionProvider workspace)
     {
         ClientConnection connection = workspace.GetConnection(typeof(SecretClient).FullName);
-        if (connection.Authentication == ClientAuthenticationMethod.Credential)
+        if (connection.CredentialKind == CredentialKind.TokenCredential)
         {
             if (!connection.TryGetLocatorAsUri(out Uri uri))
             {
