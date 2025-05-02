@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Developer.LoadTesting
 {
-    /// <summary> Types of secrets supported. </summary>
+    /// <summary> Types of secrets supported. I'm adding a comment here so that verify generated code should error.</summary>
     public readonly partial struct SecretType : IEquatable<SecretType>
     {
         private readonly string _value;
