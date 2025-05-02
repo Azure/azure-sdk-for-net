@@ -1,6 +1,6 @@
 {
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
-  "TagPrefix": "net/lambdatesthyperexecute/Azure.ResourceManager.LambdaTestHyperExecute",
+  "TagPrefix": "net/liftrhyperexecute/Azure.ResourceManager.LambdaTestHyperExecute",
   "Tag": ""
 }
