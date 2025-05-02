@@ -953,4 +953,21 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
                 }
                 """),
             false);
+
+    [RecordedTest]
+    [TestCase(Gpt4oMiniDeployment)]
+    public void ChatbotTellsJokes(string deploymentName)
+    {
+        OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
+
+        OpenAIResponse response = client.CreateResponse(
+            inputItems: [
+                ResponseItem.CreateSystemMessageItem("You are a humorous assistant who tells jokes"),
+                ResponseItem.CreateUserMessageItem("Please tell me 3 jokes about trains")
+            ]);
+
+        string output = ((MessageResponseItem)response.OutputItems[0]).Content[0].Text;
+
+        Assert.That(output, Is.Not.Null.And.Not.Empty);
+    }
 }
