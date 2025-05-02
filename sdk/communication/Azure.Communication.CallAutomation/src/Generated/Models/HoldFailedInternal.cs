@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Hold Failed event. </summary>
+    /// <summary> The HoldFailed. </summary>
     internal partial class HoldFailedInternal
     {
         /// <summary> Initializes a new instance of <see cref="HoldFailedInternal"/>. </summary>
