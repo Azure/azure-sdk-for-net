@@ -5684,7 +5684,7 @@
    "$id": "712",
    "kind": "model",
    "name": "CreateConversationRequest1",
-   "namespace": "Azure.Communication.Messages",
+   "namespace": "",
    "crossLanguageDefinitionId": "Azure.Communication.MessagesService.createConversation.Request.anonymous",
    "usage": "Spread,Json",
    "decorators": [],
@@ -6713,7 +6713,7 @@
              "namespace": "Azure.Communication.Messages",
              "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError",
              "usage": "Output,Json,Exception",
-             "doc": "An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.",
+             "doc": "An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#handling-errors.",
              "decorators": [],
              "properties": [
               {
