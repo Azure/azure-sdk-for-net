@@ -219,17 +219,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
-            var response = await callConnection.TransferCallToParticipantAsync(callInvite.Target as MicrosoftTeamsAppIdentifier).ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
-            verifyOperationContext(response);
-        }
-
-        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsAppTarget_TeamsCallContext))]
-        public void TransferCallToParticipant_simpleMethod_MicrosoftTeamsAppAsTarget_WithTeamsCallDetails_202Accepted(CallInvite callInvite)
-        {
-            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
-
-            var response = callConnection.TransferCallToParticipant(callInvite.Target as MicrosoftTeamsAppIdentifier);
+            var response = await callConnection.TransferCallToParticipantAsync(callInvite.Target).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             verifyOperationContext(response);
         }
