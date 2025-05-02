@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Agents.Persistent
 {
-    public partial class RunStepCustomSearchToolCall : IUtf8JsonSerializable, IJsonModel<RunStepCustomSearchToolCall>
+    public partial class RunStepBingCustomSearchToolCall : IUtf8JsonSerializable, IJsonModel<RunStepBingCustomSearchToolCall>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepCustomSearchToolCall>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepBingCustomSearchToolCall>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RunStepCustomSearchToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RunStepBingCustomSearchToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RunStepCustomSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepBingCustomSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunStepCustomSearchToolCall)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStepBingCustomSearchToolCall)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -45,19 +45,19 @@ namespace Azure.AI.Agents.Persistent
             writer.WriteEndObject();
         }
 
-        RunStepCustomSearchToolCall IJsonModel<RunStepCustomSearchToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RunStepBingCustomSearchToolCall IJsonModel<RunStepBingCustomSearchToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RunStepCustomSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepBingCustomSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunStepCustomSearchToolCall)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStepBingCustomSearchToolCall)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRunStepCustomSearchToolCall(document.RootElement, options);
+            return DeserializeRunStepBingCustomSearchToolCall(document.RootElement, options);
         }
 
-        internal static RunStepCustomSearchToolCall DeserializeRunStepCustomSearchToolCall(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RunStepBingCustomSearchToolCall DeserializeRunStepBingCustomSearchToolCall(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -98,46 +98,46 @@ namespace Azure.AI.Agents.Persistent
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RunStepCustomSearchToolCall(type, id, serializedAdditionalRawData, bingCustomSearch);
+            return new RunStepBingCustomSearchToolCall(type, id, serializedAdditionalRawData, bingCustomSearch);
         }
 
-        BinaryData IPersistableModel<RunStepCustomSearchToolCall>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RunStepBingCustomSearchToolCall>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RunStepCustomSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepBingCustomSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RunStepCustomSearchToolCall)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStepBingCustomSearchToolCall)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RunStepCustomSearchToolCall IPersistableModel<RunStepCustomSearchToolCall>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RunStepBingCustomSearchToolCall IPersistableModel<RunStepBingCustomSearchToolCall>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RunStepCustomSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepBingCustomSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRunStepCustomSearchToolCall(document.RootElement, options);
+                        return DeserializeRunStepBingCustomSearchToolCall(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunStepCustomSearchToolCall)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStepBingCustomSearchToolCall)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RunStepCustomSearchToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RunStepBingCustomSearchToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new RunStepCustomSearchToolCall FromResponse(Response response)
+        internal static new RunStepBingCustomSearchToolCall FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRunStepCustomSearchToolCall(document.RootElement);
+            return DeserializeRunStepBingCustomSearchToolCall(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

@@ -338,30 +338,30 @@ namespace Azure.AI.Agents.Persistent.Tests
         {
             PersistentAgentsClient client = GetClient();
             PersistentAgentThread thread = await GetThread(client);
-            Response<PageableList<ThreadMessage>> msgResp = await client.Messages.GetMessagesAsync(thread.Id);
-            Assert.AreEqual(0, msgResp.Value.Data.Count);
+            Pageable<ThreadMessage> msgResp = client.Messages.GetMessages(thread.Id);
+            Assert.AreEqual(0, Count(msgResp));
 
             HashSet<string> ids = new();
             ThreadMessage msg1 = await client.Messages.CreateMessageAsync(thread.Id, MessageRole.User, "foo");
             ids.Add(msg1.Id);
-            msgResp = await client.Messages.GetMessagesAsync(thread.Id);
-            foreach (ThreadMessage msg in msgResp.Value)
+            msgResp = client.Messages.GetMessages(thread.Id);
+            foreach (ThreadMessage msg in msgResp)
             {
                 ids.Remove(msg.Id);
             }
             Assert.AreEqual(0, ids.Count);
-            Assert.AreEqual(1, msgResp.Value.Data.Count);
+            Assert.AreEqual(1, Count(msgResp));
 
             ThreadMessage msg2 = await client.Messages.CreateMessageAsync(thread.Id, MessageRole.User, "bar");
             ids.Add(msg1.Id);
             ids.Add(msg2.Id);
-            msgResp = await client.Messages.GetMessagesAsync(thread.Id);
-            foreach (ThreadMessage msg in msgResp.Value)
+            msgResp = client.Messages.GetMessages(thread.Id);
+            foreach (ThreadMessage msg in msgResp)
             {
                 ids.Remove(msg.Id);
             }
             Assert.AreEqual(0, ids.Count);
-            Assert.AreEqual(2, msgResp.Value.Data.Count);
+            Assert.AreEqual(2, Count(msgResp));
         }
 
         [RecordedTest]
@@ -395,15 +395,18 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.AreEqual(thread.Id, result.ThreadId);
             //  Check run status
             result = await WaitForRun(client, result);
-            Response<PageableList<ThreadMessage>> msgResp = await client.Messages.GetMessagesAsync(thread.Id);
-            Assert.AreEqual(2, msgResp.Value.Data.Count);
-            Assert.AreEqual(MessageRole.Agent, msgResp.Value.Data[0].Role);
-            Assert.AreEqual(MessageRole.User, msgResp.Value.Data[1].Role);
+            Pageable<ThreadMessage> msgResp = client.Messages.GetMessages(thread.Id);
+            List<ThreadMessage> messages = [..msgResp];
+            Assert.AreEqual(2, messages.Count);
+
+            Assert.AreEqual(MessageRole.Agent, messages[0].Role);
+            Assert.AreEqual(MessageRole.User, messages[1].Role);
             // Get Run steps
-            PageableList<RunStep> steps = await client.ThreadRunSteps.GetRunStepsAsync(result);
-            Assert.GreaterOrEqual(steps.Data.Count, 1);
-            RunStep step = await client.ThreadRunSteps.GetRunStepAsync(result.ThreadId, result.Id, steps.Data[0].Id);
-            Assert.AreEqual(steps.Data[0].Id, step.Id);
+            AsyncPageable<RunStep> steps = client.ThreadRunSteps.GetRunStepsAsync(result);
+            List<RunStep> stepsList = await steps.ToListAsync();
+            Assert.GreaterOrEqual(stepsList.Count, 1);
+            RunStep step = await client.ThreadRunSteps.GetRunStepAsync(result.ThreadId, result.Id, stepsList[0].Id);
+            Assert.AreEqual(stepsList[0].Id, step.Id);
         }
 
         [RecordedTest]
@@ -428,10 +431,11 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.AreEqual(agent.Id, result.AssistantId);
             //  Check run status
             result = await WaitForRun(client, result);
-            Response<PageableList<ThreadMessage>> msgResp = await client.Messages.GetMessagesAsync(result.ThreadId);
-            Assert.AreEqual(2, msgResp.Value.Data.Count);
-            Assert.AreEqual(MessageRole.Agent, msgResp.Value.Data[0].Role);
-            Assert.AreEqual(MessageRole.User, msgResp.Value.Data[1].Role);
+            AsyncPageable<ThreadMessage> msgResp = client.Messages.GetMessagesAsync(result.ThreadId);
+            List<ThreadMessage> data = await msgResp.ToListAsync();
+            Assert.AreEqual(2, data.Count);
+            Assert.AreEqual(MessageRole.Agent, data[0].Role);
+            Assert.AreEqual(MessageRole.User, data[1].Role);
         }
 
         [RecordedTest]
@@ -486,12 +490,13 @@ namespace Azure.AI.Agents.Persistent.Tests
             runResp1 = await WaitForRun(client, runResp1);
             ThreadRun runResp2 = await client.ThreadRuns.CreateRunAsync(thread.Id, agent.Id);
             runResp2 = await WaitForRun(client, runResp2);
-            PageableList<ThreadRun> runsResp = await client.ThreadRuns.GetRunsAsync(thread.Id, limit: 1);
-            Assert.AreEqual(1, runsResp.Count());
-            runsResp = await client.ThreadRuns.GetRunsAsync(thread.Id);
-            Assert.AreEqual(2, runsResp.Count());
-            HashSet<string> ids = [runResp1.Id, runResp2.Id];
-            foreach (ThreadRun rn in runsResp)
+            AsyncPageable<ThreadRun> runsResp = client.ThreadRuns.GetRunsAsync(thread.Id, limit: 1);
+            Assert.True(await runsResp.AnyAsync());
+            runsResp = client.ThreadRuns.GetRunsAsync(thread.Id);
+            List<ThreadRun> data = await runsResp.ToListAsync();
+            Assert.AreEqual(2, data.Count);
+            HashSet<string> ids = [data[0].Id, data[1].Id];
+            await foreach (ThreadRun rn in runsResp)
             {
                 ids.Remove(rn.Id);
             }
@@ -602,8 +607,9 @@ namespace Azure.AI.Agents.Persistent.Tests
                 || toolRun.Status == RunStatus.RequiresAction);
             Assert.AreEqual(RunStatus.Completed, toolRun.Status, message: toolRun.LastError?.Message);
             Assert.True(functionCalled);
-            PageableList<ThreadMessage> messages = await client.Messages.GetMessagesAsync(toolRun.ThreadId, toolRun.Id);
-            Assert.GreaterOrEqual(messages.Data.Count, 1);
+            AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(toolRun.ThreadId, toolRun.Id);
+            List<ThreadMessage> messagesList = await messages.ToListAsync();
+            Assert.GreaterOrEqual(messagesList.Count, 1);
             Assert.AreEqual(parallelToolCalls, toolRun.ParallelToolCalls);
         }
 
@@ -715,14 +721,15 @@ namespace Azure.AI.Agents.Persistent.Tests
                 fileSearchRun = await WaitForRun(client, fileSearchRun);
             }
             Assert.IsNotNull(fileSearchRun);
-            PageableList<ThreadMessage> messages = await client.Messages.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id);
-            Assert.GreaterOrEqual(messages.Data.Count, 1);
+            AsyncPageable<ThreadMessage> messagesPages = client.Messages.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id);
+            List<ThreadMessage> messages = await messagesPages.ToListAsync();
+            Assert.GreaterOrEqual(messages.Count, 1);
             // Check list, get and delete operations.
             VectorStore getVct = await client.VectorStores.GetVectorStoreAsync(vectorStore.Id);
             Assert.AreEqual(vectorStore.Id, getVct.Id);
-            PersistentAgentPageableListOfVectorStore stores = await client.VectorStores.GetVectorStoresAsync(limit: 100);
+            AsyncPageable<VectorStore> stores = client.VectorStores.GetVectorStoresAsync(limit: 100);
             getVct = null;
-            foreach (VectorStore store in stores.Data)
+            await foreach (VectorStore store in stores)
             {
                 if (store.Id == vectorStore.Id)
                 {
@@ -733,9 +740,9 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.NotNull(getVct);
             VectorStoreDeletionStatus removed = await client.VectorStores.DeleteVectorStoreAsync(vectorStore.Id);
             Assert.True(removed.Deleted);
-            stores = await client.VectorStores.GetVectorStoresAsync(limit: 100);
+            stores = client.VectorStores.GetVectorStoresAsync(limit: 100);
             getVct = null;
-            foreach (VectorStore store in stores.Data)
+            await foreach (VectorStore store in stores)
             {
                 if (store.Id == vectorStore.Id)
                 {
@@ -806,8 +813,8 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
             ThreadRun fileSearchRun = await client.ThreadRuns.CreateRunAsync(thread, agent);
             fileSearchRun = await WaitForRun(client, fileSearchRun);
-            PageableList<ThreadMessage> messages = await client.Messages.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id);
-            Assert.GreaterOrEqual(messages.Data.Count, 1);
+            List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id).ToListAsync();
+            Assert.GreaterOrEqual(messages.Count, 1);
         }
 
         // TODO: Check the service and enable this test.
@@ -860,8 +867,8 @@ namespace Azure.AI.Agents.Persistent.Tests
             long milliseconds = DateTimeOffset.Now.ToUnixTimeMilliseconds();
             fileSearchRun = await WaitForRun(client, fileSearchRun);
             Console.WriteLine((milliseconds - DateTimeOffset.Now.ToUnixTimeMilliseconds()) / 1000);
-            PageableList<ThreadMessage> messages = await client.Messages.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id);
-            Assert.GreaterOrEqual(messages.Data.Count, 1);
+            List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id).ToListAsync();
+            Assert.GreaterOrEqual(messages.Count, 1);
         }
 
         [RecordedTest]
@@ -898,8 +905,8 @@ namespace Azure.AI.Agents.Persistent.Tests
             ThreadRun fileSearchRun = await client.ThreadRuns.CreateRunAsync(thread, agent);
 
             fileSearchRun = await WaitForRun(client, fileSearchRun);
-            PageableList<ThreadMessage> messages = await client.Messages.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id);
-            Assert.GreaterOrEqual(messages.Data.Count, 1);
+            List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id).ToListAsync();
+            Assert.GreaterOrEqual(messages.Count, 1);
         }
 
         [RecordedTest]
@@ -961,18 +968,18 @@ namespace Azure.AI.Agents.Persistent.Tests
                 fileSearchRun = await client.ThreadRuns.CreateRunAsync(thread.Id, agent.Id, include: include);
 
                 fileSearchRun = await WaitForRun(client, fileSearchRun);
-                PageableList<ThreadMessage> messages = await client.Messages.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id);
                 Assert.AreEqual(RunStatus.Completed, fileSearchRun.Status);
-                Assert.GreaterOrEqual(messages.Data.Count, 1);
+                List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id).ToListAsync();
+                Assert.GreaterOrEqual(messages.Count, 1);
             }
             // TODO: Implement include in streaming scenario, see task 3801146.
-            PageableList<RunStep> steps = await client.ThreadRunSteps.GetRunStepsAsync(
+            List<RunStep> steps = await client.ThreadRunSteps.GetRunStepsAsync(
                 threadId: fileSearchRun.ThreadId,
                 runId: fileSearchRun.Id
             //    include: include
-            );
-            Assert.GreaterOrEqual(steps.Data.Count, 1);
-            RunStep step = await client.ThreadRunSteps.GetRunStepAsync(fileSearchRun.ThreadId, fileSearchRun.Id, steps.Data[1].Id, include: include);
+            ).ToListAsync();
+            Assert.GreaterOrEqual(steps.Count, 2);
+            RunStep step = await client.ThreadRunSteps.GetRunStepAsync(fileSearchRun.ThreadId, fileSearchRun.Id, steps[1].Id, include: include);
 
             Assert.That(step.StepDetails is RunStepToolCallDetails);
             RunStepToolCallDetails toolCallDetails = step.StepDetails as RunStepToolCallDetails;
@@ -1050,7 +1057,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 "What is the most prevalent element in the universe? What would foo say?");
             ThreadRun run = await client.ThreadRuns.CreateRunAsync(thread, agent);
             await WaitForRun(client, run);
-            PageableList<ThreadMessage> afterRunMessages = await client.Messages.GetMessagesAsync(thread.Id);
+            List<ThreadMessage> afterRunMessages = await client.Messages.GetMessagesAsync(thread.Id).ToListAsync();
 
             Assert.Greater(afterRunMessages.Count(), 1);
             bool foundResponse = false;
@@ -1087,7 +1094,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             ThreadRun run = await client.ThreadRuns.CreateRunAsync(thread, agent);
             run = await WaitForRun(client, run);
             Assert.AreEqual(RunStatus.Completed, run.Status);
-            PageableList<ThreadMessage> afterRunMessages = await client.Messages.GetMessagesAsync(thread.Id);
+            List<ThreadMessage> afterRunMessages = await client.Messages.GetMessagesAsync(thread.Id).ToListAsync();
             Assert.Greater(afterRunMessages.Count(), 1);
         }
 
@@ -1127,9 +1134,9 @@ namespace Azure.AI.Agents.Persistent.Tests
             );
             ThreadRun run = await client.ThreadRuns.CreateRunAsync(thread, agent);
             run = await WaitForRun(client, run);
-            PageableList<ThreadMessage> messages = await client.Messages.GetMessagesAsync(run.ThreadId, run.Id);
+            AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(run.ThreadId, run.Id);
             bool foundId = false;
-            foreach (ThreadMessage msg in messages)
+            await foreach (ThreadMessage msg in messages)
             {
                 foreach (MessageContent cont in msg.ContentItems)
                 {
@@ -1189,13 +1196,13 @@ namespace Azure.AI.Agents.Persistent.Tests
                 RunStatus.Completed,
                 run.Status,
                 run.LastError?.Message);
-            PageableList<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
+            AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(
                 threadId: thread.Id,
                 order: ListSortOrder.Ascending
             );
 
             // Note: messages iterate from newest to oldest, with the messages[0] being the most recent
-            foreach (ThreadMessage threadMessage in messages)
+            await foreach (ThreadMessage threadMessage in messages)
             {
                 Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
                 foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -1399,20 +1406,33 @@ namespace Azure.AI.Agents.Persistent.Tests
             return Path.Combine(new string[] { dirName, "TestData", FILE_NAME });
         }
 
+        private async Task<int> CountRuns(PersistentAgentsClient client, string threadId, int? limit=null)
+        {
+            int count = 0;
+            if (IsAsync)
+            {
+                AsyncPageable<ThreadRun> runs = client.ThreadRuns.GetRunsAsync(threadId: threadId, limit: limit);
+                await foreach (ThreadRun run in runs)
+                    count++;
+            }
+            else
+            {
+                Pageable<ThreadRun> runs = client.ThreadRuns.GetRuns(threadId: threadId, limit: limit);
+                foreach (ThreadRun run in runs)
+                    count++;
+            }
+            return count;
+        }
+
         private static async Task<int> CountElementsAndRemoveIds(PersistentAgentsClient client, HashSet<string> ids)
         {
-            PageableList<PersistentAgent> agentsResp;
             int count = 0;
-            string lastId = null;
-            do
+            AsyncPageable<PersistentAgent> agentsResp = client.AgentsAdministration.GetAgentsAsync(limit: 100);
+            await foreach (PersistentAgent agent in agentsResp)
             {
-                agentsResp = await client.AgentsAdministration.GetAgentsAsync(limit: 100, after: lastId);
-                foreach (PersistentAgent agent in agentsResp)
-                    ids.Remove(agent.Id);
-                count += agentsResp.Count();
-                lastId = agentsResp.LastId;
+                ids.Remove(agent.Id);
+                count++;
             }
-            while (agentsResp.HasMore);
             return count;
         }
 
@@ -1430,6 +1450,23 @@ namespace Azure.AI.Agents.Persistent.Tests
                 }
             };
         }
+
+        private int Count<T> (IEnumerable<T> listValues)
+        {
+            int count = 0;
+            foreach (T val in listValues)
+                count++;
+            return count;
+        }
+
+        private async Task<int> CountAsync<T>(IAsyncEnumerable<T> listValues)
+        {
+            int count = 0;
+            await foreach (T val in listValues)
+                count++;
+            return count;
+        }
+
         #endregion
         #region Cleanup
         [TearDown]
@@ -1463,15 +1500,15 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
 
             // Remove all vector stores
-            PersistentAgentPageableListOfVectorStore stores = client.VectorStores.GetVectorStores();
-            foreach (VectorStore store in stores.Data)
+            Pageable<VectorStore> stores = client.VectorStores.GetVectorStores();
+            foreach (VectorStore store in stores)
             {
                 if (store.Name == null || store.Name.Equals(VCT_STORE_NAME))
                     client.VectorStores.DeleteVectorStore(store.Id);
             }
 
             // Remove all agents
-            PageableList<PersistentAgent> agents = client.AgentsAdministration.GetAgents();
+            Pageable<PersistentAgent> agents = client.AgentsAdministration.GetAgents();
             foreach (PersistentAgent agent in agents)
             {
                 if (agent.Name.StartsWith(AGENT_NAME))

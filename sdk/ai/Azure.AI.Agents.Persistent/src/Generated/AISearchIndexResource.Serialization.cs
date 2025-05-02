@@ -53,6 +53,11 @@ namespace Azure.AI.Agents.Persistent
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
+            if (Optional.IsDefined(IndexAssetId))
+            {
+                writer.WritePropertyName("index_asset_id"u8);
+                writer.WriteStringValue(IndexAssetId);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -95,6 +100,7 @@ namespace Azure.AI.Agents.Persistent
             AzureAISearchQueryType? queryType = default;
             int? topK = default;
             string filter = default;
+            string indexAssetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,6 +138,11 @@ namespace Azure.AI.Agents.Persistent
                     filter = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("index_asset_id"u8))
+                {
+                    indexAssetId = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -144,6 +155,7 @@ namespace Azure.AI.Agents.Persistent
                 queryType,
                 topK,
                 filter,
+                indexAssetId,
                 serializedAdditionalRawData);
         }
 

@@ -69,34 +69,34 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
-        /// <inheritdoc cref="InternalGetAgents(int?, ListSortOrder?, string, string, CancellationToken)"/>
-        public virtual Response<PageableList<PersistentAgent>> GetAgents(
-            int? limit = null,
-            ListSortOrder? order = null,
-            string after = null,
-            string before = null,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.GetAgents");
-            scope.Start();
-            Response<InternalOpenAIPageableListOfAgent> baseResponse = InternalGetAgents(limit, order, after, before, cancellationToken);
-            return Response.FromValue(PageableList<PersistentAgent>.Create(baseResponse.Value), baseResponse.GetRawResponse());
-        }
+        // /// <inheritdoc cref="InternalGetAgents(int?, ListSortOrder?, string, string, CancellationToken)"/>
+        //public virtual Response<PageableList<PersistentAgent>> GetAgents(
+        //    int? limit = null,
+        //    ListSortOrder? order = null,
+        //    string after = null,
+        //    string before = null,
+        //    CancellationToken cancellationToken = default)
+        //{
+        //    using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.GetAgents");
+        //    scope.Start();
+        //    Response<InternalOpenAIPageableListOfAgent> baseResponse = InternalGetAgents(limit, order, after, before, cancellationToken);
+        //    return Response.FromValue(PageableList<PersistentAgent>.Create(baseResponse.Value), baseResponse.GetRawResponse());
+        //}
 
-        /// <inheritdoc cref="InternalGetAgentsAsync(int?, ListSortOrder?, string, string, CancellationToken)"/>
-        public virtual async Task<Response<PageableList<PersistentAgent>>> GetAgentsAsync(
-            int? limit = null,
-            ListSortOrder? order = null,
-            string after = null,
-            string before = null,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.GetAgents");
-            scope.Start();
-            Response<InternalOpenAIPageableListOfAgent> baseResponse
-                = await InternalGetAgentsAsync(limit, order, after, before, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(PageableList<PersistentAgent>.Create(baseResponse.Value), baseResponse.GetRawResponse());
-        }
+        ///// <inheritdoc cref="InternalGetAgentsAsync(int?, ListSortOrder?, string, string, CancellationToken)"/>
+        //public virtual async Task<Response<PageableList<PersistentAgent>>> GetAgentsAsync(
+        //    int? limit = null,
+        //    ListSortOrder? order = null,
+        //    string after = null,
+        //    string before = null,
+        //    CancellationToken cancellationToken = default)
+        //{
+        //    using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.GetAgents");
+        //    scope.Start();
+        //    Response<InternalOpenAIPageableListOfAgent> baseResponse
+        //        = await InternalGetAgentsAsync(limit, order, after, before, cancellationToken).ConfigureAwait(false);
+        //    return Response.FromValue(PageableList<PersistentAgent>.Create(baseResponse.Value), baseResponse.GetRawResponse());
+        //}
 
         /*
          * CUSTOM CODE DESCRIPTION:

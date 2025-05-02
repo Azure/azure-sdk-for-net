@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Agents.Persistent
 {
-    public partial class SearchConfigurationList : IUtf8JsonSerializable, IJsonModel<SearchConfigurationList>
+    public partial class BingCustomSearchConfigurationList : IUtf8JsonSerializable, IJsonModel<BingCustomSearchConfigurationList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchConfigurationList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BingCustomSearchConfigurationList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SearchConfigurationList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BingCustomSearchConfigurationList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchConfigurationList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BingCustomSearchConfigurationList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchConfigurationList)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BingCustomSearchConfigurationList)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("search_configurations"u8);
@@ -58,19 +58,19 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
-        SearchConfigurationList IJsonModel<SearchConfigurationList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BingCustomSearchConfigurationList IJsonModel<BingCustomSearchConfigurationList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchConfigurationList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BingCustomSearchConfigurationList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchConfigurationList)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BingCustomSearchConfigurationList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSearchConfigurationList(document.RootElement, options);
+            return DeserializeBingCustomSearchConfigurationList(document.RootElement, options);
         }
 
-        internal static SearchConfigurationList DeserializeSearchConfigurationList(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BingCustomSearchConfigurationList DeserializeBingCustomSearchConfigurationList(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -78,17 +78,17 @@ namespace Azure.AI.Agents.Persistent
             {
                 return null;
             }
-            IList<SearchConfiguration> searchConfigurations = default;
+            IList<BingCustomSearchConfiguration> searchConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("search_configurations"u8))
                 {
-                    List<SearchConfiguration> array = new List<SearchConfiguration>();
+                    List<BingCustomSearchConfiguration> array = new List<BingCustomSearchConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchConfiguration.DeserializeSearchConfiguration(item, options));
+                        array.Add(BingCustomSearchConfiguration.DeserializeBingCustomSearchConfiguration(item, options));
                     }
                     searchConfigurations = array;
                     continue;
@@ -99,46 +99,46 @@ namespace Azure.AI.Agents.Persistent
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SearchConfigurationList(searchConfigurations, serializedAdditionalRawData);
+            return new BingCustomSearchConfigurationList(searchConfigurations, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SearchConfigurationList>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BingCustomSearchConfigurationList>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchConfigurationList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BingCustomSearchConfigurationList>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SearchConfigurationList)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BingCustomSearchConfigurationList)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SearchConfigurationList IPersistableModel<SearchConfigurationList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BingCustomSearchConfigurationList IPersistableModel<BingCustomSearchConfigurationList>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchConfigurationList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BingCustomSearchConfigurationList>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSearchConfigurationList(document.RootElement, options);
+                        return DeserializeBingCustomSearchConfigurationList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SearchConfigurationList)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BingCustomSearchConfigurationList)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SearchConfigurationList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BingCustomSearchConfigurationList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SearchConfigurationList FromResponse(Response response)
+        internal static BingCustomSearchConfigurationList FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSearchConfigurationList(document.RootElement);
+            return DeserializeBingCustomSearchConfigurationList(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

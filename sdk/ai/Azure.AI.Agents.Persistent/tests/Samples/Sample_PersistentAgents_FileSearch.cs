@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -87,10 +88,10 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
             RunStatus.Completed,
             run.Status,
             run.LastError?.Message);
-        PageableList<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
+        List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
-        );
+        ).ToListAsync();
         WriteMessages(messages, fileIds);
         #endregion
         #region Snippet:AgentsFilesSearchExample_Cleanup
@@ -172,7 +173,7 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
             RunStatus.Completed,
             run.Status,
             run.LastError?.Message);
-        PageableList<ThreadMessage> messages = client.Messages.GetMessages(
+        Pageable<ThreadMessage> messages = client.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );

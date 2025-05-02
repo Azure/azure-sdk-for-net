@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -22,7 +23,7 @@ namespace Azure.AI.Agents.Persistent
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
         private const string AuthorizationApiKeyPrefix = "Bearer";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -293,128 +294,6 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateCreateRunRequest(threadId, content, include, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a list of runs for a specified thread. </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
-        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
-        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<InternalOpenAIPageableListOfThreadRun>> InternalGetRunsAsync(string threadId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await InternalGetRunsAsync(threadId, limit, order?.ToString(), after, before, context).ConfigureAwait(false);
-            return Response.FromValue(InternalOpenAIPageableListOfThreadRun.FromResponse(response), response);
-        }
-
-        /// <summary> Gets a list of runs for a specified thread. </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
-        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
-        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<InternalOpenAIPageableListOfThreadRun> InternalGetRuns(string threadId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = InternalGetRuns(threadId, limit, order?.ToString(), after, before, context);
-            return Response.FromValue(InternalOpenAIPageableListOfThreadRun.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets a list of runs for a specified thread.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="InternalGetRunsAsync(string,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
-        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
-        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> InternalGetRunsAsync(string threadId, int? limit, string order, string after, string before, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-
-            using var scope = ClientDiagnostics.CreateScope("ThreadRunsClient.InternalGetRuns");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateInternalGetRunsRequest(threadId, limit, order, after, before, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets a list of runs for a specified thread.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="InternalGetRuns(string,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
-        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
-        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response InternalGetRuns(string threadId, int? limit, string order, string after, string before, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-
-            using var scope = ClientDiagnostics.CreateScope("ThreadRunsClient.InternalGetRuns");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateInternalGetRunsRequest(threadId, limit, order, after, before, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -774,6 +653,108 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
+        /// <summary> Gets a list of runs for a specified thread. </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual AsyncPageable<ThreadRun> GetRunsAsync(string threadId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(threadId, limit, order?.ToString(), after, before, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ThreadRun.DeserializeThreadRun(e), ClientDiagnostics, _pipeline, "ThreadRunsClient.GetRuns", "data", null, context);
+        }
+
+        /// <summary> Gets a list of runs for a specified thread. </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Pageable<ThreadRun> GetRuns(string threadId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(threadId, limit, order?.ToString(), after, before, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ThreadRun.DeserializeThreadRun(e), ClientDiagnostics, _pipeline, "ThreadRunsClient.GetRuns", "data", null, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a list of runs for a specified thread.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetRunsAsync(string,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        public virtual AsyncPageable<BinaryData> GetRunsAsync(string threadId, int? limit, string order, string after, string before, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(threadId, limit, order, after, before, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadRunsClient.GetRuns", "data", null, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a list of runs for a specified thread.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetRuns(string,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        public virtual Pageable<BinaryData> GetRuns(string threadId, int? limit, string order, string after, string before, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(threadId, limit, order, after, before, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadRunsClient.GetRuns", "data", null, context);
+        }
+
         internal HttpMessage CreateCreateRunRequest(string threadId, RequestContent content, IEnumerable<RunAdditionalFieldList> include, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -796,7 +777,7 @@ namespace Azure.AI.Agents.Persistent
             return message;
         }
 
-        internal HttpMessage CreateInternalGetRunsRequest(string threadId, int? limit, string order, string after, string before, RequestContext context)
+        internal HttpMessage CreateGetRunsRequest(string threadId, int? limit, string order, string after, string before, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

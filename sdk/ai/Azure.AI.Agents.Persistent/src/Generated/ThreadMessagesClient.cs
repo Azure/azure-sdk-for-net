@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -22,7 +23,7 @@ namespace Azure.AI.Agents.Persistent
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
         private const string AuthorizationApiKeyPrefix = "Bearer";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -189,132 +190,6 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateCreateMessageRequest(threadId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a list of messages that exist on a thread. </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="runId"> Filter messages by the run ID that generated them. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
-        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
-        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<InternalOpenAIPageableListOfThreadMessage>> InternalGetMessagesAsync(string threadId, string runId = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await InternalGetMessagesAsync(threadId, runId, limit, order?.ToString(), after, before, context).ConfigureAwait(false);
-            return Response.FromValue(InternalOpenAIPageableListOfThreadMessage.FromResponse(response), response);
-        }
-
-        /// <summary> Gets a list of messages that exist on a thread. </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="runId"> Filter messages by the run ID that generated them. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
-        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
-        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<InternalOpenAIPageableListOfThreadMessage> InternalGetMessages(string threadId, string runId = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = InternalGetMessages(threadId, runId, limit, order?.ToString(), after, before, context);
-            return Response.FromValue(InternalOpenAIPageableListOfThreadMessage.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets a list of messages that exist on a thread.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="InternalGetMessagesAsync(string,string,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="runId"> Filter messages by the run ID that generated them. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
-        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
-        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> InternalGetMessagesAsync(string threadId, string runId, int? limit, string order, string after, string before, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-
-            using var scope = ClientDiagnostics.CreateScope("ThreadMessagesClient.InternalGetMessages");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateInternalGetMessagesRequest(threadId, runId, limit, order, after, before, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets a list of messages that exist on a thread.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="InternalGetMessages(string,string,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="runId"> Filter messages by the run ID that generated them. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
-        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
-        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
-        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response InternalGetMessages(string threadId, string runId, int? limit, string order, string after, string before, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-
-            using var scope = ClientDiagnostics.CreateScope("ThreadMessagesClient.InternalGetMessages");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateInternalGetMessagesRequest(threadId, runId, limit, order, after, before, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -560,6 +435,112 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
+        /// <summary> Gets a list of messages that exist on a thread. </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="runId"> Filter messages by the run ID that generated them. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual AsyncPageable<ThreadMessage> GetMessagesAsync(string threadId, string runId = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(threadId, runId, limit, order?.ToString(), after, before, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ThreadMessage.DeserializeThreadMessage(e), ClientDiagnostics, _pipeline, "ThreadMessagesClient.GetMessages", "data", null, context);
+        }
+
+        /// <summary> Gets a list of messages that exist on a thread. </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="runId"> Filter messages by the run ID that generated them. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Pageable<ThreadMessage> GetMessages(string threadId, string runId = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(threadId, runId, limit, order?.ToString(), after, before, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ThreadMessage.DeserializeThreadMessage(e), ClientDiagnostics, _pipeline, "ThreadMessagesClient.GetMessages", "data", null, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a list of messages that exist on a thread.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetMessagesAsync(string,string,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="runId"> Filter messages by the run ID that generated them. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        public virtual AsyncPageable<BinaryData> GetMessagesAsync(string threadId, string runId, int? limit, string order, string after, string before, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(threadId, runId, limit, order, after, before, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadMessagesClient.GetMessages", "data", null, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a list of messages that exist on a thread.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetMessages(string,string,int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="runId"> Filter messages by the run ID that generated them. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        public virtual Pageable<BinaryData> GetMessages(string threadId, string runId, int? limit, string order, string after, string before, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(threadId, runId, limit, order, after, before, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadMessagesClient.GetMessages", "data", null, context);
+        }
+
         internal HttpMessage CreateCreateMessageRequest(string threadId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -578,7 +559,7 @@ namespace Azure.AI.Agents.Persistent
             return message;
         }
 
-        internal HttpMessage CreateInternalGetMessagesRequest(string threadId, string runId, int? limit, string order, string after, string before, RequestContext context)
+        internal HttpMessage CreateGetMessagesRequest(string threadId, string runId, int? limit, string order, string after, string before, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -588,11 +569,11 @@ namespace Azure.AI.Agents.Persistent
             uri.AppendPath("/threads/", false);
             uri.AppendPath(threadId, true);
             uri.AppendPath("/messages", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (runId != null)
             {
                 uri.AppendQuery("run_id", runId, true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (limit != null)
             {
                 uri.AppendQuery("limit", limit.Value, true);

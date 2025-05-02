@@ -20,7 +20,7 @@ namespace Azure.AI.Agents.Persistent
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
         private const string AuthorizationApiKeyPrefix = "Bearer";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;

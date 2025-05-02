@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -24,7 +25,7 @@ namespace Azure.AI.Agents.Persistent
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
         private const string AuthorizationApiKeyPrefix = "Bearer";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -210,14 +211,14 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<InternalOpenAIPageableListOfRunStep>> InternalGetRunStepsAsync(string threadId, string runId, IEnumerable<RunAdditionalFieldList> include = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RunStep> GetRunStepsAsync(string threadId, string runId, IEnumerable<RunAdditionalFieldList> include = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await InternalGetRunStepsAsync(threadId, runId, include, limit, order?.ToString(), after, before, context).ConfigureAwait(false);
-            return Response.FromValue(InternalOpenAIPageableListOfRunStep.FromResponse(response), response);
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunStepsRequest(threadId, runId, include, limit, order?.ToString(), after, before, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => RunStep.DeserializeRunStep(e), ClientDiagnostics, _pipeline, "ThreadRunStepsClient.GetRunSteps", "data", null, context);
         }
 
         /// <summary> Gets a list of run steps from a thread run. </summary>
@@ -234,14 +235,14 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<InternalOpenAIPageableListOfRunStep> InternalGetRunSteps(string threadId, string runId, IEnumerable<RunAdditionalFieldList> include = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<RunStep> GetRunSteps(string threadId, string runId, IEnumerable<RunAdditionalFieldList> include = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = InternalGetRunSteps(threadId, runId, include, limit, order?.ToString(), after, before, context);
-            return Response.FromValue(InternalOpenAIPageableListOfRunStep.FromResponse(response), response);
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunStepsRequest(threadId, runId, include, limit, order?.ToString(), after, before, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => RunStep.DeserializeRunStep(e), ClientDiagnostics, _pipeline, "ThreadRunStepsClient.GetRunSteps", "data", null, context);
         }
 
         /// <summary>
@@ -254,7 +255,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="InternalGetRunStepsAsync(string,string,IEnumerable{RunAdditionalFieldList},int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetRunStepsAsync(string,string,IEnumerable{RunAdditionalFieldList},int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -273,24 +274,14 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> InternalGetRunStepsAsync(string threadId, string runId, IEnumerable<RunAdditionalFieldList> include, int? limit, string order, string after, string before, RequestContext context)
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        public virtual AsyncPageable<BinaryData> GetRunStepsAsync(string threadId, string runId, IEnumerable<RunAdditionalFieldList> include, int? limit, string order, string after, string before, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("ThreadRunStepsClient.InternalGetRunSteps");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateInternalGetRunStepsRequest(threadId, runId, include, limit, order, after, before, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunStepsRequest(threadId, runId, include, limit, order, after, before, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadRunStepsClient.GetRunSteps", "data", null, context);
         }
 
         /// <summary>
@@ -303,7 +294,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="InternalGetRunSteps(string,string,IEnumerable{RunAdditionalFieldList},int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetRunSteps(string,string,IEnumerable{RunAdditionalFieldList},int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -322,24 +313,14 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response InternalGetRunSteps(string threadId, string runId, IEnumerable<RunAdditionalFieldList> include, int? limit, string order, string after, string before, RequestContext context)
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        public virtual Pageable<BinaryData> GetRunSteps(string threadId, string runId, IEnumerable<RunAdditionalFieldList> include, int? limit, string order, string after, string before, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("ThreadRunStepsClient.InternalGetRunSteps");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateInternalGetRunStepsRequest(threadId, runId, include, limit, order, after, before, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunStepsRequest(threadId, runId, include, limit, order, after, before, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadRunStepsClient.GetRunSteps", "data", null, context);
         }
 
         internal HttpMessage CreateGetRunStepRequest(string threadId, string runId, string stepId, IEnumerable<RunAdditionalFieldList> include, RequestContext context)
@@ -365,7 +346,7 @@ namespace Azure.AI.Agents.Persistent
             return message;
         }
 
-        internal HttpMessage CreateInternalGetRunStepsRequest(string threadId, string runId, IEnumerable<RunAdditionalFieldList> include, int? limit, string order, string after, string before, RequestContext context)
+        internal HttpMessage CreateGetRunStepsRequest(string threadId, string runId, IEnumerable<RunAdditionalFieldList> include, int? limit, string order, string after, string before, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -377,11 +358,11 @@ namespace Azure.AI.Agents.Persistent
             uri.AppendPath("/runs/", false);
             uri.AppendPath(runId, true);
             uri.AppendPath("/steps", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (include != null && !(include is ChangeTrackingList<RunAdditionalFieldList> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("include[]", include, ",", true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (limit != null)
             {
                 uri.AppendQuery("limit", limit.Value, true);

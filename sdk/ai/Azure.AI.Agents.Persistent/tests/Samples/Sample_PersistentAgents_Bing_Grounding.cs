@@ -30,11 +30,10 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
         PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
         #endregion
         #region Snippet:AgentsBingGroundingAsync_GetConnection
-        ToolConnectionList connectionList = new()
-        {
-            ConnectionList = { new ToolConnection(connectionId) }
-        };
-        BingGroundingToolDefinition bingGroundingTool = new(connectionList);
+        BingGroundingSearchConfigurationList configurationList = new(
+            [new BingGroundingSearchConfiguration(connectionId)]
+        );
+        BingGroundingToolDefinition bingGroundingTool = new(configurationList);
         #endregion
         #region Snippet:AgentsBingGroundingAsync_CreateAgent
         PersistentAgent agent = await agentClient.AgentsAdministration.CreateAgentAsync(
@@ -70,12 +69,12 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
         #endregion
 
         #region Snippet:AgentsBingGroundingAsync_Print
-        PageableList<ThreadMessage> messages = await agentClient.Messages.GetMessagesAsync(
+        AsyncPageable<ThreadMessage> messages = agentClient.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
 
-        foreach (ThreadMessage threadMessage in messages)
+        await foreach (ThreadMessage threadMessage in messages)
         {
             Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
             foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -124,11 +123,10 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
 #endif
         PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
         #region Snippet:AgentsBingGrounding_GetConnection
-        ToolConnectionList connectionList = new()
-        {
-            ConnectionList = { new ToolConnection(connectionId) }
-        };
-        BingGroundingToolDefinition bingGroundingTool = new(connectionList);
+        BingGroundingSearchConfigurationList configurationList = new(
+            [new BingGroundingSearchConfiguration(connectionId)]
+        );
+        BingGroundingToolDefinition bingGroundingTool = new(configurationList);
         #endregion
         #region Snippet:AgentsBingGrounding_CreateAgent
         PersistentAgent agent = agentClient.AgentsAdministration.CreateAgent(
@@ -164,7 +162,7 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
         #endregion
 
         #region Snippet:AgentsBingGrounding_Print
-        PageableList<ThreadMessage> messages = agentClient.Messages.GetMessages(
+        Pageable<ThreadMessage> messages = agentClient.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );

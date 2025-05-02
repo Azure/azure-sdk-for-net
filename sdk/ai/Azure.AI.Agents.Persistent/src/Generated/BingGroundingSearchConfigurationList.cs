@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> A list of search configurations currently used by the `bing_custom_search` tool. </summary>
-    public partial class SearchConfigurationList
+    /// <summary> A list of search configurations currently used by the `bing_grounding` tool. </summary>
+    public partial class BingGroundingSearchConfigurationList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,40 +46,40 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SearchConfigurationList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BingGroundingSearchConfigurationList"/>. </summary>
         /// <param name="searchConfigurations">
-        /// The connections attached to this tool. There can be a maximum of 1 connection
-        /// resource attached to the tool.
+        /// The search configurations attached to this tool. There can be a maximum of 1
+        /// search configuration resource attached to the tool.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchConfigurations"/> is null. </exception>
-        public SearchConfigurationList(IEnumerable<SearchConfiguration> searchConfigurations)
+        public BingGroundingSearchConfigurationList(IEnumerable<BingGroundingSearchConfiguration> searchConfigurations)
         {
             Argument.AssertNotNull(searchConfigurations, nameof(searchConfigurations));
 
             SearchConfigurations = searchConfigurations.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchConfigurationList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BingGroundingSearchConfigurationList"/>. </summary>
         /// <param name="searchConfigurations">
-        /// The connections attached to this tool. There can be a maximum of 1 connection
-        /// resource attached to the tool.
+        /// The search configurations attached to this tool. There can be a maximum of 1
+        /// search configuration resource attached to the tool.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchConfigurationList(IList<SearchConfiguration> searchConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BingGroundingSearchConfigurationList(IList<BingGroundingSearchConfiguration> searchConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SearchConfigurations = searchConfigurations;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchConfigurationList"/> for deserialization. </summary>
-        internal SearchConfigurationList()
+        /// <summary> Initializes a new instance of <see cref="BingGroundingSearchConfigurationList"/> for deserialization. </summary>
+        internal BingGroundingSearchConfigurationList()
         {
         }
 
         /// <summary>
-        /// The connections attached to this tool. There can be a maximum of 1 connection
-        /// resource attached to the tool.
+        /// The search configurations attached to this tool. There can be a maximum of 1
+        /// search configuration resource attached to the tool.
         /// </summary>
-        public IList<SearchConfiguration> SearchConfigurations { get; }
+        public IList<BingGroundingSearchConfiguration> SearchConfigurations { get; }
     }
 }

@@ -118,9 +118,9 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // 8) Retrieve messages (including any agent responses) and print them
             #region Snippet:AgentsImageFileInMessageReview
-            PageableList<ThreadMessage> messages = await client.Messages.GetMessagesAsync(thread.Id);
+            AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(thread.Id);
 
-            foreach (ThreadMessage msg in messages)
+            await foreach (ThreadMessage msg in messages)
             {
                 Console.WriteLine($"{msg.CreatedAt:yyyy-MM-dd HH:mm:ss} - {msg.Role,10}:");
 
@@ -232,7 +232,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // 8) Retrieve messages (including any agent responses) and print them
             #region Snippet:AgentsImageFileInMessageReview_Sync
-            PageableList<ThreadMessage> messages = client.Messages.GetMessages(thread.Id);
+            Pageable<ThreadMessage> messages = client.Messages.GetMessages(thread.Id);
 
             foreach (ThreadMessage msg in messages)
             {

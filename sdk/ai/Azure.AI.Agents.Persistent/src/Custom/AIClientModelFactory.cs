@@ -201,9 +201,9 @@ public static partial class AIAgentsPersistentModelFactory
         return new RequiredFunctionToolCall(toolCallId, new InternalRequiredFunctionToolCallDetails(functionName, functionArguments));
     }
 
-    public static RunStepFunctionToolCall RunStepFunctionToolCall(string id, string name, string arguments, string output)
+    public static RunStepFunctionToolCall RunStepFunctionToolCall(string id, string name, string arguments)
     {
-        return new RunStepFunctionToolCall(id, new InternalRunStepFunctionToolCallDetails(name, arguments, output));
+        return new RunStepFunctionToolCall(id, new InternalRunStepFunctionToolCallDetails(name, arguments));
     }
 
     public static RunStepCodeInterpreterToolCall RunStepCodeInterpreterToolCall(string id, string input, IReadOnlyList<RunStepCodeInterpreterToolCallOutput> outputs)
@@ -264,16 +264,4 @@ public static partial class AIAgentsPersistentModelFactory
     {
         return new MessageTextFilePathAnnotation(text, new InternalMessageTextFilePathDetails(fileId));
     }
-
-    /// <summary>
-    /// Creates a new instance of PageableList<typeparamref name="T"/>.
-    /// </summary>
-    /// <typeparam name="T"> The data type of the listed items. </typeparam>
-    /// <param name="data"> The items for the list. </param>
-    /// <param name="firstId"> The ID of the first item in the list. </param>
-    /// <param name="lastId"> The ID of the last item in the list. </param>
-    /// <param name="hasMore"> Whether more items not included in the list exist. </param>
-    /// <returns> A new instance of PageableList<typeparamref name="T"/>. </returns>
-    public static PageableList<T> PageableList<T>(IReadOnlyList<T> data, string firstId, string lastId, bool hasMore)
-        => new(data, firstId, lastId, hasMore);
 }

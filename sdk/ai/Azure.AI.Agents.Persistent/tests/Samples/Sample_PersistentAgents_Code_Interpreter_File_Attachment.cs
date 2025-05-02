@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -78,10 +79,10 @@ public partial class Sample_PersistentAgents_Code_Interpreter_File_Attachment : 
             run.LastError?.Message);
         #endregion
         #region Snippet:AgentsCodeInterpreterFileAttachment_PrintMessages
-        PageableList<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
+        List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
-        );
+        ).ToListAsync();
         WriteMessages(messages);
         #endregion
         #region Snippet:AgentsCodeInterpreterFileAttachment_Cleanup
@@ -153,7 +154,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_File_Attachment : 
             run.LastError?.Message);
         #endregion
         #region Snippet:AgentsCodeInterpreterFileAttachmentSync_PrintMessages
-        PageableList<ThreadMessage> messages = client.Messages.GetMessages(
+        Pageable<ThreadMessage> messages = client.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );

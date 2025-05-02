@@ -221,7 +221,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolCalls">
         /// A list of tool call details for this run step.
         /// Please note <see cref="Persistent.RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.RunStepAzureAISearchToolCall"/>, <see cref="Persistent.RunStepCustomSearchToolCall"/>, <see cref="Persistent.RunStepBingGroundingToolCall"/>, <see cref="Persistent.RunStepCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepMicrosoftFabricToolCall"/>, <see cref="Persistent.RunStepFileSearchToolCall"/>, <see cref="Persistent.RunStepFunctionToolCall"/>, <see cref="Persistent.RunStepOpenAPIToolCall"/> and <see cref="Persistent.RunStepSharepointToolCall"/>.
+        /// The available derived classes include <see cref="Persistent.RunStepAzureAISearchToolCall"/>, <see cref="Persistent.RunStepBingCustomSearchToolCall"/>, <see cref="Persistent.RunStepBingGroundingToolCall"/>, <see cref="Persistent.RunStepCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepMicrosoftFabricToolCall"/>, <see cref="Persistent.RunStepFileSearchToolCall"/>, <see cref="Persistent.RunStepFunctionToolCall"/>, <see cref="Persistent.RunStepOpenAPIToolCall"/> and <see cref="Persistent.RunStepSharepointToolCall"/>.
         /// </param>
         /// <returns> A new <see cref="Persistent.RunStepToolCallDetails"/> instance for mocking. </returns>
         public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls = null)
@@ -350,15 +350,15 @@ namespace Azure.AI.Agents.Persistent
             return new RunStepMicrosoftFabricToolCall("fabric_dataagent", id, serializedAdditionalRawData: null, microsoftFabric);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepCustomSearchToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepBingCustomSearchToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="bingCustomSearch"> Reserved for future use. </param>
-        /// <returns> A new <see cref="Persistent.RunStepCustomSearchToolCall"/> instance for mocking. </returns>
-        public static RunStepCustomSearchToolCall RunStepCustomSearchToolCall(string id = null, IReadOnlyDictionary<string, string> bingCustomSearch = null)
+        /// <returns> A new <see cref="Persistent.RunStepBingCustomSearchToolCall"/> instance for mocking. </returns>
+        public static RunStepBingCustomSearchToolCall RunStepBingCustomSearchToolCall(string id = null, IReadOnlyDictionary<string, string> bingCustomSearch = null)
         {
             bingCustomSearch ??= new Dictionary<string, string>();
 
-            return new RunStepCustomSearchToolCall("bing_custom_search", id, serializedAdditionalRawData: null, bingCustomSearch);
+            return new RunStepBingCustomSearchToolCall("bing_custom_search", id, serializedAdditionalRawData: null, bingCustomSearch);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepOpenAPIToolCall"/>. </summary>
@@ -389,26 +389,6 @@ namespace Azure.AI.Agents.Persistent
         public static RunStepCompletionUsage RunStepCompletionUsage(long completionTokens = default, long promptTokens = default, long totalTokens = default)
         {
             return new RunStepCompletionUsage(completionTokens, promptTokens, totalTokens, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.PersistentAgentPageableListOfVectorStore"/>. </summary>
-        /// <param name="object"> The object type, which is always list. </param>
-        /// <param name="data"> The requested list of items. </param>
-        /// <param name="firstId"> The first ID represented in this list. </param>
-        /// <param name="lastId"> The last ID represented in this list. </param>
-        /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
-        /// <returns> A new <see cref="Persistent.PersistentAgentPageableListOfVectorStore"/> instance for mocking. </returns>
-        public static PersistentAgentPageableListOfVectorStore PersistentAgentPageableListOfVectorStore(PersistentAgentPageableListOfVectorStoreObject @object = default, IEnumerable<VectorStore> data = null, string firstId = null, string lastId = null, bool hasMore = default)
-        {
-            data ??= new List<VectorStore>();
-
-            return new PersistentAgentPageableListOfVectorStore(
-                @object,
-                data?.ToList(),
-                firstId,
-                lastId,
-                hasMore,
-                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.VectorStore"/>. </summary>
@@ -477,26 +457,6 @@ namespace Azure.AI.Agents.Persistent
         public static VectorStoreDeletionStatus VectorStoreDeletionStatus(string id = null, bool deleted = default, VectorStoreDeletionStatusObject @object = default)
         {
             return new VectorStoreDeletionStatus(id, deleted, @object, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.PersistentAgentPageableListOfVectorStoreFile"/>. </summary>
-        /// <param name="object"> The object type, which is always list. </param>
-        /// <param name="data"> The requested list of items. </param>
-        /// <param name="firstId"> The first ID represented in this list. </param>
-        /// <param name="lastId"> The last ID represented in this list. </param>
-        /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
-        /// <returns> A new <see cref="Persistent.PersistentAgentPageableListOfVectorStoreFile"/> instance for mocking. </returns>
-        public static PersistentAgentPageableListOfVectorStoreFile PersistentAgentPageableListOfVectorStoreFile(PersistentAgentPageableListOfVectorStoreFileObject @object = default, IEnumerable<VectorStoreFile> data = null, string firstId = null, string lastId = null, bool hasMore = default)
-        {
-            data ??= new List<VectorStoreFile>();
-
-            return new PersistentAgentPageableListOfVectorStoreFile(
-                @object,
-                data?.ToList(),
-                firstId,
-                lastId,
-                hasMore,
-                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.VectorStoreFile"/>. </summary>

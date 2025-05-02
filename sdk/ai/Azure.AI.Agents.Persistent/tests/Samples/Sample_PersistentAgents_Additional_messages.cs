@@ -66,9 +66,9 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
             || agentRun.Status == RunStatus.InProgress);
         #endregion
         #region Snippet:Sample_Agent_Multiple_Messages_PrintAsync
-        PageableList<ThreadMessage> messages = await agentClient.Messages.GetMessagesAsync(thread.Id, order:ListSortOrder.Ascending);
+        AsyncPageable<ThreadMessage> messages = agentClient.Messages.GetMessagesAsync(thread.Id, order:ListSortOrder.Ascending);
 
-        foreach (ThreadMessage threadMessage in messages)
+        await foreach (ThreadMessage threadMessage in messages)
         {
             Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
             foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -140,7 +140,7 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
             || agentRun.Status == RunStatus.InProgress);
         #endregion
         #region Snippet:Sample_Agent_Multiple_Messages_Print
-        PageableList<ThreadMessage> messages = agentClient.Messages.GetMessages(thread.Id, order: ListSortOrder.Ascending);
+        Pageable<ThreadMessage> messages = agentClient.Messages.GetMessages(thread.Id, order: ListSortOrder.Ascending);
 
         foreach (ThreadMessage threadMessage in messages)
         {

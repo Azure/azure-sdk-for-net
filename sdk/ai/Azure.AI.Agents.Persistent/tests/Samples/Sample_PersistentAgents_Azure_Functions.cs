@@ -106,12 +106,12 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
         #endregion
 
         #region Snippet:AgentsAzureFunctionsPrint
-        PageableList<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
+        AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
 
-        foreach (ThreadMessage threadMessage in messages)
+        await foreach (ThreadMessage threadMessage in messages)
         {
             Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
             foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -224,7 +224,7 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
         #endregion
 
         #region Snippet:AgentsAzureFunctionsPrintSync
-        PageableList<ThreadMessage> messages = client.Messages.GetMessages(
+        Pageable<ThreadMessage> messages = client.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );

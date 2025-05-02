@@ -14,13 +14,13 @@ namespace Azure.AI.Agents.Persistent
     /// A record of a call to a bing custom search tool, issued by the model in evaluation of a defined tool, that represents
     /// executed search with bing custom search.
     /// </summary>
-    public partial class RunStepCustomSearchToolCall : RunStepToolCall
+    public partial class RunStepBingCustomSearchToolCall : RunStepToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepCustomSearchToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunStepBingCustomSearchToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="bingCustomSearch"> Reserved for future use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="bingCustomSearch"/> is null. </exception>
-        internal RunStepCustomSearchToolCall(string id, IReadOnlyDictionary<string, string> bingCustomSearch) : base(id)
+        internal RunStepBingCustomSearchToolCall(string id, IReadOnlyDictionary<string, string> bingCustomSearch) : base(id)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(bingCustomSearch, nameof(bingCustomSearch));
@@ -29,18 +29,18 @@ namespace Azure.AI.Agents.Persistent
             BingCustomSearch = bingCustomSearch;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepCustomSearchToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunStepBingCustomSearchToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="bingCustomSearch"> Reserved for future use. </param>
-        internal RunStepCustomSearchToolCall(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, string> bingCustomSearch) : base(type, id, serializedAdditionalRawData)
+        internal RunStepBingCustomSearchToolCall(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, string> bingCustomSearch) : base(type, id, serializedAdditionalRawData)
         {
             BingCustomSearch = bingCustomSearch;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepCustomSearchToolCall"/> for deserialization. </summary>
-        internal RunStepCustomSearchToolCall()
+        /// <summary> Initializes a new instance of <see cref="RunStepBingCustomSearchToolCall"/> for deserialization. </summary>
+        internal RunStepBingCustomSearchToolCall()
         {
         }
 

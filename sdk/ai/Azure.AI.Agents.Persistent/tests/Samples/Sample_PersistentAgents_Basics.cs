@@ -4,6 +4,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -53,8 +55,9 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         // Intermission: message is now correlated with thread
         // Intermission: listing messages will retrieve the message just added
 
-        Response<PageableList<ThreadMessage>> messagesListResponse = await client.Messages.GetMessagesAsync(thread.Id);
-        Assert.That(messagesListResponse.Value.Data[0].Id == message.Id);
+        AsyncPageable<ThreadMessage> messagesList = client.Messages.GetMessagesAsync(thread.Id);
+        List<ThreadMessage> messagesOne = await messagesList.ToListAsync();
+        Assert.AreEqual(message.Id, messagesOne[0].Id);
 
         // Step 4: Run the agent
         #region Snippet:AgentsOverviewCreateRun
@@ -79,11 +82,11 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         #endregion
 
         #region Snippet:AgentsOverviewListUpdatedMessages
-        PageableList<ThreadMessage> messages
-            = await client.Messages.GetMessagesAsync(
+        AsyncPageable<ThreadMessage> messages
+            = client.Messages.GetMessagesAsync(
                 threadId: thread.Id, order: ListSortOrder.Ascending);
 
-        foreach (ThreadMessage threadMessage in messages)
+        await foreach (ThreadMessage threadMessage in messages)
         {
             Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
             foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -144,8 +147,8 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         // Intermission: message is now correlated with thread
         // Intermission: listing messages will retrieve the message just added
 
-        Response<PageableList<ThreadMessage>> messagesListResponse = client.Messages.GetMessages(thread.Id);
-        Assert.That(messagesListResponse.Value.Data[0].Id == message.Id);
+        List<ThreadMessage> messagesList = [..client.Messages.GetMessages(thread.Id)];
+        Assert.AreEqual(message.Id, messagesList[0].Id);
 
         // Step 4: Run the agent
         #region Snippet:AgentsOverviewCreateRunSync
@@ -170,7 +173,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         #endregion
 
         #region Snippet:AgentsOverviewListUpdatedMessagesSync
-        PageableList<ThreadMessage> messages
+        Pageable<ThreadMessage> messages
             = client.Messages.GetMessages(
                 threadId: thread.Id, order: ListSortOrder.Ascending);
 

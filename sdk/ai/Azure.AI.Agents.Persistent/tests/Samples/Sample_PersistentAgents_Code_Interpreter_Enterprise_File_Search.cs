@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Agents.Persistent.Custom;
@@ -79,10 +80,10 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
             run.LastError?.Message);
         #endregion
         #region Snippet:AgentsCodeInterpreterEnterpriseSearchAsync_PrintMessages
-        PageableList<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
+        List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
-        );
+        ).ToListAsync();
         WriteMessages(messages);
         #endregion
         #region Snippet:AgentsCodeInterpreterEnterpriseSearchAsync_Cleanup
@@ -153,7 +154,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
             run.LastError?.Message);
         #endregion
         #region Snippet:AgentsCodeInterpreterEnterpriseSearch_PrintMessages
-        PageableList<ThreadMessage> messages = client.Messages.GetMessages(
+        Pageable<ThreadMessage> messages = client.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> A custom search configuration. </summary>
-    public partial class SearchConfiguration
+    /// <summary> A bing custom search configuration. </summary>
+    public partial class BingCustomSearchConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SearchConfiguration"/>. </summary>
-        /// <param name="connectionId"> A connection in a ToolConnectionList attached to this tool. </param>
+        /// <summary> Initializes a new instance of <see cref="BingCustomSearchConfiguration"/>. </summary>
+        /// <param name="connectionId"> Connection id for grounding with bing search. </param>
         /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> or <paramref name="instanceName"/> is null. </exception>
-        public SearchConfiguration(string connectionId, string instanceName)
+        public BingCustomSearchConfiguration(string connectionId, string instanceName)
         {
             Argument.AssertNotNull(connectionId, nameof(connectionId));
             Argument.AssertNotNull(instanceName, nameof(instanceName));
@@ -58,25 +58,41 @@ namespace Azure.AI.Agents.Persistent
             InstanceName = instanceName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchConfiguration"/>. </summary>
-        /// <param name="connectionId"> A connection in a ToolConnectionList attached to this tool. </param>
+        /// <summary> Initializes a new instance of <see cref="BingCustomSearchConfiguration"/>. </summary>
+        /// <param name="connectionId"> Connection id for grounding with bing search. </param>
         /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
+        /// <param name="market"> The market where the results come from. </param>
+        /// <param name="setLang"> The language to use for user interface strings when calling Bing API. </param>
+        /// <param name="count"> The number of search results to return in the bing api response. </param>
+        /// <param name="freshness"> Filter search results by a specific time range. Accepted values: https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/query-parameters. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchConfiguration(string connectionId, string instanceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BingCustomSearchConfiguration(string connectionId, string instanceName, string market, string setLang, long? count, string freshness, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionId = connectionId;
             InstanceName = instanceName;
+            Market = market;
+            SetLang = setLang;
+            Count = count;
+            Freshness = freshness;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchConfiguration"/> for deserialization. </summary>
-        internal SearchConfiguration()
+        /// <summary> Initializes a new instance of <see cref="BingCustomSearchConfiguration"/> for deserialization. </summary>
+        internal BingCustomSearchConfiguration()
         {
         }
 
-        /// <summary> A connection in a ToolConnectionList attached to this tool. </summary>
+        /// <summary> Connection id for grounding with bing search. </summary>
         public string ConnectionId { get; set; }
         /// <summary> Name of the custom configuration instance given to config. </summary>
         public string InstanceName { get; set; }
+        /// <summary> The market where the results come from. </summary>
+        public string Market { get; set; }
+        /// <summary> The language to use for user interface strings when calling Bing API. </summary>
+        public string SetLang { get; set; }
+        /// <summary> The number of search results to return in the bing api response. </summary>
+        public long? Count { get; set; }
+        /// <summary> Filter search results by a specific time range. Accepted values: https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/query-parameters. </summary>
+        public string Freshness { get; set; }
     }
 }

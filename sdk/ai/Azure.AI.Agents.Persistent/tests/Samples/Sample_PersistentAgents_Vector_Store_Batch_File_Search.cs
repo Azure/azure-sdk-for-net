@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -87,10 +88,10 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_File_Search : Sa
             RunStatus.Completed,
             run.Status,
             run.LastError?.Message);
-        PageableList<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
+        List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
-        );
+        ).ToListAsync();
         WriteMessages(messages, dtReferences);
         #endregion
 
@@ -176,7 +177,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_File_Search : Sa
             RunStatus.Completed,
             run.Status,
             run.LastError?.Message);
-        PageableList<ThreadMessage> messages = client.Messages.GetMessages(
+        Pageable<ThreadMessage> messages = client.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -82,29 +83,21 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_Enterprise_File_
             RunStatus.Completed,
             run.Status,
             run.LastError?.Message);
-        PageableList<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
+        List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
-        );
+        ).ToListAsync();
         // Build the map of file IDs to file names.
-        string after = null;
-        PersistentAgentPageableListOfVectorStoreFile storeFiles;
         Dictionary<string, string> dtFiles = [];
-        do
+        AsyncPageable<VectorStoreFile> storeFiles = client.VectorStoreFiles.GetVectorStoreFilesAsync(
+            vectorStoreId: vectorStore.Id
+        );
+        await foreach (VectorStoreFile fle in storeFiles)
         {
-            storeFiles = await client.VectorStoreFiles.GetVectorStoreFilesAsync(
-                vectorStoreId: vectorStore.Id,
-                after: after
-            );
-            after = storeFiles.LastId;
-            foreach (VectorStoreFile fle in storeFiles.Data)
-            {
-                PersistentAgentFileInfo agentFile = await client.PersistentAgentsFiles.GetFileAsync(fle.Id);
-                Uri uriFile = new(agentFile.Filename);
-                dtFiles.Add(fle.Id, uriFile.Segments[uriFile.Segments.Length - 1]);
-            }
+            PersistentAgentFileInfo agentFile = await client.PersistentAgentsFiles.GetFileAsync(fle.Id);
+            Uri uriFile = new(agentFile.Filename);
+            dtFiles.Add(fle.Id, uriFile.Segments[uriFile.Segments.Length - 1]);
         }
-        while (storeFiles.HasMore);
         WriteMessages(messages, dtFiles);
         #endregion
         #region Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_Cleanup_Async
@@ -190,29 +183,21 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_Enterprise_File_
             RunStatus.Completed,
             run.Status,
             run.LastError?.Message);
-        PageableList<ThreadMessage> messages = client.Messages.GetMessages(
+        Pageable<ThreadMessage> messages = client.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
         // Build the map of file IDs to file names.
-        string after = null;
-        PersistentAgentPageableListOfVectorStoreFile storeFiles;
         Dictionary<string, string> dtFiles = [];
-        do
+        Pageable<VectorStoreFile> storeFiles = client.VectorStoreFiles.GetVectorStoreFiles(
+                vectorStoreId: vectorStore.Id
+        );
+        foreach (VectorStoreFile fle in storeFiles)
         {
-            storeFiles = client.VectorStoreFiles.GetVectorStoreFiles(
-                vectorStoreId: vectorStore.Id,
-            after: after
-                );
-            after = storeFiles.LastId;
-            foreach (VectorStoreFile fle in storeFiles.Data)
-            {
-                PersistentAgentFileInfo agentFile = client.PersistentAgentsFiles.GetFile(fle.Id);
-                Uri uriFile = new(agentFile.Filename);
-                dtFiles.Add(fle.Id, uriFile.Segments[uriFile.Segments.Length - 1]);
-            }
+            PersistentAgentFileInfo agentFile = client.PersistentAgentsFiles.GetFile(fle.Id);
+            Uri uriFile = new(agentFile.Filename);
+            dtFiles.Add(fle.Id, uriFile.Segments[uriFile.Segments.Length - 1]);
         }
-        while (storeFiles.HasMore);
         WriteMessages(messages, dtFiles);
         #endregion
         #region Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_Cleanup

@@ -237,37 +237,37 @@ namespace Azure.AI.Agents.Persistent
             );
         }
 
-        /// <inheritdoc cref="InternalGetMessages(string, string, int?, ListSortOrder?, string, string, CancellationToken)"/>
-        public virtual Response<PageableList<ThreadMessage>> GetMessages(
-            string threadId,
-            string runId = null,
-            int? limit = null,
-            ListSortOrder? order = null,
-            string after = null,
-            string before = null,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.GetMessages");
-            scope.Start();
-            Response<InternalOpenAIPageableListOfThreadMessage> baseResponse = InternalGetMessages(threadId, runId, limit, order, after, before, cancellationToken);
-            return Response.FromValue(PageableList<ThreadMessage>.Create(baseResponse.Value), baseResponse.GetRawResponse());
-        }
+        ///// <inheritdoc cref="InternalGetMessages(string, string, int?, ListSortOrder?, string, string, CancellationToken)"/>
+        //public virtual Response<PageableList<ThreadMessage>> GetMessages(
+        //    string threadId,
+        //    string runId = null,
+        //    int? limit = null,
+        //    ListSortOrder? order = null,
+        //    string after = null,
+        //    string before = null,
+        //    CancellationToken cancellationToken = default)
+        //{
+        //    using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.GetMessages");
+        //    scope.Start();
+        //    Response<InternalOpenAIPageableListOfThreadMessage> baseResponse = InternalGetMessages(threadId, runId, limit, order, after, before, cancellationToken);
+        //    return Response.FromValue(PageableList<ThreadMessage>.Create(baseResponse.Value), baseResponse.GetRawResponse());
+        //}
 
-        /// <inheritdoc cref="InternalGetMessagesAsync(string, string, int?, ListSortOrder?, string, string, CancellationToken)"/>
-        public virtual async Task<Response<PageableList<ThreadMessage>>> GetMessagesAsync(
-            string threadId,
-            string runId = null,
-            int? limit = null,
-            ListSortOrder? order = null,
-            string after = null,
-            string before = null,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.GetMessages");
-            scope.Start();
-            Response<InternalOpenAIPageableListOfThreadMessage> baseResponse
-                = await InternalGetMessagesAsync(threadId, runId, limit, order, after, before, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(PageableList<ThreadMessage>.Create(baseResponse.Value), baseResponse.GetRawResponse());
-        }
+        ///// <inheritdoc cref="InternalGetMessagesAsync(string, string, int?, ListSortOrder?, string, string, CancellationToken)"/>
+        //public virtual async Task<Response<PageableList<ThreadMessage>>> GetMessagesAsync(
+        //    string threadId,
+        //    string runId = null,
+        //    int? limit = null,
+        //    ListSortOrder? order = null,
+        //    string after = null,
+        //    string before = null,
+        //    CancellationToken cancellationToken = default)
+        //{
+        //    using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.GetMessages");
+        //    scope.Start();
+        //    Response<InternalOpenAIPageableListOfThreadMessage> baseResponse
+        //        = await InternalGetMessagesAsync(threadId, runId, limit, order, after, before, cancellationToken).ConfigureAwait(false);
+        //    return Response.FromValue(PageableList<ThreadMessage>.Create(baseResponse.Value), baseResponse.GetRawResponse());
+        //}
     }
 }
