@@ -91,8 +91,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [TestCase(Avro)]
         [TestCase(Json)]
         [TestCase(Custom)]
-        // Until Protobuf is publicly available
-        //[TestCase(Protobuf)]
+        [TestCase(Protobuf)]
         public async Task CanRegisterSchema(string formatName)
         {
             var client = CreateClient(formatName);
@@ -113,7 +112,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [TestCase(Avro)]
         [TestCase(Json)]
         [TestCase(Custom)]
-        //[TestCase(Protobuf)]
+        [TestCase(Protobuf)]
         public async Task CanRegisterNewVersionOfSchema(string formatName)
         {
             var client = CreateClient(formatName);
@@ -139,7 +138,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [TestCase(Avro)]
         [TestCase(Json)]
         [TestCase(Custom)]
-        //[TestCase(Protobuf)]
+        [TestCase(Protobuf)]
         public async Task CanGetSchemaId(string formatName)
         {
             var client = CreateClient(formatName);
@@ -160,7 +159,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [TestCase(Avro)]
         [TestCase(Json)]
         [TestCase(Custom)]
-        //[TestCase(Protobuf)]
+        [TestCase(Protobuf)]
         public async Task CanGetSchema(string formatName)
         {
             var client = CreateClient(formatName);
@@ -181,7 +180,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         [TestCase(Avro)]
         [TestCase(Json)]
         [TestCase(Custom)]
-        //[TestCase(Protobuf)]
+        [TestCase(Protobuf)]
         public async Task CanGetSchemaByVersion(string formatName)
         {
             var client = CreateClient(formatName);
@@ -305,8 +304,8 @@ namespace Azure.Data.SchemaRegistry.Tests
                     return SchemaFormat.Json;
                 case Custom:
                     return SchemaFormat.Custom;
-                //case Protobuf:
-                //    return SchemaFormat.Protobuf;
+                case Protobuf:
+                    return SchemaFormat.Protobuf;
                 default:
                     throw new ArgumentException("Format name was invalid.");
             }
