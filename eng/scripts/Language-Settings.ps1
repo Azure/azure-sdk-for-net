@@ -9,32 +9,6 @@ $PackageRepositoryUri = "https://www.nuget.org/packages"
 
 . "$PSScriptRoot/docs/Docs-ToC.ps1"
 
-$DependencyCalculationPackages = @(
-  "Azure.Core",
-  "Azure.ResourceManager",
-  "System.ClientModel"
-)
-
-function processTestProject($projPath) {
-  $cleanPath = $projPath -replace "^\$\(RepoRoot\)", ""
-
-  # Split the path into segments
-  $pathSegments = $cleanPath -split "[\\/]"
-
-  # Find the index of the 'tests' directory
-  $testsIndex = $pathSegments.IndexOf("tests")
-
-  if ($testsIndex -gt 0) {
-      # Reconstruct the path up to the directory just above 'tests'
-      $parentDirectory = ($pathSegments[0..($testsIndex - 1)] -join [System.IO.Path]::DirectorySeparatorChar)
-      return $parentDirectory
-  } else {
-      Write-Error "Unable to retrieve a package directory for this this test project: $projPath"
-      # If 'tests' is not found, return the original path (optional behavior)
-      $_
-  }
-}
-
 function Get-AllPackageInfoFromRepo($serviceDirectory)
 {
   $allPackageProps = @()
@@ -55,7 +29,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   foreach ($projectOutput in $msbuildOutput)
   {
     if (!$projectOutput) {
-      Write-Host "Get-AllPackageInfoFromRepo::projectOutput was null or empty, skipping"
+      Write-Verbose "Get-AllPackageInfoFromRepo::projectOutput was null or empty, skipping"
       continue
     }
 
@@ -71,51 +45,6 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     $pkgProp.ArtifactName = $pkgName
     $pkgProp.IncludedForValidation = $false
     $pkgProp.DirectoryPath = ($pkgProp.DirectoryPath)
-
-    if ($pkgProp.Name -in $DependencyCalculationPackages -and $env:DISCOVER_DEPENDENT_PACKAGES) {
-      Write-Host "Calculating dependencies for $($pkgProp.Name)"
-      $outputFilePath = Join-Path $RepoRoot "$($pkgProp.Name)_dependencylist.txt"
-      $buildOutputPath = Join-Path $RepoRoot "$($pkgProp.Name)_dependencylistoutput.txt"
-
-      if (!(Test-Path $outputFilePath)) {
-        try {
-          $command = "dotnet build /t:ProjectDependsOn ./eng/service.proj /p:TestDependsOnDependency=`"$($pkgProp.Name)`" /p:IncludeSrc=false " +
-          "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false" +
-          " /p:OutputProjectFilePath=`"$outputFilePath`" > $buildOutputPath 2>&1"
-
-          Invoke-LoggedCommand $command | Out-Null
-        }
-        catch {
-            Write-Host "Failed calculating dependencies for $($pkgProp.Name). Exit code $LASTEXITCODE."
-            Write-Host "Dumping erroring build output."
-            Write-Host (Get-Content -Raw $buildOutputPath)
-            continue
-        }
-      }
-
-      $pkgRelPath = $pkgProp.DirectoryPath.Replace($RepoRoot, "").TrimStart("\/")
-
-      if (Test-Path $outputFilePath) {
-        $dependentProjects = Get-Content $outputFilePath
-        $testPackages = @{}
-
-        foreach ($projectLine in $dependentProjects) {
-          $testPackage = processTestProject($projectLine)
-          if ($testPackage -and $testPackage -ne $pkgRelPath) {
-            if ($testPackages[$testPackage]) {
-              $testPackages[$testPackage] += 1
-            }
-            else {
-              $testPackages[$testPackage] = 1
-            }
-          }
-        }
-
-        $pkgProp.AdditionalValidationPackages = $testPackages.Keys
-
-        Write-Host "Cleaning up $outputFilePath."
-      }
-    }
 
     $ciProps = $pkgProp.GetCIYmlForArtifact()
 
@@ -164,6 +93,67 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   }
 
   return $allPackageProps
+}
+
+function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages, $diffObj, $AllPkgProps)
+{
+  $additionalValidationPackages = @()
+
+  $DependencyCalculationPackages = @(
+    "Azure.Core",
+    "Azure.ResourceManager",
+    "System.ClientModel"
+  )
+
+  $TestDependsOnDependencySet = $LocatedPackages | Where-Object { $_.Name -in $DependencyCalculationPackages }
+  $TestDependsOnDependency = $TestDependsOnDependencySet.Name -join " "
+
+  if (!$TestDependsOnDependency) {
+    return $additionalValidationPackages
+  }
+
+  Write-Host "Calculating dependencies for $($pkgProp.Name)"
+
+  $outputFilePath = Join-Path $RepoRoot "_dependencylist.txt"
+  $buildOutputPath = Join-Path $RepoRoot "_dependencylistoutput.txt"
+
+  try {
+    $command = "dotnet build /t:ProjectDependsOn ./eng/service.proj /p:TestDependsOnDependency=`"$TestDependsOnDependency`" /p:TestDependsIncludePackageRootDirectoryOnly=true /p:IncludeSrc=false " +
+    "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false" +
+    " /p:OutputProjectFilePath=`"$outputFilePath`" > $buildOutputPath 2>&1"
+
+    Invoke-LoggedCommand $command | Out-Null
+  }
+  catch {
+      Write-Host "Failed calculating dependencies for '$TestDependsOnDependency'. Exit code $LASTEXITCODE."
+      Write-Host "Dumping erroring build output."
+      Write-Host (Get-Content -Raw $buildOutputPath)
+      continue
+  }
+
+  if (Test-Path $outputFilePath) {
+    $dependentProjects = Get-Content $outputFilePath
+
+    foreach ($packageRootPath in $dependentProjects) {
+      if (!$packageRootPath) {
+        Write-Verbose "Get-dotnet-AdditionalValidationPackagesFromPackageSet::dependentProjects Package root path is empty, skipping."
+        continue
+      }
+      $pkg = $AllPkgProps | Where-Object { $_.DirectoryPath -eq $packageRootPath }
+
+      if (!$pkg) {
+        Write-Verbose "Unable to find package for path $packageRootPath, skipping. Most likely a nested test project not directly under test."
+        continue
+      }
+
+      if ($pkg -and $LocatedPackages -notcontains $pkg) {
+        $pkg.IncludedForValidation = $true
+        $additionalValidationPackages += $pkg
+      }
+    }
+  }
+
+  return $additionalValidationPackages
 }
 
 # Returns the nuget publish status of a package id and version.
