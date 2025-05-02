@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
     }
     public partial class WeightsAndBiasesInstanceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstanceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstanceProperties>
     {
-        public WeightsAndBiasesInstanceProperties(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceDetails marketplace, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesUserDetails user) { }
+        public WeightsAndBiasesInstanceProperties(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceDetails marketplace, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesUserDetails user, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesPartnerProperties partnerProperties) { }
         public Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceDetails Marketplace { get { throw null; } set { } }
         public Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesPartnerProperties PartnerProperties { get { throw null; } set { } }
         public Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState? ProvisioningState { get { throw null; } }

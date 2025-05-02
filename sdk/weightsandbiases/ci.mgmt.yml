@@ -1,6 +1,7 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
 trigger: none
+
 pr:
   branches:
     include:
@@ -10,13 +11,14 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/weightsandbiases/ci.mgmt.yml
-    - sdk/weightsandbiases/Azure.ResourceManager.WeightsAndBiases/
+    - sdk/liftrweightsandbiases/ci.mgmt.yml
+    - sdk/liftrweightsandbiases/Azure.ResourceManager.WeightsAndBiases/
+
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: weightsandbiases
+    ServiceDirectory: liftrweightsandbiases
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.WeightsAndBiases

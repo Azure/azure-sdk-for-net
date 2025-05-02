@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-18-preview</description>
+        /// <description>2024-09-18</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-18-preview</description>
+        /// <description>2024-09-18</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

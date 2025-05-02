@@ -48,14 +48,17 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         /// <summary> Initializes a new instance of <see cref="WeightsAndBiasesInstanceProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/> or <paramref name="user"/> is null. </exception>
-        public WeightsAndBiasesInstanceProperties(WeightsAndBiasesMarketplaceDetails marketplace, WeightsAndBiasesUserDetails user)
+        /// <param name="partnerProperties"> partner properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/>, <paramref name="user"/> or <paramref name="partnerProperties"/> is null. </exception>
+        public WeightsAndBiasesInstanceProperties(WeightsAndBiasesMarketplaceDetails marketplace, WeightsAndBiasesUserDetails user, WeightsAndBiasesPartnerProperties partnerProperties)
         {
             Argument.AssertNotNull(marketplace, nameof(marketplace));
             Argument.AssertNotNull(user, nameof(user));
+            Argument.AssertNotNull(partnerProperties, nameof(partnerProperties));
 
             Marketplace = marketplace;
             User = user;
+            PartnerProperties = partnerProperties;
         }
 
         /// <summary> Initializes a new instance of <see cref="WeightsAndBiasesInstanceProperties"/>. </summary>
