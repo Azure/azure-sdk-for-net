@@ -12,7 +12,7 @@ namespace Azure.AI.Agents.Persistent
     /// <summary>
     /// The Azure AI Agents Persistent extensions.
     /// </summary>
-    public static class AIAgentsPersistentExtensions
+    public static class PersistentAgentsExtensions
     {
         /// <summary>
         /// Gets the agents client.

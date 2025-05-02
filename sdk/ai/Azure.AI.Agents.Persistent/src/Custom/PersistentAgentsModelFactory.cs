@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.Agents.Persistent;
 
@@ -15,8 +16,8 @@ namespace Azure.AI.Agents.Persistent;
  * This file restores substantial portions of generated model factory surface lost via type customization and
  * visibility adjustments.
  */
-
-public static partial class AIAgentsPersistentModelFactory
+[CodeGenClient("AIAgentsPersistentModelFactory")]
+public static partial class PersistentAgentsModelFactory
 {
     /// <summary> Initializes a new instance of <see cref="Azure.AI.Agents.Persistent.PersistentAgent"/>. </summary>
     /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>

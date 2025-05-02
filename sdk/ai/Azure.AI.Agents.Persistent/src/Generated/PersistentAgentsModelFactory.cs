@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class AIAgentsPersistentModelFactory
+    public static partial class PersistentAgentsModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Persistent.AzureFunctionBinding"/>. </summary>
         /// <param name="type"> The type of binding, which is always 'storage_queue'. </param>
@@ -132,30 +132,6 @@ namespace Azure.AI.Agents.Persistent
         public static RunCompletionUsage RunCompletionUsage(long completionTokens = default, long promptTokens = default, long totalTokens = default)
         {
             return new RunCompletionUsage(completionTokens, promptTokens, totalTokens, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.PersistentAgentThread"/>. </summary>
-        /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
-        /// <param name="object"> The object type, which is always 'thread'. </param>
-        /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
-        /// <param name="toolResources">
-        /// A set of resources that are made available to the agent's tools in this thread. The resources are specific to the type
-        /// of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires a list
-        /// of vector store IDs.
-        /// </param>
-        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        /// <returns> A new <see cref="Persistent.PersistentAgentThread"/> instance for mocking. </returns>
-        public static PersistentAgentThread PersistentAgentThread(string id = null, PersistentAgentThreadObject @object = default, DateTimeOffset createdAt = default, ToolResources toolResources = null, IReadOnlyDictionary<string, string> metadata = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-
-            return new PersistentAgentThread(
-                id,
-                @object,
-                createdAt,
-                toolResources,
-                metadata,
-                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.MessageIncompleteDetails"/>. </summary>
