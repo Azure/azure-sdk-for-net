@@ -167,5 +167,3 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
         '''
     }
 }
-
-output INPUT_BLOB_URI string = 'https://${storageAccount.name}.blob.${environment().suffixes.storage}/${containerName}/${blobName}'
