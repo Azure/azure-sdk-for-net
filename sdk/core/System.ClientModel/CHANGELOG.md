@@ -14,6 +14,8 @@
 - Changed `IEquatable<object> clientId` parameter to `object clientId` in `ClientCache.GetClient`
 - Renamed `ConnectionCollection` to `ClientConnectionCollection`
 - Renamed `ConnectionProvider` to `ClientConnectionProvider`
+- Renamed `ToCollection` to `ConvertCollectionBuilder` in `ModelReadWriteTypeBuilder`
+- Renamed `AddKeyValuePair` to `AddItemWithKey` in `ModelReadWriteTypeBuilder`
 
 ## 1.4.0-beta.6 (2025-04-28)
 
