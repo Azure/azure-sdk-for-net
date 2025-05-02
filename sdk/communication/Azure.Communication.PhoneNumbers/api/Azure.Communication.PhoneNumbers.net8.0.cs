@@ -502,6 +502,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
     }
     public partial class SipTrunkRoute
     {
+        public SipTrunkRoute(string name, string numberPattern, string description = null, System.Collections.Generic.IEnumerable<string> trunks = null) { }
         public SipTrunkRoute(string name, string numberPattern, string description = null, System.Collections.Generic.IEnumerable<string> trunks = null, string callerIdOverride = null) { }
         public string CallerIdOverride { get { throw null; } }
         public string Description { get { throw null; } }
