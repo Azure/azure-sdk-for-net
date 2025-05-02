@@ -90,6 +90,37 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         }
     }
 
+    [TestCase(Gpt4oMiniDeployment)]
+    public async Task ResponseImageInput(string deploymentName)
+    {
+        OpenAIClient topLevelClient = GetTestTopLevelClient(DefaultResponsesConfig);
+        OpenAIFileClient fileClient = topLevelClient.GetOpenAIFileClient();
+        VectorStoreClient vectorStoreClient = topLevelClient.GetVectorStoreClient();
+        OpenAIResponseClient client = topLevelClient.GetOpenAIResponseClient(deploymentName);
+
+        Uri imageUri = new("https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/512px-Microsoft_logo.svg.png");
+        ResponseContentPart imagePart = ResponseContentPart.CreateInputImagePart(imageUri);
+        ResponseContentPart textPart = ResponseContentPart.CreateInputTextPart("Describe this image");
+
+        List<ResponseContentPart> contentParts = [imagePart, textPart];
+
+        OpenAIResponse response = client.CreateResponse(
+                    inputItems:
+                    [
+                        ResponseItem.CreateSystemMessageItem("You are a helpful assistant that describes images"),
+                        ResponseItem.CreateUserMessageItem(contentParts)
+                    ]);
+
+        Assert.That(response.OutputItems?.Count, Is.EqualTo(1));
+        MessageResponseItem? message = response?.OutputItems?[0] as MessageResponseItem;
+        Assert.That(message, Is.Not.Null);
+
+        await foreach (ResponseItem inputItem in client.GetResponseInputItemsAsync(response?.Id))
+        {
+            Console.WriteLine(ModelReaderWriter.Write(inputItem).ToString());
+        }
+    }
+
     [RecordedTest]
     public async Task ComputerToolWithScreenshotRoundTrip()
     {
@@ -954,7 +985,6 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
                 """),
             false);
 
-    [RecordedTest]
     [TestCase(Gpt4oMiniDeployment)]
     public void ChatbotTellsJokes(string deploymentName)
     {
