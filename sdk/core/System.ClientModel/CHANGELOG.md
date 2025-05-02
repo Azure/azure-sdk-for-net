@@ -6,6 +6,14 @@
 
 - Added additional supported scenarios to System.ClientModel.SourceGeneration.
 
+### Other Changes
+
+- Renamed `ActivityExtensions.MarkFailed` to `ActivityExtensions.MarkClientActivityFailed`.
+- Made `int maxSize` parameter to `ClientCache` constructor required and removed default value.
+- Changed `IEquatable<object> clientId` parameter to `object clientId` in `ClientCache.GetClient`
+- Renamed `ConnectionCollection` to `ClientConnectionCollection`
+- Renamed `ConnectionProvider` to `ClientConnectionProvider`
+
 ## 1.4.0-beta.6 (2025-04-28)
 
 ### Features Added
