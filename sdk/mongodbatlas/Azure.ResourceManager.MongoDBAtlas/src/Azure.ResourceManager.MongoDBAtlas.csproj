@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-beta.1</Version>
+    <PackageId>Azure.ResourceManager.MongoDBAtlas</PackageId>
+    <Description>Azure Resource Manager client SDK for Azure resource provider liftrmongodb.</Description>
+    <PackageTags>azure;management;arm;resource manager;liftrmongodb</PackageTags>
+  </PropertyGroup>
+</Project>
