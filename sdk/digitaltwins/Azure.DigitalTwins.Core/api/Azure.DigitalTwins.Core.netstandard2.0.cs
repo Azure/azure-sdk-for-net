@@ -129,7 +129,7 @@ namespace Azure.DigitalTwins.Core
             V2020_10_31 = 1,
             V2022_05_31 = 2,
             V2023_06_30 = 3,
-            V2023-10-31 = 4,
+            V2023_10_31 = 4,
         }
     }
     public partial class DigitalTwinsEventRoute
