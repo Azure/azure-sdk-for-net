@@ -53,17 +53,18 @@ namespace Azure.Storage.Tests
 
         private Mock<PartitionedUploader<object, object>.SingleUploadStreamingInternal> GetMockSingleUploadStreamingInternal(
             int expectedSize,
-            Action<UploadTransferValidationOptions> validationOptionsAssertion = default)
+            Action<UploadTransferValidationOptions> validationOptionsAssertion = default,
+            Stream dataDest = default)
         {
             var mock = new Mock<PartitionedUploader<object, object>.SingleUploadStreamingInternal>(MockBehavior.Strict);
             mock.Setup(del => del(It.IsNotNull<Stream>(), s_objectArgs, It.IsAny<IProgress<long>>(), It.IsAny<UploadTransferValidationOptions>(), s_operationName, IsAsync, s_cancellation))
-                .Returns<Stream, object, IProgress<long>, UploadTransferValidationOptions, string, bool, CancellationToken>((stream, obj, progress, validationOptions, operation, async, cancellation) =>
+                .Returns<Stream, object, IProgress<long>, UploadTransferValidationOptions, string, bool, CancellationToken>(async (stream, obj, progress, validationOptions, operation, async, cancellation) =>
                 {
                     Assert.IsTrue(stream.CanSeek, "PartitionedUploader sent non-seekable stream to the REST client");
                     Assert.AreEqual(expectedSize, stream.Length);
                     validationOptionsAssertion?.Invoke(validationOptions);
-                    stream.CopyTo(Stream.Null);
-                    return Task.FromResult(new Mock<Response<object>>(MockBehavior.Loose).Object);
+                    await stream.CopyToInternal(dataDest ?? Stream.Null, async, cancellation);
+                    return new Mock<Response<object>>(MockBehavior.Loose).Object;
                 });
 
             return mock;
@@ -162,12 +163,13 @@ namespace Azure.Storage.Tests
         private MockBehaviors GetMockBehaviors(
             int dataSize,
             int blockSize,
-            Action<UploadTransferValidationOptions> validationOptionsAssertion = default)
+            Action<UploadTransferValidationOptions> validationOptionsAssertion = default,
+            Stream oneshotDest = default)
             => new MockBehaviors
             {
                 CreateScope = GetMockCreateScope(),
                 Initialize = GetMockInitializeDestinationInternal(),
-                SingleUploadStream = GetMockSingleUploadStreamingInternal(dataSize, validationOptionsAssertion),
+                SingleUploadStream = GetMockSingleUploadStreamingInternal(dataSize, validationOptionsAssertion, oneshotDest),
                 SingleUploadBinaryData = GetMockSingleUploadBinaryDataInternal(dataSize, validationOptionsAssertion),
                 PartitionUploadStream = GetMockUploadPartitionStreamingInternal(blockSize, validationOptionsAssertion),
                 PartitionUploadBinaryData = GetMockUploadPartitionBinaryDataInternal(blockSize, validationOptionsAssertion),
@@ -311,6 +313,52 @@ namespace Azure.Storage.Tests
                 Assert.IsEmpty(mocks.PartitionUploadStream.Invocations);
                 Assert.IsEmpty(mocks.Commit.Invocations);
             }
+        }
+
+        [TestCase(1024, 2048, 16)] // under threshold, even block distribution
+        [TestCase(1024, 2048, 10)] // under threshold, uneven block distribution
+        [TestCase(12345, 1234567, 123)] // under threshold, no powers of 2
+        public async Task RestitchStreamOnOneshot(
+            int dataSize,
+            int threshold,
+            int blockSize)
+        {
+            var dataBuffer = new byte[dataSize];
+            new Random().NextBytes(dataBuffer);
+            Mock<MemoryStream> content = new(dataBuffer)
+            {
+                CallBase = true,
+            };
+            // when unseekable, uploader will buffer multiple blocks of blocksize before reaching threshold
+            // when threshold not reached, will stitch back together as one stream to upload
+            content.MakeUnseekable();
+
+            Mock<MemoryStream> dest = new(dataBuffer)
+            {
+                CallBase = true,
+            };
+            var mocks = GetMockBehaviors(dataSize, blockSize, oneshotDest: dest.Object);
+            var partitionedUploader = new PartitionedUploader<object, object>(
+                mocks.ToBehaviors(),
+                new StorageTransferOptions()
+                {
+                    InitialTransferSize = threshold,
+                    MaximumTransferSize = blockSize,
+                },
+                s_validationOptions,
+                operationName: s_operationName);
+
+            await partitionedUploader.UploadInternal(content.Object, default, s_objectArgs, s_progress, IsAsync, s_cancellation);
+
+            // check all the individual writes of exactly blockSize as indirect demonstration of the blocks being stitched back together
+            // just checking synchronous write works due to MemoryStream impl; don't need to branch check on async
+            dest.Verify(c => c.Write(It.IsAny<byte[]>(), It.IsAny<int>(), blockSize),
+                Times.Exactly(dataSize / blockSize));
+            if (dataSize % blockSize != 0)
+                dest.Verify(c => c.Write(It.IsAny<byte[]>(), It.IsAny<int>(), dataSize % blockSize), Times.Once);
+
+            // check data was resequenced correctly
+            Assert.That(dataBuffer, Is.EqualTo(dest.Object.ToArray()));
         }
 
         [TestCase(1024, 2048, 2048)]
