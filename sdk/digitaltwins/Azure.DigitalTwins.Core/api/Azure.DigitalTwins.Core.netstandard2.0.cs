@@ -121,7 +121,7 @@ namespace Azure.DigitalTwins.Core
     }
     public partial class DigitalTwinsClientOptions : Azure.Core.ClientOptions
     {
-        public DigitalTwinsClientOptions(Azure.DigitalTwins.Core.DigitalTwinsClientOptions.ServiceVersion version = Azure.DigitalTwins.Core.DigitalTwinsClientOptions.ServiceVersion.V2023_06_30) { }
+        public DigitalTwinsClientOptions(Azure.DigitalTwins.Core.DigitalTwinsClientOptions.ServiceVersion version = Azure.DigitalTwins.Core.DigitalTwinsClientOptions.ServiceVersion.V2023_10_31) { }
         public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
         public Azure.DigitalTwins.Core.DigitalTwinsClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -129,6 +129,7 @@ namespace Azure.DigitalTwins.Core
             V2020_10_31 = 1,
             V2022_05_31 = 2,
             V2023_06_30 = 3,
+            V2023-10-31 = 4,
         }
     }
     public partial class DigitalTwinsEventRoute
