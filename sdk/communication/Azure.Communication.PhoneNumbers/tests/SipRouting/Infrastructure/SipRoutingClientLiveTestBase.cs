@@ -76,7 +76,8 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
                 expected.Name == actual.Name &&
                 expected.Description == actual.Description &&
                 expected.NumberPattern == actual.NumberPattern &&
-                expected.Trunks.Count == actual.Trunks.Count);
+                expected.Trunks.Count == actual.Trunks.Count &&
+                expected.CallerIdOverride == actual.CallerIdOverride);
 
             for (int i = 0; i < expected.Trunks.Count; i++)
             {
@@ -88,7 +89,18 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
 
         protected bool TrunkAreEqual(SipTrunk expected, SipTrunk actual)
         {
-            return expected.Fqdn == actual.Fqdn && expected.SipSignalingPort == actual.SipSignalingPort;
+            return expected.Fqdn == actual.Fqdn &&
+                expected.SipSignalingPort == actual.SipSignalingPort &&
+                expected.DirectTransfer == actual.DirectTransfer &&
+                expected.Enabled == actual.Enabled &&
+                expected.IpAddressVersion == actual.IpAddressVersion &&
+                expected.PrivacyHeader == actual.PrivacyHeader;
+        }
+
+        protected bool DomainAreEqual(SipDomain expected, SipDomain actual)
+        {
+            return expected.Fqdn == actual.Fqdn &&
+                expected.Enabled == actual.Enabled;
         }
     }
 }

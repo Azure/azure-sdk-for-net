@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -107,6 +106,23 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         }
 
         [Test]
+        public async Task GetSipDomainsForResource()
+        {
+            if (SkipSipConfigurationLiveTest)
+            {
+                Assert.Ignore("Skip sip configuration flag is on.");
+            }
+
+            var client = CreateClient();
+            var response = await client.GetDomainsAsync().ConfigureAwait(false);
+            var domains = response.Value;
+
+            Assert.IsNotNull(domains);
+            Assert.AreEqual(1, domains.Count());
+            Assert.AreEqual(TestData!.Domain.Fqdn, domains[0].Fqdn);
+        }
+
+        [Test]
         public async Task AddSipTrunkForResource()
         {
             if (SkipSipConfigurationLiveTest)
@@ -174,6 +190,21 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         }
 
         [Test]
+        public async Task DeleteSipDomainForResource()
+        {
+            if (SkipSipConfigurationLiveTest)
+            {
+                Assert.Ignore("Skip sip configuration flag is on.");
+            }
+
+            var client = InitializeTest();
+            await client.SetDomainAsync(TestData!.NewDomain).ConfigureAwait(false);
+            var response = await client.DeleteDomainAsync(TestData!.NewDomain.Fqdn).ConfigureAwait(false);
+
+            Assert.AreEqual(200, response.Status);
+        }
+
+        [Test]
         public async Task GetSipTrunkForResource()
         {
             if (SkipSipConfigurationLiveTest)
@@ -191,7 +222,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         }
 
         [Test]
-        public async Task GetSipTrunksWithHealthForResource()
+        public async Task GetSipDomainForResource()
         {
             if (SkipSipConfigurationLiveTest)
             {
@@ -200,13 +231,11 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
 
             var client = InitializeTest();
 
-            var response = await client.GetTrunksAsync(true).ConfigureAwait(false);
+            var response = await client.GetDomainAsync(TestData!.Domain.Fqdn).ConfigureAwait(false);
+            var domain = response.Value;
 
-            var trunks = response.Value;
-
-            Assert.IsNotNull(trunks);
-            Assert.IsNotNull(trunks[0].Health);
-            Assert.IsNotNull(trunks[1].Health);
+            Assert.IsNotNull(domain);
+            Assert.AreEqual(TestData!.Domain.Fqdn, domain.Fqdn);
         }
 
         [Test]
@@ -246,6 +275,20 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
             Assert.IsNotNull(newTrunks);
             Assert.AreEqual(1, newTrunks.Count);
             Assert.IsTrue(TrunkAreEqual(TestData!.NewTrunk, newTrunks[0]));
+        }
+
+        [Test]
+        public async Task ReplaceSipDomainsForResource()
+        {
+            if (SkipSipConfigurationLiveTest)
+            {
+                Assert.Ignore("Skip sip configuration flag is on.");
+            }
+            var client = InitializeTest();
+
+            var response = await client.SetDomainsAsync(new List<SipDomain> { TestData!.Domain, TestData!.NewDomain }).ConfigureAwait(false);
+
+            Assert.AreEqual(200, response.Status);
         }
 
         [Test]
@@ -325,7 +368,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         }
 
         [Test]
-        public async Task TestRoutesWithNumbersTest()
+        public async Task GetRoutesForNumber()
         {
             if (SkipSipConfigurationLiveTest)
             {
@@ -333,12 +376,11 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
             }
 
             var client = CreateClient();
-            var response = await client.TestRoutesWithNumberAsync(TestData!.TestPhoneNumber, new List<SipTrunkRoute>()).ConfigureAwait(false);
+            var response = await client.GetRoutesForNumberAsync(TestData!.TestPhoneNumber, new List<SipTrunkRoute>()).ConfigureAwait(false);
             Assert.AreEqual(200, response.GetRawResponse().Status);
             var routesForNumber = response.Value;
             Assert.IsNotNull(routesForNumber);
-            Assert.AreEqual(0, routesForNumber.MatchingRoutes.Count);
-            Assert.IsEmpty(routesForNumber.MatchingRoutes);
+            Assert.IsEmpty(routesForNumber);
         }
     }
 }

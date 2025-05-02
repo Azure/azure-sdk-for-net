@@ -34,8 +34,23 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
                 new SipTrunk(Fqdns[0], TrunkPorts[0]),
                 new SipTrunk(Fqdns[1], TrunkPorts[1])
             };
+            TrunkList[0].Enabled = true;
+            TrunkList[0].DirectTransfer = true;
+            TrunkList[0].IpAddressVersion = IpAddressVersion.Ipv4;
+            TrunkList[0].PrivacyHeader = PrivacyHeader.None;
+
+            TrunkList[1].Enabled = false;
+            TrunkList[1].DirectTransfer = false;
+            TrunkList[1].IpAddressVersion = IpAddressVersion.Ipv6;
+            TrunkList[1].PrivacyHeader = PrivacyHeader.Id;
+
             NewTrunk = new SipTrunk("newsbs-" + randomGuid + "." + domain, 3333);
-            NewDomain = new SipDomain("new-domain" + randomGuid + domain, false);
+            NewTrunk.DirectTransfer = true;
+            NewTrunk.Enabled = true;
+            NewTrunk.PrivacyHeader = PrivacyHeader.Id;
+            NewTrunk.IpAddressVersion = IpAddressVersion.Ipv6;
+
+            NewDomain = new SipDomain("new-domain" + randomGuid + "." + domain, false);
 
             RuleNavigateToTrunk1 = new SipTrunkRoute(
                 name: "First rule",

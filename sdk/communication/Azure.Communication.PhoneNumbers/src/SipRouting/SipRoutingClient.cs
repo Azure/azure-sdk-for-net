@@ -110,40 +110,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             scope.Start();
             try
             {
-                var response = _restClient.Get(cancellationToken: cancellationToken);
-                var trunk = response.Value.Trunks[fqdn];
-
-                if (trunk == null)
-                {
-                    throw new KeyNotFoundException($"SIP trunk with FQDN: {fqdn} wasn't found");
-                }
-                return Response.FromValue(trunk, response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get <see cref="SipTrunk"/> with provided FQDN.
-        /// </summary>
-        /// <param name="fqdn">SIP trunk FQDN.</param>
-        /// <param name="includeHealth">Include SIP trunk health in response.</param>
-        /// <param name="cancellationToken">Optional cancellation token.</param>
-        /// <returns>Trunk configuration.</returns>
-        /// <exception cref="KeyNotFoundException">Route with specified name wasn't found.</exception>
-        public virtual Response<SipTrunk> GetTrunk(
-            string fqdn,
-            bool includeHealth,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(GetTrunk)}");
-            scope.Start();
-            try
-            {
-                var response = _restClient.Get(includeHealth, cancellationToken);
+                var response = _restClient.Get(ExpandEnum.TrunksHealth, cancellationToken: cancellationToken);
                 var trunk = response.Value.Trunks[fqdn];
 
                 if (trunk == null)
@@ -174,40 +141,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                var trunk = response.Value.Trunks[fqdn];
-
-                if (trunk == null)
-                {
-                    throw new KeyNotFoundException($"SIP trunk with FQDN: {fqdn} wasn't found");
-                }
-                return Response.FromValue(trunk, response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get <see cref="SipTrunk"/> with provided FQDN.
-        /// </summary>
-        /// <param name="fqdn">SIP trunk FQDN.</param>
-        /// <param name="includeHealth">Include SIP trunk health in response.</param>
-        /// <param name="cancellationToken">Optional cancellation token.</param>
-        /// <returns>Trunk configuration.</returns>
-        /// <exception cref="KeyNotFoundException">Route with specified name wasn't found.</exception>
-        public async virtual Task<Response<SipTrunk>> GetTrunkAsync(
-            string fqdn,
-            bool includeHealth,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(GetTrunk)}");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetAsync(includeHealth, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(ExpandEnum.TrunksHealth, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var trunk = response.Value.Trunks[fqdn];
 
                 if (trunk == null)
@@ -331,31 +265,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             scope.Start();
             try
             {
-                var response = _restClient.Get(cancellationToken: cancellationToken);
-                return Response.FromValue((IReadOnlyList<SipTrunk>)response.Value.Trunks.Values.ToList().AsReadOnly(), response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get List of configured <see cref="SipTrunk"/>.
-        /// </summary>
-        /// <param name="includeHealth">Include SIP trunk health in response.</param>
-        /// <param name="cancellationToken">Optional cancellation token.</param>
-        /// <returns>List of configured trunks.</returns>
-        public virtual Response<IReadOnlyList<SipTrunk>> GetTrunks(
-            bool includeHealth,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(GetTrunks)}");
-            scope.Start();
-            try
-            {
-                var response = _restClient.Get(includeHealth, cancellationToken);
+                var response = _restClient.Get(ExpandEnum.TrunksHealth, cancellationToken: cancellationToken);
                 return Response.FromValue((IReadOnlyList<SipTrunk>)response.Value.Trunks.Values.ToList().AsReadOnly(), response.GetRawResponse());
             }
             catch (Exception ex)
@@ -377,31 +287,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             scope.Start();
             try
             {
-                var response = await _restClient.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue((IReadOnlyList<SipTrunk>)response.Value.Trunks.Values.ToList().AsReadOnly(), response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get List of configured <see cref="SipTrunk"/>.
-        /// </summary>
-        /// <param name="includeHealth">Include SIP trunk health in response.</param>
-        /// <param name="cancellationToken">Optional cancellation token.</param>
-        /// <returns>List of configured trunks.</returns>
-        public virtual async Task<Response<IReadOnlyList<SipTrunk>>> GetTrunksAsync(
-            bool includeHealth,
-            CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(GetTrunks)}");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.GetAsync(includeHealth, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(ExpandEnum.TrunksHealth, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue((IReadOnlyList<SipTrunk>)response.Value.Trunks.Values.ToList().AsReadOnly(), response.GetRawResponse());
             }
             catch (Exception ex)
@@ -869,16 +755,17 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// <param name="targetPhoneNumber"> Phone number to test routing patterns against. </param>
         /// <param name="routes">New list of <see cref="SipTrunkRoute"/>.</param>
         /// <param name="cancellationToken">Optional cancellation token.</param>
-        public virtual Response<RoutesForNumber> TestRoutesWithNumber(string targetPhoneNumber, IReadOnlyList<SipTrunkRoute> routes, CancellationToken cancellationToken = default)
+        public virtual Response<IEnumerable<SipTrunkRoute>> GetRoutesForNumber(string targetPhoneNumber, IReadOnlyList<SipTrunkRoute> routes, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(TestRoutesWithNumber)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(GetRoutesForNumber)}");
             scope.Start();
             try
             {
                 IReadOnlyDictionary<string, SipDomain> domains = new Dictionary<string, SipDomain>();
                 IReadOnlyDictionary<string, SipTrunk> trunks = new Dictionary<string, SipTrunk>();
                 var config = new SipConfiguration(domains, trunks, routes);
-                return _restClient.TestRoutesWithNumber(targetPhoneNumber, config, cancellationToken);
+                var response = _restClient.TestRoutesWithNumber(targetPhoneNumber, config, cancellationToken);
+                return Response.FromValue(response.Value.MatchingRoutes.AsEnumerable<SipTrunkRoute>(), response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -893,16 +780,17 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// <param name="targetPhoneNumber"> Phone number to test routing patterns against. </param>
         /// <param name="routes">New list of <see cref="SipTrunkRoute"/>.</param>
         /// <param name="cancellationToken">Optional cancellation token.</param>
-        public virtual async Task<Response<RoutesForNumber>> TestRoutesWithNumberAsync(string targetPhoneNumber, IReadOnlyList<SipTrunkRoute> routes, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IEnumerable<SipTrunkRoute>>> GetRoutesForNumberAsync(string targetPhoneNumber, IReadOnlyList<SipTrunkRoute> routes, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(TestRoutesWithNumber)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(GetRoutesForNumber)}");
             scope.Start();
             try
             {
                 IReadOnlyDictionary<string, SipDomain> domains = new Dictionary<string, SipDomain>();
                 IReadOnlyDictionary<string, SipTrunk> trunks = new Dictionary<string, SipTrunk>();
                 var config = new SipConfiguration(domains, trunks, routes);
-                return await _restClient.TestRoutesWithNumberAsync(targetPhoneNumber, config, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.TestRoutesWithNumberAsync(targetPhoneNumber, config, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value.MatchingRoutes.AsEnumerable<SipTrunkRoute>(), response.GetRawResponse());
             }
             catch (Exception ex)
             {

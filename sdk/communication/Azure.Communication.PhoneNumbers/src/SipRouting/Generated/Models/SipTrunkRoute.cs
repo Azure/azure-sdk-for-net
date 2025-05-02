@@ -31,7 +31,5 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             Trunks = trunks;
             CallerIdOverride = callerIdOverride;
         }
-        /// <summary> Gets or sets caller ID override. This value will override caller ID of outgoing call specified at runtime. </summary>
-        public string CallerIdOverride { get; set; }
     }
 }
