@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         [SetUp]
         public async Task FixtureSetup()
         {
-            await CreateLedger(LedgerName);
-            _ledgerResource = await GetLedgerByName(LedgerName);
+            await CreateLedger(LedgerNameInFixture);
+            _ledgerResource = await GetLedgerByName(LedgerNameInFixture);
         }
 
         [Test, Order(1)]
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
             await _ledgerResource.DeleteAsync(WaitUntil.Completed);
             try
             {
-                await GetLedgerByName(LedgerName);
+                await GetLedgerByName(LedgerNameInFixture);
                 Assert.Fail("Ledger should not exist after delete operation");
             }
             catch (Exception exception)

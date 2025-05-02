@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
     public abstract class AclManagementTestBase : ManagementRecordedTestBase<AclManagementTestEnvironment>
     {
         protected SubscriptionResource Subscription;
-        protected string LedgerName;
+        protected string LedgerNameInFixture;
 
         private readonly string _testResourceGroupPrefix = "sdk-test-rg-";
         private static readonly AzureLocation s_defaultTestLocation = AzureLocation.WestEurope;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
                 new ResourceIdentifier($"/subscriptions/{TestEnvironment.SubscriptionId}"));
             ResourceGroupCollection resourceGroups = Subscription.GetResourceGroups();
             _resourceGroup =  resourceGroups.GetAsync(_resourceGroupName).Result;
-            LedgerName = TestEnvironment.TestLedgerNamePrefix + _testFixtureName;
+            LedgerNameInFixture = "ledger-" + _testFixtureName;
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
         /// <param name="ledgerData"></param>
         protected async Task UpdateLedger(string ledgerName, ConfidentialLedgerData ledgerData)
         {
-            await _resourceGroup.GetConfidentialLedgers().CreateOrUpdateAsync(WaitUntil.Completed, ledgerData.Name, ledgerData);
+            await _resourceGroup.GetConfidentialLedgers().CreateOrUpdateAsync(WaitUntil.Completed, ledgerName, ledgerData);
         }
     }
 }

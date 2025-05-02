@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         public async Task TestAddUserToLedger()
         {
             // Create Ledger
-            await CreateLedger(LedgerName);
-            _ledgerResource = await GetLedgerByName(LedgerName);
+            await CreateLedger(LedgerNameInFixture);
+            _ledgerResource = await GetLedgerByName(LedgerNameInFixture);
 
             // Add the AadBasedSecurityPrincipal
             _ledgerResource.Data.Properties = AddTestSecurityPrincipal(_ledgerResource.Data.Properties,
                 GenerateTestSecurityPrincipal());
-            await UpdateLedger(LedgerName, _ledgerResource.Data);
+            await UpdateLedger(LedgerNameInFixture, _ledgerResource.Data);
 
             // Get the updated ledger
-            _ledgerResource = await GetLedgerByName(LedgerName);
+            _ledgerResource = await GetLedgerByName(LedgerNameInFixture);
 
             Assert.True(_ledgerResource.Data.Properties.AadBasedSecurityPrincipals
                 .Any(testUser => TestEnvironment.TestUserObjectId.Equals(testUser.PrincipalId.ToString())));
@@ -47,20 +47,20 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         public async Task TestRemoveUserFromLedger()
         {
             // Create Ledger
-            await CreateLedger(LedgerName);
-            _ledgerResource = await GetLedgerByName(LedgerName);
+            await CreateLedger(LedgerNameInFixture);
+            _ledgerResource = await GetLedgerByName(LedgerNameInFixture);
 
             // Add the AadBasedSecurityPrincipal
             _ledgerResource.Data.Properties = AddTestSecurityPrincipal(_ledgerResource.Data.Properties,
                 GenerateTestSecurityPrincipal());
-            await UpdateLedger(LedgerName, _ledgerResource.Data);
+            await UpdateLedger(LedgerNameInFixture, _ledgerResource.Data);
 
             // Remove the AadBasedSecurityPrincipal
             _ledgerResource.Data.Properties.AadBasedSecurityPrincipals.RemoveAt(0);
-            await UpdateLedger(LedgerName, _ledgerResource.Data);
+            await UpdateLedger(LedgerNameInFixture, _ledgerResource.Data);
 
             // Get the updated ledger
-            _ledgerResource = await GetLedgerByName(LedgerName);
+            _ledgerResource = await GetLedgerByName(LedgerNameInFixture);
 
             Assert.False(_ledgerResource.Data.Properties.AadBasedSecurityPrincipals
                 .Any(testUser => TestEnvironment.TestUserObjectId.Equals(testUser.PrincipalId.ToString())));

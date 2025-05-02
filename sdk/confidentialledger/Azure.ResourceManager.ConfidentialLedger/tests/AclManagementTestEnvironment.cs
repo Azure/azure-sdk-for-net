@@ -5,9 +5,11 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Tests
 {
+    /// <summary>
+    /// Get outputs from test-resource.json and assign them to variables.
+    /// </summary>
     public class AclManagementTestEnvironment : TestEnvironment
     {
-        public string TestLedgerNamePrefix => GetRecordedVariable("TEST-LEDGER-NAME-PREFIX");
-        public string TestUserObjectId => GetRecordedVariable("TEST-USER-OBJECT-ID");
+        public string TestUserObjectId => GetRecordedVariable("CONFIDENTIALLEDGER_CLIENT_OBJECTID");
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         [RecordedTest]
         public async Task TestNameAvailabilityBeforeCreating()
         {
-            ConfidentialLedgerNameAvailabilityResult response = await GetLedgerNameAvailability(LedgerName);
+            ConfidentialLedgerNameAvailabilityResult response = await GetLedgerNameAvailability(LedgerNameInFixture);
             Assert.True(response.IsNameAvailable);
         }
 
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         public async Task TestCreateLedger()
         {
             // Create the ledger
-            await CreateLedger(LedgerName);
+            await CreateLedger(LedgerNameInFixture);
 
-            ConfidentialLedgerResource ledgerResource = await GetLedgerByName(LedgerName);
+            ConfidentialLedgerResource ledgerResource = await GetLedgerByName(LedgerNameInFixture);
 
             Assert.NotNull(ledgerResource);
-            Assert.AreEqual(LedgerName, ledgerResource.Data.Properties.LedgerName);
+            Assert.AreEqual(LedgerNameInFixture, ledgerResource.Data.Properties.LedgerName);
             Assert.NotNull(ledgerResource.Data.Properties.LedgerUri);
         }
 
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         [RecordedTest]
         public async Task TestNameAvailabilityAfterCreating()
         {
-            ConfidentialLedgerNameAvailabilityResult response = await GetLedgerNameAvailability(LedgerName);
+            ConfidentialLedgerNameAvailabilityResult response = await GetLedgerNameAvailability(LedgerNameInFixture);
             Assert.False(response.IsNameAvailable);
         }
 
