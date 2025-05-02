@@ -85,7 +85,7 @@ Phone numbers can also be released using the release API.
 
 ### SIP routing client
 
-Direct routing feature allows connecting customer-provided telephony infrastructure to Azure Communication Resources. In order to setup routing configuration properly, customer needs to supply the SIP trunk configuration and SIP routing rules for calls. SIP routing client provides the necessary interface for setting this configuration.
+Direct routing feature allows connecting customer-provided telephony infrastructure to Azure Communication Resources. In order to setup routing configuration properly, customer needs to supply the SIP domains configuration, the SIP trunk configuration and SIP routing rules for calls. SIP routing client provides the necessary interface for setting this configuration.
 
 When a call is made, the system tries to match the destination number with regex number patterns of defined routes. The first route to match the number will be selected. The order of regex matching is the same as the order of routes in configuration, therefore the order of routes matters.
 Once a route is matched, the call is routed to the first trunk in the route's trunks list. If the trunk is not available, next trunk in the list is selected.
@@ -166,26 +166,58 @@ await WaitForCompletionResponseAsync(releaseOperation);
 
 ### SipRoutingClient
 
-#### Retrieve SIP trunks and routes
+#### Retrieve SIP domains, trunks and routes
 
-Get the list of currently configured trunks or routes.
+Get the list of currently configured domains, trunks or routes.
 
 ```C# Snippet:RetrieveListAsync
+var domainsResponse = await client.GetDomainsAsync();
 var trunksResponse = await client.GetTrunksAsync();
 var routesResponse = await client.GetRoutesAsync();
 ```
 
-#### Replace SIP trunks and routes
+#### Replace SIP domains, trunks and routes
 
-Replace the list of currently configured trunks or routes.
+Replace the list of currently configured domains, trunks or routes.
 
 ```C# Snippet:ReplaceAsync
 // The service will not allow trunks that are used in any of the routes to be deleted, therefore first set the routes as empty list, and then update the routes.
+var newDomains = "<new_domains_list>";
 var newTrunks = "<new_trunks_list>";
 var newRoutes = "<new_routes_list>";
 await client.SetRoutesAsync(new List<SipTrunkRoute>());
+await client.SetDomainsAsync(newDomains);
 await client.SetTrunksAsync(newTrunks);
 await client.SetRoutesAsync(newRoutes);
+```
+
+#### Manage single domain
+
+SIP domains can be managed separately by using the `SipRoutingClient` to retrieve, set or delete a single domain.
+
+#### Retrieve single domain
+
+```C# Snippet:RetrieveDomainAsync
+// Get domain object, based on it's FQDN.
+var domainFqdnToRetrieve = "<domain_fqdn>";
+var domainResponse = await client.GetDomainAsync(domainFqdnToRetrieve);
+```
+
+#### Set single domain
+
+```C# Snippet:SetDomainAsync
+// Set function will either modify existing item or add new item to the collection.
+// The domain is matched based on it's FQDN.
+var domainToSet = "<domain_to_set>";
+await client.SetDomainAsync(domainToSet);
+```
+
+#### Delete single domain
+
+```C# Snippet:DeleteDomainAsync
+// Deletes domain with supplied FQDN.
+var domainFqdnToDelete = "<domain_fqdn>";
+await client.DeleteDomainAsync(domainFqdnToDelete);
 ```
 
 #### Manage single trunk
@@ -199,6 +231,7 @@ SIP trunks can be managed separately by using the `SipRoutingClient` to retrieve
 var fqdnToRetrieve = "<fqdn>";
 var trunkResponse = await client.GetTrunkAsync(fqdnToRetrieve);
 ```
+
 #### Set single trunk
 
 ```C# Snippet:SetTrunkAsync

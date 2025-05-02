@@ -16,30 +16,39 @@ var client = new SipRoutingClient(connectionString);
 ```
 
 ## Operations on collections
-To retrieve or replace current Trunk or Route configuration, SDK provides several functions that operate on the whole collection.
+To retrieve or replace current Domain, Trunk or Route configuration, SDK provides several functions that operate on the whole collection.
 
 #### Set SIP configuration
-Set SIP trunks and routes in bulk.
+Set SIP domains, trunks and routes in bulk.
 
 ```C# Snippet:ReplaceAsync
 // The service will not allow trunks that are used in any of the routes to be deleted, therefore first set the routes as empty list, and then update the routes.
+var newDomains = "<new_domains_list>";
 var newTrunks = "<new_trunks_list>";
 var newRoutes = "<new_routes_list>";
 await client.SetRoutesAsync(new List<SipTrunkRoute>());
+await client.SetDomainsAsync(newDomains);
 await client.SetTrunksAsync(newTrunks);
 await client.SetRoutesAsync(newRoutes);
 ```
 
 #### Retrieve SIP configuration
 ```C# Snippet:RetrieveListAsync
+var domainsResponse = await client.GetDomainsAsync();
 var trunksResponse = await client.GetTrunksAsync();
 var routesResponse = await client.GetRoutesAsync();
 ```
 
-## Operations on a single trunk
+## Operations on a single item
 The SDK allows also for retrieving, setting and deleting single item from the collection.
 
 #### Retrieve single item
+```C# Snippet:RetrieveDomainAsync
+// Get domain object, based on it's FQDN.
+var domainFqdnToRetrieve = "<domain_fqdn>";
+var domainResponse = await client.GetDomainAsync(domainFqdnToRetrieve);
+```
+
 ```C# Snippet:RetrieveTrunkAsync
 // Get trunk object, based on it's FQDN.
 var fqdnToRetrieve = "<fqdn>";
@@ -47,6 +56,13 @@ var trunkResponse = await client.GetTrunkAsync(fqdnToRetrieve);
 ```
 
 #### Set single item
+```C# Snippet:SetDomainAsync
+// Set function will either modify existing item or add new item to the collection.
+// The domain is matched based on it's FQDN.
+var domainToSet = "<domain_to_set>";
+await client.SetDomainAsync(domainToSet);
+```
+
 ```C# Snippet:SetTrunkAsync
 // Set function will either modify existing item or add new item to the collection.
 // The trunk is matched based on it's FQDN.
@@ -55,6 +71,12 @@ await client.SetTrunkAsync(trunkToSet);
 ```
 
 #### Delete single item
+```C# Snippet:DeleteDomainAsync
+// Deletes domain with supplied FQDN.
+var domainFqdnToDelete = "<domain_fqdn>";
+await client.DeleteDomainAsync(domainFqdnToDelete);
+```
+
 ```C# Snippet:DeleteTrunkAsync
 // Deletes trunk with supplied FQDN.
 var fqdnToDelete = "<fqdn>";

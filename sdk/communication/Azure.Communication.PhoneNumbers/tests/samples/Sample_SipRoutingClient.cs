@@ -180,11 +180,11 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             var domainFqdnToRetrieve = TestData.Domain.Fqdn;
 
-            #region Snippet:RetrieveDomain
+            #region Snippet:RetrieveDomainAsync
             // Get domain object, based on it's FQDN.
             //@@var domainFqdnToRetrieve = "<domain_fqdn>";
             var domainResponse = await client.GetDomainAsync(domainFqdnToRetrieve);
-            #endregion Snippet:RetrieveDomain
+            #endregion Snippet:RetrieveDomainAsync
 
             var trunkToSet = new SipTrunk(TestData.NewTrunk.Fqdn, 9999);
 
@@ -197,12 +197,12 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             var domainToSet = TestData.NewDomain;
 
-            #region Snippet:SetDomain
+            #region Snippet:SetDomainAsync
             // Set function will either modify existing item or add new item to the collection.
             // The domain is matched based on it's FQDN.
             //@@var domainToSet = "<domain_to_set>";
             await client.SetDomainAsync(domainToSet);
-            #endregion Snippet:SetDomain
+            #endregion Snippet:SetDomainAsync
 
             await client.SetTrunkAsync(TestData.TrunkList[0]);
             var fqdnToDelete = TestData.Fqdns[0];
@@ -216,11 +216,11 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             await client.SetDomainAsync(TestData.NewDomain);
             var domainFqdnToDelete = TestData.NewDomain.Fqdn;
 
-            #region Snippet:DeleteDomain
+            #region Snippet:DeleteDomainAsync
             // Deletes domain with supplied FQDN.
             //@@var domainFqdnToDelete = "<domain_fqdn>";
             await client.DeleteDomainAsync(domainFqdnToDelete);
-            #endregion Snippet:DeleteDomain
+            #endregion Snippet:DeleteDomainAsync
 
             var domainsFinalResponse = await client.GetDomainsAsync();
             var trunksFinalResponse = await client.GetTrunksAsync();
