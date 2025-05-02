@@ -8,6 +8,7 @@
 
 ### Other Changes
 
+- Upgraded versions of dependencies on System.Diagnostics.DiagnosticSource, System.Text.Json, and Microsoft.Extensions.Logging.Abstractions.
 - Renamed `ActivityExtensions.MarkFailed` to `ActivityExtensions.MarkClientActivityFailed`.
 - Made `int maxSize` parameter to `ClientCache` constructor required and removed default value.
 - Changed `IEquatable<object> clientId` parameter to `object clientId` in `ClientCache.GetClient`
