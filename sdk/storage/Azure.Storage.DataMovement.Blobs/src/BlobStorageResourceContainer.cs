@@ -161,12 +161,14 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 string currentPrefix = prefixes.Dequeue();
 
+                int childCount = 0;
                 await foreach (BlobHierarchyItem blobHierarchyItem in BlobContainerClient.GetBlobsByHierarchyAsync(
                     traits: BlobTraits.Metadata,
                     prefix: currentPrefix,
                     delimiter: Constants.PathBackSlashDelimiter,
                     cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
+                    childCount++;
                     if (blobHierarchyItem.IsBlob)
                     {
                         // Return the blob as a StorageResourceItem
@@ -182,6 +184,21 @@ namespace Azure.Storage.DataMovement.Blobs
                         // Enqueue the prefix for further traversal
                         prefixes.Enqueue(blobHierarchyItem.Prefix);
                     }
+                }
+
+                // Empty directory - This can only happen on HNS accounts as on FNS accounts empty directories
+                // do not exist and will not show up as a prefix.
+                // If the destination is Blob, we need to manually create the empty directory here as the regular
+                // path for creating directories is a no-op for Blob. This will always create an empty Block Blob
+                // with the folder metadata set which represents a directory stub on HNS accounts. No other
+                // properties will be copied from the source. We only do this for empty directories because non-empty
+                // directories are created automatically.
+                if (childCount == 0 && destinationContainer is BlobStorageResourceContainer destBlobContainer)
+                {
+                    BlockBlobStorageResource destinationDirectoryResource = destBlobContainer.GetBlobAsStorageResource(
+                        currentPrefix,
+                        BlobType.Block) as BlockBlobStorageResource;
+                    await destinationDirectoryResource.CreateEmptyDirectoryStubAsync(cancellationToken).ConfigureAwait(false);
                 }
             }
         }

@@ -200,17 +200,8 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
-            // For empty blobs, just use Put Blob
-            if (completeLength == 0)
-            {
-                await BlobClient.UploadAsync(
-                    Stream.Null,
-                    DataMovementBlobsExtensions.GetBlobUploadOptionsForCopy(_options, overwrite, options?.SourceProperties),
-                    cancellationToken).ConfigureAwait(false);
-                return;
-            }
-
             // We use SyncUploadFromUri over SyncCopyUploadFromUri in this case because it accepts any blob type as the source.
+            // TODO: subject to change as we scale to support resource types outside of blobs.
             await BlobClient.SyncUploadFromUriAsync(
                 sourceResource.Uri,
                 DataMovementBlobsExtensions.GetSyncUploadFromUriOptions(
@@ -384,5 +375,27 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageResourceItemProperties sourceProperties,
             CancellationToken cancellationToken = default)
             => Task.CompletedTask;
+
+        /// <summary>
+        /// Creates this resource an empty directory stub. This is only intended to be used
+        /// for HNS accounts as empty directories do not exist on FNS accounts.
+        ///
+        /// Creates an empty Block Blob with the hdi_isfolder metadata. All other properties
+        /// of the blob are left default.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        internal async Task CreateEmptyDirectoryStubAsync(CancellationToken cancellationToken = default)
+        {
+            Dictionary<string, string> folderMetadata = new() {
+                { DataMovementBlobConstants.FolderMetadataKey, "true" }
+            };
+
+            BlobUploadOptions options = new()
+            {
+                Metadata = folderMetadata
+            };
+            await BlobClient.UploadAsync(Stream.Null, options, cancellationToken).ConfigureAwait(false);
+        }
     }
 }

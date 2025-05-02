@@ -15,6 +15,7 @@ using BaseBlobs::Azure.Storage.Blobs;
 using BaseBlobs::Azure.Storage.Blobs.Models;
 using BaseBlobs::Azure.Storage.Blobs.Specialized;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
+using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
@@ -115,7 +116,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
 
             // List of empty directories to be created
-            string[] emptyDirs = ["emptyDir", "recursiveDir/emptyDir"];
+            string[] emptyDirs = ["emptyDir", "recursiveDir/emptySubDir"];
             foreach (string dir in emptyDirs)
             {
                 BlobClient blobClient = containerClient.GetBlobClient(dir);
@@ -127,10 +128,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
-        public async Task DirectoryCopyWithVirtualDirectories()
+        public async Task DirectoryCopyWithVirtualDirectories([Values(true, false)] bool hns)
         {
             BlobServiceClient serviceClient = SourceClientBuilder.GetServiceClientFromOauthConfig(
-                Tenants.TestConfigHierarchicalNamespace,
+                hns ? Tenants.TestConfigHierarchicalNamespace : Tenants.TestConfigDefault,
                 TestEnvironment.Credential);
 
             await using DisposingBlobContainer sourceContainer = await SourceClientBuilder.GetTestContainerAsync(serviceClient);
@@ -157,10 +158,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             testEventsRaised.AssertUnexpectedFailureCheck();
             await VerifyResultsAsync(
-                sourceContainer.Container, "/",
-                destinationContainer.Container, "/");
-
-            // TODO: Handle empty directories
+                sourceContainer.Container, string.Empty,
+                destinationContainer.Container, string.Empty);
         }
     }
 }

@@ -346,34 +346,6 @@ namespace Azure.Storage.DataMovement.Blobs
             };
         }
 
-        /// <summary>
-        /// Used only for uploading empty blobs during a copy.
-        /// </summary>
-        internal static BlobUploadOptions GetBlobUploadOptionsForCopy(
-            BlockBlobStorageResourceOptions options,
-            bool overwrite,
-            StorageResourceItemProperties sourceProperties)
-        {
-            // The metadata that is going to be set on the destination, could come from source
-            // or be overriden by the customer.
-            Metadata metadata = GetMetadata(options, sourceProperties?.RawProperties);
-
-            // Use metadata to detemine if the destination blob is intended to be a virtual folder.
-            bool isFolder = false;
-            if (metadata != default && metadata.TryGetValue(DataMovementBlobConstants.FolderMetadataKey, out string value))
-            {
-                isFolder = value.Equals("true", StringComparison.OrdinalIgnoreCase);
-            }
-
-            return new BlobUploadOptions()
-            {
-                HttpHeaders = GetHttpHeaders(options, sourceProperties?.RawProperties),
-                Metadata = metadata,
-                AccessTier = !isFolder ? GetAccessTier(options, sourceProperties?.RawProperties) : default,  // Access tier not settable on folders
-                Conditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
-            };
-        }
-
         internal static BlockBlobStageBlockOptions ToBlobStageBlockOptions(this BlockBlobStorageResourceOptions options)
         {
             // There's a lot of conditions that cannot be applied to a StageBlock Request.
