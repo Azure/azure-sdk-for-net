@@ -47,6 +47,7 @@ resource eventHubNamespace 'Microsoft.EventHub/namespaces@2022-01-01-preview' = 
         isAutoInflateEnabled: false
         maximumThroughputUnits: 0
         kafkaEnabled: false
+        minimumTlsVersion: 'TLS1_2'
     }
 }
 
@@ -103,6 +104,9 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
         name: 'Standard_LRS'
     }
     kind: 'StorageV2'
+    properties: {
+        minimumTlsVersion: 'TLS1_2'
+    }
 
     resource blobService 'blobServices' = {
         name: 'default'
