@@ -6,18 +6,32 @@ using Azure.Provisioning.CognitiveServices;
 
 namespace Azure.Projects;
 
+/// <summary>
+/// Represents the OpenAI account feature for Azure projects.
+/// </summary>
 internal class OpenAIAccountFeature : AzureProjectFeature
 {
-    public OpenAIAccountFeature()
-    {}
+    /// <summary>
+    /// Represents a feature or capability associated with an OpenAI account.
+    /// </summary>
+    public OpenAIAccountFeature(CognitiveServicesSku? sku = default)
+    {
+        Sku = sku ?? new CognitiveServicesSku { Name = "S0" };
+    }
 
+    /// <summary>
+    /// Gets or sets the SKU (Stock Keeping Unit) for the Cognitive Services resource.
+    /// </summary>
+    public CognitiveServicesSku Sku { get; set; }
+
+    /// <inheritdoc/>
     protected override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         CognitiveServicesAccount cognitiveServices = new("openai")
         {
             Name = infrastructure.ProjectId,
             Kind = "OpenAI",
-            Sku = new CognitiveServicesSku { Name = "S0" },
+            Sku = Sku,
             Properties = new CognitiveServicesAccountProperties()
             {
                 PublicNetworkAccess = ServiceAccountPublicNetworkAccess.Enabled,

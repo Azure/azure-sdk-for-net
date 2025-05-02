@@ -85,6 +85,7 @@ dotnet run
 
 ## Troubleshooting
 
+-   Read the [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/sdk/cloudmachine/TROUBLESHOOTING.md) for common issues.
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
 -   Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
 
