@@ -383,8 +383,9 @@ namespace Azure.Storage
             GetNextStreamPartition partitionGetter = content.CanSeek && _maxWorkerCount == 1
                 ? (GetNextStreamPartition)GetStreamedPartitionInternal
                 : /*   redundant cast   */GetBufferedPartitionInternal;
-            IAsyncEnumerable<ContentPartition<Stream>> partitionsEnumerable = GetStreamPartitionsAsync(
-                content, length, actualBlockSize, partitionGetter, async, cancellationToken);
+            IAsyncEnumerator<ContentPartition<Stream>> partitionsEnumerator = GetStreamPartitionsAsync(
+                content, length, actualBlockSize, partitionGetter, async, cancellationToken)
+                .GetAsyncEnumerator(cancellationToken);
             List<ContentPartition<Stream>> prebufferedPartitions = [];
 
             // If we don't know the length, we must buffer anyway. Upfront buffer up to _singleUploadThreshold
@@ -399,7 +400,6 @@ namespace Azure.Storage
                 oneshotValidationOptions.PrecalculatedChecksum = _masterCrcSupplier?.Invoke() ?? default;
 
                 long bytesBuffered = 0;
-                IAsyncEnumerator<ContentPartition<Stream>> partitionsEnumerator = partitionsEnumerable.GetAsyncEnumerator(cancellationToken);
 #pragma warning disable AZC0107 // DO NOT call public asynchronous method in synchronous scope.
                 while (bytesBuffered < _singleUploadThreshold &&
                     (async ? await partitionsEnumerator.MoveNextAsync().ConfigureAwait(false) : partitionsEnumerator.MoveNextAsync().EnsureCompleted()))
@@ -425,7 +425,7 @@ namespace Azure.Storage
 
             IAsyncEnumerable<ContentPartition<Stream>> resequencedPartitions = prebufferedPartitions
                 .AsAsyncEnumerable()
-                .Concat(partitionsEnumerable);
+                .Concat(partitionsEnumerator.EnumerableWrap());
             return await UploadPartitionsInternal(
                 resequencedPartitions,
                 args,

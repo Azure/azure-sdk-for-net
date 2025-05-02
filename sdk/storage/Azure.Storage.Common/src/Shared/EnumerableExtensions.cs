@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Storage.Shared;
@@ -31,5 +32,21 @@ internal static class EnumerableExtensions
                 yield return elem;
             }
         }
+    }
+
+    /// <summary>
+    /// Preserves a stateful enumerator in the form of an enumerable.
+    /// </summary>
+    /// <returns>
+    /// IAsyncEnumerable whose <see cref="IAsyncEnumerable{T}.GetAsyncEnumerator(CancellationToken)"/>
+    /// implementation returns a reference to the provided enumerable.
+    /// </returns>
+    public static IAsyncEnumerable<T> EnumerableWrap<T>(this IAsyncEnumerator<T> enumerator)
+        => new WrappedAsyncEnumerator<T>(enumerator);
+
+    private struct WrappedAsyncEnumerator<T>(IAsyncEnumerator<T> inner) : IAsyncEnumerable<T>
+    {
+        public IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+            => inner;
     }
 }
