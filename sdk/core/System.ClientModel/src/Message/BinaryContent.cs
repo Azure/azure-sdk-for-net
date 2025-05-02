@@ -4,6 +4,7 @@
 using System.Buffers;
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
+using System.ClientModel.Serialization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -64,6 +65,13 @@ public abstract class BinaryContent : IDisposable
 
         return new StreamBinaryContent(stream);
     }
+
+    /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/> that wraps a <see cref="DynamicJsonData"/>.
+    /// </summary>
+    /// <param name="content">The <see cref="DynamicJsonData"/> to use.</param>
+    /// <returns>An instance of <see cref="BinaryContent"/> that wraps a <see cref="DynamicJsonData"/>.</returns>
+    public static BinaryContent Create(DynamicJsonData content) => new DynamicJsonBinaryContent(content);
 
     /// <summary>
     /// Attempts to compute the length of the underlying body content, if available.
@@ -267,6 +275,29 @@ public abstract class BinaryContent : IDisposable
         public override void Dispose()
         {
             _stream.Dispose();
+        }
+    }
+
+    private sealed class DynamicJsonBinaryContent : BinaryContent
+    {
+        private readonly DynamicJsonData _dynamicJsonData;
+
+        public DynamicJsonBinaryContent(DynamicJsonData dynamicJsonData) => _dynamicJsonData = dynamicJsonData;
+
+        public override void Dispose() => _dynamicJsonData.Dispose();
+
+        public override bool TryComputeLength(out long length)
+        {
+            length = default;
+            return false;
+        }
+
+        public override void WriteTo(Stream stream, CancellationToken cancellationToken = default) => _dynamicJsonData.WriteTo(stream);
+
+        public override Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)
+        {
+            _dynamicJsonData.WriteTo(stream);
+            return Task.CompletedTask;
         }
     }
 }
