@@ -34,7 +34,18 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(Connection)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W")
+            writer.WritePropertyName("role"u8);
+            writer.WriteStringValue(Role.ToString());
+            writer.WritePropertyName("content"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Content);
+#else
+            using (JsonDocument document = JsonDocument.Parse(Content, ModelSerializationExtensions.JsonDocumentOptions))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
+            if (Optional.IsCollectionDefined(Attachments))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -107,11 +118,9 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            string name = default;
-            ConnectionType type = default;
-            string target = default;
-            bool isDefault = default;
-            BaseCredentials credentials = default;
+            MessageRole role = default;
+            BinaryData content = default;
+            IReadOnlyList<MessageAttachment> attachments = default;
             IReadOnlyDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -124,7 +133,7 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ConnectionType(property.Value.GetString());
+                    content = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("target"u8))

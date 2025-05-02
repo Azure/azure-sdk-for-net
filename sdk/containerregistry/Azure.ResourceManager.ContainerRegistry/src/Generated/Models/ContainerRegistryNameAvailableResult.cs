@@ -51,23 +51,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryNameAvailableResult"/>. </summary>
-        /// <param name="availableLoginServerName"> The complete login server name with domain name label (DNL) hash, if available. </param>
         /// <param name="isNameAvailable"> The value that indicates whether the name is available. </param>
         /// <param name="reason"> If any, the reason that the name is not available. </param>
         /// <param name="message"> If any, the error message that provides more detail for the reason that the name is not available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryNameAvailableResult(string availableLoginServerName, bool? isNameAvailable, string reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerRegistryNameAvailableResult(bool? isNameAvailable, string reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AvailableLoginServerName = availableLoginServerName;
             IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The complete login server name with domain name label (DNL) hash, if available. </summary>
-        [WirePath("availableLoginServerName")]
-        public string AvailableLoginServerName { get; }
         /// <summary> The value that indicates whether the name is available. </summary>
         [WirePath("nameAvailable")]
         public bool? IsNameAvailable { get; }

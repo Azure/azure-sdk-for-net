@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Search
 namespace: Azure.ResourceManager.Search
-require: https://github.com/Azure/azure-rest-api-specs/blob/2aaa7ef3c48b8f4b7cb0e1e9bbe0041eec62c92d/specification/search/resource-manager/readme.md
-#tag: package-preview-2025-02
+require: https://github.com/Azure/azure-rest-api-specs/blob/5c73e496040fa9fec8725b7e26f8e45864211e62/specification/search/resource-manager/readme.md
+#tag: package-preview-2025-02-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -107,7 +107,6 @@ override-operation-name:
   Services_CheckNameAvailability: CheckSearchServiceNameAvailability
 
 # Remove "stopped" enum from SearchServiceStatus
-
 directive:
   - from: search.json
     where: $.definitions.SearchServiceProperties.properties.status

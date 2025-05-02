@@ -27,11 +27,6 @@ namespace Azure.AI.Projects
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of AIProjectClient for mocking. </summary>
-        protected AIProjectClient()
-        {
-        }
-
         /// <summary> Initializes a new instance of AIProjectClient. </summary>
         /// <param name="endpoint">
         /// Project endpoint. In the form "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/_project"

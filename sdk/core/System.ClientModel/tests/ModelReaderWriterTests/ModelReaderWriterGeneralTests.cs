@@ -792,7 +792,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
                 protected override object CreateInstance() => new Dictionary<string, AvailabilitySetData>();
 
-                protected override void AddKeyValuePair(object collection, string key, object item)
+                protected override void AddItemWithKey(object collection, string key, object item)
                     => ((Dictionary<string, AvailabilitySetData>)collection).Add(key, (AvailabilitySetData)item);
             }
 
@@ -923,7 +923,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
                 protected override object CreateInstance() => new Dictionary<string, SubType>();
 
-                protected override void AddKeyValuePair(object collection, string key, object item)
+                protected override void AddItemWithKey(object collection, string key, object item)
                     => ((Dictionary<string, SubType>)collection).Add(key, (SubType)item);
             }
         }

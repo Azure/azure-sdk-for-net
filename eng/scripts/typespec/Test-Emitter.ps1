@@ -4,7 +4,8 @@ param(
     [switch] $UnitTests,
     [switch] $GenerationChecks,
     [string] $Filter = ".",
-    [string] $OutputDirectory
+    [string] $OutputDirectory,
+    [string] $EmitterPackagePath
 )
 
 $ErrorActionPreference = 'Stop'
@@ -12,10 +13,14 @@ Set-StrictMode -Version 3.0
 . "$PSScriptRoot/../../common/scripts/common.ps1"
 Set-ConsoleEncoding
 
-$packageRoot = Resolve-Path "$RepoRoot/eng/packages/http-client-csharp"
-$mgmtPackageRoot = Resolve-Path "$RepoRoot/eng/packages/http-client-csharp-mgmt"
+# strip leading slash from emitterPackagePath if it exists
+if ($EmitterPackagePath.StartsWith("/")) {
+    $EmitterPackagePath = $EmitterPackagePath.Substring(1)
+}
+
+$packageRoot = Resolve-Path "$RepoRoot/$EmitterPackagePath"
 $testResultsPath = $OutputDirectory ? $OutputDirectory : (Join-Path $packageRoot "artifacts" "test")
-$mgmtTestResultsPath = $OutputDirectory ? $OutputDirectory : (Join-Path $mgmtPackageRoot "artifacts" "test")
+
 $errors = @()
 
 function Build-Emitter {
@@ -23,6 +28,10 @@ function Build-Emitter {
         [string]$packageRoot,
         [string]$testResultsPath
     )
+
+        # restore the package.json and package-lock.json files to their original state
+        Write-Host "Restoring package.json and package-lock.json to their original state"
+        Invoke-LoggedCommand "git restore package.json package-lock.json"
 
         if ($UnitTests) {
             # test the emitter
@@ -51,27 +60,13 @@ function Build-Emitter {
         }
 }
 
-
 Push-Location $packageRoot
+
 try {
     Build-Emitter -packageRoot $packageRoot -testResultsPath $testResultsPath
-}
-finally {
-    Pop-Location
-}
 
-
-Push-Location $mgmtPackageRoot
-try {
-    Build-Emitter -packageRoot $mgmtPackageRoot -testResultsPath $mgmtTestResultsPath
-}
-finally {
-    Pop-Location
-}
-
-Push-Location $packageRoot
-try {
-    if ($UnitTests) {
+    # we only run spector test for Azure emitter
+    if ($UnitTests -and $EmitterPackagePath.EndsWith("http-client-csharp")) {
         Invoke-LoggedCommand "$packageRoot/eng/scripts/Get-Spector-Coverage.ps1" -GroupOutput
 
         $testResultsFile = "$packageRoot/generator/artifacts/coverage/tsp-spector-coverage-azure.json"
@@ -91,7 +86,7 @@ try {
         # run E2E Test for TypeSpec emitter
         try
         {
-            & "$RepoRoot/eng/scripts/typespec/Check-CodeGeneration.ps1" -Filter $Filter -Reset
+            & "$RepoRoot/eng/scripts/typespec/Check-CodeGeneration.ps1" -EmitterPackagePath $packageRoot -Filter $Filter -Reset
         }
         catch
         {

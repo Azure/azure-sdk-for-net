@@ -16,6 +16,7 @@ import { HttpTestLibrary } from "@typespec/http/testing";
 import { RestTestLibrary } from "@typespec/rest/testing";
 import { VersioningTestLibrary } from "@typespec/versioning/testing";
 import { XmlTestLibrary } from "@typespec/xml/testing";
+import { AzureEmitterOptions } from "../../src/options.js";
 
 export async function createEmitterTestHost(): Promise<TestHost> {
   return createTestHost({
@@ -61,7 +62,7 @@ export async function typeSpecCompile(
     ${"@useDependency(Azure.Core.Versions.v1_0_Preview_1)"}
     "2023-01-01-preview"
     }
-    
+
     `;
   const fileContent = `
     import "@typespec/rest";
@@ -70,13 +71,13 @@ export async function typeSpecCompile(
     ${needXml ? 'import  "@typespec/xml";' : ""}
     ${'import "@azure-tools/typespec-azure-core";'}
     ${needTCGC ? 'import "@azure-tools/typespec-client-generator-core";' : ""}
-    using TypeSpec.Rest; 
+    using TypeSpec.Rest;
     using TypeSpec.Http;
     using TypeSpec.Versioning;
     ${needXml ? "using TypeSpec.Xml;" : ""}
     ${"using Azure.Core;\nusing Azure.Core.Traits;"}
     ${needTCGC ? "using Azure.ClientGenerator.Core;" : ""}
-    
+
     ${needNamespaces ? namespace : ""}
     ${content}
     `;
@@ -89,12 +90,13 @@ export async function typeSpecCompile(
 }
 
 export function createEmitterContext(
-  program: Program
+  program: Program,
+  options: AzureEmitterOptions = {}
 ): EmitContext<CSharpEmitterOptions> {
   return {
     program: program,
     emitterOutputDir: "./",
-    options: {
+    options: options ?? {
       outputFile: "tspCodeModel.json",
       logFile: "log.json",
       "new-project": false,
@@ -109,7 +111,7 @@ export function createEmitterContext(
 
 /* We always need to pass in the emitter name now that it is required so making a helper to do this. */
 export async function createCSharpSdkContext(
-  program: EmitContext<CSharpEmitterOptions>,
+  program: EmitContext<AzureEmitterOptions>,
   sdkContextOptions: CreateSdkContextOptions = {}
 ): Promise<CSharpEmitterContext> {
   const context = await createSdkContext(
@@ -124,7 +126,15 @@ export async function createCSharpSdkContext(
       crossLanguageDefinitionIds: new Map(),
       types: new Map(),
       models: new Map(),
-      enums: new Map()
+      enums: new Map(),
+      clients: new Map(),
+      properties: new Map(),
+      responses: new Map(),
+      updateSdkClientReferences: () => {},
+      updateSdkPropertyReferences: () => {},
+      updateSdkResponseReferences: () => {},
+      updateSdkTypeReferences: () => {},
+      updateTypeCache: () => {}
     }
   };
 }
