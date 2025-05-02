@@ -194,6 +194,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
-        RehydrationToken IOperation<AnalyzeResult>.GetRehydrationToken() => default;
+        RehydrationToken IOperation<AnalyzeResult>.GetRehydrationToken() =>
+            throw new NotSupportedException($"{nameof(GetRehydrationToken)} is not supported.");
     }
 }

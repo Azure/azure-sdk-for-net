@@ -206,7 +206,8 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
-        RehydrationToken IOperation<CustomFormModelInfo>.GetRehydrationToken() => default;
+        RehydrationToken IOperation<CustomFormModelInfo>.GetRehydrationToken() =>
+            throw new NotSupportedException($"{nameof(GetRehydrationToken)} is not supported.");
 
         private static CustomFormModelInfo ConvertValue(CopyOperationResult result, string modelId, CustomFormModelStatus status)
         {

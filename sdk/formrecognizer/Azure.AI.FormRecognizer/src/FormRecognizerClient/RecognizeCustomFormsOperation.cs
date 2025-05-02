@@ -207,7 +207,8 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
-        RehydrationToken IOperation<RecognizedFormCollection>.GetRehydrationToken() => default;
+        RehydrationToken IOperation<RecognizedFormCollection>.GetRehydrationToken() =>
+            throw new NotSupportedException($"{nameof(GetRehydrationToken)} is not supported.");
 
         private static RecognizedFormCollection ConvertToRecognizedForms(V2AnalyzeResult analyzeResult, string modelId)
         {
