@@ -1,8 +1,6 @@
-# Microsoft Azure ArizeAI ObservabilityEval management client library for .NET
+# Microsoft Azure liftrarize management client library for .NET
 
-Arize AI's innovative observability and model evaluation empowers one to build more reliable and effective AI applications. With Arize AI on Azure, one can leverage the robust infrastructure of Microsoft's cloud computing platform to enhance your AI workflows.
-
-This library supports managing Microsoft Azure ArizeAI resources.
+**[Describe the service briefly first.]**
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -16,7 +14,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Microsoft Azure ArizeAI ObservabilityEval management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure liftrarize management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.ArizeAIObservabilityEval --prerelease
