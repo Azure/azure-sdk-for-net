@@ -18,7 +18,7 @@ param (
     [ValidatePattern('^[-\w\._\(\)]+$')]
     [string] $ResourceGroupName,
 
-    [Parameter(Mandatory = $true, Position = 0)]
+    [Parameter(Position = 0)]
     [string] $ServiceDirectory,
 
     [Parameter()]
@@ -159,10 +159,13 @@ if ($initialContext) {
 
 # try..finally will also trap Ctrl+C.
 try {
-
     # Enumerate test resources to deploy. Fail if none found.
-    $repositoryRoot = "$PSScriptRoot/../../.." | Resolve-Path
-    $root = [System.IO.Path]::Combine($repositoryRoot, "sdk", $ServiceDirectory) | Resolve-Path
+    $root = $repositoryRoot = "$PSScriptRoot/../../.." | Resolve-Path
+
+    if($ServiceDirectory) {
+        $root = [System.IO.Path]::Combine($repositoryRoot, "sdk", $ServiceDirectory) | Resolve-Path
+    }
+
     if ($TestResourcesDirectory) {
         $root = $TestResourcesDirectory | Resolve-Path
         # Add an explicit check below in case ErrorActionPreference is overridden and Resolve-Path doesn't stop execution
@@ -171,6 +174,7 @@ try {
         }
         Write-Verbose "Overriding test resources search directory to '$root'"
     }
+    
     $templateFiles = @()
 
     "$ResourceType-resources.json", "$ResourceType-resources.bicep" | ForEach-Object {
@@ -192,13 +196,30 @@ try {
         exit
     }
 
+    # returns empty string if $ServiceDirectory is not set
     $serviceName = GetServiceLeafDirectoryName $ServiceDirectory
+
+    # in ci, random names are used
+    # in non-ci, without BaseName, ResourceGroupName or ServiceDirectory, all invocations will
+    # generate the same resource group name and base name for a given user
     $BaseName, $ResourceGroupName = GetBaseAndResourceGroupNames `
         -baseNameDefault $BaseName `
         -resourceGroupNameDefault $ResourceGroupName `
         -user (GetUserName) `
         -serviceDirectoryName $serviceName `
         -CI $CI
+
+    if ($wellKnownTMETenants.Contains($TenantId)) {
+        # Add a prefix to the resource group name to avoid flagging the usages of local auth
+        # See details at https://eng.ms/docs/products/onecert-certificates-key-vault-and-dsms/key-vault-dsms/certandsecretmngmt/credfreefaqs#how-can-i-disable-s360-reporting-when-testing-customer-facing-3p-features-that-depend-on-use-of-unsafe-local-auth
+        $ResourceGroupName = "SSS3PT_" + $ResourceGroupName
+    }
+
+    if ($ResourceGroupName.Length -gt 90) {
+        # See limits at https://docs.microsoft.com/azure/architecture/best-practices/resource-naming
+        Write-Warning -Message "Resource group name '$ResourceGroupName' is too long. So pruning it to be the first 90 characters."
+        $ResourceGroupName = $ResourceGroupName.Substring(0, 90)
+    }
 
     # Make sure pre- and post-scripts are passed formerly required arguments.
     $PSBoundParameters['BaseName'] = $BaseName
@@ -296,19 +317,6 @@ try {
         }
     }
 
-    # This needs to happen after we set the TenantId but before we use the ResourceGroupName
-    if ($wellKnownTMETenants.Contains($TenantId)) {
-        # Add a prefix to the resource group name to avoid flagging the usages of local auth
-        # See details at https://eng.ms/docs/products/onecert-certificates-key-vault-and-dsms/key-vault-dsms/certandsecretmngmt/credfreefaqs#how-can-i-disable-s360-reporting-when-testing-customer-facing-3p-features-that-depend-on-use-of-unsafe-local-auth
-        $ResourceGroupName = "SSS3PT_" + $ResourceGroupName
-    }
-
-    if ($ResourceGroupName.Length -gt 90) {
-        # See limits at https://docs.microsoft.com/azure/architecture/best-practices/resource-naming
-        Write-Warning -Message "Resource group name '$ResourceGroupName' is too long. So pruning it to be the first 90 characters."
-        $ResourceGroupName = $ResourceGroupName.Substring(0, 90)
-    }
-
     # If a provisioner service principal was provided log into it to perform the pre- and post-scripts and deployments.
     if ($ProvisionerApplicationId -and $ServicePrincipalAuth) {
         $null = Disable-AzContextAutosave -Scope Process
@@ -364,9 +372,10 @@ try {
         $ProvisionerApplicationOid = $sp.Id
     }
 
-    $tags = @{
-        Owners = (GetUserName)
-        ServiceDirectory = $ServiceDirectory
+    $tags = @{ Owners = (GetUserName) }
+
+    if ($ServiceDirectory) {
+        $tags['ServiceDirectory'] = $ServiceDirectory
     }
 
     # Tag the resource group to be deleted after a certain number of hours.
@@ -662,7 +671,6 @@ $serialized
 '`@ | ConvertFrom-Json -AsHashtable
 # Set global variables that aren't always passed as parameters
 `$ResourceGroupName = `$parameters.ResourceGroupName
-`$AdditionalParameters = `$parameters.AdditionalParameters
 `$DeploymentOutputs = `$parameters.DeploymentOutputs
 $postDeploymentScript `@parameters
 "@
