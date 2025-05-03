@@ -1890,19 +1890,23 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class TeamsPhoneCallerDetails
     {
-        internal TeamsPhoneCallerDetails() { }
+        public TeamsPhoneCallerDetails(Azure.Communication.CommunicationIdentifier caller, string name, string phoneNumber) { }
         public System.Collections.Generic.IDictionary<string, string> AdditionalCallerInformation { get { throw null; } }
         public bool? IsAuthenticated { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string PhoneNumber { get { throw null; } set { } }
         public string RecordId { get { throw null; } set { } }
         public string ScreenPopUrl { get { throw null; } set { } }
+        public bool AddAdditionalCallerInformation(string key, string value) { throw null; }
     }
     public partial class TeamsPhoneSourceDetails
     {
-        internal TeamsPhoneSourceDetails() { }
+        public TeamsPhoneSourceDetails(Azure.Communication.CommunicationIdentifier source, string language, string status) { }
+        public System.Collections.Generic.IDictionary<string, Azure.Communication.CommunicationIdentifier> IntendedTargets { get { throw null; } }
         public string Language { get { throw null; } set { } }
+        public Azure.Communication.CommunicationIdentifier Source { get { throw null; } set { } }
         public string Status { get { throw null; } set { } }
+        public bool AddIntendedTargets(string key, Azure.Communication.CommunicationIdentifier target) { throw null; }
     }
     public enum TextFormat
     {

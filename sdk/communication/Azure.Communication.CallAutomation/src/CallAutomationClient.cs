@@ -855,7 +855,7 @@ namespace Azure.Communication.CallAutomation
             }
 
             return new TeamsPhoneCallerDetailsInternal(
-                teamsPhoneCallerDetails.Caller,
+                CommunicationIdentifierSerializer.Serialize(teamsPhoneCallerDetails.Caller),
                 teamsPhoneCallerDetails.Name,
                 teamsPhoneCallerDetails.PhoneNumber,
                 teamsPhoneCallerDetails.RecordId,
@@ -879,10 +879,13 @@ namespace Azure.Communication.CallAutomation
             }
 
             return new TeamsPhoneSourceDetailsInternal(
-                teamsPhoneSourceDetails.Source,
+                CommunicationIdentifierSerializer.Serialize(teamsPhoneSourceDetails.Source),
                 teamsPhoneSourceDetails.Language,
                 teamsPhoneSourceDetails.Status,
-                teamsPhoneSourceDetails.IntendedTargets);
+                teamsPhoneSourceDetails.IntendedTargets?.ToDictionary(
+                    pair => pair.Key,
+                    pair => CommunicationIdentifierSerializer.Serialize(pair.Value))
+                );
         }
 
         /// <summary>
