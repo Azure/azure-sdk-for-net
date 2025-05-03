@@ -230,11 +230,61 @@ function Set-ApiViewCommentForPR {
   }
 }
 
-function Save-PackageProperties ($repoRoot, $serviceNames, $outputDirectory) {
-  $scriptPath = Join-Path $repoRoot "eng" "common" "scripts" "Save-Package-Properties.ps1"
-  $serviceDirectories = $serviceNames -split ","
+# Helper function used to create API review requests for Spec generation SDKs pipelines
+function Create-API-Review {
+  param (
+    [string]$apiviewEndpoint = "https://apiview.dev/PullRequest/DetectAPIChanges",
+    [string]$specGenSDKArtifactPath,
+    [string]$apiviewArtifactName,
+    [string]$buildId,
+    [string]$commitish,
+    [string]$repoName,
+    [string]$pullRequestNumber
+  )
+  . ${PSScriptRoot}\..\logging.ps1
+  $specGenSDKContent = Get-Content -Path $SpecGenSDKArtifactPath -Raw | ConvertFrom-Json
+  $language = ($specGenSDKContent.language -split "-")[-1]
+  
+  foreach ($requestData in $specGenSDKContent.apiViewRequestData) {
+    $requestUri = [System.UriBuilder]$apiviewEndpoint
+    $requestParam = [System.Web.HttpUtility]::ParseQueryString('')
+    $requestParam.Add('artifactName', $apiviewArtifactName)
+    $requestParam.Add('buildId', $buildId)
+    $requestParam.Add('commitSha', $commitish)
+    $requestParam.Add('repoName', $repoName)
+    $requestParam.Add('pullRequestNumber', $pullRequestNumber)
+    $requestParam.Add('packageName', $requestData.packageName)
+    $requestParam.Add('filePath', $requestData.filePath)
+    $requestParam.Add('language', $language)
+    $requestUri.query = $requestParam.toString()
+    $correlationId = [System.Guid]::NewGuid().ToString()
 
-  foreach ($serviceDirectory in $serviceDirectories) {
-    & $scriptPath -ServiceDirectory $serviceDirectory.Trim() -OutDirectory $outputDirectory
+    $headers = @{
+      "Content-Type"  = "application/json"
+      "x-correlation-id" = $correlationId
+    }
+
+    LogInfo "Request URI: $($requestUri.Uri.OriginalString)"
+    LogInfo "Correlation ID: $correlationId"
+
+    try
+    {
+      $response = Invoke-WebRequest -Method 'GET' -Uri $requestUri.Uri -Headers $headers -MaximumRetryCount 3
+      if ($response.StatusCode -eq 201) {
+        LogSuccess "Status Code: $($response.StatusCode)`nAPI review request created successfully.`n$($response.Content)"
+      }
+      elseif ($response.StatusCode -eq 208) {
+        LogSuccess "Status Code: $($response.StatusCode)`nThere is no API change compared with the previous version."
+      }
+      else {
+        LogError "Failed to create API review request. $($response)"
+        exit 1
+      }
+    }
+    catch
+    {
+      LogError "Error : $($_.Exception)"
+      exit 1
+    }
   }
 }
