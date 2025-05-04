@@ -69,53 +69,5 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
             NeonBranchResource.ValidateResourceId(id);
             return new NeonBranchResource(Client, id);
         }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NeonComputeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NeonComputeResource.CreateResourceIdentifier" /> to create a <see cref="NeonComputeResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NeonComputeResource"/> object. </returns>
-        public virtual NeonComputeResource GetNeonComputeResource(ResourceIdentifier id)
-        {
-            NeonComputeResource.ValidateResourceId(id);
-            return new NeonComputeResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NeonDatabaseResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NeonDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="NeonDatabaseResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NeonDatabaseResource"/> object. </returns>
-        public virtual NeonDatabaseResource GetNeonDatabaseResource(ResourceIdentifier id)
-        {
-            NeonDatabaseResource.ValidateResourceId(id);
-            return new NeonDatabaseResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NeonRoleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NeonRoleResource.CreateResourceIdentifier" /> to create a <see cref="NeonRoleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NeonRoleResource"/> object. </returns>
-        public virtual NeonRoleResource GetNeonRoleResource(ResourceIdentifier id)
-        {
-            NeonRoleResource.ValidateResourceId(id);
-            return new NeonRoleResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NeonEndpointResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NeonEndpointResource.CreateResourceIdentifier" /> to create a <see cref="NeonEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NeonEndpointResource"/> object. </returns>
-        public virtual NeonEndpointResource GetNeonEndpointResource(ResourceIdentifier id)
-        {
-            NeonEndpointResource.ValidateResourceId(id);
-            return new NeonEndpointResource(Client, id);
-        }
     }
 }

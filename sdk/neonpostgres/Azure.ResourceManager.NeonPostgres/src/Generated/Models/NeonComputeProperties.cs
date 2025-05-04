@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NeonComputeProperties"/>. </summary>
-        public NeonComputeProperties()
+        internal NeonComputeProperties()
         {
             Attributes = new ChangeTrackingList<Attributes>();
         }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="memory"> Memory allocated in GB. </param>
         /// <param name="status"> Current status of the compute instance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonComputeProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IList<Attributes> attributes, string region, int? cpuCores, int? memory, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NeonComputeProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IReadOnlyList<Attributes> attributes, string region, int? cpuCores, int? memory, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EntityId = entityId;
             EntityName = entityName;
@@ -79,20 +79,20 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <summary> Unique identifier for the entity. </summary>
         public string EntityId { get; }
         /// <summary> Name of the resource. </summary>
-        public string EntityName { get; set; }
+        public string EntityName { get; }
         /// <summary> Timestamp indicating when the entity was created. </summary>
         public string CreatedAt { get; }
         /// <summary> Provisioning state of the resource. </summary>
         public NeonResourceProvisioningState? ProvisioningState { get; }
         /// <summary> Additional attributes for the entity. </summary>
-        public IList<Attributes> Attributes { get; }
+        public IReadOnlyList<Attributes> Attributes { get; }
         /// <summary> Region where the compute instance is located. </summary>
-        public string Region { get; set; }
+        public string Region { get; }
         /// <summary> Number of allocated CPU cores. </summary>
-        public int? CpuCores { get; set; }
+        public int? CpuCores { get; }
         /// <summary> Memory allocated in GB. </summary>
-        public int? Memory { get; set; }
+        public int? Memory { get; }
         /// <summary> Current status of the compute instance. </summary>
-        public string Status { get; set; }
+        public string Status { get; }
     }
 }

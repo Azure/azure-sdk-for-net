@@ -9,15 +9,11 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NeonPostgres.Models;
 
-namespace Azure.ResourceManager.NeonPostgres
+namespace Azure.ResourceManager.NeonPostgres.Models
 {
-    /// <summary>
-    /// A class representing the NeonCompute data model.
-    /// The Compute resource type.
-    /// </summary>
-    public partial class NeonComputeData : ResourceData
+    /// <summary> The Compute resource type. </summary>
+    public partial class NeonCompute : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +47,25 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NeonComputeData"/>. </summary>
-        public NeonComputeData()
+        /// <summary> Initializes a new instance of <see cref="NeonCompute"/>. </summary>
+        internal NeonCompute()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NeonComputeData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NeonCompute"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonComputeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NeonComputeProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NeonCompute(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NeonComputeProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public NeonComputeProperties Properties { get; set; }
+        public NeonComputeProperties Properties { get; }
     }
 }

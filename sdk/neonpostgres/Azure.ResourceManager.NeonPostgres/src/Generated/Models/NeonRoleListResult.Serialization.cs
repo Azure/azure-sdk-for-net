@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             {
                 return null;
             }
-            IReadOnlyList<NeonRoleData> value = default;
+            IReadOnlyList<NeonRole> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<NeonRoleData> array = new List<NeonRoleData>();
+                    List<NeonRole> array = new List<NeonRole>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NeonRoleData.DeserializeNeonRoleData(item, options));
+                        array.Add(NeonRole.DeserializeNeonRole(item, options));
                     }
                     value = array;
                     continue;

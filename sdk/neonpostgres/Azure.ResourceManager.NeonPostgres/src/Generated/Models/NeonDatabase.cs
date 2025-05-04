@@ -9,15 +9,11 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NeonPostgres.Models;
 
-namespace Azure.ResourceManager.NeonPostgres
+namespace Azure.ResourceManager.NeonPostgres.Models
 {
-    /// <summary>
-    /// A class representing the NeonRole data model.
-    /// The Neon Role resource type.
-    /// </summary>
-    public partial class NeonRoleData : ResourceData
+    /// <summary> The Neon Database resource type. </summary>
+    public partial class NeonDatabase : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +47,25 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NeonRoleData"/>. </summary>
-        public NeonRoleData()
+        /// <summary> Initializes a new instance of <see cref="NeonDatabase"/>. </summary>
+        internal NeonDatabase()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NeonRoleData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NeonDatabase"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonRoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NeonRoleProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NeonDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NeonDatabaseProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public NeonRoleProperties Properties { get; set; }
+        public NeonDatabaseProperties Properties { get; }
     }
 }

@@ -11,15 +11,14 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NeonPostgres.Models;
 
-namespace Azure.ResourceManager.NeonPostgres
+namespace Azure.ResourceManager.NeonPostgres.Models
 {
-    public partial class NeonDatabaseData : IUtf8JsonSerializable, IJsonModel<NeonDatabaseData>
+    public partial class NeonEndpoint : IUtf8JsonSerializable, IJsonModel<NeonEndpoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NeonDatabaseData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NeonEndpoint>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NeonDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NeonEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +29,10 @@ namespace Azure.ResourceManager.NeonPostgres
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NeonDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NeonEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NeonDatabaseData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NeonEndpoint)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -44,19 +43,19 @@ namespace Azure.ResourceManager.NeonPostgres
             }
         }
 
-        NeonDatabaseData IJsonModel<NeonDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NeonEndpoint IJsonModel<NeonEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NeonDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NeonEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NeonDatabaseData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NeonEndpoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNeonDatabaseData(document.RootElement, options);
+            return DeserializeNeonEndpoint(document.RootElement, options);
         }
 
-        internal static NeonDatabaseData DeserializeNeonDatabaseData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NeonEndpoint DeserializeNeonEndpoint(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.NeonPostgres
             {
                 return null;
             }
-            NeonDatabaseProperties properties = default;
+            NeonEndpointProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.NeonPostgres
                     {
                         continue;
                     }
-                    properties = NeonDatabaseProperties.DeserializeNeonDatabaseProperties(property.Value, options);
+                    properties = NeonEndpointProperties.DeserializeNeonEndpointProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.NeonPostgres
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NeonDatabaseData(
+            return new NeonEndpoint(
                 id,
                 name,
                 type,
@@ -121,35 +120,35 @@ namespace Azure.ResourceManager.NeonPostgres
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NeonDatabaseData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NeonEndpoint>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NeonDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NeonEndpoint>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NeonDatabaseData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NeonEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NeonDatabaseData IPersistableModel<NeonDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NeonEndpoint IPersistableModel<NeonEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NeonDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NeonEndpoint>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNeonDatabaseData(document.RootElement, options);
+                        return DeserializeNeonEndpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NeonDatabaseData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NeonEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NeonDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NeonEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

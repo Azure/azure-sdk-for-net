@@ -9,8 +9,10 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.NeonPostgres.Models;
 
 namespace Azure.ResourceManager.NeonPostgres
 {
@@ -36,6 +38,14 @@ namespace Azure.ResourceManager.NeonPostgres
 
         private readonly ClientDiagnostics _neonBranchBranchesClientDiagnostics;
         private readonly BranchesRestOperations _neonBranchBranchesRestClient;
+        private readonly ClientDiagnostics _computesClientDiagnostics;
+        private readonly ComputesRestOperations _computesRestClient;
+        private readonly ClientDiagnostics _neonDatabasesClientDiagnostics;
+        private readonly NeonDatabasesRestOperations _neonDatabasesRestClient;
+        private readonly ClientDiagnostics _neonRolesClientDiagnostics;
+        private readonly NeonRolesRestOperations _neonRolesRestClient;
+        private readonly ClientDiagnostics _endpointsClientDiagnostics;
+        private readonly EndpointsRestOperations _endpointsRestClient;
         private readonly NeonBranchData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -63,6 +73,14 @@ namespace Azure.ResourceManager.NeonPostgres
             _neonBranchBranchesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string neonBranchBranchesApiVersion);
             _neonBranchBranchesRestClient = new BranchesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, neonBranchBranchesApiVersion);
+            _computesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _computesRestClient = new ComputesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _neonDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _neonDatabasesRestClient = new NeonDatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _neonRolesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _neonRolesRestClient = new NeonRolesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _endpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NeonPostgres", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _endpointsRestClient = new EndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -87,282 +105,6 @@ namespace Azure.ResourceManager.NeonPostgres
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of NeonComputeResources in the NeonBranch. </summary>
-        /// <returns> An object representing collection of NeonComputeResources and their operations over a NeonComputeResource. </returns>
-        public virtual NeonComputeCollection GetNeonComputes()
-        {
-            return GetCachedClient(client => new NeonComputeCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a Compute
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/computes/{computeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Compute_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NeonComputeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="computeName"> The name of the Compute. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="computeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="computeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NeonComputeResource>> GetNeonComputeAsync(string computeName, CancellationToken cancellationToken = default)
-        {
-            return await GetNeonComputes().GetAsync(computeName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Compute
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/computes/{computeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Compute_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NeonComputeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="computeName"> The name of the Compute. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="computeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="computeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NeonComputeResource> GetNeonCompute(string computeName, CancellationToken cancellationToken = default)
-        {
-            return GetNeonComputes().Get(computeName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NeonDatabaseResources in the NeonBranch. </summary>
-        /// <returns> An object representing collection of NeonDatabaseResources and their operations over a NeonDatabaseResource. </returns>
-        public virtual NeonDatabaseCollection GetNeonDatabases()
-        {
-            return GetCachedClient(client => new NeonDatabaseCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a NeonDatabase
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neondatabases/{neonDatabaseName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NeonDatabase_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NeonDatabaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="neonDatabaseName"> The name of the NeonDatabase. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="neonDatabaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="neonDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NeonDatabaseResource>> GetNeonDatabaseAsync(string neonDatabaseName, CancellationToken cancellationToken = default)
-        {
-            return await GetNeonDatabases().GetAsync(neonDatabaseName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a NeonDatabase
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neondatabases/{neonDatabaseName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NeonDatabase_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NeonDatabaseResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="neonDatabaseName"> The name of the NeonDatabase. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="neonDatabaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="neonDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NeonDatabaseResource> GetNeonDatabase(string neonDatabaseName, CancellationToken cancellationToken = default)
-        {
-            return GetNeonDatabases().Get(neonDatabaseName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NeonRoleResources in the NeonBranch. </summary>
-        /// <returns> An object representing collection of NeonRoleResources and their operations over a NeonRoleResource. </returns>
-        public virtual NeonRoleCollection GetNeonRoles()
-        {
-            return GetCachedClient(client => new NeonRoleCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a NeonRole
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonroles/{neonRoleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NeonRole_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NeonRoleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="neonRoleName"> The name of the NeonRole. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="neonRoleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="neonRoleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NeonRoleResource>> GetNeonRoleAsync(string neonRoleName, CancellationToken cancellationToken = default)
-        {
-            return await GetNeonRoles().GetAsync(neonRoleName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a NeonRole
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonroles/{neonRoleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NeonRole_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NeonRoleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="neonRoleName"> The name of the NeonRole. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="neonRoleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="neonRoleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NeonRoleResource> GetNeonRole(string neonRoleName, CancellationToken cancellationToken = default)
-        {
-            return GetNeonRoles().Get(neonRoleName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NeonEndpointResources in the NeonBranch. </summary>
-        /// <returns> An object representing collection of NeonEndpointResources and their operations over a NeonEndpointResource. </returns>
-        public virtual NeonEndpointCollection GetNeonEndpoints()
-        {
-            return GetCachedClient(client => new NeonEndpointCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a Endpoint
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/endpoints/{endpointName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Endpoint_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NeonEndpointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="endpointName"> The name of the Endpoint. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NeonEndpointResource>> GetNeonEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
-        {
-            return await GetNeonEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Endpoint
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/endpoints/{endpointName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Endpoint_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NeonEndpointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="endpointName"> The name of the Endpoint. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NeonEndpointResource> GetNeonEndpoint(string endpointName, CancellationToken cancellationToken = default)
-        {
-            return GetNeonEndpoints().Get(endpointName, cancellationToken);
         }
 
         /// <summary>
@@ -534,7 +276,7 @@ namespace Azure.ResourceManager.NeonPostgres
         }
 
         /// <summary>
-        /// Update a Branch
+        /// Create a Branch
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -542,7 +284,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Branch_Update</description>
+        /// <description>Branch_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -555,7 +297,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The resource properties to be updated. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NeonBranchResource>> UpdateAsync(WaitUntil waitUntil, NeonBranchData data, CancellationToken cancellationToken = default)
@@ -566,8 +308,8 @@ namespace Azure.ResourceManager.NeonPostgres
             scope.Start();
             try
             {
-                var response = await _neonBranchBranchesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NeonPostgresArmOperation<NeonBranchResource>(new NeonBranchOperationSource(Client), _neonBranchBranchesClientDiagnostics, Pipeline, _neonBranchBranchesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _neonBranchBranchesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NeonPostgresArmOperation<NeonBranchResource>(new NeonBranchOperationSource(Client), _neonBranchBranchesClientDiagnostics, Pipeline, _neonBranchBranchesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -580,7 +322,7 @@ namespace Azure.ResourceManager.NeonPostgres
         }
 
         /// <summary>
-        /// Update a Branch
+        /// Create a Branch
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -588,7 +330,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Branch_Update</description>
+        /// <description>Branch_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -601,7 +343,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The resource properties to be updated. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NeonBranchResource> Update(WaitUntil waitUntil, NeonBranchData data, CancellationToken cancellationToken = default)
@@ -612,8 +354,8 @@ namespace Azure.ResourceManager.NeonPostgres
             scope.Start();
             try
             {
-                var response = _neonBranchBranchesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new NeonPostgresArmOperation<NeonBranchResource>(new NeonBranchOperationSource(Client), _neonBranchBranchesClientDiagnostics, Pipeline, _neonBranchBranchesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _neonBranchBranchesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new NeonPostgresArmOperation<NeonBranchResource>(new NeonBranchOperationSource(Client), _neonBranchBranchesClientDiagnostics, Pipeline, _neonBranchBranchesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -623,6 +365,214 @@ namespace Azure.ResourceManager.NeonPostgres
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// List Compute resources by Branch
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/computes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Compute_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NeonCompute"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NeonCompute> GetComputesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _computesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _computesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NeonCompute.DeserializeNeonCompute(e), _computesClientDiagnostics, Pipeline, "NeonBranchResource.GetComputes", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List Compute resources by Branch
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/computes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Compute_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NeonCompute"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NeonCompute> GetComputes(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _computesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _computesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NeonCompute.DeserializeNeonCompute(e), _computesClientDiagnostics, Pipeline, "NeonBranchResource.GetComputes", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List NeonDatabase resources by Branch
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonDatabases</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NeonDatabase_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NeonDatabase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NeonDatabase> GetNeonDatabasesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _neonDatabasesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _neonDatabasesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NeonDatabase.DeserializeNeonDatabase(e), _neonDatabasesClientDiagnostics, Pipeline, "NeonBranchResource.GetNeonDatabases", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List NeonDatabase resources by Branch
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonDatabases</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NeonDatabase_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NeonDatabase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NeonDatabase> GetNeonDatabases(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _neonDatabasesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _neonDatabasesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NeonDatabase.DeserializeNeonDatabase(e), _neonDatabasesClientDiagnostics, Pipeline, "NeonBranchResource.GetNeonDatabases", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List NeonRole resources by Branch
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonRoles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NeonRole_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NeonRole"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NeonRole> GetNeonRolesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _neonRolesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _neonRolesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NeonRole.DeserializeNeonRole(e), _neonRolesClientDiagnostics, Pipeline, "NeonBranchResource.GetNeonRoles", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List NeonRole resources by Branch
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/neonRoles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NeonRole_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NeonRole"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NeonRole> GetNeonRoles(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _neonRolesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _neonRolesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NeonRole.DeserializeNeonRole(e), _neonRolesClientDiagnostics, Pipeline, "NeonBranchResource.GetNeonRoles", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List Endpoint resources by Branch
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/endpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoint_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NeonEndpoint"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NeonEndpoint> GetEndpointsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _endpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _endpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NeonEndpoint.DeserializeNeonEndpoint(e), _endpointsClientDiagnostics, Pipeline, "NeonBranchResource.GetEndpoints", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List Endpoint resources by Branch
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Neon.Postgres/organizations/{organizationName}/projects/{projectName}/branches/{branchName}/endpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoint_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NeonEndpoint"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NeonEndpoint> GetEndpoints(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _endpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _endpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NeonEndpoint.DeserializeNeonEndpoint(e), _endpointsClientDiagnostics, Pipeline, "NeonBranchResource.GetEndpoints", "value", "nextLink", cancellationToken);
         }
     }
 }

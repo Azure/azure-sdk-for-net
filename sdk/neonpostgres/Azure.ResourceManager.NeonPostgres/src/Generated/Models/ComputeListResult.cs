@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <summary> Initializes a new instance of <see cref="ComputeListResult"/>. </summary>
         /// <param name="value"> The Compute items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ComputeListResult(IEnumerable<NeonComputeData> value)
+        internal ComputeListResult(IEnumerable<NeonCompute> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="value"> The Compute items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeListResult(IReadOnlyList<NeonComputeData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeListResult(IReadOnlyList<NeonCompute> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         }
 
         /// <summary> The Compute items on this page. </summary>
-        public IReadOnlyList<NeonComputeData> Value { get; }
+        public IReadOnlyList<NeonCompute> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

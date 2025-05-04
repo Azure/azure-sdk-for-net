@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             string entityName = default;
             string createdAt = default;
             NeonResourceProvisioningState? provisioningState = default;
-            IList<Attributes> attributes = default;
+            IReadOnlyList<Attributes> attributes = default;
             string region = default;
             int? cpuCores = default;
             int? memory = default;
