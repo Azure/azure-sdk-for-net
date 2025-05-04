@@ -5,6 +5,7 @@ using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Microsoft.Extensions.Azure;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -12,7 +13,9 @@ using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers
@@ -21,8 +24,8 @@ namespace Azure.Generator.Management.Providers
     {
         private ResourceClientProvider _resource;
         private InputServiceMethod? _getAll;
-        private InputOperation? _create;
-        private InputOperation? _get;
+        private InputServiceMethod? _create;
+        private InputServiceMethod? _get;
 
         public ResourceCollectionClientProvider(InputClient inputClient, ResourceClientProvider resource) : base(inputClient)
         {
@@ -39,12 +42,12 @@ namespace Azure.Generator.Management.Providers
                     }
                     else if (operation.Name == "get")
                     {
-                        _get = operation;
+                        _get = method;
                     }
                 }
                 if (operation.HttpMethod == HttpMethod.Put.ToString() && operation.Name == "createOrUpdate")
                 {
-                    _create = operation;
+                    _create = method;
                 }
             }
         }
@@ -67,8 +70,10 @@ namespace Azure.Generator.Management.Providers
 
         protected override ValueExpression ResourceTypeExpression => Static(_resource.Type).Property("ResourceType");
 
+        protected override CSharpType ResourceClientCharpType => _resource.Type;
+
         // TODO: build GetIfExists, GetIfExistsAsync, Exists, ExistsAsync, Get, GetAsync, CreateOrUpdate, CreateOrUpdateAsync methods
-        protected override MethodProvider[] BuildMethods() => [BuildValidateResourceIdMethod(), .. BuildGetAllMethods()];
+        protected override MethodProvider[] BuildMethods() => [BuildValidateResourceIdMethod(), .. BuildCreateOrUpdateMethods(), .. BuildGetMethods(), .. BuildGetAllMethods(), .. BuildExistsMethods(), .. BuildGetIfExistsMethods(), .. BuildEnumeratorMethods()];
 
         private MethodProvider[] BuildGetAllMethods()
         {
@@ -76,7 +81,7 @@ namespace Azure.Generator.Management.Providers
             var getAll = BuildGetAllMethod(false);
             var getAllAsync = BuildGetAllMethod(true);
 
-            return [getAll, getAllAsync, .. BuildEnumeratorMethods()];
+            return [getAllAsync, getAll];
         }
 
         private MethodProvider[] BuildEnumeratorMethods()
@@ -100,9 +105,25 @@ namespace Azure.Generator.Management.Providers
                 new MethodSignature("GetAsyncEnumerator", null, MethodSignatureModifiers.None, new CSharpType(typeof(IAsyncEnumerator<>), _resource.Type), null, [KnownAzureParameters.CancellationTokenWithoutDefault], ExplicitInterface: new CSharpType(typeof(IAsyncEnumerable<>), _resource.Type)),
                 Return(This.Invoke("GetAllAsync", [KnownAzureParameters.CancellationTokenWithoutDefault]).Invoke("GetAsyncEnumerator", [KnownAzureParameters.CancellationTokenWithoutDefault])),
                 this);
-            return [getEnumeratorMethod, getEnumeratorOfTMethod, getEnumeratorAsyncMethod];
+            return [getEnumeratorOfTMethod, getEnumeratorMethod, getEnumeratorAsyncMethod];
         }
 
+        private List<MethodProvider> BuildCreateOrUpdateMethods()
+        {
+            var result = new List<MethodProvider>();
+            if (_create is null)
+            {
+                return result;
+            }
+
+            foreach (var isAsync in new List<bool> { true, false})
+            {
+                var convenienceMethod = GetCorrespondingConvenienceMethod(_create!.Operation, isAsync);
+                result.Add(BuildOperationMethod(_create, convenienceMethod, isAsync));
+            }
+
+            return result;
+        }
         private MethodProvider BuildGetAllMethod(bool isAsync)
         {
             var convenienceMethod = GetCorrespondingConvenienceMethod(_getAll!.Operation, isAsync);
@@ -122,6 +143,90 @@ namespace Azure.Generator.Management.Providers
 
             // TODO: implement paging method properly
             return new MethodProvider(signature, ThrowExpression(New.Instance(typeof(NotImplementedException))), this);
+        }
+
+        private List<MethodProvider> BuildGetMethods()
+        {
+            var result = new List<MethodProvider>();
+            if (_get is null)
+            {
+                return result;
+            }
+
+            foreach (var isAsync in new List<bool> { true, false})
+            {
+                var convenienceMethod = GetCorrespondingConvenienceMethod(_get!.Operation, isAsync);
+                result.Add(BuildOperationMethod(_get, convenienceMethod, isAsync));
+            }
+
+            return result;
+        }
+
+        private List<MethodProvider> BuildExistsMethods()
+        {
+            var result = new List<MethodProvider>();
+            if (_get is null)
+            {
+                return result;
+            }
+
+            foreach (var isAsync in new List<bool> { true, false})
+            {
+                var convenienceMethod = GetCorrespondingConvenienceMethod(_get!.Operation, isAsync);
+                var signature = new MethodSignature(
+                isAsync ? "ExistsAsync" : "Exists",
+                convenienceMethod.Signature.Description,
+                convenienceMethod.Signature.Modifiers,
+                isAsync ? new CSharpType(typeof(Task<>), new CSharpType(typeof(Response<>), typeof(bool))) : new CSharpType(typeof(Response<>), typeof(bool)),
+                convenienceMethod.Signature.ReturnDescription,
+                GetOperationMethodParameters(convenienceMethod, false),
+                convenienceMethod.Signature.Attributes,
+                convenienceMethod.Signature.GenericArguments,
+                convenienceMethod.Signature.GenericParameterConstraints,
+                convenienceMethod.Signature.ExplicitInterface,
+                convenienceMethod.Signature.NonDocumentComment);
+                result.Add(BuildOperationMethod(_get, convenienceMethod, signature, isAsync));
+            }
+
+            return result;
+        }
+
+        private List<MethodProvider> BuildGetIfExistsMethods()
+        {
+            var result = new List<MethodProvider>();
+            if (_get is null)
+            {
+                return result;
+            }
+
+            foreach (var isAsync in new List<bool> { true, false})
+            {
+                var convenienceMethod = GetCorrespondingConvenienceMethod(_get!.Operation, isAsync);
+                var signature = new MethodSignature(
+                isAsync ? "GetIfExistsAsync" : "GetIfExists",
+                convenienceMethod.Signature.Description,
+                convenienceMethod.Signature.Modifiers,
+                isAsync ? new CSharpType(typeof(Task<>), new CSharpType(typeof(NullableResponse<>), ResourceClientCharpType)) : new CSharpType(typeof(NullableResponse<>), ResourceClientCharpType),
+                convenienceMethod.Signature.ReturnDescription,
+                GetOperationMethodParameters(convenienceMethod, false),
+                convenienceMethod.Signature.Attributes,
+                convenienceMethod.Signature.GenericArguments,
+                convenienceMethod.Signature.GenericParameterConstraints,
+                convenienceMethod.Signature.ExplicitInterface,
+                convenienceMethod.Signature.NonDocumentComment);
+                result.Add(BuildOperationMethod(_get, convenienceMethod, signature, isAsync));
+            }
+
+            return result;
+        }
+
+        protected override bool FilterContexualParameter(ParameterProvider parameter)
+        {
+            if (ContextualParameters == null)
+            {
+                return false;
+            }
+            return ContextualParameters.Take(ContextualParameters.Count - 1).Any(p => p == parameter.Name);
         }
     }
 }

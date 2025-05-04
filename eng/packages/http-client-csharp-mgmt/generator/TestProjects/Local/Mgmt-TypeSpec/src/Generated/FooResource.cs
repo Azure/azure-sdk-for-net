@@ -79,7 +79,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(resource, nameof(resource));
 
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("MgmtTypeSpec.createOrUpdate");
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.Update");
             scope.Start();
             try
             {
@@ -120,7 +120,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(resource, nameof(resource));
 
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("MgmtTypeSpec.createOrUpdate");
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.UpdateAsync");
             scope.Start();
             try
             {
@@ -156,7 +156,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual Response<FooResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("MgmtTypeSpec.get");
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.Get");
             scope.Start();
             try
             {
@@ -185,7 +185,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual async Task<Response<FooResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("MgmtTypeSpec.get");
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.GetAsync");
             scope.Start();
             try
             {
@@ -215,7 +215,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("MgmtTypeSpec.delete");
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.Delete");
             scope.Start();
             try
             {
@@ -245,7 +245,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("MgmtTypeSpec.delete");
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.DeleteAsync");
             scope.Start();
             try
             {
