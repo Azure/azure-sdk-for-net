@@ -1,5 +1,7 @@
 # @azure-typespec/http-client-csharp-mgmt
 
+TypeSpec library for emitting Azure management libraries for C#.
+
 ## Install
 
 ```bash
@@ -58,12 +60,6 @@ Defines the strategy on how to handle unreferenced types. The default value is `
 **Type:** `boolean`
 
 Set to `true` to overwrite the csproj if it already exists. The default value is `false`.
-
-### `clear-output-folder`
-
-**Type:** `boolean`
-
-Indicates if you want to clear the output folder before generating. The default value is `true`.
 
 ### `save-inputs`
 
@@ -135,4 +131,4 @@ The C# namespace to use for the generated code. This will override the TypeSpec 
 
 **Type:** `boolean`
 
-Whether to put models under a separate 'Models' sub-namespace. This only applies if the 'namespace' option is set. The default value is 'true' when the 'namespace' option is set. Otherwise, each model will be in the corresponding namespace defined in the TypeSpec.
+Whether to put models under a separate 'Models' sub-namespace. This only applies if the 'namespace' option is set. The default value is 'false'.

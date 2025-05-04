@@ -108,9 +108,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 {
 ["expression"] = BinaryData.FromObjectAsJson("Example Expression"),
 ["steward"] = BinaryData.FromObjectAsJson("Example Steward"),
-["description"] = BinaryData.FromObjectAsJson("Example Description"),
-["source"] = null,
-["status"] = null
+["description"] = BinaryData.FromObjectAsJson("Example Description")
 },
                 TypeName = "AtlasGlossarySynonym",
                 CreatedBy = "ExampleCreator",
@@ -146,9 +144,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 {
 ["expression"] = BinaryData.FromObjectAsJson("Example Expression"),
 ["steward"] = BinaryData.FromObjectAsJson("Example Steward"),
-["description"] = BinaryData.FromObjectAsJson("Example Description"),
-["source"] = null,
-["status"] = null
+["description"] = BinaryData.FromObjectAsJson("Example Description")
 },
                 TypeName = "AtlasGlossarySynonym",
                 CreatedBy = "ExampleCreator",
@@ -264,9 +260,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 {
 ["expression"] = BinaryData.FromObjectAsJson("Example Expression"),
 ["steward"] = BinaryData.FromObjectAsJson("Example Steward"),
-["description"] = BinaryData.FromObjectAsJson("Example Description"),
-["source"] = null,
-["status"] = null
+["description"] = BinaryData.FromObjectAsJson("Example Description")
 },
                 TypeName = "AtlasGlossarySynonym",
                 CreatedBy = "ExampleCreator",
@@ -303,9 +297,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 {
 ["expression"] = BinaryData.FromObjectAsJson("Example Expression"),
 ["steward"] = BinaryData.FromObjectAsJson("Example Steward"),
-["description"] = BinaryData.FromObjectAsJson("Example Description"),
-["source"] = null,
-["status"] = null
+["description"] = BinaryData.FromObjectAsJson("Example Description")
 },
                 TypeName = "AtlasGlossarySynonym",
                 CreatedBy = "ExampleCreator",
