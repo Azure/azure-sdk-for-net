@@ -24,7 +24,10 @@ internal class OpenAIAccountFeature : AzureProjectFeature
     /// </summary>
     public CognitiveServicesSku Sku { get; set; }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// emits the features for the OpenAI account.
+    /// </summary>
+    /// <param name="infrastructure"></param>
     protected override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         CognitiveServicesAccount cognitiveServices = new("openai")
