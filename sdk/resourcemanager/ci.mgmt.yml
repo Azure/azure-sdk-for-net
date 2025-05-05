@@ -216,6 +216,7 @@ trigger:
     - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
     - sdk/workloads/Azure.ResourceManager.Workloads
     - sdk/workloadssapvirtualinstance/Azure.ResourceManager.WorkloadsSapVirtualInstance
+    - sdk/mongodbatlas/Azure.ResourceManager.MongoDBAtlas
 
 pr:
   branches:
@@ -434,6 +435,7 @@ pr:
     - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
     - sdk/workloads/Azure.ResourceManager.Workloads
     - sdk/workloadssapvirtualinstance/Azure.ResourceManager.WorkloadsSapVirtualInstance
+    - sdk/mongodbatlas/Azure.ResourceManager.MongoDBAtlas
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
