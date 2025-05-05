@@ -5,7 +5,6 @@
 
 using System;
 using Azure.Identity;
-using Azure.AI.Projects;
 using NUnit.Framework;
 using System.Threading.Tasks;
 using Azure.AI.Inference;

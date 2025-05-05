@@ -18,7 +18,7 @@ namespace Azure.AI.Projects
     /// <summary> The Connections sub-client. </summary>
     public partial class Connections
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;

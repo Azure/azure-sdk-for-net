@@ -18,5 +18,10 @@ namespace Azure.AI.Projects.Tests
         public string AZURE_BLOB_URI => GetRecordedVariable("AZURE_BLOB_URI");
         public string FABRICCONNECTIONNAME => GetRecordedVariable("FABRIC_CONNECTION_NAME");
         public string SHAREPOINTCONNECTIONNAME => GetRecordedVariable("SHAREPOINT_CONNECTION_NAME");
+        public string INDEXNAME => GetRecordedVariable("INDEX_NAME");
+        public string INDEXVERSION => GetRecordedVariable("INDEX_VERSION");
+        public string AISEARCHCONNECTIONNAME => GetRecordedVariable("AI_SEARCH_CONNECTION_NAME");
+        public string AISEARCHINDEXNAME => GetRecordedVariable("AI_SEARCH_INDEX_NAME");
+        public string CONNECTIONNAME => GetRecordedVariable("CONNECTION_NAME");
     }
 }
