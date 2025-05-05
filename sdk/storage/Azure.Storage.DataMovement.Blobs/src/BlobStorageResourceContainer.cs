@@ -186,8 +186,9 @@ namespace Azure.Storage.DataMovement.Blobs
                     }
                 }
 
-                // Empty directory - This can only happen on HNS accounts as on FNS accounts empty directories
-                // do not exist and will not show up as a prefix.
+                // Empty directory - This can only happen on HNS accounts as empty directories do not exist on FNS
+                // accounts and will not show up as a prefix.
+                //
                 // If the destination is Blob, we need to manually create the empty directory here as the regular
                 // path for creating directories is a no-op for Blob. This will always create an empty Block Blob
                 // with the folder metadata set which represents a directory stub on HNS accounts. No other

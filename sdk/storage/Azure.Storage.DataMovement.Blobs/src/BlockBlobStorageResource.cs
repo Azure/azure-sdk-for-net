@@ -383,8 +383,6 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Creates an empty Block Blob with the hdi_isfolder metadata. All other properties
         /// of the blob are left default.
         /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         internal async Task CreateEmptyDirectoryStubAsync(CancellationToken cancellationToken = default)
         {
             Dictionary<string, string> folderMetadata = new() {
