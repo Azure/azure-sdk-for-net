@@ -3,20 +3,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Health.Insights.RadiologyInsights.Tests.Infrastructure;
 using NUnit.Framework;
-using Azure.Identity;
-using System.Net;
+using System.Threading.Tasks;
 
 namespace Azure.Health.Insights.RadiologyInsights.Tests
 {
-    internal class Sample01_GuidanceSample : SamplesBase<HealthInsightsTestEnvironment>
+    internal class Sample01_GuidanceSampleAsync : SamplesBase<HealthInsightsTestEnvironment>
     {
-        #region Snippet:Guidance_Sync_Tests_Samples_Doc_Content
+        #region Snippet:Guidance_Async_Tests_Samples_Doc_Content
         private const string DOC_CONTENT = "History:" +
             "\r\n    Left renal tumor with thin septations." +
             "\r\n    Findings:" +
@@ -24,21 +21,21 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
         #endregion
 
         [Test]
-        public void RadiologyInsightsGuidanceScenario()
+        public async Task RadiologyInsightsGuidanceScenario()
         {
             // Read endpoint
             string endpoint = TestEnvironment.Endpoint;
-            #region Snippet:Guidance_Sync_Tests_Samples_TokenCredential
+            #region Snippet:Guidance_Async_Tests_Samples_TokenCredential
             Uri endpointUri = new Uri(endpoint);
             TokenCredential cred = new DefaultAzureCredential();
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, cred);
             #endregion
-            #region Snippet:Guidance_Sync_Tests_Samples_synccall
+            #region Snippet:Guidance_Async_Tests_Samples_Asynccall
             RadiologyInsightsJob radiologyInsightsjob = GetRadiologyInsightsJob();
             var jobId = "job" + DateTimeOffset.Now.ToUnixTimeMilliseconds();
-            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, jobId, radiologyInsightsjob);
+            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, jobId, radiologyInsightsjob);
             #endregion
-            #region Snippet:Guidance_Sync_Tests_Samples_GuidanceInference
+            #region Snippet:Guidance_Async_Tests_Samples_GuidanceInference
             RadiologyInsightsInferenceResult responseData = operation.Value;
             IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
 
@@ -90,7 +87,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             }
             if (codeableConcept != null)
             {
-                #region Snippet:Guidance_Sync_Sync_Tests_Samples_DisplayCodes
+                #region Snippet:Guidance_Async_Async_Tests_Samples_DisplayCodes
                 IList<FhirR4Coding> codingList = codeableConcept.Coding;
                 if (codingList != null)
                 {
@@ -106,7 +103,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
         private static void DisplayPresentGuidanceInformation(PresentGuidanceInformation guidanceInfo)
         {
             Console.WriteLine($"     Present Guidance Information Item: {guidanceInfo.PresentGuidanceItem}");
-            #region Snippet:Guidance_Sync_Tests_Samples_DisplayPresentGuidanceInformation
+            #region Snippet:Guidance_Async_Tests_Samples_DisplayPresentGuidanceInformation
             if (guidanceInfo.PresentGuidanceValues != null)
             {
                 foreach (var value in guidanceInfo.PresentGuidanceValues)
@@ -154,7 +151,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
 
         private static void DisplayQuantityOutput(FhirR4Quantity quantity)
         {
-            #region Snippet:Guidance_Sync_Tests_Samples_DisplayQuantityOutput
+            #region Snippet:Guidance_Async_Tests_Samples_DisplayQuantityOutput
             if (quantity.Value != null)
             {
                 Console.WriteLine($"     Value: {quantity.Value}");
@@ -168,7 +165,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
 
         private static void DisplaySectionInfo(PresentGuidanceInformation guidanceInfo)
         {
-            #region Snippet:Guidance_Sync_Tests_Samples_DisplaySectionInfo
+            #region Snippet:Guidance_Async_Tests_Samples_DisplaySectionInfo
             if (guidanceInfo.Extension != null)
             {
                 foreach (var ext in guidanceInfo.Extension)
@@ -202,7 +199,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
         private static RadiologyInsightsData GetRadiologyInsightsData()
         {
             PatientRecord patientRecord = CreatePatientRecord();
-            #region Snippet:Guidance_Sync_Tests_Samples_AddRecordAndConfiguration
+            #region Snippet:Guidance_Async_Tests_Samples_AddRecordAndConfiguration
             List<PatientRecord> patientRecords = new() { patientRecord };
             RadiologyInsightsData radiologyInsightsData = new(patientRecords);
             radiologyInsightsData.Configuration = CreateConfiguration();
@@ -213,7 +210,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
         private static RadiologyInsightsModelConfiguration CreateConfiguration()
         {
             RadiologyInsightsInferenceOptions radiologyInsightsInferenceOptions = GetRadiologyInsightsInferenceOptions();
-            #region Snippet:Guidance_Sync_Tests_Samples_CreateModelConfiguration
+            #region Snippet:Guidance_Async_Tests_Samples_CreateModelConfiguration
             RadiologyInsightsModelConfiguration radiologyInsightsModelConfiguration = new()
             {
                 Locale = "en-US",
@@ -227,7 +224,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
 
         private static RadiologyInsightsInferenceOptions GetRadiologyInsightsInferenceOptions()
         {
-            #region Snippet:Guidance_Sync_Tests_Samples_CreateRadiologyInsightsInferenceOptions
+            #region Snippet:Guidance_Async_Tests_Samples_CreateRadiologyInsightsInferenceOptions
             RadiologyInsightsInferenceOptions radiologyInsightsInferenceOptions = new();
             FollowupRecommendationOptions followupRecommendationOptions = new();
             FindingOptions findingOptions = new();
@@ -243,7 +240,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
 
         private static PatientRecord CreatePatientRecord()
         {
-            #region Snippet:Guidance_Sync_Tests_Samples_CreatePatientRecord
+            #region Snippet:Guidance_Async_Tests_Samples_CreatePatientRecord
             string id = "patient_id2";
             PatientDetails patientInfo = new()
             {
@@ -277,7 +274,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
 
         private static DocumentAdministrativeMetadata CreateDocumentAdministrativeMetadata()
         {
-            #region Snippet:Guidance_Sync_Tests_Samples_CreateDocumentAdministrativeMetadata
+            #region Snippet:Guidance_Async_Tests_Samples_CreateDocumentAdministrativeMetadata
             DocumentAdministrativeMetadata documentAdministrativeMetadata = new DocumentAdministrativeMetadata();
 
             FhirR4Coding coding = new()
