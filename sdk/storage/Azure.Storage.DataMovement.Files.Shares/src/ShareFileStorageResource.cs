@@ -352,54 +352,28 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
-            if (sourceResource is ShareFileStorageResource sourceShareFile)
+            if (sourceResource is ShareFileStorageResource sourceShareFileResource)
             {
-                // Make sure the transfer is supported (NFS -> NFS and SMB -> SMB)
-                if ((_options?.IsNfs ?? false) != (sourceShareFile._options?.IsNfs ?? false))
+                // Ensure the transfer is supported (NFS -> NFS and SMB -> SMB)
+                if ((_options?.IsNfs ?? false) != (sourceShareFileResource._options?.IsNfs ?? false))
                 {
                     throw Errors.ShareTransferNotSupported();
                 }
 
-                // validate the source protocol
-                if (!sourceShareFile._options?.SkipProtocolValidation ?? true)
-                {
-                    try
-                    {
-                        ShareClient sourceParentShare = sourceShareFile.ShareFileClient.GetParentShareClient();
-                        ShareProperties sourceProperties = await sourceParentShare.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                        ShareProtocols setProtocolSource = (sourceShareFile._options?.IsNfs ?? false) ? ShareProtocols.Nfs : ShareProtocols.Smb;
-                        ShareProtocols actualProtocolSource = sourceProperties.Protocols ?? ShareProtocols.Smb;
-                        if (actualProtocolSource != setProtocolSource)
-                        {
-                            throw Errors.ProtocolSetMismatch("source", setProtocolSource, actualProtocolSource);
-                        }
-                    }
-                    catch (RequestFailedException ex) when (ex.Status == 403)
-                    {
-                        throw Errors.NoShareLevelPermissions("source");
-                    }
-                }
+                // Validate the source protocol
+                await DataMovementSharesExtensions.ValidateProtocolAsync(
+                    sourceShareFileResource.ShareFileClient.GetParentShareClient(),
+                    sourceShareFileResource._options,
+                    "source",
+                    cancellationToken).ConfigureAwait(false);
             }
 
-            // validate the destination protocol
-            if (!_options?.SkipProtocolValidation ?? true)
-            {
-                try
-                {
-                    ShareClient parentShare = ShareFileClient.GetParentShareClient();
-                    ShareProperties properties = await parentShare.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    ShareProtocols setProtocol = (_options?.IsNfs ?? false) ? ShareProtocols.Nfs : ShareProtocols.Smb;
-                    ShareProtocols actualProtocol = properties.Protocols ?? ShareProtocols.Smb;
-                    if (actualProtocol != setProtocol)
-                    {
-                        throw Errors.ProtocolSetMismatch("destination", setProtocol, actualProtocol);
-                    }
-                }
-                catch (RequestFailedException ex) when (ex.Status == 403)
-                {
-                    throw Errors.NoShareLevelPermissions("destination");
-                }
-            }
+            // Validate the destination protocol
+            await DataMovementSharesExtensions.ValidateProtocolAsync(
+                ShareFileClient.GetParentShareClient(),
+                _options,
+                "destination",
+                cancellationToken).ConfigureAwait(false);
         }
     }
 

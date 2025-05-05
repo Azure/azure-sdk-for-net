@@ -72,7 +72,7 @@ namespace Azure.Storage.DataMovement
             WriteEvent(EnumerationCompleteEvent, transferId, jobPartCount);
         }
 
-        [Event(ResumeTransferEvent, Level = EventLevel.Informational, Message = "Resume transfer [{0]} Transfer queued: {1} -> {2}")]
+        [Event(ResumeTransferEvent, Level = EventLevel.Informational, Message = "Resume transfer [{0}] Transfer queued: {1} -> {2}")]
         public void ResumeTransfer(string transferId, string source, string destination)
         {
             WriteEvent(ResumeTransferEvent, transferId, source, destination);

@@ -53,10 +53,8 @@ namespace Azure.Storage.DataMovement
         protected internal abstract StorageResourceCheckpointDetails GetDestinationCheckpointDetails();
 
         /// <summary>
-        /// Validates whether the proper protocol has been set for the resource.
-        /// Applies only to File Shares.
+        /// Ensures the transfer is valid. Intended to be called on destination resources.
         /// </summary>
-        /// <returns>Whether the protocol of the resource is NFS. Returns null if the resource is not File Share.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal virtual Task ValidateTransferAsync(StorageResource sourceResource, CancellationToken cancellationToken = default)
             => Task.CompletedTask;

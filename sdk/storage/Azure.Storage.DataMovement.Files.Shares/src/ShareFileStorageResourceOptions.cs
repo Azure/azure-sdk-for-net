@@ -50,6 +50,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// Optional. Specifies whether we should skip validating the protocol of the resource before starting the transfer.
         /// By default this value is set to false.
         /// Applies to copy, upload, and download transfers.
+        /// Note: Protocol validation requires share-level read access.
         /// </summary>
         public bool SkipProtocolValidation { get; set; } = false;
 
