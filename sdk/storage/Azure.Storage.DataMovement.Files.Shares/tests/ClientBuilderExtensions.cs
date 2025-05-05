@@ -59,5 +59,26 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareClient share = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetShareClient(shareName));
             return await DisposingShare.CreateAsync(share, metadata);
         }
+
+        public static async Task<DisposingShare> GetTestShareSasNfsAsync(
+            this SharesClientBuilder clientBuilder,
+            ShareServiceClient service = default,
+            string shareName = default,
+            IDictionary<string, string> metadata = default,
+            ShareClientOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            service ??= clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigPremiumFile, options);
+            ShareServiceClient sasService = new ShareServiceClient(service.GenerateAccountSasUri(
+                Sas.AccountSasPermissions.All,
+                clientBuilder.Recording.UtcNow.AddDays(1),
+                Sas.AccountSasResourceTypes.All),
+                clientBuilder.GetOptions());
+            metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            shareName ??= clientBuilder.GetNewShareName();
+            ShareClient share = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(sasService.GetShareClient(shareName));
+            return await DisposingShare.CreateNfsAsync(share, metadata);
+        }
     }
 }

@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGuestConfigurationAssignmentData(document.RootElement, options);
                     }
                 default:

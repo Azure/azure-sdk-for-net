@@ -15,14 +15,14 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 use-model-reader-writer: true
 client-side-validation: false
 enable-bicep-serialization: true
 
-mgmt-debug:
-  show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 request-path-to-resource-name:
   /providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}: TenantPacketCoreControlPlaneVersion
@@ -125,6 +125,7 @@ rename-mapping:
   SimMove: SimMoveContent
   SimClone: SimCloneContent
   SignalingConfiguration: PacketCoreSignalingConfiguration
+  PlatformType.AKS-HCI: AksHci
 
 prepend-rp-prefix:
   - Ipv4Route

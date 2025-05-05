@@ -19,18 +19,11 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            if (element.TryGetProperty("type", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "Boundary": return BoundaryInternal.DeserializeBoundaryInternal(element);
-                }
-            }
             GeoJsonGeometry geometry = default;
             object properties = default;
             string id = default;
             string featureType = default;
-            GeoJsonObjectType type = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
+            GeoJsonObjectType type = default;
             IReadOnlyList<double> bbox = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -91,7 +84,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new GeoJsonFeature FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeGeoJsonFeature(document.RootElement);
         }
     }

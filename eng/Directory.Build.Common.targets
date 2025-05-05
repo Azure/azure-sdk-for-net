@@ -107,6 +107,7 @@
     <PackageReference Remove="System.Text.Encodings.Web" />
     <PackageReference Remove="System.Text.Json" />
     <PackageReference Remove="System.Threading.Channels" />
+    <PackageReference Remove="System.Threading.Tasks.Extensions" />
   </ItemGroup>
 
   <!-- Add Package Icon to DataPlane Packages -->
@@ -254,8 +255,6 @@
   <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true'">
 
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
-    <PackageReference Include="System.ClientModel" />
 
     <!-- TODO: Review these file references-->
     <Compile Include="$(AzureCoreSharedSources)NoValueResponseOfT.cs" LinkBase="Shared" />

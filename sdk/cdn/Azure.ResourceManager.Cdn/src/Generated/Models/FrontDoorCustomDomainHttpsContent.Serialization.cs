@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -43,15 +44,8 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(Secret))
             {
-                if (Secret != null)
-                {
-                    writer.WritePropertyName("secret"u8);
-                    writer.WriteObjectValue(Secret, options);
-                }
-                else
-                {
-                    writer.WriteNull("secret");
-                }
+                writer.WritePropertyName("secret"u8);
+                JsonSerializer.Serialize(writer, Secret);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -61,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -92,7 +86,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             FrontDoorCertificateType certificateType = default;
             FrontDoorMinimumTlsVersion? minimumTlsVersion = default;
-            FrontDoorCustomDomainHttpsContentSecret secret = default;
+            WritableSubResource secret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,10 +109,9 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        secret = null;
                         continue;
                     }
-                    secret = FrontDoorCustomDomainHttpsContentSecret.DeserializeFrontDoorCustomDomainHttpsContentSecret(property.Value, options);
+                    secret = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
@@ -151,7 +144,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFrontDoorCustomDomainHttpsContent(document.RootElement, options);
                     }
                 default:

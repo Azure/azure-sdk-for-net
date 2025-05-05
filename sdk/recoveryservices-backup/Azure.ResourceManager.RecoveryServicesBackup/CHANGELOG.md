@@ -1,19 +1,35 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.3.0 (2025-04-24)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-06' to 'package-2025-02'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/97ee23a6db6078abcbec7b75bf9af8c503e9bb8b/specification/recoveryservicesbackup/resource-manager/readme.md.
+- Support for SAPAse Database.
+- Added MUA support for new operations.
+- Added recovery point tier information for AFS.
+- Added support for undelete softdeleted container.
+
+## 1.2.1 (2025-03-11)
 
 ### Features Added
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 Fix an issue that the `IaasComputeVmProtectedItem` can't handle empty `resourceId`. Issue at https://github.com/Azure/azure-sdk-for-net/issues/47381
-
-### Other Changes
 
 ## 1.2.0 (2024-01-03)
 

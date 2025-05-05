@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StandbyPool
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-03-01";
+            _apiVersion = apiVersion ?? "2025-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.StandbyPool
                 case 200:
                     {
                         StandbyContainerGroupPoolData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StandbyContainerGroupPoolData.DeserializeStandbyContainerGroupPoolData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StandbyPool
                 case 200:
                     {
                         StandbyContainerGroupPoolData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StandbyContainerGroupPoolData.DeserializeStandbyContainerGroupPoolData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.StandbyPool
                 case 200:
                     {
                         StandbyContainerGroupPoolData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StandbyContainerGroupPoolData.DeserializeStandbyContainerGroupPoolData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.StandbyPool
                 case 200:
                     {
                         StandbyContainerGroupPoolData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StandbyContainerGroupPoolData.DeserializeStandbyContainerGroupPoolData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.StandbyPool
                 case 200:
                     {
                         StandbyContainerGroupPoolResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StandbyContainerGroupPoolResourceListResult.DeserializeStandbyContainerGroupPoolResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.StandbyPool
                 case 200:
                     {
                         StandbyContainerGroupPoolResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StandbyContainerGroupPoolResourceListResult.DeserializeStandbyContainerGroupPoolResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.StandbyPool
                 case 200:
                     {
                         StandbyContainerGroupPoolResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StandbyContainerGroupPoolResourceListResult.DeserializeStandbyContainerGroupPoolResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.StandbyPool
                 case 200:
                     {
                         StandbyContainerGroupPoolResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StandbyContainerGroupPoolResourceListResult.DeserializeStandbyContainerGroupPoolResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.StandbyPool
                 case 200:
                     {
                         StandbyContainerGroupPoolResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StandbyContainerGroupPoolResourceListResult.DeserializeStandbyContainerGroupPoolResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.StandbyPool
                 case 200:
                     {
                         StandbyContainerGroupPoolResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StandbyContainerGroupPoolResourceListResult.DeserializeStandbyContainerGroupPoolResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.StandbyPool
                 case 200:
                     {
                         StandbyContainerGroupPoolResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StandbyContainerGroupPoolResourceListResult.DeserializeStandbyContainerGroupPoolResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.StandbyPool
                 case 200:
                     {
                         StandbyContainerGroupPoolResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StandbyContainerGroupPoolResourceListResult.DeserializeStandbyContainerGroupPoolResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

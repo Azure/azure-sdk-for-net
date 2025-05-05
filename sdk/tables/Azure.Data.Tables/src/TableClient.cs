@@ -272,10 +272,11 @@ namespace Azure.Data.Tables
             options ??= TableClientOptions.DefaultOptions;
 
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
-
+            var audienceScope = (options?.Audience ?? TableAudience.AzurePublicCloud)
+                .GetDefaultScope(_isCosmosEndpoint);
             var pipelineOptions = new HttpPipelineOptions(options)
             {
-                PerRetryPolicies = { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, _isCosmosEndpoint ? TableConstants.CosmosScope : TableConstants.StorageScope, options.EnableTenantDiscovery) },
+                PerRetryPolicies = { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, audienceScope, options.EnableTenantDiscovery) },
                 ResponseClassifier = new ResponseClassifier(),
                 RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
             };
@@ -1543,8 +1544,10 @@ namespace Azure.Data.Tables
         /// <returns><see cref="Response{T}"/> containing a <see cref="IReadOnlyList{T}"/> of <see cref="Response"/>.
         /// Each sub-response in the collection corresponds to the <see cref="TableTransactionAction"/> provided to the <paramref name="transactionActions"/> parameter at the same index position.
         /// Each response can be inspected for details for its corresponding table operation, such as the <see cref="Response.Headers"/> property containing the <see cref="ResponseHeaders.ETag"/></returns>
-        /// <exception cref="RequestFailedException"/> if the batch transaction fails./>
-        /// <exception cref="InvalidOperationException"/> if the batch has been previously submitted.
+        /// <exception cref="RequestFailedException"> Thrown when the batch transaction operation fails.</exception>
+        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="transactionActions"/> is <c>null</c>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if <paramref name="transactionActions"/> contains no items.</exception>
+        /// <exception cref="InvalidOperationException"> Thrown if the batch has been previously submitted.</exception>
         public virtual async Task<Response<IReadOnlyList<Response>>> SubmitTransactionAsync(
             IEnumerable<TableTransactionAction> transactionActions,
             CancellationToken cancellationToken = default) =>
@@ -1560,8 +1563,10 @@ namespace Azure.Data.Tables
         /// <returns><see cref="Response{T}"/> containing a <see cref="IReadOnlyList{T}"/> of <see cref="Response"/>.
         /// Each sub-response in the collection corresponds to the <see cref="TableTransactionAction"/> provided to the <paramref name="transactionActions"/> parameter at the same index position.
         /// Each response can be inspected for details for its corresponding table operation, such as the <see cref="Response.Headers"/> property containing the <see cref="ResponseHeaders.ETag"/></returns>
-        /// <exception cref="RequestFailedException"/> if the batch transaction fails./>
-        /// <exception cref="InvalidOperationException"/> if the batch has been previously submitted.
+        /// <exception cref="RequestFailedException"> Thrown when the batch transaction operation fails.</exception>
+        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="transactionActions"/> is <c>null</c>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <paramref name="transactionActions"/> contains no items.</exception>
+        /// <exception cref="InvalidOperationException"> Thrown if the batch has been previously submitted.</exception>
         public virtual Response<IReadOnlyList<Response>> SubmitTransaction(
             IEnumerable<TableTransactionAction> transactionActions,
             CancellationToken cancellationToken = default) =>

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.14.0-beta.2 (Unreleased)
+## 1.14.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,40 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.14.0-beta.4 (2025-05-01)
+
+### Bugs Fixed
+- Fixed an issue where Azure CLI credential could hang or delay due to I/O contention when standard input/output was shared with the host process ([#49582](https://github.com/Azure/azure-sdk-for-net/pull/49582)).
+
+### Other Changes
+
+- Updated `Microsoft.Identity.Client` dependency to version 4.71.1
+
+## 1.14.0-beta.3 (2025-04-08)
+
+### Features Added
+
+- `DefaultAzureCredential` now includes silent authentication via the authentication broker on Windows if the `Azure.Identity.Broker` NuGet package is referenced. This allows for a more seamless authentication experience when using the `DefaultAzureCredential` in Windows environments. Setting the `ExcludeBrokerCredential` property on `DefaultAzureCredentialOptions` disables this feature.
+
+### Bugs Fixed
+- `DefaultAzureCredential` no longer sends a probe request on each call to `GetToken`. It now only happens on the first call.
+
+### Other Changes
+
+- Marked `VisualStudioCodeCredential` as obsolete because the VS Code Azure Account extension on which this credential relies has been deprecated. See the Azure Account extension deprecation notice [here](https://github.com/microsoft/vscode-azure-account/issues/964).
+
+## 1.14.0-beta.2 (2025-03-11)
+
+### Bugs Fixed
+
+- `VisualStudioCredential` will now correctly fall through to the next credential in the chain when no account is found by Visual Studio. ([#48464](https://github.com/Azure/azure-sdk-for-net/issues/48464))
+
+### Other Changes
+- Updated Microsoft.Identity.Client dependency to version 4.69.1.
+- ManagedIdentityCredential now properly supports CAE.
+- An event is now logged when the `ManagedIdentityCredential` is used directly or indirectly via a credential chain indicating which managed identity source was selected and which `ManagedIdentityId` was specified.
+- Marked `UsernamePasswordCredential` as obsolete because Resource Owner Password Credentials (ROPC) token grant flow is incompatible with multifactor authentication (MFA), which Microsoft Entra ID requires for all tenants. See https://aka.ms/azsdk/identity/mfa for details about MFA enforcement and migration guidance.
 
 ## 1.14.0-beta.1 (2025-02-11)
 

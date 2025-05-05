@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-11-01-preview";
+            _apiVersion = apiVersion ?? "2025-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryNameAvailableResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryNameAvailableResult.DeserializeContainerRegistryNameAvailableResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryNameAvailableResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryNameAvailableResult.DeserializeContainerRegistryNameAvailableResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryListResult.DeserializeContainerRegistryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryListResult.DeserializeContainerRegistryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryListResult.DeserializeContainerRegistryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryListResult.DeserializeContainerRegistryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryData.DeserializeContainerRegistryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryData.DeserializeContainerRegistryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryUsageListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryUsageListResult.DeserializeContainerRegistryUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -829,7 +829,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryUsageListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryUsageListResult.DeserializeContainerRegistryUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryPrivateLinkResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryPrivateLinkResourceListResult.DeserializeContainerRegistryPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -923,7 +923,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryPrivateLinkResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryPrivateLinkResourceListResult.DeserializeContainerRegistryPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -992,7 +992,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryPrivateLinkResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryPrivateLinkResourceData.DeserializeContainerRegistryPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1025,7 +1025,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryPrivateLinkResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryPrivateLinkResourceData.DeserializeContainerRegistryPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1092,7 +1092,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListCredentialsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryListCredentialsResult.DeserializeContainerRegistryListCredentialsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1121,7 +1121,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListCredentialsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryListCredentialsResult.DeserializeContainerRegistryListCredentialsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1192,7 +1192,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListCredentialsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryListCredentialsResult.DeserializeContainerRegistryListCredentialsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1223,7 +1223,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListCredentialsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryListCredentialsResult.DeserializeContainerRegistryListCredentialsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1366,7 +1366,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryListResult.DeserializeContainerRegistryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1393,7 +1393,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryListResult.DeserializeContainerRegistryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1444,7 +1444,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryListResult.DeserializeContainerRegistryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1473,7 +1473,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryListResult.DeserializeContainerRegistryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1526,7 +1526,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryPrivateLinkResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContainerRegistryPrivateLinkResourceListResult.DeserializeContainerRegistryPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1557,7 +1557,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case 200:
                     {
                         ContainerRegistryPrivateLinkResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContainerRegistryPrivateLinkResourceListResult.DeserializeContainerRegistryPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

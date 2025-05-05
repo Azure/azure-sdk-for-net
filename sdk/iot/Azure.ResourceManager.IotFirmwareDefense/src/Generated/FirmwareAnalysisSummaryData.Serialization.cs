@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFirmwareAnalysisSummaryData(document.RootElement, options);
                     }
                 default:

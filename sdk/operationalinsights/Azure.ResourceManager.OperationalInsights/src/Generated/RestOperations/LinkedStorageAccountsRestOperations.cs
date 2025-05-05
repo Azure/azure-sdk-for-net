@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-08-01";
+            _apiVersion = apiVersion ?? "2025-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         OperationalInsightsLinkedStorageAccountsData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OperationalInsightsLinkedStorageAccountsData.DeserializeOperationalInsightsLinkedStorageAccountsData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         OperationalInsightsLinkedStorageAccountsData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OperationalInsightsLinkedStorageAccountsData.DeserializeOperationalInsightsLinkedStorageAccountsData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         OperationalInsightsLinkedStorageAccountsData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OperationalInsightsLinkedStorageAccountsData.DeserializeOperationalInsightsLinkedStorageAccountsData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         OperationalInsightsLinkedStorageAccountsData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OperationalInsightsLinkedStorageAccountsData.DeserializeOperationalInsightsLinkedStorageAccountsData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         LinkedStorageAccountsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LinkedStorageAccountsListResult.DeserializeLinkedStorageAccountsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         LinkedStorageAccountsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LinkedStorageAccountsListResult.DeserializeLinkedStorageAccountsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

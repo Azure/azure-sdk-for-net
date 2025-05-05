@@ -18,20 +18,18 @@ namespace Azure.Generator.StubLibrary
         private readonly ValueExpression _throwNull = ThrowExpression(Null);
         private readonly XmlDocProvider _emptyDocs = new();
 
-        protected override TypeProvider? Visit(TypeProvider type)
+        protected override TypeProvider? VisitType(TypeProvider type)
         {
             if (!type.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public) &&
                 !type.Name.StartsWith("Unknown", StringComparison.Ordinal) &&
                 !type.Name.Equals("MultiPartFormDataBinaryContent", StringComparison.Ordinal))
-            {
                 return null;
-            }
 
             type.Update(xmlDocs: _emptyDocs);
             return type;
         }
 
-        protected override TypeProvider? PostVisit(TypeProvider type)
+        protected override TypeProvider? PostVisitType(TypeProvider type)
         {
             if (type is RestClientProvider &&
                 type.Methods.Count == 0 &&
@@ -45,14 +43,12 @@ namespace Azure.Generator.StubLibrary
             return type;
         }
 
-        protected override ConstructorProvider? Visit(ConstructorProvider constructor)
+        protected override ConstructorProvider? VisitConstructor(ConstructorProvider constructor)
         {
             if (!IsCallingBaseCtor(constructor) &&
                 !IsEffectivelyPublic(constructor.Signature.Modifiers) &&
                 (constructor.EnclosingType is not ModelProvider model || model.DerivedModels.Count == 0))
-            {
                 return null;
-            }
 
             constructor.Update(
                 bodyStatements: null,
@@ -69,7 +65,7 @@ namespace Azure.Generator.StubLibrary
                 constructor.Signature.Initializer.Arguments.Count > 0;
         }
 
-        protected override FieldProvider? Visit(FieldProvider field)
+        protected override FieldProvider? VisitField(FieldProvider field)
         {
             // For ClientOptions, keep the non-public field as this currently represents the latest service version for a client.
             return (field.Modifiers.HasFlag(FieldModifiers.Public) || field.EnclosingType.Implements.Any(i => i.Equals(typeof(ClientPipelineOptions))))
@@ -77,19 +73,15 @@ namespace Azure.Generator.StubLibrary
                 : null;
         }
 
-        protected override MethodProvider? Visit(MethodProvider method)
+        protected override MethodProvider? VisitMethod(MethodProvider method)
         {
             if (method.Signature.ExplicitInterface is null && !IsEffectivelyPublic(method.Signature.Modifiers))
-            {
                 return null;
-            }
 
             method.Signature.Update(modifiers: method.Signature.Modifiers & ~MethodSignatureModifiers.Async);
-
             var docs = method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Implicit)
                 ? method.XmlDocs
                 : _emptyDocs;
-
             method.Update(
                 bodyStatements: null,
                 bodyExpression: _throwNull,
@@ -98,12 +90,10 @@ namespace Azure.Generator.StubLibrary
             return method;
         }
 
-        protected override PropertyProvider? Visit(PropertyProvider property)
+        protected override PropertyProvider? VisitProperty(PropertyProvider property)
         {
             if (!property.IsDiscriminator && !IsEffectivelyPublic(property.Modifiers))
-            {
                 return null;
-            }
 
             var propertyBody = new ExpressionPropertyBody(_throwNull, property.Body.HasSetter ? _throwNull : null);
 
@@ -117,14 +107,10 @@ namespace Azure.Generator.StubLibrary
         private bool IsEffectivelyPublic(MethodSignatureModifiers modifiers)
         {
             if (modifiers.HasFlag(MethodSignatureModifiers.Public))
-            {
                 return true;
-            }
 
             if (modifiers.HasFlag(MethodSignatureModifiers.Protected) && !modifiers.HasFlag(MethodSignatureModifiers.Private))
-            {
                 return true;
-            }
 
             return false;
         }

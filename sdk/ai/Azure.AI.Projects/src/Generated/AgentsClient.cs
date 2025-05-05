@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1163,26 +1162,128 @@ namespace Azure.AI.Projects
             }
         }
 
+        /// <summary> Gets a list of threads that were previously created. </summary>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal virtual async Task<Response<OpenAIPageableListOfAgentThread>> InternalGetThreadsAsync(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await InternalGetThreadsAsync(limit, order?.ToString(), after, before, context).ConfigureAwait(false);
+            return Response.FromValue(OpenAIPageableListOfAgentThread.FromResponse(response), response);
+        }
+
+        /// <summary> Gets a list of threads that were previously created. </summary>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal virtual Response<OpenAIPageableListOfAgentThread> InternalGetThreads(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = InternalGetThreads(limit, order?.ToString(), after, before, context);
+            return Response.FromValue(OpenAIPageableListOfAgentThread.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a list of threads that were previously created.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="InternalGetThreadsAsync(int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> InternalGetThreadsAsync(int? limit, string order, string after, string before, RequestContext context)
+        {
+            using var scope = ClientDiagnostics.CreateScope("AgentsClient.InternalGetThreads");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateInternalGetThreadsRequest(limit, order, after, before, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a list of threads that were previously created.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="InternalGetThreads(int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response InternalGetThreads(int? limit, string order, string after, string before, RequestContext context)
+        {
+            using var scope = ClientDiagnostics.CreateScope("AgentsClient.InternalGetThreads");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateInternalGetThreadsRequest(limit, order, after, before, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Creates a new message on a specified thread. </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="role">
         /// The role of the entity that is creating the message. Allowed values include:
-        /// - `user`: Indicates the message is sent by an actual user and should be used in most
-        /// cases to represent user-generated messages.
-        /// - `assistant`: Indicates the message is generated by the agent. Use this value to insert
-        /// messages from the agent into the
-        /// conversation.
+        /// `user`, which indicates the message is sent by an actual user (and should be
+        /// used in most cases to represent user-generated messages), and `assistant`,
+        /// which indicates the message is generated by the agent (use this value to insert
+        /// messages from the agent into the conversation).
         /// </param>
         /// <param name="content">
-        /// The textual content of the initial message. Currently, robust input including images and annotated text may only be provided via
-        /// a separate call to the create message API.
+        /// The content of the initial message. This may be a basic string (if you only
+        /// need text) or an array of typed content blocks (for example, text, image_file,
+        /// image_url, and so on).
         /// </param>
         /// <param name="attachments"> A list of files attached to the message, and the tools they should be added to. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ThreadMessage>> CreateMessageAsync(string threadId, MessageRole role, string content, IEnumerable<MessageAttachment> attachments = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreadMessage>> CreateMessageAsync(string threadId, MessageRole role, BinaryData content, IEnumerable<MessageAttachment> attachments = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
@@ -1197,22 +1298,22 @@ namespace Azure.AI.Projects
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="role">
         /// The role of the entity that is creating the message. Allowed values include:
-        /// - `user`: Indicates the message is sent by an actual user and should be used in most
-        /// cases to represent user-generated messages.
-        /// - `assistant`: Indicates the message is generated by the agent. Use this value to insert
-        /// messages from the agent into the
-        /// conversation.
+        /// `user`, which indicates the message is sent by an actual user (and should be
+        /// used in most cases to represent user-generated messages), and `assistant`,
+        /// which indicates the message is generated by the agent (use this value to insert
+        /// messages from the agent into the conversation).
         /// </param>
         /// <param name="content">
-        /// The textual content of the initial message. Currently, robust input including images and annotated text may only be provided via
-        /// a separate call to the create message API.
+        /// The content of the initial message. This may be a basic string (if you only
+        /// need text) or an array of typed content blocks (for example, text, image_file,
+        /// image_url, and so on).
         /// </param>
         /// <param name="attachments"> A list of files attached to the message, and the tools they should be added to. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ThreadMessage> CreateMessage(string threadId, MessageRole role, string content, IEnumerable<MessageAttachment> attachments = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual Response<ThreadMessage> CreateMessage(string threadId, MessageRole role, BinaryData content, IEnumerable<MessageAttachment> attachments = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
@@ -1233,7 +1334,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateMessageAsync(string,MessageRole,string,IEnumerable{MessageAttachment},IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateMessageAsync(string,MessageRole,BinaryData,IEnumerable{MessageAttachment},IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1274,7 +1375,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateMessage(string,MessageRole,string,IEnumerable{MessageAttachment},IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateMessage(string,MessageRole,BinaryData,IEnumerable{MessageAttachment},IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -2973,7 +3074,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UploadFileAsync(Stream,AgentFilePurpose,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UploadFileAsync(UploadFileRequest,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -3012,7 +3113,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UploadFile(Stream,AgentFilePurpose,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UploadFile(UploadFileRequest,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -5083,6 +5184,42 @@ namespace Azure.AI.Projects
             return message;
         }
 
+        internal HttpMessage CreateInternalGetThreadsRequest(int? limit, string order, string after, string before, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/agents/v1.0/subscriptions/", false);
+            uri.AppendRaw(_subscriptionId, true);
+            uri.AppendRaw("/resourceGroups/", false);
+            uri.AppendRaw(_resourceGroupName, true);
+            uri.AppendRaw("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendRaw(_projectName, true);
+            uri.AppendPath("/threads", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (limit != null)
+            {
+                uri.AppendQuery("limit", limit.Value, true);
+            }
+            if (order != null)
+            {
+                uri.AppendQuery("order", order, true);
+            }
+            if (after != null)
+            {
+                uri.AppendQuery("after", after, true);
+            }
+            if (before != null)
+            {
+                uri.AppendQuery("before", before, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
         internal HttpMessage CreateCreateMessageRequest(string threadId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -5126,7 +5263,7 @@ namespace Azure.AI.Projects
             uri.AppendQuery("api-version", _apiVersion, true);
             if (runId != null)
             {
-                uri.AppendQuery("runId", runId, true);
+                uri.AppendQuery("run_id", runId, true);
             }
             if (limit != null)
             {
@@ -5562,7 +5699,7 @@ namespace Azure.AI.Projects
             uri.AppendPath("/content", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", "application/octet-stream");
             return message;
         }
 

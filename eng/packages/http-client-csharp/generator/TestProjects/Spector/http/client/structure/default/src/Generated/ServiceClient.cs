@@ -10,7 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
-using Client.Structure.Service.Models;
 
 namespace Client.Structure.Service
 {

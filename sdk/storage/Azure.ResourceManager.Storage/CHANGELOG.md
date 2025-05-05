@@ -1,5 +1,28 @@
 # Release History
 
+## 1.5.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.4.2 (2025-04-25)
+
+### Breaking Changes
+
+- Fixed issue https://github.com/Azure/azure-sdk-for-net/issues/49612.
+
+## 1.4.1 (2025-04-24)
+
+### Features Added
+
+- Added "Accepted" to StorageTaskAssignment properties ProvisioningState.
+- Updated doc link in API description.
+
 ## 1.4.0 (2025-02-18)
 
 ### Features Added

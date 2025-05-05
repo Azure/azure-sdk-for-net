@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Messaging;
 using Newtonsoft.Json.Linq;
@@ -1394,6 +1395,122 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual(200, mediaStreamingFailed.ResultInformation?.Code);
                 Assert.AreEqual(MediaStreamingStatus.MediaStreamingStarted, mediaStreamingFailed.MediaStreamingUpdate.MediaStreamingStatus);
                 Assert.AreEqual(MediaStreamingStatusDetails.SubscriptionStarted, mediaStreamingFailed.MediaStreamingUpdate.MediaStreamingStatusDetails);
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
+        public void IncomingCallEventParsed_XMS_Header_Test()
+        {
+            // arrange
+            var to = new CommunicationUserIdentifier("8:acs:12345");
+            var from = new CommunicationUserIdentifier("8:acs:54321");
+            var callerDisplayName = "callerDisplayName";
+            var serverCallId = "serverCallId";
+
+            Dictionary<string, string> sipHeaders = new Dictionary<string, string>();
+            Dictionary<string, string> voipHeaders = new Dictionary<string, string>();
+            var customContext = new CustomCallingContext(sipHeaders, voipHeaders);
+            customContext.AddSipX("Test-SIP-Header", "TestSIPValue", CustomCallingContext.SipHeaderPrefix.XMSCustom);
+            customContext.AddVoip("Test-VoIP-Header", "TestVoIPValue");
+
+            var incomingCallContext = "incomingCallContext";
+            var onBehalfOfCallee = from;
+            var correlationId = "correlationId";
+            var @event = CallAutomationModelFactory.IncomingCall(to, from, callerDisplayName, serverCallId, customContext, incomingCallContext, onBehalfOfCallee, correlationId);
+
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+
+            // act
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.IncomingCall");
+            var IncomingCall = (IncomingCall)parsedEvent;
+
+            // assert
+            if (parsedEvent is IncomingCall)
+            {
+                Assert.AreEqual(to.RawId, IncomingCall.To.RawId);
+                Assert.AreEqual(from.RawId, IncomingCall.From.RawId);
+                Assert.AreEqual(callerDisplayName, IncomingCall.CallerDisplayName);
+                Assert.AreEqual(serverCallId, IncomingCall.ServerCallId);
+
+                Assert.AreEqual(customContext.SipHeaders.First().Key, IncomingCall.CustomContext.SipHeaders.First().Key);
+                Assert.AreEqual(customContext.SipHeaders.First().Value, IncomingCall.CustomContext.SipHeaders.First().Value);
+                Assert.AreEqual(customContext.VoipHeaders.First().Key, IncomingCall.CustomContext.VoipHeaders.First().Key);
+                Assert.AreEqual(customContext.VoipHeaders.First().Value, IncomingCall.CustomContext.VoipHeaders.First().Value);
+
+                Assert.AreEqual(incomingCallContext, IncomingCall.IncomingCallContext);
+                Assert.AreEqual(onBehalfOfCallee.RawId, IncomingCall.OnBehalfOfCallee.RawId);
+                Assert.AreEqual(correlationId, IncomingCall.CorrelationId);
+
+                var sipHeaderKey = IncomingCall.CustomContext.SipHeaders.First().Key;
+                var sipHeaderValue = IncomingCall.CustomContext.SipHeaders.First().Value;
+                Console.WriteLine($"SIP Header -> Key: {sipHeaderKey}, Value: {sipHeaderValue}");
+
+                var voipHeaderKey = IncomingCall.CustomContext.VoipHeaders.First().Key;
+                var voipHeaderValue = IncomingCall.CustomContext.VoipHeaders.First().Value;
+                Console.WriteLine($"VoIP Header -> Key: {voipHeaderKey}, Value: {voipHeaderValue}");
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
+        public void IncomingCallEventParsed_X_Header_Test()
+        {
+            // arrange
+            var to = new CommunicationUserIdentifier("8:acs:12345");
+            var from = new CommunicationUserIdentifier("8:acs:54321");
+            var callerDisplayName = "callerDisplayName";
+            var serverCallId = "serverCallId";
+
+            Dictionary<string, string> sipHeaders = new Dictionary<string, string>();
+            Dictionary<string, string> voipHeaders = new Dictionary<string, string>();
+            var customContext = new CustomCallingContext(sipHeaders, voipHeaders);
+            customContext.AddSipX("Test-SIP-Header", "TestSIPValue", CustomCallingContext.SipHeaderPrefix.X);
+            customContext.AddVoip("Test-VoIP-Header", "TestVoIPValue");
+
+            var incomingCallContext = "incomingCallContext";
+            var onBehalfOfCallee = from;
+            var correlationId = "correlationId";
+            var @event = CallAutomationModelFactory.IncomingCall(to, from, callerDisplayName, serverCallId, customContext, incomingCallContext, onBehalfOfCallee, correlationId);
+
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+
+            // act
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.IncomingCall");
+            var IncomingCall = (IncomingCall)parsedEvent;
+
+            // assert
+            if (parsedEvent is IncomingCall)
+            {
+                Assert.AreEqual(to.RawId, IncomingCall.To.RawId);
+                Assert.AreEqual(from.RawId, IncomingCall.From.RawId);
+                Assert.AreEqual(callerDisplayName, IncomingCall.CallerDisplayName);
+                Assert.AreEqual(serverCallId, IncomingCall.ServerCallId);
+
+                Assert.AreEqual(customContext.SipHeaders.First().Key, IncomingCall.CustomContext.SipHeaders.First().Key);
+                Assert.AreEqual(customContext.SipHeaders.First().Value, IncomingCall.CustomContext.SipHeaders.First().Value);
+                Assert.AreEqual(customContext.VoipHeaders.First().Key, IncomingCall.CustomContext.VoipHeaders.First().Key);
+                Assert.AreEqual(customContext.VoipHeaders.First().Value, IncomingCall.CustomContext.VoipHeaders.First().Value);
+
+                Assert.AreEqual(incomingCallContext, IncomingCall.IncomingCallContext);
+                Assert.AreEqual(onBehalfOfCallee.RawId, IncomingCall.OnBehalfOfCallee.RawId);
+                Assert.AreEqual(correlationId, IncomingCall.CorrelationId);
+
+                var sipHeaderKey = IncomingCall.CustomContext.SipHeaders.First().Key;
+                var sipHeaderValue = IncomingCall.CustomContext.SipHeaders.First().Value;
+                Console.WriteLine($"SIP Header -> Key: {sipHeaderKey}, Value: {sipHeaderValue}");
+
+                var voipHeaderKey = IncomingCall.CustomContext.VoipHeaders.First().Key;
+                var voipHeaderValue = IncomingCall.CustomContext.VoipHeaders.First().Value;
+                Console.WriteLine($"VoIP Header -> Key: {voipHeaderKey}, Value: {voipHeaderValue}");
             }
             else
             {

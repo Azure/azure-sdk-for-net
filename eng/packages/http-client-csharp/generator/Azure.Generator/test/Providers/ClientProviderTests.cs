@@ -22,9 +22,10 @@ namespace Azure.Generator.Tests.Providers
         private const string KeyAuthCategory = "WithKeyAuth";
         private const string OAuth2Category = "WithOAuth2";
         private const string TestClientName = "TestClient";
-        private static readonly InputClient _animalClient = new("animal", "Samples", "AnimalClient description", null, [], [], TestClientName);
-        private static readonly InputClient _dogClient = new("dog", "Samples", "DogClient description", null, [], [], _animalClient.Name);
-        private static readonly InputClient _huskyClient = new("husky", "Samples", "HuskyClient description", null, [], [], _dogClient.Name);
+        private static readonly InputClient _testClient = new(TestClientName, "Samples", "", "TestClient description", null, [], [], _testClient, []);
+        private static readonly InputClient _animalClient = new("animal", "Samples", "", "AnimalClient description", null, [], [], _testClient, []);
+        private static readonly InputClient _dogClient = new("dog", "Samples", "", "DogClient description", null, [], [], _animalClient, []);
+        private static readonly InputClient _huskyClient = new("husky", "Samples", "", "HuskyClient description", null, [], [], _dogClient, []);
 
         private bool _containsSubClients;
         private bool _hasKeyAuth;
@@ -169,14 +170,14 @@ namespace Azure.Generator.Tests.Providers
                     InputFactory.Parameter(
                         "optionalParam",
                         InputPrimitiveType.String,
-                        location: RequestLocation.None,
-                        kind: InputOperationParameterKind.Client),
+                        location: InputRequestLocation.None,
+                        kind: InputParameterKind.Client),
                     InputFactory.Parameter(
                         KnownParameters.Endpoint.Name,
                         InputPrimitiveType.String,
-                        location: RequestLocation.None,
+                        location: InputRequestLocation.None,
                         defaultValue: InputFactory.Constant.String("someValue"),
-                        kind: InputOperationParameterKind.Client,
+                        kind: InputParameterKind.Client,
                         isEndpoint: true)
                 }).SetProperty("caseName", "WithDefault");
                 // scenario where endpoint is required
@@ -185,15 +186,15 @@ namespace Azure.Generator.Tests.Providers
                     InputFactory.Parameter(
                         KnownParameters.Endpoint.Name,
                         InputPrimitiveType.String,
-                        location: RequestLocation.None,
-                        kind: InputOperationParameterKind.Client,
+                        location: InputRequestLocation.None,
+                        kind: InputParameterKind.Client,
                         isRequired: true,
                         isEndpoint: true),
                     InputFactory.Parameter(
                         "optionalParam",
                         InputPrimitiveType.String,
-                        location: RequestLocation.None,
-                        kind: InputOperationParameterKind.Client)
+                        location: InputRequestLocation.None,
+                        kind: InputParameterKind.Client)
                 }).SetProperty("caseName", "WithRequired");
             }
         }
@@ -207,13 +208,13 @@ namespace Azure.Generator.Tests.Providers
                     InputFactory.Parameter(
                         "optionalParam",
                         InputPrimitiveType.String,
-                        location: RequestLocation.None,
-                        kind: InputOperationParameterKind.Client),
+                        location: InputRequestLocation.None,
+                        kind: InputParameterKind.Client),
                     InputFactory.Parameter(
                         KnownParameters.Endpoint.Name,
                         InputPrimitiveType.String,
-                        location:RequestLocation.None,
-                        kind: InputOperationParameterKind.Client,
+                        location: InputRequestLocation.None,
+                        kind: InputParameterKind.Client,
                         isEndpoint: true)
                 });
                 yield return new TestCaseData(new List<InputParameter>
@@ -222,30 +223,30 @@ namespace Azure.Generator.Tests.Providers
                     InputFactory.Parameter(
                         "optionalNullableParam",
                         InputPrimitiveType.String,
-                        location: RequestLocation.None,
+                        location: InputRequestLocation.None,
                         defaultValue: InputFactory.Constant.String("someValue"),
-                        kind: InputOperationParameterKind.Client,
+                        kind: InputParameterKind.Client,
                         isRequired: false),
                     InputFactory.Parameter(
                         "requiredParam2",
                         InputPrimitiveType.String,
-                        location: RequestLocation.None,
+                        location: InputRequestLocation.None,
                         defaultValue: InputFactory.Constant.String("someValue"),
-                        kind: InputOperationParameterKind.Client,
+                        kind: InputParameterKind.Client,
                         isRequired: true),
                     InputFactory.Parameter(
                         "requiredParam3",
                         InputPrimitiveType.Int64,
-                        location: RequestLocation.None,
+                        location: InputRequestLocation.None,
                         defaultValue: InputFactory.Constant.Int64(2),
-                        kind: InputOperationParameterKind.Client,
+                        kind: InputParameterKind.Client,
                         isRequired: true),
                     InputFactory.Parameter(
                         KnownParameters.Endpoint.Name,
                         InputPrimitiveType.String,
-                        location: RequestLocation.None,
+                        location: InputRequestLocation.None,
                         defaultValue: null,
-                        kind: InputOperationParameterKind.Client,
+                        kind: InputParameterKind.Client,
                         isEndpoint: true)
                 });
             }

@@ -61,7 +61,7 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.AreEqual(1, sink.Staged.Count);
             Assert.AreEqual(s_response, info);
-            Assert.AreEqual(2, testPool.TotalRents); // while conceptually there is one rental, the second rental occurs upon checking for stream end on a Read() call
+            Assert.AreEqual(1, testPool.TotalRents);
             Assert.AreEqual(0, testPool.CurrentCount);
             AssertStaged(sink, content);
         }
@@ -107,14 +107,14 @@ namespace Azure.Storage.Blobs.Test
             clientMock.SetupGet(c => c.ClientConfiguration).CallBase();
             SetupInternalStaging(clientMock, sink);
 
-            var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 20}, s_validationEmpty, arrayPool: testPool);
+            var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 10}, s_validationEmpty, arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(2, sink.Staged.Count);
             Assert.AreEqual(s_response, info);
             AssertStaged(sink, content);
 
-            Assert.AreEqual(3, testPool.TotalRents);
+            Assert.AreEqual(2, testPool.TotalRents);
             Assert.AreEqual(0, testPool.CurrentCount);
         }
 
@@ -137,7 +137,7 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.AreEqual(1, sink.Staged.Count);
             Assert.AreEqual(s_response, info);
-            Assert.AreEqual(2, testPool.TotalRents); // while conceptually there is one rental, the second rental occurs upon checking for stream end on a Read() call
+            Assert.AreEqual(1, testPool.TotalRents);
             Assert.AreEqual(0, testPool.CurrentCount);
             AssertStaged(sink, content);
         }
@@ -161,7 +161,7 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.AreEqual(s_response, info);
             Assert.AreEqual(0, testPool.CurrentCount);
-            Assert.AreEqual(41, testPool.TotalRents);
+            Assert.AreEqual(20, testPool.TotalRents);
             AssertStaged(sink, content);
 
             foreach (byte[] bytes in sink.Staged.Values.Select(val => val.Data))
@@ -186,14 +186,14 @@ namespace Azure.Storage.Blobs.Test
             clientMock.SetupGet(c => c.ClientConfiguration).CallBase();
             SetupInternalStaging(clientMock, sink);
 
-            var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 20}, s_validationEmpty, arrayPool: testPool);
+            var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 10}, s_validationEmpty, arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(2, sink.Staged.Count);
             // First two should be merged
             CollectionAssert.AreEqual(new byte[] {0, 0, 0, 0, 0, 1, 1, 1, 1, 1 }, sink.Staged[sink.Blocks.First()].Data);
             Assert.AreEqual(s_response, info);
-            Assert.AreEqual(3, testPool.TotalRents);
+            Assert.AreEqual(2, testPool.TotalRents);
             Assert.AreEqual(0, testPool.CurrentCount);
             AssertStaged(sink, content);
         }
@@ -212,7 +212,7 @@ namespace Azure.Storage.Blobs.Test
             clientMock.SetupGet(c => c.ClientConfiguration).CallBase();
             SetupInternalStaging(clientMock, sink);
 
-            var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 20 }, s_validationEmpty);
+            var uploader = new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(BlockBlobClient.GetPartitionedUploaderBehaviors(clientMock.Object), new StorageTransferOptions() { MaximumTransferLength = 10 }, s_validationEmpty);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(2, sink.Staged.Count);

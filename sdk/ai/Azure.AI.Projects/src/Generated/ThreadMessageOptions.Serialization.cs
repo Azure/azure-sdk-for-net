@@ -37,7 +37,14 @@ namespace Azure.AI.Projects
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToString());
             writer.WritePropertyName("content"u8);
-            writer.WriteStringValue(Content);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Content);
+#else
+            using (JsonDocument document = JsonDocument.Parse(Content, ModelSerializationExtensions.JsonDocumentOptions))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsCollectionDefined(Attachments))
             {
                 if (Attachments != null)
@@ -81,7 +88,7 @@ namespace Azure.AI.Projects
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -111,7 +118,7 @@ namespace Azure.AI.Projects
                 return null;
             }
             MessageRole role = default;
-            string content = default;
+            BinaryData content = default;
             IList<MessageAttachment> attachments = default;
             IDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -125,7 +132,7 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("content"u8))
                 {
-                    content = property.Value.GetString();
+                    content = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("attachments"u8))
@@ -186,7 +193,7 @@ namespace Azure.AI.Projects
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeThreadMessageOptions(document.RootElement, options);
                     }
                 default:
@@ -200,7 +207,7 @@ namespace Azure.AI.Projects
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ThreadMessageOptions FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeThreadMessageOptions(document.RootElement);
         }
 

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-01";
+            _apiVersion = apiVersion ?? "2022-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Create a new CloudEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Create a new CloudEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Get a given CloudEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         CloudEndpointData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudEndpointData.DeserializeCloudEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Get a given CloudEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         CloudEndpointData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudEndpointData.DeserializeCloudEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Delete a given CloudEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Delete a given CloudEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Get a CloudEndpoint List. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         CloudEndpointArray value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudEndpointArray.DeserializeCloudEndpointArray(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Get a CloudEndpoint List. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         CloudEndpointArray value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudEndpointArray.DeserializeCloudEndpointArray(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Pre Backup a given CloudEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Pre Backup a given CloudEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Post Backup a given CloudEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Post Backup a given CloudEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Pre Restore a given CloudEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -760,7 +760,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Pre Restore a given CloudEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Restore Heartbeat a given CloudEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -863,7 +863,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Restore Heartbeat a given CloudEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -939,7 +939,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Post Restore a given CloudEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -970,7 +970,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Post Restore a given CloudEndpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -1049,7 +1049,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Triggers detection of changes performed on Azure File share connected to the specified Azure File Sync Cloud Endpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -1080,7 +1080,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Triggers detection of changes performed on Azure File share connected to the specified Azure File Sync Cloud Endpoint. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -1155,7 +1155,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Get the AFS file share metadata signing certificate public keys. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -1178,7 +1178,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         CloudEndpointAfsShareMetadataCertificatePublicKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudEndpointAfsShareMetadataCertificatePublicKeys.DeserializeCloudEndpointAfsShareMetadataCertificatePublicKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1188,7 +1188,7 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Get the AFS file share metadata signing certificate public keys. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -1211,7 +1211,7 @@ namespace Azure.ResourceManager.StorageSync
                 case 200:
                     {
                         CloudEndpointAfsShareMetadataCertificatePublicKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudEndpointAfsShareMetadataCertificatePublicKeys.DeserializeCloudEndpointAfsShareMetadataCertificatePublicKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.ServiceNetworking
                 writer.WritePropertyName("securityPolicyConfigurations"u8);
                 writer.WriteObjectValue(SecurityPolicyConfigurations, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && Optional.IsDefined(TrafficControllerProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(TrafficControllerProvisioningState.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             IReadOnlyList<SubResource> associations = default;
             IReadOnlyList<SubResource> securityPolicies = default;
             SecurityPolicyConfigurations securityPolicyConfigurations = default;
-            ProvisioningState? provisioningState = default;
+            ServiceNetworkingProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new ServiceNetworkingProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTrafficControllerData(document.RootElement, options);
                     }
                 default:

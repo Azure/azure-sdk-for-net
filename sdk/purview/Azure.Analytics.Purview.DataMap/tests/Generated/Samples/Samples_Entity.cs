@@ -106,9 +106,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount.core.windows.net"),
-["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
-["description"] = null,
-["publicAccessLevel"] = null
+["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount")
 },
                     TypeName = "azure_storage_account",
                     CustomAttributes =
@@ -140,9 +138,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount.core.windows.net"),
-["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
-["description"] = null,
-["publicAccessLevel"] = null
+["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount")
 },
                     TypeName = "azure_storage_account",
                     CustomAttributes =
@@ -280,9 +276,7 @@ info = "Example Owner Info",
 ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount.core.windows.net"),
-["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
-["description"] = null,
-["publicAccessLevel"] = null
+["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount")
 },
                     TypeName = "azure_storage_account",
                     CreatedBy = "ExampleCreator",
@@ -291,16 +285,22 @@ info = "Example Owner Info",
                     Version = 0L,
                     Contacts =
 {
-["Expert"] = {new ContactInfo
+["Expert"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Expert Info",
-}},
-["Owner"] = {new ContactInfo
+}
+},
+["Owner"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Owner Info",
-}}
+}
+}
 },
                 },
             };
@@ -326,9 +326,7 @@ Info = "Example Owner Info",
 ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount.core.windows.net"),
-["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
-["description"] = null,
-["publicAccessLevel"] = null
+["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount")
 },
                     TypeName = "azure_storage_account",
                     CreatedBy = "ExampleCreator",
@@ -337,16 +335,22 @@ Info = "Example Owner Info",
                     Version = 0L,
                     Contacts =
 {
-["Expert"] = {new ContactInfo
+["Expert"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Expert Info",
-}},
-["Owner"] = {new ContactInfo
+}
+},
+["Owner"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Owner Info",
-}}
+}
+}
 },
                 },
             };
@@ -451,9 +455,7 @@ Info = "Example Owner Info",
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount.core.windows.net"),
 ["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
-["description"] = null,
-["userDescription"] = BinaryData.FromObjectAsJson("<div><b>testing</b></div>"),
-["publicAccessLevel"] = null
+["userDescription"] = BinaryData.FromObjectAsJson("<div><b>testing</b></div>")
 },
                     TypeName = "azure_storage_account",
                     CreatedBy = "ExampleCreator",
@@ -489,9 +491,7 @@ Info = "Example Owner Info",
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount.core.windows.net"),
 ["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
-["description"] = null,
-["userDescription"] = BinaryData.FromObjectAsJson("<div><b>testing</b></div>"),
-["publicAccessLevel"] = null
+["userDescription"] = BinaryData.FromObjectAsJson("<div><b>testing</b></div>")
 },
                     TypeName = "azure_storage_account",
                     CreatedBy = "ExampleCreator",
@@ -632,9 +632,7 @@ info = "Example Owner Info",
 ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("exampleaccount"),
-["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
-["description"] = null,
-["publicAccessLevel"] = null
+["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount")
 },
                     TypeName = "azure_storage_account",
                     CreatedBy = "ExampleCreator",
@@ -643,16 +641,22 @@ info = "Example Owner Info",
                     Version = 0L,
                     Contacts =
 {
-["Expert"] = {new ContactInfo
+["Expert"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Expert Info",
-}},
-["Owner"] = {new ContactInfo
+}
+},
+["Owner"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Owner Info",
-}}
+}
+}
 },
                 },
             };
@@ -678,9 +682,7 @@ Info = "Example Owner Info",
 ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("exampleaccount"),
-["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
-["description"] = null,
-["publicAccessLevel"] = null
+["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount")
 },
                     TypeName = "azure_storage_account",
                     CreatedBy = "ExampleCreator",
@@ -689,16 +691,22 @@ Info = "Example Owner Info",
                     Version = 0L,
                     Contacts =
 {
-["Expert"] = {new ContactInfo
+["Expert"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Expert Info",
-}},
-["Owner"] = {new ContactInfo
+}
+},
+["Owner"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Owner Info",
-}}
+}
+}
 },
                 },
             };
@@ -958,9 +966,7 @@ Attributes =
 ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("exampleaccount1"),
-["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount1"),
-["description"] = null,
-["publicAccessLevel"] = null
+["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount1")
 },
 TypeName = "azure_storage_account",
 CreatedBy = "ExampleCreator",
@@ -969,16 +975,22 @@ UpdatedBy = "ExampleUpdator",
 Version = 0L,
 Contacts =
 {
-["Expert"] = {new ContactInfo
+["Expert"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Expert Info",
-}},
-["Owner"] = {new ContactInfo
+}
+},
+["Owner"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Owner Info",
-}}
+}
+}
 },
 }, new AtlasEntity
 {
@@ -989,8 +1001,7 @@ Attributes =
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("exampleaccount2"),
 ["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount2"),
-["description"] = BinaryData.FromObjectAsJson("Example Description"),
-["publicAccessLevel"] = null
+["description"] = BinaryData.FromObjectAsJson("Example Description")
 },
 TypeName = "azure_storage_account",
 CreatedBy = "ExampleCreator",
@@ -999,16 +1010,22 @@ UpdatedBy = "ExampleUpdator",
 Version = 0L,
 Contacts =
 {
-["Expert"] = {new ContactInfo
+["Expert"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Expert Info",
-}},
-["Owner"] = {new ContactInfo
+}
+},
+["Owner"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Owner Info",
-}}
+}
+}
 },
 }},
             };
@@ -1034,9 +1051,7 @@ Attributes =
 ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("exampleaccount1"),
-["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount1"),
-["description"] = null,
-["publicAccessLevel"] = null
+["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount1")
 },
 TypeName = "azure_storage_account",
 CreatedBy = "ExampleCreator",
@@ -1045,16 +1060,22 @@ UpdatedBy = "ExampleUpdator",
 Version = 0L,
 Contacts =
 {
-["Expert"] = {new ContactInfo
+["Expert"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Expert Info",
-}},
-["Owner"] = {new ContactInfo
+}
+},
+["Owner"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Owner Info",
-}}
+}
+}
 },
 }, new AtlasEntity
 {
@@ -1065,8 +1086,7 @@ Attributes =
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("exampleaccount2"),
 ["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount2"),
-["description"] = BinaryData.FromObjectAsJson("Example Description"),
-["publicAccessLevel"] = null
+["description"] = BinaryData.FromObjectAsJson("Example Description")
 },
 TypeName = "azure_storage_account",
 CreatedBy = "ExampleCreator",
@@ -1075,16 +1095,22 @@ UpdatedBy = "ExampleUpdator",
 Version = 0L,
 Contacts =
 {
-["Expert"] = {new ContactInfo
+["Expert"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Expert Info",
-}},
-["Owner"] = {new ContactInfo
+}
+},
+["Owner"] = new ContactInfo[]
+{
+new ContactInfo
 {
 Id = "30435ff9-9b96-44af-a5a9-e05c8b1ae2df",
 Info = "Example Owner Info",
-}}
+}
+}
 },
 }},
             };
