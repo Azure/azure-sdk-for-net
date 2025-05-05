@@ -1,7 +1,7 @@
 # Troubleshooting Azure.Projects
 
 Use this file to find solutions to common issues related to Azure.Projects developmnet.
-You can search this file for issues you are experiences,
+You can search this file for issues you are experiencing,
 or better feed it to your Copilot and ask it to help you with the issue. 
 
 ## Provisioning Issues
