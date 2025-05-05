@@ -23,8 +23,8 @@ namespace MgmtTypeSpec
     /// <summary></summary>
     public partial class FooCollection : ArmCollection, IEnumerable<FooResource>, IAsyncEnumerable<FooResource>
     {
-        private ClientDiagnostics _fooClientDiagnostics;
-        private Foos _fooRestClient;
+        private readonly ClientDiagnostics _fooClientDiagnostics;
+        private readonly Foos _fooRestClient;
 
         /// <summary> Initializes a new instance of FooCollection for mocking. </summary>
         protected FooCollection()

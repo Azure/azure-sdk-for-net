@@ -20,9 +20,9 @@ namespace MgmtTypeSpec
     /// <summary></summary>
     public partial class FooResource : ArmResource
     {
-        private FooData _data;
-        private ClientDiagnostics _fooClientDiagnostics;
-        private Foos _fooRestClient;
+        private readonly ClientDiagnostics _fooClientDiagnostics;
+        private readonly Foos _fooRestClient;
+        private readonly FooData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/foos";
 
