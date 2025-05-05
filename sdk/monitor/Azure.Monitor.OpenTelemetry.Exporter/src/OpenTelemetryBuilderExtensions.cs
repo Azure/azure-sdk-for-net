@@ -92,7 +92,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 serviceProvider!.EnsureSingleUseAzureMonitorExporterRegistration();
 
                 var exporterOptions = serviceProvider!.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(Options.DefaultName);
-                meterProviderBuilder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions))
+                meterProviderBuilder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions, isLiveMetricsSupported: true))
                     { TemporalityPreference = MetricReaderTemporalityPreference.Delta });
             });
 

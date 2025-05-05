@@ -18,12 +18,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private AzureMonitorResource? _resource;
         private bool _disposed;
 
-        public AzureMonitorMetricExporter(AzureMonitorExporterOptions options) : this(TransmitterFactory.Instance.Get(options))
+        public AzureMonitorMetricExporter(AzureMonitorExporterOptions options) : this(options, TransmitterFactory.Instance.Get(options))
         {
         }
 
-        internal AzureMonitorMetricExporter(ITransmitter transmitter)
+        internal AzureMonitorMetricExporter(AzureMonitorExporterOptions options, bool isLiveMetricsSupported)
+            : this(options, TransmitterFactory.Instance.Get(options), isLiveMetricsSupported)
         {
+        }
+
+        internal AzureMonitorMetricExporter(AzureMonitorExporterOptions options, ITransmitter transmitter, bool isLiveMetricsSupported = false)
+        {
+            if (isLiveMetricsSupported == false && options.EnableLiveMetrics == true)
+            {
+                AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(name: nameof(AzureMonitorMetricExporter));
+            }
+
             _transmitter = transmitter;
             _instrumentationKey = transmitter.InstrumentationKey;
         }
