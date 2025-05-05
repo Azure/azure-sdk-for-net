@@ -18,5 +18,3 @@ See the [Azure App Configuration pricing page](https://azure.microsoft.com/prici
 AppConfigConnectionStore connections = new(AppConfigurationFeature.SkuName.Developer);
 ProjectInfrastructure infrastructure = new(connections);
 ```
-
-
