@@ -95,14 +95,11 @@ end {
 }
 
 begin {
-    # https://review.learn.microsoft.com/help/platform/metadata-taxonomies?branch=main#product
+    # https://taxonomy.learn.microsoft.com/TaxonomyServiceAdminPage/#/taxonomy/
     $productSlugs = @(
         "ai-builder",
         "aspnet",
         "aspnet-core",
-        "azure-active-directory",
-        "azure-active-directory-b2c",
-        "azure-active-directory-domain",
         "azure-advisor",
         "azure-ai-content-safety",
         "azure-analysis-services",
@@ -365,6 +362,16 @@ begin {
         "dynamics-talent-onboard",
         "ef-core",
         "ef6",
+        "entra",
+        "entra-external-id",
+        "entra-id",
+        "entra-id-protection",
+        "entra-identity-governance",
+        "entra-internet-access",
+        "entra-permissions-management",
+        "entra-private-access",
+        "entra-verified-id",
+        "entra-workload-identities",
         "expression-studio",
         "language-service",
         "m365-ems",
