@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="extendedProperties"> Key-Value pair representing migration properties for domains. </param>
         /// <param name="validationProperties"> Values the customer needs to validate domain ownership. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string profileName, FrontDoorCustomDomainHttpsContent tlsSettings, WritableSubResource dnsZone, FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId preValidatedCustomDomainResource, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, DomainValidationState? domainValidationState, string hostName, IDictionary<string, string> extendedProperties, DomainValidationProperties validationProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal FrontDoorCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string profileName, FrontDoorCustomDomainHttpsContent tlsSettings, WritableSubResource dnsZone, WritableSubResource preValidatedCustomDomainResource, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, DomainValidationState? domainValidationState, string hostName, IDictionary<string, string> extendedProperties, DomainValidationProperties validationProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProfileName = profileName;
             TlsSettings = tlsSettings;
@@ -108,15 +108,15 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Resource reference to the Azure resource where custom domain ownership was prevalidated. </summary>
-        internal FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId PreValidatedCustomDomainResource { get; set; }
-        /// <summary> Resource ID. </summary>
+        internal WritableSubResource PreValidatedCustomDomainResource { get; set; }
+        /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier PreValidatedCustomDomainResourceId
         {
             get => PreValidatedCustomDomainResource is null ? default : PreValidatedCustomDomainResource.Id;
             set
             {
                 if (PreValidatedCustomDomainResource is null)
-                    PreValidatedCustomDomainResource = new FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId();
+                    PreValidatedCustomDomainResource = new WritableSubResource();
                 PreValidatedCustomDomainResource.Id = value;
             }
         }

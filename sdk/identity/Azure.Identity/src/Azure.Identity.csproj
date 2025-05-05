@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>Provides APIs for authenticating to Microsoft Entra ID</Description>
     <AssemblyTitle>Microsoft Azure.Identity Component</AssemblyTitle>
-    <Version>1.14.0-beta.4</Version>
+    <Version>1.14.0-beta.5</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.13.2</ApiCompatVersion>
     <PackageTags>Microsoft Azure Identity;$(PackageCommonTags)</PackageTags>

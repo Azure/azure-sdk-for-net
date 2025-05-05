@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 optimizationType,
                 probePath,
                 geoFilters?.ToList(),
-                defaultOriginGroupId != null ? new EndpointPropertiesUpdateParametersDefaultOriginGroup(defaultOriginGroupId, serializedAdditionalRawData: null) : null,
+                defaultOriginGroupId != null ? ResourceManagerModelFactory.WritableSubResource(defaultOriginGroupId) : null,
                 uriSigningKeys?.ToList(),
                 deliveryPolicy,
                 webApplicationFirewallPolicyLinkId != null ? new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, serializedAdditionalRawData: null) : null,
