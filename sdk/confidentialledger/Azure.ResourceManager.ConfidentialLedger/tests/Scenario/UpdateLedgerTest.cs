@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
     {
         private ConfidentialLedgerResource _ledgerResource;
 
-        public UpdateLedgerTest(string testFixtureName) : base(true, RecordedTestMode.Record, testFixtureName)
+        public UpdateLedgerTest(string testFixtureName) : base(true, RecordedTestMode.Playback, testFixtureName)
         {
             SaveDebugRecordingsOnFailure = true;
         }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         {
             return new ConfidentialLedgerProperties(properties.LedgerName, properties.LedgerUri,
                 properties.IdentityServiceUri, properties.LedgerInternalNamespace, properties.RunningState, properties.LedgerType,
-                properties.ProvisioningState, ConfidentialLedgerSku.Unknown, securityPrincipals, properties.CertBasedSecurityPrincipals, properties.HostLevel,
+                properties.ProvisioningState, ConfidentialLedgerSku.Standard, securityPrincipals, properties.CertBasedSecurityPrincipals, properties.HostLevel,
                 properties.MaxBodySizeInMb, properties.SubjectName, properties.NodeCount, properties.WriteLBAddressPrefix,
                 properties.WorkerThreads, properties.EnclavePlatform, properties.ApplicationType, null);
         }
