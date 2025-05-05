@@ -1,3 +1,5 @@
+. ${PSScriptRoot}\..\logging.ps1
+
 function MapLanguageToRequestParam($language)
 {
     $lang = $language
@@ -241,7 +243,6 @@ function Create-API-Review {
     [string]$repoName,
     [string]$pullRequestNumber
   )
-  . ${PSScriptRoot}\..\logging.ps1
   $specGenSDKContent = Get-Content -Path $SpecGenSDKArtifactPath -Raw | ConvertFrom-Json
   $language = ($specGenSDKContent.language -split "-")[-1]
   
