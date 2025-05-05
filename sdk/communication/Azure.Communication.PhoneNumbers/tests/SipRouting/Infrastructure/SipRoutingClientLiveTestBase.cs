@@ -14,25 +14,28 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
     {
         private const string URIDomainNameReplacerRegEx = @"https://([^/?]+)";
         private const string DummyTestDomain = "testdomain.com";
+        private const string DummyRandom = "123456789";
         private string testDomain;
+        private string randomDomain;
         protected TestData? TestData;
 
         public SipRoutingClientLiveTestBase(bool isAsync) : base(isAsync)
         {
             testDomain = TestEnvironment.Mode != RecordedTestMode.Playback ? TestEnvironment.GetTestDomain() ?? DummyTestDomain : DummyTestDomain;
+            var testRandom = TestEnvironment.Mode != RecordedTestMode.Playback ? Guid.NewGuid().ToString() ?? DummyRandom : DummyRandom;
+            randomDomain = testRandom + "." + testDomain;
 
             JsonPathSanitizers.Add("$..credential");
             SanitizedHeaders.Add("x-ms-content-sha256");
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx) { Value = "https://sanitized.communication.azure.com" });
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(testDomain) { Value = DummyTestDomain });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(testRandom) { Value = DummyRandom });
         }
 
         [SetUp]
         public void SetUpTestData()
         {
-            var testRandom = Recording.Random;
-            var randomGuid = testRandom.NewGuid();
-            TestData = new TestData(testDomain, randomGuid.ToString());
+            TestData = new TestData(testDomain, randomDomain);
         }
 
         public bool SkipSipRoutingLiveTests

@@ -25,10 +25,10 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         public readonly SipTrunkRoute RuleWithoutTrunks2;
         public readonly string TestPhoneNumber;
 
-        public TestData(string domain, string randomGuid)
+        public TestData(string domain, string randomDomain)
         {
             Domain = new SipDomain(domain, true);
-            Fqdns = new List<string>() { "sbs1-" + randomGuid + "." + domain, "sbs2-" + randomGuid + "." + domain };
+            Fqdns = new List<string>() { "sbs1-" + randomDomain, "sbs2-" + randomDomain };
             TrunkList = new List<SipTrunk>
             {
                 new SipTrunk(Fqdns[0], TrunkPorts[0]),
@@ -44,13 +44,13 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
             TrunkList[1].IpAddressVersion = IpAddressVersion.Ipv6;
             TrunkList[1].PrivacyHeader = PrivacyHeader.Id;
 
-            NewTrunk = new SipTrunk("newsbs-" + randomGuid + "." + domain, 3333);
+            NewTrunk = new SipTrunk("newsbs-" + randomDomain, 3333);
             NewTrunk.DirectTransfer = true;
             NewTrunk.Enabled = true;
             NewTrunk.PrivacyHeader = PrivacyHeader.Id;
             NewTrunk.IpAddressVersion = IpAddressVersion.Ipv6;
 
-            NewDomain = new SipDomain("new-domain" + randomGuid + "." + domain, false);
+            NewDomain = new SipDomain("new-domain" + randomDomain, false);
 
             RuleNavigateToTrunk1 = new SipTrunkRoute(
                 name: "First rule",
