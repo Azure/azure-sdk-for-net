@@ -24,7 +24,6 @@
       -->
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="System.ClientModel" />
-    <PackageReference Update="System.ClientModel" />
   </ItemGroup>
 
   <ItemGroup>
