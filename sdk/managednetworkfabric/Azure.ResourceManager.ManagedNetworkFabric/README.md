@@ -1,6 +1,6 @@
-# Microsoft Azure Azure.ResourceManager.ManagedNetworkFabric management client library for .NET
+# Microsoft Azure ManagedNetworkFabric management client library for .NET
 
-Managed Network Fabric RP exposes APIs to enable bootstrapping and configuration of devices of Network Fabric in Telco premises. This enables programming the network devices for enabling management infrastructure and tenant workloads. 
+**[Describe the service briefly first.]**
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -14,10 +14,10 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Microsoft Azure Azure.ResourceManager.ManagedNetworkFabric management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure ManagedNetworkFabric management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.ManagedNetworkFabric
+dotnet add package Azure.ResourceManager.ManagedNetworkFabric --prerelease
 ```
 
 ### Prerequisites
@@ -37,7 +37,7 @@ Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azu
 Documentation is available to help you learn how to use this package:
 
 - [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
-- [API References](https://learn.microsoft.com/dotnet/api/?view=azure-dotnet).
+- [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet).
 - [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
 
 ## Examples

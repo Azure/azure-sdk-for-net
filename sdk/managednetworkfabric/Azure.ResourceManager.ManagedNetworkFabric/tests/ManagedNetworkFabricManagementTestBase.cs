@@ -3,11 +3,9 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using System;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Tests
@@ -15,7 +13,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests
     public class ManagedNetworkFabricManagementTestBase : ManagementRecordedTestBase<ManagedNetworkFabricManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
-        protected ResourceGroupResource ResourceGroupResource { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
         protected ManagedNetworkFabricManagementTestBase(bool isAsync, RecordedTestMode mode)
@@ -29,19 +26,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests
         }
 
         [SetUp]
-        public void SetUp()
+        public async Task CreateCommonClient()
         {
             Client = GetArmClient();
-
-            var subscriptionId = SubscriptionResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId);
-            TestContext.Out.WriteLine($"Provided subscription-Id : {subscriptionId.SubscriptionId}");
-
-            string resourceGroupName = TestEnvironment.ResourceGroupName;
-
-            TestContext.Out.WriteLine($"Provided ResourceGroup: {resourceGroupName}");
-            DefaultSubscription = Client.GetSubscriptionResource(subscriptionId);
-            var resourceGroupId = ResourceGroupResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName);
-            ResourceGroupResource = Client.GetResourceGroupResource(resourceGroupId);
+            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
