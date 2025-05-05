@@ -17,9 +17,6 @@ namespace Azure.Core
             => new ValueTask<T>(CreateResult(response));
 
         private T CreateResult(Response response)
-            //TODO: Will add an AOT compatible overload during https://github.com/Azure/azure-sdk-for-net/issues/48294
-#pragma warning disable AZC0150 // Use ModelReaderWriter overloads with ModelReaderWriterContext
             => ModelReaderWriter.Read<T>(response.Content)!;
-#pragma warning restore AZC0150 // Use ModelReaderWriter overloads with ModelReaderWriterContext
     }
 }

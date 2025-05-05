@@ -10,8 +10,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
     <NoWarn>$(NoWarn);CS1591;AZC0012;AZC0102;CS8002;CS0436;AZC0112;OPENAI001;OPENAI002;AOAI001</NoWarn>
-    <!-- Needed until SCM goes GA with this fix https://github.com/Azure/azure-sdk-for-net/pull/49824 -->
-    <NoWarn>$(NoWarn);AZC0150</NoWarn>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>preview</LangVersion>
     <Nullable>disable</Nullable>
