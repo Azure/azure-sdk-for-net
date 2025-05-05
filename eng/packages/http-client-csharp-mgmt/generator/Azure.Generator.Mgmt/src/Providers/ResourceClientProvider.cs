@@ -58,9 +58,9 @@ namespace Azure.Generator.Management.Providers
 
             _contextualParameters = GetContextualParameters(requestPath);
 
-            _dataField = new FieldProvider(FieldModifiers.Private, ResourceData.Type, "_data", this);
-            _clientDiagonosticsField = new FieldProvider(FieldModifiers.Private, typeof(ClientDiagnostics), $"_{SpecName.ToLower()}ClientDiagnostics", this);
-            _restClientField = new FieldProvider(FieldModifiers.Private, _clientProvider.Type, $"_{SpecName.ToLower()}RestClient", this);
+            _dataField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, ResourceData.Type, "_data", this);
+            _clientDiagonosticsField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(ClientDiagnostics), $"_{SpecName.ToLower()}ClientDiagnostics", this);
+            _restClientField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, _clientProvider.Type, $"_{SpecName.ToLower()}RestClient", this);
         }
 
         private IReadOnlyList<string> GetContextualParameters(string contextualRequestPath)
@@ -91,7 +91,7 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
-        protected override FieldProvider[] BuildFields() => [_dataField, _clientDiagonosticsField, _restClientField, _resourcetypeField];
+        protected override FieldProvider[] BuildFields() => [_clientDiagonosticsField, _restClientField, _dataField, _resourcetypeField];
 
         protected override PropertyProvider[] BuildProperties()
         {
