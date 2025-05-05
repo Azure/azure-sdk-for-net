@@ -438,6 +438,6 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TestProxyVersion>1.0.0-dev.20250221.1</TestProxyVersion>
+    <TestProxyVersion>1.0.0-dev.20250501.1</TestProxyVersion>
   </PropertyGroup>
 </Project>
