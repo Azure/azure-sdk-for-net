@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -15,8 +14,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
 {
     internal static partial class BinaryContentHelper
     {
-        public static BinaryContent FromEnumerable<T>(IEnumerable<T> enumerable)
-            where T : notnull
+        public static RequestContent FromEnumerable<T>(IEnumerable<T> enumerable)
+            where T : notnull 
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteStartArray();
@@ -29,7 +28,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             return content;
         }
 
-        public static BinaryContent FromEnumerable(IEnumerable<BinaryData> enumerable)
+        public static RequestContent FromEnumerable(IEnumerable<BinaryData> enumerable)
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteStartArray();
@@ -57,7 +56,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         }
 
         public static RequestContent FromEnumerable<T>(ReadOnlySpan<T> span)
-            where T : notnull
+            where T : notnull 
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteStartArray();
@@ -72,7 +71,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         }
 
         public static RequestContent FromDictionary<TValue>(IDictionary<string, TValue> dictionary)
-            where TValue : notnull
+            where TValue : notnull 
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteStartObject();
@@ -86,7 +85,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             return content;
         }
 
-        public static BinaryContent FromDictionary(IDictionary<string, BinaryData> dictionary)
+        public static RequestContent FromDictionary(IDictionary<string, BinaryData> dictionary)
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteStartObject();
@@ -114,14 +113,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
             return content;
         }
 
-        public static BinaryContent FromObject(object value)
+        public static RequestContent FromObject(object value)
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteObjectValue<object>(value, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
-        public static BinaryContent FromObject(BinaryData value)
+        public static RequestContent FromObject(BinaryData value)
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
 #if NET6_0_OR_GREATER

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
@@ -16,13 +17,13 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        internal FailedLockToken(string lockToken, Error error)
+        internal FailedLockToken(string lockToken, ResponseError error)
         {
             LockToken = lockToken;
             Error = error;
         }
 
-        internal FailedLockToken(string lockToken, Error error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FailedLockToken(string lockToken, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LockToken = lockToken;
             Error = error;
@@ -33,6 +34,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public string LockToken { get; }
 
         /// <summary> Error information of the failed operation result for the lock token in the request. </summary>
-        public Error Error { get; }
+        public ResponseError Error { get; }
     }
 }

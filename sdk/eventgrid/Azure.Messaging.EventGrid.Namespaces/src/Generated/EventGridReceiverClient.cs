@@ -37,16 +37,39 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public HttpPipeline Pipeline { get; }
 
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
         internal virtual Response Receive(string topicName, string eventSubscriptionName, int? maxEvents, TimeSpan? maxWaitTime, RequestContext context)
         {
-            using HttpMessage message = CreateReceiveRequest(topicName, eventSubscriptionName, maxEvents, maxWaitTime, context);
-            return Pipeline.ProcessMessage(message, context);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Receive");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateReceiveRequest(topicName, eventSubscriptionName, maxEvents, maxWaitTime, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         internal virtual async Task<Response> ReceiveAsync(string topicName, string eventSubscriptionName, int? maxEvents, TimeSpan? maxWaitTime, RequestContext context)
         {
-            using HttpMessage message = CreateReceiveRequest(topicName, eventSubscriptionName, maxEvents, maxWaitTime, context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Receive");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateReceiveRequest(topicName, eventSubscriptionName, maxEvents, maxWaitTime, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         internal virtual Response<ReceiveResult> Receive(string topicName, string eventSubscriptionName, int? maxEvents = default, TimeSpan? maxWaitTime = default, CancellationToken cancellationToken = default)
@@ -63,14 +86,34 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         internal virtual Response Acknowledge(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
-            using HttpMessage message = CreateAcknowledgeRequest(topicName, eventSubscriptionName, content, context);
-            return Pipeline.ProcessMessage(message, context);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Acknowledge");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAcknowledgeRequest(topicName, eventSubscriptionName, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         internal virtual async Task<Response> AcknowledgeAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
-            using HttpMessage message = CreateAcknowledgeRequest(topicName, eventSubscriptionName, content, context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Acknowledge");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAcknowledgeRequest(topicName, eventSubscriptionName, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         internal virtual Response<AcknowledgeResult> Acknowledge(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
@@ -89,14 +132,34 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         internal virtual Response Release(string topicName, string eventSubscriptionName, RequestContent content, string releaseDelayInSeconds = default, RequestContext context = null)
         {
-            using HttpMessage message = CreateReleaseRequest(topicName, eventSubscriptionName, content, releaseDelayInSeconds, context);
-            return Pipeline.ProcessMessage(message, context);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Release");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateReleaseRequest(topicName, eventSubscriptionName, content, releaseDelayInSeconds, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         internal virtual async Task<Response> ReleaseAsync(string topicName, string eventSubscriptionName, RequestContent content, string releaseDelayInSeconds = default, RequestContext context = null)
         {
-            using HttpMessage message = CreateReleaseRequest(topicName, eventSubscriptionName, content, releaseDelayInSeconds, context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Release");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateReleaseRequest(topicName, eventSubscriptionName, content, releaseDelayInSeconds, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         internal virtual Response<ReleaseResult> Release(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, ReleaseDelay? releaseDelayInSeconds = default, CancellationToken cancellationToken = default)
@@ -115,14 +178,34 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         internal virtual Response Reject(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
-            using HttpMessage message = CreateRejectRequest(topicName, eventSubscriptionName, content, context);
-            return Pipeline.ProcessMessage(message, context);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Reject");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRejectRequest(topicName, eventSubscriptionName, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         internal virtual async Task<Response> RejectAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
-            using HttpMessage message = CreateRejectRequest(topicName, eventSubscriptionName, content, context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Reject");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRejectRequest(topicName, eventSubscriptionName, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         internal virtual Response<RejectResult> Reject(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
@@ -141,14 +224,34 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         internal virtual Response RenewLocks(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
-            using HttpMessage message = CreateRenewLocksRequest(topicName, eventSubscriptionName, content, context);
-            return Pipeline.ProcessMessage(message, context);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.RenewLocks");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRenewLocksRequest(topicName, eventSubscriptionName, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         internal virtual async Task<Response> RenewLocksAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
-            using HttpMessage message = CreateRenewLocksRequest(topicName, eventSubscriptionName, content, context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.RenewLocks");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRenewLocksRequest(topicName, eventSubscriptionName, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         internal virtual Response<RenewLocksResult> RenewLocks(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)

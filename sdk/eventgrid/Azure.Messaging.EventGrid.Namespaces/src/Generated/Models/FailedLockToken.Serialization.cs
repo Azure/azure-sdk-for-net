@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             writer.WritePropertyName("lockToken"u8);
             writer.WriteStringValue(LockToken);
             writer.WritePropertyName("error"u8);
-            writer.WriteObjectValue(Error, options);
+            JsonSerializer.Serialize(writer, Error);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -80,7 +80,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
                 return null;
             }
             string lockToken = default;
-            Error error = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -91,7 +91,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
                 }
                 if (prop.NameEquals("error"u8))
                 {
-                    error = Error.DeserializeError(prop.Value, options);
+                    error = JsonSerializer.Deserialize<ResponseError>(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

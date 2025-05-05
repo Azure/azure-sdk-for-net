@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,16 +36,39 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public HttpPipeline Pipeline { get; }
 
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
         internal virtual Response Send(string topicName, RequestContent content, RequestContext context = null)
         {
-            using HttpMessage message = CreateSendRequest(topicName, content, context);
-            return Pipeline.ProcessMessage(message, context);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridSenderClient.Send");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSendRequest(topicName, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         internal virtual async Task<Response> SendAsync(string topicName, RequestContent content, RequestContext context = null)
         {
-            using HttpMessage message = CreateSendRequest(topicName, content, context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridSenderClient.Send");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSendRequest(topicName, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         internal virtual Response<PublishResult> Send(string topicName, CloudEvent @event, CancellationToken cancellationToken = default)
@@ -63,27 +85,47 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         internal virtual Response SendEvents(string topicName, RequestContent content, RequestContext context = null)
         {
-            using HttpMessage message = CreateSendEventsRequest(topicName, content, context);
-            return Pipeline.ProcessMessage(message, context);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridSenderClient.SendEvents");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSendEventsRequest(topicName, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         internal virtual async Task<Response> SendEventsAsync(string topicName, RequestContent content, RequestContext context = null)
         {
-            using HttpMessage message = CreateSendEventsRequest(topicName, content, context);
-            return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridSenderClient.SendEvents");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSendEventsRequest(topicName, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         internal virtual Response<PublishResult> SendEvents(string topicName, IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
         {
-            using BinaryContent content = BinaryContentHelper.FromEnumerable(events);
-            Response result = this.SendEvents(topicName, content, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            using RequestContent content = BinaryContentHelper.FromEnumerable(events);
+            Response result = SendEvents(topicName, content, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((PublishResult)result, result);
         }
 
         internal virtual async Task<Response<PublishResult>> SendEventsAsync(string topicName, IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
         {
-            using BinaryContent content = BinaryContentHelper.FromEnumerable(events);
-            Response result = await this.SendEventsAsync(topicName, content, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            using RequestContent content = BinaryContentHelper.FromEnumerable(events);
+            Response result = await SendEventsAsync(topicName, content, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((PublishResult)result, result);
         }
     }
