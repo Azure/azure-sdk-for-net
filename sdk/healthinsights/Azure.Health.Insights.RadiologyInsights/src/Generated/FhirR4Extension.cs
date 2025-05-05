@@ -12,7 +12,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 {
     /// <summary>
     /// Base for all elements
-    /// Based on [FHIR Element](https://www.hl7.org/fhir/datatypes.html#Element)
+    /// Based on [FHIR Element](https://www.hl7.org/fhir/R4/element.html)
     /// </summary>
     public partial class FhirR4Extension : FhirR4Element
     {

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
-    /// <summary> Options regarding follow up recommendation inferences and finding inferences. </summary>
-    public partial class RadiologyInsightsInferenceOptions
+    /// <summary> Guidance options. </summary>
+    public partial class GuidanceOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,33 +45,28 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsightsInferenceOptions"/>. </summary>
-        public RadiologyInsightsInferenceOptions()
+        /// <summary> Initializes a new instance of <see cref="GuidanceOptions"/>. </summary>
+        /// <param name="showGuidanceInHistory"> If this is true, also show guidances from a clinical history section i.e. if the first token of the associated finding's clinical indicator is in this section. Default is false. </param>
+        public GuidanceOptions(bool showGuidanceInHistory)
         {
+            ShowGuidanceInHistory = showGuidanceInHistory;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsightsInferenceOptions"/>. </summary>
-        /// <param name="followupRecommendationOptions"> Follow-up recommendation options. </param>
-        /// <param name="findingOptions"> Finding options. </param>
-        /// <param name="guidanceOptions"> Guidance options. </param>
-        /// <param name="qualityMeasureOptions"> QualityMeasureOptions. </param>
+        /// <summary> Initializes a new instance of <see cref="GuidanceOptions"/>. </summary>
+        /// <param name="showGuidanceInHistory"> If this is true, also show guidances from a clinical history section i.e. if the first token of the associated finding's clinical indicator is in this section. Default is false. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RadiologyInsightsInferenceOptions(FollowupRecommendationOptions followupRecommendationOptions, FindingOptions findingOptions, GuidanceOptions guidanceOptions, QualityMeasureOptions qualityMeasureOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GuidanceOptions(bool showGuidanceInHistory, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            FollowupRecommendationOptions = followupRecommendationOptions;
-            FindingOptions = findingOptions;
-            GuidanceOptions = guidanceOptions;
-            QualityMeasureOptions = qualityMeasureOptions;
+            ShowGuidanceInHistory = showGuidanceInHistory;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Follow-up recommendation options. </summary>
-        public FollowupRecommendationOptions FollowupRecommendationOptions { get; set; }
-        /// <summary> Finding options. </summary>
-        public FindingOptions FindingOptions { get; set; }
-        /// <summary> Guidance options. </summary>
-        public GuidanceOptions GuidanceOptions { get; set; }
-        /// <summary> QualityMeasureOptions. </summary>
-        public QualityMeasureOptions QualityMeasureOptions { get; set; }
+        /// <summary> Initializes a new instance of <see cref="GuidanceOptions"/> for deserialization. </summary>
+        internal GuidanceOptions()
+        {
+        }
+
+        /// <summary> If this is true, also show guidances from a clinical history section i.e. if the first token of the associated finding's clinical indicator is in this section. Default is false. </summary>
+        public bool ShowGuidanceInHistory { get; set; }
     }
 }
