@@ -40,7 +40,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
                 protected override object CreateInstance() => new Dictionary<string, AvailabilitySetData>();
 
-                protected override void AddKeyValuePair(object collection, string key, object item)
+                protected override void AddItemWithKey(object collection, string key, object item)
                     => ((Dictionary<string, AvailabilitySetData>)collection).Add(key, (AvailabilitySetData)item);
             }
         }

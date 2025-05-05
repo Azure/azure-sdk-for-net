@@ -1,0 +1,20 @@
+{
+  "wingspan": 5,
+  "kind": "eagle",
+  "partner": {
+    "wingspan": 2,
+    "kind": "goose"
+  },
+  "friends": [
+    {
+      "wingspan": 2,
+      "kind": "seagull"
+    }
+  ],
+  "hate": {
+    "key3": {
+      "wingspan": 1,
+      "kind": "sparrow"
+    }
+  }
+}
