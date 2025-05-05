@@ -44,12 +44,12 @@ namespace Azure.Generator.Primitives
             => Static(valueType).Invoke("Parse", element.GetString());
 
         private static MethodBodyStatement SerializeResponseError(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
-            => Static(typeof(JsonSerializer)).Invoke("Serialize", writer, value).Terminate();
+            => Static(typeof(JsonSerializer)).Invoke(nameof(JsonSerializer.Serialize), writer, value).Terminate();
 
         private static ValueExpression DeserializeResponseError(CSharpType valueType,
             ScopedApi<JsonElement> element,
             SerializationFormat format)
-            => Static(typeof(JsonSerializer)).Invoke("Deserialize", arguments: [element.GetRawText()], typeArguments: [valueType], callAsAsync: false);
+            => Static(typeof(JsonSerializer)).Invoke(nameof(JsonSerializer.Deserialize), arguments: [element.GetRawText()], typeArguments: [valueType], callAsAsync: false);
 
         private static readonly IReadOnlyDictionary<string, CSharpType> _idToTypes = new Dictionary<string, CSharpType>
         {
