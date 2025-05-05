@@ -19,7 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
     /// The filter's configuration (condition) is specified in a <see cref="FilterInfo"/> DTO.
     /// </summary>
     /// <typeparam name="TTelemetry">Type of telemetry documents.</typeparam>
-    internal class Filter<TTelemetry> where TTelemetry : DocumentIngress
+    internal class Filter<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] TTelemetry> where TTelemetry : DocumentIngress
     {
         private const string FieldNameCustomDimensionsPrefix = "CustomDimensions.";
 
@@ -370,10 +370,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
         {
             try
             {
-                Type propertyType = fieldName.Split(FieldNameTrainSeparator)
-                    .Aggregate(
-                        typeof(TTelemetry),
-                        (type, propertyName) => type.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public).PropertyType);
+                Type propertyType = typeof(TTelemetry);
+
+                foreach (string propertyName in fieldName.Split(FieldNameTrainSeparator))
+                {
+                    propertyType = GetPropertyType(propertyType, propertyName);
+                }
 
                 if (fieldName == "Duration")
                 {
@@ -399,6 +401,16 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                     string.Format(CultureInfo.InvariantCulture, "Error finding property {0} in the type {1}", fieldName, typeof(TTelemetry).FullName),
                     e);
             }
+        }
+
+        private static Type GetPropertyType(
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] Type type,
+            string propertyName)
+        {
+            PropertyInfo propertyInfo = type.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public)
+                ?? throw new ArgumentOutOfRangeException(nameof(propertyName), $"Property '{propertyName}' not found on type '{type.FullName}'");
+
+            return propertyInfo.PropertyType;
         }
 
         [SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Justification = "Argument exceptions are valid.")]
@@ -767,6 +779,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             return null;
         }
 
+        [UnconditionalSuppressMessage("AOT", "IL2075", Justification = "The DocumentIngress class and its derived classes have DynamicallyAccessedMembers attribute applied to preserve public properties.")]
         private Expression ProduceComparatorExpressionForAnyFieldCondition(ParameterExpression documentExpression)
         {
             // this.predicate is either Predicate.Contains or Predicate.DoesNotContain at this point
@@ -786,7 +799,16 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                     if (string.Equals(propertyInfo.Name, CustomDimensionsPropertyName, StringComparison.Ordinal))
                     {
                         // ScanList(document.<CustomDimensionsPropertyName>, <this.comparand>)
-                        MemberExpression customDimensionsProperty = Expression.Property(documentExpression, CustomDimensionsPropertyName);
+                        PropertyInfo customDimensionsPropertyInfo = documentExpression.Type.GetProperty(
+                            CustomDimensionsPropertyName, BindingFlags.Instance | BindingFlags.Public);
+
+                        if (customDimensionsPropertyInfo == null)
+                        {
+                            continue; // Skip if property doesn't exist
+                        }
+
+                        MemberExpression customDimensionsProperty = Expression.Property(documentExpression, customDimensionsPropertyInfo);
+
                         propertyComparatorExpression = Expression.Call(
                             null,
                             ListKeyValuePairStringScanMethodInfo,
@@ -801,7 +823,16 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                     else if (string.Equals(propertyInfo.Name, CustomMetricsPropertyName, StringComparison.Ordinal))
                     {
                         // ScanDictionary(document.<CustomMetricsPropertyName>, <this.comparand>)
-                        MemberExpression customMetricsProperty = Expression.Property(documentExpression, CustomMetricsPropertyName);
+                        PropertyInfo customMetricsPropertyInfo = documentExpression.Type.GetProperty(
+                            CustomMetricsPropertyName, BindingFlags.Instance | BindingFlags.Public);
+
+                        if (customMetricsPropertyInfo == null)
+                        {
+                            continue; // Skip if property doesn't exist
+                        }
+
+                        MemberExpression customMetricsProperty = Expression.Property(documentExpression, customMetricsPropertyInfo);
+
                         propertyComparatorExpression = Expression.Call(
                             null,
                             DictionaryStringDoubleScanMethodInfo,

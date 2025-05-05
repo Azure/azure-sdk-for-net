@@ -80,7 +80,7 @@ public class SampleClient
         catch (Exception ex)
         {
             // Catch any exceptions and update the activity. Then re-throw the exception.
-            activity?.MarkFailed(ex);
+            activity?.MarkClientActivityFailed(ex);
             throw;
         }
     }
