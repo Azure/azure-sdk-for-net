@@ -11,9 +11,8 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/liftrmongodb/ci.mgmt.yml
-    - sdk/liftrmongodb/Azure.ResourceManager.MongoDBAtlas/
-
+    - sdk/liftrmongodb/ci.mgmt.yml
+    - sdk/liftrmongodb/Azure.ResourceManager.MongoDBAtlas/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
