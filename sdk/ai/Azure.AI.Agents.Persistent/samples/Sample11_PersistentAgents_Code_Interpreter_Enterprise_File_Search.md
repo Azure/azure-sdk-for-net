@@ -14,7 +14,7 @@ PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential(
 Synchronous sample:
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearch_CreateAgent
 List<ToolDefinition> tools = [new CodeInterpreterToolDefinition()];
-PersistentAgent agent = client.CreateAgent(
+PersistentAgent agent = client.Administration.CreateAgent(
     model: modelDeploymentName,
     name: "my-agent",
     instructions: "You are helpful agent.",
@@ -25,7 +25,7 @@ PersistentAgent agent = client.CreateAgent(
 Asynchronous sample:
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearchAsync_CreateAgent
 List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
-PersistentAgent agent = await client.CreateAgentAsync(
+PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "my-agent",
     instructions: "You are helpful agent.",
@@ -50,23 +50,23 @@ var attachment = new MessageAttachment(
 
 Synchronous sample:
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearch_CreateThreadRun
-PersistentAgentThread thread = client.CreateThread();
+PersistentAgentThread thread = client.Threads.CreateThread();
 
-ThreadMessage message = client.CreateMessage(
+ThreadMessage message = client.Messages.CreateMessage(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "What does the attachment say?",
     attachments: [attachment]
 );
 
-ThreadRun run = client.CreateRun(
+ThreadRun run = client.Runs.CreateRun(
     thread.Id,
     agent.Id
 );
 do
 {
     Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    run = client.GetRun(thread.Id, run.Id);
+    run = client.Runs.GetRun(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
@@ -78,23 +78,23 @@ Assert.AreEqual(
 
 Asynchronous sample:
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearchAsync_CreateThreadRun
-PersistentAgentThread thread = await client.CreateThreadAsync();
+PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
-ThreadMessage message = await client.CreateMessageAsync(
+ThreadMessage message = await client.Messages.CreateMessageAsync(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "What does the attachment say?",
     attachments: [ attachment ]
 );
 
-ThreadRun run = await client.CreateRunAsync(
+ThreadRun run = await client.Runs.CreateRunAsync(
     thread.Id,
     agent.Id
 );
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
-    run = await client.GetRunAsync(thread.Id, run.Id);
+    run = await client.Runs.GetRunAsync(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
@@ -131,23 +131,23 @@ private static void WriteMessages(IEnumerable<ThreadMessage> messages)
 
 Synchronous sample:
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearch_CreateThreadRun
-PersistentAgentThread thread = client.CreateThread();
+PersistentAgentThread thread = client.Threads.CreateThread();
 
-ThreadMessage message = client.CreateMessage(
+ThreadMessage message = client.Messages.CreateMessage(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "What does the attachment say?",
     attachments: [attachment]
 );
 
-ThreadRun run = client.CreateRun(
+ThreadRun run = client.Runs.CreateRun(
     thread.Id,
     agent.Id
 );
 do
 {
     Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    run = client.GetRun(thread.Id, run.Id);
+    run = client.Runs.GetRun(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
@@ -159,23 +159,23 @@ Assert.AreEqual(
 
 Asynchronous sample:
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearchAsync_CreateThreadRun
-PersistentAgentThread thread = await client.CreateThreadAsync();
+PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
-ThreadMessage message = await client.CreateMessageAsync(
+ThreadMessage message = await client.Messages.CreateMessageAsync(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "What does the attachment say?",
     attachments: [ attachment ]
 );
 
-ThreadRun run = await client.CreateRunAsync(
+ThreadRun run = await client.Runs.CreateRunAsync(
     thread.Id,
     agent.Id
 );
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
-    run = await client.GetRunAsync(thread.Id, run.Id);
+    run = await client.Runs.GetRunAsync(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
@@ -189,7 +189,7 @@ Assert.AreEqual(
 
 Synchronous sample:
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearch_PrintMessages
-PageableList<ThreadMessage> messages = client.GetMessages(
+Pageable<ThreadMessage> messages = client.Messages.GetMessages(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
@@ -198,10 +198,10 @@ WriteMessages(messages);
 
 Asynchronous sample:
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearchAsync_PrintMessages
-PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
+List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
-);
+).ToListAsync();
 WriteMessages(messages);
 ```
 
@@ -210,12 +210,12 @@ WriteMessages(messages);
 
 Synchronous sample:
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearch_Cleanup
-client.DeleteThread(thread.Id);
-client.DeleteAgent(agent.Id);
+client.Threads.DeleteThread(thread.Id);
+client.Administration.DeleteAgent(agent.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearchAsync_Cleanup
-await client.DeleteThreadAsync(thread.Id);
-await client.DeleteAgentAsync(agent.Id);
+await client.Threads.DeleteThreadAsync(thread.Id);
+await client.Administration.DeleteAgentAsync(agent.Id);
 ```

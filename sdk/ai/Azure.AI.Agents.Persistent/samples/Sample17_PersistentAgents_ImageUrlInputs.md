@@ -15,7 +15,7 @@ PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential(
 
 Synchronous sample:
 ```C# Snippet:AgentImageUrlInMessageCreateAgent_Sync
-PersistentAgent agent = client.CreateAgent(
+PersistentAgent agent = client.Administration.CreateAgent(
     model: modelDeploymentName,
     name: "Image Understanding Agent",
     instructions: "You are an image-understanding agent. Analyze images and provide textual descriptions."
@@ -24,7 +24,7 @@ PersistentAgent agent = client.CreateAgent(
 
 Asynchronous sample:
 ```C# Snippet:AgentImageUrlInMessageCreateAgent
-PersistentAgent agent = await client.CreateAgentAsync(
+PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "Image Understanding Agent",
     instructions: "You are an image-understanding agent. Analyze images and provide textual descriptions."
@@ -35,12 +35,12 @@ PersistentAgent agent = await client.CreateAgentAsync(
 
 Synchronous sample:
 ```C# Snippet:AgentImageUrlInMessageCreateThread_Sync
-PersistentAgentThread thread = client.CreateThread();
+PersistentAgentThread thread = client.Threads.CreateThread();
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentImageUrlInMessageCreateThread
-PersistentAgentThread thread = await client.CreateThreadAsync();
+PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 ```
 
 4. Create a message using multiple content blocks. Here we combine a short text and an image URL in a single user message.
@@ -58,7 +58,7 @@ var contentBlocks = new List<MessageInputContentBlock>
     new MessageInputImageUrlBlock(imageUrlParam)
 };
 
-ThreadMessage imageMessage = client.CreateMessage(
+ThreadMessage imageMessage = client.Messages.CreateMessage(
     threadId: thread.Id,
     role: MessageRole.User,
     contentBlocks: contentBlocks
@@ -77,7 +77,7 @@ var contentBlocks = new List<MessageInputContentBlock>
     new MessageInputImageUrlBlock(imageUrlParam)
 };
 
-ThreadMessage imageMessage = await client.CreateMessageAsync(
+ThreadMessage imageMessage = await client.Messages.CreateMessageAsync(
     threadId: thread.Id,
     role: MessageRole.User,
     contentBlocks: contentBlocks
@@ -88,7 +88,7 @@ ThreadMessage imageMessage = await client.CreateMessageAsync(
 
 Synchronous sample:
 ```C# Snippet:AgentImageUrlInMessageCreateRun_Sync
-ThreadRun run = client.CreateRun(
+ThreadRun run = client.Runs.CreateRun(
     threadId: thread.Id,
     assistantId: agent.Id
 );
@@ -96,7 +96,7 @@ ThreadRun run = client.CreateRun(
 
 Asynchronous sample:
 ```C# Snippet:AgentImageUrlInMessageCreateRun
-ThreadRun run = await client.CreateRunAsync(
+ThreadRun run = await client.Runs.CreateRunAsync(
     threadId: thread.Id,
     assistantId: agent.Id
 );
@@ -110,7 +110,7 @@ Synchronous sample:
 do
 {
     Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    run = client.GetRun(thread.Id, run.Id);
+    run = client.Runs.GetRun(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress);
 
@@ -125,7 +125,7 @@ Asynchronous sample:
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
-    run = await client.GetRunAsync(thread.Id, run.Id);
+    run = await client.Runs.GetRunAsync(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress);
 
@@ -139,7 +139,7 @@ if (run.Status != RunStatus.Completed)
 
 Synchronous sample:
 ```C# Snippet:AgentImageUrlInMessageReview_Sync
-PageableList<ThreadMessage> messages = client.GetMessages(thread.Id);
+Pageable<ThreadMessage> messages = client.Messages.GetMessages(thread.Id);
 
 foreach (ThreadMessage msg in messages)
 {
@@ -163,9 +163,9 @@ foreach (ThreadMessage msg in messages)
 
 Asynchronous sample:
 ```C# Snippet:AgentImageUrlInMessageReview
-PageableList<ThreadMessage> messages = await client.GetMessagesAsync(thread.Id);
+AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(thread.Id);
 
-foreach (ThreadMessage msg in messages)
+await foreach (ThreadMessage msg in messages)
 {
     Console.WriteLine($"{msg.CreatedAt:yyyy-MM-dd HH:mm:ss} - {msg.Role,10}:");
 
@@ -189,12 +189,12 @@ foreach (ThreadMessage msg in messages)
 
 Synchronous sample:
 ```C# Snippet:AgentImageUrlInMessageCleanup_Sync
-client.DeleteThread(thread.Id);
-client.DeleteAgent(agent.Id);
+client.Threads.DeleteThread(thread.Id);
+client.Administration.DeleteAgent(agent.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentImageUrlInMessageCleanup
-await client.DeleteThreadAsync(thread.Id);
-await client.DeleteAgentAsync(agent.Id);
+await client.Threads.DeleteThreadAsync(thread.Id);
+await client.Administration.DeleteAgentAsync(agent.Id);
 ```

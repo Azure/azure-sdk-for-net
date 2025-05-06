@@ -58,7 +58,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Initializes a new instance of <see cref="SubmitToolOutputsToRunRequest"/>. </summary>
         /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
-        /// <param name="stream"> If true, returns a stream of events that happen during the Run as server-sent events, terminating when the run enters a terminal state. </param>
+        /// <param name="stream"> If true, returns a stream of events that happen during the Run as SSE, terminating at `[DONE]`. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SubmitToolOutputsToRunRequest(IReadOnlyList<ToolOutput> toolOutputs, bool? stream, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,7 +74,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> A list of tools for which the outputs are being submitted. </summary>
         public IReadOnlyList<ToolOutput> ToolOutputs { get; }
-        /// <summary> If true, returns a stream of events that happen during the Run as server-sent events, terminating when the run enters a terminal state. </summary>
+        /// <summary> If true, returns a stream of events that happen during the Run as SSE, terminating at `[DONE]`. </summary>
         public bool? Stream { get; }
     }
 }

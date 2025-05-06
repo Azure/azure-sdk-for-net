@@ -49,7 +49,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of <see cref="InternalFileListResponse"/>. </summary>
         /// <param name="data"> The files returned for the request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        internal InternalFileListResponse(IEnumerable<PersistentAgentFile> data)
+        internal InternalFileListResponse(IEnumerable<PersistentAgentFileInfo> data)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -60,7 +60,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="object"> The object type, which is always 'list'. </param>
         /// <param name="data"> The files returned for the request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalFileListResponse(InternalFileListResponseObject @object, IReadOnlyList<PersistentAgentFile> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalFileListResponse(InternalFileListResponseObject @object, IReadOnlyList<PersistentAgentFileInfo> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Object = @object;
             Data = data;
@@ -76,6 +76,6 @@ namespace Azure.AI.Agents.Persistent
         public InternalFileListResponseObject Object { get; } = InternalFileListResponseObject.List;
 
         /// <summary> The files returned for the request. </summary>
-        public IReadOnlyList<PersistentAgentFile> Data { get; }
+        public IReadOnlyList<PersistentAgentFileInfo> Data { get; }
     }
 }

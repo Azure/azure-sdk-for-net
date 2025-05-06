@@ -30,7 +30,7 @@ OpenApiToolDefinition openapiTool = new(
     defaultParams: ["format"]
 );
 
-PersistentAgent agent = client.CreateAgent(
+PersistentAgent agent = client.Administration.CreateAgent(
     model: modelDeploymentName,
     name: "azure-function-agent-foo",
     instructions: "You are a helpful agent.",
@@ -49,7 +49,7 @@ OpenApiToolDefinition openapiTool = new(
     defaultParams: [ "format" ]
 );
 
-PersistentAgent agent = await client.CreateAgentAsync(
+PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "azure-function-agent-foo",
     instructions: "You are a helpful agent.",
@@ -61,18 +61,18 @@ PersistentAgent agent = await client.CreateAgentAsync(
 
 Synchronous sample:
 ```C# Snippet:AgentsOpenAPISyncHandlePollingWithRequiredAction
-PersistentAgentThread thread = client.CreateThread();
-ThreadMessage message = client.CreateMessage(
+PersistentAgentThread thread = client.Threads.CreateThread();
+ThreadMessage message = client.Messages.CreateMessage(
     thread.Id,
     MessageRole.User,
     "What's the weather in Seattle?");
 
-ThreadRun run = client.CreateRun(thread, agent);
+ThreadRun run = client.Runs.CreateRun(thread, agent);
 
 do
 {
     Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    run = client.GetRun(thread.Id, run.Id);
+    run = client.Runs.GetRun(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress
@@ -85,18 +85,18 @@ Assert.AreEqual(
 
 Asynchronous sample:
 ```C# Snippet:AgentsOpenAPIHandlePollingWithRequiredAction
-PersistentAgentThread thread = await client.CreateThreadAsync();
-ThreadMessage message = await client.CreateMessageAsync(
+PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+ThreadMessage message = await client.Messages.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     "What's the weather in Seattle?");
 
-ThreadRun run = await client.CreateRunAsync(thread, agent);
+ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
 
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
-    run = await client.GetRunAsync(thread.Id, run.Id);
+    run = await client.Runs.GetRunAsync(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress
@@ -111,7 +111,7 @@ Assert.AreEqual(
 
 Synchronous sample:
 ```C# Snippet:AgentsOpenAPISync_Print
-PageableList<ThreadMessage> messages = client.GetMessages(
+Pageable<ThreadMessage> messages = client.Messages.GetMessages(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
@@ -136,12 +136,12 @@ foreach (ThreadMessage threadMessage in messages)
 
 Asynchronous sample:
 ```C# Snippet:AgentsOpenAPI_Print
-PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
+AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
 
-foreach (ThreadMessage threadMessage in messages)
+await foreach (ThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -163,12 +163,12 @@ foreach (ThreadMessage threadMessage in messages)
 
 Synchronous sample:
 ```C# Snippet:AgentsOpenAPISync_Cleanup
-client.DeleteThread(thread.Id);
-client.DeleteAgent(agent.Id);
+client.Threads.DeleteThread(thread.Id);
+client.Administration.DeleteAgent(agent.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentsOpenAPI_Cleanup
-await client.DeleteThreadAsync(thread.Id);
-await client.DeleteAgentAsync(agent.Id);
+await client.Threads.DeleteThreadAsync(thread.Id);
+await client.Administration.DeleteAgentAsync(agent.Id);
 ```

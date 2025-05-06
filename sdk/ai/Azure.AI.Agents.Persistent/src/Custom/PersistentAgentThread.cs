@@ -5,7 +5,7 @@
 
 using Azure;
 
-namespace Azure.AI.Agents.Persistent.Custom;
+namespace Azure.AI.Agents.Persistent;
 
 /*
  * CUSTOM CODE DESCRIPTION:

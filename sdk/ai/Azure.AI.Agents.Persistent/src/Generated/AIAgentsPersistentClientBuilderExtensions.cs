@@ -12,35 +12,35 @@ using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="PersistentAgentsClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add <see cref="PersistentAgentsAdministration"/> to client builder. </summary>
     public static partial class AIAgentsPersistentClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="PersistentAgentsClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="PersistentAgentsAdministration"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        public static IAzureClientBuilder<PersistentAgentsClient, PersistentAgentsClientOptions> AddPersistentAgentsClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        public static IAzureClientBuilder<PersistentAgentsAdministration, PersistentAgentsAdministrationClientOptions> AddPersistentAgentsAdministration<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
         where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<PersistentAgentsClient, PersistentAgentsClientOptions>((options) => new PersistentAgentsClient(endpoint, credential, options));
+            return builder.RegisterClientFactory<PersistentAgentsAdministration, PersistentAgentsAdministrationClientOptions>((options) => new PersistentAgentsAdministration(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="PersistentAgentsClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="PersistentAgentsAdministration"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
-        public static IAzureClientBuilder<PersistentAgentsClient, PersistentAgentsClientOptions> AddPersistentAgentsClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<PersistentAgentsAdministration, PersistentAgentsAdministrationClientOptions> AddPersistentAgentsAdministration<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<PersistentAgentsClient, PersistentAgentsClientOptions>((options, cred) => new PersistentAgentsClient(endpoint, cred, options));
+            return builder.RegisterClientFactory<PersistentAgentsAdministration, PersistentAgentsAdministrationClientOptions>((options, cred) => new PersistentAgentsAdministration(endpoint, cred, options));
         }
 
-        /// <summary> Registers a <see cref="PersistentAgentsClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="PersistentAgentsAdministration"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<PersistentAgentsClient, PersistentAgentsClientOptions> AddPersistentAgentsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<PersistentAgentsAdministration, PersistentAgentsAdministrationClientOptions> AddPersistentAgentsAdministration<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<PersistentAgentsClient, PersistentAgentsClientOptions>(configuration);
+            return builder.RegisterClientFactory<PersistentAgentsAdministration, PersistentAgentsAdministrationClientOptions>(configuration);
         }
     }
 }

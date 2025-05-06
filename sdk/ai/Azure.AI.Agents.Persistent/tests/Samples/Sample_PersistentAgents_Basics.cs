@@ -4,6 +4,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -30,7 +32,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
 
         // Step 1: Create an agent
         #region Snippet:AgentsOverviewCreateAgent
-        PersistentAgent agent = await client.CreateAgentAsync(
+        PersistentAgent agent = await client.Administration.CreateAgentAsync(
             model: modelDeploymentName,
             name: "Math Tutor",
             instructions: "You are a personal math tutor. Write and run code to answer math questions."
@@ -39,12 +41,12 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
 
         //// Step 2: Create a thread
         #region Snippet:AgentsOverviewCreateThread
-        PersistentAgentThread thread = await client.CreateThreadAsync();
+        PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
         #endregion
 
         // Step 3: Add a message to a thread
         #region Snippet:AgentsOverviewCreateMessage
-        ThreadMessage message = await client.CreateMessageAsync(
+        ThreadMessage message = await client.Messages.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
             "I need to solve the equation `3x + 11 = 14`. Can you help me?");
@@ -53,12 +55,13 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         // Intermission: message is now correlated with thread
         // Intermission: listing messages will retrieve the message just added
 
-        Response<PageableList<ThreadMessage>> messagesListResponse = await client.GetMessagesAsync(thread.Id);
-        Assert.That(messagesListResponse.Value.Data[0].Id == message.Id);
+        AsyncPageable<ThreadMessage> messagesList = client.Messages.GetMessagesAsync(thread.Id);
+        List<ThreadMessage> messagesOne = await messagesList.ToListAsync();
+        Assert.AreEqual(message.Id, messagesOne[0].Id);
 
         // Step 4: Run the agent
         #region Snippet:AgentsOverviewCreateRun
-        ThreadRun run = await client.CreateRunAsync(
+        ThreadRun run = await client.Runs.CreateRunAsync(
             thread.Id,
             agent.Id,
             additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
@@ -68,7 +71,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            run = await client.GetRunAsync(thread.Id, run.Id);
+            run = await client.Runs.GetRunAsync(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
@@ -79,11 +82,11 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         #endregion
 
         #region Snippet:AgentsOverviewListUpdatedMessages
-        PageableList<ThreadMessage> messages
-            = await client.GetMessagesAsync(
+        AsyncPageable<ThreadMessage> messages
+            = client.Messages.GetMessagesAsync(
                 threadId: thread.Id, order: ListSortOrder.Ascending);
 
-        foreach (ThreadMessage threadMessage in messages)
+        await foreach (ThreadMessage threadMessage in messages)
         {
             Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
             foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -101,8 +104,8 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         }
         #endregion
         #region Snippet:AgentsOverviewCleanup
-        await client.DeleteThreadAsync(threadId: thread.Id);
-        await client.DeleteAgentAsync(agentId: agent.Id);
+        await client.Threads.DeleteThreadAsync(threadId: thread.Id);
+        await client.Administration.DeleteAgentAsync(agentId: agent.Id);
         #endregion
     }
 
@@ -121,7 +124,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
 
         // Step 1: Create an agent
         #region Snippet:AgentsOverviewCreateAgentSync
-        PersistentAgent agent = client.CreateAgent(
+        PersistentAgent agent = client.Administration.CreateAgent(
             model: modelDeploymentName,
             name: "Math Tutor",
             instructions: "You are a personal math tutor. Write and run code to answer math questions."
@@ -130,12 +133,12 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
 
         //// Step 2: Create a thread
         #region Snippet:AgentsOverviewCreateThreadSync
-        PersistentAgentThread thread = client.CreateThread();
+        PersistentAgentThread thread = client.Threads.CreateThread();
         #endregion
 
         // Step 3: Add a message to a thread
         #region Snippet:AgentsOverviewCreateMessageSync
-        ThreadMessage message = client.CreateMessage(
+        ThreadMessage message = client.Messages.CreateMessage(
             thread.Id,
             MessageRole.User,
             "I need to solve the equation `3x + 11 = 14`. Can you help me?");
@@ -144,12 +147,12 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         // Intermission: message is now correlated with thread
         // Intermission: listing messages will retrieve the message just added
 
-        Response<PageableList<ThreadMessage>> messagesListResponse = client.GetMessages(thread.Id);
-        Assert.That(messagesListResponse.Value.Data[0].Id == message.Id);
+        List<ThreadMessage> messagesList = [..client.Messages.GetMessages(thread.Id)];
+        Assert.AreEqual(message.Id, messagesList[0].Id);
 
         // Step 4: Run the agent
         #region Snippet:AgentsOverviewCreateRunSync
-        ThreadRun run = client.CreateRun(
+        ThreadRun run = client.Runs.CreateRun(
             thread.Id,
             agent.Id,
             additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
@@ -159,7 +162,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            run = client.GetRun(thread.Id, run.Id);
+            run = client.Runs.GetRun(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
@@ -170,8 +173,8 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         #endregion
 
         #region Snippet:AgentsOverviewListUpdatedMessagesSync
-        PageableList<ThreadMessage> messages
-            = client.GetMessages(
+        Pageable<ThreadMessage> messages
+            = client.Messages.GetMessages(
                 threadId: thread.Id, order: ListSortOrder.Ascending);
 
         foreach (ThreadMessage threadMessage in messages)
@@ -193,8 +196,8 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         #endregion
 
         #region Snippet:AgentsOverviewCleanupSync
-        client.DeleteThread(threadId: thread.Id);
-        client.DeleteAgent(agentId: agent.Id);
+        client.Threads.DeleteThread(threadId: thread.Id);
+        client.Administration.DeleteAgent(agentId: agent.Id);
         #endregion
     }
 }

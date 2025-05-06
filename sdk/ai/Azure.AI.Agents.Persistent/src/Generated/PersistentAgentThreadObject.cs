@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The PersistentAgentThread_object. </summary>
-    public readonly partial struct PersistentAgentThreadObject : IEquatable<PersistentAgentThreadObject>
+    internal readonly partial struct PersistentAgentThreadObject : IEquatable<PersistentAgentThreadObject>
     {
         private readonly string _value;
 

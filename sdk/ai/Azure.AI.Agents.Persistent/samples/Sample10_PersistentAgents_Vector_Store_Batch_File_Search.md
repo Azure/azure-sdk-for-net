@@ -9,17 +9,17 @@ var modelName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME
 var filePath = GetFile();
 PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
-VectorStore vectorStore = client.CreateVectorStore(
+VectorStore vectorStore = client.VectorStores.CreateVectorStore(
     name: "sample_vector_store"
 );
 
-PersistentAgentFile file = client.UploadFile(filePath, PersistentAgentFilePurpose.Agents);
+PersistentAgentFileInfo file = client.Files.UploadFile(filePath, PersistentAgentFilePurpose.Agents);
 Dictionary<string, string> dtReferences = new()
 {
     {file.Id, Path.GetFileName(file.Filename)}
 };
 
-var uploadTask = client.CreateVectorStoreFileBatch(
+var uploadTask = client.VectorStoreFileBatches.CreateVectorStoreFileBatch(
     vectorStoreId: vectorStore.Id,
     fileIds: [file.Id]
 );
@@ -28,7 +28,7 @@ Console.WriteLine($"Created vector store file batch, vector store file batch ID:
 FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 
 List<ToolDefinition> tools = [new FileSearchToolDefinition()];
-PersistentAgent agent = client.CreateAgent(
+PersistentAgent agent = client.Administration.CreateAgent(
     model: modelName,
     name: "my-agent",
     instructions: "You are helpful agent.",
@@ -44,17 +44,17 @@ var modelName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME
 var filePath = GetFile();
 PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
-VectorStore vectorStore = await client.CreateVectorStoreAsync(
+VectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
     name: "sample_vector_store"
 );
 
-PersistentAgentFile file = await client.UploadFileAsync(filePath, PersistentAgentFilePurpose.Agents);
+PersistentAgentFileInfo file = await client.Files.UploadFileAsync(filePath, PersistentAgentFilePurpose.Agents);
 Dictionary<string, string> dtReferences = new()
 {
     {file.Id, Path.GetFileName(file.Filename)}
 };
 
-VectorStoreFileBatch uploadTask = await client.CreateVectorStoreFileBatchAsync(
+VectorStoreFileBatch uploadTask = await client.VectorStoreFileBatches.CreateVectorStoreFileBatchAsync(
     vectorStoreId: vectorStore.Id,
     fileIds: [file.Id]
 );
@@ -63,7 +63,7 @@ Console.WriteLine($"Created vector store file batch, vector store file batch ID:
 FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 
 List<ToolDefinition> tools = [new FileSearchToolDefinition()];
-PersistentAgent agent = await client.CreateAgentAsync(
+PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelName,
     name: "my-agent",
     instructions: "You are helpful agent.",
@@ -76,15 +76,15 @@ PersistentAgent agent = await client.CreateAgentAsync(
 
 Synchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchFileSearchThreadAndResponse
-PersistentAgentThread thread = client.CreateThread();
+PersistentAgentThread thread = client.Threads.CreateThread();
 
-ThreadMessage message = client.CreateMessage(
+ThreadMessage message = client.Messages.CreateMessage(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "What feature does Smart Eyewear offer?"
     );
 
-ThreadRun run = client.CreateRun(
+ThreadRun run = client.Runs.CreateRun(
     thread.Id,
     agent.Id
 );
@@ -92,7 +92,7 @@ ThreadRun run = client.CreateRun(
 do
 {
     Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    run = client.GetRun(thread.Id,  run.Id);
+    run = client.Runs.GetRun(thread.Id,  run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
@@ -101,7 +101,7 @@ Assert.AreEqual(
     RunStatus.Completed,
     run.Status,
     run.LastError?.Message);
-PageableList<ThreadMessage> messages = client.GetMessages(
+Pageable<ThreadMessage> messages = client.Messages.GetMessages(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
@@ -110,15 +110,15 @@ WriteMessages(messages, dtReferences);
 
 Asynchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchFileSearchAsyncThreadAndResponse
-PersistentAgentThread thread = await client.CreateThreadAsync();
+PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
-ThreadMessage message = await client.CreateMessageAsync(
+ThreadMessage message = await client.Messages.CreateMessageAsync(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "What feature does Smart Eyewear offer?"
 );
 
-ThreadRun run = await client.CreateRunAsync(
+ThreadRun run = await client.Runs.CreateRunAsync(
     thread.Id,
     agent.Id
 );
@@ -126,7 +126,7 @@ ThreadRun run = await client.CreateRunAsync(
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
-    run = await client.GetRunAsync(thread.Id, run.Id);
+    run = await client.Runs.GetRunAsync(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
@@ -134,10 +134,10 @@ Assert.AreEqual(
     RunStatus.Completed,
     run.Status,
     run.LastError?.Message);
-PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
+List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
-);
+).ToListAsync();
 WriteMessages(messages, dtReferences);
 ```
 
@@ -195,7 +195,7 @@ private static string replaceReferences(Dictionary<string, string> fileIds, stri
 
 Synchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchFileSearchCleanup
-VectorStoreDeletionStatus delTask = client.DeleteVectorStore(vectorStore.Id);
+VectorStoreDeletionStatus delTask = client.VectorStores.DeleteVectorStore(vectorStore.Id);
 if (delTask.Deleted)
 {
     Console.WriteLine($"Deleted vector store {vectorStore.Id}");
@@ -204,12 +204,12 @@ else
 {
     Console.WriteLine($"Unable to delete vector store {vectorStore.Id}");
 }
-client.DeleteAgent(agent.Id);
+client.Administration.DeleteAgent(agent.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchFileSearchAsyncCleanup
-VectorStoreDeletionStatus delTask = await client.DeleteVectorStoreAsync(vectorStore.Id);
+VectorStoreDeletionStatus delTask = await client.VectorStores.DeleteVectorStoreAsync(vectorStore.Id);
 if (delTask.Deleted)
 {
     Console.WriteLine($"Deleted vector store {vectorStore.Id}");
@@ -218,5 +218,5 @@ else
 {
     Console.WriteLine($"Unable to delete vector store {vectorStore.Id}");
 }
-await client.DeleteAgentAsync(agent.Id);
+await client.Administration.DeleteAgentAsync(agent.Id);
 ```

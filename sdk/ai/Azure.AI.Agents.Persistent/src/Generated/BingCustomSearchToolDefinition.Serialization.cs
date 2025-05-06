@@ -59,7 +59,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 return null;
             }
-            SearchConfigurationList bingCustomSearch = default;
+            BingCustomSearchConfigurationList bingCustomSearch = default;
             string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -67,7 +67,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("bing_custom_search"u8))
                 {
-                    bingCustomSearch = SearchConfigurationList.DeserializeSearchConfigurationList(property.Value, options);
+                    bingCustomSearch = BingCustomSearchConfigurationList.DeserializeBingCustomSearchConfigurationList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

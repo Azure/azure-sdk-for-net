@@ -20,8 +20,5 @@ public partial class RunStepFunctionToolCall
     /// <inheritdoc cref="InternalRunStepFunctionToolCallDetails.Arguments"/>
     public string Arguments => InternalDetails.Arguments;
 
-    /// <inheritdoc cref="InternalRunStepFunctionToolCallDetails.Output"/>
-    public string Output => InternalDetails.Output;
-
     internal InternalRunStepFunctionToolCallDetails InternalDetails { get; }
 }

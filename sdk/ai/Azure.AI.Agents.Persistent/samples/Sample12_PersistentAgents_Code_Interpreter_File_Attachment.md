@@ -14,7 +14,7 @@ PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential(
 Synchronous sample:
 ```C# Snippet:AgentsCreateAgentWithInterpreterToolSync
 List<ToolDefinition> tools = [new CodeInterpreterToolDefinition()];
-PersistentAgent agent = client.CreateAgent(
+PersistentAgent agent = client.Administration.CreateAgent(
     model: modelDeploymentName,
     name: "my-agent",
     instructions: "You are a helpful agent that can help fetch data from files you know about.",
@@ -24,7 +24,7 @@ PersistentAgent agent = client.CreateAgent(
 System.IO.File.WriteAllText(
     path: "sample_file_for_upload.txt",
     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-PersistentAgentFile uploadedAgentFile = client.UploadFile(
+PersistentAgentFileInfo uploadedAgentFile = client.Files.UploadFile(
     filePath: "sample_file_for_upload.txt",
     purpose: PersistentAgentFilePurpose.Agents);
 var fileId = uploadedAgentFile.Id;
@@ -34,9 +34,9 @@ var attachment = new MessageAttachment(
     tools: tools
 );
 
-PersistentAgentThread thread = client.CreateThread();
+PersistentAgentThread thread = client.Threads.CreateThread();
 
-ThreadMessage message = client.CreateMessage(
+ThreadMessage message = client.Messages.CreateMessage(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "Can you give me the documented codes for 'banana' and 'orange'?",
@@ -47,7 +47,7 @@ ThreadMessage message = client.CreateMessage(
 Asynchronous sample:
 ```C# Snippet:AgentsCreateAgentWithInterpreterTool
 List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
-PersistentAgent agent = await client.CreateAgentAsync(
+PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "my-agent",
     instructions: "You are a helpful agent that can help fetch data from files you know about.",
@@ -57,7 +57,7 @@ PersistentAgent agent = await client.CreateAgentAsync(
 System.IO.File.WriteAllText(
     path: "sample_file_for_upload.txt",
     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-PersistentAgentFile uploadedAgentFile = await client.UploadFileAsync(
+PersistentAgentFileInfo uploadedAgentFile = await client.Files.UploadFileAsync(
     filePath: "sample_file_for_upload.txt",
     purpose: PersistentAgentFilePurpose.Agents);
 var fileId = uploadedAgentFile.Id;
@@ -67,9 +67,9 @@ var attachment = new MessageAttachment(
     tools: tools
 );
 
-PersistentAgentThread thread = await client.CreateThreadAsync();
+PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
-ThreadMessage message = await client.CreateMessageAsync(
+ThreadMessage message = await client.Messages.CreateMessageAsync(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "Can you give me the documented codes for 'banana' and 'orange'?",
@@ -81,7 +81,7 @@ ThreadMessage message = await client.CreateMessageAsync(
 
 Synchronous sample:
 ```C# Snippet:AgentsCodeInterpreterFileAttachmentSync_CreateRun
-ThreadRun run = client.CreateRun(
+ThreadRun run = client.Runs.CreateRun(
     thread.Id,
     agent.Id
 );
@@ -89,7 +89,7 @@ ThreadRun run = client.CreateRun(
 do
 {
     Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    run = client.GetRun(thread.Id, run.Id);
+    run = client.Runs.GetRun(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
@@ -101,7 +101,7 @@ Assert.AreEqual(
 
 Asynchronous sample:
 ```C# Snippet:AgentsCodeInterpreterFileAttachment_CreateRun
-ThreadRun run = await client.CreateRunAsync(
+ThreadRun run = await client.Runs.CreateRunAsync(
     thread.Id,
     agent.Id
 );
@@ -109,7 +109,7 @@ ThreadRun run = await client.CreateRunAsync(
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
-    run = await client.GetRunAsync(thread.Id, run.Id);
+    run = await client.Runs.GetRunAsync(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
@@ -146,7 +146,7 @@ private static void WriteMessages(IEnumerable<ThreadMessage> messages)
 
 Synchronous sample:
 ```C# Snippet:AgentsCodeInterpreterFileAttachmentSync_PrintMessages
-PageableList<ThreadMessage> messages = client.GetMessages(
+Pageable<ThreadMessage> messages = client.Messages.GetMessages(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
@@ -155,10 +155,10 @@ WriteMessages(messages);
 
 Asynchronous sample:
 ```C# Snippet:AgentsCodeInterpreterFileAttachment_PrintMessages
-PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
+List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
-);
+).ToListAsync();
 WriteMessages(messages);
 ```
 
@@ -166,12 +166,12 @@ WriteMessages(messages);
 
 Synchronous sample:
 ```C# Snippet:AgentsCodeInterpreterFileAttachmentSync_Cleanup
-client.DeleteThread(thread.Id);
-client.DeleteAgent(agent.Id);
+client.Threads.DeleteThread(thread.Id);
+client.Administration.DeleteAgent(agent.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentsCodeInterpreterFileAttachment_Cleanup
-await client.DeleteThreadAsync(thread.Id);
-await client.DeleteAgentAsync(agent.Id);
+await client.Threads.DeleteThreadAsync(thread.Id);
+await client.Administration.DeleteAgentAsync(agent.Id);
 ```

@@ -48,28 +48,24 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of <see cref="InternalRunStepFunctionToolCallDetails"/>. </summary>
         /// <param name="name"> The name of the function. </param>
         /// <param name="arguments"> The arguments that the model requires are provided to the named function. </param>
-        /// <param name="output"> The output of the function, only populated for function calls that have already have had their outputs submitted. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="arguments"/> is null. </exception>
-        internal InternalRunStepFunctionToolCallDetails(string name, string arguments, string output)
+        internal InternalRunStepFunctionToolCallDetails(string name, string arguments)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(arguments, nameof(arguments));
 
             Name = name;
             Arguments = arguments;
-            Output = output;
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalRunStepFunctionToolCallDetails"/>. </summary>
         /// <param name="name"> The name of the function. </param>
         /// <param name="arguments"> The arguments that the model requires are provided to the named function. </param>
-        /// <param name="output"> The output of the function, only populated for function calls that have already have had their outputs submitted. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalRunStepFunctionToolCallDetails(string name, string arguments, string output, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalRunStepFunctionToolCallDetails(string name, string arguments, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Arguments = arguments;
-            Output = output;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -82,7 +78,5 @@ namespace Azure.AI.Agents.Persistent
         public string Name { get; }
         /// <summary> The arguments that the model requires are provided to the named function. </summary>
         public string Arguments { get; }
-        /// <summary> The output of the function, only populated for function calls that have already have had their outputs submitted. </summary>
-        public string Output { get; }
     }
 }
