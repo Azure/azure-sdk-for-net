@@ -1,0 +1,38 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someNonExistantEventRoute?api-version=2023-10-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-b98e7d32e64d07b4daf7da4ef273f8b3-6778b051bbdabd7c-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET Framework 4.8.9300.0; Microsoft Windows 10.0.26100 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "223",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 02 May 2025 14:55:23 GMT",
+        "mise-correlation-id": "93bf7088-5ec0-493d-83d3-a6593932b013",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-b98e7d32e64d07b4daf7da4ef273f8b3-be1366b3b3a887bd-01",
+        "x-ms-error-code": "EventRouteNotFound"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "EventRouteNotFound",
+          "message": "There is no route available that matches the provided input. Check for all valid event routes by calling EventRoute_List. See Swagger example (https://aka.ms/RouteSwSmpl)."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "DIGITALTWINS_URL": "https://fakeHost.api.wus2.digitaltwins.azure.net",
+    "RandomSeed": "1482673548"
+  }
+}

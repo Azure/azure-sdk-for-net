@@ -168,7 +168,7 @@ public class ActivityExtensionsTests
         MockPipelineResponse response = new(500, "Internal Server error");
         ClientResultException exception = new(message, response);
 
-        activity?.MarkFailed(exception);
+        activity?.MarkClientActivityFailed(exception);
 
         Assert.NotNull(activity);
         Assert.AreEqual(message, activity!.StatusDescription);
@@ -191,7 +191,7 @@ public class ActivityExtensionsTests
         string message = "Value cannot be null. (Parameter 'parameter')";
 #endif
 
-        activity?.MarkFailed(exception);
+        activity?.MarkClientActivityFailed(exception);
 
         Assert.NotNull(activity);
         Assert.AreEqual(message, activity!.StatusDescription);
@@ -207,7 +207,7 @@ public class ActivityExtensionsTests
 
         using Activity? activity = activitySource.StartClientActivity(options, "Client.Method");
 
-        activity?.MarkFailed(null);
+        activity?.MarkClientActivityFailed(null);
 
         Assert.NotNull(activity);
         Assert.AreEqual(null, activity!.StatusDescription);
