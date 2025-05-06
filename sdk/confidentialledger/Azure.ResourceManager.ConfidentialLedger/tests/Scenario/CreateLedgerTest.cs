@@ -21,18 +21,17 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         [RecordedTest]
         public async Task TestNameAvailabilityBeforeCreating()
         {
+            IgnoreTestInLiveMode();
             ConfidentialLedgerNameAvailabilityResult response = await GetLedgerNameAvailability(LedgerNameInFixture);
             Assert.True(response.IsNameAvailable);
         }
 
         [Test, Order(2)]
         [RecordedTest]
-        [LiveOnly(Reason = "Test relies on PrincipalId format which currently is not a valid GUID. This will be fixed when the sanitization migrates to the Test Proxy.")]
         public async Task TestCreateLedger()
         {
-            // Create the ledger
+            IgnoreTestInLiveMode();
             await CreateLedger(LedgerNameInFixture);
-
             ConfidentialLedgerResource ledgerResource = await GetLedgerByName(LedgerNameInFixture);
 
             Assert.NotNull(ledgerResource);
@@ -44,6 +43,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         [RecordedTest]
         public async Task TestNameAvailabilityAfterCreating()
         {
+            IgnoreTestInLiveMode();
             ConfidentialLedgerNameAvailabilityResult response = await GetLedgerNameAvailability(LedgerNameInFixture);
             Assert.False(response.IsNameAvailable);
         }

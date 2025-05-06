@@ -51,7 +51,15 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
                 new ResourceIdentifier($"/subscriptions/{TestEnvironment.SubscriptionId}"));
             ResourceGroupCollection resourceGroups = Subscription.GetResourceGroups();
             _resourceGroup =  resourceGroups.GetAsync(_resourceGroupName).Result;
-            LedgerNameInFixture = "ledger-" + _testFixtureName;
+            LedgerNameInFixture = "dotnet-sdk-test-ledger-" + _testFixtureName;
+        }
+
+        public void IgnoreTestInLiveMode()
+        {
+            if (Mode == RecordedTestMode.Live)
+            {
+                Assert.Ignore();
+            }
         }
 
         /// <summary>

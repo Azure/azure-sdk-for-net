@@ -20,50 +20,31 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         {
         }
 
-        [Test, Order(1)]
         [RecordedTest]
-        [LiveOnly(Reason = "Test relies on PrincipalId format which currently is not a valid GUID. This will be fixed when the sanitization migrates to the Test Proxy.")]
-        public async Task TestAddUserToLedger()
+        public async Task TestAddRemoveCertUserFromLedger()
         {
-            // Create Ledger
+            IgnoreTestInLiveMode();
+
+            TestContext.WriteLine($"Creating ledger {LedgerNameInFixture}");
             await CreateLedger(LedgerNameInFixture);
             _ledgerResource = await GetLedgerByName(LedgerNameInFixture);
+            TestContext.WriteLine($"Ledger created with aad users {string.Join(",", _ledgerResource.Data.Properties.AadBasedSecurityPrincipals.Select(x => x.PrincipalId))}");
+            TestContext.WriteLine($"Ledger created with cert users {string.Join(",", _ledgerResource.Data.Properties.CertBasedSecurityPrincipals.Select(x => x.LedgerRoleName))}");
 
-            // Add the AadBasedSecurityPrincipal
+            TestContext.WriteLine($"Update ledger {LedgerNameInFixture} with new cert users");
             _ledgerResource.Data.Properties = AddTestSecurityPrincipal(_ledgerResource.Data.Properties,
                 GenerateTestSecurityPrincipal());
             await UpdateLedger(LedgerNameInFixture, _ledgerResource.Data);
 
-            // Get the updated ledger
-            _ledgerResource = await GetLedgerByName(LedgerNameInFixture);
-
-            Assert.True(_ledgerResource.Data.Properties.AadBasedSecurityPrincipals
-                .Any(testUser => TestEnvironment.TestUserObjectId.Equals(testUser.PrincipalId.ToString())));
-        }
-
-        [Test, Order(2)]
-        [RecordedTest]
-        [LiveOnly(Reason = "Test relies on PrincipalId format which currently is not a valid GUID. This will be fixed when the sanitization migrates to the Test Proxy.")]
-        public async Task TestRemoveUserFromLedger()
-        {
-            // Create Ledger
-            await CreateLedger(LedgerNameInFixture);
-            _ledgerResource = await GetLedgerByName(LedgerNameInFixture);
-
-            // Add the AadBasedSecurityPrincipal
-            _ledgerResource.Data.Properties = AddTestSecurityPrincipal(_ledgerResource.Data.Properties,
-                GenerateTestSecurityPrincipal());
+            TestContext.WriteLine($"Remove 1st user from the list of cert users");
+            _ledgerResource.Data.Properties.CertBasedSecurityPrincipals.RemoveAt(0);
             await UpdateLedger(LedgerNameInFixture, _ledgerResource.Data);
 
-            // Remove the AadBasedSecurityPrincipal
-            _ledgerResource.Data.Properties.AadBasedSecurityPrincipals.RemoveAt(0);
-            await UpdateLedger(LedgerNameInFixture, _ledgerResource.Data);
-
-            // Get the updated ledger
             _ledgerResource = await GetLedgerByName(LedgerNameInFixture);
+            TestContext.WriteLine($"Ledger users after removal {string.Join(",", _ledgerResource.Data.Properties.CertBasedSecurityPrincipals.Select(x => x.LedgerRoleName))}");
 
-            Assert.False(_ledgerResource.Data.Properties.AadBasedSecurityPrincipals
-                .Any(testUser => TestEnvironment.TestUserObjectId.Equals(testUser.PrincipalId.ToString())));
+            Assert.IsEmpty(_ledgerResource.Data.Properties.CertBasedSecurityPrincipals,
+                $"Expected list to be empty, but it was not.");
         }
 
         /// <summary>
@@ -73,22 +54,27 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         /// <param name="securityPrincipals"></param>
         /// <returns></returns>
         private ConfidentialLedgerProperties AddTestSecurityPrincipal(ConfidentialLedgerProperties properties,
-            IList<AadBasedSecurityPrincipal> securityPrincipals)
+            IList<CertBasedSecurityPrincipal> securityPrincipals)
         {
             return new ConfidentialLedgerProperties(properties.LedgerName, properties.LedgerUri,
                 properties.IdentityServiceUri, properties.LedgerInternalNamespace, properties.RunningState, properties.LedgerType,
-                properties.ProvisioningState, null, securityPrincipals, properties.CertBasedSecurityPrincipals, null);
+                properties.ProvisioningState, null, properties.AadBasedSecurityPrincipals, securityPrincipals, null);
         }
 
         /// <summary>
-        /// Method generate a test list with the TestUser (TestUser321@microsoft.com) with a Contributor test role
+        /// Method generate a test list with the cert based user and a Contributor test role
+        /// AAD based users cannot be modified as the test framework invalidates user GUIDs
         /// </summary>
         /// <returns></returns>
-        private IList<AadBasedSecurityPrincipal> GenerateTestSecurityPrincipal()
+        private IList<CertBasedSecurityPrincipal> GenerateTestSecurityPrincipal()
         {
-            IList<AadBasedSecurityPrincipal> securityPrincipals = new List<AadBasedSecurityPrincipal>();
-            securityPrincipals.Add(new AadBasedSecurityPrincipal(new Guid(TestEnvironment.TestUserObjectId),
-                new Guid(TestEnvironment.TenantId), new ConfidentialLedgerRoleName("Contributor"), null));
+            CertBasedSecurityPrincipal certUser = new CertBasedSecurityPrincipal
+            {
+                Cert = "-----BEGIN CERTIFICATE-----\nMIIDUjCCAjqgAwIBAgIQJ2IrDBawSkiAbkBYmiAopDANBgkqhkiG9w0BAQsFADAmMSQwIgYDVQQDExtTeW50aGV0aWNzIExlZGdlciBVc2VyIENlcnQwHhcNMjAwOTIzMjIxODQ2WhcNMjEwOTIzMjIyODQ2WjAmMSQwIgYDVQQDExtTeW50aGV0aWNzIExlZGdlciBVc2VyIENlcnQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCX2s/Eu4q/eQ63N+Ugeg5oAciZua/YCJr41c/696szvSY7Zg1SNJlW88/nbz70+QpO55OmqlEE3QCU+T0Vl/h0Gf//n1PYcoBbTGUnYEmV+fTTHict6rFiEwrGJ62tvcpYgwapInSLyEeUzjki0zhOLJ1OfRnYd1eGnFVMpE5aVjiS8Q5dmTEUyd51EIprGE8RYAW9aeWSwTH7gjHUsRlJnHKcdhaK/v5QKJnNu5bzPFUcpC0ZBcizoMPAtroLAD4B68Jl0z3op18MgZe6lRrVoWuxfqnk5GojuB/Vu8ohAZKoFhQ6NB6r+LL2AUs+Zr7Bt26IkEdR178n9JMEA4gHAgMBAAGjfDB6MA4GA1UdDwEB/wQEAwIFoDAJBgNVHRMEAjAAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAfBgNVHSMEGDAWgBS/a7PU9iOfOKEyZCp11Oen5VSuuDAdBgNVHQ4EFgQUv2uz1PYjnzihMmQqddTnp+VUrrgwDQYJKoZIhvcNAQELBQADggEBAF5q2fDwnse8egXhfaJCqqM969E9gSacqFmASpoDJPRPEX7gqoO7v1ww7nqRtRDoRiBvo/yNk7jlSAkRN3nRRnZLZZ3MYQdmCr4FGyIqRg4Y94+nja+Du9pDD761rxRktMVPSOaAVM/E5DQvscDlPvlPYe9mkcrLCE4DXYpiMmLT8Tm55LJJq5m07dVDgzAIR1L/hmEcbK0pnLgzciMtMLxGO2udnyyW/UW9WxnjvrrD2JluTHH9mVbb+XQP1oFtlRBfH7aui1ZgWfKvxrdP4zdK9QoWSUvRux3TLsGmHRBjBMtqYDY3y5mB+aNjLelvWpeVb0m2aOSVXynrLwNCAVA=\n-----END CERTIFICATE-----",
+                LedgerRoleName = ConfidentialLedgerRoleName.Contributor,
+            };
+            IList<CertBasedSecurityPrincipal> securityPrincipals = new List<CertBasedSecurityPrincipal>();
+            securityPrincipals.Add(certUser);
             return securityPrincipals;
         }
     }
