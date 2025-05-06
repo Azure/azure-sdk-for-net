@@ -115,7 +115,7 @@ public partial class Sample_PersistentAgents_Functions_Streaming : SamplesBase<A
         }
         #endregion
         #region Snippet:AgentsFunctionsWithStreaming_CreateAgent
-        PersistentAgent agent = await client.CreateAgentAsync(
+        PersistentAgent agent = await client.Administration.CreateAgentAsync(
             model: modelDeploymentName,
             name: "SDK Test Agent - Functions",
                 instructions: "You are a weather bot. Use the provided functions to help answer questions. "
@@ -125,9 +125,9 @@ public partial class Sample_PersistentAgents_Functions_Streaming : SamplesBase<A
         );
         #endregion
         #region Snippet:AgentsFunctionsWithStreaming_CreateThread
-        PersistentAgentThread thread = await client.CreateThreadAsync();
+        PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
-        ThreadMessage message = await client.CreateMessageAsync(
+        ThreadMessage message = await client.Messages.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
             "What's the weather like in my favorite city?");
@@ -135,7 +135,7 @@ public partial class Sample_PersistentAgents_Functions_Streaming : SamplesBase<A
         #region Snippet:AgentsFunctionsWithStreamingUpdateCycle
         List<ToolOutput> toolOutputs = [];
         ThreadRun streamRun = null;
-        AsyncCollectionResult<StreamingUpdate> stream = client.CreateRunStreamingAsync(thread.Id, agent.Id);
+        AsyncCollectionResult<StreamingUpdate> stream = client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id);
         do
         {
             toolOutputs.Clear();
@@ -165,17 +165,21 @@ public partial class Sample_PersistentAgents_Functions_Streaming : SamplesBase<A
                     Console.WriteLine();
                     Console.WriteLine("--- Run completed! ---");
                 }
+                else if (streamingUpdate.UpdateKind == StreamingUpdateReason.Error && streamingUpdate is RunUpdate errorStep)
+                {
+                    Console.WriteLine($"Error: {errorStep.Value.LastError}");
+                }
             }
             if (toolOutputs.Count > 0)
             {
-                stream = client.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs);
+                stream = client.Runs.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs);
             }
         }
         while (toolOutputs.Count > 0);
         #endregion
         #region Snippet:AgentsFunctionsWithStreaming_Cleanup
-        await client.DeleteThreadAsync(thread.Id);
-        await client.DeleteAgentAsync(agent.Id);
+        await client.Threads.DeleteThreadAsync(thread.Id);
+        await client.Administration.DeleteAgentAsync(agent.Id);
         #endregion
     }
 
@@ -273,7 +277,7 @@ public partial class Sample_PersistentAgents_Functions_Streaming : SamplesBase<A
             return null;
         }
         #region Snippet:AgentsFunctionsWithStreamingSync_CreateAgent
-        PersistentAgent agent = client.CreateAgent(
+        PersistentAgent agent = client.Administration.CreateAgent(
             model: modelDeploymentName,
             name: "SDK Test Agent - Functions",
                 instructions: "You are a weather bot. Use the provided functions to help answer questions. "
@@ -283,9 +287,9 @@ public partial class Sample_PersistentAgents_Functions_Streaming : SamplesBase<A
         );
         #endregion
         #region Snippet:AgentsFunctionsWithStreamingSync_CreateThread
-        PersistentAgentThread thread = client.CreateThread();
+        PersistentAgentThread thread = client.Threads.CreateThread();
 
-        ThreadMessage message = client.CreateMessage(
+        ThreadMessage message = client.Messages.CreateMessage(
             thread.Id,
             MessageRole.User,
             "What's the weather like in my favorite city?");
@@ -293,7 +297,7 @@ public partial class Sample_PersistentAgents_Functions_Streaming : SamplesBase<A
         #region Snippet:AgentsFunctionsWithStreamingSyncUpdateCycle
         List<ToolOutput> toolOutputs = [];
         ThreadRun streamRun = null;
-        CollectionResult<StreamingUpdate> stream = client.CreateRunStreaming(thread.Id, agent.Id);
+        CollectionResult<StreamingUpdate> stream = client.Runs.CreateRunStreaming(thread.Id, agent.Id);
         do
         {
             toolOutputs.Clear();
@@ -323,17 +327,21 @@ public partial class Sample_PersistentAgents_Functions_Streaming : SamplesBase<A
                     Console.WriteLine();
                     Console.WriteLine("--- Run completed! ---");
                 }
+                else if (streamingUpdate.UpdateKind == StreamingUpdateReason.Error && streamingUpdate is RunUpdate errorStep)
+                {
+                    Console.WriteLine($"Error: {errorStep.Value.LastError}");
+                }
             }
             if (toolOutputs.Count > 0)
             {
-                stream = client.SubmitToolOutputsToStream(streamRun, toolOutputs);
+                stream = client.Runs.SubmitToolOutputsToStream(streamRun, toolOutputs);
             }
         }
         while (toolOutputs.Count > 0);
         #endregion
         #region Snippet:AgentsFunctionsWithStreamingSync_Cleanup
-        client.DeleteThread(thread.Id);
-        client.DeleteAgent(agent.Id);
+        client.Threads.DeleteThread(thread.Id);
+        client.Administration.DeleteAgent(agent.Id);
         #endregion
     }
 }

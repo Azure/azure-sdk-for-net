@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of <see cref="BingCustomSearchToolDefinition"/>. </summary>
         /// <param name="bingCustomSearch"> The list of search configurations used by the bing custom search tool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bingCustomSearch"/> is null. </exception>
-        public BingCustomSearchToolDefinition(SearchConfigurationList bingCustomSearch)
+        public BingCustomSearchToolDefinition(BingCustomSearchConfigurationList bingCustomSearch)
         {
             Argument.AssertNotNull(bingCustomSearch, nameof(bingCustomSearch));
 
@@ -28,7 +28,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="type"> The object type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="bingCustomSearch"> The list of search configurations used by the bing custom search tool. </param>
-        internal BingCustomSearchToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, SearchConfigurationList bingCustomSearch) : base(type, serializedAdditionalRawData)
+        internal BingCustomSearchToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, BingCustomSearchConfigurationList bingCustomSearch) : base(type, serializedAdditionalRawData)
         {
             BingCustomSearch = bingCustomSearch;
         }
@@ -39,6 +39,6 @@ namespace Azure.AI.Agents.Persistent
         }
 
         /// <summary> The list of search configurations used by the bing custom search tool. </summary>
-        public SearchConfigurationList BingCustomSearch { get; set; }
+        public BingCustomSearchConfigurationList BingCustomSearch { get; set; }
     }
 }

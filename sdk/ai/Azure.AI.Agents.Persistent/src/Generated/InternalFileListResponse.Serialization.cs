@@ -81,7 +81,7 @@ namespace Azure.AI.Agents.Persistent
                 return null;
             }
             InternalFileListResponseObject @object = default;
-            IReadOnlyList<PersistentAgentFile> data = default;
+            IReadOnlyList<PersistentAgentFileInfo> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,10 +93,10 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (property.NameEquals("data"u8))
                 {
-                    List<PersistentAgentFile> array = new List<PersistentAgentFile>();
+                    List<PersistentAgentFileInfo> array = new List<PersistentAgentFileInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PersistentAgentFile.DeserializePersistentAgentFile(item, options));
+                        array.Add(PersistentAgentFileInfo.DeserializePersistentAgentFileInfo(item, options));
                     }
                     data = array;
                     continue;

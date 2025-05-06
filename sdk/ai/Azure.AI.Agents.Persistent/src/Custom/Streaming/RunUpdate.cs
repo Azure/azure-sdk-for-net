@@ -4,7 +4,6 @@
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Agents.Persistent.Custom;
 
 namespace Azure.AI.Agents.Persistent;
 

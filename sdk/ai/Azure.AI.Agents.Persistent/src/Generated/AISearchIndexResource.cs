@@ -63,15 +63,17 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="indexName"> The name of an index in an IndexResource attached to this agent. </param>
         /// <param name="queryType"> Type of query in an AIIndexResource attached to this agent. </param>
         /// <param name="topK"> Number of documents to retrieve from search and present to the model. </param>
-        /// <param name="filter"> Odata filter string for search resource. </param>
+        /// <param name="filter"> filter string for search resource. </param>
+        /// <param name="indexAssetId"> Index asset id for search resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AISearchIndexResource(string indexConnectionId, string indexName, AzureAISearchQueryType? queryType, int? topK, string filter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AISearchIndexResource(string indexConnectionId, string indexName, AzureAISearchQueryType? queryType, int? topK, string filter, string indexAssetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IndexConnectionId = indexConnectionId;
             IndexName = indexName;
             QueryType = queryType;
             TopK = topK;
             Filter = filter;
+            IndexAssetId = indexAssetId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -88,7 +90,9 @@ namespace Azure.AI.Agents.Persistent
         public AzureAISearchQueryType? QueryType { get; set; }
         /// <summary> Number of documents to retrieve from search and present to the model. </summary>
         public int? TopK { get; set; }
-        /// <summary> Odata filter string for search resource. </summary>
+        /// <summary> filter string for search resource. </summary>
         public string Filter { get; set; }
+        /// <summary> Index asset id for search resource. </summary>
+        public string IndexAssetId { get; set; }
     }
 }

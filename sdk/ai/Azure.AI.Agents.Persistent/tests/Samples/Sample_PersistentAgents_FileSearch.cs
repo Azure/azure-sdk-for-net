@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -33,7 +34,7 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
         System.IO.File.WriteAllText(
             path: "sample_file_for_upload.txt",
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-        PersistentAgentFile uploadedAgentFile = await client.UploadFileAsync(
+        PersistentAgentFileInfo uploadedAgentFile = await client.Files.UploadFileAsync(
             filePath: "sample_file_for_upload.txt",
             purpose: PersistentAgentFilePurpose.Agents);
         Dictionary<string, string> fileIds = new()
@@ -45,7 +46,7 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
         #region Snippet:AgentsCreateVectorStore
         // Create a vector store with the file and wait for it to be processed.
         // If you do not specify a vector store, create_message will create a vector store with a default expiration policy of seven days after they were last active
-        VectorStore vectorStore = await client.CreateVectorStoreAsync(
+        VectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
             fileIds:  new List<string> { uploadedAgentFile.Id },
             name: "my_vector_store");
         #endregion
@@ -55,7 +56,7 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
         fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
         // Create an agent with toolResources and process agent run
-        PersistentAgent agent = await client.CreateAgentAsync(
+        PersistentAgent agent = await client.Administration.CreateAgentAsync(
                 model: modelDeploymentName,
                 name: "SDK Test Agent - Retrieval",
                 instructions: "You are a helpful agent that can help fetch data from files you know about.",
@@ -65,21 +66,21 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
 
         #region Snippet:AgentsFilesSearchExample_CreateThreadAndRun
         // Create thread for communication
-        PersistentAgentThread thread = await client.CreateThreadAsync();
+        PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
         // Create message to thread
-        ThreadMessage messageResponse = await client.CreateMessageAsync(
+        ThreadMessage messageResponse = await client.Messages.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
             "Can you give me the documented codes for 'banana' and 'orange'?");
 
         // Run the agent
-        ThreadRun run = await client.CreateRunAsync(thread, agent);
+        ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
 
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            run = await client.GetRunAsync(thread.Id, run.Id);
+            run = await client.Runs.GetRunAsync(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
@@ -87,17 +88,17 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
             RunStatus.Completed,
             run.Status,
             run.LastError?.Message);
-        PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
+        List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
-        );
+        ).ToListAsync();
         WriteMessages(messages, fileIds);
         #endregion
         #region Snippet:AgentsFilesSearchExample_Cleanup
-        await client.DeleteVectorStoreAsync(vectorStore.Id);
-        await client.DeleteFileAsync(uploadedAgentFile.Id);
-        await client.DeleteThreadAsync(thread.Id);
-        await client.DeleteAgentAsync(agent.Id);
+        await client.VectorStores.DeleteVectorStoreAsync(vectorStore.Id);
+        await client.Files.DeleteFileAsync(uploadedAgentFile.Id);
+        await client.Threads.DeleteThreadAsync(thread.Id);
+        await client.Administration.DeleteAgentAsync(agent.Id);
         #endregion
     }
 
@@ -118,7 +119,7 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
         System.IO.File.WriteAllText(
             path: "sample_file_for_upload.txt",
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-        PersistentAgentFile uploadedAgentFile = client.UploadFile(
+        PersistentAgentFileInfo uploadedAgentFile = client.Files.UploadFile(
             filePath: "sample_file_for_upload.txt",
             purpose: PersistentAgentFilePurpose.Agents);
         Dictionary<string, string> fileIds = new()
@@ -130,7 +131,7 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
         #region Snippet:AgentsCreateVectorStore_Sync
         // Create a vector store with the file and wait for it to be processed.
         // If you do not specify a vector store, create_message will create a vector store with a default expiration policy of seven days after they were last active
-        VectorStore vectorStore = client.CreateVectorStore(
+        VectorStore vectorStore = client.VectorStores.CreateVectorStore(
             fileIds: new List<string> { uploadedAgentFile.Id },
             name: "my_vector_store");
         #endregion
@@ -140,7 +141,7 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
         fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
         // Create an agent with toolResources and process agent run
-        PersistentAgent agent = client.CreateAgent(
+        PersistentAgent agent = client.Administration.CreateAgent(
                 model: modelDeploymentName,
                 name: "SDK Test Agent - Retrieval",
                 instructions: "You are a helpful agent that can help fetch data from files you know about.",
@@ -150,21 +151,21 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
 
         #region Snippet:AgentsFilesSearchExample_CreateThreadAndRun_Sync
         // Create thread for communication
-        PersistentAgentThread thread = client.CreateThread();
+        PersistentAgentThread thread = client.Threads.CreateThread();
 
         // Create message to thread
-        ThreadMessage messageResponse = client.CreateMessage(
+        ThreadMessage messageResponse = client.Messages.CreateMessage(
             thread.Id,
             MessageRole.User,
             "Can you give me the documented codes for 'banana' and 'orange'?");
 
         // Run the agent
-        ThreadRun run = client.CreateRun(thread, agent);
+        ThreadRun run = client.Runs.CreateRun(thread, agent);
 
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            run = client.GetRun(thread.Id, run.Id);
+            run = client.Runs.GetRun(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
@@ -172,17 +173,17 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
             RunStatus.Completed,
             run.Status,
             run.LastError?.Message);
-        PageableList<ThreadMessage> messages = client.GetMessages(
+        Pageable<ThreadMessage> messages = client.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
         WriteMessages(messages, fileIds);
         #endregion
         #region Snippet:AgentsFilesSearchExample_Cleanup_Sync
-        client.DeleteVectorStore(vectorStore.Id);
-        client.DeleteFile(uploadedAgentFile.Id);
-        client.DeleteThread(thread.Id);
-        client.DeleteAgent(agent.Id);
+        client.VectorStores.DeleteVectorStore(vectorStore.Id);
+        client.Files.DeleteFile(uploadedAgentFile.Id);
+        client.Threads.DeleteThread(thread.Id);
+        client.Administration.DeleteAgent(agent.Id);
         #endregion
     }
 

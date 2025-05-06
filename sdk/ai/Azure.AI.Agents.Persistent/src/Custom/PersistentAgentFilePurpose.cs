@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The possible values denoting the intended usage of a file. </summary>
-    [CodeGenModel("OpenAIFilePurpose")]
+    [CodeGenModel("FilePurpose")]
     public readonly partial struct PersistentAgentFilePurpose : IEquatable<PersistentAgentFilePurpose>
     {
     }
