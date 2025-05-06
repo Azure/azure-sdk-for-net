@@ -230,12 +230,11 @@ namespace Azure.Generator.Management.Providers
 
         protected MethodProvider BuildOperationMethod(InputServiceMethod method, MethodProvider convenienceMethod, bool isAsync, bool isUpdateOnly = false)
         {
-            var operation = method.Operation;
             var signature = new MethodSignature(
                 isUpdateOnly ? (isAsync ? "UpdateAsync" : "Update") : convenienceMethod.Signature.Name,
                 isUpdateOnly ? $"Update a {SpecName}" : convenienceMethod.Signature.Description,
                 convenienceMethod.Signature.Modifiers,
-                GetOperationMethodReturnType(isAsync, method is InputLongRunningServiceMethod || method is InputLongRunningPagingServiceMethod, operation.Responses),
+                GetOperationMethodReturnType(method, isAsync, out var isGeneric),
                 convenienceMethod.Signature.ReturnDescription,
                 GetOperationMethodParameters(convenienceMethod, method is InputLongRunningServiceMethod),
                 convenienceMethod.Signature.Attributes,
@@ -244,17 +243,17 @@ namespace Azure.Generator.Management.Providers
                 convenienceMethod.Signature.ExplicitInterface,
                 convenienceMethod.Signature.NonDocumentComment);
 
-            return BuildOperationMethod(method, convenienceMethod, signature, isAsync);
+            return BuildOperationMethodCore(method, convenienceMethod, signature, isAsync, isGeneric);
         }
 
-        protected MethodProvider BuildOperationMethod(InputServiceMethod method, MethodProvider convenienceMethod, MethodSignature signature, bool isAsync)
+        protected MethodProvider BuildOperationMethodCore(InputServiceMethod method, MethodProvider convenienceMethod, MethodSignature signature, bool isAsync, bool isGeneric)
         {
             var bodyStatements = new MethodBodyStatement[]
                 {
                     UsingDeclare("scope", typeof(DiagnosticScope), _clientDiagonosticsField.Invoke(nameof(ClientDiagnostics.CreateScope), [Literal($"{Name}.{signature.Name}")]), out var scopeVariable),
                     scopeVariable.Invoke(nameof(DiagnosticScope.Start)).Terminate(),
                     new TryCatchFinallyStatement
-                    (BuildOperationMethodTryStatement(method, convenienceMethod, signature, isAsync),
+                    (BuildOperationMethodTryStatement(method, convenienceMethod, signature, isAsync, isGeneric),
                      Catch(Declare<Exception>("e", out var exceptionVarialble),
                      [scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVarialble).Terminate(), Throw()]))
                 };
@@ -262,7 +261,7 @@ namespace Azure.Generator.Management.Providers
             return new MethodProvider(signature, bodyStatements, this);
         }
 
-        protected virtual bool FilterContexualParameter(ParameterProvider parameter)
+        protected virtual bool SkipMethodParameter(ParameterProvider parameter)
         {
             return ContextualParameters.Contains(parameter.Name);
         }
@@ -277,23 +276,36 @@ namespace Azure.Generator.Management.Providers
 
             foreach (var parameter in convenienceMethod.Signature.Parameters)
             {
-                if (FilterContexualParameter(parameter))
+                if (!SkipMethodParameter(parameter))
                 {
-                    continue;
+                    result.Add(parameter);
                 }
-                result.Add(parameter);
             }
 
             return result;
         }
 
-        protected CSharpType GetOperationMethodReturnType(bool isAsync, bool isLongRunningOperation, IReadOnlyList<InputOperationResponse> operationResponses)
+        protected bool IsLongRunningOperation(InputServiceMethod method)
         {
+            return method is InputLongRunningServiceMethod || method is InputLongRunningPagingServiceMethod;
+        }
+
+        protected bool IsReturnTypeGeneric(InputServiceMethod method)
+        {
+            var operationResponses = method.Operation.Responses;
+            var response = operationResponses.FirstOrDefault(r => !r.IsErrorResponse);
+            var responseBodyType = response?.BodyType is null ? null : ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(response.BodyType);
+            return IsLongRunningOperation(method) && responseBodyType is not null;
+        }
+
+        protected CSharpType GetOperationMethodReturnType(InputServiceMethod method, bool isAsync, out bool isGeneric)
+        {
+            bool isLongRunningOperation = IsLongRunningOperation(method);
+            isGeneric = IsReturnTypeGeneric(method);
+
             if (isLongRunningOperation)
             {
-                var response = operationResponses.FirstOrDefault(r => !r.IsErrorResponse);
-                var responseBodyType = response?.BodyType is null ? null : ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(response.BodyType);
-                if (responseBodyType is null)
+                if (!isGeneric)
                 {
                     return isAsync ? new CSharpType(typeof(Task<>), typeof(ArmOperation)) : typeof(ArmOperation);
                 }
@@ -305,21 +317,8 @@ namespace Azure.Generator.Management.Providers
             return isAsync ? new CSharpType(typeof(Task<>), new CSharpType(typeof(Response<>), ResourceClientCharpType)) : new CSharpType(typeof(Response<>), ResourceClientCharpType);
         }
 
-        private static bool IsGenericOperationMethod(InputOperation operation)
+        private TryStatement BuildOperationMethodTryStatement(InputServiceMethod method, MethodProvider convenienceMethod, MethodSignature signature, bool isAsync, bool isGeneric)
         {
-            var response = operation.Responses.FirstOrDefault(r => !r.IsErrorResponse);
-            return response?.BodyType is not null;
-        }
-
-        private static Type ThrowTypeOnNullResource(MethodSignature signature)
-        {
-            var NoValueResponse = typeof(RequestFailedException);
-            return signature.Name.Contains("Exists") ? NoValueResponse : typeof(RequestFailedException);
-        }
-
-        private TryStatement BuildOperationMethodTryStatement(InputServiceMethod method, MethodProvider convenienceMethod, MethodSignature signature, bool isAsync)
-        {
-            var isGeneric = IsGenericOperationMethod(method.Operation);
             var operation = method.Operation;
             var cancellationToken = convenienceMethod.Signature.Parameters.Single(p => p.Type.Equals(typeof(CancellationToken)));
 
@@ -371,18 +370,25 @@ namespace Azure.Generator.Management.Providers
             }
             else
             {
-                bool isExistsMethod = signature.Name.StartsWith("Exists");
-                if (!isExistsMethod)
-                {
-                    tryStatement.Add(new IfStatement(responseVariable.Property("Value").Equal(Null))
-                    {
-                        ((KeywordExpression)ThrowExpression(New.Instance(ThrowTypeOnNullResource(signature), responseVariable.Invoke("GetRawResponse")))).Terminate()
-                    });
-                }
-                var returnValueExpression = isExistsMethod ? responseVariable.Property("Value").NotEqual(Null) : New.Instance(ResourceClientCharpType, This.Property("Client"), responseVariable.Property("Value"));
-                tryStatement.Add(Return(Static(typeof(Response)).Invoke(nameof(Response.FromValue), returnValueExpression, responseVariable.Invoke("GetRawResponse"))));
+                tryStatement.Add(BuildReturnStatements(responseVariable, signature));
             }
+
             return tryStatement;
+        }
+
+        protected virtual MethodBodyStatement BuildReturnStatements(ValueExpression responseVariable, MethodSignature? _ = null)
+        {
+            List<MethodBodyStatement> statements =
+            [
+                new IfStatement(responseVariable.Property("Value").Equal(Null))
+                        {
+                            ((KeywordExpression)ThrowExpression(New.Instance(typeof(RequestFailedException), responseVariable.Invoke("GetRawResponse")))).Terminate()
+                        },
+            ];
+            var returnValueExpression =  New.Instance(ResourceClientCharpType, This.Property("Client"), responseVariable.Property("Value"));
+            statements.Add(Return(Static(typeof(Response)).Invoke(nameof(Response.FromValue), returnValueExpression, responseVariable.Invoke("GetRawResponse"))));
+
+            return statements;
         }
 
         private static CSharpType GetResponseType(MethodProvider convenienceMethod, bool isAsync) => isAsync ? convenienceMethod.Signature.ReturnType?.Arguments[0]! : convenienceMethod.Signature.ReturnType!;

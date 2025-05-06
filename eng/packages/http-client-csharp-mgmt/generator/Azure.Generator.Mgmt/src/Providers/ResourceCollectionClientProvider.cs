@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
@@ -9,6 +8,7 @@ using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -71,7 +71,6 @@ namespace Azure.Generator.Management.Providers
 
         protected override CSharpType ResourceClientCharpType => _resource.Type;
 
-        // TODO: build GetIfExists, GetIfExistsAsync, Exists, ExistsAsync, Get, GetAsync, CreateOrUpdate, CreateOrUpdateAsync methods
         protected override MethodProvider[] BuildMethods() => [BuildValidateResourceIdMethod(), .. BuildCreateOrUpdateMethods(), .. BuildGetMethods(), .. BuildGetAllMethods(), .. BuildExistsMethods(), .. BuildGetIfExistsMethods(), .. BuildEnumeratorMethods()];
 
         private MethodProvider[] BuildGetAllMethods()
@@ -174,7 +173,7 @@ namespace Azure.Generator.Management.Providers
                 var convenienceMethod = GetCorrespondingConvenienceMethod(_get!.Operation, isAsync);
                 var signature = new MethodSignature(
                 isAsync ? "ExistsAsync" : "Exists",
-                convenienceMethod.Signature.Description,
+                $"Checks to see if the resource exists in azure.",
                 convenienceMethod.Signature.Modifiers,
                 isAsync ? new CSharpType(typeof(Task<>), new CSharpType(typeof(Response<>), typeof(bool))) : new CSharpType(typeof(Response<>), typeof(bool)),
                 convenienceMethod.Signature.ReturnDescription,
@@ -184,7 +183,7 @@ namespace Azure.Generator.Management.Providers
                 convenienceMethod.Signature.GenericParameterConstraints,
                 convenienceMethod.Signature.ExplicitInterface,
                 convenienceMethod.Signature.NonDocumentComment);
-                result.Add(BuildOperationMethod(_get, convenienceMethod, signature, isAsync));
+                result.Add(BuildOperationMethodCore(_get, convenienceMethod, signature, isAsync, IsReturnTypeGeneric(_get)));
             }
 
             return result;
@@ -203,7 +202,7 @@ namespace Azure.Generator.Management.Providers
                 var convenienceMethod = GetCorrespondingConvenienceMethod(_get!.Operation, isAsync);
                 var signature = new MethodSignature(
                 isAsync ? "GetIfExistsAsync" : "GetIfExists",
-                convenienceMethod.Signature.Description,
+                $"Tries to get details for this resource from the service.",
                 convenienceMethod.Signature.Modifiers,
                 isAsync ? new CSharpType(typeof(Task<>), new CSharpType(typeof(NullableResponse<>), ResourceClientCharpType)) : new CSharpType(typeof(NullableResponse<>), ResourceClientCharpType),
                 convenienceMethod.Signature.ReturnDescription,
@@ -213,19 +212,61 @@ namespace Azure.Generator.Management.Providers
                 convenienceMethod.Signature.GenericParameterConstraints,
                 convenienceMethod.Signature.ExplicitInterface,
                 convenienceMethod.Signature.NonDocumentComment);
-                result.Add(BuildOperationMethod(_get, convenienceMethod, signature, isAsync));
+                result.Add(BuildOperationMethodCore(_get, convenienceMethod, signature, isAsync, IsReturnTypeGeneric(_get)));
             }
 
             return result;
         }
 
-        protected override bool FilterContexualParameter(ParameterProvider parameter)
+        protected override bool SkipMethodParameter(ParameterProvider parameter)
         {
             if (ContextualParameters == null)
             {
                 return false;
             }
             return ContextualParameters.Take(ContextualParameters.Count - 1).Any(p => p == parameter.Name);
+        }
+
+        protected override MethodBodyStatement BuildReturnStatements(ValueExpression responseVariable, MethodSignature? signature)
+        {
+            if (signature is null)
+            {
+                return base.BuildReturnStatements(responseVariable, signature);
+            }
+
+            if (signature.Name == "GetIfExists" || signature.Name == "GetIfExistsAsync")
+            {
+                return BuildReturnStatementsForGetIfExists(responseVariable);
+            }
+            if (signature.Name == "Exists" || signature.Name == "ExistsAsync")
+            {
+                return BuildReturnStatementsForExists(responseVariable);
+            }
+
+            return base.BuildReturnStatements(responseVariable, signature);
+        }
+
+        // TODO: make the commented implementation work - find a way to access the NoValueResponse<T> type
+        private MethodBodyStatement BuildReturnStatementsForGetIfExists(ValueExpression responseVariable)
+        {
+            // List<MethodBodyStatement> statements =
+            // [
+            //     new IfStatement(responseVariable.Property("Value").Equal(Null))
+            //             {
+            //                 Return(New.Instance(new CSharpType(typeof(NoValueResponse<>), _resource.Type), responseVariable.Invoke("GetRawResponse")))
+            //             }
+            // ];
+            // var returnValueExpression =  New.Instance(ResourceClientCharpType, This.Property("Client"), responseVariable.Property("Value"));
+            // statements.Add(Return(Static(typeof(Response)).Invoke(nameof(Response.FromValue), returnValueExpression, responseVariable.Invoke("GetRawResponse"))));
+
+            // return statements;
+            return base.BuildReturnStatements(responseVariable, null);
+        }
+
+        private MethodBodyStatement BuildReturnStatementsForExists(ValueExpression responseVariable)
+        {
+            var returnValueExpression = responseVariable.Property("Value").NotEqual(Null);
+            return Return(Static(typeof(Response)).Invoke(nameof(Response.FromValue), returnValueExpression, responseVariable.Invoke("GetRawResponse")));
         }
     }
 }

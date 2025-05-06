@@ -212,7 +212,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual Pageable<FooResource> GetAll(CancellationToken cancellationToken = default) => throw new NotImplementedException();
 
-        /// <summary> Get a Foo. </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
@@ -241,7 +241,7 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Get a Foo. </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
@@ -270,7 +270,7 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Get a Foo. </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
@@ -303,7 +303,7 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Get a Foo. </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
