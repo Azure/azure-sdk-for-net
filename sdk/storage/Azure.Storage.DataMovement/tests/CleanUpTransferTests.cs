@@ -114,7 +114,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             AssertBaseSource(sourceMock);
-            destMock.Verify(b => b.Uri, Times.Exactly(6));
+            destMock.Verify(b => b.Uri, Times.Exactly(7));
             destMock.Verify(b => b.ProviderId, Times.Once());
             destMock.Verify(b => b.ResourceId, Times.Once());
             destMock.Verify(b => b.MaxSupportedSingleTransferSize, Times.Once());
@@ -159,7 +159,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             AssertBaseSource(sourceMock);
-            destMock.Verify(b => b.Uri, Times.Exactly(6));
+            destMock.Verify(b => b.Uri, Times.Exactly(7));
             destMock.Verify(b => b.ProviderId, Times.Once());
             destMock.Verify(b => b.ResourceId, Times.Once());
             destMock.Verify(b => b.MaxSupportedSingleTransferSize, Times.Once());
