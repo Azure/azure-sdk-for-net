@@ -17,10 +17,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\core\System.ClientModel\src\System.ClientModel.csproj" />
+    <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
 </Project>
