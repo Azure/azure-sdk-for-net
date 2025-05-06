@@ -243,7 +243,7 @@ namespace Azure.Generator.Management.Providers
                 return BuildReturnStatementsForExists(responseVariable);
             }
 
-            return base.BuildReturnStatements(responseVariable, signature);
+            return base.BuildReturnStatements(responseVariable);
         }
 
         // TODO: make the commented implementation work - find a way to access the NoValueResponse<T> type
@@ -260,7 +260,7 @@ namespace Azure.Generator.Management.Providers
             // statements.Add(Return(Static(typeof(Response)).Invoke(nameof(Response.FromValue), returnValueExpression, responseVariable.Invoke("GetRawResponse"))));
 
             // return statements;
-            return base.BuildReturnStatements(responseVariable, null);
+            return base.BuildReturnStatements(responseVariable);
         }
 
         private MethodBodyStatement BuildReturnStatementsForExists(ValueExpression responseVariable)
