@@ -31,6 +31,7 @@ namespace Azure.Core.Pipeline
                             xml.Root.Element(Constants.ErrorCodeLower)?.Value;
                         var message = xml.Root.Element(Constants.ErrorMessage)?.Value ??
                             xml.Root.Element(Constants.ErrorMessageLower)?.Value;
+                        var headerName = xml.Root!.Element(Constants.HeaderName)?.Value;
 
                         data = new Dictionary<string, string>();
                         foreach (XElement element in xml.Root.Elements())
@@ -46,7 +47,15 @@ namespace Azure.Core.Pipeline
                             }
                         }
 
-                        error = new ResponseError(errorCode, message);
+                        if (headerName != null && headerName == Constants.HeaderNames.Version)
+                        {
+                            error = new ResponseError(errorCode, "The provided x-ms-version header is not enabled on this storage account.  Please see https://learn.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services for additional information.\n");
+                        }
+                        else
+                        {
+                            error = new ResponseError(errorCode, message);
+                        }
+
                         return true;
                     }
 

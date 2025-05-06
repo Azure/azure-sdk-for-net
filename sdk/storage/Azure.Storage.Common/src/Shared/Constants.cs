@@ -108,6 +108,7 @@ namespace Azure.Storage
         public const string ErrorCodeLower = "code";
         public const string ErrorMessage = "Message";
         public const string ErrorMessageLower = "message";
+        public const string HeaderName = "HeaderName";
 
         public const string CommaString = ",";
         public const char CommaChar = ',';
@@ -199,6 +200,7 @@ namespace Azure.Storage
             public const string LastModified = "Last-Modified";
             public const string ETag = "ETag";
             public const string CopySourceErrorCode = "x-ms-copy-source-error-code";
+            public const string Version = "x-ms-version";
         }
 
         internal static class ErrorCodes
