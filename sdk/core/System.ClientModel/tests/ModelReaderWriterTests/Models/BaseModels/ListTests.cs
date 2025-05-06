@@ -2,15 +2,23 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+#if SOURCE_GENERATOR
+using System.ClientModel.SourceGeneration.Tests;
+#else
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
+#endif
 using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
 {
-    public class ListTests : MrwCollectionTests<List<BaseModel>, BaseModel>
+    public partial class ListTests : MrwCollectionTests<List<BaseModel>, BaseModel>
     {
+#if SOURCE_GENERATOR
+        protected override ModelReaderWriterContext Context => BasicContext.Default;
+#else
         protected override ModelReaderWriterContext Context => new LocalContext();
+#endif
 
         protected override string CollectionTypeName => "List<BaseModel>";
 
@@ -35,42 +43,5 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
                 ModelInstances.CompareModelZ(model, model2, format);
             }
         }
-
-#nullable disable
-        public class LocalContext : ModelReaderWriterContext
-        {
-            private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
-            private List_BaseModel_Builder _list_BaseModel_Builder;
-
-            protected override bool TryGetTypeBuilderCore(Type type, out ModelReaderWriterTypeBuilder builder)
-            {
-                builder = type switch
-                {
-                    Type t when t == typeof(List<BaseModel>) => _list_BaseModel_Builder ??= new(),
-                    _ => GetFromDependencies(type)
-                };
-                return builder is not null;
-            }
-
-            private ModelReaderWriterTypeBuilder GetFromDependencies(Type type)
-            {
-                if (s_libraryContext.Value.TryGetTypeBuilder(type, out ModelReaderWriterTypeBuilder builder))
-                    return builder;
-                return null;
-            }
-
-            private class List_BaseModel_Builder : ModelReaderWriterTypeBuilder
-            {
-                protected override Type BuilderType => typeof(List<BaseModel>);
-
-                protected override Type ItemType => typeof(BaseModel);
-
-                protected override object CreateInstance() => new List<BaseModel>();
-
-                protected override void AddItem(object collection, object item)
-                    => ((List<BaseModel>)collection).Add((BaseModel)item);
-            }
-        }
-#nullable enable
     }
 }

@@ -24,8 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.ClientModel" />
-    <PackageReference Update="System.ClientModel" VersionOverride="1.4.0-beta.1" />
   </ItemGroup>
 
   <Choose>

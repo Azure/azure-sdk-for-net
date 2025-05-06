@@ -7,8 +7,9 @@ using System;
 using System.IO;
 using System.Linq;
 using Azure.Projects.Ofx;
-using Azure.Projects.AI;
 using NUnit.Framework;
+using Azure.Projects.Core;
+using Azure.Provisioning.CognitiveServices;
 
 [assembly: NonParallelizable]
 
@@ -26,6 +27,23 @@ public class BicepGenerationTests
         //File.WriteAllText(Path.Combine(Path.GetTempPath(), "minimal.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("minimal.bicep");
+        Assert.AreEqual(expectedBicep, actualBicep);
+    }
+
+    [Test]
+    public void MinimalProjectWithDeveloperAppConfig()
+    {
+        #region Snippet:StoreAppConfigurationSku
+        AppConfigConnectionStore connections = new(AppConfigurationFeature.SkuName.Developer);
+        ProjectInfrastructure infrastructure = new(connections);
+        #endregion
+
+        infrastructure = new(connections, "cm0c420d2f21084cd"); // we don't want cmid in the snippet
+        string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
+        // Un-comment to debug bicep creation issues
+        //File.WriteAllText(Path.Combine(Path.GetTempPath(), "developer.bicep"), actualBicep);
+
+        string expectedBicep = LoadTestFile("developer.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
 
