@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             if (options.Format != "W" && Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IPAddress);
+                writer.WriteStringValue(IPAddress.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(Health))
             {
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             string hostname = default;
             string kernelVersion = default;
             string kernelPatch = default;
-            string ipAddress = default;
+            IPAddress ipAddress = default;
             SapHealthState? health = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -148,7 +149,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 }
                 if (property.NameEquals("ipAddress"u8))
                 {
-                    ipAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("health"u8))

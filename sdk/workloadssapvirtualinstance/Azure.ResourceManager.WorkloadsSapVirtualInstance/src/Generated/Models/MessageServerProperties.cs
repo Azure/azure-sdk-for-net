@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="ipAddress"> message server IP Address. </param>
         /// <param name="health"> Defines the health of SAP Instances. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MessageServerProperties(long? msPort, long? internalMsPort, long? httpPort, long? httpsPort, string hostname, string ipAddress, SapHealthState? health, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MessageServerProperties(long? msPort, long? internalMsPort, long? httpPort, long? httpsPort, string hostname, IPAddress ipAddress, SapHealthState? health, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MsPort = msPort;
             InternalMsPort = internalMsPort;
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <summary> message server SAP Hostname. </summary>
         public string Hostname { get; }
         /// <summary> message server IP Address. </summary>
-        public string IPAddress { get; }
+        public IPAddress IPAddress { get; }
         /// <summary> Defines the health of SAP Instances. </summary>
         public SapHealthState? Health { get; }
     }

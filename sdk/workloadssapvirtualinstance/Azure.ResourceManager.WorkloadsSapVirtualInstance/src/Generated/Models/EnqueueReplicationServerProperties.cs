@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="ipAddress"> ERS SAP IP Address. </param>
         /// <param name="health"> Defines the health of SAP Instances. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EnqueueReplicationServerProperties(EnqueueReplicationServerType? ersVersion, string instanceNo, string hostname, string kernelVersion, string kernelPatch, string ipAddress, SapHealthState? health, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EnqueueReplicationServerProperties(EnqueueReplicationServerType? ersVersion, string instanceNo, string hostname, string kernelVersion, string kernelPatch, IPAddress ipAddress, SapHealthState? health, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ErsVersion = ersVersion;
             InstanceNo = instanceNo;
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <summary> ERS SAP Kernel Patch level. </summary>
         public string KernelPatch { get; }
         /// <summary> ERS SAP IP Address. </summary>
-        public string IPAddress { get; }
+        public IPAddress IPAddress { get; }
         /// <summary> Defines the health of SAP Instances. </summary>
         public SapHealthState? Health { get; }
     }

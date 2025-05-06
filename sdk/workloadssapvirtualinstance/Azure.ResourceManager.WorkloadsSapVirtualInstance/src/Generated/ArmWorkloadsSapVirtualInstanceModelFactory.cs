@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -332,7 +333,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="ipAddress"> message server IP Address. </param>
         /// <param name="health"> Defines the health of SAP Instances. </param>
         /// <returns> A new <see cref="Models.MessageServerProperties"/> instance for mocking. </returns>
-        public static MessageServerProperties MessageServerProperties(long? msPort = null, long? internalMsPort = null, long? httpPort = null, long? httpsPort = null, string hostname = null, string ipAddress = null, SapHealthState? health = null)
+        public static MessageServerProperties MessageServerProperties(long? msPort = null, long? internalMsPort = null, long? httpPort = null, long? httpsPort = null, string hostname = null, IPAddress ipAddress = null, SapHealthState? health = null)
         {
             return new MessageServerProperties(
                 msPort,
@@ -351,7 +352,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="port"> Enqueue Server Port. </param>
         /// <param name="health"> Defines the health of SAP Instances. </param>
         /// <returns> A new <see cref="Models.EnqueueServerProperties"/> instance for mocking. </returns>
-        public static EnqueueServerProperties EnqueueServerProperties(string hostname = null, string ipAddress = null, long? port = null, SapHealthState? health = null)
+        public static EnqueueServerProperties EnqueueServerProperties(string hostname = null, IPAddress ipAddress = null, long? port = null, SapHealthState? health = null)
         {
             return new EnqueueServerProperties(hostname, ipAddress, port, health, serializedAdditionalRawData: null);
         }
@@ -374,7 +375,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="ipAddress"> ERS SAP IP Address. </param>
         /// <param name="health"> Defines the health of SAP Instances. </param>
         /// <returns> A new <see cref="Models.EnqueueReplicationServerProperties"/> instance for mocking. </returns>
-        public static EnqueueReplicationServerProperties EnqueueReplicationServerProperties(EnqueueReplicationServerType? ersVersion = null, string instanceNo = null, string hostname = null, string kernelVersion = null, string kernelPatch = null, string ipAddress = null, SapHealthState? health = null)
+        public static EnqueueReplicationServerProperties EnqueueReplicationServerProperties(EnqueueReplicationServerType? ersVersion = null, string instanceNo = null, string hostname = null, string kernelVersion = null, string kernelPatch = null, IPAddress ipAddress = null, SapHealthState? health = null)
         {
             return new EnqueueReplicationServerProperties(
                 ersVersion,
@@ -416,7 +417,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errorsProperties"> Defines the errors related to Database resource. </param>
         /// <returns> A new <see cref="WorkloadsSapVirtualInstance.SapDatabaseInstanceData"/> instance for mocking. </returns>
-        public static SapDatabaseInstanceData SapDatabaseInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResourceIdentifier subnetId = null, string databaseSid = null, string databaseType = null, string ipAddress = null, ResourceIdentifier loadBalancerDetailsId = null, IEnumerable<DatabaseVmDetails> vmDetails = null, SapVirtualInstanceStatus? status = null, SapVirtualInstanceProvisioningState? provisioningState = null, SapVirtualInstanceErrorDetail errorsProperties = null)
+        public static SapDatabaseInstanceData SapDatabaseInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResourceIdentifier subnetId = null, string databaseSid = null, string databaseType = null, IPAddress ipAddress = null, ResourceIdentifier loadBalancerDetailsId = null, IEnumerable<DatabaseVmDetails> vmDetails = null, SapVirtualInstanceStatus? status = null, SapVirtualInstanceProvisioningState? provisioningState = null, SapVirtualInstanceErrorDetail errorsProperties = null)
         {
             tags ??= new Dictionary<string, string>();
             vmDetails ??= new List<DatabaseVmDetails>();
@@ -476,7 +477,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errorsProperties"> Defines the Application Instance errors. </param>
         /// <returns> A new <see cref="WorkloadsSapVirtualInstance.SapApplicationServerInstanceData"/> instance for mocking. </returns>
-        public static SapApplicationServerInstanceData SapApplicationServerInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string instanceNo = null, ResourceIdentifier subnetId = null, string hostname = null, string kernelVersion = null, string kernelPatch = null, string ipAddress = null, long? gatewayPort = null, long? icmHttpPort = null, long? icmHttpsPort = null, string dispatcherStatus = null, ResourceIdentifier loadBalancerDetailsId = null, IEnumerable<ApplicationServerVmDetails> vmDetails = null, SapVirtualInstanceStatus? status = null, SapHealthState? health = null, SapVirtualInstanceProvisioningState? provisioningState = null, SapVirtualInstanceErrorDetail errorsProperties = null)
+        public static SapApplicationServerInstanceData SapApplicationServerInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string instanceNo = null, ResourceIdentifier subnetId = null, string hostname = null, string kernelVersion = null, string kernelPatch = null, IPAddress ipAddress = null, long? gatewayPort = null, long? icmHttpPort = null, long? icmHttpsPort = null, string dispatcherStatus = null, ResourceIdentifier loadBalancerDetailsId = null, IEnumerable<ApplicationServerVmDetails> vmDetails = null, SapVirtualInstanceStatus? status = null, SapHealthState? health = null, SapVirtualInstanceProvisioningState? provisioningState = null, SapVirtualInstanceErrorDetail errorsProperties = null)
         {
             tags ??= new Dictionary<string, string>();
             vmDetails ??= new List<ApplicationServerVmDetails>();

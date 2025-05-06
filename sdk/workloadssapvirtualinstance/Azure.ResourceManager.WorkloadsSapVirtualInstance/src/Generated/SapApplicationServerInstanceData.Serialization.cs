@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             if (options.Format != "W" && Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IPAddress);
+                writer.WriteStringValue(IPAddress.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(GatewayPort))
             {
@@ -159,7 +160,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             string hostname = default;
             string kernelVersion = default;
             string kernelPatch = default;
-            string ipAddress = default;
+            IPAddress ipAddress = default;
             long? gatewayPort = default;
             long? icmHttpPort = default;
             long? icmHttpsPort = default;
@@ -257,7 +258,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                         }
                         if (property0.NameEquals("ipAddress"u8))
                         {
-                            ipAddress = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            ipAddress = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("gatewayPort"u8))

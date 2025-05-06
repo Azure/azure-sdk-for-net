@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="port"> Enqueue Server Port. </param>
         /// <param name="health"> Defines the health of SAP Instances. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EnqueueServerProperties(string hostname, string ipAddress, long? port, SapHealthState? health, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EnqueueServerProperties(string hostname, IPAddress ipAddress, long? port, SapHealthState? health, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Hostname = hostname;
             IPAddress = ipAddress;
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <summary> Enqueue Server SAP Hostname. </summary>
         public string Hostname { get; }
         /// <summary> Enqueue Server SAP IP Address. </summary>
-        public string IPAddress { get; }
+        public IPAddress IPAddress { get; }
         /// <summary> Enqueue Server Port. </summary>
         public long? Port { get; }
         /// <summary> Defines the health of SAP Instances. </summary>
