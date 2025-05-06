@@ -76,7 +76,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 if (exporterOptions.EnableLiveMetrics == true)
                 {
-                    AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(name: nameof(AddAzureMonitorTraceExporter));
+                    AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(methodName: nameof(AddAzureMonitorTraceExporter));
                 }
 
                 builder.SetSampler(new ApplicationInsightsSampler(exporterOptions.SamplingRatio));
@@ -146,7 +146,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 if (exporterOptions.EnableLiveMetrics == true)
                 {
-                    AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(name: nameof(AddAzureMonitorMetricExporter));
+                    AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(methodName: nameof(AddAzureMonitorMetricExporter));
                 }
 
                 if (credential != null)
@@ -189,7 +189,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             if (options.EnableLiveMetrics == true)
             {
-                AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(name: nameof(AddAzureMonitorLogExporter));
+                AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(methodName: nameof(AddAzureMonitorLogExporter));
             }
 
             if (credential != null)
@@ -254,7 +254,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 if (exporterOptions.EnableLiveMetrics == true)
                 {
-                    AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(name: nameof(AddAzureMonitorLogExporter));
+                    AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(methodName: nameof(AddAzureMonitorLogExporter));
                 }
 
                 if (credential != null)
