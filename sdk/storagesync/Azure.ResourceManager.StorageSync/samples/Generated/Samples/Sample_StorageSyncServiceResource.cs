@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_StorageSyncServicesGet()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/StorageSyncServices_Get.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/StorageSyncServices_Get.json
             // this example is just showing the usage of "StorageSyncServices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_StorageSyncServicesDelete()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/StorageSyncServices_Delete.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/StorageSyncServices_Delete.json
             // this example is just showing the usage of "StorageSyncServices_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_StorageSyncServicesUpdate()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/StorageSyncServices_Update.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/StorageSyncServices_Update.json
             // this example is just showing the usage of "StorageSyncServices_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,6 +101,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
 ["Environment"] = "Test"
 },
                 IncomingTrafficPolicy = IncomingTrafficPolicy.AllowAllTraffic,
+                UseIdentity = true,
             };
             ArmOperation<StorageSyncServiceResource> lro = await storageSyncService.UpdateAsync(WaitUntil.Completed, patch);
             StorageSyncServiceResource result = lro.Value;
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateLinkResources_PrivateLinkResourcesList()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/PrivateLinkResources_List.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/PrivateLinkResources_List.json
             // this example is just showing the usage of "PrivateLinkResources_ListByStorageSyncService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
 
             // this example assumes you already have this StorageSyncServiceResource created on azure
             // for more information of creating StorageSyncServiceResource, please refer to the document of StorageSyncServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "52b8da2f-61e0-4a1f-8dde-336911f367fb";
             string resourceGroupName = "res6977";
             string storageSyncServiceName = "sss2527";
             ResourceIdentifier storageSyncServiceResourceId = StorageSyncServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, storageSyncServiceName);
