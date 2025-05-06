@@ -322,7 +322,6 @@ namespace Azure.Generator.Management.Providers
             var isGeneric = IsGenericOperationMethod(method.Operation);
             var operation = method.Operation;
             var cancellationToken = convenienceMethod.Signature.Parameters.Single(p => p.Type.Equals(typeof(CancellationToken)));
-            var skipNullCheckStatement = signature.Name.StartsWith("Exists");
 
             var tryStatement = new TryStatement();
             var contextDeclaration = Declare("context", typeof(RequestContext), New.Instance(typeof(RequestContext), new Dictionary<ValueExpression, ValueExpression> { { Identifier(nameof(RequestContext.CancellationToken)), cancellationToken } }), out var contextVariable);
@@ -372,14 +371,15 @@ namespace Azure.Generator.Management.Providers
             }
             else
             {
-                if (!skipNullCheckStatement)
+                bool isExistsMethod = signature.Name.StartsWith("Exists");
+                if (!isExistsMethod)
                 {
                     tryStatement.Add(new IfStatement(responseVariable.Property("Value").Equal(Null))
                     {
                         ((KeywordExpression)ThrowExpression(New.Instance(ThrowTypeOnNullResource(signature), responseVariable.Invoke("GetRawResponse")))).Terminate()
                     });
                 }
-                var returnValueExpression = signature.Name.StartsWith("Exists") ? responseVariable.Property("Value").NotEqual(Null) : New.Instance(ResourceClientCharpType, This.Property("Client"), responseVariable.Property("Value"));
+                var returnValueExpression = isExistsMethod ? responseVariable.Property("Value").NotEqual(Null) : New.Instance(ResourceClientCharpType, This.Property("Client"), responseVariable.Property("Value"));
                 tryStatement.Add(Return(Static(typeof(Response)).Invoke(nameof(Response.FromValue), returnValueExpression, responseVariable.Invoke("GetRawResponse"))));
             }
             return tryStatement;
