@@ -13,11 +13,6 @@
 - Added `IsLargeVolume` to  `NetAppBackupData`
 - `IsRestoring` in `NetAppVolumeData` and `NetAppVolumeGroupVolume` is now a read only property indicating if volume is being resored 
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.9.0 (2025-02-21)
 
