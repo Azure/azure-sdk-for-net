@@ -28,6 +28,7 @@ namespace Azure.Generator.Tests
         [TestCase(typeof(ETag), ExpectedResult = "writer.WriteStringValue(value.ToString());\n")]
         [TestCase(typeof(AzureLocation), ExpectedResult = "writer.WriteStringValue(value);\n")]
         [TestCase(typeof(ResourceIdentifier), ExpectedResult = "writer.WriteStringValue(value);\n")]
+        [TestCase(typeof(ResponseError), ExpectedResult = "global::System.Text.Json.JsonSerializer.Serialize(writer, value);\n")]
         public string ValidateSerializationStatement(Type type)
         {
             var value = new ParameterProvider("value", $"", type).AsExpression().As(type);
@@ -45,6 +46,7 @@ namespace Azure.Generator.Tests
         [TestCase(typeof(ETag), ExpectedResult = "new global::Azure.ETag(element.GetString())")]
         [TestCase(typeof(AzureLocation), ExpectedResult = "new global::Azure.Core.AzureLocation(element.GetString())")]
         [TestCase(typeof(ResourceIdentifier), ExpectedResult = "new global::Azure.Core.ResourceIdentifier(element.GetString())")]
+        [TestCase(typeof(ResponseError), ExpectedResult = "global::System.Text.Json.JsonSerializer.Deserialize<global::Azure.ResponseError>(element.GetRawText())")]
         public string ValidateDeserializationExpression(Type type)
         {
             var element = new ParameterProvider("element", $"", typeof(JsonElement)).AsExpression().As<JsonElement>();
@@ -125,6 +127,18 @@ namespace Azure.Generator.Tests
             Assert.IsNotNull(actual);
             Assert.IsTrue(actual?.IsFrameworkType);
             Assert.AreEqual(typeof(ResourceIdentifier), actual?.FrameworkType);
+        }
+
+        [Test]
+        public void ResponseError()
+        {
+            var input = InputFactory.Primitive.String("responseError", "Azure.Core.Foundations.Error");
+
+            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(input);
+
+            Assert.IsNotNull(actual);
+            Assert.IsTrue(actual?.IsFrameworkType);
+            Assert.AreEqual(typeof(ResponseError), actual?.FrameworkType);
         }
     }
 }

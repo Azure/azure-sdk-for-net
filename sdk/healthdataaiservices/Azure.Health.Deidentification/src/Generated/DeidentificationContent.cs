@@ -57,13 +57,13 @@ namespace Azure.Health.Deidentification
 
         /// <summary> Initializes a new instance of <see cref="DeidentificationContent"/>. </summary>
         /// <param name="inputText"> Input text to de-identify. </param>
-        /// <param name="operation"> Operation to perform on the input documents. </param>
+        /// <param name="operationType"> Operation to perform on the input documents. </param>
         /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationContent(string inputText, DeidentificationOperationType? operation, DeidentificationCustomizationOptions customizations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeidentificationContent(string inputText, DeidentificationOperationType? operationType, DeidentificationCustomizationOptions customizations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InputText = inputText;
-            Operation = operation;
+            OperationType = operationType;
             Customizations = customizations;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -76,7 +76,7 @@ namespace Azure.Health.Deidentification
         /// <summary> Input text to de-identify. </summary>
         public string InputText { get; }
         /// <summary> Operation to perform on the input documents. </summary>
-        public DeidentificationOperationType? Operation { get; set; }
+        public DeidentificationOperationType? OperationType { get; set; }
         /// <summary> Customization parameters to override default service behaviors. </summary>
         public DeidentificationCustomizationOptions Customizations { get; set; }
     }

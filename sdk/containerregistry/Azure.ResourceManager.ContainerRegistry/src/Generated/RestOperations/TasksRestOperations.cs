@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-03-01-preview";
+            _apiVersion = apiVersion ?? "2019-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="taskName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ContainerRegistryTaskData>> CreateAsync(string subscriptionId, string resourceGroupName, string registryName, string taskName, ContainerRegistryTaskData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string registryName, string taskName, ContainerRegistryTaskData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -299,12 +299,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 case 200:
                 case 201:
-                    {
-                        ContainerRegistryTaskData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ContainerRegistryTaskData.DeserializeContainerRegistryTaskData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -319,7 +314,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="taskName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ContainerRegistryTaskData> Create(string subscriptionId, string resourceGroupName, string registryName, string taskName, ContainerRegistryTaskData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string registryName, string taskName, ContainerRegistryTaskData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -333,12 +328,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 case 200:
                 case 201:
-                    {
-                        ContainerRegistryTaskData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ContainerRegistryTaskData.DeserializeContainerRegistryTaskData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -402,6 +392,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -429,6 +420,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -487,7 +479,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="taskName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ContainerRegistryTaskData>> UpdateAsync(string subscriptionId, string resourceGroupName, string registryName, string taskName, ContainerRegistryTaskPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string registryName, string taskName, ContainerRegistryTaskPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -500,12 +492,8 @@ namespace Azure.ResourceManager.ContainerRegistry
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        ContainerRegistryTaskData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ContainerRegistryTaskData.DeserializeContainerRegistryTaskData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 201:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -520,7 +508,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="taskName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ContainerRegistryTaskData> Update(string subscriptionId, string resourceGroupName, string registryName, string taskName, ContainerRegistryTaskPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string registryName, string taskName, ContainerRegistryTaskPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -533,12 +521,8 @@ namespace Azure.ResourceManager.ContainerRegistry
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        ContainerRegistryTaskData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ContainerRegistryTaskData.DeserializeContainerRegistryTaskData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 201:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }

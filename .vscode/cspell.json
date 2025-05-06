@@ -250,6 +250,12 @@
       ]
     },
     {
+      "filename": "**/sdk/arizeaiobservabilityeval/**/*.cs",
+      "words": [
+        "Arize"
+      ]
+    },
+    {
       "filename": "**/sdk/avs/**/*.cs",
       "words": [
         "dhcps",

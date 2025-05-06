@@ -22,7 +22,7 @@ parameters:
   type: stepList
   default: []
 
-# Indicates the build matrix to use for post-build autorest validation
+# Indicates the build matrix to use for post-build TypeSpec validation
 - name: TestMatrix
   type: object
   default: {}
@@ -36,6 +36,11 @@ parameters:
 - name: PublishPublic
   type: boolean
   default: true
+
+# Whether the built packages contain nuget packages. If true, the publish stage will publish the nuget packages to the internal nuget feed.
+- name: HasNugetPackages
+  type: boolean
+  default: false
 
 # Indicates if the Publish stage should depend on the Test stage
 - name: PublishDependsOnTest
@@ -57,7 +62,7 @@ parameters:
   type: number
   default: 10
 
-# Indicates if regenration matrix should only contain folders with typespec files
+# Indicates if regeneration matrix should only contain folders with typespec files
 - name: OnlyGenerateTypespec
   type: boolean
   default: false
@@ -81,7 +86,7 @@ extends:
   parameters:
     stages:
     # Build stage
-    # Responsible for building the autorest generator and typespec emitter packages
+    # Responsible for building the TypeSpec generator and emitter packages
     # Produces the artifact `build_artifacts` which contains the following:
     #   package-versions.json: Contains a map of package name to version for the packages that were built
     #   overrides.json: Contains npm package version overrides for the emitter and generator
@@ -126,6 +131,7 @@ extends:
               -OutputDirectory "$(Build.ArtifactStagingDirectory)/packages"
               -TargetNpmJsFeed:$${{ parameters.PublishPublic }}
               -EmitterPackagePath:${{ parameters.EmitterPackagePath }}
+              -GeneratorVersion: $(initialize.emitterVersion)
 
         - pwsh: |
             $sourceBranch = '$(Build.SourceBranch)'
@@ -186,6 +192,16 @@ extends:
             displayName: Publish to DevOps feed
             workingDirectory: $(buildArtifactsPath)/packages
 
+          # Publish to https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
+          - ${{ if parameters.HasNugetPackages }}:
+            - task: 1ES.PublishNuget@1
+              displayName: Publish NuGet Packages to DevOps feed
+              inputs:
+                packagesToPush: $(buildArtifactsPath)/packages/*.nupkg;!$(buildArtifactsPath)/packages/*.symbols.nupkg
+                packageParentPath: $(buildArtifactsPath)/packages
+                publishVstsFeed: "29ec6040-b234-4e31-b139-33dc4287b756/fa8c16a3-dbe0-4de2-a297-03065ec1ba3f"
+                nuGetFeedType: internal
+
           - ${{ if parameters.PublishPublic }}:
             # publish to npmjs.org using ESRP
             - task: EsrpRelease@9
@@ -225,6 +241,11 @@ extends:
               Paths:
               - "/*"
               - "!SessionRecords"
+          
+          - task: UseNode@1
+            displayName: 'Install Node.js'
+            inputs:
+              version: '22.x'
 
           - download: current
             displayName: Download pipeline artifacts
@@ -244,7 +265,7 @@ extends:
                 --overrides '$(buildArtifactsPath)/packages/overrides.json'
               } else {
                 Write-Host "No overrides.json found. Running tsp-client without overrides."
-                
+
                 tsp-client generate-config-files `
                 --package-json '$(buildArtifactsPath)/lock-files/package.json' `
                 --emitter-package-json-path '${{ parameters.EmitterPackageJsonOutputPath }}'
@@ -259,7 +280,7 @@ extends:
               BaseRepoOwner: azure-sdk
               TargetRepoName: $(Build.Repository.Name)
               BaseRepoBranch: $(branchName)
-              CommitMsg: Initialize repository for autorest build $(Build.BuildNumber)
+              CommitMsg: Regenerate repository SDK with TypeSpec build $(Build.BuildNumber)
               WorkingDirectory: $(Build.SourcesDirectory)
               ScriptDirectory: $(Build.SourcesDirectory)/eng/common/scripts
               # To accomodate scheduled runs and retries, we want to overwrite any existing changes on the branch
@@ -296,6 +317,11 @@ extends:
               Paths:
               - "/*"
               - "!SessionRecords"
+
+          - task: UseNode@1
+            displayName: 'Install Node.js'
+            inputs:
+              version: '22.x'
 
           - download: current
             displayName: Download pipeline artifacts
@@ -361,9 +387,9 @@ extends:
                 $prTitle = "Scheduled code regeneration test"
               } else {
                 if ($preRelease) {
-                  $prTitle = "Update typespec emitter version to prerelease $emitterVersion"
+                  $prTitle = "Update TypeSpec emitter version to prerelease $emitterVersion"
                 } else {
-                  $prTitle = "Update typespec emitter version to $emitterVersion"
+                  $prTitle = "Update TypeSpec emitter version to $emitterVersion"
                 }
 
                 if ($generateJobResult -ne 'Succeeded') {
