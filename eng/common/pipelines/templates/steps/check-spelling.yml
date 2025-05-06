@@ -17,7 +17,7 @@ steps:
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
     - task: PowerShell@2
       displayName: Check spelling (cspell)
-      condition: and(succeededOrFailed(), ne(variables['Skip.SpellCheck'],'true'))
+      condition: and(succeeded(), ne(variables['Skip.SpellCheck'],'true'))
       continueOnError: ${{ parameters.ContinueOnError }}
       inputs:
         targetType: filePath
