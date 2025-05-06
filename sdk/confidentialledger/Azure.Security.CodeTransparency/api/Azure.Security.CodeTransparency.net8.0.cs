@@ -39,7 +39,7 @@ namespace Azure.Security.CodeTransparency
         public virtual Azure.Response<System.BinaryData> GetTransparencyConfigCbor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTransparencyConfigCborAsync(Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetTransparencyConfigCborAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public void RunTransparentStatementVerification(byte[] transparentStatementCoseSign1Bytes) { }
+        public virtual void RunTransparentStatementVerification(byte[] transparentStatementCoseSign1Bytes) { }
     }
     public partial class CodeTransparencyClientOptions : Azure.Core.ClientOptions
     {
