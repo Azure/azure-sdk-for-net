@@ -57,9 +57,16 @@ namespace Azure.AI.Projects.Tests
                 Console.WriteLine(ds);
             }
 
-            Console.WriteLine("Retrieving Dataset version '1' credentials...");
-            var credentials = datasets.GetCredentials(datasetName, "1", body: null);
-            Console.WriteLine(credentials);
+            Console.WriteLine($"Listing latest versions for all datasets:");
+            foreach (var ds in datasets.GetDatasetVersions())
+            {
+                Console.WriteLine(ds);
+            }
+
+            // TODO: update with typespec, remove body
+            //Console.WriteLine("Retrieving Dataset version '1' credentials...");
+            //var credentials = datasets.GetCredentials(datasetName, "1", body: new GetCredentialsRequest());
+            //Console.WriteLine(credentials);
 
             Console.WriteLine("Deleting Dataset versions '1' and '2'...");
             datasets.Delete(datasetName, "1");
@@ -69,7 +76,7 @@ namespace Azure.AI.Projects.Tests
 
         [Test]
         [AsyncOnly]
-        public async void DatasetsExampleAsync()
+        public async Task DatasetsExampleAsync()
         {
             #region Snippet:DatasetsExampleAsync
 #if SNIPPET
@@ -108,9 +115,16 @@ namespace Azure.AI.Projects.Tests
                 Console.WriteLine(ds);
             }
 
-            Console.WriteLine("Retrieving Dataset version '1' credentials...");
-            var credentials = await datasets.GetCredentialsAsync(datasetName, "1", body: null);
-            Console.WriteLine(credentials);
+            Console.WriteLine($"Listing latest versions for all datasets:");
+            await foreach (var ds in datasets.GetDatasetVersionsAsync())
+            {
+                Console.WriteLine(ds);
+            }
+
+            // TODO: update with typespec, remove body
+            //Console.WriteLine("Retrieving Dataset version '1' credentials...");
+            //var credentials = await datasets.GetCredentialsAsync(datasetName, "1", body: new GetCredentialsRequest());
+            //Console.WriteLine(credentials);
 
             Console.WriteLine("Deleting Dataset versions '1' and '2'...");
             await datasets.DeleteAsync(datasetName, "1");
