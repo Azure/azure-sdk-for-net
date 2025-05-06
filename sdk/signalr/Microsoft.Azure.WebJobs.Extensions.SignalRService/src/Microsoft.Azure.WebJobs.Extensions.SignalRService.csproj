@@ -11,8 +11,10 @@
 
   <ItemGroup>
     <PackageReference Include="MessagePack" />
+    <!--To resolve the version conflict of Microsoft.Bcl.AsyncInterfaces under .net 6 and above frameworks,
+    version override is added. Tracked by issue: https://github.com/Azure/azure-sdk-for-net/issues/49840 -->
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" VersionOverride ="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" VersionOverride="6.0.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" />
     <PackageReference Include="Microsoft.Azure.SignalR.Management" />
     <PackageReference Include="Microsoft.Azure.SignalR" />
@@ -21,7 +23,7 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(![MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
-    <PackageReference Include="Microsoft.AspNetCore.Http.Connections" />  
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0')) == false">  
+   <PackageReference Include="Microsoft.AspNetCore.Http.Connections" />  
   </ItemGroup>
 </Project>
