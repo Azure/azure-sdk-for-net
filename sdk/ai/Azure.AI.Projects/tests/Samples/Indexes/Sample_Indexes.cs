@@ -5,9 +5,9 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.AI.Projects;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests
@@ -40,7 +40,7 @@ namespace Azure.AI.Projects.Tests
                 connectionName = aiSearchConnectionName,
                 indexName = aiSearchIndexName,
                 indexVersion = indexVersion,
-                //indexType = IndexType.AzureSearch,
+                type = "AzureSearch",
                 description = "Sample Index for testing",
                 displayName = "Sample Index"
             });

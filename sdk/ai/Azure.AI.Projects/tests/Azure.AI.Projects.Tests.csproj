@@ -6,13 +6,6 @@
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 
-  <ItemGroup>
-    <!-- Adjust the relative path as necessary if your .png is in "samples/Agent/" -->
-    <None Include="Samples\Agent\image_file.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
   <!-- Reference the Client Library -->
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />

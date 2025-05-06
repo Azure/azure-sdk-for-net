@@ -18,7 +18,7 @@ namespace Azure.AI.Projects
     /// <summary> The Evaluations sub-client. </summary>
     public partial class Evaluations
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -169,14 +169,14 @@ namespace Azure.AI.Projects
         /// <param name="evaluation"> Evaluation to be run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluation"/> is null. </exception>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateRunAsync(Evaluation,CancellationToken)']/*" />
-        public virtual async Task<Response<Evaluation>> CreateRunAsync(Evaluation evaluation, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateAsync(Evaluation,CancellationToken)']/*" />
+        public virtual async Task<Response<Evaluation>> CreateAsync(Evaluation evaluation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(evaluation, nameof(evaluation));
 
             using RequestContent content = evaluation.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateRunAsync(content, context).ConfigureAwait(false);
+            Response response = await CreateAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(Evaluation.FromResponse(response), response);
         }
 
@@ -184,14 +184,14 @@ namespace Azure.AI.Projects
         /// <param name="evaluation"> Evaluation to be run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluation"/> is null. </exception>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateRun(Evaluation,CancellationToken)']/*" />
-        public virtual Response<Evaluation> CreateRun(Evaluation evaluation, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='Create(Evaluation,CancellationToken)']/*" />
+        public virtual Response<Evaluation> Create(Evaluation evaluation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(evaluation, nameof(evaluation));
 
             using RequestContent content = evaluation.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateRun(content, context);
+            Response response = Create(content, context);
             return Response.FromValue(Evaluation.FromResponse(response), response);
         }
 
@@ -205,7 +205,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateRunAsync(Evaluation,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateAsync(Evaluation,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -215,16 +215,16 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateRunAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateRunAsync(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Evaluations.CreateRun");
+            using var scope = ClientDiagnostics.CreateScope("Evaluations.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRunRequest(content, context);
+                using HttpMessage message = CreateCreateRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -244,7 +244,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateRun(Evaluation,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Create(Evaluation,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -254,16 +254,16 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateRun(RequestContent,RequestContext)']/*" />
-        public virtual Response CreateRun(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='Create(RequestContent,RequestContext)']/*" />
+        public virtual Response Create(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Evaluations.CreateRun");
+            using var scope = ClientDiagnostics.CreateScope("Evaluations.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRunRequest(content, context);
+                using HttpMessage message = CreateCreateRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -508,7 +508,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal HttpMessage CreateCreateRunRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
             var request = message.Request;

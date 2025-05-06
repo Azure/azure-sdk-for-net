@@ -36,6 +36,8 @@ namespace Azure.AI.Projects
 
             writer.WritePropertyName("evaluator"u8);
             writer.WriteStringValue(Evaluator);
+            writer.WritePropertyName("evaluatorId"u8);
+            writer.WriteStringValue(EvaluatorId);
             writer.WritePropertyName("score"u8);
             writer.WriteNumberValue(Score);
             writer.WritePropertyName("status"u8);
@@ -111,6 +113,7 @@ namespace Azure.AI.Projects
                 return null;
             }
             string evaluator = default;
+            string evaluatorId = default;
             float score = default;
             string status = default;
             string reason = default;
@@ -126,6 +129,11 @@ namespace Azure.AI.Projects
                 if (property.NameEquals("evaluator"u8))
                 {
                     evaluator = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("evaluatorId"u8))
+                {
+                    evaluatorId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("score"u8))
@@ -185,6 +193,7 @@ namespace Azure.AI.Projects
             serializedAdditionalRawData = rawDataDictionary;
             return new AgentEvaluationResult(
                 evaluator,
+                evaluatorId,
                 score,
                 status,
                 reason,

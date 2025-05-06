@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Threading.Tasks;
-using Azure.AI.Projects;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -55,7 +54,7 @@ public class Sample_Evaluations : SamplesBase<AIProjectsTestEnvironment>
         evaluation.Description = "Sample evaluation for testing"; // TODO: Make optional once bug 4115256 is fixed
 
         Console.WriteLine("Create the evaluation run");
-        Evaluation evaluationResponse = evaluations.CreateRun(evaluation);
+        Evaluation evaluationResponse = evaluations.Create(evaluation: evaluation);
         Console.WriteLine(evaluationResponse);
 
         Console.WriteLine("Get evaluation");
@@ -109,7 +108,7 @@ public class Sample_Evaluations : SamplesBase<AIProjectsTestEnvironment>
         evaluation.Description = "Sample evaluation for testing"; // TODO: Make optional once bug 4115256 is fixed
 
         Console.WriteLine("Create the evaluation run");
-        Evaluation evaluationResponse = await evaluations.CreateRunAsync(evaluation);
+        Evaluation evaluationResponse = await evaluations.CreateAsync(evaluation: evaluation);
         Console.WriteLine(evaluationResponse);
 
         Console.WriteLine("Get evaluation");

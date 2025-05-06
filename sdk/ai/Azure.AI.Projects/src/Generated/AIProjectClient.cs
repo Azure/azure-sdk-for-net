@@ -16,7 +16,7 @@ namespace Azure.AI.Projects
     /// <summary> The AIProject service client. </summary>
     public partial class AIProjectClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -26,6 +26,11 @@ namespace Azure.AI.Projects
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary> Initializes a new instance of AIProjectClient for mocking. </summary>
+        protected AIProjectClient()
+        {
+        }
 
         /// <summary> Initializes a new instance of AIProjectClient. </summary>
         /// <param name="endpoint">

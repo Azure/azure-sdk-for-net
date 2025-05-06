@@ -18,7 +18,7 @@ namespace Azure.AI.Projects
     /// <summary> The Connections sub-client. </summary>
     public partial class Connections
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -56,7 +56,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Get a connection by name, without populating connection credentials. </summary>
-        /// <param name="name"> The name of the resource. </param>
+        /// <param name="name"> The friendly name of the connection, provided by the user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -70,7 +70,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Get a connection by name, without populating connection credentials. </summary>
-        /// <param name="name"> The name of the resource. </param>
+        /// <param name="name"> The friendly name of the connection, provided by the user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -98,7 +98,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the resource. </param>
+        /// <param name="name"> The friendly name of the connection, provided by the user. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -137,7 +137,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the resource. </param>
+        /// <param name="name"> The friendly name of the connection, provided by the user. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -162,7 +162,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Get a connection by name, with its connection credentials. </summary>
-        /// <param name="name"> The name of the resource. </param>
+        /// <param name="name"> The friendly name of the connection, provided by the user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -176,7 +176,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Get a connection by name, with its connection credentials. </summary>
-        /// <param name="name"> The name of the resource. </param>
+        /// <param name="name"> The friendly name of the connection, provided by the user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -204,7 +204,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the resource. </param>
+        /// <param name="name"> The friendly name of the connection, provided by the user. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -243,7 +243,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the resource. </param>
+        /// <param name="name"> The friendly name of the connection, provided by the user. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
