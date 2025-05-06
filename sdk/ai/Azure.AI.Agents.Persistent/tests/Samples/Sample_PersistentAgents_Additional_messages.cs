@@ -16,7 +16,7 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
     [AsyncOnly]
     public async Task CreateAdditionalMessageExampleAsync()
     {
-        #region Snippet:Sample_Agent_Multiple_Messages_CreateAsync
+        #region Snippet:Sample_PersistentAgent_Multiple_Messages_CreateAsync
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -34,7 +34,7 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
             instructions: "You are a personal electronics tutor. Write and run code to answer questions.",
             tools: [new CodeInterpreterToolDefinition()]);
         #endregion
-        #region Snippet:Sample_Agent_Multiple_Messages_RunAsync
+        #region Snippet:Sample_PersistentAgent_Multiple_Messages_RunAsync
         PersistentAgentThread thread = await agentClient.Threads.CreateThreadAsync();
         ThreadMessage message = await agentClient.Messages.CreateMessageAsync(
             thread.Id,
@@ -64,7 +64,7 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
         while (agentRun.Status == RunStatus.Queued
             || agentRun.Status == RunStatus.InProgress);
         #endregion
-        #region Snippet:Sample_Agent_Multiple_Messages_PrintAsync
+        #region Snippet:Sample_PersistentAgent_Multiple_Messages_PrintAsync
         AsyncPageable<ThreadMessage> messages = agentClient.Messages.GetMessagesAsync(thread.Id, order:ListSortOrder.Ascending);
 
         await foreach (ThreadMessage threadMessage in messages)
@@ -90,7 +90,7 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
     [SyncOnly]
     public void CreateAdditionalMessageExample()
     {
-        #region Snippet:Sample_Agent_Multiple_Messages_Create
+        #region Snippet:Sample_PersistentAgent_Multiple_Messages_Create
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -108,7 +108,7 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
             instructions: "You are a personal electronics tutor. Write and run code to answer questions.",
             tools: [new CodeInterpreterToolDefinition()]);
         #endregion
-        #region Snippet:Sample_Agent_Multiple_Messages_Run
+        #region Snippet:Sample_PersistentAgent_Multiple_Messages_Run
         PersistentAgentThread thread = agentClient.Threads.CreateThread();
         ThreadMessage message = agentClient.Messages.CreateMessage(
             thread.Id,
@@ -138,7 +138,7 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
         while (agentRun.Status == RunStatus.Queued
             || agentRun.Status == RunStatus.InProgress);
         #endregion
-        #region Snippet:Sample_Agent_Multiple_Messages_Print
+        #region Snippet:Sample_PersistentAgent_Multiple_Messages_Print
         Pageable<ThreadMessage> messages = agentClient.Messages.GetMessages(thread.Id, order: ListSortOrder.Ascending);
 
         foreach (ThreadMessage threadMessage in messages)
