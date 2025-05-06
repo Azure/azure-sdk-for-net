@@ -47,17 +47,20 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="AgentEvaluationResult"/>. </summary>
         /// <param name="evaluator"> Evaluator's name. This is the name of the evaluator that was used to evaluate the agent's completion. </param>
+        /// <param name="evaluatorId"> Identifier of the evaluator. </param>
         /// <param name="score"> Score of the given evaluator. No restriction on range. </param>
         /// <param name="status"> Status of the evaluator result. Options: Running, Completed, Failed, NotApplicable. </param>
         /// <param name="runId"> The unique identifier of the run. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="evaluator"/>, <paramref name="status"/> or <paramref name="runId"/> is null. </exception>
-        internal AgentEvaluationResult(string evaluator, float score, string status, string runId)
+        /// <exception cref="ArgumentNullException"> <paramref name="evaluator"/>, <paramref name="evaluatorId"/>, <paramref name="status"/> or <paramref name="runId"/> is null. </exception>
+        internal AgentEvaluationResult(string evaluator, string evaluatorId, float score, string status, string runId)
         {
             Argument.AssertNotNull(evaluator, nameof(evaluator));
+            Argument.AssertNotNull(evaluatorId, nameof(evaluatorId));
             Argument.AssertNotNull(status, nameof(status));
             Argument.AssertNotNull(runId, nameof(runId));
 
             Evaluator = evaluator;
+            EvaluatorId = evaluatorId;
             Score = score;
             Status = status;
             RunId = runId;
@@ -66,6 +69,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="AgentEvaluationResult"/>. </summary>
         /// <param name="evaluator"> Evaluator's name. This is the name of the evaluator that was used to evaluate the agent's completion. </param>
+        /// <param name="evaluatorId"> Identifier of the evaluator. </param>
         /// <param name="score"> Score of the given evaluator. No restriction on range. </param>
         /// <param name="status"> Status of the evaluator result. Options: Running, Completed, Failed, NotApplicable. </param>
         /// <param name="reason"> Reasoning for the evaluation result. </param>
@@ -75,9 +79,10 @@ namespace Azure.AI.Projects
         /// <param name="error"> A string explaining why there was an error, if applicable. </param>
         /// <param name="additionalDetails"> Additional properties relevant to the evaluator. These will differ between evaluators. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgentEvaluationResult(string evaluator, float score, string status, string reason, string version, string threadId, string runId, string error, IReadOnlyDictionary<string, string> additionalDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AgentEvaluationResult(string evaluator, string evaluatorId, float score, string status, string reason, string version, string threadId, string runId, string error, IReadOnlyDictionary<string, string> additionalDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Evaluator = evaluator;
+            EvaluatorId = evaluatorId;
             Score = score;
             Status = status;
             Reason = reason;
@@ -96,6 +101,8 @@ namespace Azure.AI.Projects
 
         /// <summary> Evaluator's name. This is the name of the evaluator that was used to evaluate the agent's completion. </summary>
         public string Evaluator { get; }
+        /// <summary> Identifier of the evaluator. </summary>
+        public string EvaluatorId { get; }
         /// <summary> Score of the given evaluator. No restriction on range. </summary>
         public float Score { get; }
         /// <summary> Status of the evaluator result. Options: Running, Completed, Failed, NotApplicable. </summary>

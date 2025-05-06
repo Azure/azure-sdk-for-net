@@ -58,7 +58,7 @@ namespace Azure.AI.Projects.Tests
             }
 
             Console.WriteLine("Retrieving Dataset version '1' credentials...");
-            var credentials = datasets.GetCredentials(datasetName, "1", new GetCredentialsRequest());
+            var credentials = datasets.GetCredentials(datasetName, "1", body: null);
             Console.WriteLine(credentials);
 
             Console.WriteLine("Deleting Dataset versions '1' and '2'...");
@@ -109,7 +109,7 @@ namespace Azure.AI.Projects.Tests
             }
 
             Console.WriteLine("Retrieving Dataset version '1' credentials...");
-            var credentials = await datasets.GetCredentialsAsync(datasetName, "1", new GetCredentialsRequest());
+            var credentials = await datasets.GetCredentialsAsync(datasetName, "1", body: null);
             Console.WriteLine(credentials);
 
             Console.WriteLine("Deleting Dataset versions '1' and '2'...");
