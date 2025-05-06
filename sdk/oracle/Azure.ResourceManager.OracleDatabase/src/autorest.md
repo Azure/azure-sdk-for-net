@@ -116,6 +116,10 @@ rename-mapping:
   WorkloadType: AutonomousDatabaseWorkloadType
   WorkloadType.AJD: Ajd
   ZoneType: OracleDnsPrivateZoneType
+  DnsPrivateZoneProperties.lifecycleState: DnsPrivateZoneLifecycleState
+  DnsPrivateViewProperties.lifecycleState: DnsPrivateViewLifecycleState
+  DbNodeProperties.lifecycleState: DbNodeLifecycleState
+  DbNodeProperties.timeCreated: DbNodeTimeCreated
 
 prepend-rp-prefix:
   - DayOfWeek

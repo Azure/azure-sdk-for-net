@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WriteStringValue(Hostname);
             }
             writer.WritePropertyName("lifecycleState"u8);
-            writer.WriteStringValue(LifecycleState.ToString());
+            writer.WriteStringValue(DBNodeLifecycleState.ToString());
             if (Optional.IsDefined(LifecycleDetails))
             {
                 writer.WritePropertyName("lifecycleDetails"u8);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WriteNumberValue(SoftwareStorageSizeInGb.Value);
             }
             writer.WritePropertyName("timeCreated"u8);
-            writer.WriteStringValue(TimeCreated, "O");
+            writer.WriteStringValue(DBNodeTimeCreated, "O");
             if (Optional.IsDefined(TimeMaintenanceWindowEnd))
             {
                 writer.WritePropertyName("timeMaintenanceWindowEnd"u8);

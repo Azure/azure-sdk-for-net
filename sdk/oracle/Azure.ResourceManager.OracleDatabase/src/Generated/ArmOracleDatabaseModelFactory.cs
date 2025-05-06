@@ -902,19 +902,19 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="ocid"> The OCID of the view. </param>
         /// <param name="displayName"> The display name of the view resource. </param>
         /// <param name="isProtected"> A Boolean flag indicating whether or not parts of the resource are unable to be explicitly managed. </param>
-        /// <param name="lifecycleState"> Views lifecycleState. </param>
+        /// <param name="dnsPrivateViewLifecycleState"> Views lifecycleState. </param>
         /// <param name="self"> The canonical absolute URL of the resource. </param>
         /// <param name="createdOn"> views timeCreated. </param>
         /// <param name="updatedOn"> views timeCreated. </param>
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <returns> A new <see cref="Models.OracleDnsPrivateViewProperties"/> instance for mocking. </returns>
-        public static OracleDnsPrivateViewProperties OracleDnsPrivateViewProperties(ResourceIdentifier ocid = null, string displayName = null, bool isProtected = default, DnsPrivateViewsLifecycleState lifecycleState = default, string self = null, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default, OracleDatabaseResourceProvisioningState? provisioningState = null)
+        public static OracleDnsPrivateViewProperties OracleDnsPrivateViewProperties(ResourceIdentifier ocid = null, string displayName = null, bool isProtected = default, DnsPrivateViewsLifecycleState dnsPrivateViewLifecycleState = default, string self = null, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default, OracleDatabaseResourceProvisioningState? provisioningState = null)
         {
             return new OracleDnsPrivateViewProperties(
                 ocid,
                 displayName,
                 isProtected,
-                lifecycleState,
+                dnsPrivateViewLifecycleState,
                 self,
                 createdOn,
                 updatedOn,
@@ -943,7 +943,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Initializes a new instance of <see cref="Models.OracleDnsPrivateZoneProperties"/>. </summary>
         /// <param name="ocid"> The OCID of the Zone. </param>
         /// <param name="isProtected"> A Boolean flag indicating whether or not parts of the resource are unable to be explicitly managed. </param>
-        /// <param name="lifecycleState"> Zones lifecycleState. </param>
+        /// <param name="dnsPrivateZoneLifecycleState"> Zones lifecycleState. </param>
         /// <param name="self"> The canonical absolute URL of the resource. </param>
         /// <param name="serial"> The current serial of the zone. As seen in the zone's SOA record. </param>
         /// <param name="version"> Version is the never-repeating, totally-orderable, version of the zone, from which the serial field of the zone's SOA record is derived. </param>
@@ -952,12 +952,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="createdOn"> Zones timeCreated. </param>
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <returns> A new <see cref="Models.OracleDnsPrivateZoneProperties"/> instance for mocking. </returns>
-        public static OracleDnsPrivateZoneProperties OracleDnsPrivateZoneProperties(ResourceIdentifier ocid = null, bool isProtected = default, DnsPrivateZonesLifecycleState lifecycleState = default, string self = null, int serial = default, string version = null, ResourceIdentifier viewId = null, OracleDnsPrivateZoneType zoneType = default, DateTimeOffset createdOn = default, OracleDatabaseResourceProvisioningState? provisioningState = null)
+        public static OracleDnsPrivateZoneProperties OracleDnsPrivateZoneProperties(ResourceIdentifier ocid = null, bool isProtected = default, DnsPrivateZonesLifecycleState dnsPrivateZoneLifecycleState = default, string self = null, int serial = default, string version = null, ResourceIdentifier viewId = null, OracleDnsPrivateZoneType zoneType = default, DateTimeOffset createdOn = default, OracleDatabaseResourceProvisioningState? provisioningState = null)
         {
             return new OracleDnsPrivateZoneProperties(
                 ocid,
                 isProtected,
-                lifecycleState,
+                dnsPrivateZoneLifecycleState,
                 self,
                 serial,
                 version,
@@ -1377,19 +1377,19 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="faultDomain"> The name of the Fault Domain the instance is contained in. </param>
         /// <param name="hostIPId"> The OCID of the host IP address associated with the database node. </param>
         /// <param name="hostname"> The host name for the database node. </param>
-        /// <param name="lifecycleState"> The current state of the database node. </param>
+        /// <param name="dbNodeLifecycleState"> The current state of the database node. </param>
         /// <param name="lifecycleDetails"> Lifecycle details of Db Node. </param>
         /// <param name="maintenanceType"> The type of database node maintenance. </param>
         /// <param name="memorySizeInGbs"> The allocated memory in GBs on the Db node. </param>
         /// <param name="softwareStorageSizeInGb"> The size (in GB) of the block storage volume allocation for the DB system. This attribute applies only for virtual machine DB systems. </param>
-        /// <param name="timeCreated"> The date and time that the database node was created. </param>
+        /// <param name="dbNodeTimeCreated"> The date and time that the database node was created. </param>
         /// <param name="timeMaintenanceWindowEnd"> End date and time of maintenance window. </param>
         /// <param name="timeMaintenanceWindowStart"> Start date and time of maintenance window. </param>
         /// <param name="vnic2Id"> The OCID of the second VNIC. </param>
         /// <param name="vnicId"> The OCID of the VNIC. </param>
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <returns> A new <see cref="Models.CloudVmClusterDBNodeProperties"/> instance for mocking. </returns>
-        public static CloudVmClusterDBNodeProperties CloudVmClusterDBNodeProperties(ResourceIdentifier ocid = null, string additionalDetails = null, ResourceIdentifier backupIPId = null, ResourceIdentifier backupVnic2Id = null, ResourceIdentifier backupVnicId = null, int? cpuCoreCount = null, int? dbNodeStorageSizeInGbs = null, ResourceIdentifier dbServerId = null, ResourceIdentifier dbSystemId = null, string faultDomain = null, ResourceIdentifier hostIPId = null, string hostname = null, DBNodeProvisioningState lifecycleState = default, string lifecycleDetails = null, DBNodeMaintenanceType? maintenanceType = null, int? memorySizeInGbs = null, int? softwareStorageSizeInGb = null, DateTimeOffset timeCreated = default, DateTimeOffset? timeMaintenanceWindowEnd = null, DateTimeOffset? timeMaintenanceWindowStart = null, ResourceIdentifier vnic2Id = null, ResourceIdentifier vnicId = null, OracleDatabaseResourceProvisioningState? provisioningState = null)
+        public static CloudVmClusterDBNodeProperties CloudVmClusterDBNodeProperties(ResourceIdentifier ocid = null, string additionalDetails = null, ResourceIdentifier backupIPId = null, ResourceIdentifier backupVnic2Id = null, ResourceIdentifier backupVnicId = null, int? cpuCoreCount = null, int? dbNodeStorageSizeInGbs = null, ResourceIdentifier dbServerId = null, ResourceIdentifier dbSystemId = null, string faultDomain = null, ResourceIdentifier hostIPId = null, string hostname = null, DBNodeProvisioningState dbNodeLifecycleState = default, string lifecycleDetails = null, DBNodeMaintenanceType? maintenanceType = null, int? memorySizeInGbs = null, int? softwareStorageSizeInGb = null, DateTimeOffset dbNodeTimeCreated = default, DateTimeOffset? timeMaintenanceWindowEnd = null, DateTimeOffset? timeMaintenanceWindowStart = null, ResourceIdentifier vnic2Id = null, ResourceIdentifier vnicId = null, OracleDatabaseResourceProvisioningState? provisioningState = null)
         {
             return new CloudVmClusterDBNodeProperties(
                 ocid,
@@ -1404,12 +1404,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 faultDomain,
                 hostIPId,
                 hostname,
-                lifecycleState,
+                dbNodeLifecycleState,
                 lifecycleDetails,
                 maintenanceType,
                 memorySizeInGbs,
                 softwareStorageSizeInGb,
-                timeCreated,
+                dbNodeTimeCreated,
                 timeMaintenanceWindowEnd,
                 timeMaintenanceWindowStart,
                 vnic2Id,

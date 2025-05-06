@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             writer.WritePropertyName("isProtected"u8);
             writer.WriteBooleanValue(IsProtected);
             writer.WritePropertyName("lifecycleState"u8);
-            writer.WriteStringValue(LifecycleState.ToString());
+            writer.WriteStringValue(DnsPrivateZoneLifecycleState.ToString());
             writer.WritePropertyName("self"u8);
             writer.WriteStringValue(Self);
             writer.WritePropertyName("serial"u8);
