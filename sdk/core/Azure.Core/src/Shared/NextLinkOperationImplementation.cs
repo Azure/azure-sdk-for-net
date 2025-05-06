@@ -228,7 +228,7 @@ namespace Azure.Core
             {"version":"{{RehydrationTokenVersion}}","id":{{ConstructStringValue(operationId)}},"requestMethod":"{{requestMethod}}","initialUri":"{{startRequestUri.AbsoluteUri}}","nextRequestUri":"{{nextRequestUri}}","headerSource":"{{headerSource}}","finalStateVia":"{{finalStateVia}}","lastKnownLocation":{{ConstructStringValue(lastKnownLocation)}}}
             """;
             var data = new BinaryData(json);
-            return ModelReaderWriter.Read<RehydrationToken>(data, ModelReaderWriterOptions.Json);
+            return ModelReaderWriter.Read<RehydrationToken>(data);
         }
 
         private static string? ConstructStringValue(string? value) => value is null ? "null" : $"\"{value}\"";
