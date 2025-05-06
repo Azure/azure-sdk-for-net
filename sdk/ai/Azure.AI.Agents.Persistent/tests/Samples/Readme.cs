@@ -33,7 +33,7 @@ public partial class Readme : SamplesBase<AIAgentsTestEnvironment>
         #region Snippet:AgentsReadme_Troubleshooting
         try
         {
-            client.CreateMessage(
+            client.Messages.CreateMessage(
             "thread1234",
             MessageRole.User,
             "I need to solve the equation `3x + 11 = 14`. Can you help me?");

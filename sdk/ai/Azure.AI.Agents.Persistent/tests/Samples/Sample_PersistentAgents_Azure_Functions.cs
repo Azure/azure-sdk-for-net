@@ -70,7 +70,7 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
         #endregion
 
         #region Snippet:AgentsAzureFunctionsCreateAgentWithFunctionTools
-        PersistentAgent agent = await client.CreateAgentAsync(
+        PersistentAgent agent = await client.Administration.CreateAgentAsync(
             model: modelDeploymentName,
             name: "azure-function-agent-foo",
                 instructions: "You are a helpful support agent. Use the provided function any "
@@ -82,19 +82,19 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
             );
         #endregion
         #region Snippet:AgentsAzureFunctionsHandlePollingWithRequiredAction
-        PersistentAgentThread thread = await client.CreateThreadAsync();
+        PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
-        ThreadMessage message = await client.CreateMessageAsync(
+        ThreadMessage message = await client.Messages.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
             "What is the most prevalent element in the universe? What would foo say?");
 
-        ThreadRun run = await client.CreateRunAsync(thread, agent);
+        ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
 
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            run = await client.GetRunAsync(thread.Id, run.Id);
+            run = await client.Runs.GetRunAsync(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress
@@ -106,12 +106,12 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
         #endregion
 
         #region Snippet:AgentsAzureFunctionsPrint
-        PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
+        AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
 
-        foreach (ThreadMessage threadMessage in messages)
+        await foreach (ThreadMessage threadMessage in messages)
         {
             Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
             foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -129,8 +129,8 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
         }
         #endregion
         #region Snippet:AgentsAzureFunctionsCleanup
-        await client.DeleteThreadAsync(thread.Id);
-        await client.DeleteAgentAsync(agent.Id);
+        await client.Threads.DeleteThreadAsync(thread.Id);
+        await client.Administration.DeleteAgentAsync(agent.Id);
         #endregion
     }
 
@@ -188,7 +188,7 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
         );
 
         #region Snippet:AgentsAzureFunctionsCreateAgentWithFunctionToolsSync
-        PersistentAgent agent = client.CreateAgent(
+        PersistentAgent agent = client.Administration.CreateAgent(
             model: modelDeploymentName,
             name: "azure-function-agent-foo",
                 instructions: "You are a helpful support agent. Use the provided function any "
@@ -200,19 +200,19 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
             );
         #endregion
         #region Snippet:AgentsAzureFunctionsHandlePollingWithRequiredActionSync
-        PersistentAgentThread thread = client.CreateThread();
+        PersistentAgentThread thread = client.Threads.CreateThread();
 
-        ThreadMessage message = client.CreateMessage(
+        ThreadMessage message = client.Messages.CreateMessage(
             thread.Id,
             MessageRole.User,
             "What is the most prevalent element in the universe? What would foo say?");
 
-        ThreadRun run = client.CreateRun(thread, agent);
+        ThreadRun run = client.Runs.CreateRun(thread, agent);
 
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            run = client.GetRun(thread.Id, run.Id);
+            run = client.Runs.GetRun(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress
@@ -224,7 +224,7 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
         #endregion
 
         #region Snippet:AgentsAzureFunctionsPrintSync
-        PageableList<ThreadMessage> messages = client.GetMessages(
+        Pageable<ThreadMessage> messages = client.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
@@ -247,8 +247,8 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
         }
         #endregion
         #region Snippet:AgentsAzureFunctionsCleanupSync
-        client.DeleteThread(thread.Id);
-        client.DeleteAgent(agent.Id);
+        client.Threads.DeleteThread(thread.Id);
+        client.Administration.DeleteAgent(agent.Id);
         #endregion
     }
 }

@@ -13,7 +13,7 @@ PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential(
 
 Synchronous sample:
 ```C# Snippet:AgentsOverviewCreateAgentSync
-PersistentAgent agent = client.CreateAgent(
+PersistentAgent agent = client.Administration.CreateAgent(
     model: modelDeploymentName,
     name: "Math Tutor",
     instructions: "You are a personal math tutor. Write and run code to answer math questions."
@@ -22,7 +22,7 @@ PersistentAgent agent = client.CreateAgent(
 
 Asynchronous sample:
 ```C# Snippet:AgentsOverviewCreateAgent
-PersistentAgent agent = await client.CreateAgentAsync(
+PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "Math Tutor",
     instructions: "You are a personal math tutor. Write and run code to answer math questions."
@@ -33,19 +33,19 @@ PersistentAgent agent = await client.CreateAgentAsync(
 
 Synchronous sample:
 ```C# Snippet:AgentsOverviewCreateThreadSync
-PersistentAgentThread thread = client.CreateThread();
+PersistentAgentThread thread = client.Threads.CreateThread();
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentsOverviewCreateThread
-PersistentAgentThread thread = await client.CreateThreadAsync();
+PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 ```
 
 4. We will add the message to the thread, containing a question for agent. This message must have `User` role.
 
 Synchronous sample:
 ```C# Snippet:AgentsOverviewCreateMessageSync
-ThreadMessage message = client.CreateMessage(
+ThreadMessage message = client.Messages.CreateMessage(
     thread.Id,
     MessageRole.User,
     "I need to solve the equation `3x + 11 = 14`. Can you help me?");
@@ -53,7 +53,7 @@ ThreadMessage message = client.CreateMessage(
 
 Asynchronous sample:
 ```C# Snippet:AgentsOverviewCreateMessage
-ThreadMessage message = await client.CreateMessageAsync(
+ThreadMessage message = await client.Messages.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     "I need to solve the equation `3x + 11 = 14`. Can you help me?");
@@ -63,7 +63,7 @@ ThreadMessage message = await client.CreateMessageAsync(
 
 Synchronous sample:
 ```C# Snippet:AgentsOverviewCreateRunSync
-ThreadRun run = client.CreateRun(
+ThreadRun run = client.Runs.CreateRun(
     thread.Id,
     agent.Id,
     additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
@@ -71,7 +71,7 @@ ThreadRun run = client.CreateRun(
 
 Asynchronous sample:
 ```C# Snippet:AgentsOverviewCreateRun
-ThreadRun run = await client.CreateRunAsync(
+ThreadRun run = await client.Runs.CreateRunAsync(
     thread.Id,
     agent.Id,
     additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
@@ -84,7 +84,7 @@ Synchronous sample:
 do
 {
     Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    run = client.GetRun(thread.Id, run.Id);
+    run = client.Runs.GetRun(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
@@ -99,7 +99,7 @@ Asynchronous sample:
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
-    run = await client.GetRunAsync(thread.Id, run.Id);
+    run = await client.Runs.GetRunAsync(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
@@ -113,8 +113,8 @@ Assert.AreEqual(
 
 Synchronous sample:
 ```C# Snippet:AgentsOverviewListUpdatedMessagesSync
-PageableList<ThreadMessage> messages
-    = client.GetMessages(
+Pageable<ThreadMessage> messages
+    = client.Messages.GetMessages(
         threadId: thread.Id, order: ListSortOrder.Ascending);
 
 foreach (ThreadMessage threadMessage in messages)
@@ -137,11 +137,11 @@ foreach (ThreadMessage threadMessage in messages)
 
 Asynchronous sample:
 ```C# Snippet:AgentsOverviewListUpdatedMessages
-PageableList<ThreadMessage> messages
-    = await client.GetMessagesAsync(
+AsyncPageable<ThreadMessage> messages
+    = client.Messages.GetMessagesAsync(
         threadId: thread.Id, order: ListSortOrder.Ascending);
 
-foreach (ThreadMessage threadMessage in messages)
+await foreach (ThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -163,12 +163,12 @@ foreach (ThreadMessage threadMessage in messages)
 
 Synchronous sample:
 ```C# Snippet:AgentsOverviewCleanupSync
-client.DeleteThread(threadId: thread.Id);
-client.DeleteAgent(agentId: agent.Id);
+client.Threads.DeleteThread(threadId: thread.Id);
+client.Administration.DeleteAgent(agentId: agent.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentsOverviewCleanup
-await client.DeleteThreadAsync(threadId: thread.Id);
-await client.DeleteAgentAsync(agentId: agent.Id);
+await client.Threads.DeleteThreadAsync(threadId: thread.Id);
+await client.Administration.DeleteAgentAsync(agentId: agent.Id);
 ```

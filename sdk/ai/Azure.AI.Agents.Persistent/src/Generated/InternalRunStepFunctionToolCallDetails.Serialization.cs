@@ -38,15 +38,6 @@ namespace Azure.AI.Agents.Persistent
             writer.WriteStringValue(Name);
             writer.WritePropertyName("arguments"u8);
             writer.WriteStringValue(Arguments);
-            if (Output != null)
-            {
-                writer.WritePropertyName("output"u8);
-                writer.WriteStringValue(Output);
-            }
-            else
-            {
-                writer.WriteNull("output");
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -86,7 +77,6 @@ namespace Azure.AI.Agents.Persistent
             }
             string name = default;
             string arguments = default;
-            string output = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,23 +91,13 @@ namespace Azure.AI.Agents.Persistent
                     arguments = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("output"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        output = null;
-                        continue;
-                    }
-                    output = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new InternalRunStepFunctionToolCallDetails(name, arguments, output, serializedAdditionalRawData);
+            return new InternalRunStepFunctionToolCallDetails(name, arguments, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InternalRunStepFunctionToolCallDetails>.Write(ModelReaderWriterOptions options)

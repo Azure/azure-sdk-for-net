@@ -254,7 +254,7 @@ namespace Azure.AI.Agents.Persistent
         /// <description><see cref="string"/></description>
         /// </item>
         /// <item>
-        /// <description><see cref="PersistentAgentsApiToolChoiceOptionMode"/></description>
+        /// <description><see cref="PersistentAgentsToolChoiceOptionMode"/></description>
         /// </item>
         /// <item>
         /// <description><see cref="PersistentAgentsNamedToolChoice"/></description>
@@ -299,10 +299,10 @@ namespace Azure.AI.Agents.Persistent
         /// <description><see cref="string"/></description>
         /// </item>
         /// <item>
-        /// <description><see cref="PersistentAgentsApiResponseFormatMode"/></description>
+        /// <description><see cref="PersistentAgentsResponseFormatMode"/></description>
         /// </item>
         /// <item>
-        /// <description><see cref="PersistentAgentsApiResponseFormat"/></description>
+        /// <description><see cref="PersistentAgentsResponseFormat"/></description>
         /// </item>
         /// <item>
         /// <description><see cref="ResponseFormatJsonSchemaType"/></description>

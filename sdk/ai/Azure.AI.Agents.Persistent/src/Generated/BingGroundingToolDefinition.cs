@@ -14,9 +14,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class BingGroundingToolDefinition : ToolDefinition
     {
         /// <summary> Initializes a new instance of <see cref="BingGroundingToolDefinition"/>. </summary>
-        /// <param name="bingGrounding"> The list of connections used by the bing grounding tool. </param>
+        /// <param name="bingGrounding"> The list of search configurations used by the bing grounding tool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bingGrounding"/> is null. </exception>
-        public BingGroundingToolDefinition(ToolConnectionList bingGrounding)
+        public BingGroundingToolDefinition(BingGroundingSearchConfigurationList bingGrounding)
         {
             Argument.AssertNotNull(bingGrounding, nameof(bingGrounding));
 
@@ -27,8 +27,8 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of <see cref="BingGroundingToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="bingGrounding"> The list of connections used by the bing grounding tool. </param>
-        internal BingGroundingToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, ToolConnectionList bingGrounding) : base(type, serializedAdditionalRawData)
+        /// <param name="bingGrounding"> The list of search configurations used by the bing grounding tool. </param>
+        internal BingGroundingToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, BingGroundingSearchConfigurationList bingGrounding) : base(type, serializedAdditionalRawData)
         {
             BingGrounding = bingGrounding;
         }
@@ -38,7 +38,7 @@ namespace Azure.AI.Agents.Persistent
         {
         }
 
-        /// <summary> The list of connections used by the bing grounding tool. </summary>
-        public ToolConnectionList BingGrounding { get; set; }
+        /// <summary> The list of search configurations used by the bing grounding tool. </summary>
+        public BingGroundingSearchConfigurationList BingGrounding { get; set; }
     }
 }

@@ -44,7 +44,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
 
         PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
-        PersistentAgent agent = await client.CreateAgentAsync(
+        PersistentAgent agent = await client.Administration.CreateAgentAsync(
            model: modelDeploymentName,
            name: "my-agent",
            instructions: "You are a helpful agent.",
@@ -53,21 +53,21 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
         #endregion
         #region Snippet:AgentsAzureAISearchExample_CreateRun
         // Create thread for communication
-        PersistentAgentThread thread = await client.CreateThreadAsync();
+        PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
         // Create message to thread
-        ThreadMessage message = await client.CreateMessageAsync(
+        ThreadMessage message = await client.Messages.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
             "What is the temperature rating of the cozynights sleeping bag?");
 
         // Run the agent
-        ThreadRun run = await client.CreateRunAsync(thread, agent);
+        ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
 
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            run = await client.GetRunAsync(thread.Id, run.Id);
+            run = await client.Runs.GetRunAsync(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
@@ -78,12 +78,12 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
             run.LastError?.Message);
         #endregion
         #region Snippet:AgentsPopulateReferencesAgentWithAzureAISearchTool
-        PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
+        AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
 
-        foreach (ThreadMessage threadMessage in messages)
+        await foreach (ThreadMessage threadMessage in messages)
         {
             Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
             foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -119,8 +119,8 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
         }
         #endregion
         #region Snippet:AgentsAzureAISearchExample_Cleanup
-        await client.DeleteThreadAsync(thread.Id);
-        await client.DeleteAgentAsync(agent.Id);
+        await client.Threads.DeleteThreadAsync(thread.Id);
+        await client.Administration.DeleteAgentAsync(agent.Id);
         #endregion
     }
 
@@ -152,7 +152,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
 
         PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
-        PersistentAgent agent = client.CreateAgent(
+        PersistentAgent agent = client.Administration.CreateAgent(
            model: modelDeploymentName,
            name: "my-agent",
            instructions: "You are a helpful agent.",
@@ -161,21 +161,21 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
         #endregion
         #region Snippet:AgentsAzureAISearchExample_CreateRun_Sync
         // Create thread for communication
-        PersistentAgentThread thread = client.CreateThread();
+        PersistentAgentThread thread = client.Threads.CreateThread();
 
         // Create message to thread
-        ThreadMessage message = client.CreateMessage(
+        ThreadMessage message = client.Messages.CreateMessage(
             thread.Id,
             MessageRole.User,
             "What is the temperature rating of the cozynights sleeping bag?");
 
         // Run the agent
-        Response<ThreadRun> runResponse = client.CreateRun(thread, agent);
+        Response<ThreadRun> runResponse = client.Runs.CreateRun(thread, agent);
 
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            runResponse = client.GetRun(thread.Id, runResponse.Value.Id);
+            runResponse = client.Runs.GetRun(thread.Id, runResponse.Value.Id);
         }
         while (runResponse.Value.Status == RunStatus.Queued
             || runResponse.Value.Status == RunStatus.InProgress);
@@ -186,7 +186,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
             runResponse.Value.LastError?.Message);
         #endregion
         #region Snippet:AgentsPopulateReferencesAgentWithAzureAISearchTool_Sync
-        PageableList<ThreadMessage> messages = client.GetMessages(
+        Pageable<ThreadMessage> messages = client.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
@@ -227,8 +227,8 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
         }
         #endregion
         #region Snippet:AgentsAzureAISearchExample_Cleanup_Sync
-        client.DeleteThread(thread.Id);
-        client.DeleteAgent(agent.Id);
+        client.Threads.DeleteThread(thread.Id);
+        client.Administration.DeleteAgent(agent.Id);
         #endregion
     }
 }

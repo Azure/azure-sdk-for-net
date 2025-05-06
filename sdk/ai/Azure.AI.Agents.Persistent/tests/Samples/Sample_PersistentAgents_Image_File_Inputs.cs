@@ -57,7 +57,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // The file might be an image or any relevant binary.
             // Make sure the server or container is set up for "Agents" usage if required.
-            PersistentAgentFile uploadedFile = await client.UploadFileAsync(
+            PersistentAgentFileInfo uploadedFile = await client.Files.UploadFileAsync(
                 filePath: pathToImage,
                 purpose: PersistentAgentFilePurpose.Agents
             );
@@ -66,7 +66,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // 3) Create an agent
             #region Snippet:AgentsImageFileInMessageCreateAgent
-            PersistentAgent agent = await client.CreateAgentAsync(
+            PersistentAgent agent = await client.Administration.CreateAgentAsync(
                 model: modelDeploymentName,
                 name: "File Image Understanding Agent",
                 instructions: "Analyze images from internally uploaded files."
@@ -75,7 +75,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // 4) Create a thread
             #region Snippet:AgentsImageFileInMessageCreateThread
-            PersistentAgentThread thread = await client.CreateThreadAsync();
+            PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
             #endregion
 
             // 5) Create a message referencing the uploaded file
@@ -86,7 +86,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 new MessageInputImageFileBlock(new MessageImageFileParam(uploadedFile.Id))
             };
 
-            ThreadMessage imageMessage = await client.CreateMessageAsync(
+            ThreadMessage imageMessage = await client.Messages.CreateMessageAsync(
                 thread.Id,
                 MessageRole.User,
                 contentBlocks: contentBlocks
@@ -95,7 +95,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // 6) Run the agent
             #region Snippet:AgentsImageFileInMessageCreateRun
-            ThreadRun run = await client.CreateRunAsync(
+            ThreadRun run = await client.Runs.CreateRunAsync(
                 threadId: thread.Id,
                 assistantId: agent.Id
             );
@@ -106,7 +106,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             do
             {
                 await Task.Delay(500);
-                run = await client.GetRunAsync(thread.Id, run.Id);
+                run = await client.Runs.GetRunAsync(thread.Id, run.Id);
             }
             while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress);
 
@@ -118,9 +118,9 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // 8) Retrieve messages (including any agent responses) and print them
             #region Snippet:AgentsImageFileInMessageReview
-            PageableList<ThreadMessage> messages = await client.GetMessagesAsync(thread.Id);
+            AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(thread.Id);
 
-            foreach (ThreadMessage msg in messages)
+            await foreach (ThreadMessage msg in messages)
             {
                 Console.WriteLine($"{msg.CreatedAt:yyyy-MM-dd HH:mm:ss} - {msg.Role,10}:");
 
@@ -142,8 +142,8 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // 9) Cleanup
             #region Snippet:AgentsImageFileInMessageCleanup
-            await client.DeleteThreadAsync(thread.Id);
-            await client.DeleteAgentAsync(agent.Id);
+            await client.Threads.DeleteThreadAsync(thread.Id);
+            await client.Administration.DeleteAgentAsync(agent.Id);
             #endregion
         }
 
@@ -171,7 +171,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // The file might be an image or any relevant binary.
             // Make sure the server or container is set up for "Agents" usage if required.
-            PersistentAgentFile uploadedFile = client.UploadFile(
+            PersistentAgentFileInfo uploadedFile = client.Files.UploadFile(
                 filePath: pathToImage,
                 purpose: PersistentAgentFilePurpose.Agents
             );
@@ -180,7 +180,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // 3) Create an agent
             #region Snippet:AgentsImageFileInMessageCreateAgent_Sync
-            PersistentAgent agent = client.CreateAgent(
+            PersistentAgent agent = client.Administration.CreateAgent(
                 model: modelDeploymentName,
                 name: "File Image Understanding Agent",
                 instructions: "Analyze images from internally uploaded files."
@@ -189,7 +189,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // 4) Create a thread
             #region Snippet:AgentsImageFileInMessageCreateThread_Sync
-            PersistentAgentThread thread = client.CreateThread();
+            PersistentAgentThread thread = client.Threads.CreateThread();
             #endregion
 
             // 5) Create a message referencing the uploaded file
@@ -200,7 +200,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 new MessageInputImageFileBlock(new MessageImageFileParam(uploadedFile.Id))
             };
 
-            ThreadMessage imageMessage = client.CreateMessage(
+            ThreadMessage imageMessage = client.Messages.CreateMessage(
                 threadId: thread.Id,
                 role: MessageRole.User,
                 contentBlocks: contentBlocks
@@ -209,7 +209,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // 6) Run the agent
             #region Snippet:AgentsImageFileInMessageCreateRun_Sync
-            ThreadRun run = client.CreateRun(
+            ThreadRun run = client.Runs.CreateRun(
                 threadId: thread.Id,
                 assistantId: agent.Id
             );
@@ -220,7 +220,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             do
             {
                 Thread.Sleep(500);
-                run = client.GetRun(thread.Id, run.Id);
+                run = client.Runs.GetRun(thread.Id, run.Id);
             }
             while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress);
 
@@ -232,7 +232,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // 8) Retrieve messages (including any agent responses) and print them
             #region Snippet:AgentsImageFileInMessageReview_Sync
-            PageableList<ThreadMessage> messages = client.GetMessages(thread.Id);
+            Pageable<ThreadMessage> messages = client.Messages.GetMessages(thread.Id);
 
             foreach (ThreadMessage msg in messages)
             {
@@ -256,8 +256,8 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // 9) Cleanup
             #region Snippet:AgentsImageFileInMessageCleanup_Sync
-            client.DeleteThread(thread.Id);
-            client.DeleteAgent(agent.Id);
+            client.Threads.DeleteThread(thread.Id);
+            client.Administration.DeleteAgent(agent.Id);
             #endregion
         }
     }

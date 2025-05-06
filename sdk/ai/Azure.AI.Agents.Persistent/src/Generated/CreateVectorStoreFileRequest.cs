@@ -54,7 +54,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="fileId"> Identifier of the file. </param>
         /// <param name="dataSource"> Azure asset ID. </param>
         /// <param name="chunkingStrategy">
-        /// The chunking strategy used to chunk the file(s). If not set, will use the auto strategy.
+        /// The chunking strategy used to chunk the file. If not set, uses the auto strategy.
         /// Please note <see cref="VectorStoreChunkingStrategyRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VectorStoreAutoChunkingStrategyRequest"/> and <see cref="VectorStoreStaticChunkingStrategyRequest"/>.
         /// </param>
@@ -72,7 +72,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Azure asset ID. </summary>
         public VectorStoreDataSource DataSource { get; }
         /// <summary>
-        /// The chunking strategy used to chunk the file(s). If not set, will use the auto strategy.
+        /// The chunking strategy used to chunk the file. If not set, uses the auto strategy.
         /// Please note <see cref="VectorStoreChunkingStrategyRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VectorStoreAutoChunkingStrategyRequest"/> and <see cref="VectorStoreStaticChunkingStrategyRequest"/>.
         /// </summary>

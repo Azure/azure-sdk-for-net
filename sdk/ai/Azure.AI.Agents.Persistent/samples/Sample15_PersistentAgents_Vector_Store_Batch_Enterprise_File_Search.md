@@ -16,11 +16,11 @@ var ds = new VectorStoreDataSource(
     assetIdentifier: blobURI,
     assetType: VectorStoreDataSourceAssetType.UriAsset
 );
-VectorStore vectorStore = client.CreateVectorStore(
+VectorStore vectorStore = client.VectorStores.CreateVectorStore(
     name: "sample_vector_store"
 );
 
-VectorStoreFileBatch vctFile = client.CreateVectorStoreFileBatch(
+VectorStoreFileBatch vctFile = client.VectorStoreFileBatches.CreateVectorStoreFileBatch(
     vectorStoreId: vectorStore.Id,
     dataSources: [ds]
 );
@@ -35,11 +35,11 @@ var ds = new VectorStoreDataSource(
     assetIdentifier: blobURI,
     assetType: VectorStoreDataSourceAssetType.UriAsset
 );
-VectorStore vectorStore = await client.CreateVectorStoreAsync(
+VectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
     name: "sample_vector_store"
 );
 
-VectorStoreFileBatch vctFile = await client.CreateVectorStoreFileBatchAsync(
+VectorStoreFileBatch vctFile = await client.VectorStoreFileBatches.CreateVectorStoreFileBatchAsync(
     vectorStoreId: vectorStore.Id,
     dataSources: [ ds ]
 );
@@ -53,7 +53,7 @@ FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 Synchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_CreateAgentAndThread
 List<ToolDefinition> tools = [new FileSearchToolDefinition()];
-PersistentAgent agent = client.CreateAgent(
+PersistentAgent agent = client.Administration.CreateAgent(
     model: modelName,
     name: "my-agent",
     instructions: "You are helpful agent.",
@@ -61,9 +61,9 @@ PersistentAgent agent = client.CreateAgent(
     toolResources: new ToolResources() { FileSearch = fileSearchResource }
 );
 
-PersistentAgentThread thread = client.CreateThread();
+PersistentAgentThread thread = client.Threads.CreateThread();
 
-ThreadMessage message = client.CreateMessage(
+ThreadMessage message = client.Messages.CreateMessage(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "What feature does Smart Eyewear offer?"
@@ -73,7 +73,7 @@ ThreadMessage message = client.CreateMessage(
 Asynchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_CreateAgentAndThread_Async
 List<ToolDefinition> tools = [new FileSearchToolDefinition()];
-PersistentAgent agent = await client.CreateAgentAsync(
+PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelName,
     name: "my-agent",
     instructions: "You are helpful agent.",
@@ -81,9 +81,9 @@ PersistentAgent agent = await client.CreateAgentAsync(
     toolResources: new ToolResources() { FileSearch = fileSearchResource }
 );
 
-PersistentAgentThread thread = await client.CreateThreadAsync();
+PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
-ThreadMessage message = await client.CreateMessageAsync(
+ThreadMessage message = await client.Messages.CreateMessageAsync(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "What feature does Smart Eyewear offer?"
@@ -144,7 +144,7 @@ private static string replaceReferences(Dictionary<string, string> fileIds, stri
 
 Synchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_ThreadRun
-ThreadRun run = client.CreateRun(
+ThreadRun run = client.Runs.CreateRun(
     thread.Id,
     agent.Id
 );
@@ -152,7 +152,7 @@ ThreadRun run = client.CreateRun(
 do
 {
     Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    run = client.GetRun(thread.Id, run.Id);
+    run = client.Runs.GetRun(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
@@ -160,35 +160,27 @@ Assert.AreEqual(
     RunStatus.Completed,
     run.Status,
     run.LastError?.Message);
-PageableList<ThreadMessage> messages = client.GetMessages(
+Pageable<ThreadMessage> messages = client.Messages.GetMessages(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
 // Build the map of file IDs to file names.
-string after = null;
-PersistentAgentPageableListOfVectorStoreFile storeFiles;
 Dictionary<string, string> dtFiles = [];
-do
+Pageable<VectorStoreFile> storeFiles = client.VectorStoreFiles.GetVectorStoreFiles(
+        vectorStoreId: vectorStore.Id
+);
+foreach (VectorStoreFile fle in storeFiles)
 {
-    storeFiles = client.GetVectorStoreFiles(
-        vectorStoreId: vectorStore.Id,
-    after: after
-        );
-    after = storeFiles.LastId;
-    foreach (VectorStoreFile fle in storeFiles.Data)
-    {
-        PersistentAgentFile agentFile = client.GetFile(fle.Id);
-        Uri uriFile = new(agentFile.Filename);
-        dtFiles.Add(fle.Id, uriFile.Segments[uriFile.Segments.Length - 1]);
-    }
+    PersistentAgentFileInfo agentFile = client.Files.GetFile(fle.Id);
+    Uri uriFile = new(agentFile.Filename);
+    dtFiles.Add(fle.Id, uriFile.Segments[uriFile.Segments.Length - 1]);
 }
-while (storeFiles.HasMore);
 WriteMessages(messages, dtFiles);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_ThreadRun_Async
-ThreadRun run = await client.CreateRunAsync(
+ThreadRun run = await client.Runs.CreateRunAsync(
     thread.Id,
     agent.Id
 );
@@ -196,7 +188,7 @@ ThreadRun run = await client.CreateRunAsync(
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
-    run = await client.GetRunAsync(thread.Id, run.Id);
+    run = await client.Runs.GetRunAsync(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
@@ -204,29 +196,21 @@ Assert.AreEqual(
     RunStatus.Completed,
     run.Status,
     run.LastError?.Message);
-PageableList<ThreadMessage> messages = await client.GetMessagesAsync(
+List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
-);
+).ToListAsync();
 // Build the map of file IDs to file names.
-string after = null;
-PersistentAgentPageableListOfVectorStoreFile storeFiles;
 Dictionary<string, string> dtFiles = [];
-do
+AsyncPageable<VectorStoreFile> storeFiles = client.VectorStoreFiles.GetVectorStoreFilesAsync(
+    vectorStoreId: vectorStore.Id
+);
+await foreach (VectorStoreFile fle in storeFiles)
 {
-    storeFiles = await client.GetVectorStoreFilesAsync(
-        vectorStoreId: vectorStore.Id,
-        after: after
-    );
-    after = storeFiles.LastId;
-    foreach (VectorStoreFile fle in storeFiles.Data)
-    {
-        PersistentAgentFile agentFile = await client.GetFileAsync(fle.Id);
-        Uri uriFile = new(agentFile.Filename);
-        dtFiles.Add(fle.Id, uriFile.Segments[uriFile.Segments.Length - 1]);
-    }
+    PersistentAgentFileInfo agentFile = await client.Files.GetFileAsync(fle.Id);
+    Uri uriFile = new(agentFile.Filename);
+    dtFiles.Add(fle.Id, uriFile.Segments[uriFile.Segments.Length - 1]);
 }
-while (storeFiles.HasMore);
 WriteMessages(messages, dtFiles);
 ```
 
@@ -234,7 +218,7 @@ WriteMessages(messages, dtFiles);
 
 Synchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_Cleanup
-VectorStoreDeletionStatus delStatus = client.DeleteVectorStore(vectorStore.Id);
+VectorStoreDeletionStatus delStatus = client.VectorStores.DeleteVectorStore(vectorStore.Id);
 if (delStatus.Deleted)
 {
     Console.WriteLine($"Deleted vector store {vectorStore.Id}");
@@ -243,13 +227,13 @@ else
 {
     Console.WriteLine($"Unable to delete vector store {vectorStore.Id}");
 }
-client.DeleteThread(thread.Id);
-client.DeleteAgent(agent.Id);
+client.Threads.DeleteThread(thread.Id);
+client.Administration.DeleteAgent(agent.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_Cleanup_Async
-VectorStoreDeletionStatus delStatus = await client.DeleteVectorStoreAsync(vectorStore.Id);
+VectorStoreDeletionStatus delStatus = await client.VectorStores.DeleteVectorStoreAsync(vectorStore.Id);
 if (delStatus.Deleted)
 {
     Console.WriteLine($"Deleted vector store {vectorStore.Id}");
@@ -258,6 +242,6 @@ else
 {
     Console.WriteLine($"Unable to delete vector store {vectorStore.Id}");
 }
-await client.DeleteThreadAsync(thread.Id);
-await client.DeleteAgentAsync(agent.Id);
+await client.Threads.DeleteThreadAsync(thread.Id);
+await client.Administration.DeleteAgentAsync(agent.Id);
 ```
