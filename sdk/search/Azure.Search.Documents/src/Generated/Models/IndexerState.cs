@@ -19,9 +19,44 @@ namespace Azure.Search.Documents.Indexes.Models
             ResetDataSourceDocumentIds = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="IndexerState"/>. </summary>
+        /// <param name="mode"> The mode the indexer is running in. </param>
+        /// <param name="allDocsInitialTrackingState"> Change tracking state used when indexing starts on all documents in the datasource. </param>
+        /// <param name="allDocsFinalTrackingState"> Change tracking state value when indexing finishes on all documents in the datasource. </param>
+        /// <param name="resetDocsInitialTrackingState"> Change tracking state used when indexing starts on select, reset documents in the datasource. </param>
+        /// <param name="resetDocsFinalTrackingState"> Change tracking state value when indexing finishes on select, reset documents in the datasource. </param>
+        /// <param name="resetDocumentKeys"> The list of document keys that have been reset. The document key is the document's unique identifier for the data in the search index. The indexer will prioritize selectively re-ingesting these keys. </param>
+        /// <param name="resetDataSourceDocumentIds"> The list of datasource document ids that have been reset. The datasource document id is the unique identifier for the data in the datasource. The indexer will prioritize selectively re-ingesting these ids. </param>
+        /// <param name="resyncInitialTrackingState"> Change tracking state used when indexing starts on selective options from the datasource. </param>
+        /// <param name="resyncFinalTrackingState"> Change tracking state value when indexing finishes on selective options from the datasource. </param>
+        internal IndexerState(IndexingMode? mode, string allDocsInitialTrackingState, string allDocsFinalTrackingState, string resetDocsInitialTrackingState, string resetDocsFinalTrackingState, IReadOnlyList<string> resetDocumentKeys, IReadOnlyList<string> resetDataSourceDocumentIds, string resyncInitialTrackingState, string resyncFinalTrackingState)
+        {
+            Mode = mode;
+            AllDocsInitialTrackingState = allDocsInitialTrackingState;
+            AllDocsFinalTrackingState = allDocsFinalTrackingState;
+            ResetDocsInitialTrackingState = resetDocsInitialTrackingState;
+            ResetDocsFinalTrackingState = resetDocsFinalTrackingState;
+            ResetDocumentKeys = resetDocumentKeys;
+            ResetDataSourceDocumentIds = resetDataSourceDocumentIds;
+            ResyncInitialTrackingState = resyncInitialTrackingState;
+            ResyncFinalTrackingState = resyncFinalTrackingState;
+        }
+
         /// <summary> The mode the indexer is running in. </summary>
         public IndexingMode? Mode { get; }
+        /// <summary> Change tracking state used when indexing starts on all documents in the datasource. </summary>
+        public string AllDocsInitialTrackingState { get; }
+        /// <summary> Change tracking state value when indexing finishes on all documents in the datasource. </summary>
+        public string AllDocsFinalTrackingState { get; }
+        /// <summary> Change tracking state used when indexing starts on select, reset documents in the datasource. </summary>
+        public string ResetDocsInitialTrackingState { get; }
+        /// <summary> Change tracking state value when indexing finishes on select, reset documents in the datasource. </summary>
+        public string ResetDocsFinalTrackingState { get; }
         /// <summary> The list of document keys that have been reset. The document key is the document's unique identifier for the data in the search index. The indexer will prioritize selectively re-ingesting these keys. </summary>
         public IReadOnlyList<string> ResetDocumentKeys { get; }
+        /// <summary> Change tracking state used when indexing starts on selective options from the datasource. </summary>
+        public string ResyncInitialTrackingState { get; }
+        /// <summary> Change tracking state value when indexing finishes on selective options from the datasource. </summary>
+        public string ResyncFinalTrackingState { get; }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="resourceId"> (Required for token authentication). The Azure Resource Manager resource ID of the AML service. It should be in the format subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.MachineLearningServices/workspaces/{workspace-name}/services/{service_name}. </param>
         /// <param name="timeout"> (Optional) When specified, indicates the timeout for the http client making the API call. </param>
         /// <param name="region"> (Optional for token authentication). The region the AML service is deployed in. </param>
-        /// <param name="modelName"> The name of the embedding model from the Azure AI Studio Catalog that is deployed at the provided endpoint. </param>
+        /// <param name="modelName"> The name of the embedding model from the Azure AI Foundry Catalog that is deployed at the provided endpoint. </param>
         internal AzureMachineLearningParameters(Uri scoringUri, string authenticationKey, string resourceId, TimeSpan? timeout, string region, AIFoundryModelCatalogName? modelName)
         {
             ScoringUri = scoringUri;
@@ -46,7 +46,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public TimeSpan? Timeout { get; set; }
         /// <summary> (Optional for token authentication). The region the AML service is deployed in. </summary>
         public string Region { get; set; }
-        /// <summary> The name of the embedding model from the Azure AI Studio Catalog that is deployed at the provided endpoint. </summary>
+        /// <summary> The name of the embedding model from the Azure AI Foundry Catalog that is deployed at the provided endpoint. </summary>
         public AIFoundryModelCatalogName? ModelName { get; set; }
     }
 }

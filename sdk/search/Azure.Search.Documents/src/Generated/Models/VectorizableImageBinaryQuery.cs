@@ -29,8 +29,9 @@ namespace Azure.Search.Documents.Models
         /// The available derived classes include <see cref="SearchScoreThreshold"/> and <see cref="VectorSimilarityThreshold"/>.
         /// </param>
         /// <param name="filterOverride"> The OData filter expression to apply to this specific vector query. If no filter expression is defined at the vector level, the expression defined in the top level filter parameter is used instead. </param>
+        /// <param name="perDocumentVectorLimit"> Controls how many vectors can be matched from each document in a vector search query. Setting it to 1 ensures at most one vector per document is matched, guaranteeing results come from distinct documents. Setting it to 0 (unlimited) allows multiple relevant vectors from the same document to be matched. Default is 0. </param>
         /// <param name="base64Image"> The base 64 encoded binary of an image to be vectorized to perform a vector search query. </param>
-        internal VectorizableImageBinaryQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, string base64Image) : base(kind, kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, threshold, filterOverride)
+        internal VectorizableImageBinaryQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit, string base64Image) : base(kind, kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, threshold, filterOverride, perDocumentVectorLimit)
         {
             Base64Image = base64Image;
             Kind = kind;

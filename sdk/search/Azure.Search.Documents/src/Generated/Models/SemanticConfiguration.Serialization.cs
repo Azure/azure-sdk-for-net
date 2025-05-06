@@ -19,6 +19,18 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("prioritizedFields"u8);
             writer.WriteObjectValue(PrioritizedFields);
+            if (Optional.IsDefined(RankingOrder))
+            {
+                if (RankingOrder != null)
+                {
+                    writer.WritePropertyName("rankingOrder"u8);
+                    writer.WriteStringValue(RankingOrder.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("rankingOrder");
+                }
+            }
             if (Optional.IsDefined(FlightingOptIn))
             {
                 writer.WritePropertyName("flightingOptIn"u8);
@@ -35,6 +47,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string name = default;
             SemanticPrioritizedFields prioritizedFields = default;
+            RankingOrder? rankingOrder = default;
             bool? flightingOptIn = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,6 +61,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     prioritizedFields = SemanticPrioritizedFields.DeserializeSemanticPrioritizedFields(property.Value);
                     continue;
                 }
+                if (property.NameEquals("rankingOrder"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        rankingOrder = null;
+                        continue;
+                    }
+                    rankingOrder = new RankingOrder(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("flightingOptIn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -58,7 +81,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SemanticConfiguration(name, prioritizedFields, flightingOptIn);
+            return new SemanticConfiguration(name, prioritizedFields, rankingOrder, flightingOptIn);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
