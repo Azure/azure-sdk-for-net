@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>

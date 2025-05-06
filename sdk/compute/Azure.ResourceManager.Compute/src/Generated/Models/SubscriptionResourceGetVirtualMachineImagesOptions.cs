@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class SubscriptionResourceGetVirtualMachineImagesOptions
     {
         /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetVirtualMachineImagesOptions"/>. </summary>
-        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="skus"> A valid image SKU. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
         }
 
-        /// <summary> The name of a supported Azure region. </summary>
+        /// <summary> The name of Azure region. </summary>
         public AzureLocation Location { get; }
         /// <summary> A valid image publisher. </summary>
         public string PublisherName { get; }

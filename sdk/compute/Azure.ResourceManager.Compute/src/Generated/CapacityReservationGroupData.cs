@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="zones"> Availability Zones to use for this capacity reservation group. The zones can be assigned only during creation. If not provided, the group supports only regional resources in the region. If provided, enforces each capacity reservation in the group to be in one of the zones. </param>
+        /// <param name="zones"> The availability zones. </param>
         /// <param name="capacityReservations"> A list of all capacity reservation resource ids that belong to capacity reservation group. </param>
         /// <param name="virtualMachinesAssociated"> A list of references to all virtual machines associated to the capacity reservation group. </param>
         /// <param name="instanceView"> The capacity reservation group instance view which has the list of instance views for all the capacity reservations that belong to the capacity reservation group. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
-        /// <summary> Availability Zones to use for this capacity reservation group. The zones can be assigned only during creation. If not provided, the group supports only regional resources in the region. If provided, enforces each capacity reservation in the group to be in one of the zones. </summary>
+        /// <summary> The availability zones. </summary>
         public IList<string> Zones { get; }
         /// <summary> A list of all capacity reservation resource ids that belong to capacity reservation group. </summary>
         public IReadOnlyList<SubResource> CapacityReservations { get; }

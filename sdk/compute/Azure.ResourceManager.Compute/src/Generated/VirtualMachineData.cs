@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="plan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click **Want to deploy programmatically, Get Started -&gt;**. Enter any required information and then click **Save**. </param>
         /// <param name="resources"> The virtual machine child extension resources. </param>
         /// <param name="identity"> The identity of the virtual machine, if configured. </param>
-        /// <param name="zones"> The virtual machine zones. </param>
+        /// <param name="zones"> The availability zones. </param>
         /// <param name="extendedLocation"> The extended location of the Virtual Machine. </param>
         /// <param name="managedBy"> ManagedBy is set to Virtual Machine Scale Set(VMSS) flex ARM resourceID, if the VM is part of the VMSS. This property is used by platform for internal resource group delete optimization. </param>
         /// <param name="etag"> Etag is property returned in Create/Update/Get response of the VM, so that customer can supply it in the header to ensure optimistic updates. </param>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Compute
         public IReadOnlyList<VirtualMachineExtensionData> Resources { get; }
         /// <summary> The identity of the virtual machine, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The virtual machine zones. </summary>
+        /// <summary> The availability zones. </summary>
         public IList<string> Zones { get; }
         /// <summary> The extended location of the Virtual Machine. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
