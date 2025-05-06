@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string location = "eastus";
+            AzureLocation location = new AzureLocation("eastus");
             string clusterVersion = "7.2.477.9590";
             ServiceFabricManagedClusterVersion result = await subscriptionResource.GetManagedClusterVersionAsync(location, clusterVersion);
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            string location = "eastus";
+            AzureLocation location = new AzureLocation("eastus");
             await foreach (ServiceFabricManagedClusterVersion item in subscriptionResource.GetManagedClusterVersionsAsync(location))
             {
                 Console.WriteLine($"Succeeded: {item}");
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string location = "eastus";
+            AzureLocation location = new AzureLocation("eastus");
             ManagedClusterVersionEnvironment environment = ManagedClusterVersionEnvironment.Windows;
             string clusterVersion = "7.2.477.9590";
             ServiceFabricManagedClusterVersion result = await subscriptionResource.GetManagedClusterVersionByEnvironmentAsync(location, environment, clusterVersion);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            string location = "eastus";
+            AzureLocation location = new AzureLocation("eastus");
             ManagedClusterVersionEnvironment environment = ManagedClusterVersionEnvironment.Windows;
             await foreach (ServiceFabricManagedClusterVersion item in subscriptionResource.GetManagedClusterVersionsByEnvironmentAsync(location, environment))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string location = "eastus";
+            AzureLocation location = new AzureLocation("eastus");
             string vmSize = "Standard_B1ls1";
             ServiceFabricManagedUnsupportedVmSize result = await subscriptionResource.GetManagedUnsupportedVmSizeAsync(location, vmSize);
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            string location = "eastus";
+            AzureLocation location = new AzureLocation("eastus");
             await foreach (ServiceFabricManagedUnsupportedVmSize item in subscriptionResource.GetManagedUnsupportedVmSizesAsync(location))
             {
                 Console.WriteLine($"Succeeded: {item}");
