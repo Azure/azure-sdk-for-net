@@ -1,4 +1,4 @@
-﻿﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -15,7 +15,7 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
-
+    
     <!--
       Microsoft.NET.Test.Sdk has a transitive dependency to Newtonsoft.Json. In order to pick up the
       right version from Packages.data.props, we need to add an explicit reference to it here.
@@ -68,7 +68,7 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
+  
   <ItemGroup>
     <Compile Include="..\src\Utility\Polyfill\**\*.cs">
       <Link>Utils\Polyfill\%(RecursiveDir)\%(Filename).cs</Link>
