@@ -736,15 +736,15 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="observedImpact"> Gets the observed/actual impact info for this recommended action e.g., Actual CPU gain, Actual Disk Space change. </param>
         /// <param name="timeSeries"> Gets the time series info of metrics for this recommended action e.g., CPU consumption time series. </param>
         /// <param name="linkedObjects"> Gets the linked objects, if any. </param>
-        /// <param name="additionalDetails"> Gets additional details specific to this recommended action. </param>
+        /// <param name="details"> Gets additional details specific to this recommended action. </param>
         /// <returns> A new <see cref="Sql.RecommendedActionData"/> instance for mocking. </returns>
-        public static RecommendedActionData RecommendedActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AzureLocation? location = null, string recommendationReason = null, DateTimeOffset? validSince = null, DateTimeOffset? lastRefresh = null, RecommendedActionStateInfo state = null, bool? isExecutableAction = null, bool? isRevertableAction = null, bool? isArchivedAction = null, DateTimeOffset? executeActionStartOn = null, TimeSpan? executeActionDuration = null, DateTimeOffset? revertActionStartOn = null, TimeSpan? revertActionDuration = null, RecommendedActionInitiatedBy? executeActionInitiatedBy = null, DateTimeOffset? executeActionInitiatedOn = null, RecommendedActionInitiatedBy? revertActionInitiatedBy = null, DateTimeOffset? revertActionInitiatedOn = null, int? score = null, RecommendedActionImplementationInfo implementationDetails = null, RecommendedActionErrorInfo errorDetails = null, IEnumerable<RecommendedActionImpactRecord> estimatedImpact = null, IEnumerable<RecommendedActionImpactRecord> observedImpact = null, IEnumerable<RecommendedActionMetricInfo> timeSeries = null, IEnumerable<string> linkedObjects = null, IReadOnlyDictionary<string, string> additionalDetails = null)
+        public static RecommendedActionData RecommendedActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AzureLocation? location = null, string recommendationReason = null, DateTimeOffset? validSince = null, DateTimeOffset? lastRefresh = null, RecommendedActionStateInfo state = null, bool? isExecutableAction = null, bool? isRevertableAction = null, bool? isArchivedAction = null, DateTimeOffset? executeActionStartOn = null, TimeSpan? executeActionDuration = null, DateTimeOffset? revertActionStartOn = null, TimeSpan? revertActionDuration = null, RecommendedActionInitiatedBy? executeActionInitiatedBy = null, DateTimeOffset? executeActionInitiatedOn = null, RecommendedActionInitiatedBy? revertActionInitiatedBy = null, DateTimeOffset? revertActionInitiatedOn = null, int? score = null, RecommendedActionImplementationInfo implementationDetails = null, RecommendedActionErrorInfo errorDetails = null, IEnumerable<RecommendedActionImpactRecord> estimatedImpact = null, IEnumerable<RecommendedActionImpactRecord> observedImpact = null, IEnumerable<RecommendedActionMetricInfo> timeSeries = null, IEnumerable<string> linkedObjects = null, IReadOnlyDictionary<string, BinaryData> details = null)
         {
             estimatedImpact ??= new List<RecommendedActionImpactRecord>();
             observedImpact ??= new List<RecommendedActionImpactRecord>();
             timeSeries ??= new List<RecommendedActionMetricInfo>();
             linkedObjects ??= new List<string>();
-            additionalDetails ??= new Dictionary<string, string>();
+            details ??= new Dictionary<string, BinaryData>();
 
             return new RecommendedActionData(
                 id,
@@ -775,7 +775,7 @@ namespace Azure.ResourceManager.Sql.Models
                 observedImpact?.ToList(),
                 timeSeries?.ToList(),
                 linkedObjects?.ToList(),
-                additionalDetails,
+                details,
                 serializedAdditionalRawData: null);
         }
 
@@ -956,12 +956,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="operationMode"> Operation mode of the operation: Import, Export, or PolybaseImport. </param>
-        /// <param name="storageKeyType"> Storage key type: StorageAccessKey or SharedAccessKey. </param>
-        /// <param name="storageKey"> Storage key for the storage account. </param>
+        /// <param name="storageKeyType"> Storage key type: StorageAccessKey, SharedAccessKey or ManagedIdentity. </param>
+        /// <param name="storageKey"> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
         /// <param name="storageUri"> Storage Uri for the storage account. </param>
-        /// <param name="administratorLogin"> Administrator login name. </param>
-        /// <param name="administratorLoginPassword"> Administrator login password. </param>
-        /// <param name="authenticationType"> Authentication type: SQL authentication or AD password. </param>
+        /// <param name="administratorLogin"> Administrator login name. If AuthenticationType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
+        /// <param name="administratorLoginPassword"> Administrator login password. If AuthenticationType is ManagedIdentity, this field should not be specified. </param>
+        /// <param name="authenticationType"> Authentication type used to access the SQL: Sql, ADPassword or ManagedIdentity. </param>
         /// <param name="databaseEdition"> Database edition for the newly created database in the case of an import operation. </param>
         /// <param name="serviceObjectiveName"> Database service level objective for the newly created database in the case of an import operation. </param>
         /// <param name="maxSizeBytes"> Database max size in bytes for the newly created database in the case of an import operation. </param>
@@ -1892,12 +1892,12 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseExportDefinition"/>. </summary>
-        /// <param name="storageKeyType"> Storage key type. </param>
-        /// <param name="storageKey"> Storage key. </param>
+        /// <param name="storageKeyType"> Storage key type: StorageAccessKey, SharedAccessKey, or ManagedIdentity. </param>
+        /// <param name="storageKey"> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
         /// <param name="storageUri"> Storage Uri. </param>
-        /// <param name="administratorLogin"> Administrator login name. </param>
-        /// <param name="administratorLoginPassword"> Administrator login password. </param>
-        /// <param name="authenticationType"> Authentication type. </param>
+        /// <param name="administratorLogin"> Administrator login name. If AuthenticationType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
+        /// <param name="administratorLoginPassword"> Administrator login password. If AuthenticationType is ManagedIdentity, this field should not be specified. </param>
+        /// <param name="authenticationType"> Type of credentials provided for access to the target SQL server: SQL, ADPassword or ManagedIdentity. </param>
         /// <param name="networkIsolation"> Optional resource information to enable network isolation for request. </param>
         /// <returns> A new <see cref="Models.DatabaseExportDefinition"/> instance for mocking. </returns>
         public static DatabaseExportDefinition DatabaseExportDefinition(StorageKeyType storageKeyType = default, string storageKey = null, Uri storageUri = null, string administratorLogin = null, string administratorLoginPassword = null, string authenticationType = null, NetworkIsolationSettings networkIsolation = null)
@@ -1952,12 +1952,12 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ImportExistingDatabaseDefinition"/>. </summary>
-        /// <param name="storageKeyType"> Storage key type. </param>
-        /// <param name="storageKey"> Storage key. </param>
+        /// <param name="storageKeyType"> Storage key type: StorageAccessKey, SharedAccessKey, or ManagedIdentity. </param>
+        /// <param name="storageKey"> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
         /// <param name="storageUri"> Storage Uri. </param>
-        /// <param name="administratorLogin"> Administrator login name. </param>
-        /// <param name="administratorLoginPassword"> Administrator login password. </param>
-        /// <param name="authenticationType"> Authentication type. </param>
+        /// <param name="administratorLogin"> Administrator login name. If AuthenticationType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
+        /// <param name="administratorLoginPassword"> Administrator login password. If AuthenticationType is ManagedIdentity, this field should not be specified. </param>
+        /// <param name="authenticationType"> Type of credentials provided for access to the target SQL server: SQL, ADPassword or ManagedIdentity. </param>
         /// <param name="networkIsolation"> Optional resource information to enable network isolation for request. </param>
         /// <returns> A new <see cref="Models.ImportExistingDatabaseDefinition"/> instance for mocking. </returns>
         public static ImportExistingDatabaseDefinition ImportExistingDatabaseDefinition(StorageKeyType storageKeyType = default, string storageKey = null, Uri storageUri = null, string administratorLogin = null, string administratorLoginPassword = null, string authenticationType = null, NetworkIsolationSettings networkIsolation = null)
@@ -2474,6 +2474,48 @@ namespace Azure.ResourceManager.Sql.Models
                 licenseType,
                 dnsZone,
                 maintenanceConfigurationId,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.InstancePoolOperationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="instancePoolName"> The name of the instance pool the operation is being performed on. </param>
+        /// <param name="operation"> The name of operation. </param>
+        /// <param name="operationFriendlyName"> The friendly name of operation. </param>
+        /// <param name="percentComplete"> The percentage of the operation completed. </param>
+        /// <param name="startOn"> The operation start time. </param>
+        /// <param name="state"> The operation state. </param>
+        /// <param name="errorCode"> The operation error code. </param>
+        /// <param name="errorDescription"> The operation error description. </param>
+        /// <param name="errorSeverity"> The operation error severity. </param>
+        /// <param name="errorType"> Error type (e.g. None, User). </param>
+        /// <param name="estimatedCompleteOn"> The estimated completion time of the operation. </param>
+        /// <param name="description"> The operation description. </param>
+        /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
+        /// <returns> A new <see cref="Sql.InstancePoolOperationData"/> instance for mocking. </returns>
+        public static InstancePoolOperationData InstancePoolOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string instancePoolName = null, string operation = null, string operationFriendlyName = null, int? percentComplete = null, DateTimeOffset? startOn = null, ManagementOperationState? state = null, int? errorCode = null, string errorDescription = null, int? errorSeverity = null, ErrorType? errorType = null, DateTimeOffset? estimatedCompleteOn = null, string description = null, bool? isCancellable = null)
+        {
+            return new InstancePoolOperationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                instancePoolName,
+                operation,
+                operationFriendlyName,
+                percentComplete,
+                startOn,
+                state,
+                errorCode,
+                errorDescription,
+                errorSeverity,
+                errorType,
+                estimatedCompleteOn,
+                description,
+                isCancellable,
                 serializedAdditionalRawData: null);
         }
 
@@ -4447,6 +4489,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="storageSizeInGB"> Storage size in GB. Minimum value: 32. Maximum value: 16384. Increments of 32 GB allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
         /// <param name="storageIOps"> Storage IOps. Minimum value: 300. Maximum value: 80000. Increments of 1 IOps allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
         /// <param name="storageThroughputMBps"> Storage throughput MBps parameter is not supported in the instance create/update operation. </param>
+        /// <param name="totalMemoryMB"> Total memory in MB. Minimum value: 7168. Maximum value: 891328. Increments of 1 MB allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
         /// <param name="collation"> Collation of the managed instance. </param>
         /// <param name="dnsZone"> The Dns Zone that the managed instance is in. </param>
         /// <param name="managedDnsZonePartner"> The resource id of another managed instance whose DNS zone this managed instance will share after creation. </param>
@@ -4480,7 +4523,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="authenticationMetadata"> The managed instance's authentication metadata lookup mode. </param>
         /// <param name="databaseFormat"> Specifies the internal format of instance databases specific to the SQL engine version. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceData"/> instance for mocking. </returns>
-        public static ManagedInstanceData ManagedInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, SqlSku sku = null, ManagedInstancePropertiesProvisioningState? provisioningState = null, ManagedServerCreateMode? managedInstanceCreateMode = null, string fullyQualifiedDomainName = null, bool? isGeneralPurposeV2 = null, string administratorLogin = null, string administratorLoginPassword = null, ResourceIdentifier subnetId = null, string state = null, ManagedInstanceLicenseType? licenseType = null, HybridSecondaryUsage? hybridSecondaryUsage = null, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected = null, int? vCores = null, int? storageSizeInGB = null, int? storageIOps = null, int? storageThroughputMBps = null, string collation = null, string dnsZone = null, ResourceIdentifier managedDnsZonePartner = null, bool? isPublicDataEndpointEnabled = null, ResourceIdentifier sourceManagedInstanceId = null, DateTimeOffset? restorePointInTime = null, ManagedInstanceProxyOverride? proxyOverride = null, string timezoneId = null, ResourceIdentifier instancePoolId = null, ResourceIdentifier maintenanceConfigurationId = null, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections = null, string minimalTlsVersion = null, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, bool? isZoneRedundant = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Uri keyId = null, ManagedInstanceExternalAdministrator administrators = null, SqlServicePrincipal servicePrincipal = null, ResourceIdentifier virtualClusterId = null, ExternalGovernanceStatus? externalGovernanceStatus = null, SqlManagedInstancePricingModel? pricingModel = null, DateTimeOffset? createOn = null, AuthMetadataLookupMode? authenticationMetadata = null, ManagedInstanceDatabaseFormat? databaseFormat = null)
+        public static ManagedInstanceData ManagedInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, SqlSku sku = null, ManagedInstancePropertiesProvisioningState? provisioningState = null, ManagedServerCreateMode? managedInstanceCreateMode = null, string fullyQualifiedDomainName = null, bool? isGeneralPurposeV2 = null, string administratorLogin = null, string administratorLoginPassword = null, ResourceIdentifier subnetId = null, string state = null, ManagedInstanceLicenseType? licenseType = null, HybridSecondaryUsage? hybridSecondaryUsage = null, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected = null, int? vCores = null, int? storageSizeInGB = null, int? storageIOps = null, int? storageThroughputMBps = null, int? totalMemoryMB = null, string collation = null, string dnsZone = null, ResourceIdentifier managedDnsZonePartner = null, bool? isPublicDataEndpointEnabled = null, ResourceIdentifier sourceManagedInstanceId = null, DateTimeOffset? restorePointInTime = null, ManagedInstanceProxyOverride? proxyOverride = null, string timezoneId = null, ResourceIdentifier instancePoolId = null, ResourceIdentifier maintenanceConfigurationId = null, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections = null, string minimalTlsVersion = null, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, bool? isZoneRedundant = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Uri keyId = null, ManagedInstanceExternalAdministrator administrators = null, SqlServicePrincipal servicePrincipal = null, ResourceIdentifier virtualClusterId = null, ExternalGovernanceStatus? externalGovernanceStatus = null, SqlManagedInstancePricingModel? pricingModel = null, DateTimeOffset? createOn = null, AuthMetadataLookupMode? authenticationMetadata = null, ManagedInstanceDatabaseFormat? databaseFormat = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<ManagedInstancePecProperty>();
@@ -4509,6 +4552,7 @@ namespace Azure.ResourceManager.Sql.Models
                 storageSizeInGB,
                 storageIOps,
                 storageThroughputMBps,
+                totalMemoryMB,
                 collation,
                 dnsZone,
                 managedDnsZonePartner,
@@ -4582,6 +4626,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="storageSizeInGB"> Storage size in GB. Minimum value: 32. Maximum value: 16384. Increments of 32 GB allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
         /// <param name="storageIOps"> Storage IOps. Minimum value: 300. Maximum value: 80000. Increments of 1 IOps allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
         /// <param name="storageThroughputMBps"> Storage throughput MBps parameter is not supported in the instance create/update operation. </param>
+        /// <param name="totalMemoryMB"> Total memory in MB. Minimum value: 7168. Maximum value: 891328. Increments of 1 MB allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
         /// <param name="collation"> Collation of the managed instance. </param>
         /// <param name="dnsZone"> The Dns Zone that the managed instance is in. </param>
         /// <param name="managedDnsZonePartner"> The resource id of another managed instance whose DNS zone this managed instance will share after creation. </param>
@@ -4615,7 +4660,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="authenticationMetadata"> The managed instance's authentication metadata lookup mode. </param>
         /// <param name="databaseFormat"> Specifies the internal format of instance databases specific to the SQL engine version. </param>
         /// <returns> A new <see cref="Models.ManagedInstancePatch"/> instance for mocking. </returns>
-        public static ManagedInstancePatch ManagedInstancePatch(SqlSku sku = null, ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, ManagedInstancePropertiesProvisioningState? provisioningState = null, ManagedServerCreateMode? managedInstanceCreateMode = null, string fullyQualifiedDomainName = null, bool? isGeneralPurposeV2 = null, string administratorLogin = null, string administratorLoginPassword = null, ResourceIdentifier subnetId = null, string state = null, ManagedInstanceLicenseType? licenseType = null, HybridSecondaryUsage? hybridSecondaryUsage = null, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected = null, int? vCores = null, int? storageSizeInGB = null, int? storageIOps = null, int? storageThroughputMBps = null, string collation = null, string dnsZone = null, ResourceIdentifier managedDnsZonePartner = null, bool? isPublicDataEndpointEnabled = null, ResourceIdentifier sourceManagedInstanceId = null, DateTimeOffset? restorePointInTime = null, ManagedInstanceProxyOverride? proxyOverride = null, string timezoneId = null, ResourceIdentifier instancePoolId = null, ResourceIdentifier maintenanceConfigurationId = null, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections = null, string minimalTlsVersion = null, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, bool? isZoneRedundant = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Uri keyId = null, ManagedInstanceExternalAdministrator administrators = null, SqlServicePrincipal servicePrincipal = null, ResourceIdentifier virtualClusterId = null, ExternalGovernanceStatus? externalGovernanceStatus = null, SqlManagedInstancePricingModel? pricingModel = null, DateTimeOffset? createOn = null, AuthMetadataLookupMode? authenticationMetadata = null, ManagedInstanceDatabaseFormat? databaseFormat = null)
+        public static ManagedInstancePatch ManagedInstancePatch(SqlSku sku = null, ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, ManagedInstancePropertiesProvisioningState? provisioningState = null, ManagedServerCreateMode? managedInstanceCreateMode = null, string fullyQualifiedDomainName = null, bool? isGeneralPurposeV2 = null, string administratorLogin = null, string administratorLoginPassword = null, ResourceIdentifier subnetId = null, string state = null, ManagedInstanceLicenseType? licenseType = null, HybridSecondaryUsage? hybridSecondaryUsage = null, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected = null, int? vCores = null, int? storageSizeInGB = null, int? storageIOps = null, int? storageThroughputMBps = null, int? totalMemoryMB = null, string collation = null, string dnsZone = null, ResourceIdentifier managedDnsZonePartner = null, bool? isPublicDataEndpointEnabled = null, ResourceIdentifier sourceManagedInstanceId = null, DateTimeOffset? restorePointInTime = null, ManagedInstanceProxyOverride? proxyOverride = null, string timezoneId = null, ResourceIdentifier instancePoolId = null, ResourceIdentifier maintenanceConfigurationId = null, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections = null, string minimalTlsVersion = null, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, bool? isZoneRedundant = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Uri keyId = null, ManagedInstanceExternalAdministrator administrators = null, SqlServicePrincipal servicePrincipal = null, ResourceIdentifier virtualClusterId = null, ExternalGovernanceStatus? externalGovernanceStatus = null, SqlManagedInstancePricingModel? pricingModel = null, DateTimeOffset? createOn = null, AuthMetadataLookupMode? authenticationMetadata = null, ManagedInstanceDatabaseFormat? databaseFormat = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<ManagedInstancePecProperty>();
@@ -4639,6 +4684,7 @@ namespace Azure.ResourceManager.Sql.Models
                 storageSizeInGB,
                 storageIOps,
                 storageThroughputMBps,
+                totalMemoryMB,
                 collation,
                 dnsZone,
                 managedDnsZonePartner,
@@ -5701,12 +5747,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="edition"> Edition of the import database. </param>
         /// <param name="serviceObjectiveName"> Service level objective name of the import database. </param>
         /// <param name="maxSizeBytes"> Max size in bytes for the import database. </param>
-        /// <param name="storageKeyType"> Storage key type. </param>
-        /// <param name="storageKey"> Storage key. </param>
+        /// <param name="storageKeyType"> Storage key type: StorageAccessKey, SharedAccessKey, or ManagedIdentity. </param>
+        /// <param name="storageKey"> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
         /// <param name="storageUri"> Storage Uri. </param>
-        /// <param name="administratorLogin"> Administrator login name. </param>
-        /// <param name="administratorLoginPassword"> Administrator login password. </param>
-        /// <param name="authenticationType"> Authentication type. </param>
+        /// <param name="administratorLogin"> Administrator login name. If AuthenticationType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
+        /// <param name="administratorLoginPassword"> Administrator login password. If AuthenticationType is ManagedIdentity, this field should not be specified. </param>
+        /// <param name="authenticationType"> Type of credentials provided for access to the target SQL server: SQL, ADPassword or ManagedIdentity. </param>
         /// <param name="networkIsolation"> Optional resource information to enable network isolation for request. </param>
         /// <returns> A new <see cref="Models.DatabaseImportDefinition"/> instance for mocking. </returns>
         public static DatabaseImportDefinition DatabaseImportDefinition(string databaseName = null, string edition = null, string serviceObjectiveName = null, string maxSizeBytes = null, StorageKeyType storageKeyType = default, string storageKey = null, Uri storageUri = null, string administratorLogin = null, string administratorLoginPassword = null, string authenticationType = null, NetworkIsolationSettings networkIsolation = null)

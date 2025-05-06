@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesAVCoreDatabaseBySpecifyingServiceObjectiveName()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/CreateVCoreDatabaseByServiceObjective.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/CreateVCoreDatabaseByServiceObjective.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesAVCoreDatabaseBySpecifyingSkuNameAndCapacity()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/CreateVCoreDatabaseBySkuNameCapacity.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/CreateVCoreDatabaseBySkuNameCapacity.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesADataWarehouseDatabaseAsACrossSubscriptionRestoreFromABackupOfADroppedDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/CreateDwDatabaseCrossSubscriptionRestore.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/CreateDwDatabaseCrossSubscriptionRestore.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesADataWarehouseDatabaseAsACrossSubscriptionRestoreFromAGeoBackup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/CreateDwDatabaseCrossSubscriptionRecovery.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/CreateDwDatabaseCrossSubscriptionRecovery.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesADataWarehouseDatabaseAsACrossSubscriptionRestoreFromARestorePointOfAnExistingDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/CreateDwDatabaseCrossSubscriptionPITR.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/CreateDwDatabaseCrossSubscriptionPITR.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesADatabaseAsACopy()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/CreateDatabaseCopyMode.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/CreateDatabaseCopyMode.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesADatabaseAsAStandbySecondary()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/CreateDatabaseStandbyMode.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/CreateDatabaseStandbyMode.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesADatabaseAsAnOnLineSecondary()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/CreateDatabaseSecondaryMode.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/CreateDatabaseSecondaryMode.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesADatabaseAsNamedReplicaSecondary()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/CreateDatabaseNamedReplica.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/CreateDatabaseNamedReplica.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesADatabaseFromPointInTimeRestore()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/CreateDatabasePITRMode.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/CreateDatabasePITRMode.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesADatabaseWithDefaultEnclaveType()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/CreateDatabaseDefaultEnclave.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/CreateDatabaseDefaultEnclave.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesADatabaseWithVBSEnclaveType()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/CreateDatabaseVBSEnclave.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/CreateDatabaseVBSEnclave.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesADatabaseWithAvailabilityZoneSpecified()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/CreateDatabaseWithAvailabilityZone.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/CreateDatabaseWithAvailabilityZone.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesADatabaseWithDatabaseLevelCustomerManagedKeys()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/CreateDatabaseDefaultModeWithKeysAndEncryptionProtector.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/CreateDatabaseDefaultModeWithKeysAndEncryptionProtector.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesADatabaseWithDefaultMode()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/CreateDatabaseDefaultMode.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/CreateDatabaseDefaultMode.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesADatabaseWithEncryptionProtectorAutoRotation()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/CreateDatabaseWithEncryptionProtectorAutoRotation.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/CreateDatabaseWithEncryptionProtectorAutoRotation.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesADatabaseWithLedgerOn()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/CreateDatabaseLedger.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/CreateDatabaseLedger.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -770,7 +770,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesADatabaseWithMinimumNumberOfParameters()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/CreateDatabaseMin.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/CreateDatabaseMin.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -806,7 +806,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesADatabaseWithPreferredMaintenanceWindow()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/CreateDatabaseMaintenanceConfiguration.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/CreateDatabaseMaintenanceConfiguration.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -852,7 +852,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesADatabaseWithSpecifiedBackupStorageRedundancy()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/CreateDatabaseConfiguredBackupStorageRedundancy.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/CreateDatabaseConfiguredBackupStorageRedundancy.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_UpdatesADatabaseToHyperscaleSLOWithManualCutover()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/UpdateDatabaseHyperscaleMigrationWithManualCutover.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/UpdateDatabaseHyperscaleMigrationWithManualCutover.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -943,7 +943,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_UpdatesADatabaseToHyperscaleTierByTriggeringManualCutoverDuringMigrationWorkflow()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/UpdateDatabaseHyperscaleMigrationPerformCutover.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/UpdateDatabaseHyperscaleMigrationPerformCutover.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -991,7 +991,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsADatabaseConfiguredWithDefaultEnclaveType()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/GetVCoreDatabaseDefaultEnclave.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GetVCoreDatabaseDefaultEnclave.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1025,7 +1025,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsADatabaseConfiguredWithVBSEnclaveType()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/GetVCoreDatabaseVBSEnclave.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GetVCoreDatabaseVBSEnclave.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1059,7 +1059,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsADatabaseWithAvailabilityZoneSpecified()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/GetDatabaseWithAvailabilityZone.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GetDatabaseWithAvailabilityZone.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1093,7 +1093,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsADatabaseWithDatabaseLevelKeysExpanded()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/GetVCoreDatabaseWithExpandEqualsKeys.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GetVCoreDatabaseWithExpandEqualsKeys.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1128,7 +1128,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsADatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/GetVCoreDatabase.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GetVCoreDatabase.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1162,7 +1162,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetsAListOfDatabasesConfiguredWithEnclaveType()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/ListVCoreDatabasesEnclaveTypeByServer.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ListVCoreDatabasesEnclaveTypeByServer.json
             // this example is just showing the usage of "Databases_ListByServer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1198,7 +1198,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetsAListOfDatabases()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/ListVCoreDatabasesByServer.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ListVCoreDatabasesByServer.json
             // this example is just showing the usage of "Databases_ListByServer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1234,7 +1234,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsADatabaseConfiguredWithDefaultEnclaveType()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/GetVCoreDatabaseDefaultEnclave.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GetVCoreDatabaseDefaultEnclave.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1264,7 +1264,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsADatabaseConfiguredWithVBSEnclaveType()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/GetVCoreDatabaseVBSEnclave.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GetVCoreDatabaseVBSEnclave.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1294,7 +1294,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsADatabaseWithAvailabilityZoneSpecified()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/GetDatabaseWithAvailabilityZone.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GetDatabaseWithAvailabilityZone.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1324,7 +1324,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsADatabaseWithDatabaseLevelKeysExpanded()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/GetVCoreDatabaseWithExpandEqualsKeys.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GetVCoreDatabaseWithExpandEqualsKeys.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1355,7 +1355,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsADatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/GetVCoreDatabase.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GetVCoreDatabase.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1385,7 +1385,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsADatabaseConfiguredWithDefaultEnclaveType()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/GetVCoreDatabaseDefaultEnclave.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GetVCoreDatabaseDefaultEnclave.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1427,7 +1427,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsADatabaseConfiguredWithVBSEnclaveType()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/GetVCoreDatabaseVBSEnclave.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GetVCoreDatabaseVBSEnclave.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1469,7 +1469,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsADatabaseWithAvailabilityZoneSpecified()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/GetDatabaseWithAvailabilityZone.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GetDatabaseWithAvailabilityZone.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1511,7 +1511,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsADatabaseWithDatabaseLevelKeysExpanded()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/GetVCoreDatabaseWithExpandEqualsKeys.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GetVCoreDatabaseWithExpandEqualsKeys.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1554,7 +1554,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsADatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/GetVCoreDatabase.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GetVCoreDatabase.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

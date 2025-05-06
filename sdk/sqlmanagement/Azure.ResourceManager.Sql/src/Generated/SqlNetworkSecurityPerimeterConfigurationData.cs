@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.Sql
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the provisioning state. </summary>
+        /// <summary> Gets or sets the provisioning state. </summary>
         [WirePath("properties.provisioningState")]
-        public string ProvisioningState { get; }
+        public string ProvisioningState { get; set; }
         /// <summary> Gets or sets the network security perimeter. </summary>
         [WirePath("properties.networkSecurityPerimeter")]
         public SqlNetworkSecurityPerimeterConfigPerimeter NetworkSecurityPerimeter { get; set; }
