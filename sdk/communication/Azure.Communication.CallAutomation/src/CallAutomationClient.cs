@@ -743,7 +743,7 @@ namespace Azure.Communication.CallAutomation
                 {
                     SpeechModelEndpointId = configuration.SpeechRecognitionModelEndpointId,
                     StartTranscription = configuration.StartTranscription,
-                    TransportUrl = configuration.TransportUrl.AbsoluteUri,
+                    TransportUrl = configuration.TransportUri?.AbsoluteUri,
                     TransportType = configuration.TranscriptionTransport,
                     EnableIntermediateResults = configuration.EnableIntermediateResults,
                     SpeechRecognitionModelEndpointId = configuration.SpeechRecognitionModelEndpointId

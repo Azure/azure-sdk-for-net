@@ -33,14 +33,14 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(transportUri, nameof(transportUri));
             Argument.AssertNotNull(locale, nameof(locale));
 
-            TransportUrl = transportUri;
+            TransportUri = transportUri;
             TranscriptionTransport = transcriptionTransport;
             Locale = locale;
             StartTranscription = startTranscription;
         }
 
         /// <summary> Transport URL for live transcription. </summary>
-        public Uri TransportUrl { get; }
+        public Uri TransportUri { get; }
         /// <summary> The type of transport to be used for live transcription, eg. Websocket. </summary>
         public StreamingTransport TranscriptionTransport { get; }
         /// <summary> Defines the locale for the data e.g en-CA, en-AU. </summary>

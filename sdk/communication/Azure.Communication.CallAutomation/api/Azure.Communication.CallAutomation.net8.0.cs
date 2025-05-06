@@ -1465,14 +1465,6 @@ namespace Azure.Communication.CallAutomation
         public static bool operator !=(Azure.Communication.CallAutomation.StreamingTransport left, Azure.Communication.CallAutomation.StreamingTransport right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SummarizationSettings
-    {
-        public SummarizationSettings() { }
-    }
-    public partial class TeamsExtensionUserIdentifierModel
-    {
-        public TeamsExtensionUserIdentifierModel() { }
-    }
     public enum TextFormat
     {
         Display = 0,
@@ -1528,7 +1520,7 @@ namespace Azure.Communication.CallAutomation
         public string SpeechRecognitionModelEndpointId { get { throw null; } set { } }
         public bool? StartTranscription { get { throw null; } }
         public Azure.Communication.CallAutomation.StreamingTransport TranscriptionTransport { get { throw null; } }
-        public System.Uri TransportUrl { get { throw null; } }
+        public System.Uri TransportUri { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TranscriptionResultState : System.IEquatable<Azure.Communication.CallAutomation.TranscriptionResultState>
@@ -1547,10 +1539,6 @@ namespace Azure.Communication.CallAutomation
         public static implicit operator Azure.Communication.CallAutomation.TranscriptionResultState (string value) { throw null; }
         public static bool operator !=(Azure.Communication.CallAutomation.TranscriptionResultState left, Azure.Communication.CallAutomation.TranscriptionResultState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class TranscriptionSettings
-    {
-        public TranscriptionSettings() { }
     }
     public partial class TranscriptionStarted : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
@@ -1642,10 +1630,6 @@ namespace Azure.Communication.CallAutomation
         public static implicit operator Azure.Communication.CallAutomation.TranscriptionSubscriptionState (string value) { throw null; }
         public static bool operator !=(Azure.Communication.CallAutomation.TranscriptionSubscriptionState left, Azure.Communication.CallAutomation.TranscriptionSubscriptionState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential, Size=1)]
-    public readonly partial struct TranscriptionTransport
-    {
     }
     public partial class TranscriptionUpdate
     {
