@@ -26,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var traceTelemetryItems = new List<TelemetryItem>();
             var metricTelemetryItems = new List<TelemetryItem>();
 
-            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new AzureMonitorExporterOptions(), new MockTransmitter(metricTelemetryItems)));
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
 
             var traceServiceName = new KeyValuePair<string, object>("service.name", "trace.service");
             var resourceAttributes = new KeyValuePair<string, object>[] { traceServiceName };
@@ -75,7 +75,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var traceTelemetryItems = new List<TelemetryItem>();
             var metricTelemetryItems = new List<TelemetryItem>();
 
-            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new AzureMonitorExporterOptions(), new MockTransmitter(metricTelemetryItems)));
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
 
             var traceServiceName = new KeyValuePair<string, object>("service.name", "trace.service");
             var resourceAttributes = new KeyValuePair<string, object>[] { traceServiceName };
@@ -124,7 +124,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var traceTelemetryItems = new List<TelemetryItem>();
             var metricTelemetryItems = new List<TelemetryItem>();
 
-            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new AzureMonitorExporterOptions(), new MockTransmitter(metricTelemetryItems)));
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
 
             var traceServiceName = new KeyValuePair<string, object>("service.name", "trace.service");
             var resourceAttributes = new KeyValuePair<string, object>[] { traceServiceName };
@@ -178,7 +178,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var traceTelemetryItems = new List<TelemetryItem>();
             var metricTelemetryItems = new List<TelemetryItem>();
 
-            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new AzureMonitorExporterOptions(), new MockTransmitter(metricTelemetryItems)));
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
 
             var traceServiceName = new KeyValuePair<string, object>("service.name", "trace.service");
             var resourceAttributes = new KeyValuePair<string, object>[] { traceServiceName };
@@ -247,7 +247,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var traceTelemetryItems = new List<TelemetryItem>();
             var metricTelemetryItems = new List<TelemetryItem>();
 
-            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new AzureMonitorExporterOptions(), new MockTransmitter(metricTelemetryItems)));
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
 
             var traceServiceName = new KeyValuePair<string, object>("service.name", "trace.service");
             var resourceAttributes = new KeyValuePair<string, object>[] { traceServiceName };
@@ -315,7 +315,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var traceTelemetryItems = new List<TelemetryItem>();
             var metricTelemetryItems = new List<TelemetryItem>();
 
-            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new AzureMonitorExporterOptions(), new MockTransmitter(metricTelemetryItems)));
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
 
             var traceServiceName = new KeyValuePair<string, object>("service.name", "trace.service");
             var resourceAttributes = new KeyValuePair<string, object>[] { traceServiceName };
@@ -384,7 +384,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var traceTelemetryItems = new List<TelemetryItem>();
             var metricTelemetryItems = new List<TelemetryItem>();
 
-            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new AzureMonitorExporterOptions(), new MockTransmitter(metricTelemetryItems)));
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
 
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .SetSampler(new AlwaysOnSampler())
@@ -432,7 +432,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var traceTelemetryItems = new List<TelemetryItem>();
             var metricTelemetryItems = new List<TelemetryItem>();
 
-            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new AzureMonitorExporterOptions(), new MockTransmitter(metricTelemetryItems)));
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
 
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .SetSampler(new AlwaysOnSampler())

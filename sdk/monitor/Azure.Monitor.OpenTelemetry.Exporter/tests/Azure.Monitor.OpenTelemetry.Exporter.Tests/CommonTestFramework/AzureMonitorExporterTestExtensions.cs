@@ -29,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
             telemetryItems = new List<TelemetryItem>();
 
-            return loggerOptions.AddProcessor(new SimpleLogRecordExportProcessor(new AzureMonitorLogExporter(new AzureMonitorExporterOptions(), new MockTransmitter(telemetryItems))));
+            return loggerOptions.AddProcessor(new SimpleLogRecordExportProcessor(new AzureMonitorLogExporter(new MockTransmitter(telemetryItems))));
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
             telemetryItems = new List<TelemetryItem>();
 
-            return builder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(new AzureMonitorExporterOptions(), new MockTransmitter(telemetryItems)))
+            return builder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(new MockTransmitter(telemetryItems)))
             {
                 TemporalityPreference = MetricReaderTemporalityPreference.Delta
             });
@@ -62,7 +62,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
             telemetryItems = new List<TelemetryItem>();
 
-            metricReader = new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(new AzureMonitorExporterOptions(), new MockTransmitter(telemetryItems)));
+            metricReader = new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(new MockTransmitter(telemetryItems)));
 
             return builder.AddReader(metricReader);
         }

@@ -455,8 +455,5 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(44, Message = "Failed to configure AzureMonitorExporterOptions using the connection string from environment variables due to an exception: {0}", Level = EventLevel.Error)]
         public void ConfigureFailed(string exceptionMessage) => WriteEvent(44, exceptionMessage);
-
-        [Event(45, Message = "{0} observed that EnableLiveMetrics was set to true in a scenario where LiveMetrics is not supported. Note that LiveMetrics is only supported via the UseAzureMonitorExporter API.", Level = EventLevel.Warning)]
-        public void LiveMetricsNotSupported(string name) => WriteEvent(45, name);
     }
 }

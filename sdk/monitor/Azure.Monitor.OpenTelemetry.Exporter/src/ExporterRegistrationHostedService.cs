@@ -68,8 +68,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 // TODO: Add Ai Sampler.
                 tracerProvider.AddProcessor(new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
                 {
-                    new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(exporterOptions, isLiveMetricsSupported: true)),
-                    new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions, isLiveMetricsSupported: true))
+                    new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(exporterOptions)),
+                    new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions))
                 }));
             }
 
@@ -81,7 +81,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 // Add a processor manually to the LoggerProvider created by the SDK
                 var exporterOptions = serviceProvider!.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(Options.DefaultName);
-                var exporter = new AzureMonitorLogExporter(exporterOptions, isLiveMetricsSupported: true);
+                var exporter = new AzureMonitorLogExporter(exporterOptions);
 
                 if (exporterOptions.EnableLiveMetrics)
                 {

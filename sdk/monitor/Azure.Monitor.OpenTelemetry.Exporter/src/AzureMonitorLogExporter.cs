@@ -25,22 +25,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// Initializes a new instance of Azure Monitor Log Exporter.
         /// </summary>
         /// <param name="options">Configuration options for the exporter.</param>
-        public AzureMonitorLogExporter(AzureMonitorExporterOptions options) : this(options, TransmitterFactory.Instance.Get(options))
+        public AzureMonitorLogExporter(AzureMonitorExporterOptions options) : this(TransmitterFactory.Instance.Get(options))
         {
         }
 
-        internal AzureMonitorLogExporter(AzureMonitorExporterOptions options, bool isLiveMetricsSupported)
-            : this(options, TransmitterFactory.Instance.Get(options), isLiveMetricsSupported)
+        internal AzureMonitorLogExporter(ITransmitter transmitter)
         {
-        }
-
-        internal AzureMonitorLogExporter(AzureMonitorExporterOptions options, ITransmitter transmitter, bool isLiveMetricsSupported = false)
-        {
-            if (isLiveMetricsSupported == false && options.EnableLiveMetrics == true)
-            {
-                AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(name: nameof(AzureMonitorLogExporter));
-            }
-
             _transmitter = transmitter;
             _instrumentationKey = transmitter.InstrumentationKey;
         }
