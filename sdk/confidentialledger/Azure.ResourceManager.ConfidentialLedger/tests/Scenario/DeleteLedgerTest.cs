@@ -20,8 +20,11 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         [SetUp]
         public async Task FixtureSetup()
         {
-            await CreateLedger(LedgerNameInFixture);
-            _ledgerResource = await GetLedgerByName(LedgerNameInFixture);
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            {
+                await CreateLedger(LedgerNameInFixture);
+                _ledgerResource = await GetLedgerByName(LedgerNameInFixture);
+            }
         }
 
         [Test, Order(1)]
