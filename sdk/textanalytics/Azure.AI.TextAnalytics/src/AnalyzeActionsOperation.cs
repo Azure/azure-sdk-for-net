@@ -322,7 +322,8 @@ namespace Azure.AI.TextAnalytics
         }
 
         // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
-        RehydrationToken IOperation<AsyncPageable<AnalyzeActionsResult>>.GetRehydrationToken() => default;
+        RehydrationToken IOperation<AsyncPageable<AnalyzeActionsResult>>.GetRehydrationToken() =>
+            throw new NotSupportedException($"{nameof(GetRehydrationToken)} is not supported.");
 
         private AsyncPageable<AnalyzeActionsResult> CreateOperationValueAsync(CancellationToken cancellationToken = default)
         {

@@ -241,7 +241,8 @@ namespace Azure.AI.Translation.Document
         }
 
         // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
-        RehydrationToken IOperation<AsyncPageable<DocumentStatusResult>>.GetRehydrationToken() => default;
+        RehydrationToken IOperation<AsyncPageable<DocumentStatusResult>>.GetRehydrationToken() =>
+            throw new NotSupportedException($"{nameof(GetRehydrationToken)} is not supported.");
 
         private AsyncPageable<DocumentStatusResult> CreateOperationValueAsync(CancellationToken cancellationToken = default)
         {

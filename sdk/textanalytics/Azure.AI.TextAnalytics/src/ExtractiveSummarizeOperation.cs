@@ -296,6 +296,7 @@ namespace Azure.AI.TextAnalytics
         }
 
         // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
-        RehydrationToken IOperation<AsyncPageable<ExtractiveSummarizeResultCollection>>.GetRehydrationToken() => default;
+        RehydrationToken IOperation<AsyncPageable<ExtractiveSummarizeResultCollection>>.GetRehydrationToken() =>
+            throw new NotSupportedException($"{nameof(GetRehydrationToken)} is not supported.");
     }
 }

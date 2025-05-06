@@ -185,12 +185,6 @@ namespace Azure.Core
         public Response WaitForCompletionResponse(TimeSpan pollingInterval, CancellationToken cancellationToken)
             => WaitForCompletionResponseAsync(async: false, pollingInterval, _waitForCompletionResponseScopeName, cancellationToken).EnsureCompleted();
 
-        /// <summary>
-        /// Get a token that can be used to rehydrate the operation.
-        /// </summary>
-        public RehydrationToken GetRehydrationToken(RequestMethod requestMethod, Uri startRequestUri, OperationFinalStateVia finalStateVia)
-            => NextLinkOperationImplementation.GetRehydrationToken(requestMethod, startRequestUri, RawResponse, finalStateVia);
-
         protected async ValueTask<Response> WaitForCompletionResponseAsync(bool async, TimeSpan? pollingInterval, string scopeName, CancellationToken cancellationToken)
         {
             // If _responseLock has the value, lockOrValue will contain that value, and no lock is acquired.
