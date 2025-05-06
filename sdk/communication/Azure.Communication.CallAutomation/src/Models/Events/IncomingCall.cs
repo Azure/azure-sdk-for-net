@@ -23,7 +23,9 @@ namespace Azure.Communication.CallAutomation
             From = CommunicationIdentifierSerializer.Deserialize(internalEvent.From);
             ServerCallId = internalEvent.ServerCallId;
             CallerDisplayName = internalEvent.CallerDisplayName;
-            CustomContext = new CustomCallingContext(internalEvent.CustomContext.VoipHeaders, internalEvent.CustomContext.SipHeaders);
+            CustomContext = internalEvent.CustomContext != null
+                ? new CustomCallingContext(internalEvent.CustomContext.VoipHeaders, internalEvent.CustomContext.SipHeaders)
+                : new CustomCallingContext(null,null);
             IncomingCallContext = internalEvent.IncomingCallContext;
 
             if (internalEvent.OnBehalfOfCallee != null)
