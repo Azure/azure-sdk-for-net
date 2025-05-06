@@ -9,20 +9,20 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.AppPlatform.Models;
+using Azure.ResourceManager.PostgreSql.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.AppPlatform.Samples
+namespace Azure.ResourceManager.PostgreSql.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CheckAppPlatformNameAvailability_ServicesCheckNameAvailability()
+        public async Task GetPostgreSqlServers_ServerList()
         {
-            // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Services_CheckNameAvailability.json
-            // this example is just showing the usage of "Services_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2017-12-01/examples/ServerList.json
+            // this example is just showing the usage of "Servers_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -31,42 +31,16 @@ namespace Azure.ResourceManager.AppPlatform.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            AzureLocation location = new AzureLocation("eastus");
-            AppPlatformNameAvailabilityContent content = new AppPlatformNameAvailabilityContent(new ResourceType("Microsoft.AppPlatform/Spring"), "myservice");
-            AppPlatformNameAvailabilityResult result = await subscriptionResource.CheckAppPlatformNameAvailabilityAsync(location, content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAppPlatformServices_ServicesListBySubscription()
-        {
-            // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Services_ListBySubscription.json
-            // this example is just showing the usage of "Services_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (AppPlatformServiceResource item in subscriptionResource.GetAppPlatformServicesAsync())
+            await foreach (PostgreSqlServerResource item in subscriptionResource.GetPostgreSqlServersAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AppPlatformServiceData resourceData = item.Data;
+                PostgreSqlServerData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -76,10 +50,10 @@ namespace Azure.ResourceManager.AppPlatform.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetSkus_SkusList()
+        public async Task GetLocationBasedPerformanceTiers_PerformanceTiersList()
         {
-            // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Skus_List.json
-            // this example is just showing the usage of "Skus_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2017-12-01/examples/PerformanceTiersListByLocation.json
+            // this example is just showing the usage of "LocationBasedPerformanceTier_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -88,17 +62,46 @@ namespace Azure.ResourceManager.AppPlatform.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (AvailableAppPlatformSku item in subscriptionResource.GetSkusAsync())
+            AzureLocation locationName = new AzureLocation("WestUS");
+            await foreach (PostgreSqlPerformanceTierProperties item in subscriptionResource.GetLocationBasedPerformanceTiersAsync(locationName))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CheckPostgreSqlNameAvailability_NameAvailability()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2017-12-01/examples/CheckNameAvailability.json
+            // this example is just showing the usage of "CheckNameAvailability_Execute" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            PostgreSqlNameAvailabilityContent content = new PostgreSqlNameAvailabilityContent("name1")
+            {
+                ResourceType = new ResourceType("Microsoft.DBforPostgreSQL"),
+            };
+            PostgreSqlNameAvailabilityResult result = await subscriptionResource.CheckPostgreSqlNameAvailabilityAsync(content);
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }
