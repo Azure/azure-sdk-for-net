@@ -1361,14 +1361,18 @@ namespace Azure.Communication.CallAutomation
         /// <param name="locale">Defines new locale for transcription.</param>
         /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
         /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
-        public virtual Response UpdateTranscription(string locale, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateTranscription(string locale, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(UpdateTranscription)}");
             scope.Start();
             try
             {
-                UpdateTranscriptionRequestInternal request = new UpdateTranscriptionRequestInternal(locale);
-                return CallMediaRestClient.UpdateTranscription(CallConnectionId, request, cancellationToken);
+                UpdateTranscriptionRequestInternal request = new UpdateTranscriptionRequestInternal(
+                    locale: locale,
+                    speechModelEndpointId: null,
+                    operationContext: null,
+                    operationCallbackUri: null);
+                return await CallMediaRestClient.UpdateTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -1412,7 +1416,11 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                UpdateTranscriptionRequestInternal request = new UpdateTranscriptionRequestInternal(locale);
+                UpdateTranscriptionRequestInternal request = new UpdateTranscriptionRequestInternal(
+                    locale: locale,
+                    speechModelEndpointId: null,
+                    operationContext: null,
+                    operationCallbackUri: null);
                 return await CallMediaRestClient.UpdateTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.4 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,15 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2025-04-22)
+
+### Features Added
+
+- Upgraded api-version tag from `package-2022-12` to `package-2025-04`. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/a55917cb512540bc3d0aec760d4e28712c3a4ae0/specification/containerregistry/resource-manager/readme.md.
+- Added new classes and methods for the following features
+    - Connected Registry
+    - Artifact Cache
 
 ## 1.3.0-beta.3 (2025-04-10)
 

@@ -12,16 +12,16 @@ AgentsClient client = new(connectionString, new DefaultAzureCredential());
 2 Define three toy functions: `GetUserFavoriteCity`that always returns "Seattle, WA" and `GetCityNickname`, which will handle only "Seattle, WA" and will throw exception in response to other city names. The last function `GetWeatherAtLocation` returns weather at Seattle, WA. For each function we need to create `FunctionToolDefinition`, which defines function name, description and parameters.
 ```C# Snippet:FunctionsWithStreaming_DefineFunctionTools
 // Example of a function that defines no parameters
-string GetUserFavoriteCity() => "Seattle, WA";
-FunctionToolDefinition getUserFavoriteCityTool = new("getUserFavoriteCity", "Gets the user's favorite city.");
+private string GetUserFavoriteCity() => "Seattle, WA";
+private FunctionToolDefinition getUserFavoriteCityTool = new("GetUserFavoriteCity", "Gets the user's favorite city.");
 // Example of a function with a single required parameter
-string GetCityNickname(string location) => location switch
+private string GetCityNickname(string location) => location switch
 {
     "Seattle, WA" => "The Emerald City",
     _ => throw new NotImplementedException(),
 };
-FunctionToolDefinition getCityNicknameTool = new(
-    name: "getCityNickname",
+private FunctionToolDefinition getCityNicknameTool = new(
+    name: "GetCityNickname",
     description: "Gets the nickname of a city, e.g. 'LA' for 'Los Angeles, CA'.",
     parameters: BinaryData.FromObjectAsJson(
         new
@@ -39,13 +39,13 @@ FunctionToolDefinition getCityNicknameTool = new(
         },
         new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
 // Example of a function with one required and one optional, enum parameter
-string GetWeatherAtLocation(string location, string temperatureUnit = "f") => location switch
+private string GetWeatherAtLocation(string location, string temperatureUnit = "f") => location switch
 {
     "Seattle, WA" => temperatureUnit == "f" ? "70f" : "21c",
     _ => throw new NotImplementedException()
 };
-FunctionToolDefinition getCurrentWeatherAtLocationTool = new(
-    name: "getCurrentWeatherAtLocation",
+private FunctionToolDefinition getCurrentWeatherAtLocationTool = new(
+    name: "GetWeatherAtLocation",
     description: "Gets the current weather at a provided location.",
     parameters: BinaryData.FromObjectAsJson(
         new

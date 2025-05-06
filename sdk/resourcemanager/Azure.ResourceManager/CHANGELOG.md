@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.13.1 (2025-04-24)
+
+### Bugs Fixed
+
+- Fixed the `Longitude` and `Latitude` in `LocationMetadata` class to use invariant culture during serialization and deserialization. (https://github.com/Azure/azure-sdk-for-net/issues/43116)
+
 ## 1.13.0 (2024-09-03)
 
 ### Features Added

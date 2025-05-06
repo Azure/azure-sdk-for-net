@@ -14,11 +14,11 @@ namespace Azure.ResourceManager.Chaos.Models
     internal partial class UnknownChaosTargetFilter : ChaosTargetFilter
     {
         /// <summary> Initializes a new instance of <see cref="UnknownChaosTargetFilter"/>. </summary>
-        /// <param name="filterType"> Enum that discriminates between filter types. Currently only `Simple` type is supported. </param>
+        /// <param name="type"> Chaos target filter discriminator type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownChaosTargetFilter(FilterType filterType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(filterType, serializedAdditionalRawData)
+        internal UnknownChaosTargetFilter(FilterType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
         {
-            FilterType = filterType;
+            Type = type;
         }
 
         /// <summary> Initializes a new instance of <see cref="UnknownChaosTargetFilter"/> for deserialization. </summary>
