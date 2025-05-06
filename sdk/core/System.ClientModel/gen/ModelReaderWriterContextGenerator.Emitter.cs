@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.CodeAnalysis.Text;
 
@@ -31,6 +33,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
         {
             var contextName = contextGenerationSpec.Type.Name;
             var namespaces = GetNameSpaces(contextGenerationSpec);
+            namespaces.Add("System.Collections.Concurrent");
 
             var indent = 0;
             var builder = new StringBuilder();
@@ -59,7 +62,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             builder.AppendLine($"{s_modelReaderWriterTypeBuilder}>> _typeBuilderFactories = new();");
 
             builder.Append(indent, "private readonly ");
-            builder.AppendType(typeof(Dictionary<,>));
+            builder.AppendType(typeof(ConcurrentDictionary<,>));
             builder.Append("<");
             builder.AppendType(typeof(Type));
             builder.Append(", ");
@@ -134,7 +137,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             builder.AppendLine(indent, "{");
             indent++;
             builder.AppendLine(indent, "builder = factory();");
-            builder.AppendLine(indent, "_typeBuilders.Add(type, builder);");
+            builder.AppendLine(indent, "_typeBuilders.TryAdd(type, builder);");
             builder.AppendLine(indent, "return true;");
             indent--;
             builder.AppendLine(indent, "}");
@@ -147,7 +150,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
                 builder.AppendLine(indent, $"if (kvp.Value.TryGetTypeBuilder(type, out builder))");
                 builder.AppendLine(indent, "{");
                 indent++;
-                builder.AppendLine(indent, $"_typeBuilders.Add(type, builder);");
+                builder.AppendLine(indent, $"_typeBuilders.TryAdd(type, builder);");
                 builder.AppendLine(indent, "return true;");
                 indent--;
                 builder.AppendLine(indent, "}");
@@ -281,6 +284,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
                 case TypeBuilderKind.ReadOnlyMemory:
                     namespaces.Add("System.Collections");
                     namespaces.Add("System.Collections.Generic");
+                    namespaces.Add("System.Runtime.InteropServices");
                     break;
                 case TypeBuilderKind.Array:
                     namespaces.Add("System.Collections.Generic");
@@ -327,19 +331,19 @@ internal sealed partial class ModelReaderWriterContextGenerator
                 builder.AppendLine($"<{elementType.FullyQualifiedName}>();");
                 builder.AppendLine();
 
-                builder.AppendLine(indent, "protected override void AddItem(object collection, object item)");
+                builder.AppendLine(indent, "protected override void AddItem(object collectionBuilder, object item)");
                 indent++;
                 builder.Append(indent, "=> ((");
                 builder.AppendType(typeof(List<>));
-                builder.AppendLine($"<{elementType.FullyQualifiedName}>)collection).Add(({elementType.FullyQualifiedName})item);");
+                builder.AppendLine($"<{elementType.FullyQualifiedName}>)collectionBuilder).Add(({elementType.FullyQualifiedName})item);");
                 indent--;
                 builder.AppendLine();
 
-                builder.AppendLine(indent, "protected override object ToCollection(object builder)");
+                builder.AppendLine(indent, "protected override object ConvertCollectionBuilder(object collectionBuilder)");
                 indent++;
                 builder.Append(indent, $"=> new {modelInfo.Type.FullyQualifiedName}(((");
                 builder.AppendType(typeof(List<>));
-                builder.AppendLine($"<{elementType.FullyQualifiedName}>)builder).ToArray());");
+                builder.AppendLine($"<{elementType.FullyQualifiedName}>)collectionBuilder).ToArray());");
                 indent--;
                 builder.AppendLine();
 
@@ -351,15 +355,13 @@ internal sealed partial class ModelReaderWriterContextGenerator
                 builder.AppendLine(indent, $"if (obj is {modelInfo.Type.FullyQualifiedName} rom)");
                 builder.AppendLine(indent, "{");
                 indent++;
-                builder.AppendLine(indent, "for (int i = 0; i < rom.Length; i++)");
-                builder.AppendLine(indent, "{");
-                indent++;
-                builder.AppendLine(indent, "yield return rom.Span[i];");
+                builder.Append(indent, "return ");
+                builder.AppendType(typeof(MemoryMarshal));
+                builder.AppendLine($".ToEnumerable(rom);");
                 indent--;
                 builder.AppendLine(indent, "}");
-                indent--;
-                builder.AppendLine(indent, "}");
-                builder.AppendLine(indent, "yield break;");
+                builder.AppendLine();
+                builder.AppendLine(indent, $"return null;");
                 indent--;
                 builder.AppendLine(indent, "}");
             });
@@ -393,22 +395,22 @@ internal sealed partial class ModelReaderWriterContextGenerator
                 builder.AppendLine("();");
                 builder.AppendLine();
 
-                builder.AppendLine(indent, "protected override void AddItem(object collection, object item)");
+                builder.AppendLine(indent, "protected override void AddItem(object collectionBuilder, object item)");
                 indent++;
                 builder.Append(indent, "=> ((");
                 builder.AppendVariableList(modelInfo.Type.ArrayRank, elementType.FullyQualifiedName);
-                builder.Append(")collection).Add((");
+                builder.Append(")collectionBuilder).Add((");
                 builder.AppendVariableList(modelInfo.Type.ArrayRank - 1, elementType.FullyQualifiedName);
                 builder.AppendLine(")item);");
                 indent--;
                 builder.AppendLine();
 
-                builder.AppendLine(indent, "protected override object ToCollection(object builder)");
+                builder.AppendLine(indent, "protected override object ConvertCollectionBuilder(object collectionBuilder)");
                 builder.AppendLine(indent, "{");
                 indent++;
                 builder.Append(indent, "var instance = (");
                 builder.AppendVariableList(modelInfo.Type.ArrayRank, elementType.FullyQualifiedName);
-                builder.AppendLine(")builder;");
+                builder.AppendLine(")collectionBuilder;");
                 builder.AppendLine(indent, "int rowCount = instance.Count;");
                 builder.AppendLine(indent, "int colCount = instance[0].Count;");
                 builder.AppendLine(indent, $"{modelInfo.Type.Name} multiArray = new {elementType.FullyQualifiedName}[rowCount, colCount];");
@@ -455,19 +457,19 @@ internal sealed partial class ModelReaderWriterContextGenerator
                 builder.AppendLine($"<{elementType.FullyQualifiedName}>();");
                 builder.AppendLine();
 
-                builder.AppendLine(indent, "protected override void AddItem(object collection, object item)");
+                builder.AppendLine(indent, "protected override void AddItem(object collectionBuilder, object item)");
                 indent++;
                 builder.Append(indent, "=> ((");
                 builder.AppendType(typeof(List<>));
-                builder.AppendLine($"<{elementType.FullyQualifiedName}>)collection).Add(({elementType.FullyQualifiedName})item);");
+                builder.AppendLine($"<{elementType.FullyQualifiedName}>)collectionBuilder).Add(({elementType.FullyQualifiedName})item);");
                 indent--;
                 builder.AppendLine();
 
-                builder.AppendLine(indent, "protected override object ToCollection(object builder)");
+                builder.AppendLine(indent, "protected override object ConvertCollectionBuilder(object collectionBuilder)");
                 indent++;
                 builder.Append(indent, "=> ((");
                 builder.AppendType(typeof(List<>));
-                builder.AppendLine($"<{elementType.FullyQualifiedName}>)builder).ToArray();");
+                builder.AppendLine($"<{elementType.FullyQualifiedName}>)collectionBuilder).ToArray();");
                 indent--;
             });
         }
@@ -494,9 +496,9 @@ internal sealed partial class ModelReaderWriterContextGenerator
                 builder.AppendLine(indent, $"protected override object CreateInstance() => new {modelInfo.Type.FullyQualifiedName}();");
                 builder.AppendLine();
 
-                builder.AppendLine(indent, "protected override void AddKeyValuePair(object collection, string key, object item)");
+                builder.AppendLine(indent, "protected override void AddItemWithKey(object collectionBuilder, string key, object item)");
                 indent++;
-                builder.AppendLine(indent, $"=> (({modelInfo.Type.FullyQualifiedName})collection).Add(key, ({elementType.FullyQualifiedName})item);");
+                builder.AppendLine(indent, $"=> (({modelInfo.Type.FullyQualifiedName})collectionBuilder).Add(key, ({elementType.FullyQualifiedName})item);");
                 indent--;
             });
         }
@@ -523,9 +525,9 @@ internal sealed partial class ModelReaderWriterContextGenerator
                 builder.AppendLine(indent, $"protected override object CreateInstance() => new {modelInfo.Type.FullyQualifiedName}();");
                 builder.AppendLine();
 
-                builder.AppendLine(indent, "protected override void AddItem(object collection, object item)");
+                builder.AppendLine(indent, "protected override void AddItem(object collectionBuilder, object item)");
                 indent++;
-                builder.AppendLine(indent, $"=> (({modelInfo.Type.FullyQualifiedName})collection).Add(({elementType.FullyQualifiedName})item);");
+                builder.AppendLine(indent, $"=> (({modelInfo.Type.FullyQualifiedName})collectionBuilder).Add(({elementType.FullyQualifiedName})item);");
                 indent--;
             });
         }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetServer()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/ServerGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/ServerGet.json
             // this example is just showing the usage of "Servers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetServerWithExpandAdministratorsActivedirectory()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/ServerGetWithExpandEqualsAdministrators.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/ServerGetWithExpandEqualsAdministrators.json
             // this example is just showing the usage of "Servers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteServer()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/ServerDelete.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/ServerDelete.json
             // this example is just showing the usage of "Servers_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAServer()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/ServerUpdate.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/ServerUpdate.json
             // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -143,97 +143,9 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetServerUsages_ListServersUsages()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2014-04-01-legacy/examples/ServerUsageMetricsList.json
-            // this example is just showing the usage of "ServerUsages_ListByServer" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SqlServerResource created on azure
-            // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "sqlcrudtest-6730";
-            string serverName = "sqlcrudtest-9007";
-            ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            SqlServerResource sqlServer = client.GetSqlServerResource(sqlServerResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (SqlServerUsage item in sqlServer.GetServerUsagesAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetServerOperations_ListTheServerManagementOperations()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ListServerOperations.json
-            // this example is just showing the usage of "ServerOperations_ListByServer" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SqlServerResource created on azure
-            // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "sqlcrudtest-7398";
-            string serverName = "sqlcrudtest-4645";
-            ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            SqlServerResource sqlServer = client.GetSqlServerResource(sqlServerResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ServerOperationData item in sqlServer.GetServerOperationsAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateTdeCertificate_UploadATDECertificate()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/SqlTdeCertificateCreate.json
-            // this example is just showing the usage of "TdeCertificates_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SqlServerResource created on azure
-            // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000001";
-            string resourceGroupName = "testtdecert";
-            string serverName = "testtdecert";
-            ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            SqlServerResource sqlServer = client.GetSqlServerResource(sqlServerResourceId);
-
-            // invoke the operation
-            TdeCertificate tdeCertificate = new TdeCertificate
-            {
-                PrivateBlob = "MIIXXXXXXXX",
-            };
-            await sqlServer.CreateTdeCertificateAsync(WaitUntil.Completed, tdeCertificate);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetInaccessibleDatabases_GetsAListOfInaccessibleDatabasesInALogicalServer()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-02-01-preview/examples/ListVCoreInaccessibleDatabasesByServer.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/ListVCoreInaccessibleDatabasesByServer.json
             // this example is just showing the usage of "Databases_ListInaccessibleByServer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -264,9 +176,100 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetReplicationLinks_ListReplicationLinksOnServer()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/ReplicationLinkListByServer.json
+            // this example is just showing the usage of "ReplicationLinks_ListByServer" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SqlServerResource created on azure
+            // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "Default";
+            string serverName = "sourcesvr";
+            ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            SqlServerResource sqlServer = client.GetSqlServerResource(sqlServerResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (SqlServerDatabaseReplicationLinkResource item in sqlServer.GetReplicationLinksAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SqlServerDatabaseReplicationLinkData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetServerOperations_ListTheServerManagementOperations()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/ListServerOperations.json
+            // this example is just showing the usage of "ServerOperations_ListByServer" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SqlServerResource created on azure
+            // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "sqlcrudtest-7398";
+            string serverName = "sqlcrudtest-4645";
+            ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            SqlServerResource sqlServer = client.GetSqlServerResource(sqlServerResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (ServerOperationData item in sqlServer.GetServerOperationsAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetServerUsages_ListServersUsages()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/ServerUsageList.json
+            // this example is just showing the usage of "ServerUsages_ListByServer" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SqlServerResource created on azure
+            // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "sqlcrudtest-6730";
+            string serverName = "sqlcrudtest-9007";
+            ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            SqlServerResource sqlServer = client.GetSqlServerResource(sqlServerResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (SqlServerUsage item in sqlServer.GetServerUsagesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ImportDatabase_ImportsToANewDatabaseUsingPrivateLinkForTheSQLServerAndStorageAccount()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/ImportNewDatabaseWithNetworkIsolation.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/ImportNewDatabaseWithNetworkIsolation.json
             // this example is just showing the usage of "Servers_ImportDatabase" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -303,7 +306,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ImportDatabase_ImportsToANewDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/ImportNewDatabase.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/ImportNewDatabase.json
             // this example is just showing the usage of "Servers_ImportDatabase" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -335,7 +338,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RefreshStatus_RefreshExternalGovernanceEnablementStatus()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/RefreshExternalGovernanceStatus.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/RefreshExternalGovernanceStatus.json
             // this example is just showing the usage of "Servers_RefreshStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -360,10 +363,10 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetReplicationLinks_ListReplicationLinksOnServer()
+        public async Task CreateTdeCertificate_UploadATDECertificate()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/ReplicationLinkListByServer.json
-            // this example is just showing the usage of "ReplicationLinks_ListByServer" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2023-08-01/examples/SqlTdeCertificateCreate.json
+            // this example is just showing the usage of "TdeCertificates_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -372,21 +375,18 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this SqlServerResource created on azure
             // for more information of creating SqlServerResource, please refer to the document of SqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "Default";
-            string serverName = "sourcesvr";
+            string subscriptionId = "00000000-0000-0000-0000-000000000001";
+            string resourceGroupName = "testtdecert";
+            string serverName = "testtdecert";
             ResourceIdentifier sqlServerResourceId = SqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             SqlServerResource sqlServer = client.GetSqlServerResource(sqlServerResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (SqlServerDatabaseReplicationLinkResource item in sqlServer.GetReplicationLinksAsync())
+            // invoke the operation
+            TdeCertificate tdeCertificate = new TdeCertificate
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                SqlServerDatabaseReplicationLinkData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                PrivateBlob = "MIIXXXXXXXX",
+            };
+            await sqlServer.CreateTdeCertificateAsync(WaitUntil.Completed, tdeCertificate);
 
             Console.WriteLine("Succeeded");
         }
