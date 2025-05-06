@@ -1,5 +1,11 @@
 # Release History
 
+## 1.3.1-beta.1 (Unreleased)
+
+### Features Added
+
+- Upgraded api-version tag to 'package-preview-2024-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/8c2c4da647cc9dbe6317a5961138fd058ed78401/specification/sql/resource-manager/readme.md.
+
 ## 1.3.0 (2025-05-01)
 
 ### Features Added
