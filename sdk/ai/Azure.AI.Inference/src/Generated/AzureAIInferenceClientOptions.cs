@@ -13,13 +13,16 @@ namespace Azure.AI.Inference
     /// <summary> Client options for Azure.AI.Inference library clients. </summary>
     public partial class AzureAIInferenceClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_05_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2024_08_01_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
             /// <summary> Service version "2024-05-01-preview". </summary>
             V2024_05_01_Preview = 1,
+
+            /// <summary> Service version "2024-08-01-preview". </summary>
+            V2024_08_01_Preview = 2,
         }
 
         internal string Version { get; }
@@ -30,6 +33,7 @@ namespace Azure.AI.Inference
             Version = version switch
             {
                 ServiceVersion.V2024_05_01_Preview => "2024-05-01-preview",
+                ServiceVersion.V2024_08_01_Preview => "2024-08-01-preview",
                 _ => throw new NotSupportedException()
             };
         }
