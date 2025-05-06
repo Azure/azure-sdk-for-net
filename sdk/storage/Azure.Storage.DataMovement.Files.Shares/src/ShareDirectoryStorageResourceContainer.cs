@@ -177,9 +177,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        protected override async Task ValidateTransferAsync(StorageResource sourceResource, CancellationToken cancellationToken = default)
+        protected override async Task<(bool ValidateSource, bool ValidateDest)> ValidateTransferAsync(
+            StorageResource sourceResource,
+            CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            bool validateSource = true, validateDest = true;
 
             if (sourceResource is ShareDirectoryStorageResourceContainer sourceShareDirectoryResource)
             {
@@ -190,7 +193,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 }
 
                 // Validate the source protocol
-                await DataMovementSharesExtensions.ValidateProtocolAsync(
+                validateSource = await DataMovementSharesExtensions.ValidateProtocolAsync(
                     sourceShareDirectoryResource.ShareDirectoryClient.GetParentShareClient(),
                     sourceShareDirectoryResource.ResourceOptions,
                     "source",
@@ -198,11 +201,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
 
             // Validate the destination protocol
-            await DataMovementSharesExtensions.ValidateProtocolAsync(
+            validateDest = await DataMovementSharesExtensions.ValidateProtocolAsync(
                 ShareDirectoryClient.GetParentShareClient(),
                 ResourceOptions,
                 "destination",
                 cancellationToken).ConfigureAwait(false);
+
+            return (ValidateSource: validateSource, ValidateDest: validateDest);
         }
     }
 }

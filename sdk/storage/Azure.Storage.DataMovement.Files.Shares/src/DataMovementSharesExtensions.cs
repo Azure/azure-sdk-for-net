@@ -684,7 +684,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
         }
 
-        public static async Task ValidateProtocolAsync(
+        public static async Task<bool> ValidateProtocolAsync(
             ShareClient parentShareClient,
             ShareFileStorageResourceOptions options,
             string endpoint,
@@ -707,7 +707,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 {
                     throw Errors.NoShareLevelPermissions(endpoint);
                 }
+                return true;
             }
+            return false;
         }
     }
 

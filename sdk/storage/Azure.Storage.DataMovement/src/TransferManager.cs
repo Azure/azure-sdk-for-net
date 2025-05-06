@@ -375,11 +375,19 @@ namespace Azure.Storage.DataMovement
             Argument.AssertNotNull(sourceResource, nameof(sourceResource));
             Argument.AssertNotNull(destinationResource, nameof(destinationResource));
 
-            await destinationResource.ValidateTransferAsync(sourceResource, cancellationToken).ConfigureAwait(false);
-
-            transferOptions ??= new TransferOptions();
+            (bool validateSource, bool validateDest) = await destinationResource.ValidateTransferAsync(sourceResource, cancellationToken).ConfigureAwait(false);
 
             string transferId = _generateTransferId();
+            if (!validateSource)
+            {
+                DataMovementEventSource.Singleton.TransferValidationSkipped(transferId, "source", sourceResource.Uri.AbsoluteUri);
+            }
+            if (!validateDest)
+            {
+                DataMovementEventSource.Singleton.TransferValidationSkipped(transferId, "destination", destinationResource.Uri.AbsoluteUri);
+            }
+
+            transferOptions ??= new TransferOptions();
             try
             {
                 await _checkpointer.AddNewJobAsync(
