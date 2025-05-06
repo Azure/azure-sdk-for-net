@@ -46,17 +46,5 @@ namespace _Specs_.Azure.Core.Lro.Standard
 
             return new OperationStatusError(id, status, error, additionalBinaryDataProperties: null);
         }
-
-        /// <summary> Provides status details for long running operations. </summary>
-        /// <param name="id"> The unique ID of the operation. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="error"> Error object that describes the error when status is "Failed". </param>
-        /// <param name="result"> The result of the operation. </param>
-        /// <returns> A new <see cref="global::Azure.Core.ResourceOperationStatusUserExportedUserError"/> instance for mocking. </returns>
-        public static ResourceOperationStatusUserExportedUserError ResourceOperationStatusUserExportedUserError(string id = default, OperationState status = default, ResponseError error = default, ExportedUser result = default)
-        {
-
-            return new ResourceOperationStatusUserExportedUserError(id, status, error, result, additionalBinaryDataProperties: null);
-        }
     }
 }

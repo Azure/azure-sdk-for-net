@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
@@ -16,15 +18,12 @@ namespace Azure.Generator.Visitors
             TypeProvider enclosingType,
             ScmMethodProviderCollection? methodProviderCollection)
         {
-            // if (serviceMethod is InputLongRunningServiceMethod lroServiceMethod)
-            // {
-            //     foreach (var method in methodProviderCollection!.ToArray())
-            //     {
-            //         // wrap each return type in an Operation
-            //         var returnType = method.Signature.ReturnType;
-            //         method.Signature.Update(returnType: new CSharpType(typeof(Operation<>), returnType!));
-            //     }
-            // }
+            if (serviceMethod is InputLongRunningServiceMethod lroServiceMethod)
+            {
+                return new LroMethodProviderCollection(
+                    serviceMethod,
+                    enclosingType);
+            }
 
             return methodProviderCollection;
         }

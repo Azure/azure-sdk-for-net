@@ -62,7 +62,7 @@ namespace _Specs_.Azure.Core.Lro.Standard
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CreateOrReplace(string name, RequestContent content, RequestContext context = null)
+        public virtual Operation<BinaryData> CreateOrReplace(WaitUntil waitUntil, string name, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("StandardClient.CreateOrReplace");
             scope.Start();
@@ -95,7 +95,7 @@ namespace _Specs_.Azure.Core.Lro.Standard
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateOrReplaceAsync(string name, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> CreateOrReplaceAsync(WaitUntil waitUntil, string name, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("StandardClient.CreateOrReplace");
             scope.Start();
@@ -120,12 +120,12 @@ namespace _Specs_.Azure.Core.Lro.Standard
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="resource"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<User> CreateOrReplace(string name, User resource, CancellationToken cancellationToken = default)
+        public virtual Operation<User> CreateOrReplace(WaitUntil waitUntil, string name, User resource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(resource, nameof(resource));
 
-            Response result = CreateOrReplace(name, resource, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = this.CreateOrReplace(name, resource, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((User)result, result);
         }
 
@@ -135,12 +135,12 @@ namespace _Specs_.Azure.Core.Lro.Standard
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="resource"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<User>> CreateOrReplaceAsync(string name, User resource, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<User>> CreateOrReplaceAsync(WaitUntil waitUntil, string name, User resource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(resource, nameof(resource));
 
-            Response result = await CreateOrReplaceAsync(name, resource, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await this.CreateOrReplaceAsync(name, resource, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((User)result, result);
         }
 
@@ -246,7 +246,7 @@ namespace _Specs_.Azure.Core.Lro.Standard
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="format"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Export(string name, string format, RequestContext context)
+        public virtual Operation<BinaryData> Export(WaitUntil waitUntil, string name, string format, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("StandardClient.Export");
             scope.Start();
@@ -279,7 +279,7 @@ namespace _Specs_.Azure.Core.Lro.Standard
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="format"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ExportAsync(string name, string format, RequestContext context)
+        public virtual async Task<Operation<BinaryData>> ExportAsync(WaitUntil waitUntil, string name, string format, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("StandardClient.Export");
             scope.Start();
@@ -304,12 +304,12 @@ namespace _Specs_.Azure.Core.Lro.Standard
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="format"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ResourceOperationStatusUserExportedUserError> Export(string name, string format, CancellationToken cancellationToken = default)
+        public virtual Operation<ExportedUser> Export(WaitUntil waitUntil, string name, string format, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(format, nameof(format));
 
-            Response result = Export(name, format, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = this.Export(name, format, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((ResourceOperationStatusUserExportedUserError)result, result);
         }
 
@@ -319,12 +319,12 @@ namespace _Specs_.Azure.Core.Lro.Standard
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="format"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ResourceOperationStatusUserExportedUserError>> ExportAsync(string name, string format, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<ExportedUser>> ExportAsync(WaitUntil waitUntil, string name, string format, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(format, nameof(format));
 
-            Response result = await ExportAsync(name, format, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await this.ExportAsync(name, format, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((ResourceOperationStatusUserExportedUserError)result, result);
         }
     }

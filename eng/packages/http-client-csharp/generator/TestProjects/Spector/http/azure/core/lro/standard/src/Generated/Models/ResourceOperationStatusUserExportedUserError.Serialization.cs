@@ -16,7 +16,7 @@ using _Specs_.Azure.Core.Lro.Standard;
 namespace Azure.Core
 {
     /// <summary></summary>
-    public partial class ResourceOperationStatusUserExportedUserError : IJsonModel<ResourceOperationStatusUserExportedUserError>
+    internal partial class ResourceOperationStatusUserExportedUserError : IJsonModel<ResourceOperationStatusUserExportedUserError>
     {
         internal ResourceOperationStatusUserExportedUserError()
         {

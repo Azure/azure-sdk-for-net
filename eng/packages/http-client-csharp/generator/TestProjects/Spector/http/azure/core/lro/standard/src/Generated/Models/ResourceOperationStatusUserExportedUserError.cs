@@ -14,7 +14,7 @@ using _Specs_.Azure.Core.Lro.Standard;
 namespace Azure.Core
 {
     /// <summary> Provides status details for long running operations. </summary>
-    public partial class ResourceOperationStatusUserExportedUserError
+    internal partial class ResourceOperationStatusUserExportedUserError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -94,6 +94,7 @@ namespace Azure.Generator.Primitives
             "OperationInternalBase.cs",
             "OperationInternalOfT.cs",
             "OperationPoller.cs",
+            "ProtocolOperationHelpers.cs",
             "SequentialDelayStrategy.cs",
             "TaskExtensions.cs",
             "VoidValue.cs"
