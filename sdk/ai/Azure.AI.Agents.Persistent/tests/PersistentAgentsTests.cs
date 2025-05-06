@@ -12,7 +12,12 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
+using Azure.Core.Pipeline;
 using NUnit.Framework;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Azure;
+using System.Threading;
+using NUnit.Framework.Constraints;
 
 namespace Azure.AI.Agents.Persistent.Tests
 {
@@ -145,7 +150,6 @@ namespace Azure.AI.Agents.Persistent.Tests
         public async Task TestListAgent()
         {
             PersistentAgentsClient client = GetClient();
-            // Note: if the numer  of arent will be bigger then 100 this test will fail.
             HashSet<string> ids = new();
             int initialAgentCount = await CountElementsAndRemoveIds(client, ids);
             PersistentAgent agent1 = await GetAgent(client, AGENT_NAME);
@@ -169,6 +173,57 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.False(ids.Contains(agent2.Id));
             Assert.AreEqual(initialAgentCount + 1, count);
             await DeleteAndAssert(client, agent2);
+        }
+
+        [RecordedTest]
+        public async Task TestThreadPageable()
+        {
+            PersistentAgentsClient client = GetClient();
+            PersistentAgent agent = await GetAgent(client, AGENT_NAME);
+            AsyncPageable<PersistentAgentThread> pgThreads = client.Threads.GetThreadsAsync(limit: 2);
+            int cntBefore = (await pgThreads.ToListAsync()).Count;
+            // This test may take a long time if the number of threads is big.
+            // The code below may e used to clean up the threads.
+            // AsyncPageable<PersistentAgentThread> pgThreads = client.Threads.GetThreadsAsync(limit: 100);
+            // List<PersistentAgentThread> del = await pgThreads.ToListAsync();
+            // int iter = 0;
+            // foreach (PersistentAgentThread thr in del)
+            // {
+            //    await client.Threads.DeleteThreadAsync(thr.Id);
+            //    await Delay(5);
+            // }
+            // pgThreads = client.Threads.GetThreadsAsync(limit: 100);
+            // int cntBefore = (await pgThreads.ToListAsync()).Count;
+            // End of cleanup code.
+            PersistentAgentThread thr1 = await client.Threads.CreateThreadAsync();
+            PersistentAgentThread thr2 = await client.Threads.CreateThreadAsync();
+            PersistentAgentThread thr3 = await client.Threads.CreateThreadAsync();
+            HashSet<string> threads = [thr1.Id, thr2.Id, thr3.Id];
+            pgThreads = client.Threads.GetThreadsAsync(limit: 2);
+            await foreach (Page<PersistentAgentThread> pg in pgThreads.AsPages())
+            {
+                Assert.LessOrEqual(pg.Values.Count, 2);
+            }
+            List<PersistentAgentThread> lstThreads = await client.Threads.GetThreadsAsync(limit: 2).ToListAsync();
+            Assert.AreEqual(lstThreads.Count, cntBefore + 3);
+            foreach (PersistentAgentThread thr in lstThreads)
+                threads.Remove(thr.Id);
+            Assert.AreEqual(threads.Count, 0, $"Some threads were not added: {threads.ToList()}");
+            threads = [thr1.Id, thr2.Id, thr3.Id];
+            Assert.True((await client.Threads.DeleteThreadAsync(thr1.Id)).Value);
+            Assert.True((await client.Threads.DeleteThreadAsync(thr2.Id)).Value);
+            Assert.True((await client.Threads.DeleteThreadAsync(thr3.Id)).Value);
+            int cnt = 0;
+            StringBuilder sbUndeleted = new();
+            pgThreads = client.Threads.GetThreadsAsync(limit: 2);
+            await foreach (PersistentAgentThread thr in pgThreads)
+            {
+                if (threads.Contains(thr.Id))
+                    sbUndeleted.Append($" thr.Id");
+                cnt++;
+            }
+            Assert.That(sbUndeleted.Length == 0, $"The threads{sbUndeleted.ToString()} were not deleted.");
+            Assert.AreEqual(cntBefore, cnt);
         }
 
         [RecordedTest]
@@ -338,30 +393,30 @@ namespace Azure.AI.Agents.Persistent.Tests
         {
             PersistentAgentsClient client = GetClient();
             PersistentAgentThread thread = await GetThread(client);
-            Pageable<ThreadMessage> msgResp = client.Messages.GetMessages(thread.Id);
-            Assert.AreEqual(0, Count(msgResp));
+            AsyncPageable<ThreadMessage> msgResp = client.Messages.GetMessagesAsync(thread.Id);
+            Assert.False(await msgResp.AnyAsync());
 
             HashSet<string> ids = new();
             ThreadMessage msg1 = await client.Messages.CreateMessageAsync(thread.Id, MessageRole.User, "foo");
             ids.Add(msg1.Id);
-            msgResp = client.Messages.GetMessages(thread.Id);
-            foreach (ThreadMessage msg in msgResp)
+            msgResp = client.Messages.GetMessagesAsync(thread.Id);
+            await foreach (ThreadMessage msg in msgResp)
             {
                 ids.Remove(msg.Id);
             }
             Assert.AreEqual(0, ids.Count);
-            Assert.AreEqual(1, Count(msgResp));
+            Assert.AreEqual(1, (await msgResp.ToListAsync()).Count);
 
             ThreadMessage msg2 = await client.Messages.CreateMessageAsync(thread.Id, MessageRole.User, "bar");
             ids.Add(msg1.Id);
             ids.Add(msg2.Id);
-            msgResp = client.Messages.GetMessages(thread.Id);
-            foreach (ThreadMessage msg in msgResp)
+            msgResp = client.Messages.GetMessagesAsync(thread.Id);
+            await foreach (ThreadMessage msg in msgResp)
             {
                 ids.Remove(msg.Id);
             }
             Assert.AreEqual(0, ids.Count);
-            Assert.AreEqual(2, Count(msgResp));
+            Assert.AreEqual(2, (await msgResp.ToListAsync()).Count);
         }
 
         [RecordedTest]
@@ -395,8 +450,8 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.AreEqual(thread.Id, result.ThreadId);
             //  Check run status
             result = await WaitForRun(client, result);
-            Pageable<ThreadMessage> msgResp = client.Messages.GetMessages(thread.Id);
-            List<ThreadMessage> messages = [..msgResp];
+            AsyncPageable<ThreadMessage> msgResp = client.Messages.GetMessagesAsync(thread.Id);
+            List<ThreadMessage> messages = await msgResp.ToListAsync();
             Assert.AreEqual(2, messages.Count);
 
             Assert.AreEqual(MessageRole.Agent, messages[0].Role);
@@ -1308,14 +1363,13 @@ namespace Azure.AI.Agents.Persistent.Tests
 
         private PersistentAgentsClient GetClient()
         {
-            // TODO: Replace project connections string by PROJECT_ENDPOINT when 1DP will be available.
-            //var connectionString = TestEnvironment.PROJECT_ENDPOINT;
             var connectionString = TestEnvironment.PROJECT_CONNECTION_STRING;
             // If we are in the Playback, do not ask for authentication.
             PersistentAgentsAdministrationClient admClient = null;
+            PersistentAgentsAdministrationClientOptions opts = InstrumentClientOptions(new PersistentAgentsAdministrationClientOptions());
             if (Mode == RecordedTestMode.Playback)
             {
-                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(connectionString, new MockCredential(), InstrumentClientOptions(new PersistentAgentsAdministrationClientOptions())));
+                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(connectionString, new MockCredential(), opts));
             }
             // For local testing if you are using non default account
             // add USE_CLI_CREDENTIAL into the .runsettings and set it to true,
@@ -1324,11 +1378,11 @@ namespace Azure.AI.Agents.Persistent.Tests
             var cli = System.Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL");
             if (!string.IsNullOrEmpty(cli) && string.Compare(cli, "true", StringComparison.OrdinalIgnoreCase) == 0)
             {
-                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(connectionString, new AzureCliCredential(), InstrumentClientOptions(new PersistentAgentsAdministrationClientOptions())));
+                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(connectionString, new AzureCliCredential(), opts));
             }
             else
             {
-                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(connectionString, new DefaultAzureCredential(), InstrumentClientOptions(new PersistentAgentsAdministrationClientOptions())));
+                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(connectionString, new DefaultAzureCredential(), opts));
             }
             Assert.IsNotNull(admClient);
             return new PersistentAgentsClient(admClient);
@@ -1406,28 +1460,10 @@ namespace Azure.AI.Agents.Persistent.Tests
             return Path.Combine(new string[] { dirName, "TestData", FILE_NAME });
         }
 
-        private async Task<int> CountRuns(PersistentAgentsClient client, string threadId, int? limit=null)
-        {
-            int count = 0;
-            if (IsAsync)
-            {
-                AsyncPageable<ThreadRun> runs = client.ThreadRuns.GetRunsAsync(threadId: threadId, limit: limit);
-                await foreach (ThreadRun run in runs)
-                    count++;
-            }
-            else
-            {
-                Pageable<ThreadRun> runs = client.ThreadRuns.GetRuns(threadId: threadId, limit: limit);
-                foreach (ThreadRun run in runs)
-                    count++;
-            }
-            return count;
-        }
-
         private static async Task<int> CountElementsAndRemoveIds(PersistentAgentsClient client, HashSet<string> ids)
         {
             int count = 0;
-            AsyncPageable<PersistentAgent> agentsResp = client.AgentsAdministration.GetAgentsAsync(limit: 100);
+            AsyncPageable<PersistentAgent> agentsResp = client.AgentsAdministration.GetAgentsAsync();
             await foreach (PersistentAgent agent in agentsResp)
             {
                 ids.Remove(agent.Id);
@@ -1449,22 +1485,6 @@ namespace Azure.AI.Agents.Persistent.Tests
                     IndexList = { indexList }
                 }
             };
-        }
-
-        private int Count<T> (IEnumerable<T> listValues)
-        {
-            int count = 0;
-            foreach (T val in listValues)
-                count++;
-            return count;
-        }
-
-        private async Task<int> CountAsync<T>(IAsyncEnumerable<T> listValues)
-        {
-            int count = 0;
-            await foreach (T val in listValues)
-                count++;
-            return count;
         }
 
         #endregion

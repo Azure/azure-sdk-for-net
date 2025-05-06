@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -11,6 +12,11 @@ namespace Azure.AI.Agents.Persistent
 {
     public partial class PersistentAgentsAdministrationClient
     {
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal virtual ClientDiagnostics ClientDiagnostics { get; }
+        // TODO: Replace project connections string by PROJECT_ENDPOINT when 1DP will be available.
+        //var connectionString = TestEnvironment.PROJECT_ENDPOINT;
+
         /// <summary> Initializes a new instance of AzureAIClient. </summary>
         /// <param name="endpoint"> The Azure AI Foundry project endpoint, in the form `https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;`</param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
@@ -44,7 +50,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> is an empty string, and was expected to be non-empty. </exception>
-        public PersistentAgentsAdministrationClient(string endpoint, TokenCredential credential, PersistentAgentsAdministrationClientOptions options) //: this(new Uri(endpoint), credential, options)
+        public PersistentAgentsAdministrationClient(string endpoint, TokenCredential credential, PersistentAgentsAdministrationClientOptions options)
         {
             // TODO: Remve this code when 1DP endpoint will be available and just call the upsteam constructor.
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -68,35 +74,6 @@ namespace Azure.AI.Agents.Persistent
                 _apiVersion = options.Version;
             }
         }
-
-        // /// <inheritdoc cref="InternalGetAgents(int?, ListSortOrder?, string, string, CancellationToken)"/>
-        //public virtual Response<PageableList<PersistentAgent>> GetAgents(
-        //    int? limit = null,
-        //    ListSortOrder? order = null,
-        //    string after = null,
-        //    string before = null,
-        //    CancellationToken cancellationToken = default)
-        //{
-        //    using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.GetAgents");
-        //    scope.Start();
-        //    Response<InternalOpenAIPageableListOfAgent> baseResponse = InternalGetAgents(limit, order, after, before, cancellationToken);
-        //    return Response.FromValue(PageableList<PersistentAgent>.Create(baseResponse.Value), baseResponse.GetRawResponse());
-        //}
-
-        ///// <inheritdoc cref="InternalGetAgentsAsync(int?, ListSortOrder?, string, string, CancellationToken)"/>
-        //public virtual async Task<Response<PageableList<PersistentAgent>>> GetAgentsAsync(
-        //    int? limit = null,
-        //    ListSortOrder? order = null,
-        //    string after = null,
-        //    string before = null,
-        //    CancellationToken cancellationToken = default)
-        //{
-        //    using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.GetAgents");
-        //    scope.Start();
-        //    Response<InternalOpenAIPageableListOfAgent> baseResponse
-        //        = await InternalGetAgentsAsync(limit, order, after, before, cancellationToken).ConfigureAwait(false);
-        //    return Response.FromValue(PageableList<PersistentAgent>.Create(baseResponse.Value), baseResponse.GetRawResponse());
-        //}
 
         /*
          * CUSTOM CODE DESCRIPTION:
@@ -191,6 +168,106 @@ namespace Azure.AI.Agents.Persistent
         internal virtual VectorStoreFileBatchesClient GetVectorStoreFileBatchesClient()
         {
             return Volatile.Read(ref _cachedVectorStoreFileBatchesClient) ?? Interlocked.CompareExchange(ref _cachedVectorStoreFileBatchesClient, new VectorStoreFileBatchesClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedVectorStoreFileBatchesClient;
+        }
+
+        /// <summary> Gets a list of agents that were previously created. </summary>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<PersistentAgent> GetAgentsAsync(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetAgentsRequest(limit, order?.ToString(), continuationToken, before, context);
+            return new ContinuationTokenPageableAsync<PersistentAgent>(
+                createPageRequest: PageRequest,
+                valueFactory: e => PersistentAgent.DeserializePersistentAgent(e),
+                pipeline: _pipeline,
+                clientDiagnostics: ClientDiagnostics,
+                scopeName: "ThreadMessagesClient.GetMessages",
+                requestContext: context
+            );
+        }
+
+        /// <summary> Gets a list of agents that were previously created. </summary>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<PersistentAgent> GetAgents(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetAgentsRequest(limit, order?.ToString(), continuationToken, before, context);
+            return new ContinuationTokenPageable<PersistentAgent>(
+                createPageRequest: PageRequest,
+                valueFactory: e => PersistentAgent.DeserializePersistentAgent(e),
+                pipeline: _pipeline,
+                clientDiagnostics: ClientDiagnostics,
+                scopeName: "ThreadMessagesClient.GetMessages",
+                requestContext: context
+            );
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a list of agents that were previously created.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetAgentsAsync(int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        internal virtual AsyncPageable<BinaryData> GetAgentsAsync(int? limit, string order, string after, string before, RequestContext context)
+        {
+            // This method is not yet supported, because it is using generated implementation of parser,
+            // which is currently do not support next token.
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAgentsRequest(limit, order, after, before, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PersistentAgentsAdministrationClient.GetAgents", "data", null, context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a list of agents that were previously created.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetAgents(int?,ListSortOrder?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. Allowed values: "asc" | "desc". </param>
+        /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
+        /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        internal virtual Pageable<BinaryData> GetAgents(int? limit, string order, string after, string before, RequestContext context)
+        {
+            // This method is not yet supported, because it is using generated implementation of parser,
+            // which is currently do not support next token.
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAgentsRequest(limit, order, after, before, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PersistentAgentsAdministrationClient.GetAgents", "data", null, context);
         }
     }
 }
