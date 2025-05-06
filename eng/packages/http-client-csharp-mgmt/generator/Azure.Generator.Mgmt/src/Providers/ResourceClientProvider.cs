@@ -317,6 +317,12 @@ namespace Azure.Generator.Management.Providers
             return isAsync ? new CSharpType(typeof(Task<>), new CSharpType(typeof(Response<>), ResourceClientCharpType)) : new CSharpType(typeof(Response<>), ResourceClientCharpType);
         }
 
+        // TODO: should we fix the generated context declaration statement format? there semicolon after a new line is weird
+        //         RequestContext context = new RequestContext
+        //         {
+        //             CancellationToken = cancellationToken
+        //         }
+        //         ;
         private TryStatement BuildOperationMethodTryStatement(InputServiceMethod method, MethodProvider convenienceMethod, MethodSignature signature, bool isAsync, bool isGeneric)
         {
             var operation = method.Operation;
