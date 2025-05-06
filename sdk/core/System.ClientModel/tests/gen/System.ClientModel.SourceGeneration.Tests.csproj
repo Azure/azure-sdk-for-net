@@ -35,11 +35,28 @@
     <Compile Include="..\ModelReaderWriterTests\Models\AvailabilitySetDatas\MultiDimensionalArrayTests.cs" LinkBase="SharedTests\AvailabilitySetDatas" />
     <Compile Include="..\ModelReaderWriterTests\Models\AvailabilitySetDatas\ReadOnlyMemoryTests.cs" LinkBase="SharedTests\AvailabilitySetDatas" />
     <Compile Include="..\ModelReaderWriterTests\Models\AvailabilitySetDataTests.cs" LinkBase="SharedTests" />
+    <Compile Include="..\ModelReaderWriterTests\Models\BaseModels\ListTests.cs" LinkBase="SharedTests\BaseModels" />
+    <Compile Include="..\ModelReaderWriterTests\Models\BaseModels\ModelInstances.cs" LinkBase="SharedTests\BaseModels" />
+    <Compile Include="..\ModelReaderWriterTests\Models\BaseModelTests.cs" LinkBase="SharedTests\BaseModels" />
+    <Compile Include="..\ModelReaderWriterTests\Models\UnknownBaseModelTests.cs" LinkBase="SharedTests\BaseModels" />
     <Compile Include="..\ModelReaderWriterTests\Models\ModelJsonTests.cs" LinkBase="SharedTests" />
     <Compile Include="..\ModelReaderWriterTests\MrwModelTests.cs" LinkBase="SharedTests" />
     <Compile Include="..\ModelReaderWriterTests\MrwCollectionTests.cs" LinkBase="SharedTests" />
     <Compile Include="..\ModelReaderWriterTests\MrwTestBase.cs" LinkBase="SharedTests" />
     <Compile Include="..\ModelReaderWriterTests\RoundTripStrategy.cs" LinkBase="SharedTests" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Include="..\client\ModelReaderWriter\Models\DiscriminatorSet\BaseModel.cs" LinkBase="Shared\Models" />
+    <Compile Include="..\client\ModelReaderWriter\Models\DiscriminatorSet\ModelX.cs" LinkBase="Shared\Models" />
+    <Compile Include="..\client\ModelReaderWriter\Models\DiscriminatorSet\ModelY.cs" LinkBase="Shared\Models" />
+    <Compile Include="..\client\ModelReaderWriter\Models\DiscriminatorSet\UnknownBaseModel.cs" LinkBase="Shared\Models" />
+    <Compile Include="..\client\ClientShared\ModelReaderWriterHelper.cs" LinkBase="Shared\Helpers" />
+    <Compile Include="..\client\ClientShared\OptionalProperty.cs" LinkBase="Shared\Helpers" />
+    <Compile Include="..\client\ClientShared\OptionalList.cs" LinkBase="Shared\Helpers" />
+    <Compile Include="..\client\ClientShared\OptionalDictionary.cs" LinkBase="Shared\Helpers" />
+    <Compile Include="..\client\ClientShared\ModelReaderWriterExtensions.cs" LinkBase="Shared\Helpers" />
+    <Compile Include="..\client\ClientShared\TypeFormatters.cs" LinkBase="Shared\Helpers" />
   </ItemGroup>
 
   <ItemGroup>

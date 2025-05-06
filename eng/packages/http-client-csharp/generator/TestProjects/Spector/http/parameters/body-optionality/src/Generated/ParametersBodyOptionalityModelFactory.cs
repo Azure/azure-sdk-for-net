@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Parameters.BodyOptionality.Models
+namespace Parameters.BodyOptionality
 {
     public static partial class ParametersBodyOptionalityModelFactory
     {

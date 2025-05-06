@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -14,6 +15,65 @@ namespace Azure.AI.Projects.Tests;
 
 public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIProjectsTestEnvironment>
 {
+    #region Snippet:FunctionsWithStreaming_DefineFunctionTools
+    // Example of a function that defines no parameters
+    private string GetUserFavoriteCity() => "Seattle, WA";
+    private FunctionToolDefinition getUserFavoriteCityTool = new("GetUserFavoriteCity", "Gets the user's favorite city.");
+    // Example of a function with a single required parameter
+    private string GetCityNickname(string location) => location switch
+    {
+        "Seattle, WA" => "The Emerald City",
+        _ => throw new NotImplementedException(),
+    };
+    private FunctionToolDefinition getCityNicknameTool = new(
+        name: "GetCityNickname",
+        description: "Gets the nickname of a city, e.g. 'LA' for 'Los Angeles, CA'.",
+        parameters: BinaryData.FromObjectAsJson(
+            new
+            {
+                Type = "object",
+                Properties = new
+                {
+                    Location = new
+                    {
+                        Type = "string",
+                        Description = "The city and state, e.g. San Francisco, CA",
+                    },
+                },
+                Required = new[] { "location" },
+            },
+            new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+    // Example of a function with one required and one optional, enum parameter
+    private string GetWeatherAtLocation(string location, string temperatureUnit = "f") => location switch
+    {
+        "Seattle, WA" => temperatureUnit == "f" ? "70f" : "21c",
+        _ => throw new NotImplementedException()
+    };
+    private FunctionToolDefinition getCurrentWeatherAtLocationTool = new(
+        name: "GetWeatherAtLocation",
+        description: "Gets the current weather at a provided location.",
+        parameters: BinaryData.FromObjectAsJson(
+            new
+            {
+                Type = "object",
+                Properties = new
+                {
+                    Location = new
+                    {
+                        Type = "string",
+                        Description = "The city and state, e.g. San Francisco, CA",
+                    },
+                    Unit = new
+                    {
+                        Type = "string",
+                        Enum = new[] { "c", "f" },
+                    },
+                },
+                Required = new[] { "location" },
+            },
+            new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+    #endregion
+
     [Test]
     [AsyncOnly]
     public async Task FunctionCallingWithStreamingExampleAsync()
@@ -29,64 +89,6 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIProjectsTe
         AgentsClient client = new(connectionString, new DefaultAzureCredential());
         #endregion
 
-        #region Snippet:FunctionsWithStreaming_DefineFunctionTools
-        // Example of a function that defines no parameters
-        string GetUserFavoriteCity() => "Seattle, WA";
-        FunctionToolDefinition getUserFavoriteCityTool = new("getUserFavoriteCity", "Gets the user's favorite city.");
-        // Example of a function with a single required parameter
-        string GetCityNickname(string location) => location switch
-        {
-            "Seattle, WA" => "The Emerald City",
-            _ => throw new NotImplementedException(),
-        };
-        FunctionToolDefinition getCityNicknameTool = new(
-            name: "getCityNickname",
-            description: "Gets the nickname of a city, e.g. 'LA' for 'Los Angeles, CA'.",
-            parameters: BinaryData.FromObjectAsJson(
-                new
-                {
-                    Type = "object",
-                    Properties = new
-                    {
-                        Location = new
-                        {
-                            Type = "string",
-                            Description = "The city and state, e.g. San Francisco, CA",
-                        },
-                    },
-                    Required = new[] { "location" },
-                },
-                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
-        // Example of a function with one required and one optional, enum parameter
-        string GetWeatherAtLocation(string location, string temperatureUnit = "f") => location switch
-        {
-            "Seattle, WA" => temperatureUnit == "f" ? "70f" : "21c",
-            _ => throw new NotImplementedException()
-        };
-        FunctionToolDefinition getCurrentWeatherAtLocationTool = new(
-            name: "getCurrentWeatherAtLocation",
-            description: "Gets the current weather at a provided location.",
-            parameters: BinaryData.FromObjectAsJson(
-                new
-                {
-                    Type = "object",
-                    Properties = new
-                    {
-                        Location = new
-                        {
-                            Type = "string",
-                            Description = "The city and state, e.g. San Francisco, CA",
-                        },
-                        Unit = new
-                        {
-                            Type = "string",
-                            Enum = new[] { "c", "f" },
-                        },
-                    },
-                    Required = new[] { "location" },
-                },
-                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
-        #endregion
         #region Snippet:FunctionsWithStreamingUpdateHandling
         ToolOutput GetResolvedToolOutput(string functionName, string toolCallId, string functionArguments)
         {
@@ -134,56 +136,43 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIProjectsTe
         #region Snippet:FunctionsWithStreamingUpdateCycle
         List<ToolOutput> toolOutputs = [];
         ThreadRun streamRun = null;
-        await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id))
+        AsyncCollectionResult<StreamingUpdate> stream = client.CreateRunStreamingAsync(thread.Id, agent.Id);
+        do
         {
-            if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+            toolOutputs.Clear();
+            await foreach (StreamingUpdate streamingUpdate in stream)
             {
-                Console.WriteLine("--- Run started! ---");
-            }
-            else if (streamingUpdate is RequiredActionUpdate submitToolOutputsUpdate)
-            {
-                streamRun = submitToolOutputsUpdate.Value;
-                RequiredActionUpdate newActionUpdate = submitToolOutputsUpdate;
-                while (streamRun.Status == RunStatus.RequiresAction) {
+                if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+                {
+                    Console.WriteLine("--- Run started! ---");
+                }
+                else if (streamingUpdate is RequiredActionUpdate submitToolOutputsUpdate)
+                {
+                    RequiredActionUpdate newActionUpdate = submitToolOutputsUpdate;
                     toolOutputs.Add(
                         GetResolvedToolOutput(
                             newActionUpdate.FunctionName,
                             newActionUpdate.ToolCallId,
                             newActionUpdate.FunctionArguments
                     ));
-                    await foreach (StreamingUpdate actionUpdate in client.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs))
-                    {
-                        if (actionUpdate is MessageContentUpdate contentUpdate)
-                        {
-                            Console.Write(contentUpdate.Text);
-                        }
-                        else if (actionUpdate is RequiredActionUpdate newAction)
-                        {
-                            newActionUpdate = newAction;
-                            toolOutputs.Add(
-                                GetResolvedToolOutput(
-                                    newActionUpdate.FunctionName,
-                                    newActionUpdate.ToolCallId,
-                                    newActionUpdate.FunctionArguments
-                                )
-                            );
-                        }
-                        else if (actionUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
-                        {
-                            Console.WriteLine();
-                            Console.WriteLine("--- Run completed! ---");
-                        }
-                    }
-                    streamRun = client.GetRun(thread.Id, streamRun.Id);
-                    toolOutputs.Clear();
+                    streamRun = submitToolOutputsUpdate.Value;
                 }
-                break;
+                else if (streamingUpdate is MessageContentUpdate contentUpdate)
+                {
+                    Console.Write(contentUpdate.Text);
+                }
+                else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("--- Run completed! ---");
+                }
             }
-            else if (streamingUpdate is MessageContentUpdate contentUpdate)
+            if (toolOutputs.Count > 0)
             {
-                Console.Write(contentUpdate.Text);
+                stream = client.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs);
             }
         }
+        while (toolOutputs.Count > 0);
         #endregion
         #region Snippet:FunctionsWithStreaming_Cleanup
         await client.DeleteThreadAsync(thread.Id);
@@ -204,62 +193,6 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIProjectsTe
 #endif
         AgentsClient client = new(connectionString, new DefaultAzureCredential());
 
-        // Example of a function that defines no parameters
-        string GetUserFavoriteCity() => "Seattle, WA";
-        FunctionToolDefinition getUserFavoriteCityTool = new("getUserFavoriteCity", "Gets the user's favorite city.");
-        // Example of a function with a single required parameter
-        string GetCityNickname(string location) => location switch
-        {
-            "Seattle, WA" => "The Emerald City",
-            _ => throw new NotImplementedException(),
-        };
-        FunctionToolDefinition getCityNicknameTool = new(
-            name: "getCityNickname",
-            description: "Gets the nickname of a city, e.g. 'LA' for 'Los Angeles, CA'.",
-            parameters: BinaryData.FromObjectAsJson(
-                new
-                {
-                    Type = "object",
-                    Properties = new
-                    {
-                        Location = new
-                        {
-                            Type = "string",
-                            Description = "The city and state, e.g. San Francisco, CA",
-                        },
-                    },
-                    Required = new[] { "location" },
-                },
-                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
-        // Example of a function with one required and one optional, enum parameter
-        string GetWeatherAtLocation(string location, string temperatureUnit = "f") => location switch
-        {
-            "Seattle, WA" => temperatureUnit == "f" ? "70f" : "21c",
-            _ => throw new NotImplementedException()
-        };
-        FunctionToolDefinition getCurrentWeatherAtLocationTool = new(
-            name: "getCurrentWeatherAtLocation",
-            description: "Gets the current weather at a provided location.",
-            parameters: BinaryData.FromObjectAsJson(
-                new
-                {
-                    Type = "object",
-                    Properties = new
-                    {
-                        Location = new
-                        {
-                            Type = "string",
-                            Description = "The city and state, e.g. San Francisco, CA",
-                        },
-                        Unit = new
-                        {
-                            Type = "string",
-                            Enum = new[] { "c", "f" },
-                        },
-                    },
-                    Required = new[] { "location" },
-                },
-                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
         ToolOutput GetResolvedToolOutput(string functionName, string toolCallId, string functionArguments)
         {
             if (functionName == getUserFavoriteCityTool.Name)
@@ -284,6 +217,7 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIProjectsTe
             }
             return null;
         }
+
         #region Snippet:FunctionsWithStreamingSync_CreateAgent
         Agent agent = client.CreateAgent(
             model: modelDeploymentName,
@@ -305,57 +239,43 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIProjectsTe
         #region Snippet:FunctionsWithStreamingSyncUpdateCycle
         List<ToolOutput> toolOutputs = [];
         ThreadRun streamRun = null;
-        foreach (StreamingUpdate streamingUpdate in client.CreateRunStreaming(thread.Id, agent.Id))
+        CollectionResult<StreamingUpdate> stream = client.CreateRunStreaming(thread.Id, agent.Id);
+        do
         {
-            if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+            toolOutputs.Clear();
+            foreach (StreamingUpdate streamingUpdate in stream)
             {
-                Console.WriteLine("--- Run started! ---");
-            }
-            else if (streamingUpdate is RequiredActionUpdate submitToolOutputsUpdate)
-            {
-                streamRun = submitToolOutputsUpdate.Value;
-                RequiredActionUpdate newActionUpdate = submitToolOutputsUpdate;
-                while (streamRun.Status == RunStatus.RequiresAction)
+                if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
                 {
+                    Console.WriteLine("--- Run started! ---");
+                }
+                else if (streamingUpdate is RequiredActionUpdate submitToolOutputsUpdate)
+                {
+                    RequiredActionUpdate newActionUpdate = submitToolOutputsUpdate;
                     toolOutputs.Add(
                         GetResolvedToolOutput(
                             newActionUpdate.FunctionName,
                             newActionUpdate.ToolCallId,
                             newActionUpdate.FunctionArguments
                     ));
-                    foreach (StreamingUpdate actionUpdate in client.SubmitToolOutputsToStream(streamRun, toolOutputs))
-                    {
-                        if (actionUpdate is MessageContentUpdate contentUpdate)
-                        {
-                            Console.Write(contentUpdate.Text);
-                        }
-                        else if (actionUpdate is RequiredActionUpdate newAction)
-                        {
-                            newActionUpdate = newAction;
-                            toolOutputs.Add(
-                                GetResolvedToolOutput(
-                                    newActionUpdate.FunctionName,
-                                    newActionUpdate.ToolCallId,
-                                    newActionUpdate.FunctionArguments
-                                )
-                            );
-                        }
-                        else if (actionUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
-                        {
-                            Console.WriteLine();
-                            Console.WriteLine("--- Run completed! ---");
-                        }
-                    }
-                    streamRun = client.GetRun(thread.Id, streamRun.Id);
-                    toolOutputs.Clear();
+                    streamRun = submitToolOutputsUpdate.Value;
                 }
-                break;
+                else if (streamingUpdate is MessageContentUpdate contentUpdate)
+                {
+                    Console.Write(contentUpdate.Text);
+                }
+                else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("--- Run completed! ---");
+                }
             }
-            else if (streamingUpdate is MessageContentUpdate contentUpdate)
+            if (toolOutputs.Count > 0)
             {
-                Console.Write(contentUpdate.Text);
+                stream = client.SubmitToolOutputsToStream(streamRun, toolOutputs);
             }
         }
+        while (toolOutputs.Count > 0);
         #endregion
         #region Snippet:FunctionsWithStreamingSync_Cleanup
         client.DeleteThread(thread.Id);

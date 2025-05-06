@@ -12,17 +12,31 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
         protected override List<TypeValidation> TypeValidations => [AssertDictionary];
 
-        private static void AssertDictionary(string type, Action<TypeRef> modelValidator, Dictionary<string, TypeBuilderSpec> dict)
+        private static void AssertDictionary(ModelExpectation expectation, bool invocationDuped, Dictionary<string, TypeBuilderSpec> dict)
         {
-            Assert.IsTrue(dict.ContainsKey($"Dictionary<string, {type}>"));
-            var firstType = dict[$"Dictionary<string, {type}>"];
-            Assert.AreEqual($"Dictionary<string, {type}>", firstType.Type.Name);
-            Assert.AreEqual("System.Collections.Generic", firstType.Type.Namespace);
-            Assert.AreEqual(2, firstType.Type.GenericArguments.Count);
-            Assert.AreEqual(TypeBuilderKind.IDictionary, firstType.Kind);
+            TypeBuilderSpec dictionaryType = ValidateBuilder(expectation.Namespace, expectation, dict);
 
-            var genericArgument = firstType.Type.GenericArguments[1];
-            modelValidator(genericArgument);
+            if (invocationDuped)
+            {
+                var dupedDictionaryType = ValidateBuilder("TestProject1", expectation, dict);
+            }
+
+            Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}", out var itemModel));
+            Assert.AreEqual(itemModel!.Type, dictionaryType.Type.ItemType);
+            expectation.ModelValidation(itemModel);
+        }
+
+        private static TypeBuilderSpec ValidateBuilder(string lookupName, ModelExpectation expectation, Dictionary<string, TypeBuilderSpec> dict)
+        {
+            Assert.IsTrue(dict.TryGetValue($"{lookupName}.Dictionary<string, {expectation.TypeName}>", out var dictionaryType));
+            Assert.AreEqual($"Dictionary<string, {expectation.TypeName}>", dictionaryType!.Type.Name);
+            Assert.AreEqual("System.Collections.Generic", dictionaryType.Type.Namespace);
+            Assert.IsNotNull(dictionaryType.Type.ItemType);
+            Assert.AreEqual(TypeBuilderKind.IDictionary, dictionaryType.Kind);
+            Assert.AreEqual($"Dictionary_string_{expectation.TypeName}_", dictionaryType.Type.TypeCaseName);
+            Assert.AreEqual($"dictionary_string_{expectation.TypeName}_", dictionaryType.Type.CamelCaseName);
+            Assert.AreEqual(s_localContext, dictionaryType.ContextType);
+            return dictionaryType;
         }
     }
 }

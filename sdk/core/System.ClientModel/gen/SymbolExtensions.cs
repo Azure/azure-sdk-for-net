@@ -20,51 +20,25 @@ internal static class SymbolExtensions
         return false;
     }
 
-    public static TypeBuilderKind GetModelInfoKind(this ISymbol symbol)
+    public static ITypeSymbol? GetItemSymbol(this ITypeSymbol typeSymbol, TypeSymbolKindCache cache)
     {
-        if (symbol is INamedTypeSymbol namedTypeSymbol)
+        switch (typeSymbol)
         {
-            if (namedTypeSymbol.IsList())
-            {
-                return TypeBuilderKind.IList;
-            }
-
-            if (namedTypeSymbol.IsDictionary())
-            {
-                return TypeBuilderKind.IDictionary;
-            }
-
-            if (namedTypeSymbol.IsReadOnlyMemory())
-            {
-                return TypeBuilderKind.ReadOnlyMemory;
-            }
+            case INamedTypeSymbol namedTypeSymbol:
+                switch (cache.Get(namedTypeSymbol))
+                {
+                    case TypeBuilderKind.IList:
+                    case TypeBuilderKind.ReadOnlyMemory:
+                        return namedTypeSymbol.TypeArguments[0];
+                    case TypeBuilderKind.IDictionary:
+                        return namedTypeSymbol.TypeArguments[1];
+                    default:
+                        return null;
+                }
+            case IArrayTypeSymbol arrayTypeSymbol:
+                return arrayTypeSymbol.ElementType;
+            default:
+                return null;
         }
-        else if (symbol is IArrayTypeSymbol arraySymbol)
-        {
-            return arraySymbol.Rank == 1 ? TypeBuilderKind.Array : TypeBuilderKind.MultiDimensionalArray;
-        }
-
-        return TypeBuilderKind.IPersistableModel;
-    }
-
-    internal static bool IsReadOnlyMemory(this INamedTypeSymbol namedSymbol)
-    {
-        return namedSymbol.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat).StartsWith("System.ReadOnlyMemory<", StringComparison.Ordinal);
-    }
-
-    internal static bool IsList(this INamedTypeSymbol typeSymbol)
-    {
-        return typeSymbol.AllInterfaces
-            .Any(i => i.OriginalDefinition.SpecialType == SpecialType.None &&
-                      i.ContainingNamespace?.ToDisplayString() == "System.Collections" &&
-                      i.Name == "IList");
-    }
-
-    internal static bool IsDictionary(this INamedTypeSymbol typeSymbol)
-    {
-        return typeSymbol.AllInterfaces
-            .Any(i => i.OriginalDefinition.SpecialType == SpecialType.None &&
-                      i.ContainingNamespace?.ToDisplayString() == "System.Collections.Generic" &&
-                      i.Name == "IDictionary");
     }
 }

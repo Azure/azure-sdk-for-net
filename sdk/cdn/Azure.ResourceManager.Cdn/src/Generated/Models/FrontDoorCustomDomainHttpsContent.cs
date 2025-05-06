@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>
         /// <param name="secret"> Resource reference to the secret. ie. subs/rg/profile/secret. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorCustomDomainHttpsContent(FrontDoorCertificateType certificateType, FrontDoorMinimumTlsVersion? minimumTlsVersion, FrontDoorCustomDomainHttpsContentSecret secret, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FrontDoorCustomDomainHttpsContent(FrontDoorCertificateType certificateType, FrontDoorMinimumTlsVersion? minimumTlsVersion, WritableSubResource secret, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CertificateType = certificateType;
             MinimumTlsVersion = minimumTlsVersion;
@@ -76,15 +77,15 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> TLS protocol version that will be used for Https. </summary>
         public FrontDoorMinimumTlsVersion? MinimumTlsVersion { get; set; }
         /// <summary> Resource reference to the secret. ie. subs/rg/profile/secret. </summary>
-        internal FrontDoorCustomDomainHttpsContentSecret Secret { get; set; }
-        /// <summary> Resource ID. </summary>
+        internal WritableSubResource Secret { get; set; }
+        /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SecretId
         {
             get => Secret is null ? default : Secret.Id;
             set
             {
                 if (Secret is null)
-                    Secret = new FrontDoorCustomDomainHttpsContentSecret();
+                    Secret = new WritableSubResource();
                 Secret.Id = value;
             }
         }

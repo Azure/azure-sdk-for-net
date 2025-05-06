@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace _Type.Model.Visibility.Models
+namespace _Type.Model.Visibility
 {
     public static partial class TypeModelVisibilityModelFactory
     {

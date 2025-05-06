@@ -1,14 +1,22 @@
 # Release History
 
-## 7.19.0-beta.1 (Unreleased)
+## 7.20.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- `ServiceBusClientOptions` now supports registering a callback delegate for participating in the validation of SSL certificates when connections are established.  This delegate may override the built-in validation and allow or deny certificates based on application-specific logic.
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Fixed a bug where the custom port associated with a local emulator endpoint was reset by the `ServiceBusAdministrationClient`.
+
+### Other Changes
+
+## 7.19.0 (2025-04-08)
+
+### Features Added
+
+- `ServiceBusClientOptions` now supports registering a callback delegate for participating in the validation of SSL certificates when connections are established.  This delegate may override the built-in validation and allow or deny certificates based on application-specific logic.
 
 ### Other Changes
 

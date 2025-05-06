@@ -63,8 +63,6 @@ internal class ModelReaderWriterSamples
     {
         var myObject = new MyPersistableModel();
         #region Snippet:ModelReaderWriterContext_Usage
-        //assembly name is MyProject
-
         ModelReaderWriter.Write<MyPersistableModel>(myObject, ModelReaderWriterOptions.Json, MyProjectContext.Default);
         #endregion
     }
@@ -76,7 +74,11 @@ internal class ModelReaderWriterSamples
     #endregion
     #endregion
 
-    private partial class MyProjectContext : ModelReaderWriterContext
+    #region Snippet:ModelReaderWriterContext_Example
+    public partial class MyProjectContext : ModelReaderWriterContext { }
+    #endregion
+
+    public partial class MyProjectContext : ModelReaderWriterContext
     {
         public static MyProjectContext Default => new MyProjectContext();
     }

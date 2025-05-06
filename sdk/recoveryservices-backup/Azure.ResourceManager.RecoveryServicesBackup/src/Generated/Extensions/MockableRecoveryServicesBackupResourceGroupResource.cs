@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -827,7 +827,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -957,7 +957,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -997,7 +997,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1037,7 +1037,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1070,7 +1070,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1103,7 +1103,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1137,7 +1137,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1172,7 +1172,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1219,7 +1219,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1266,7 +1266,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1300,7 +1300,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1333,7 +1333,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1365,7 +1365,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1397,7 +1397,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1429,7 +1429,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1461,16 +1461,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="content"> security pin request. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        public virtual async Task<Response<TokenInformation>> GetSecurityPinAsync(string vaultName, SecurityPinContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TokenInformation>> GetSecurityPinAsync(string vaultName, SecurityPinContent content = null, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
@@ -1478,7 +1479,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             scope.Start();
             try
             {
-                var response = await SecurityPINsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, content, cancellationToken).ConfigureAwait(false);
+                var response = await SecurityPINsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, content, xMsAuthorizationAuxiliary, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1501,16 +1502,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="content"> security pin request. </param>
+        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        public virtual Response<TokenInformation> GetSecurityPin(string vaultName, SecurityPinContent content = null, CancellationToken cancellationToken = default)
+        public virtual Response<TokenInformation> GetSecurityPin(string vaultName, SecurityPinContent content = null, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
@@ -1518,7 +1520,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             scope.Start();
             try
             {
-                var response = SecurityPINsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, content, cancellationToken);
+                var response = SecurityPINsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, content, xMsAuthorizationAuxiliary, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1542,7 +1544,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1588,7 +1590,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1633,7 +1635,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1674,7 +1676,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -30,22 +30,22 @@ var data = new
 
 try
 {
-    Response getTestRunResponse = await loadTestRunClient.GetTestRunAsync(testRunId);
-    JsonDocument testRunJson = JsonDocument.Parse(getTestRunResponse.Content.ToString());
+    var getTestRunResponse = await loadTestRunClient.GetTestRunAsync(testRunId);
+    var testRun = getTestRunResponse.Value;
 
-    Response getMetricNamespaces = await loadTestRunClient.GetMetricNamespacesAsync(testRunId);
-    JsonDocument metricNamespacesJson = JsonDocument.Parse(getMetricNamespaces.Content.ToString());
+    var getMetricNamespaces = await loadTestRunClient.GetMetricNamespacesAsync(testRunId);
+    var metricNamespaces = getMetricNamespaces.Value;
 
-    Response getMetricDefinitions = await loadTestRunClient.GetMetricDefinitionsAsync(
-        testRunId, metricNamespacesJson.RootElement.GetProperty("value")[0].GetProperty("name").ToString()
+    var getMetricDefinitions = await loadTestRunClient.GetMetricDefinitionsAsync(
+        testRunId, metricNamespaces.Value.First().Name
         );
-    JsonDocument metricDefinitionsJson = JsonDocument.Parse(getMetricDefinitions.Content.ToString());
+    var metricDefinitions = getMetricDefinitions.Value;
 
-    AsyncPageable<BinaryData> metrics = loadTestRunClient.GetMetricsAsync(
+    var metricsPagedResponse = loadTestRunClient.GetMetricsAsync(
             testRunId,
-            metricNamespacesJson.RootElement.GetProperty("value")[0].GetProperty("name").GetString(),
-            metricDefinitionsJson.RootElement.GetProperty("value")[0].GetProperty("name").GetString(),
-            testRunJson.RootElement.GetProperty("startDateTime").GetString() + "/" + testRunJson.RootElement.GetProperty("endDateTime")
+            metricNamespaces.Value.First().Name,
+            metricDefinitions.Value.First().Name,
+            testRun.StartDateTime.Value.ToString("o") + "/" + testRun.EndDateTime.Value.ToString("o")
         );
 }
 catch (Exception ex)
