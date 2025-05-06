@@ -17,7 +17,7 @@ Synchronous sample:
 System.IO.File.WriteAllText(
     path: "sample_file_for_upload.txt",
     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-PersistentAgentFileInfo uploadedAgentFile = client.PersistentAgentsFiles.UploadFile(
+PersistentAgentFileInfo uploadedAgentFile = client.Files.UploadFile(
     filePath: "sample_file_for_upload.txt",
     purpose: PersistentAgentFilePurpose.Agents);
 Dictionary<string, string> fileIds = new()
@@ -32,7 +32,7 @@ Asynchronous sample:
 System.IO.File.WriteAllText(
     path: "sample_file_for_upload.txt",
     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-PersistentAgentFileInfo uploadedAgentFile = await client.PersistentAgentsFiles.UploadFileAsync(
+PersistentAgentFileInfo uploadedAgentFile = await client.Files.UploadFileAsync(
     filePath: "sample_file_for_upload.txt",
     purpose: PersistentAgentFilePurpose.Agents);
 Dictionary<string, string> fileIds = new()
@@ -70,7 +70,7 @@ FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
 fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
 // Create an agent with toolResources and process agent run
-PersistentAgent agent = client.AgentsAdministration.CreateAgent(
+PersistentAgent agent = client.Administration.CreateAgent(
         model: modelDeploymentName,
         name: "SDK Test Agent - Retrieval",
         instructions: "You are a helpful agent that can help fetch data from files you know about.",
@@ -84,7 +84,7 @@ FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
 fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
 // Create an agent with toolResources and process agent run
-PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+PersistentAgent agent = await client.Administration.CreateAgentAsync(
         model: modelDeploymentName,
         name: "SDK Test Agent - Retrieval",
         instructions: "You are a helpful agent that can help fetch data from files you know about.",
@@ -156,12 +156,12 @@ ThreadMessage messageResponse = client.Messages.CreateMessage(
     "Can you give me the documented codes for 'banana' and 'orange'?");
 
 // Run the agent
-ThreadRun run = client.ThreadRuns.CreateRun(thread, agent);
+ThreadRun run = client.Runs.CreateRun(thread, agent);
 
 do
 {
     Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    run = client.ThreadRuns.GetRun(thread.Id, run.Id);
+    run = client.Runs.GetRun(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
@@ -188,12 +188,12 @@ ThreadMessage messageResponse = await client.Messages.CreateMessageAsync(
     "Can you give me the documented codes for 'banana' and 'orange'?");
 
 // Run the agent
-ThreadRun run = await client.ThreadRuns.CreateRunAsync(thread, agent);
+ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
 
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
-    run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
+    run = await client.Runs.GetRunAsync(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
@@ -213,15 +213,15 @@ WriteMessages(messages, fileIds);
 Synchronous sample:
 ```C# Snippet:AgentsFilesSearchExample_Cleanup_Sync
 client.VectorStores.DeleteVectorStore(vectorStore.Id);
-client.PersistentAgentsFiles.DeleteFile(uploadedAgentFile.Id);
+client.Files.DeleteFile(uploadedAgentFile.Id);
 client.Threads.DeleteThread(thread.Id);
-client.AgentsAdministration.DeleteAgent(agent.Id);
+client.Administration.DeleteAgent(agent.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentsFilesSearchExample_Cleanup
 await client.VectorStores.DeleteVectorStoreAsync(vectorStore.Id);
-await client.PersistentAgentsFiles.DeleteFileAsync(uploadedAgentFile.Id);
+await client.Files.DeleteFileAsync(uploadedAgentFile.Id);
 await client.Threads.DeleteThreadAsync(thread.Id);
-await client.AgentsAdministration.DeleteAgentAsync(agent.Id);
+await client.Administration.DeleteAgentAsync(agent.Id);
 ```

@@ -9,9 +9,7 @@ using System.ClientModel;
 
 namespace Azure.AI.Agents.Persistent
 {
-    // This class is created to Rename VectorStores to VectorStoresClient
-    [CodeGenClient("VectorStores")]
-    public partial class VectorStoresClient
+    public partial class VectorStores
     {
         /// <summary> Returns a list of vector stores. </summary>
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>

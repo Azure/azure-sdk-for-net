@@ -18,7 +18,7 @@ namespace Azure.AI.Agents.Persistent
 {
     // Data plane generated sub-client.
     /// <summary> A collection of run operations under `/threads/{threadId}/runs`. </summary>
-    public partial class ThreadRunsClient
+    public partial class ThreadRuns
     {
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
@@ -35,19 +35,19 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of ThreadRunsClient for mocking. </summary>
-        protected ThreadRunsClient()
+        /// <summary> Initializes a new instance of ThreadRuns for mocking. </summary>
+        protected ThreadRuns()
         {
         }
 
-        /// <summary> Initializes a new instance of ThreadRunsClient. </summary>
+        /// <summary> Initializes a new instance of ThreadRuns. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal ThreadRunsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal ThreadRuns(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -243,7 +243,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ThreadRunsClient.CreateRun");
+            using var scope = ClientDiagnostics.CreateScope("ThreadRuns.CreateRun");
             scope.Start();
             try
             {
@@ -289,7 +289,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ThreadRunsClient.CreateRun");
+            using var scope = ClientDiagnostics.CreateScope("ThreadRuns.CreateRun");
             scope.Start();
             try
             {
@@ -362,7 +362,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("ThreadRunsClient.GetRun");
+            using var scope = ClientDiagnostics.CreateScope("ThreadRuns.GetRun");
             scope.Start();
             try
             {
@@ -403,7 +403,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("ThreadRunsClient.GetRun");
+            using var scope = ClientDiagnostics.CreateScope("ThreadRuns.GetRun");
             scope.Start();
             try
             {
@@ -482,7 +482,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ThreadRunsClient.UpdateRun");
+            using var scope = ClientDiagnostics.CreateScope("ThreadRuns.UpdateRun");
             scope.Start();
             try
             {
@@ -525,7 +525,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ThreadRunsClient.UpdateRun");
+            using var scope = ClientDiagnostics.CreateScope("ThreadRuns.UpdateRun");
             scope.Start();
             try
             {
@@ -598,7 +598,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("ThreadRunsClient.CancelRun");
+            using var scope = ClientDiagnostics.CreateScope("ThreadRuns.CancelRun");
             scope.Start();
             try
             {
@@ -639,7 +639,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = ClientDiagnostics.CreateScope("ThreadRunsClient.CancelRun");
+            using var scope = ClientDiagnostics.CreateScope("ThreadRuns.CancelRun");
             scope.Start();
             try
             {

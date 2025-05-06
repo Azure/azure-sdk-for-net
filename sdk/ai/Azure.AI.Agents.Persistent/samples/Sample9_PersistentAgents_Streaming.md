@@ -12,7 +12,7 @@ PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential(
 
 Synchronous sample:
 ```C# Snippet:AgentsStreaming_CreateAgent
-PersistentAgent agent = client.AgentsAdministration.CreateAgent(
+PersistentAgent agent = client.Administration.CreateAgent(
     model: modelDeploymentName,
     name: "My Friendly Test Agent",
     instructions: "You politely help with math questions. Use the code interpreter tool when asked to visualize numbers.",
@@ -22,7 +22,7 @@ PersistentAgent agent = client.AgentsAdministration.CreateAgent(
 
 Asynchronous sample:
 ```C# Snippet:AgentsStreamingAsync_CreateAgent
-PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "My Friendly Test Agent",
     instructions: "You politely help with math questions. Use the code interpreter tool when asked to visualize numbers.",
@@ -56,7 +56,7 @@ ThreadMessage message = await client.Messages.CreateMessageAsync(
 
 Synchronous sample:
 ```C# Snippet:AgentsStreaming_StreamLoop
-foreach (StreamingUpdate streamingUpdate in client.ThreadRuns.CreateRunStreaming(thread.Id, agent.Id))
+foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreaming(thread.Id, agent.Id))
 {
     if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
     {
@@ -75,7 +75,7 @@ foreach (StreamingUpdate streamingUpdate in client.ThreadRuns.CreateRunStreaming
 
 Asynchronous sample:
 ```C# Snippet:AgentsStreamingAsync_StreamLoop
-await foreach (StreamingUpdate streamingUpdate in client.ThreadRuns.CreateRunStreamingAsync(thread.Id, agent.Id))
+await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id))
 {
     if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
     {
@@ -97,11 +97,11 @@ await foreach (StreamingUpdate streamingUpdate in client.ThreadRuns.CreateRunStr
 Synchronous sample:
 ```C# Snippet:AgentsStreaming_Cleanup
 client.Threads.DeleteThread(thread.Id);
-client.AgentsAdministration.DeleteAgent(agent.Id);
+client.Administration.DeleteAgent(agent.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentsStreamingAsync_Cleanup
 await client.Threads.DeleteThreadAsync(thread.Id);
-await client.AgentsAdministration.DeleteAgentAsync(agent.Id);
+await client.Administration.DeleteAgentAsync(agent.Id);
 ```

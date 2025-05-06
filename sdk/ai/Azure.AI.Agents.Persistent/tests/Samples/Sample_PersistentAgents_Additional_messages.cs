@@ -28,7 +28,7 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
             projectEndpoint,
             new DefaultAzureCredential());
 
-        PersistentAgent agent = await agentClient.AgentsAdministration.CreateAgentAsync(
+        PersistentAgent agent = await agentClient.Administration.CreateAgentAsync(
             model: modelDeploymentName,
             name: "Math Tutor",
             instructions: "You are a personal electronics tutor. Write and run code to answer questions.",
@@ -41,7 +41,7 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
             MessageRole.User,
             "What is the impedance formula?");
 
-        ThreadRun agentRun = await agentClient.ThreadRuns.CreateRunAsync(
+        ThreadRun agentRun = await agentClient.Runs.CreateRunAsync(
             threadId: thread.Id,
             agent.Id,
             additionalMessages: [
@@ -59,7 +59,7 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            agentRun = await agentClient.ThreadRuns.GetRunAsync(thread.Id, agentRun.Id);
+            agentRun = await agentClient.Runs.GetRunAsync(thread.Id, agentRun.Id);
         }
         while (agentRun.Status == RunStatus.Queued
             || agentRun.Status == RunStatus.InProgress);
@@ -102,7 +102,7 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
             projectEndpoint,
             new DefaultAzureCredential());
 
-        PersistentAgent agent = agentClient.AgentsAdministration.CreateAgent(
+        PersistentAgent agent = agentClient.Administration.CreateAgent(
             model: modelDeploymentName,
             name: "Math Tutor",
             instructions: "You are a personal electronics tutor. Write and run code to answer questions.",
@@ -115,7 +115,7 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
             MessageRole.User,
             "What is the impedance formula?");
 
-        ThreadRun agentRun = agentClient.ThreadRuns.CreateRun(
+        ThreadRun agentRun = agentClient.Runs.CreateRun(
             threadId: thread.Id,
             agent.Id,
             additionalMessages: [
@@ -133,7 +133,7 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            agentRun = agentClient.ThreadRuns.GetRun(thread.Id, agentRun.Id);
+            agentRun = agentClient.Runs.GetRun(thread.Id, agentRun.Id);
         }
         while (agentRun.Status == RunStatus.Queued
             || agentRun.Status == RunStatus.InProgress);

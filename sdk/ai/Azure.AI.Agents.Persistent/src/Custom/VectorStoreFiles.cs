@@ -9,9 +9,7 @@ using System.ClientModel;
 
 namespace Azure.AI.Agents.Persistent
 {
-    // This class is created to Rename VectorStoreFiles to VectorStoreFilesClient
-    [CodeGenClient("VectorStoreFiles")]
-    public partial class VectorStoreFilesClient
+    public partial class VectorStoreFiles
     {
         /// <summary> Returns a list of vector store files. </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>

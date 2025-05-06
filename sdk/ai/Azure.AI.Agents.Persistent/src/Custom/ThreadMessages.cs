@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Agents.Persistent
 {
     [CodeGenModel("Messages")]
-    public partial class ThreadMessagesClient
+    public partial class ThreadMessages
     {
         /*
         * CUSTOM CODE DESCRIPTION:

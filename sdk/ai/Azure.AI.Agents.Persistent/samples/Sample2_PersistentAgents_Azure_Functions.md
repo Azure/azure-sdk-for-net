@@ -152,7 +152,7 @@ AzureFunctionToolDefinition azureFnTool = new(
 
 Synchronous sample:
 ```C# Snippet:AgentsAzureFunctionsCreateAgentWithFunctionToolsSync
-PersistentAgent agent = client.AgentsAdministration.CreateAgent(
+PersistentAgent agent = client.Administration.CreateAgent(
     model: modelDeploymentName,
     name: "azure-function-agent-foo",
         instructions: "You are a helpful support agent. Use the provided function any "
@@ -166,7 +166,7 @@ PersistentAgent agent = client.AgentsAdministration.CreateAgent(
 
 Asynchronous sample:
 ```C# Snippet:AgentsAzureFunctionsCreateAgentWithFunctionTools
-PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "azure-function-agent-foo",
         instructions: "You are a helpful support agent. Use the provided function any "
@@ -189,12 +189,12 @@ ThreadMessage message = client.Messages.CreateMessage(
     MessageRole.User,
     "What is the most prevalent element in the universe? What would foo say?");
 
-ThreadRun run = client.ThreadRuns.CreateRun(thread, agent);
+ThreadRun run = client.Runs.CreateRun(thread, agent);
 
 do
 {
     Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    run = client.ThreadRuns.GetRun(thread.Id, run.Id);
+    run = client.Runs.GetRun(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress
@@ -214,12 +214,12 @@ ThreadMessage message = await client.Messages.CreateMessageAsync(
     MessageRole.User,
     "What is the most prevalent element in the universe? What would foo say?");
 
-ThreadRun run = await client.ThreadRuns.CreateRunAsync(thread, agent);
+ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
 
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
-    run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
+    run = await client.Runs.GetRunAsync(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress
@@ -287,11 +287,11 @@ await foreach (ThreadMessage threadMessage in messages)
 Synchronous sample:
 ```C# Snippet:AgentsAzureFunctionsCleanupSync
 client.Threads.DeleteThread(thread.Id);
-client.AgentsAdministration.DeleteAgent(agent.Id);
+client.Administration.DeleteAgent(agent.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentsAzureFunctionsCleanup
 await client.Threads.DeleteThreadAsync(thread.Id);
-await client.AgentsAdministration.DeleteAgentAsync(agent.Id);
+await client.Administration.DeleteAgentAsync(agent.Id);
 ```

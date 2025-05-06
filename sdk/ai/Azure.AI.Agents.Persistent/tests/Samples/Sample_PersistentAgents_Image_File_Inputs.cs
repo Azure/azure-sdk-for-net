@@ -57,7 +57,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // The file might be an image or any relevant binary.
             // Make sure the server or container is set up for "Agents" usage if required.
-            PersistentAgentFileInfo uploadedFile = await client.PersistentAgentsFiles.UploadFileAsync(
+            PersistentAgentFileInfo uploadedFile = await client.Files.UploadFileAsync(
                 filePath: pathToImage,
                 purpose: PersistentAgentFilePurpose.Agents
             );
@@ -66,7 +66,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // 3) Create an agent
             #region Snippet:AgentsImageFileInMessageCreateAgent
-            PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+            PersistentAgent agent = await client.Administration.CreateAgentAsync(
                 model: modelDeploymentName,
                 name: "File Image Understanding Agent",
                 instructions: "Analyze images from internally uploaded files."
@@ -95,7 +95,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // 6) Run the agent
             #region Snippet:AgentsImageFileInMessageCreateRun
-            ThreadRun run = await client.ThreadRuns.CreateRunAsync(
+            ThreadRun run = await client.Runs.CreateRunAsync(
                 threadId: thread.Id,
                 assistantId: agent.Id
             );
@@ -106,7 +106,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             do
             {
                 await Task.Delay(500);
-                run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
+                run = await client.Runs.GetRunAsync(thread.Id, run.Id);
             }
             while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress);
 
@@ -143,7 +143,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             // 9) Cleanup
             #region Snippet:AgentsImageFileInMessageCleanup
             await client.Threads.DeleteThreadAsync(thread.Id);
-            await client.AgentsAdministration.DeleteAgentAsync(agent.Id);
+            await client.Administration.DeleteAgentAsync(agent.Id);
             #endregion
         }
 
@@ -171,7 +171,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // The file might be an image or any relevant binary.
             // Make sure the server or container is set up for "Agents" usage if required.
-            PersistentAgentFileInfo uploadedFile = client.PersistentAgentsFiles.UploadFile(
+            PersistentAgentFileInfo uploadedFile = client.Files.UploadFile(
                 filePath: pathToImage,
                 purpose: PersistentAgentFilePurpose.Agents
             );
@@ -180,7 +180,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // 3) Create an agent
             #region Snippet:AgentsImageFileInMessageCreateAgent_Sync
-            PersistentAgent agent = client.AgentsAdministration.CreateAgent(
+            PersistentAgent agent = client.Administration.CreateAgent(
                 model: modelDeploymentName,
                 name: "File Image Understanding Agent",
                 instructions: "Analyze images from internally uploaded files."
@@ -209,7 +209,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // 6) Run the agent
             #region Snippet:AgentsImageFileInMessageCreateRun_Sync
-            ThreadRun run = client.ThreadRuns.CreateRun(
+            ThreadRun run = client.Runs.CreateRun(
                 threadId: thread.Id,
                 assistantId: agent.Id
             );
@@ -220,7 +220,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             do
             {
                 Thread.Sleep(500);
-                run = client.ThreadRuns.GetRun(thread.Id, run.Id);
+                run = client.Runs.GetRun(thread.Id, run.Id);
             }
             while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress);
 
@@ -257,7 +257,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             // 9) Cleanup
             #region Snippet:AgentsImageFileInMessageCleanup_Sync
             client.Threads.DeleteThread(thread.Id);
-            client.AgentsAdministration.DeleteAgent(agent.Id);
+            client.Administration.DeleteAgent(agent.Id);
             #endregion
         }
     }

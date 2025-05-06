@@ -13,7 +13,7 @@ VectorStore vectorStore = client.VectorStores.CreateVectorStore(
     name: "sample_vector_store"
 );
 
-PersistentAgentFileInfo file = client.PersistentAgentsFiles.UploadFile(filePath, PersistentAgentFilePurpose.Agents);
+PersistentAgentFileInfo file = client.Files.UploadFile(filePath, PersistentAgentFilePurpose.Agents);
 Dictionary<string, string> dtReferences = new()
 {
     {file.Id, Path.GetFileName(file.Filename)}
@@ -28,7 +28,7 @@ Console.WriteLine($"Created vector store file batch, vector store file batch ID:
 FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 
 List<ToolDefinition> tools = [new FileSearchToolDefinition()];
-PersistentAgent agent = client.AgentsAdministration.CreateAgent(
+PersistentAgent agent = client.Administration.CreateAgent(
     model: modelName,
     name: "my-agent",
     instructions: "You are helpful agent.",
@@ -48,7 +48,7 @@ VectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
     name: "sample_vector_store"
 );
 
-PersistentAgentFileInfo file = await client.PersistentAgentsFiles.UploadFileAsync(filePath, PersistentAgentFilePurpose.Agents);
+PersistentAgentFileInfo file = await client.Files.UploadFileAsync(filePath, PersistentAgentFilePurpose.Agents);
 Dictionary<string, string> dtReferences = new()
 {
     {file.Id, Path.GetFileName(file.Filename)}
@@ -63,7 +63,7 @@ Console.WriteLine($"Created vector store file batch, vector store file batch ID:
 FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 
 List<ToolDefinition> tools = [new FileSearchToolDefinition()];
-PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelName,
     name: "my-agent",
     instructions: "You are helpful agent.",
@@ -84,7 +84,7 @@ ThreadMessage message = client.Messages.CreateMessage(
     content: "What feature does Smart Eyewear offer?"
     );
 
-ThreadRun run = client.ThreadRuns.CreateRun(
+ThreadRun run = client.Runs.CreateRun(
     thread.Id,
     agent.Id
 );
@@ -92,7 +92,7 @@ ThreadRun run = client.ThreadRuns.CreateRun(
 do
 {
     Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    run = client.ThreadRuns.GetRun(thread.Id,  run.Id);
+    run = client.Runs.GetRun(thread.Id,  run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
@@ -118,7 +118,7 @@ ThreadMessage message = await client.Messages.CreateMessageAsync(
     content: "What feature does Smart Eyewear offer?"
 );
 
-ThreadRun run = await client.ThreadRuns.CreateRunAsync(
+ThreadRun run = await client.Runs.CreateRunAsync(
     thread.Id,
     agent.Id
 );
@@ -126,7 +126,7 @@ ThreadRun run = await client.ThreadRuns.CreateRunAsync(
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
-    run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
+    run = await client.Runs.GetRunAsync(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
@@ -204,7 +204,7 @@ else
 {
     Console.WriteLine($"Unable to delete vector store {vectorStore.Id}");
 }
-client.AgentsAdministration.DeleteAgent(agent.Id);
+client.Administration.DeleteAgent(agent.Id);
 ```
 
 Asynchronous sample:
@@ -218,5 +218,5 @@ else
 {
     Console.WriteLine($"Unable to delete vector store {vectorStore.Id}");
 }
-await client.AgentsAdministration.DeleteAgentAsync(agent.Id);
+await client.Administration.DeleteAgentAsync(agent.Id);
 ```

@@ -121,7 +121,7 @@ public partial class Sample_PersistentAgents_Functions : SamplesBase<AIAgentsTes
 
         #region Snippet:AgentsFunctionsCreateAgentWithFunctionTools
         // note: parallel function calling is only supported with newer models like gpt-4-1106-preview
-        PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+        PersistentAgent agent = await client.Administration.CreateAgentAsync(
             model: modelDeploymentName,
             name: "SDK Test Agent - Functions",
                 instructions: "You are a weather bot. Use the provided functions to help answer questions. "
@@ -138,13 +138,13 @@ public partial class Sample_PersistentAgents_Functions : SamplesBase<AIAgentsTes
             MessageRole.User,
             "What's the weather like in my favorite city?");
 
-        ThreadRun run = await client.ThreadRuns.CreateRunAsync(thread, agent);
+        ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
         #endregion
         #region Snippet:AgentsFunctionsHandlePollingWithRequiredAction
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
+            run = await client.Runs.GetRunAsync(thread.Id, run.Id);
 
             if (run.Status == RunStatus.RequiresAction
                 && run.RequiredAction is SubmitToolOutputsAction submitToolOutputsAction)
@@ -154,7 +154,7 @@ public partial class Sample_PersistentAgents_Functions : SamplesBase<AIAgentsTes
                 {
                     toolOutputs.Add(GetResolvedToolOutput(toolCall));
                 }
-                run = await client.ThreadRuns.SubmitToolOutputsToRunAsync(run, toolOutputs);
+                run = await client.Runs.SubmitToolOutputsToRunAsync(run, toolOutputs);
             }
         }
         while (run.Status == RunStatus.Queued
@@ -190,7 +190,7 @@ public partial class Sample_PersistentAgents_Functions : SamplesBase<AIAgentsTes
         #endregion
         #region Snippet:AgentsFunctions_Cleanup
         await client.Threads.DeleteThreadAsync(thread.Id);
-        await client.AgentsAdministration.DeleteAgentAsync(agent.Id);
+        await client.Administration.DeleteAgentAsync(agent.Id);
         #endregion
     }
 
@@ -294,7 +294,7 @@ public partial class Sample_PersistentAgents_Functions : SamplesBase<AIAgentsTes
 
         #region Snippet:AgentsFunctionsSyncCreateAgentWithFunctionTools
         // note: parallel function calling is only supported with newer models like gpt-4-1106-preview
-        PersistentAgent agent = client.AgentsAdministration.CreateAgent(
+        PersistentAgent agent = client.Administration.CreateAgent(
             model: modelDeploymentName,
             name: "SDK Test Agent - Functions",
                 instructions: "You are a weather bot. Use the provided functions to help answer questions. "
@@ -311,13 +311,13 @@ public partial class Sample_PersistentAgents_Functions : SamplesBase<AIAgentsTes
             MessageRole.User,
             "What's the weather like in my favorite city?");
 
-        ThreadRun run = client.ThreadRuns.CreateRun(thread, agent);
+        ThreadRun run = client.Runs.CreateRun(thread, agent);
         #endregion
         #region Snippet:AgentsFunctionsSyncHandlePollingWithRequiredAction
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            run = client.ThreadRuns.GetRun(thread.Id, run.Id);
+            run = client.Runs.GetRun(thread.Id, run.Id);
 
             if (run.Status == RunStatus.RequiresAction
                 && run.RequiredAction is SubmitToolOutputsAction submitToolOutputsAction)
@@ -327,7 +327,7 @@ public partial class Sample_PersistentAgents_Functions : SamplesBase<AIAgentsTes
                 {
                     toolOutputs.Add(GetResolvedToolOutput(toolCall));
                 }
-                run = client.ThreadRuns.SubmitToolOutputsToRun(run, toolOutputs);
+                run = client.Runs.SubmitToolOutputsToRun(run, toolOutputs);
             }
         }
         while (run.Status == RunStatus.Queued
@@ -363,7 +363,7 @@ public partial class Sample_PersistentAgents_Functions : SamplesBase<AIAgentsTes
         #endregion
         #region Snippet:AgentsFunctionsSync_Cleanup
         client.Threads.DeleteThread(thread.Id);
-        client.AgentsAdministration.DeleteAgent(agent.Id);
+        client.Administration.DeleteAgent(agent.Id);
         #endregion
     }
 }

@@ -86,7 +86,7 @@ PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential(
 
 With an authenticated client, an agent can be created:
 ```C# Snippet:AgentsOverviewCreateAgent
-PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "Math Tutor",
     instructions: "You are a personal math tutor. Write and run code to answer math questions."
@@ -114,7 +114,7 @@ ThreadMessage message = await client.Messages.CreateMessageAsync(
 
 A run can then be started that evaluates the thread against an agent:
 ```C# Snippet:AgentsOverviewCreateRun
-ThreadRun run = await client.ThreadRuns.CreateRunAsync(
+ThreadRun run = await client.Runs.CreateRunAsync(
     thread.Id,
     agent.Id,
     additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
@@ -125,7 +125,7 @@ Once the run has started, it should then be polled until it reaches a terminal s
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
-    run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
+    run = await client.Runs.GetRunAsync(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress);
@@ -177,7 +177,7 @@ purpose of 'agents' to make a file ID available:
 System.IO.File.WriteAllText(
     path: "sample_file_for_upload.txt",
     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-PersistentAgentFileInfo uploadedAgentFile = await client.PersistentAgentsFiles.UploadFileAsync(
+PersistentAgentFileInfo uploadedAgentFile = await client.Files.UploadFileAsync(
     filePath: "sample_file_for_upload.txt",
     purpose: PersistentAgentFilePurpose.Agents);
 Dictionary<string, string> fileIds = new()
@@ -201,7 +201,7 @@ FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
 fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
 // Create an agent with toolResources and process agent run
-PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+PersistentAgent agent = await client.Administration.CreateAgentAsync(
         model: modelDeploymentName,
         name: "SDK Test Agent - Retrieval",
         instructions: "You are a helpful agent that can help fetch data from files you know about.",
@@ -231,7 +231,7 @@ VectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
 FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 
 List<ToolDefinition> tools = [new FileSearchToolDefinition()];
-PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "my-agent",
     instructions: "You are helpful agent.",
@@ -268,7 +268,7 @@ Here is an example to pass `CodeInterpreterTool` as tool:
 
 ```C# Snippet:AgentsCreateAgentWithInterpreterTool
 List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
-PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "my-agent",
     instructions: "You are a helpful agent that can help fetch data from files you know about.",
@@ -278,7 +278,7 @@ PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
 System.IO.File.WriteAllText(
     path: "sample_file_for_upload.txt",
     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-PersistentAgentFileInfo uploadedAgentFile = await client.PersistentAgentsFiles.UploadFileAsync(
+PersistentAgentFileInfo uploadedAgentFile = await client.Files.UploadFileAsync(
     filePath: "sample_file_for_upload.txt",
     purpose: PersistentAgentFilePurpose.Agents);
 var fileId = uploadedAgentFile.Id;
@@ -324,7 +324,7 @@ BingGroundingSearchConfigurationList configurationList = new(
 BingGroundingToolDefinition bingGroundingTool = new(configurationList);
 ```
 ```C# Snippet:AgentsBingGroundingAsync_CreateAgent
-PersistentAgent agent = await agentClient.AgentsAdministration.CreateAgentAsync(
+PersistentAgent agent = await agentClient.Administration.CreateAgentAsync(
    model: modelDeploymentName,
    name: "my-agent",
    instructions: "You are a helpful agent.",
@@ -355,7 +355,7 @@ ToolResources toolResource = new()
 
 PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
-PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+PersistentAgent agent = await client.Administration.CreateAgentAsync(
    model: modelDeploymentName,
    name: "my-agent",
    instructions: "You are a helpful agent.",
@@ -486,7 +486,7 @@ With the functions defined in their appropriate tools, an agent can be now creat
 
 ```C# Snippet:AgentsFunctionsCreateAgentWithFunctionTools
 // note: parallel function calling is only supported with newer models like gpt-4-1106-preview
-PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "SDK Test Agent - Functions",
         instructions: "You are a weather bot. Use the provided functions to help answer questions. "
@@ -538,7 +538,7 @@ run via the `SubmitRunToolOutputs` method so that the run can continue:
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
-    run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
+    run = await client.Runs.GetRunAsync(thread.Id, run.Id);
 
     if (run.Status == RunStatus.RequiresAction
         && run.RequiredAction is SubmitToolOutputsAction submitToolOutputsAction)
@@ -548,7 +548,7 @@ do
         {
             toolOutputs.Add(GetResolvedToolOutput(toolCall));
         }
-        run = await client.ThreadRuns.SubmitToolOutputsToRunAsync(run, toolOutputs);
+        run = await client.Runs.SubmitToolOutputsToRunAsync(run, toolOutputs);
     }
 }
 while (run.Status == RunStatus.Queued
@@ -592,7 +592,7 @@ We create a stream and wait for the stream update of the `RequiredActionUpdate` 
 ```C# Snippet:AgentsFunctionsWithStreamingUpdateCycle
 List<ToolOutput> toolOutputs = [];
 ThreadRun streamRun = null;
-AsyncCollectionResult<StreamingUpdate> stream = client.ThreadRuns.CreateRunStreamingAsync(thread.Id, agent.Id);
+AsyncCollectionResult<StreamingUpdate> stream = client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id);
 do
 {
     toolOutputs.Clear();
@@ -629,7 +629,7 @@ do
     }
     if (toolOutputs.Count > 0)
     {
-        stream = client.ThreadRuns.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs);
+        stream = client.Runs.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs);
     }
 }
 while (toolOutputs.Count > 0);
@@ -685,7 +685,7 @@ AzureFunctionToolDefinition azureFnTool = new(
 
 Note that in this scenario we are asking agent to supply storage queue URI to the azure function whenever it is called.
 ```C# Snippet:AgentsAzureFunctionsCreateAgentWithFunctionTools
-PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "azure-function-agent-foo",
         instructions: "You are a helpful support agent. Use the provided function any "
@@ -706,12 +706,12 @@ ThreadMessage message = await client.Messages.CreateMessageAsync(
     MessageRole.User,
     "What is the most prevalent element in the universe? What would foo say?");
 
-ThreadRun run = await client.ThreadRuns.CreateRunAsync(thread, agent);
+ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
 
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
-    run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
+    run = await client.Runs.GetRunAsync(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress
@@ -838,7 +838,7 @@ OpenApiToolDefinition openapiTool = new(
     defaultParams: [ "format" ]
 );
 
-PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "azure-function-agent-foo",
     instructions: "You are a helpful agent.",
@@ -854,12 +854,12 @@ ThreadMessage message = await client.Messages.CreateMessageAsync(
     MessageRole.User,
     "What's the weather in Seattle?");
 
-ThreadRun run = await client.ThreadRuns.CreateRunAsync(thread, agent);
+ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
 
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
-    run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
+    run = await client.Runs.GetRunAsync(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued
     || run.Status == RunStatus.InProgress

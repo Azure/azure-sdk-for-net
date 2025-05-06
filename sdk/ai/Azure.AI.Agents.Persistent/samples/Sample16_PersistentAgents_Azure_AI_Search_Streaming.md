@@ -33,7 +33,7 @@ ToolResources toolResource = new()
 
 PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
-PersistentAgent agent = client.AgentsAdministration.CreateAgent(
+PersistentAgent agent = client.Administration.CreateAgent(
    model: modelDeploymentName,
    name: "my-agent",
    instructions: "You are a helpful agent.",
@@ -57,7 +57,7 @@ ToolResources toolResource = new()
 
 PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
-PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+PersistentAgent agent = await client.Administration.CreateAgentAsync(
    model: modelDeploymentName,
    name: "my-agent",
    instructions: "You are a helpful agent.",
@@ -95,7 +95,7 @@ ThreadMessage message = await client.Messages.CreateMessageAsync(
 
 Synchronous sample:
 ```C# Snippet:AgentsAzureAISearchStreamingExample_PrintMessages
-foreach (StreamingUpdate streamingUpdate in client.ThreadRuns.CreateRunStreaming(thread.Id, agent.Id))
+foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreaming(thread.Id, agent.Id))
 {
     if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
     {
@@ -124,7 +124,7 @@ foreach (StreamingUpdate streamingUpdate in client.ThreadRuns.CreateRunStreaming
 
 Asynchronous sample:
 ```C# Snippet:AgentsAzureAISearchStreamingExample_PrintMessages_Async
-await foreach (StreamingUpdate streamingUpdate in client.ThreadRuns.CreateRunStreamingAsync(thread.Id, agent.Id))
+await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id))
 {
     if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
     {
@@ -156,11 +156,11 @@ await foreach (StreamingUpdate streamingUpdate in client.ThreadRuns.CreateRunStr
 Synchronous sample:
 ```C# Snippet:AgentsAzureAISearchStreamingExample_Cleanup
 client.Threads.DeleteThread(thread.Id);
-client.AgentsAdministration.DeleteAgent(agent.Id);
+client.Administration.DeleteAgent(agent.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentsAzureAISearchStreamingExample_Cleanup_Async
 await client.Threads.DeleteThreadAsync(thread.Id);
-await client.AgentsAdministration.DeleteAgentAsync(agent.Id);
+await client.Administration.DeleteAgentAsync(agent.Id);
 ```

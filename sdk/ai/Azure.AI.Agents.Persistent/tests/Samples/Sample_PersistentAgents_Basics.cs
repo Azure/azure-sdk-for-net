@@ -32,7 +32,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
 
         // Step 1: Create an agent
         #region Snippet:AgentsOverviewCreateAgent
-        PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+        PersistentAgent agent = await client.Administration.CreateAgentAsync(
             model: modelDeploymentName,
             name: "Math Tutor",
             instructions: "You are a personal math tutor. Write and run code to answer math questions."
@@ -61,7 +61,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
 
         // Step 4: Run the agent
         #region Snippet:AgentsOverviewCreateRun
-        ThreadRun run = await client.ThreadRuns.CreateRunAsync(
+        ThreadRun run = await client.Runs.CreateRunAsync(
             thread.Id,
             agent.Id,
             additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
@@ -71,7 +71,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
+            run = await client.Runs.GetRunAsync(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
@@ -105,7 +105,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         #endregion
         #region Snippet:AgentsOverviewCleanup
         await client.Threads.DeleteThreadAsync(threadId: thread.Id);
-        await client.AgentsAdministration.DeleteAgentAsync(agentId: agent.Id);
+        await client.Administration.DeleteAgentAsync(agentId: agent.Id);
         #endregion
     }
 
@@ -124,7 +124,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
 
         // Step 1: Create an agent
         #region Snippet:AgentsOverviewCreateAgentSync
-        PersistentAgent agent = client.AgentsAdministration.CreateAgent(
+        PersistentAgent agent = client.Administration.CreateAgent(
             model: modelDeploymentName,
             name: "Math Tutor",
             instructions: "You are a personal math tutor. Write and run code to answer math questions."
@@ -152,7 +152,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
 
         // Step 4: Run the agent
         #region Snippet:AgentsOverviewCreateRunSync
-        ThreadRun run = client.ThreadRuns.CreateRun(
+        ThreadRun run = client.Runs.CreateRun(
             thread.Id,
             agent.Id,
             additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
@@ -162,7 +162,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            run = client.ThreadRuns.GetRun(thread.Id, run.Id);
+            run = client.Runs.GetRun(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
@@ -197,7 +197,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
 
         #region Snippet:AgentsOverviewCleanupSync
         client.Threads.DeleteThread(threadId: thread.Id);
-        client.AgentsAdministration.DeleteAgent(agentId: agent.Id);
+        client.Administration.DeleteAgent(agentId: agent.Id);
         #endregion
     }
 }

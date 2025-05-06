@@ -26,7 +26,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
             #endregion
             #region Snippet:AgentsStreamingAsync_CreateAgent
-            PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+            PersistentAgent agent = await client.Administration.CreateAgentAsync(
                 model: modelDeploymentName,
                 name: "My Friendly Test Agent",
                 instructions: "You politely help with math questions. Use the code interpreter tool when asked to visualize numbers.",
@@ -42,7 +42,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 "Hi, Agent! Draw a graph for a line with a slope of 4 and y-intercept of 9.");
             #endregion
             #region Snippet:AgentsStreamingAsync_StreamLoop
-            await foreach (StreamingUpdate streamingUpdate in client.ThreadRuns.CreateRunStreamingAsync(thread.Id, agent.Id))
+            await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id))
             {
                 if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
                 {
@@ -60,7 +60,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             #endregion
             #region Snippet:AgentsStreamingAsync_Cleanup
             await client.Threads.DeleteThreadAsync(thread.Id);
-            await client.AgentsAdministration.DeleteAgentAsync(agent.Id);
+            await client.Administration.DeleteAgentAsync(agent.Id);
             #endregion
         }
 
@@ -77,7 +77,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 #endif
             PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
             #region Snippet:AgentsStreaming_CreateAgent
-            PersistentAgent agent = client.AgentsAdministration.CreateAgent(
+            PersistentAgent agent = client.Administration.CreateAgent(
                 model: modelDeploymentName,
                 name: "My Friendly Test Agent",
                 instructions: "You politely help with math questions. Use the code interpreter tool when asked to visualize numbers.",
@@ -93,7 +93,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 "Hi, Agent! Draw a graph for a line with a slope of 4 and y-intercept of 9.");
             #endregion
             #region Snippet:AgentsStreaming_StreamLoop
-            foreach (StreamingUpdate streamingUpdate in client.ThreadRuns.CreateRunStreaming(thread.Id, agent.Id))
+            foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreaming(thread.Id, agent.Id))
             {
                 if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
                 {
@@ -111,7 +111,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             #endregion
             #region Snippet:AgentsStreaming_Cleanup
             client.Threads.DeleteThread(thread.Id);
-            client.AgentsAdministration.DeleteAgent(agent.Id);
+            client.Administration.DeleteAgent(agent.Id);
             #endregion
         }
     }

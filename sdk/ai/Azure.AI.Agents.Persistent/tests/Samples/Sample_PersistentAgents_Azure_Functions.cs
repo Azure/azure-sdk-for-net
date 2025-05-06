@@ -70,7 +70,7 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
         #endregion
 
         #region Snippet:AgentsAzureFunctionsCreateAgentWithFunctionTools
-        PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+        PersistentAgent agent = await client.Administration.CreateAgentAsync(
             model: modelDeploymentName,
             name: "azure-function-agent-foo",
                 instructions: "You are a helpful support agent. Use the provided function any "
@@ -89,12 +89,12 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
             MessageRole.User,
             "What is the most prevalent element in the universe? What would foo say?");
 
-        ThreadRun run = await client.ThreadRuns.CreateRunAsync(thread, agent);
+        ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
 
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
+            run = await client.Runs.GetRunAsync(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress
@@ -130,7 +130,7 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
         #endregion
         #region Snippet:AgentsAzureFunctionsCleanup
         await client.Threads.DeleteThreadAsync(thread.Id);
-        await client.AgentsAdministration.DeleteAgentAsync(agent.Id);
+        await client.Administration.DeleteAgentAsync(agent.Id);
         #endregion
     }
 
@@ -188,7 +188,7 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
         );
 
         #region Snippet:AgentsAzureFunctionsCreateAgentWithFunctionToolsSync
-        PersistentAgent agent = client.AgentsAdministration.CreateAgent(
+        PersistentAgent agent = client.Administration.CreateAgent(
             model: modelDeploymentName,
             name: "azure-function-agent-foo",
                 instructions: "You are a helpful support agent. Use the provided function any "
@@ -207,12 +207,12 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
             MessageRole.User,
             "What is the most prevalent element in the universe? What would foo say?");
 
-        ThreadRun run = client.ThreadRuns.CreateRun(thread, agent);
+        ThreadRun run = client.Runs.CreateRun(thread, agent);
 
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            run = client.ThreadRuns.GetRun(thread.Id, run.Id);
+            run = client.Runs.GetRun(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress
@@ -248,7 +248,7 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
         #endregion
         #region Snippet:AgentsAzureFunctionsCleanupSync
         client.Threads.DeleteThread(thread.Id);
-        client.AgentsAdministration.DeleteAgent(agent.Id);
+        client.Administration.DeleteAgent(agent.Id);
         #endregion
     }
 }

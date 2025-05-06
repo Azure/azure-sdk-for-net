@@ -36,7 +36,7 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
         BingGroundingToolDefinition bingGroundingTool = new(configurationList);
         #endregion
         #region Snippet:AgentsBingGroundingAsync_CreateAgent
-        PersistentAgent agent = await agentClient.AgentsAdministration.CreateAgentAsync(
+        PersistentAgent agent = await agentClient.Administration.CreateAgentAsync(
            model: modelDeploymentName,
            name: "my-agent",
            instructions: "You are a helpful agent.",
@@ -53,11 +53,11 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
             "How does wikipedia explain Euler's Identity?");
 
         // Run the agent
-        ThreadRun run = await agentClient.ThreadRuns.CreateRunAsync(thread, agent);
+        ThreadRun run = await agentClient.Runs.CreateRunAsync(thread, agent);
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            run = await agentClient.ThreadRuns.GetRunAsync(thread.Id, run.Id);
+            run = await agentClient.Runs.GetRunAsync(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
@@ -104,7 +104,7 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
         #endregion
         #region Snippet:AgentsBingGroundingCleanupAsync
         await agentClient.Threads.DeleteThreadAsync(threadId: thread.Id);
-        await agentClient.AgentsAdministration.DeleteAgentAsync(agentId: agent.Id);
+        await agentClient.Administration.DeleteAgentAsync(agentId: agent.Id);
         #endregion
     }
 
@@ -129,7 +129,7 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
         BingGroundingToolDefinition bingGroundingTool = new(configurationList);
         #endregion
         #region Snippet:AgentsBingGrounding_CreateAgent
-        PersistentAgent agent = agentClient.AgentsAdministration.CreateAgent(
+        PersistentAgent agent = agentClient.Administration.CreateAgent(
            model: modelDeploymentName,
            name: "my-agent",
            instructions: "You are a helpful agent.",
@@ -146,11 +146,11 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
             "How does wikipedia explain Euler's Identity?");
 
         // Run the agent
-        ThreadRun run = agentClient.ThreadRuns.CreateRun(thread, agent);
+        ThreadRun run = agentClient.Runs.CreateRun(thread, agent);
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            run = agentClient.ThreadRuns.GetRun(thread.Id, run.Id);
+            run = agentClient.Runs.GetRun(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
@@ -197,7 +197,7 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
         #endregion
         #region Snippet:AgentsBingGroundingCleanup
         agentClient.Threads.DeleteThread(threadId: thread.Id);
-        agentClient.AgentsAdministration.DeleteAgent(agentId: agent.Id);
+        agentClient.Administration.DeleteAgent(agentId: agent.Id);
         #endregion
     }
 }

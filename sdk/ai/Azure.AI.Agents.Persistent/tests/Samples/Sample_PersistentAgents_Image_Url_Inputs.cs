@@ -41,7 +41,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // Step 1: Create an agent
             #region Snippet:AgentImageUrlInMessageCreateAgent
-            PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+            PersistentAgent agent = await client.Administration.CreateAgentAsync(
                 model: modelDeploymentName,
                 name: "Image Understanding Agent",
                 instructions: "You are an image-understanding agent. Analyze images and provide textual descriptions."
@@ -75,7 +75,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // Step 4: Run the agent against the thread that now has an image to analyze.
             #region Snippet:AgentImageUrlInMessageCreateRun
-            ThreadRun run = await client.ThreadRuns.CreateRunAsync(
+            ThreadRun run = await client.Runs.CreateRunAsync(
                 threadId: thread.Id,
                 assistantId: agent.Id
             );
@@ -86,7 +86,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             do
             {
                 await Task.Delay(TimeSpan.FromMilliseconds(500));
-                run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
+                run = await client.Runs.GetRunAsync(thread.Id, run.Id);
             }
             while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress);
 
@@ -123,7 +123,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             // Step 7: Cleanup
             #region Snippet:AgentImageUrlInMessageCleanup
             await client.Threads.DeleteThreadAsync(thread.Id);
-            await client.AgentsAdministration.DeleteAgentAsync(agent.Id);
+            await client.Administration.DeleteAgentAsync(agent.Id);
             #endregion
         }
 
@@ -143,7 +143,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // Step 1: Create an agent
             #region Snippet:AgentImageUrlInMessageCreateAgent_Sync
-            PersistentAgent agent = client.AgentsAdministration.CreateAgent(
+            PersistentAgent agent = client.Administration.CreateAgent(
                 model: modelDeploymentName,
                 name: "Image Understanding Agent",
                 instructions: "You are an image-understanding agent. Analyze images and provide textual descriptions."
@@ -178,7 +178,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // Step 4: Run the agent against the thread that has an image to analyze.
             #region Snippet:AgentImageUrlInMessageCreateRun_Sync
-            ThreadRun run = client.ThreadRuns.CreateRun(
+            ThreadRun run = client.Runs.CreateRun(
                 threadId: thread.Id,
                 assistantId: agent.Id
             );
@@ -189,7 +189,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             do
             {
                 Thread.Sleep(TimeSpan.FromMilliseconds(500));
-                run = client.ThreadRuns.GetRun(thread.Id, run.Id);
+                run = client.Runs.GetRun(thread.Id, run.Id);
             }
             while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress);
 
@@ -226,7 +226,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             // Step 7: Cleanup
             #region Snippet:AgentImageUrlInMessageCleanup_Sync
             client.Threads.DeleteThread(thread.Id);
-            client.AgentsAdministration.DeleteAgent(agent.Id);
+            client.Administration.DeleteAgent(agent.Id);
             #endregion
         }
     }

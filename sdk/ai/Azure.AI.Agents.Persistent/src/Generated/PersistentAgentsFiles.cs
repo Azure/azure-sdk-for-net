@@ -15,7 +15,7 @@ namespace Azure.AI.Agents.Persistent
 {
     // Data plane generated sub-client.
     /// <summary> A collection of file‐related operations under `/files`. </summary>
-    public partial class PersistentAgentsFilesClient
+    public partial class PersistentAgentsFiles
     {
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
@@ -32,19 +32,19 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of PersistentAgentsFilesClient for mocking. </summary>
-        protected PersistentAgentsFilesClient()
+        /// <summary> Initializes a new instance of PersistentAgentsFiles for mocking. </summary>
+        protected PersistentAgentsFiles()
         {
         }
 
-        /// <summary> Initializes a new instance of PersistentAgentsFilesClient. </summary>
+        /// <summary> Initializes a new instance of PersistentAgentsFiles. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal PersistentAgentsFilesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal PersistentAgentsFiles(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -95,7 +95,7 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> InternalListFilesAsync(string purpose, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsFilesClient.InternalListFiles");
+            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsFiles.InternalListFiles");
             scope.Start();
             try
             {
@@ -130,7 +130,7 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> The response returned from the service. </returns>
         internal virtual Response InternalListFiles(string purpose, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsFilesClient.InternalListFiles");
+            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsFiles.InternalListFiles");
             scope.Start();
             try
             {
@@ -169,7 +169,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsFilesClient.UploadFile");
+            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsFiles.UploadFile");
             scope.Start();
             try
             {
@@ -208,7 +208,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsFilesClient.UploadFile");
+            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsFiles.UploadFile");
             scope.Start();
             try
             {
@@ -275,7 +275,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsFilesClient.InternalDeleteFile");
+            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsFiles.InternalDeleteFile");
             scope.Start();
             try
             {
@@ -314,7 +314,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsFilesClient.InternalDeleteFile");
+            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsFiles.InternalDeleteFile");
             scope.Start();
             try
             {
@@ -381,7 +381,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsFilesClient.GetFile");
+            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsFiles.GetFile");
             scope.Start();
             try
             {
@@ -420,7 +420,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsFilesClient.GetFile");
+            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsFiles.GetFile");
             scope.Start();
             try
             {
@@ -487,7 +487,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsFilesClient.GetFileContent");
+            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsFiles.GetFileContent");
             scope.Start();
             try
             {
@@ -526,7 +526,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsFilesClient.GetFileContent");
+            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsFiles.GetFileContent");
             scope.Start();
             try
             {

@@ -18,7 +18,7 @@ namespace Azure.AI.Agents.Persistent
 {
     // Data plane generated sub-client.
     /// <summary> A collection of thread operations under `/threads`. </summary>
-    public partial class ThreadsClient
+    public partial class Threads
     {
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
@@ -35,19 +35,19 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of ThreadsClient for mocking. </summary>
-        protected ThreadsClient()
+        /// <summary> Initializes a new instance of Threads for mocking. </summary>
+        protected Threads()
         {
         }
 
-        /// <summary> Initializes a new instance of ThreadsClient. </summary>
+        /// <summary> Initializes a new instance of Threads. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal ThreadsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal Threads(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -115,7 +115,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ThreadsClient.CreateThread");
+            using var scope = ClientDiagnostics.CreateScope("Threads.CreateThread");
             scope.Start();
             try
             {
@@ -153,7 +153,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ThreadsClient.CreateThread");
+            using var scope = ClientDiagnostics.CreateScope("Threads.CreateThread");
             scope.Start();
             try
             {
@@ -220,7 +220,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            using var scope = ClientDiagnostics.CreateScope("ThreadsClient.GetThread");
+            using var scope = ClientDiagnostics.CreateScope("Threads.GetThread");
             scope.Start();
             try
             {
@@ -259,7 +259,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            using var scope = ClientDiagnostics.CreateScope("ThreadsClient.GetThread");
+            using var scope = ClientDiagnostics.CreateScope("Threads.GetThread");
             scope.Start();
             try
             {
@@ -342,7 +342,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ThreadsClient.UpdateThread");
+            using var scope = ClientDiagnostics.CreateScope("Threads.UpdateThread");
             scope.Start();
             try
             {
@@ -383,7 +383,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ThreadsClient.UpdateThread");
+            using var scope = ClientDiagnostics.CreateScope("Threads.UpdateThread");
             scope.Start();
             try
             {
@@ -450,7 +450,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            using var scope = ClientDiagnostics.CreateScope("ThreadsClient.InternalDeleteThread");
+            using var scope = ClientDiagnostics.CreateScope("Threads.InternalDeleteThread");
             scope.Start();
             try
             {
@@ -489,7 +489,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            using var scope = ClientDiagnostics.CreateScope("ThreadsClient.InternalDeleteThread");
+            using var scope = ClientDiagnostics.CreateScope("Threads.InternalDeleteThread");
             scope.Start();
             try
             {

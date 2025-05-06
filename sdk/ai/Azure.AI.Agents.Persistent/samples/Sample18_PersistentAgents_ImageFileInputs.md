@@ -23,7 +23,7 @@ string pathToImage = Path.Combine(
 
 // The file might be an image or any relevant binary.
 // Make sure the server or container is set up for "Agents" usage if required.
-PersistentAgentFileInfo uploadedFile = client.PersistentAgentsFiles.UploadFile(
+PersistentAgentFileInfo uploadedFile = client.Files.UploadFile(
     filePath: pathToImage,
     purpose: PersistentAgentFilePurpose.Agents
 );
@@ -39,7 +39,7 @@ string pathToImage = Path.Combine(
 
 // The file might be an image or any relevant binary.
 // Make sure the server or container is set up for "Agents" usage if required.
-PersistentAgentFileInfo uploadedFile = await client.PersistentAgentsFiles.UploadFileAsync(
+PersistentAgentFileInfo uploadedFile = await client.Files.UploadFileAsync(
     filePath: pathToImage,
     purpose: PersistentAgentFilePurpose.Agents
 );
@@ -50,7 +50,7 @@ Console.WriteLine($"Uploaded file with ID: {uploadedFile.Id}");
 
 Synchronous sample:
 ```C# Snippet:AgentsImageFileInMessageCreateAgent_Sync
-PersistentAgent agent = client.AgentsAdministration.CreateAgent(
+PersistentAgent agent = client.Administration.CreateAgent(
     model: modelDeploymentName,
     name: "File Image Understanding Agent",
     instructions: "Analyze images from internally uploaded files."
@@ -59,7 +59,7 @@ PersistentAgent agent = client.AgentsAdministration.CreateAgent(
 
 Asynchronous sample:
 ```C# Snippet:AgentsImageFileInMessageCreateAgent
-PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "File Image Understanding Agent",
     instructions: "Analyze images from internally uploaded files."
@@ -114,7 +114,7 @@ ThreadMessage imageMessage = await client.Messages.CreateMessageAsync(
 
 Synchronous sample:
 ```C# Snippet:AgentsImageFileInMessageCreateRun_Sync
-ThreadRun run = client.ThreadRuns.CreateRun(
+ThreadRun run = client.Runs.CreateRun(
     threadId: thread.Id,
     assistantId: agent.Id
 );
@@ -122,7 +122,7 @@ ThreadRun run = client.ThreadRuns.CreateRun(
 
 Asynchronous sample:
 ```C# Snippet:AgentsImageFileInMessageCreateRun
-ThreadRun run = await client.ThreadRuns.CreateRunAsync(
+ThreadRun run = await client.Runs.CreateRunAsync(
     threadId: thread.Id,
     assistantId: agent.Id
 );
@@ -135,7 +135,7 @@ Synchronous sample:
 do
 {
     Thread.Sleep(500);
-    run = client.ThreadRuns.GetRun(thread.Id, run.Id);
+    run = client.Runs.GetRun(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress);
 
@@ -150,7 +150,7 @@ Asynchronous sample:
 do
 {
     await Task.Delay(500);
-    run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
+    run = await client.Runs.GetRunAsync(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress);
 
@@ -215,11 +215,11 @@ await foreach (ThreadMessage msg in messages)
 Synchronous sample:
 ```C# Snippet:AgentsImageFileInMessageCleanup_Sync
 client.Threads.DeleteThread(thread.Id);
-client.AgentsAdministration.DeleteAgent(agent.Id);
+client.Administration.DeleteAgent(agent.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentsImageFileInMessageCleanup
 await client.Threads.DeleteThreadAsync(thread.Id);
-await client.AgentsAdministration.DeleteAgentAsync(agent.Id);
+await client.Administration.DeleteAgentAsync(agent.Id);
 ```

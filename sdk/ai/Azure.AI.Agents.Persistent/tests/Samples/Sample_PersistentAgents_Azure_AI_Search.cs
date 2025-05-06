@@ -44,7 +44,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
 
         PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
-        PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+        PersistentAgent agent = await client.Administration.CreateAgentAsync(
            model: modelDeploymentName,
            name: "my-agent",
            instructions: "You are a helpful agent.",
@@ -62,12 +62,12 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
             "What is the temperature rating of the cozynights sleeping bag?");
 
         // Run the agent
-        ThreadRun run = await client.ThreadRuns.CreateRunAsync(thread, agent);
+        ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
 
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
+            run = await client.Runs.GetRunAsync(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
@@ -120,7 +120,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
         #endregion
         #region Snippet:AgentsAzureAISearchExample_Cleanup
         await client.Threads.DeleteThreadAsync(thread.Id);
-        await client.AgentsAdministration.DeleteAgentAsync(agent.Id);
+        await client.Administration.DeleteAgentAsync(agent.Id);
         #endregion
     }
 
@@ -152,7 +152,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
 
         PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
-        PersistentAgent agent = client.AgentsAdministration.CreateAgent(
+        PersistentAgent agent = client.Administration.CreateAgent(
            model: modelDeploymentName,
            name: "my-agent",
            instructions: "You are a helpful agent.",
@@ -170,12 +170,12 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
             "What is the temperature rating of the cozynights sleeping bag?");
 
         // Run the agent
-        Response<ThreadRun> runResponse = client.ThreadRuns.CreateRun(thread, agent);
+        Response<ThreadRun> runResponse = client.Runs.CreateRun(thread, agent);
 
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            runResponse = client.ThreadRuns.GetRun(thread.Id, runResponse.Value.Id);
+            runResponse = client.Runs.GetRun(thread.Id, runResponse.Value.Id);
         }
         while (runResponse.Value.Status == RunStatus.Queued
             || runResponse.Value.Status == RunStatus.InProgress);
@@ -228,7 +228,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
         #endregion
         #region Snippet:AgentsAzureAISearchExample_Cleanup_Sync
         client.Threads.DeleteThread(thread.Id);
-        client.AgentsAdministration.DeleteAgent(agent.Id);
+        client.Administration.DeleteAgent(agent.Id);
         #endregion
     }
 }

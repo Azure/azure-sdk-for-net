@@ -16,12 +16,12 @@ namespace Azure.AI.Agents.Persistent
         protected PersistentAgentsClient()
         { }
 
-        internal PersistentAgentsClient(PersistentAgentsAdministrationClient client)
+        internal PersistentAgentsClient(PersistentAgentsAdministration client)
         {
             _client = client;
         }
 
-        private PersistentAgentsAdministrationClient _client;
+        private PersistentAgentsAdministration _client;
         /// <summary> Initializes a new instance of AzureAIClient. </summary>
         /// <param name="endpoint"> The Azure AI Foundry project endpoint, in the form `https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;`</param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
@@ -62,60 +62,60 @@ namespace Azure.AI.Agents.Persistent
         {
         }
 
-        public virtual Response<ThreadRun> CreateThreadAndRun(string assistantId, PersistentAgentThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, UpdateToolResourcesOptions toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual Response<ThreadRun> CreateThreadAndRun(string assistantId, ThreadAndRunOptions options, CancellationToken cancellationToken = default)
         {
             return _client.CreateThreadAndRun(
                 assistantId: assistantId,
-                thread: thread,
-                overrideModelName: overrideModelName,
-                overrideInstructions: overrideInstructions,
-                overrideTools: overrideTools,
-                toolResources: toolResources,
-                stream: stream,
-                temperature: temperature,
-                topP: topP,
-                maxPromptTokens: maxPromptTokens,
-                maxCompletionTokens: maxCompletionTokens,
-                truncationStrategy: truncationStrategy,
-                toolChoice: toolChoice,
-                responseFormat: responseFormat,
-                parallelToolCalls: parallelToolCalls,
-                metadata: metadata,
+                thread: options.ThreadOptions,
+                overrideModelName: options.OverrideModelName,
+                overrideInstructions: options.OverrideInstructions,
+                overrideTools: options.OverrideTools,
+                toolResources: options.ToolResources,
+                stream: options.Stream,
+                temperature: options.Temperature,
+                topP: options.TopP,
+                maxPromptTokens: options.MaxPromptTokens,
+                maxCompletionTokens: options.MaxCompletionTokens,
+                truncationStrategy: options.TruncationStrategy,
+                toolChoice: options.ToolChoice,
+                responseFormat: options.ResponseFormat,
+                parallelToolCalls: options.ParallelToolCalls,
+                metadata: options.Metadata,
                 cancellationToken: cancellationToken
             );
         }
 
-        public virtual async Task<Response<ThreadRun>> CreateThreadAndRunAsync(string assistantId, PersistentAgentThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, UpdateToolResourcesOptions toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreadRun>> CreateThreadAndRunAsync(string assistantId, ThreadAndRunOptions options, CancellationToken cancellationToken = default)
         {
             return await _client.CreateThreadAndRunAsync(
                 assistantId: assistantId,
-                thread: thread,
-                overrideModelName: overrideModelName,
-                overrideInstructions: overrideInstructions,
-                overrideTools: overrideTools,
-                toolResources: toolResources,
-                stream: stream,
-                temperature: temperature,
-                topP: topP,
-                maxPromptTokens: maxPromptTokens,
-                maxCompletionTokens: maxCompletionTokens,
-                truncationStrategy: truncationStrategy,
-                toolChoice: toolChoice,
-                responseFormat: responseFormat,
-                parallelToolCalls: parallelToolCalls,
-                metadata: metadata,
+                thread: options.ThreadOptions,
+                overrideModelName: options.OverrideModelName,
+                overrideInstructions: options.OverrideInstructions,
+                overrideTools: options.OverrideTools,
+                toolResources: options.ToolResources,
+                stream: options.Stream,
+                temperature: options.Temperature,
+                topP: options.TopP,
+                maxPromptTokens: options.MaxPromptTokens,
+                maxCompletionTokens: options.MaxCompletionTokens,
+                truncationStrategy: options.TruncationStrategy,
+                toolChoice: options.ToolChoice,
+                responseFormat: options.ResponseFormat,
+                parallelToolCalls: options.ParallelToolCalls,
+                metadata: options.Metadata,
                 cancellationToken: cancellationToken
             ).ConfigureAwait(false);
         }
 
-        public PersistentAgentsAdministrationClient AgentsAdministration { get => _client; }
-        public PersistentAgentsFilesClient PersistentAgentsFiles { get => _client.GetPersistentAgentsFilesClient(); }
-        public ThreadMessagesClient Messages { get => _client.GetThreadMessagesClient();}
-        public ThreadsClient Threads { get => _client.GetThreadsClient(); }
-        public ThreadRunsClient ThreadRuns { get => _client.GetThreadRunsClient(); }
-        public ThreadRunStepsClient ThreadRunSteps { get => _client.GetThreadRunStepsClient(); }
-        public VectorStoresClient VectorStores { get => _client.GetVectorStoresClient(); }
-        public VectorStoreFileBatchesClient VectorStoreFileBatches { get => _client.GetVectorStoreFileBatchesClient(); }
-        public VectorStoreFilesClient VectorStoreFiles { get => _client.GetVectorStoreFilesClient(); }
+        public PersistentAgentsAdministration Administration { get => _client; }
+        public PersistentAgentsFiles Files { get => _client.GetPersistentAgentsFilesClient(); }
+        public ThreadMessages Messages { get => _client.GetThreadMessagesClient();}
+        public Threads Threads { get => _client.GetThreadsClient(); }
+        public ThreadRuns Runs { get => _client.GetThreadRunsClient(); }
+        public ThreadRunSteps ThreadRunSteps { get => _client.GetThreadRunStepsClient(); }
+        public VectorStores VectorStores { get => _client.GetVectorStoresClient(); }
+        public VectorStoreFileBatches VectorStoreFileBatches { get => _client.GetVectorStoreFileBatchesClient(); }
+        public VectorStoreFiles VectorStoreFiles { get => _client.GetVectorStoreFilesClient(); }
     }
 }

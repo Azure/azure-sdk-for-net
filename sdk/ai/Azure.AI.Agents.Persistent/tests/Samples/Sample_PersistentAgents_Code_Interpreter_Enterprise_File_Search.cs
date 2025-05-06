@@ -33,7 +33,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
         #endregion
         #region Snippet:AgentsCodeInterpreterEnterpriseSearchAsync_CreateAgent
         List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
-        PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+        PersistentAgent agent = await client.Administration.CreateAgentAsync(
             model: modelDeploymentName,
             name: "my-agent",
             instructions: "You are helpful agent.",
@@ -62,14 +62,14 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
             attachments: [ attachment ]
         );
 
-        ThreadRun run = await client.ThreadRuns.CreateRunAsync(
+        ThreadRun run = await client.Runs.CreateRunAsync(
             thread.Id,
             agent.Id
         );
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
+            run = await client.Runs.GetRunAsync(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
@@ -87,7 +87,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
         #endregion
         #region Snippet:AgentsCodeInterpreterEnterpriseSearchAsync_Cleanup
         await client.Threads.DeleteThreadAsync(thread.Id);
-        await client.AgentsAdministration.DeleteAgentAsync(agent.Id);
+        await client.Administration.DeleteAgentAsync(agent.Id);
         #endregion
     }
 
@@ -109,7 +109,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
         PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
         #region Snippet:AgentsCodeInterpreterEnterpriseSearch_CreateAgent
         List<ToolDefinition> tools = [new CodeInterpreterToolDefinition()];
-        PersistentAgent agent = client.AgentsAdministration.CreateAgent(
+        PersistentAgent agent = client.Administration.CreateAgent(
             model: modelDeploymentName,
             name: "my-agent",
             instructions: "You are helpful agent.",
@@ -136,14 +136,14 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
             attachments: [attachment]
         );
 
-        ThreadRun run = client.ThreadRuns.CreateRun(
+        ThreadRun run = client.Runs.CreateRun(
             thread.Id,
             agent.Id
         );
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            run = client.ThreadRuns.GetRun(thread.Id, run.Id);
+            run = client.Runs.GetRun(thread.Id, run.Id);
         }
         while (run.Status == RunStatus.Queued
             || run.Status == RunStatus.InProgress);
@@ -161,7 +161,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
         #endregion
         #region Snippet:AgentsCodeInterpreterEnterpriseSearch_Cleanup
         client.Threads.DeleteThread(thread.Id);
-        client.AgentsAdministration.DeleteAgent(agent.Id);
+        client.Administration.DeleteAgent(agent.Id);
         #endregion
     }
 

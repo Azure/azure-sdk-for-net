@@ -12,7 +12,7 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Agents.Persistent
 {
     [CodeGenClient("Files")]
-    public partial class PersistentAgentsFilesClient
+    public partial class PersistentAgentsFiles
     {
         /// <summary>
         /// Uploads a file from a local file path accessible to <see cref="System.IO.File"/>.

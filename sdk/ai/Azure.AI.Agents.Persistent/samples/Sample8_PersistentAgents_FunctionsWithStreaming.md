@@ -101,7 +101,7 @@ ToolOutput GetResolvedToolOutput(string functionName, string toolCallId, string 
 
 Synchronous sample:
 ```C# Snippet:AgentsFunctionsWithStreamingSync_CreateAgent
-PersistentAgent agent = client.AgentsAdministration.CreateAgent(
+PersistentAgent agent = client.Administration.CreateAgent(
     model: modelDeploymentName,
     name: "SDK Test Agent - Functions",
         instructions: "You are a weather bot. Use the provided functions to help answer questions. "
@@ -113,7 +113,7 @@ PersistentAgent agent = client.AgentsAdministration.CreateAgent(
 
 Asynchronous sample:
 ```C# Snippet:AgentsFunctionsWithStreaming_CreateAgent
-PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "SDK Test Agent - Functions",
         instructions: "You are a weather bot. Use the provided functions to help answer questions. "
@@ -151,7 +151,7 @@ Synchronous sample:
 ```C# Snippet:AgentsFunctionsWithStreamingSyncUpdateCycle
 List<ToolOutput> toolOutputs = [];
 ThreadRun streamRun = null;
-CollectionResult<StreamingUpdate> stream = client.ThreadRuns.CreateRunStreaming(thread.Id, agent.Id);
+CollectionResult<StreamingUpdate> stream = client.Runs.CreateRunStreaming(thread.Id, agent.Id);
 do
 {
     toolOutputs.Clear();
@@ -188,7 +188,7 @@ do
     }
     if (toolOutputs.Count > 0)
     {
-        stream = client.ThreadRuns.SubmitToolOutputsToStream(streamRun, toolOutputs);
+        stream = client.Runs.SubmitToolOutputsToStream(streamRun, toolOutputs);
     }
 }
 while (toolOutputs.Count > 0);
@@ -198,7 +198,7 @@ Asynchronous sample:
 ```C# Snippet:AgentsFunctionsWithStreamingUpdateCycle
 List<ToolOutput> toolOutputs = [];
 ThreadRun streamRun = null;
-AsyncCollectionResult<StreamingUpdate> stream = client.ThreadRuns.CreateRunStreamingAsync(thread.Id, agent.Id);
+AsyncCollectionResult<StreamingUpdate> stream = client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id);
 do
 {
     toolOutputs.Clear();
@@ -235,7 +235,7 @@ do
     }
     if (toolOutputs.Count > 0)
     {
-        stream = client.ThreadRuns.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs);
+        stream = client.Runs.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs);
     }
 }
 while (toolOutputs.Count > 0);
@@ -246,11 +246,11 @@ while (toolOutputs.Count > 0);
 Synchronous sample:
 ```C# Snippet:AgentsFunctionsWithStreamingSync_Cleanup
 client.Threads.DeleteThread(thread.Id);
-client.AgentsAdministration.DeleteAgent(agent.Id);
+client.Administration.DeleteAgent(agent.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentsFunctionsWithStreaming_Cleanup
 await client.Threads.DeleteThreadAsync(thread.Id);
-await client.AgentsAdministration.DeleteAgentAsync(agent.Id);
+await client.Administration.DeleteAgentAsync(agent.Id);
 ```

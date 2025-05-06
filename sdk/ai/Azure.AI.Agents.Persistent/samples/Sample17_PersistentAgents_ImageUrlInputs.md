@@ -15,7 +15,7 @@ PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential(
 
 Synchronous sample:
 ```C# Snippet:AgentImageUrlInMessageCreateAgent_Sync
-PersistentAgent agent = client.AgentsAdministration.CreateAgent(
+PersistentAgent agent = client.Administration.CreateAgent(
     model: modelDeploymentName,
     name: "Image Understanding Agent",
     instructions: "You are an image-understanding agent. Analyze images and provide textual descriptions."
@@ -24,7 +24,7 @@ PersistentAgent agent = client.AgentsAdministration.CreateAgent(
 
 Asynchronous sample:
 ```C# Snippet:AgentImageUrlInMessageCreateAgent
-PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "Image Understanding Agent",
     instructions: "You are an image-understanding agent. Analyze images and provide textual descriptions."
@@ -88,7 +88,7 @@ ThreadMessage imageMessage = await client.Messages.CreateMessageAsync(
 
 Synchronous sample:
 ```C# Snippet:AgentImageUrlInMessageCreateRun_Sync
-ThreadRun run = client.ThreadRuns.CreateRun(
+ThreadRun run = client.Runs.CreateRun(
     threadId: thread.Id,
     assistantId: agent.Id
 );
@@ -96,7 +96,7 @@ ThreadRun run = client.ThreadRuns.CreateRun(
 
 Asynchronous sample:
 ```C# Snippet:AgentImageUrlInMessageCreateRun
-ThreadRun run = await client.ThreadRuns.CreateRunAsync(
+ThreadRun run = await client.Runs.CreateRunAsync(
     threadId: thread.Id,
     assistantId: agent.Id
 );
@@ -110,7 +110,7 @@ Synchronous sample:
 do
 {
     Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    run = client.ThreadRuns.GetRun(thread.Id, run.Id);
+    run = client.Runs.GetRun(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress);
 
@@ -125,7 +125,7 @@ Asynchronous sample:
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
-    run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
+    run = await client.Runs.GetRunAsync(thread.Id, run.Id);
 }
 while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress);
 
@@ -190,11 +190,11 @@ await foreach (ThreadMessage msg in messages)
 Synchronous sample:
 ```C# Snippet:AgentImageUrlInMessageCleanup_Sync
 client.Threads.DeleteThread(thread.Id);
-client.AgentsAdministration.DeleteAgent(agent.Id);
+client.Administration.DeleteAgent(agent.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentImageUrlInMessageCleanup
 await client.Threads.DeleteThreadAsync(thread.Id);
-await client.AgentsAdministration.DeleteAgentAsync(agent.Id);
+await client.Administration.DeleteAgentAsync(agent.Id);
 ```

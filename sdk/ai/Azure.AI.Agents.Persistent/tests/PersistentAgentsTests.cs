@@ -12,12 +12,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using Azure.Core.Pipeline;
 using NUnit.Framework;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Azure;
-using System.Threading;
-using NUnit.Framework.Constraints;
 
 namespace Azure.AI.Agents.Persistent.Tests
 {
@@ -86,7 +81,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             string name;
             if (argType == ArgumentType.Metadata)
             {
-                Response<PersistentAgent> agentResponse = await client.AgentsAdministration.CreateAgentAsync(
+                Response<PersistentAgent> agentResponse = await client.Administration.CreateAgentAsync(
                 model: "gpt-4",
                 name: AGENT_NAME,
                 instructions: "You are helpful agent."
@@ -102,13 +97,13 @@ namespace Azure.AI.Agents.Persistent.Tests
                     instructions = "You are helpful agent"
                 };
                 RequestContent content = argType == ArgumentType.Bytes?RequestContent.Create(GetBytes(objParams)): RequestContent.Create(GetStream(objParams));
-                Response agentResponse = await client.AgentsAdministration.CreateAgentAsync(content);
+                Response agentResponse = await client.Administration.CreateAgentAsync(content);
                 id = GetFieldFromJson(agentResponse.Content, "id");
                 name = GetFieldFromJson(agentResponse.Content, "name");
             }
             Assert.AreNotEqual(default, id);
             Assert.AreEqual(name, AGENT_NAME);
-            Response<bool> delResponse = await client.AgentsAdministration.DeleteAgentAsync(id);
+            Response<bool> delResponse = await client.Administration.DeleteAgentAsync(id);
             Assert.IsTrue(delResponse.Value);
         }
 
@@ -123,7 +118,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             string name = default;
             if (argType == ArgumentType.Metadata)
             {
-                Response<PersistentAgent> agentResponse = await client.AgentsAdministration.UpdateAgentAsync(
+                Response<PersistentAgent> agentResponse = await client.Administration.UpdateAgentAsync(
                 assistantId: agent.Id,
                 model: "gpt-4",
                 name: AGENT_NAME2,
@@ -140,7 +135,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                     instructions = "You are helpful agent"
                 };
                 RequestContent content = argType == ArgumentType.Bytes ? RequestContent.Create(GetBytes(objParams)) : RequestContent.Create(GetStream(objParams));
-                Response agentResponse = await client.AgentsAdministration.UpdateAgentAsync(agent.Id, content);
+                Response agentResponse = await client.Administration.UpdateAgentAsync(agent.Id, content);
                 name = GetFieldFromJson(agentResponse.Content, "name");
             }
             Assert.AreEqual(AGENT_NAME2, name);
@@ -432,7 +427,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             ThreadRun result;
             if (argType == ArgumentType.Metadata)
             {
-                Response<ThreadRun> runResp = await client.ThreadRuns.CreateRunAsync(thread.Id, agent.Id);
+                Response<ThreadRun> runResp = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
                 result = runResp.Value;
             }
             else
@@ -442,8 +437,8 @@ namespace Azure.AI.Agents.Persistent.Tests
                     assistant_id = agent.Id
                 };
                 RequestContent content = argType == ArgumentType.Bytes ? RequestContent.Create(GetBytes(data)) : RequestContent.Create(GetStream(data));
-                Response rawRun = await client.ThreadRuns.CreateRunAsync(thread.Id, content);
-                Response<ThreadRun> resResp = await client.ThreadRuns.GetRunAsync(thread.Id, GetFieldFromJson(rawRun.Content, "id"));
+                Response rawRun = await client.Runs.CreateRunAsync(thread.Id, content);
+                Response<ThreadRun> resResp = await client.Runs.GetRunAsync(thread.Id, GetFieldFromJson(rawRun.Content, "id"));
                 result = resResp.Value;
             }
             Assert.AreEqual(agent.Id, result.AssistantId);
@@ -475,13 +470,17 @@ namespace Azure.AI.Agents.Persistent.Tests
                 role: MessageRole.User,
                 content: "Hello, tell me a joke"
             ));
+            var opts = new ThreadAndRunOptions()
+            {
+                ThreadOptions=threadOp,
+                Metadata=new Dictionary<string, string> {
+                    { "key1", "value1"},
+                    { "key2", "value2"}
+                }
+            };
             result = await client.CreateThreadAndRunAsync(
                 assistantId: agent.Id,
-                thread: threadOp,
-                metadata: new Dictionary<string, string> {
-                        { "key1", "value1"},
-                        { "key2", "value2"}
-                    }
+                opts
             );
             Assert.AreEqual(agent.Id, result.AssistantId);
             //  Check run status
@@ -503,12 +502,12 @@ namespace Azure.AI.Agents.Persistent.Tests
             PersistentAgent agent = await GetAgent(client);
             PersistentAgentThread thread = await GetThread(client);
             await client.Messages.CreateMessageAsync(thread.Id, MessageRole.User, "Hello, tell me a joke");
-            ThreadRun  runResp = await client.ThreadRuns.CreateRunAsync(thread.Id, agent.Id);
+            ThreadRun  runResp = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
             runResp = await WaitForRun(client, runResp);
             Assert.AreEqual(0, runResp.Metadata.Count);
             if (argType == ArgumentType.Metadata)
             {
-                runResp = await client.ThreadRuns.UpdateRunAsync(
+                runResp = await client.Runs.UpdateRunAsync(
                     threadId: thread.Id,
                     runId: runResp.Id,
                     metadata: new Dictionary<string, string> {
@@ -528,8 +527,8 @@ namespace Azure.AI.Agents.Persistent.Tests
                     }
                 };
                 RequestContent content = argType == ArgumentType.Bytes ? RequestContent.Create(GetBytes(data)) : RequestContent.Create(GetStream(data));
-                Response rawRun = await client.ThreadRuns.UpdateRunAsync(thread.Id, runResp.Id, content);
-                runResp = await client.ThreadRuns.GetRunAsync(thread.Id, GetFieldFromJson(rawRun.Content, "id"));
+                Response rawRun = await client.Runs.UpdateRunAsync(thread.Id, runResp.Id, content);
+                runResp = await client.Runs.GetRunAsync(thread.Id, GetFieldFromJson(rawRun.Content, "id"));
             }
             Assert.AreEqual(2, runResp.Metadata.Count);
         }
@@ -541,13 +540,13 @@ namespace Azure.AI.Agents.Persistent.Tests
             PersistentAgent agent = await GetAgent(client);
             PersistentAgentThread thread = await GetThread(client);
             await client.Messages.CreateMessageAsync(thread.Id, MessageRole.User, "Hello, tell me a joke");
-            ThreadRun runResp1 = await client.ThreadRuns.CreateRunAsync(thread.Id, agent.Id);
+            ThreadRun runResp1 = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
             runResp1 = await WaitForRun(client, runResp1);
-            ThreadRun runResp2 = await client.ThreadRuns.CreateRunAsync(thread.Id, agent.Id);
+            ThreadRun runResp2 = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
             runResp2 = await WaitForRun(client, runResp2);
-            AsyncPageable<ThreadRun> runsResp = client.ThreadRuns.GetRunsAsync(thread.Id, limit: 1);
+            AsyncPageable<ThreadRun> runsResp = client.Runs.GetRunsAsync(thread.Id, limit: 1);
             Assert.True(await runsResp.AnyAsync());
-            runsResp = client.ThreadRuns.GetRunsAsync(thread.Id);
+            runsResp = client.Runs.GetRunsAsync(thread.Id);
             List<ThreadRun> data = await runsResp.ToListAsync();
             Assert.AreEqual(2, data.Count);
             HashSet<string> ids = [data[0].Id, data[1].Id];
@@ -585,7 +584,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                         Required = new[] { "name" },
                     },
                     new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
-            PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+            PersistentAgent agent = await client.Administration.CreateAgentAsync(
                 model: "gpt-4",
                 name: AGENT_NAME,
                 instructions: "Use the provided functions to help answer questions.",
@@ -599,17 +598,21 @@ namespace Azure.AI.Agents.Persistent.Tests
                     role: MessageRole.User,
                     content: "Tell me the favourite word of Mike?"
                 ));
+                var opts = new ThreadAndRunOptions()
+                {
+                    ThreadOptions = threadOp,
+                    ParallelToolCalls = parallelToolCalls
+                };
                 toolRun = await client.CreateThreadAndRunAsync(
                     assistantId: agent.Id,
-                    thread: threadOp,
-                    parallelToolCalls: parallelToolCalls
+                    options: opts
                 );
             }
             else
             {
                 PersistentAgentThread thread = await GetThread(client);
                 await client.Messages.CreateMessageAsync(thread.Id, MessageRole.User, "Tell me the favourite word of Mike?");
-                toolRun = await client.ThreadRuns.CreateRunAsync(
+                toolRun = await client.Runs.CreateRunAsync(
                     threadId: thread.Id,
                     assistantId: agent.Id,
                     parallelToolCalls: parallelToolCalls
@@ -619,7 +622,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             do
             {
                 await Task.Delay(TimeSpan.FromMilliseconds(500));
-                toolRun = await client.ThreadRuns.GetRunAsync(toolRun.ThreadId, toolRun.Id);
+                toolRun = await client.Runs.GetRunAsync(toolRun.ThreadId, toolRun.Id);
                 if (toolRun.Status == RunStatus.RequiresAction && toolRun.RequiredAction is SubmitToolOutputsAction submitToolOutputsAction)
                 {
                     List<ToolOutput> toolOutputs = new();
@@ -638,7 +641,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                     }
                     if (argType == ArgumentType.Metadata)
                     {
-                        toolRun = await client.ThreadRuns.SubmitToolOutputsToRunAsync(toolRun, toolOutputs);
+                        toolRun = await client.Runs.SubmitToolOutputsToRunAsync(toolRun, toolOutputs);
                     }
                     else
                     {
@@ -652,8 +655,8 @@ namespace Azure.AI.Agents.Persistent.Tests
                             }
                         };
                         RequestContent content = argType == ArgumentType.Bytes ? RequestContent.Create(GetBytes(objToolOutput)) : RequestContent.Create(GetStream(objToolOutput));
-                        await client.ThreadRuns.SubmitToolOutputsToRunAsync(toolRun.ThreadId, toolRun.Id, content);
-                        toolRun = await client.ThreadRuns.GetRunAsync(toolRun.ThreadId, toolRun.Id);
+                        await client.Runs.SubmitToolOutputsToRunAsync(toolRun.ThreadId, toolRun.Id, content);
+                        toolRun = await client.Runs.GetRunAsync(toolRun.ThreadId, toolRun.Id);
                     }
                 }
             }
@@ -696,7 +699,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             List<string> fileIds = null;
             if (useFileSource)
             {
-                fileDataSource = await client.PersistentAgentsFiles.UploadFileAsync(GetFile(), PersistentAgentFilePurpose.Agents);
+                fileDataSource = await client.Files.UploadFileAsync(GetFile(), PersistentAgentFilePurpose.Agents);
                 fileIds = [ fileDataSource.Id ];
             }
             else
@@ -742,7 +745,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             // Test file search
             FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
             fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
-            PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+            PersistentAgent agent = await client.Administration.CreateAgentAsync(
                 model: "gpt-4",
                 name: "SDK Test Agent - Retrieval",
                 instructions: "You are a helpful agent that can help fetch data from files you know about.",
@@ -760,7 +763,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                     role: MessageRole.User,
                     content: "What does the attachment say?"
                 )]);
-                await foreach (StreamingUpdate streamingUpdate in client.ThreadRuns.CreateRunStreamingAsync(thread.Id, agent.Id))
+                await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id))
                 {
                     if (streamingUpdate is RunUpdate runUpdate)
                         fileSearchRun = runUpdate.Value;
@@ -769,9 +772,13 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
             else
             {
+                var opts = new ThreadAndRunOptions()
+                {
+                    ThreadOptions = threadOp
+                };
                 fileSearchRun = await client.CreateThreadAndRunAsync(
                     assistantId: agent.Id,
-                    thread: threadOp
+                    opts
                 );
                 fileSearchRun = await WaitForRun(client, fileSearchRun);
             }
@@ -827,7 +834,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             string fileId = default;
             if (useFileSource)
             {
-                PersistentAgentFileInfo fileDataSource = await client.PersistentAgentsFiles.UploadFileAsync(GetFile(), PersistentAgentFilePurpose.Agents);
+                PersistentAgentFileInfo fileDataSource = await client.Files.UploadFileAsync(GetFile(), PersistentAgentFilePurpose.Agents);
                 fileId = fileDataSource.Id;
                 attachment = new MessageAttachment(fileDataSource.Id, tools);
             }
@@ -840,7 +847,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 attachment = new MessageAttachment(vectorStoreDataSource, tools);
             }
             // Test file search
-            PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+            PersistentAgent agent = await client.Administration.CreateAgentAsync(
                 model: "gpt-4",
                 name: "SDK Test Agent - Retrieval",
                 instructions: "You are a helpful agent that can help fetch data from files you know about."
@@ -866,7 +873,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                     attachments: [attachment]
                 );
             }
-            ThreadRun fileSearchRun = await client.ThreadRuns.CreateRunAsync(thread, agent);
+            ThreadRun fileSearchRun = await client.Runs.CreateRunAsync(thread, agent);
             fileSearchRun = await WaitForRun(client, fileSearchRun);
             List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id).ToListAsync();
             Assert.GreaterOrEqual(messages.Count, 1);
@@ -887,7 +894,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             CodeInterpreterToolResource toolRes = new();
             if (useFileSource)
             {
-                PersistentAgentFileInfo fileDataSource = await client.PersistentAgentsFiles.UploadFileAsync(GetFile(), PersistentAgentFilePurpose.Agents);
+                PersistentAgentFileInfo fileDataSource = await client.Files.UploadFileAsync(GetFile(), PersistentAgentFilePurpose.Agents);
                 toolRes.FileIds.Add(fileDataSource.Id);
             }
             else
@@ -902,7 +909,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             {
                 CodeInterpreter = toolRes
             };
-            PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+            PersistentAgent agent = await client.Administration.CreateAgentAsync(
                 model: "gpt-4",
                 name: AGENT_NAME,
                 instructions: "You are a helpful agent that can help fetch data from files you know about.",
@@ -917,7 +924,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 role: MessageRole.User,
                 content: "What Contoso Galaxy Innovations produces?"
             );
-            ThreadRun fileSearchRun = await client.ThreadRuns.CreateRunAsync(thread, agent);
+            ThreadRun fileSearchRun = await client.Runs.CreateRunAsync(thread, agent);
 
             long milliseconds = DateTimeOffset.Now.ToUnixTimeMilliseconds();
             fileSearchRun = await WaitForRun(client, fileSearchRun);
@@ -944,7 +951,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             {
                 FileSearch=fileSearch
             };
-            PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+            PersistentAgent agent = await client.Administration.CreateAgentAsync(
                 model: "gpt-4",
                 name: AGENT_NAME,
                 instructions: "You are a helpful agent that can help fetch data from files you know about.",
@@ -957,7 +964,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 role: MessageRole.User,
                 content: "What does the attachment say?"
             );
-            ThreadRun fileSearchRun = await client.ThreadRuns.CreateRunAsync(thread, agent);
+            ThreadRun fileSearchRun = await client.Runs.CreateRunAsync(thread, agent);
 
             fileSearchRun = await WaitForRun(client, fileSearchRun);
             List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id).ToListAsync();
@@ -993,7 +1000,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             {
                 FileSearch = fileSearch
             };
-            PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+            PersistentAgent agent = await client.Administration.CreateAgentAsync(
                 model: "gpt-4",
                 name: AGENT_NAME,
                 instructions: "Hello, you are helpful agent and can search information from uploaded files",
@@ -1011,7 +1018,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             if (useStream)
             {
                 // TODO: Implement include in streaming scenario, see task 3801146.
-                await foreach (StreamingUpdate streamingUpdate in client.ThreadRuns.CreateRunStreamingAsync(thread.Id, agent.Id))
+                await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id))
                 {
                     if (streamingUpdate is RunUpdate runUpdate)
                         fileSearchRun = runUpdate.Value;
@@ -1020,7 +1027,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
             else
             {
-                fileSearchRun = await client.ThreadRuns.CreateRunAsync(thread.Id, agent.Id, include: include);
+                fileSearchRun = await client.Runs.CreateRunAsync(thread.Id, agent.Id, include: include);
 
                 fileSearchRun = await WaitForRun(client, fileSearchRun);
                 Assert.AreEqual(RunStatus.Completed, fileSearchRun.Status);
@@ -1095,7 +1102,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 )
             );
             PersistentAgentsClient client = GetClient();
-            PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+            PersistentAgent agent = await client.Administration.CreateAgentAsync(
                 model: "gpt-4",
                 name: AGENT_NAME,
                 instructions: "You are a helpful support agent. Use the provided function any "
@@ -1110,7 +1117,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 thread.Id,
                 MessageRole.User,
                 "What is the most prevalent element in the universe? What would foo say?");
-            ThreadRun run = await client.ThreadRuns.CreateRunAsync(thread, agent);
+            ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
             await WaitForRun(client, run);
             List<ThreadMessage> afterRunMessages = await client.Messages.GetMessagesAsync(thread.Id).ToListAsync();
 
@@ -1146,7 +1153,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 new(role: MessageRole.Agent, content: "What is the impedance formula?")
             ];
             PersistentAgentThread thread = await client.Threads.CreateThreadAsync(messages: messages);
-            ThreadRun run = await client.ThreadRuns.CreateRunAsync(thread, agent);
+            ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
             run = await WaitForRun(client, run);
             Assert.AreEqual(RunStatus.Completed, run.Status);
             List<ThreadMessage> afterRunMessages = await client.Messages.GetMessagesAsync(thread.Id).ToListAsync();
@@ -1166,14 +1173,14 @@ namespace Azure.AI.Agents.Persistent.Tests
             };
 
             PersistentAgentsClient client = GetClient();
-            PersistentAgentFileInfo fileDataSource = await client.PersistentAgentsFiles.UploadFileAsync(file.FullName, PersistentAgentFilePurpose.Agents);
+            PersistentAgentFileInfo fileDataSource = await client.Files.UploadFileAsync(file.FullName, PersistentAgentFilePurpose.Agents);
 
             CodeInterpreterToolResource cdResource = new();
             cdResource.FileIds.Add(fileDataSource.Id);
             ToolResources toolRes = new();
             toolRes.CodeInterpreter = cdResource;
 
-            PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+            PersistentAgent agent = await client.Administration.CreateAgentAsync(
                 model: "gpt-4",
                 name: AGENT_NAME,
                 instructions: "You are helpful agent",
@@ -1187,7 +1194,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 role: MessageRole.User,
                 content: "Create an image file same as the text file and give me file id?"
             );
-            ThreadRun run = await client.ThreadRuns.CreateRunAsync(thread, agent);
+            ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
             run = await WaitForRun(client, run);
             AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(run.ThreadId, run.Id);
             bool foundId = false;
@@ -1222,7 +1229,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             PersistentAgentsClient client = GetClient();
 
             ToolResources searchResource = GetAISearchToolResource(queryType);
-            PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+            PersistentAgent agent = await client.Administration.CreateAgentAsync(
                 model: "gpt-4",
                 name: AGENT_NAME,
                 instructions: "You are a helpful agent.",
@@ -1237,12 +1244,12 @@ namespace Azure.AI.Agents.Persistent.Tests
                 thread.Id,
                 MessageRole.User,
                 "What is the temperature rating of the cozynights sleeping bag?");
-            ThreadRun run = await client.ThreadRuns.CreateRunAsync(thread, agent);
+            ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
 
             do
             {
                 await Task.Delay(TimeSpan.FromMilliseconds(500));
-                run = await client.ThreadRuns.GetRunAsync(thread.Id, run.Id);
+                run = await client.Runs.GetRunAsync(thread.Id, run.Id);
             }
             while (run.Status == RunStatus.Queued
                 || run.Status == RunStatus.InProgress);
@@ -1306,7 +1313,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             PersistentAgentsClient client = GetClient();
             ToolResources searchResource = GetAISearchToolResource(queryType);
 
-            PersistentAgent agent = await client.AgentsAdministration.CreateAgentAsync(
+            PersistentAgent agent = await client.Administration.CreateAgentAsync(
                 model: "gpt-4",
                 name: AGENT_NAME,
                 instructions: "You are a helpful agent.",
@@ -1321,7 +1328,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 thread.Id,
                 MessageRole.User,
                 "What is the temperature rating of the cozynights sleeping bag?");
-            await foreach (StreamingUpdate streamingUpdate in client.ThreadRuns.CreateRunStreamingAsync(thread.Id, agent.Id))
+            await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id))
             {
                 if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
                 {
@@ -1365,11 +1372,11 @@ namespace Azure.AI.Agents.Persistent.Tests
         {
             var connectionString = TestEnvironment.PROJECT_CONNECTION_STRING;
             // If we are in the Playback, do not ask for authentication.
-            PersistentAgentsAdministrationClient admClient = null;
+            PersistentAgentsAdministration admClient = null;
             PersistentAgentsAdministrationClientOptions opts = InstrumentClientOptions(new PersistentAgentsAdministrationClientOptions());
             if (Mode == RecordedTestMode.Playback)
             {
-                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(connectionString, new MockCredential(), opts));
+                admClient = InstrumentClient(new PersistentAgentsAdministration(connectionString, new MockCredential(), opts));
             }
             // For local testing if you are using non default account
             // add USE_CLI_CREDENTIAL into the .runsettings and set it to true,
@@ -1378,11 +1385,11 @@ namespace Azure.AI.Agents.Persistent.Tests
             var cli = System.Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL");
             if (!string.IsNullOrEmpty(cli) && string.Compare(cli, "true", StringComparison.OrdinalIgnoreCase) == 0)
             {
-                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(connectionString, new AzureCliCredential(), opts));
+                admClient = InstrumentClient(new PersistentAgentsAdministration(connectionString, new AzureCliCredential(), opts));
             }
             else
             {
-                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(connectionString, new DefaultAzureCredential(), opts));
+                admClient = InstrumentClient(new PersistentAgentsAdministration(connectionString, new DefaultAzureCredential(), opts));
             }
             Assert.IsNotNull(admClient);
             return new PersistentAgentsClient(admClient);
@@ -1390,13 +1397,13 @@ namespace Azure.AI.Agents.Persistent.Tests
 
         private static async Task DeleteAndAssert(PersistentAgentsClient client, PersistentAgent agent)
         {
-            Response<bool> resp = await client.AgentsAdministration.DeleteAgentAsync(agent.Id);
+            Response<bool> resp = await client.Administration.DeleteAgentAsync(agent.Id);
             Assert.IsTrue(resp.Value);
         }
 
         private static async Task<PersistentAgent> GetAgent(PersistentAgentsClient client, string agentName=AGENT_NAME, string instruction= "You are helpful agent.")
         {
-            return await client.AgentsAdministration.CreateAgentAsync(
+            return await client.Administration.CreateAgentAsync(
                 model: "gpt-4",
                 name: agentName,
                 instructions: instruction
@@ -1445,7 +1452,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             do
             {
                 await Task.Delay(TimeSpan.FromMilliseconds(delay));
-                run = await client.ThreadRuns.GetRunAsync(run.ThreadId, run.Id);
+                run = await client.Runs.GetRunAsync(run.ThreadId, run.Id);
             }
             while (run.Status == RunStatus.Queued
                 || run.Status == RunStatus.InProgress
@@ -1463,7 +1470,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         private static async Task<int> CountElementsAndRemoveIds(PersistentAgentsClient client, HashSet<string> ids)
         {
             int count = 0;
-            AsyncPageable<PersistentAgent> agentsResp = client.AgentsAdministration.GetAgentsAsync();
+            AsyncPageable<PersistentAgent> agentsResp = client.Administration.GetAgentsAsync();
             await foreach (PersistentAgent agent in agentsResp)
             {
                 ids.Remove(agent.Id);
@@ -1512,11 +1519,11 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
 
             // Remove all files
-            IReadOnlyList<PersistentAgentFileInfo> files = client.PersistentAgentsFiles.GetFiles().Value;
+            IReadOnlyList<PersistentAgentFileInfo> files = client.Files.GetFiles().Value;
             foreach (PersistentAgentFileInfo af in files)
             {
                 if (af.Filename.Equals(FILE_NAME) || af.Filename.Equals(FILE_NAME2))
-                    client.PersistentAgentsFiles.DeleteFile(af.Id);
+                    client.Files.DeleteFile(af.Id);
             }
 
             // Remove all vector stores
@@ -1528,11 +1535,11 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
 
             // Remove all agents
-            Pageable<PersistentAgent> agents = client.AgentsAdministration.GetAgents();
+            Pageable<PersistentAgent> agents = client.Administration.GetAgents();
             foreach (PersistentAgent agent in agents)
             {
                 if (agent.Name.StartsWith(AGENT_NAME))
-                    client.AgentsAdministration.DeleteAgent(agent.Id);
+                    client.Administration.DeleteAgent(agent.Id);
             }
         }
         #endregion
