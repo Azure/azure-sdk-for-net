@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationStatusResult(ResourceIdentifier id, string name, string status, double? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, string resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OperationStatusResult(ResourceIdentifier id, string name, string status, double? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -104,6 +104,6 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <summary> If present, details of the operation error. </summary>
         public ResponseError Error { get; }
         /// <summary> Fully qualified ID of the resource against which the original async operation was started. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
     }
 }
