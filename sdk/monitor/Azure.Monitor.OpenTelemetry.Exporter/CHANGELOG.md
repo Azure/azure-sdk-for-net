@@ -10,6 +10,9 @@
 
 ### Other Changes
 
+* Changed `AzureMonitorLogExporter` to be internal to match the other Exporters (Trace and Metric).
+  ([#49849](https://github.com/Azure/azure-sdk-for-net/pull/49849))
+
 ## 1.4.0-beta.3 (2025-04-01)
 
 ### Features Added
