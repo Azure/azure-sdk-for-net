@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
 
-        /// <summary> Connectionaiting for approval or rejection. </summary>
+        /// <summary> Connection waiting for approval or rejection. </summary>
         public static MongoClusterPrivateEndpointServiceConnectionStatus Pending { get; } = new MongoClusterPrivateEndpointServiceConnectionStatus(PendingValue);
         /// <summary> Connection approved. </summary>
         public static MongoClusterPrivateEndpointServiceConnectionStatus Approved { get; } = new MongoClusterPrivateEndpointServiceConnectionStatus(ApprovedValue);
