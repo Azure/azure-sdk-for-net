@@ -5,7 +5,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Runtime.Serialization;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
