@@ -15,6 +15,12 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         private ConfidentialLedgerResource _ledgerResource;
         public DeleteLedgerTest(string testFixtureName) : base(true, testFixtureName)
         {
+            // Override the default mode to Playback for this test
+            // This is necessary as CI is using None mode and does not run tests
+            if (Mode == RecordedTestMode.None || Mode == RecordedTestMode.Live)
+            {
+                Mode = RecordedTestMode.Playback;
+            }
         }
 
         [SetUp]
