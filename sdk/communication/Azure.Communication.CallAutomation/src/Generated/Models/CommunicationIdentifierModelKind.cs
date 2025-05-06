@@ -27,7 +27,6 @@ namespace Azure.Communication
         private const string PhoneNumberValue = "phoneNumber";
         private const string MicrosoftTeamsUserValue = "microsoftTeamsUser";
         private const string MicrosoftTeamsAppValue = "microsoftTeamsApp";
-        private const string TeamsExtensionUserValue = "teamsExtensionUser";
 
         /// <summary> unknown. </summary>
         public static CommunicationIdentifierModelKind Unknown { get; } = new CommunicationIdentifierModelKind(UnknownValue);
@@ -39,8 +38,6 @@ namespace Azure.Communication
         public static CommunicationIdentifierModelKind MicrosoftTeamsUser { get; } = new CommunicationIdentifierModelKind(MicrosoftTeamsUserValue);
         /// <summary> microsoftTeamsApp. </summary>
         public static CommunicationIdentifierModelKind MicrosoftTeamsApp { get; } = new CommunicationIdentifierModelKind(MicrosoftTeamsAppValue);
-        /// <summary> teamsExtensionUser. </summary>
-        public static CommunicationIdentifierModelKind TeamsExtensionUser { get; } = new CommunicationIdentifierModelKind(TeamsExtensionUserValue);
         /// <summary> Determines if two <see cref="CommunicationIdentifierModelKind"/> values are the same. </summary>
         public static bool operator ==(CommunicationIdentifierModelKind left, CommunicationIdentifierModelKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommunicationIdentifierModelKind"/> values are not the same. </summary>

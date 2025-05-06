@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Specifies the audio format used for encoding, including sample rate and channel type. </summary>
+    /// <summary> The audio format used for encoding, including sample rate and channel type. The default is Pcm16KMono. </summary>
     public readonly partial struct AudioFormat : IEquatable<AudioFormat>
     {
         private readonly string _value;
@@ -22,12 +22,12 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string Pcm16KMonoValue = "Pcm16KMono";
-        private const string Pcm24KMonoValue = "Pcm24KMono";
+        private const string Pcm16KMonoValue = "pcm16KMono";
+        private const string Pcm24KMonoValue = "pcm24KMono";
 
-        /// <summary> Pcm16KMono. </summary>
+        /// <summary> pcm16KMono. </summary>
         public static AudioFormat Pcm16KMono { get; } = new AudioFormat(Pcm16KMonoValue);
-        /// <summary> Pcm24KMono. </summary>
+        /// <summary> pcm24KMono. </summary>
         public static AudioFormat Pcm24KMono { get; } = new AudioFormat(Pcm24KMonoValue);
         /// <summary> Determines if two <see cref="AudioFormat"/> values are the same. </summary>
         public static bool operator ==(AudioFormat left, AudioFormat right) => left.Equals(right);

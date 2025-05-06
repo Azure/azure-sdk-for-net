@@ -8,9 +8,17 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The MediaStreamingOptions. </summary>
     public class MediaStreamingOptions
     {
+        /// <summary> Initializes a new instance of <see cref="WebSocketMediaStreamingOptionsInternal"/>. </summary>
+        /// <param name="audioChannelType"> The audio channel type to stream, e.g., unmixed audio, mixed audio. </param>
+        public MediaStreamingOptions(MediaStreamingAudioChannel audioChannelType)
+        {
+            MediaStreamingAudioChannel = audioChannelType;
+            MediaStreamingTransport = StreamingTransport.Websocket;
+        }
+
         /// <summary> Initializes a new instance of MediaStreamingOptions. </summary>
         public MediaStreamingOptions(Uri transportUri,
-            MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType, MediaStreamingTransport transportType = default, bool? startMediaStreaming = null)
+            MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType, StreamingTransport transportType = default, bool? startMediaStreaming = null)
         {
             TransportUri = transportUri;
             MediaStreamingTransport = transportType;
@@ -22,7 +30,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Transport URL for media streaming. </summary>
         public Uri TransportUri { get; }
         /// <summary> The type of tranport to be used for media streaming, eg. Websocket. </summary>
-        public MediaStreamingTransport MediaStreamingTransport { get; }
+        public StreamingTransport MediaStreamingTransport { get; }
         /// <summary> Content type to stream, eg. audio, audio/video. </summary>
         public MediaStreamingContent MediaStreamingContent { get; }
         /// <summary> Audio channel type to stream, eg. unmixed audio, mixed audio. </summary>
@@ -33,5 +41,8 @@ namespace Azure.Communication.CallAutomation
         public bool? EnableBidirectional { get; set; }
         /// <summary> Specifies the audio format used for encoding, including sample rate and channel type. </summary>
         public AudioFormat? AudioFormat { get; set; }
+
+        /// <summary> A value that indicates whether to stream the DTMF tones. </summary>
+        public bool? EnableDtmfTones { get; set; }
     }
 }
