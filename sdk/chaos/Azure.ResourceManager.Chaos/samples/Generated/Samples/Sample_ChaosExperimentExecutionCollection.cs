@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheExecutionOfAExperiment()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetExperimentExecution.json
-            // this example is just showing the usage of "Experiments_GetExecution" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/Experiments_GetExecution.json
+            // this example is just showing the usage of "ExperimentExecution_GetExecution" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllExecutionsOfAnExperiment()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/ListExperimentExecutions.json
-            // this example is just showing the usage of "Experiments_ListAllExecutions" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/Experiments_ListAllExecutions.json
+            // this example is just showing the usage of "ExperimentExecution_ListAllExecutions" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetTheExecutionOfAExperiment()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetExperimentExecution.json
-            // this example is just showing the usage of "Experiments_GetExecution" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/Experiments_GetExecution.json
+            // this example is just showing the usage of "ExperimentExecution_GetExecution" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetTheExecutionOfAExperiment()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetExperimentExecution.json
-            // this example is just showing the usage of "Experiments_GetExecution" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/Experiments_GetExecution.json
+            // this example is just showing the usage of "ExperimentExecution_GetExecution" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

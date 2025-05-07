@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -84,15 +85,15 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Customized cipher suites object that will be used for Https when cipherSuiteSetType is Customized. </summary>
         public FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet CustomizedCipherSuiteSet { get; set; }
         /// <summary> Resource reference to the secret. ie. subs/rg/profile/secret. </summary>
-        internal FrontDoorCustomDomainHttpsContentSecret Secret { get; set; }
-        /// <summary> Resource ID. </summary>
+        internal WritableSubResource Secret { get; set; }
+        /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SecretId
         {
             get => Secret is null ? default : Secret.Id;
             set
             {
                 if (Secret is null)
-                    Secret = new FrontDoorCustomDomainHttpsContentSecret();
+                    Secret = new WritableSubResource();
                 Secret.Id = value;
             }
         }

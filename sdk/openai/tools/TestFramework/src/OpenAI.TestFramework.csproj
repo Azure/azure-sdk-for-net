@@ -20,7 +20,6 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="System.ValueTuple" />
     <PackageReference Include="System.ClientModel" />
-    <PackageReference Update="System.ClientModel" VersionOverride="1.4.0-beta.1" />
   </ItemGroup>
 
   <ItemGroup>

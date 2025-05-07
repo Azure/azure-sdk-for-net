@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -53,15 +54,8 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(Secret))
             {
-                if (Secret != null)
-                {
-                    writer.WritePropertyName("secret"u8);
-                    writer.WriteObjectValue(Secret, options);
-                }
-                else
-                {
-                    writer.WriteNull("secret");
-                }
+                writer.WritePropertyName("secret"u8);
+                JsonSerializer.Serialize(writer, Secret);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -145,10 +139,9 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        secret = null;
                         continue;
                     }
-                    secret = FrontDoorCustomDomainHttpsContentSecret.DeserializeFrontDoorCustomDomainHttpsContentSecret(property.Value, options);
+                    secret = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
