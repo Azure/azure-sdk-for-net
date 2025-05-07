@@ -4,9 +4,7 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
   <ItemGroup>
-    <!-- Should be swapped back to package reference after Azure.Core 1.46 goes live -->
-    <!--<PackageReference Include="Azure.Core" />-->
-    <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="NUnit" />
