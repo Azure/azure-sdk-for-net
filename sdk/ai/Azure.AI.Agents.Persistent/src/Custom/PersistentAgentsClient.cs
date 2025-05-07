@@ -42,26 +42,6 @@ namespace Azure.AI.Agents.Persistent
             _client = new(endpoint, credential, options);
         }
 
-        /// <summary> Initializes a new instance of AzureAIClient. </summary>
-        /// <param name="endpoint"> The Azure AI Foundry project endpoint, in the form `https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;`</param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> is an empty string, and was expected to be non-empty. </exception>
-        public PersistentAgentsClient(string endpoint, AzureKeyCredential credential, PersistentAgentsAdministrationClientOptions options)
-        {
-            _client = new(endpoint, credential, options);
-        }
-
-        /// <summary> Initializes a new instance of AzureAIClient. </summary>
-        /// <param name="endpoint"> The Azure AI Foundry project endpoint, in the form `https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;`</param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> is an empty string, and was expected to be non-empty. </exception>
-        public PersistentAgentsClient(string endpoint, AzureKeyCredential credential) : this(endpoint, credential, new PersistentAgentsAdministrationClientOptions())
-        {
-        }
-
         public virtual Response<ThreadRun> CreateThreadAndRun(string assistantId, ThreadAndRunOptions options, CancellationToken cancellationToken = default)
         {
             return _client.CreateThreadAndRun(

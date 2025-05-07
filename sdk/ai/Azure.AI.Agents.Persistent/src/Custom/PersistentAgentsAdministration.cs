@@ -37,24 +37,6 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> is an empty string, and was expected to be non-empty. </exception>
-        public PersistentAgentsAdministration(string endpoint, AzureKeyCredential credential, PersistentAgentsAdministrationClientOptions options) : this(new Uri(endpoint), credential, options)
-        {
-        }
-
-        /// <summary> Initializes a new instance of AzureAIClient. </summary>
-        /// <param name="endpoint"> The Azure AI Foundry project endpoint, in the form `https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;`</param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> is an empty string, and was expected to be non-empty. </exception>
-        public PersistentAgentsAdministration(string endpoint, AzureKeyCredential credential) : this(endpoint, credential, new PersistentAgentsAdministrationClientOptions())
-        {
-        }
-        /// <summary> Initializes a new instance of AzureAIClient. </summary>
-        /// <param name="endpoint"> The Azure AI Foundry project endpoint, in the form `https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;`</param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> is an empty string, and was expected to be non-empty. </exception>
         public PersistentAgentsAdministration(string endpoint, TokenCredential credential, PersistentAgentsAdministrationClientOptions options)
         {
             // TODO: Remve this code when 1DP endpoint will be available and just call the upsteam constructor.
@@ -131,49 +113,49 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of ThreadsClient. </summary>
         internal virtual Threads GetThreadsClient()
         {
-            return Volatile.Read(ref _cachedThreads) ?? Interlocked.CompareExchange(ref _cachedThreads, new Threads(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedThreads;
+            return Volatile.Read(ref _cachedThreads) ?? Interlocked.CompareExchange(ref _cachedThreads, new Threads(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedThreads;
         }
 
         /// <summary> Initializes a new instance of ThreadMessagesClient. </summary>
         internal virtual ThreadMessages GetThreadMessagesClient()
         {
-            return Volatile.Read(ref _cachedThreadMessages) ?? Interlocked.CompareExchange(ref _cachedThreadMessages, new ThreadMessages(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedThreadMessages;
+            return Volatile.Read(ref _cachedThreadMessages) ?? Interlocked.CompareExchange(ref _cachedThreadMessages, new ThreadMessages(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedThreadMessages;
         }
 
         /// <summary> Initializes a new instance of RunsClient. </summary>
         internal virtual ThreadRuns GetThreadRunsClient()
         {
-            return Volatile.Read(ref _cachedThreadRuns) ?? Interlocked.CompareExchange(ref _cachedThreadRuns, new ThreadRuns(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedThreadRuns;
+            return Volatile.Read(ref _cachedThreadRuns) ?? Interlocked.CompareExchange(ref _cachedThreadRuns, new ThreadRuns(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedThreadRuns;
         }
 
         /// <summary> Initializes a new instance of RunStepsClient. </summary>
         internal virtual ThreadRunSteps GetThreadRunStepsClient()
         {
-            return Volatile.Read(ref _cachedThreadRunSteps) ?? Interlocked.CompareExchange(ref _cachedThreadRunSteps, new ThreadRunSteps(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedThreadRunSteps;
+            return Volatile.Read(ref _cachedThreadRunSteps) ?? Interlocked.CompareExchange(ref _cachedThreadRunSteps, new ThreadRunSteps(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedThreadRunSteps;
         }
 
         /// <summary> Initializes a new instance of FilesClient. </summary>
         internal virtual PersistentAgentsFiles GetPersistentAgentsFilesClient()
         {
-            return Volatile.Read(ref _cachedPersistentAgentsFiles) ?? Interlocked.CompareExchange(ref _cachedPersistentAgentsFiles, new PersistentAgentsFiles(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPersistentAgentsFiles;
+            return Volatile.Read(ref _cachedPersistentAgentsFiles) ?? Interlocked.CompareExchange(ref _cachedPersistentAgentsFiles, new PersistentAgentsFiles(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPersistentAgentsFiles;
         }
 
         /// <summary> Initializes a new instance of VectorStoresClient. </summary>
         internal virtual VectorStores GetVectorStoresClient()
         {
-            return Volatile.Read(ref _cachedVectorStores) ?? Interlocked.CompareExchange(ref _cachedVectorStores, new VectorStores(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedVectorStores;
+            return Volatile.Read(ref _cachedVectorStores) ?? Interlocked.CompareExchange(ref _cachedVectorStores, new VectorStores(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedVectorStores;
         }
 
         /// <summary> Initializes a new instance of VectorStoreFilesClient. </summary>
         internal virtual VectorStoreFiles GetVectorStoreFilesClient()
         {
-            return Volatile.Read(ref _cachedVectorStoreFiles) ?? Interlocked.CompareExchange(ref _cachedVectorStoreFiles, new VectorStoreFiles(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedVectorStoreFiles;
+            return Volatile.Read(ref _cachedVectorStoreFiles) ?? Interlocked.CompareExchange(ref _cachedVectorStoreFiles, new VectorStoreFiles(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedVectorStoreFiles;
         }
 
         /// <summary> Initializes a new instance of VectorStoreFileBatchesClient. </summary>
         internal virtual VectorStoreFileBatches GetVectorStoreFileBatchesClient()
         {
-            return Volatile.Read(ref _cachedVectorStoreFileBatches) ?? Interlocked.CompareExchange(ref _cachedVectorStoreFileBatches, new VectorStoreFileBatches(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedVectorStoreFileBatches;
+            return Volatile.Read(ref _cachedVectorStoreFileBatches) ?? Interlocked.CompareExchange(ref _cachedVectorStoreFileBatches, new VectorStoreFileBatches(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedVectorStoreFileBatches;
         }
 
         /// <summary> Gets a list of agents that were previously created. </summary>
