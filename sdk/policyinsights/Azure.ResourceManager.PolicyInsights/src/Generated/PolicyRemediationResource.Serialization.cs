@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.PolicyInsights
 
         PolicyRemediationData IJsonModel<PolicyRemediationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicyRemediationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PolicyRemediationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PolicyRemediationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PolicyRemediationData>(Data, options, AzureResourceManagerPolicyInsightsContext.Default);
 
-        PolicyRemediationData IPersistableModel<PolicyRemediationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PolicyRemediationData>(data, options);
+        PolicyRemediationData IPersistableModel<PolicyRemediationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PolicyRemediationData>(data, options, AzureResourceManagerPolicyInsightsContext.Default);
 
         string IPersistableModel<PolicyRemediationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PolicyRemediationData>)Data).GetFormatFromOptions(options);
     }

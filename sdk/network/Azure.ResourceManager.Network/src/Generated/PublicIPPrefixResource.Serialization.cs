@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         PublicIPPrefixData IJsonModel<PublicIPPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PublicIPPrefixData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PublicIPPrefixData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PublicIPPrefixData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PublicIPPrefixData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        PublicIPPrefixData IPersistableModel<PublicIPPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PublicIPPrefixData>(data, options);
+        PublicIPPrefixData IPersistableModel<PublicIPPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PublicIPPrefixData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<PublicIPPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PublicIPPrefixData>)Data).GetFormatFromOptions(options);
     }

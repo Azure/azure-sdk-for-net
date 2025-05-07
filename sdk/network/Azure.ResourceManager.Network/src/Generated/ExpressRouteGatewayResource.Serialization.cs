@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         ExpressRouteGatewayData IJsonModel<ExpressRouteGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteGatewayData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ExpressRouteGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ExpressRouteGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExpressRouteGatewayData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        ExpressRouteGatewayData IPersistableModel<ExpressRouteGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRouteGatewayData>(data, options);
+        ExpressRouteGatewayData IPersistableModel<ExpressRouteGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRouteGatewayData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<ExpressRouteGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpressRouteGatewayData>)Data).GetFormatFromOptions(options);
     }

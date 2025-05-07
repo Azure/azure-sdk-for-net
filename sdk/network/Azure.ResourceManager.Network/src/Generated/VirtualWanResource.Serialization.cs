@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         VirtualWanData IJsonModel<VirtualWanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualWanData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VirtualWanData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VirtualWanData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualWanData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        VirtualWanData IPersistableModel<VirtualWanData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualWanData>(data, options);
+        VirtualWanData IPersistableModel<VirtualWanData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualWanData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<VirtualWanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualWanData>)Data).GetFormatFromOptions(options);
     }

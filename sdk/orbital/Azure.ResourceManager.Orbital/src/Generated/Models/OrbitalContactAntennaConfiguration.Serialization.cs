@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Orbital.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOrbitalContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(OrbitalContactAntennaConfiguration)} does not support writing '{options.Format}' format.");
             }

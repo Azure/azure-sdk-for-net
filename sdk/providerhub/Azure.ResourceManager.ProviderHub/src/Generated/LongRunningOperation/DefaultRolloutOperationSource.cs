@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ProviderHub
 
         DefaultRolloutResource IOperationSource<DefaultRolloutResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DefaultRolloutData>(response.Content);
+            var data = ModelReaderWriter.Read<DefaultRolloutData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerProviderHubContext.Default);
             return new DefaultRolloutResource(_client, data);
         }
 
         async ValueTask<DefaultRolloutResource> IOperationSource<DefaultRolloutResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DefaultRolloutData>(response.Content);
+            var data = ModelReaderWriter.Read<DefaultRolloutData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerProviderHubContext.Default);
             return await Task.FromResult(new DefaultRolloutResource(_client, data)).ConfigureAwait(false);
         }
     }

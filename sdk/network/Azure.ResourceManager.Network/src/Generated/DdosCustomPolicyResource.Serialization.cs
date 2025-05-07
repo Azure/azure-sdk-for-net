@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         DdosCustomPolicyData IJsonModel<DdosCustomPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DdosCustomPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DdosCustomPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DdosCustomPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DdosCustomPolicyData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        DdosCustomPolicyData IPersistableModel<DdosCustomPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DdosCustomPolicyData>(data, options);
+        DdosCustomPolicyData IPersistableModel<DdosCustomPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DdosCustomPolicyData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<DdosCustomPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DdosCustomPolicyData>)Data).GetFormatFromOptions(options);
     }

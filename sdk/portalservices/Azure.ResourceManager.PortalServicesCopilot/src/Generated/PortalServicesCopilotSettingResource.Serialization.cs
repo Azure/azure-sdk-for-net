@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.PortalServicesCopilot
 
         PortalServicesCopilotSettingData IJsonModel<PortalServicesCopilotSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PortalServicesCopilotSettingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PortalServicesCopilotSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PortalServicesCopilotSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PortalServicesCopilotSettingData>(Data, options, AzureResourceManagerPortalServicesCopilotContext.Default);
 
-        PortalServicesCopilotSettingData IPersistableModel<PortalServicesCopilotSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PortalServicesCopilotSettingData>(data, options);
+        PortalServicesCopilotSettingData IPersistableModel<PortalServicesCopilotSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PortalServicesCopilotSettingData>(data, options, AzureResourceManagerPortalServicesCopilotContext.Default);
 
         string IPersistableModel<PortalServicesCopilotSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PortalServicesCopilotSettingData>)Data).GetFormatFromOptions(options);
     }

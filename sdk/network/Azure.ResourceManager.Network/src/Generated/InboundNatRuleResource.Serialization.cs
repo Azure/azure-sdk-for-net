@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         InboundNatRuleData IJsonModel<InboundNatRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InboundNatRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<InboundNatRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<InboundNatRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<InboundNatRuleData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        InboundNatRuleData IPersistableModel<InboundNatRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InboundNatRuleData>(data, options);
+        InboundNatRuleData IPersistableModel<InboundNatRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InboundNatRuleData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<InboundNatRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InboundNatRuleData>)Data).GetFormatFromOptions(options);
     }

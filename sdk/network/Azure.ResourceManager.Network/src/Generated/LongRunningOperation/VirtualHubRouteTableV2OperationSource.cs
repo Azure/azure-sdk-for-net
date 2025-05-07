@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         VirtualHubRouteTableV2Resource IOperationSource<VirtualHubRouteTableV2Resource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualHubRouteTableV2Data>(response.Content);
+            var data = ModelReaderWriter.Read<VirtualHubRouteTableV2Data>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new VirtualHubRouteTableV2Resource(_client, data);
         }
 
         async ValueTask<VirtualHubRouteTableV2Resource> IOperationSource<VirtualHubRouteTableV2Resource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualHubRouteTableV2Data>(response.Content);
+            var data = ModelReaderWriter.Read<VirtualHubRouteTableV2Data>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new VirtualHubRouteTableV2Resource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.PrivateDns
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPrivateDnsContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

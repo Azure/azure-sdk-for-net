@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Peering
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPeeringContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PeeringData)} does not support writing '{options.Format}' format.");
             }

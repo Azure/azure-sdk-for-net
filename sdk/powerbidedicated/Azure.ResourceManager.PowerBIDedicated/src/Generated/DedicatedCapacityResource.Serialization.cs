@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         DedicatedCapacityData IJsonModel<DedicatedCapacityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DedicatedCapacityData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DedicatedCapacityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DedicatedCapacityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DedicatedCapacityData>(Data, options, AzureResourceManagerPowerBIDedicatedContext.Default);
 
-        DedicatedCapacityData IPersistableModel<DedicatedCapacityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DedicatedCapacityData>(data, options);
+        DedicatedCapacityData IPersistableModel<DedicatedCapacityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DedicatedCapacityData>(data, options, AzureResourceManagerPowerBIDedicatedContext.Default);
 
         string IPersistableModel<DedicatedCapacityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DedicatedCapacityData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Orbital
 
         AvailableGroundStationData IJsonModel<AvailableGroundStationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AvailableGroundStationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AvailableGroundStationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AvailableGroundStationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AvailableGroundStationData>(Data, options, AzureResourceManagerOrbitalContext.Default);
 
-        AvailableGroundStationData IPersistableModel<AvailableGroundStationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvailableGroundStationData>(data, options);
+        AvailableGroundStationData IPersistableModel<AvailableGroundStationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvailableGroundStationData>(data, options, AzureResourceManagerOrbitalContext.Default);
 
         string IPersistableModel<AvailableGroundStationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AvailableGroundStationData>)Data).GetFormatFromOptions(options);
     }

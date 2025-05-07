@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ProviderHub
 
         DefaultRolloutData IJsonModel<DefaultRolloutData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DefaultRolloutData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DefaultRolloutData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DefaultRolloutData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DefaultRolloutData>(Data, options, AzureResourceManagerProviderHubContext.Default);
 
-        DefaultRolloutData IPersistableModel<DefaultRolloutData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DefaultRolloutData>(data, options);
+        DefaultRolloutData IPersistableModel<DefaultRolloutData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DefaultRolloutData>(data, options, AzureResourceManagerProviderHubContext.Default);
 
         string IPersistableModel<DefaultRolloutData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DefaultRolloutData>)Data).GetFormatFromOptions(options);
     }
