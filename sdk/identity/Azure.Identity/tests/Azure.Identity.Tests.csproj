@@ -24,6 +24,9 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Identity.csproj" />
+    <!-- TEMP until Azure.Core releases with updated dependencies, since these dependencies impact test behavior -->
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <!-- ======================================================================================================= -->
     <ProjectReference Include="..\integration\Integration.Identity.Container\Integration.Identity.Container.csproj" />
     <None Update="Data\*" CopyToOutputDirectory="PreserveNewest" />
     <ContentWithTargetPath Update="Data\*" CopyToOutputDirectory="PreserveNewest" TargetPath="certs\*" />
