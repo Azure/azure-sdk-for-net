@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.KeyVault
 
         ManagedHsmResource IOperationSource<ManagedHsmResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedHsmData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedHsmData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKeyVaultContext.Default);
             return new ManagedHsmResource(_client, data);
         }
 
         async ValueTask<ManagedHsmResource> IOperationSource<ManagedHsmResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedHsmData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedHsmData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKeyVaultContext.Default);
             return await Task.FromResult(new ManagedHsmResource(_client, data)).ConfigureAwait(false);
         }
     }

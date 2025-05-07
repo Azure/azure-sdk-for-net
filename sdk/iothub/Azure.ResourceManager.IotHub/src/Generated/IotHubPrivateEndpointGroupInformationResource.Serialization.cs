@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.IotHub
 
         IotHubPrivateEndpointGroupInformationData IJsonModel<IotHubPrivateEndpointGroupInformationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotHubPrivateEndpointGroupInformationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IotHubPrivateEndpointGroupInformationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<IotHubPrivateEndpointGroupInformationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotHubPrivateEndpointGroupInformationData>(Data, options, AzureResourceManagerIotHubContext.Default);
 
-        IotHubPrivateEndpointGroupInformationData IPersistableModel<IotHubPrivateEndpointGroupInformationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotHubPrivateEndpointGroupInformationData>(data, options);
+        IotHubPrivateEndpointGroupInformationData IPersistableModel<IotHubPrivateEndpointGroupInformationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotHubPrivateEndpointGroupInformationData>(data, options, AzureResourceManagerIotHubContext.Default);
 
         string IPersistableModel<IotHubPrivateEndpointGroupInformationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotHubPrivateEndpointGroupInformationData>)Data).GetFormatFromOptions(options);
     }

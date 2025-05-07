@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 
         FleetUpdateStrategyData IJsonModel<FleetUpdateStrategyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FleetUpdateStrategyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FleetUpdateStrategyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<FleetUpdateStrategyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FleetUpdateStrategyData>(Data, options, AzureResourceManagerContainerServiceFleetContext.Default);
 
-        FleetUpdateStrategyData IPersistableModel<FleetUpdateStrategyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FleetUpdateStrategyData>(data, options);
+        FleetUpdateStrategyData IPersistableModel<FleetUpdateStrategyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FleetUpdateStrategyData>(data, options, AzureResourceManagerContainerServiceFleetContext.Default);
 
         string IPersistableModel<FleetUpdateStrategyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FleetUpdateStrategyData>)Data).GetFormatFromOptions(options);
     }

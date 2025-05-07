@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.KeyVault
 
         KeyVaultSecretData IJsonModel<KeyVaultSecretData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KeyVaultSecretData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<KeyVaultSecretData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<KeyVaultSecretData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KeyVaultSecretData>(Data, options, AzureResourceManagerKeyVaultContext.Default);
 
-        KeyVaultSecretData IPersistableModel<KeyVaultSecretData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KeyVaultSecretData>(data, options);
+        KeyVaultSecretData IPersistableModel<KeyVaultSecretData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KeyVaultSecretData>(data, options, AzureResourceManagerKeyVaultContext.Default);
 
         string IPersistableModel<KeyVaultSecretData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KeyVaultSecretData>)Data).GetFormatFromOptions(options);
     }
