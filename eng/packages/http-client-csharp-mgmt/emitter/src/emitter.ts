@@ -10,7 +10,7 @@ import {
   AzureEmitterOptions
 } from "@azure-typespec/http-client-csharp";
 import { azureSDKContextOptions } from "./sdk-context-options.js";
-import { updateClient } from "./resource-detection.js";
+import { updateClients } from "./resource-detection.js";
 
 export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
   context.options["generator-name"] ??= "ManagementClientGenerator";
@@ -22,9 +22,7 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
 }
 
 function updateCodeModel(codeModel: CodeModel): CodeModel {
-  for (const client of codeModel.clients) {
-    updateClient(codeModel, client);
-  }
+  updateClients(codeModel);
 
   return codeModel;
 }

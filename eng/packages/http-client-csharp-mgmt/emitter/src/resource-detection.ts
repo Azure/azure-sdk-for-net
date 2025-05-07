@@ -6,7 +6,10 @@ import {
   InputClient,
   InputModelType
 } from "@typespec/http-client-csharp";
-import { calculateResourceTypeFromPath } from "./resource-type.js";
+import {
+  calculateResourceTypeFromPath,
+  ResourceMetadata
+} from "./resource-metadata.js";
 import { DecoratorInfo } from "@azure-tools/typespec-client-generator-core";
 
 // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armresourceoperations
@@ -31,7 +34,19 @@ export const resourceMetadata = "Azure.ClientGenerator.Core.@resourceSchema";
 export const resourceMetadataRegex =
   "Azure\\.ClientGenerator\\.Core\\.@resourceSchema";
 
-export function updateClient(codeModel: CodeModel, client: InputClient) {
+export function updateClients(codeModel: CodeModel) {
+  // first pass to update all the clients with their own information
+  const metadata: Map<InputClient, ResourceMetadata> = new Map();
+  for (const client of codeModel.clients) {
+    gatherResourceMetadata(codeModel, client, metadata);
+  }
+}
+
+export function gatherResourceMetadata(
+  codeModel: CodeModel,
+  client: InputClient,
+  metadataMap: Map<InputClient, ResourceMetadata>
+) {
   // TODO: we can implement this decorator in TCGC until we meet the corner case
   // if the client has resourceMetadata decorator, it is a resource client and we don't need to add it again
   if (client.decorators?.some((d) => d.name == resourceMetadata)) {
@@ -78,20 +93,31 @@ export function updateClient(codeModel: CodeModel, client: InputClient) {
       }
     }
 
-    const resourceMetadataDecorator: DecoratorInfo = {
-      name: resourceMetadata,
-      arguments: {}
-    };
-    resourceMetadataDecorator.arguments["resourceModel"] =
-      resourceModel?.crossLanguageDefinitionId;
-    resourceMetadataDecorator.arguments["isSingleton"] = isSingleton.toString();
-    resourceMetadataDecorator.arguments["resourceType"] = resourceType;
-    client.decorators.push(resourceMetadataDecorator);
+    if (resourceModel && resourceType) {
+      const metadata = {
+        resourceModel: resourceModel,
+        resourceClient: client,
+        resourceType: resourceType,
+        isSingleton: isSingleton,
+        parentResourceClient: undefined
+      };
+      metadataMap.set(client, metadata);
+    }
+
+    // const resourceMetadataDecorator: DecoratorInfo = {
+    //   name: resourceMetadata,
+    //   arguments: {}
+    // };
+    // resourceMetadataDecorator.arguments["resourceModel"] =
+    //   resourceModel?.crossLanguageDefinitionId;
+    // resourceMetadataDecorator.arguments["isSingleton"] = isSingleton.toString();
+    // resourceMetadataDecorator.arguments["resourceType"] = resourceType;
+    // client.decorators.push(resourceMetadataDecorator);
   }
 
   if (client.children) {
     for (const child of client.children) {
-      updateClient(codeModel, child);
+      gatherResourceMetadata(codeModel, child, metadataMap);
     }
   }
 }
