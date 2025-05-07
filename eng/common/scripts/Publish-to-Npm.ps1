@@ -5,10 +5,6 @@ param (
   $additionalTag="",
   $registry,
   $npmToken,
-  $basicDeployment=$false,
-  $devopsFeed=$false,
-  $skipDiff=$false,
-  $packagesToPublishPath,
   $addTag=$false
 )
 
@@ -45,7 +41,7 @@ function extractPackage($package) {
     $devVersion = $json.version
     popd
     $publish = $true
-    if (($tag -eq "dev") -and (-not $skipDiff))
+    if ($tag -eq "dev")
     {
         mkdir $lastDevDirTgz
         pushd $lastDevDirTgz
@@ -98,31 +94,23 @@ try {
     }
 
     $publishToNpm = $false
-    if (!$basicDeployment) {
-        if ($registry -eq 'https://registry.npmjs.org/') {
-            $publishToNpm = $true
-            if ($npmToken) {
-                $env:NPM_TOKEN=$npmToken
-                npm config set $regAuth`:_authToken=`$`{NPM_TOKEN`}
-            }
-        }
-        else {
-            Write-Host "Choosing Private Devops Feed Deployment"
-            $npmReg = $regAuth.replace("registry/","");
+    if ($registry -eq 'https://registry.npmjs.org/') {
+        $publishToNpm = $true
+        if ($npmToken) {
             $env:NPM_TOKEN=$npmToken
-            npm config set $regAuth`:username=azure-sdk
-            npm config set $regAuth`:_password=`$`{NPM_TOKEN`}
-            npm config set $regAuth`:email=not_set
-            npm config set $npmReg`:username=azure-sdk
-            npm config set $npmReg`:_password=`$`{NPM_TOKEN`}
-            npm config set $npmReg`:email=not_set
-      }
+            npm config set $regAuth`:_authToken=`$`{NPM_TOKEN`}
+        }
     }
     else {
-        Write-Host "Choosing BasicAuth Deployment"
-        npm config set $regAuth`:username=pat_will_be_used
-        npm config set $regAuth`:_password=$npmToken
+        Write-Host "Choosing Private Devops Feed Deployment"
+        $npmReg = $regAuth.replace("registry/","");
+        $env:NPM_TOKEN=$npmToken
+        npm config set $regAuth`:username=azure-sdk
+        npm config set $regAuth`:_password=`$`{NPM_TOKEN`}
         npm config set $regAuth`:email=not_set
+        npm config set $npmReg`:username=azure-sdk
+        npm config set $npmReg`:_password=`$`{NPM_TOKEN`}
+        npm config set $npmReg`:email=not_set
     }
 
     foreach ($p in $packageList) {
