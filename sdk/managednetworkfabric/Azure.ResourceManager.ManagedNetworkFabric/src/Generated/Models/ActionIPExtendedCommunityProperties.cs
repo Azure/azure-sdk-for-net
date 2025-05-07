@@ -12,8 +12,40 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> IP Extended Community Properties. </summary>
-    public partial class ActionIPExtendedCommunityProperties : IPExtendedCommunityAddOperationProperties
+    public partial class ActionIPExtendedCommunityProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ActionIPExtendedCommunityProperties"/>. </summary>
         public ActionIPExtendedCommunityProperties()
         {
@@ -21,13 +53,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="ActionIPExtendedCommunityProperties"/>. </summary>
         /// <param name="add"> List of IP Extended Community IDs. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="delete"> List of IP Extended Community IDs. </param>
         /// <param name="set"> List of IP Extended Community IDs. </param>
-        internal ActionIPExtendedCommunityProperties(IPExtendedCommunityIdList @add, IDictionary<string, BinaryData> serializedAdditionalRawData, IPExtendedCommunityIdList delete, IPExtendedCommunityIdList @set) : base(@add, serializedAdditionalRawData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ActionIPExtendedCommunityProperties(IPExtendedCommunityIdList @add, IPExtendedCommunityIdList delete, IPExtendedCommunityIdList @set, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Add = @add;
             Delete = delete;
             Set = @set;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> List of IP Extended Community IDs. </summary>
+        internal IPExtendedCommunityIdList Add { get; set; }
+        /// <summary> List of IP Extended Community resource IDs. </summary>
+        public IList<ResourceIdentifier> AddIPExtendedCommunityIds
+        {
+            get
+            {
+                if (Add is null)
+                    Add = new IPExtendedCommunityIdList();
+                return Add.IPExtendedCommunityIds;
+            }
         }
 
         /// <summary> List of IP Extended Community IDs. </summary>

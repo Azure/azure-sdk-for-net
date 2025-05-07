@@ -12,8 +12,40 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> option A properties object. </summary>
-    public partial class ExternalNetworkPatchOptionAProperties : Layer3IPPrefixProperties
+    public partial class ExternalNetworkPatchOptionAProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ExternalNetworkPatchOptionAProperties"/>. </summary>
         public ExternalNetworkPatchOptionAProperties()
         {
@@ -24,7 +56,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
         /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="mtu"> MTU to use for option A peering. </param>
         /// <param name="vlanId"> Vlan identifier. Example : 501. </param>
         /// <param name="fabricAsn"> Fabric ASN number. Example 65001. </param>
@@ -32,8 +63,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
         /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
-        internal ExternalNetworkPatchOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, IDictionary<string, BinaryData> serializedAdditionalRawData, int? mtu, int? vlanId, long? fabricAsn, long? peerAsn, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId) : base(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, serializedAdditionalRawData)
+        /// <param name="bmpConfiguration"> BMP Monitor Configuration. </param>
+        /// <param name="v4OverV6BgpSession"> V4OverV6 BGP Session state. </param>
+        /// <param name="v6OverV4BgpSession"> V6OverV4 BGP Session state. </param>
+        /// <param name="nativeIPv4PrefixLimit"> Native IPv4 prefix limit configuration. </param>
+        /// <param name="nativeIPv6PrefixLimit"> Native IPv6 prefix limit configuration. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExternalNetworkPatchOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, int? mtu, int? vlanId, long? fabricAsn, long? peerAsn, BfdPatchConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, ExternalNetworkBmpPatchProperties bmpConfiguration, V4OverV6BgpSessionState? v4OverV6BgpSession, V6OverV4BgpSessionState? v6OverV4BgpSession, NativeIPv4PrefixLimitPatchProperties nativeIPv4PrefixLimit, NativeIPv6PrefixLimitPatchProperties nativeIPv6PrefixLimit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            PrimaryIPv4Prefix = primaryIPv4Prefix;
+            PrimaryIPv6Prefix = primaryIPv6Prefix;
+            SecondaryIPv4Prefix = secondaryIPv4Prefix;
+            SecondaryIPv6Prefix = secondaryIPv6Prefix;
             Mtu = mtu;
             VlanId = vlanId;
             FabricAsn = fabricAsn;
@@ -41,8 +82,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             BfdConfiguration = bfdConfiguration;
             IngressAclId = ingressAclId;
             EgressAclId = egressAclId;
+            BmpConfiguration = bmpConfiguration;
+            V4OverV6BgpSession = v4OverV6BgpSession;
+            V6OverV4BgpSession = v6OverV4BgpSession;
+            NativeIPv4PrefixLimit = nativeIPv4PrefixLimit;
+            NativeIPv6PrefixLimit = nativeIPv6PrefixLimit;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> IPv4 Address Prefix. </summary>
+        public string PrimaryIPv4Prefix { get; set; }
+        /// <summary> IPv6 Address Prefix. </summary>
+        public string PrimaryIPv6Prefix { get; set; }
+        /// <summary> Secondary IPv4 Address Prefix. </summary>
+        public string SecondaryIPv4Prefix { get; set; }
+        /// <summary> Secondary IPv6 Address Prefix. </summary>
+        public string SecondaryIPv6Prefix { get; set; }
         /// <summary> MTU to use for option A peering. </summary>
         public int? Mtu { get; set; }
         /// <summary> Vlan identifier. Example : 501. </summary>
@@ -52,10 +107,53 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Peer ASN number.Example : 28. </summary>
         public long? PeerAsn { get; set; }
         /// <summary> BFD configuration properties. </summary>
-        public BfdConfiguration BfdConfiguration { get; set; }
+        public BfdPatchConfiguration BfdConfiguration { get; set; }
         /// <summary> Ingress Acl. ARM resource ID of Access Control Lists. </summary>
         public ResourceIdentifier IngressAclId { get; set; }
         /// <summary> Egress Acl. ARM resource ID of Access Control Lists. </summary>
         public ResourceIdentifier EgressAclId { get; set; }
+        /// <summary> BMP Monitor Configuration. </summary>
+        internal ExternalNetworkBmpPatchProperties BmpConfiguration { get; set; }
+        /// <summary> BMP Configuration State. </summary>
+        public BmpConfigurationState? BmpConfigurationState
+        {
+            get => BmpConfiguration is null ? default : BmpConfiguration.ConfigurationState;
+            set
+            {
+                if (BmpConfiguration is null)
+                    BmpConfiguration = new ExternalNetworkBmpPatchProperties();
+                BmpConfiguration.ConfigurationState = value;
+            }
+        }
+
+        /// <summary> V4OverV6 BGP Session state. </summary>
+        public V4OverV6BgpSessionState? V4OverV6BgpSession { get; set; }
+        /// <summary> V6OverV4 BGP Session state. </summary>
+        public V6OverV4BgpSessionState? V6OverV4BgpSession { get; set; }
+        /// <summary> Native IPv4 prefix limit configuration. </summary>
+        internal NativeIPv4PrefixLimitPatchProperties NativeIPv4PrefixLimit { get; set; }
+        /// <summary> Prefix limits. </summary>
+        public IList<PrefixLimitPatchProperties> NativeIPv4PrefixLimits
+        {
+            get
+            {
+                if (NativeIPv4PrefixLimit is null)
+                    NativeIPv4PrefixLimit = new NativeIPv4PrefixLimitPatchProperties();
+                return NativeIPv4PrefixLimit.PrefixLimits;
+            }
+        }
+
+        /// <summary> Native IPv6 prefix limit configuration. </summary>
+        internal NativeIPv6PrefixLimitPatchProperties NativeIPv6PrefixLimit { get; set; }
+        /// <summary> Prefix limits. </summary>
+        public IList<PrefixLimitPatchProperties> NativeIPv6PrefixLimits
+        {
+            get
+            {
+                if (NativeIPv6PrefixLimit is null)
+                    NativeIPv6PrefixLimit = new NativeIPv6PrefixLimitPatchProperties();
+                return NativeIPv6PrefixLimit.PrefixLimits;
+            }
+        }
     }
 }

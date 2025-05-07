@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> community action types. Example: Permit | Deny. </summary>
+    /// <summary> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </summary>
     public readonly partial struct CommunityActionType : IEquatable<CommunityActionType>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string PermitValue = "Permit";
         private const string DenyValue = "Deny";
 
-        /// <summary> Permit. </summary>
+        /// <summary> Permit Community Action Types. </summary>
         public static CommunityActionType Permit { get; } = new CommunityActionType(PermitValue);
-        /// <summary> Deny. </summary>
+        /// <summary> Deny Community Action Types. </summary>
         public static CommunityActionType Deny { get; } = new CommunityActionType(DenyValue);
         /// <summary> Determines if two <see cref="CommunityActionType"/> values are the same. </summary>
         public static bool operator ==(CommunityActionType left, CommunityActionType right) => left.Equals(right);

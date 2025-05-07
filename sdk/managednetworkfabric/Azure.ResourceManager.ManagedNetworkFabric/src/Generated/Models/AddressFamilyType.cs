@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string IPv4Value = "IPv4";
         private const string IPv6Value = "IPv6";
 
-        /// <summary> IPv4. </summary>
+        /// <summary> AddressType-IPv4. </summary>
         public static AddressFamilyType IPv4 { get; } = new AddressFamilyType(IPv4Value);
-        /// <summary> IPv6. </summary>
+        /// <summary> AddressType-IPv6. </summary>
         public static AddressFamilyType IPv6 { get; } = new AddressFamilyType(IPv6Value);
         /// <summary> Determines if two <see cref="AddressFamilyType"/> values are the same. </summary>
         public static bool operator ==(AddressFamilyType left, AddressFamilyType right) => left.Equals(right);

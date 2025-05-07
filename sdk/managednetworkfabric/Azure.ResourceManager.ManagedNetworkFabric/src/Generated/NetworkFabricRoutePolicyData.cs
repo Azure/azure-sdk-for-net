@@ -53,14 +53,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricRoutePolicyData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="networkFabricId"> Arm Resource ID of Network Fabric. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricId"/> is null. </exception>
-        public NetworkFabricRoutePolicyData(AzureLocation location, ResourceIdentifier networkFabricId) : base(location)
+        /// <param name="properties"> The RoutePolicy properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public NetworkFabricRoutePolicyData(AzureLocation location, RoutePolicyProperties properties) : base(location)
         {
-            Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            Statements = new ChangeTrackingList<RoutePolicyStatementProperties>();
-            NetworkFabricId = networkFabricId;
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricRoutePolicyData"/>. </summary>
@@ -70,25 +69,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
-        /// <param name="statements"> Route Policy statements. </param>
-        /// <param name="networkFabricId"> Arm Resource ID of Network Fabric. </param>
-        /// <param name="addressFamilyType"> AddressFamilyType. This parameter decides whether the given ipv4 or ipv6 route policy. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <param name="properties"> The RoutePolicy properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricRoutePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, CommunityActionType? defaultAction, IList<RoutePolicyStatementProperties> statements, ResourceIdentifier networkFabricId, AddressFamilyType? addressFamilyType, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricRoutePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RoutePolicyProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Annotation = annotation;
-            DefaultAction = defaultAction;
-            Statements = statements;
-            NetworkFabricId = networkFabricId;
-            AddressFamilyType = addressFamilyType;
-            ConfigurationState = configurationState;
-            ProvisioningState = provisioningState;
-            AdministrativeState = administrativeState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -97,21 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
-        /// <summary> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </summary>
-        public CommunityActionType? DefaultAction { get; set; }
-        /// <summary> Route Policy statements. </summary>
-        public IList<RoutePolicyStatementProperties> Statements { get; }
-        /// <summary> Arm Resource ID of Network Fabric. </summary>
-        public ResourceIdentifier NetworkFabricId { get; set; }
-        /// <summary> AddressFamilyType. This parameter decides whether the given ipv4 or ipv6 route policy. </summary>
-        public AddressFamilyType? AddressFamilyType { get; set; }
-        /// <summary> Configuration state of the resource. </summary>
-        public NetworkFabricConfigurationState? ConfigurationState { get; }
-        /// <summary> Provisioning state of the resource. </summary>
-        public NetworkFabricProvisioningState? ProvisioningState { get; }
-        /// <summary> Administrative state of the resource. </summary>
-        public NetworkFabricAdministrativeState? AdministrativeState { get; }
+        /// <summary> The RoutePolicy properties. </summary>
+        public RoutePolicyProperties Properties { get; set; }
     }
 }

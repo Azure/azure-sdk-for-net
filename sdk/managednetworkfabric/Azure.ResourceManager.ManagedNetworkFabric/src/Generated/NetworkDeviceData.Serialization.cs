@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
@@ -39,68 +38,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
-            {
-                writer.WritePropertyName("annotation"u8);
-                writer.WriteStringValue(Annotation);
-            }
-            if (Optional.IsDefined(HostName))
-            {
-                writer.WritePropertyName("hostName"u8);
-                writer.WriteStringValue(HostName);
-            }
-            if (Optional.IsDefined(SerialNumber))
-            {
-                writer.WritePropertyName("serialNumber"u8);
-                writer.WriteStringValue(SerialNumber);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Version))
-            {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
-            }
-            if (Optional.IsDefined(NetworkDeviceSku))
-            {
-                writer.WritePropertyName("networkDeviceSku"u8);
-                writer.WriteStringValue(NetworkDeviceSku);
-            }
-            if (options.Format != "W" && Optional.IsDefined(NetworkDeviceRole))
-            {
-                writer.WritePropertyName("networkDeviceRole"u8);
-                writer.WriteStringValue(NetworkDeviceRole.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(NetworkRackId))
-            {
-                writer.WritePropertyName("networkRackId"u8);
-                writer.WriteStringValue(NetworkRackId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ManagementIPv4Address))
-            {
-                writer.WritePropertyName("managementIpv4Address"u8);
-                writer.WriteStringValue(ManagementIPv4Address.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ManagementIPv6Address))
-            {
-                writer.WritePropertyName("managementIpv6Address"u8);
-                writer.WriteStringValue(ManagementIPv6Address);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
-            {
-                writer.WritePropertyName("configurationState"u8);
-                writer.WriteStringValue(ConfigurationState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
-            {
-                writer.WritePropertyName("administrativeState"u8);
-                writer.WriteStringValue(AdministrativeState.Value.ToString());
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties, options);
         }
 
         NetworkDeviceData IJsonModel<NetworkDeviceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -123,28 +61,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
+            NetworkDeviceProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string annotation = default;
-            string hostName = default;
-            string serialNumber = default;
-            string version = default;
-            string networkDeviceSku = default;
-            NetworkDeviceRole? networkDeviceRole = default;
-            ResourceIdentifier networkRackId = default;
-            IPAddress managementIPv4Address = default;
-            string managementIPv6Address = default;
-            NetworkFabricConfigurationState? configurationState = default;
-            NetworkFabricProvisioningState? provisioningState = default;
-            NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = NetworkDeviceProperties.DeserializeNetworkDeviceProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -188,102 +120,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("annotation"u8))
-                        {
-                            annotation = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("hostName"u8))
-                        {
-                            hostName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("serialNumber"u8))
-                        {
-                            serialNumber = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("version"u8))
-                        {
-                            version = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("networkDeviceSku"u8))
-                        {
-                            networkDeviceSku = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("networkDeviceRole"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            networkDeviceRole = new NetworkDeviceRole(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("networkRackId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            networkRackId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("managementIpv4Address"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            managementIPv4Address = IPAddress.Parse(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("managementIpv6Address"u8))
-                        {
-                            managementIPv6Address = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("configurationState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            configurationState = new NetworkFabricConfigurationState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("administrativeState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            administrativeState = new NetworkFabricAdministrativeState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -297,18 +133,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                annotation,
-                hostName,
-                serialNumber,
-                version,
-                networkDeviceSku,
-                networkDeviceRole,
-                networkRackId,
-                managementIPv4Address,
-                managementIPv6Address,
-                configurationState,
-                provisioningState,
-                administrativeState,
+                properties,
                 serializedAdditionalRawData);
         }
 

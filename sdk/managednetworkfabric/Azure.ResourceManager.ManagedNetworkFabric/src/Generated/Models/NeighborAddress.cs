@@ -52,17 +52,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="NeighborAddress"/>. </summary>
         /// <param name="address"> IP Address. </param>
+        /// <param name="bfdAdministrativeState"> BFD Administrative State for each Neighbor Address. Example: Enabled | Disabled. </param>
+        /// <param name="bgpAdministrativeState"> BGP Administrative State for each Neighbor Address. Example: Enabled | Disabled. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeighborAddress(string address, NetworkFabricConfigurationState? configurationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NeighborAddress(string address, BfdAdministrativeState? bfdAdministrativeState, BgpAdministrativeState? bgpAdministrativeState, NetworkFabricConfigurationState? configurationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Address = address;
+            BfdAdministrativeState = bfdAdministrativeState;
+            BgpAdministrativeState = bgpAdministrativeState;
             ConfigurationState = configurationState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> IP Address. </summary>
         public string Address { get; set; }
+        /// <summary> BFD Administrative State for each Neighbor Address. Example: Enabled | Disabled. </summary>
+        public BfdAdministrativeState? BfdAdministrativeState { get; }
+        /// <summary> BGP Administrative State for each Neighbor Address. Example: Enabled | Disabled. </summary>
+        public BgpAdministrativeState? BgpAdministrativeState { get; }
         /// <summary> Configuration state of the resource. </summary>
         public NetworkFabricConfigurationState? ConfigurationState { get; }
     }

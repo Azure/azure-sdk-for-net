@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkDevicePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -34,25 +34,37 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(NetworkDevicePatch)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("annotation"u8);
-                writer.WriteStringValue(Annotation);
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            if (Optional.IsDefined(HostName))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("hostName"u8);
-                writer.WriteStringValue(HostName);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(SerialNumber))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("serialNumber"u8);
-                writer.WriteStringValue(SerialNumber);
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
-            writer.WriteEndObject();
         }
 
         NetworkDevicePatch IJsonModel<NetworkDevicePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -76,9 +88,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            string annotation = default;
-            string hostName = default;
-            string serialNumber = default;
+            NetworkDevicePatchParametersProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,27 +111,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("annotation"u8))
-                        {
-                            annotation = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("hostName"u8))
-                        {
-                            hostName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("serialNumber"u8))
-                        {
-                            serialNumber = property0.Value.GetString();
-                            continue;
-                        }
-                    }
+                    properties = NetworkDevicePatchParametersProperties.DeserializeNetworkDevicePatchParametersProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -130,7 +122,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkDevicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, annotation, hostName, serialNumber);
+            return new NetworkDevicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkDevicePatch>.Write(ModelReaderWriterOptions options)

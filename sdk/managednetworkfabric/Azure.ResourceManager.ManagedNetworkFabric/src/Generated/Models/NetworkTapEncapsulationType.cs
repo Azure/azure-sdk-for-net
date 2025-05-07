@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string NoneValue = "None";
         private const string GTPv1Value = "GTPv1";
 
-        /// <summary> None. </summary>
+        /// <summary> None EncapsulationType. </summary>
         public static NetworkTapEncapsulationType None { get; } = new NetworkTapEncapsulationType(NoneValue);
-        /// <summary> GTPv1. </summary>
+        /// <summary> GTPv1 EncapsulationType. </summary>
         public static NetworkTapEncapsulationType GTPv1 { get; } = new NetworkTapEncapsulationType(GTPv1Value);
         /// <summary> Determines if two <see cref="NetworkTapEncapsulationType"/> values are the same. </summary>
         public static bool operator ==(NetworkTapEncapsulationType left, NetworkTapEncapsulationType right) => left.Equals(right);

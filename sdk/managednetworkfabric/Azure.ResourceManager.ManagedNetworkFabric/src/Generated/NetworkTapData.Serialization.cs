@@ -38,47 +38,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
-            {
-                writer.WritePropertyName("annotation"u8);
-                writer.WriteStringValue(Annotation);
-            }
-            writer.WritePropertyName("networkPacketBrokerId"u8);
-            writer.WriteStringValue(NetworkPacketBrokerId);
-            if (options.Format != "W" && Optional.IsDefined(SourceTapRuleId))
-            {
-                writer.WritePropertyName("sourceTapRuleId"u8);
-                writer.WriteStringValue(SourceTapRuleId);
-            }
-            writer.WritePropertyName("destinations"u8);
-            writer.WriteStartArray();
-            foreach (var item in Destinations)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(PollingType))
-            {
-                writer.WritePropertyName("pollingType"u8);
-                writer.WriteStringValue(PollingType.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
-            {
-                writer.WritePropertyName("configurationState"u8);
-                writer.WriteStringValue(ConfigurationState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
-            {
-                writer.WritePropertyName("administrativeState"u8);
-                writer.WriteStringValue(AdministrativeState.Value.ToString());
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties, options);
         }
 
         NetworkTapData IJsonModel<NetworkTapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -101,24 +61,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
+            NetworkTapProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string annotation = default;
-            ResourceIdentifier networkPacketBrokerId = default;
-            ResourceIdentifier sourceTapRuleId = default;
-            IList<NetworkTapPropertiesDestinationsItem> destinations = default;
-            NetworkTapPollingType? pollingType = default;
-            NetworkFabricConfigurationState? configurationState = default;
-            NetworkFabricProvisioningState? provisioningState = default;
-            NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = NetworkTapProperties.DeserializeNetworkTapProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -162,83 +120,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("annotation"u8))
-                        {
-                            annotation = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("networkPacketBrokerId"u8))
-                        {
-                            networkPacketBrokerId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("sourceTapRuleId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sourceTapRuleId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("destinations"u8))
-                        {
-                            List<NetworkTapPropertiesDestinationsItem> array = new List<NetworkTapPropertiesDestinationsItem>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(NetworkTapPropertiesDestinationsItem.DeserializeNetworkTapPropertiesDestinationsItem(item, options));
-                            }
-                            destinations = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("pollingType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            pollingType = new NetworkTapPollingType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("configurationState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            configurationState = new NetworkFabricConfigurationState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("administrativeState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            administrativeState = new NetworkFabricAdministrativeState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -252,14 +133,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                annotation,
-                networkPacketBrokerId,
-                sourceTapRuleId,
-                destinations,
-                pollingType,
-                configurationState,
-                provisioningState,
-                administrativeState,
+                properties,
                 serializedAdditionalRawData);
         }
 

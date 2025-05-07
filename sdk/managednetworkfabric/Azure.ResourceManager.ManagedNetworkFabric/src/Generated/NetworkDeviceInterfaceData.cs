@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
@@ -53,8 +52,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfaceData"/>. </summary>
-        public NetworkDeviceInterfaceData()
+        /// <param name="properties"> The NetworkInterface properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public NetworkDeviceInterfaceData(NetworkInterfaceProperties properties)
         {
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfaceData"/>. </summary>
@@ -62,43 +66,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="physicalIdentifier"> Physical Identifier of the network interface. </param>
-        /// <param name="connectedTo"> The ARM resource id of the interface or compute server its connected to. </param>
-        /// <param name="interfaceType"> The Interface Type. Example: Management/Data. </param>
-        /// <param name="ipv4Address"> IPv4Address of the interface. </param>
-        /// <param name="ipv6Address"> IPv6Address of the interface. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <param name="properties"> The NetworkInterface properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkDeviceInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, IPAddress ipv4Address, string ipv6Address, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkDeviceInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkInterfaceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Annotation = annotation;
-            PhysicalIdentifier = physicalIdentifier;
-            ConnectedTo = connectedTo;
-            InterfaceType = interfaceType;
-            IPv4Address = ipv4Address;
-            IPv6Address = ipv6Address;
-            ProvisioningState = provisioningState;
-            AdministrativeState = administrativeState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
-        /// <summary> Physical Identifier of the network interface. </summary>
-        public string PhysicalIdentifier { get; }
-        /// <summary> The ARM resource id of the interface or compute server its connected to. </summary>
-        public string ConnectedTo { get; }
-        /// <summary> The Interface Type. Example: Management/Data. </summary>
-        public NetworkDeviceInterfaceType? InterfaceType { get; }
-        /// <summary> IPv4Address of the interface. </summary>
-        public IPAddress IPv4Address { get; }
-        /// <summary> IPv6Address of the interface. </summary>
-        public string IPv6Address { get; }
-        /// <summary> Provisioning state of the resource. </summary>
-        public NetworkFabricProvisioningState? ProvisioningState { get; }
-        /// <summary> Administrative state of the resource. </summary>
-        public NetworkFabricAdministrativeState? AdministrativeState { get; }
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfaceData"/> for deserialization. </summary>
+        internal NetworkDeviceInterfaceData()
+        {
+        }
+
+        /// <summary> The NetworkInterface properties. </summary>
+        public NetworkInterfaceProperties Properties { get; set; }
     }
 }

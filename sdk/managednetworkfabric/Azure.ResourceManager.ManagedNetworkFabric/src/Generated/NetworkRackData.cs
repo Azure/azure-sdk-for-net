@@ -53,14 +53,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Initializes a new instance of <see cref="NetworkRackData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricId"/> is null. </exception>
-        public NetworkRackData(AzureLocation location, ResourceIdentifier networkFabricId) : base(location)
+        /// <param name="properties"> The NetworkRack properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public NetworkRackData(AzureLocation location, NetworkRackProperties properties) : base(location)
         {
-            Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            NetworkFabricId = networkFabricId;
-            NetworkDevices = new ChangeTrackingList<ResourceIdentifier>();
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkRackData"/>. </summary>
@@ -70,19 +69,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="networkRackType"> Network Rack SKU name. </param>
-        /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
-        /// <param name="networkDevices"> List of network device ARM resource IDs. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="properties"> The NetworkRack properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkRackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkRackType? networkRackType, ResourceIdentifier networkFabricId, IReadOnlyList<ResourceIdentifier> networkDevices, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkRackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkRackProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Annotation = annotation;
-            NetworkRackType = networkRackType;
-            NetworkFabricId = networkFabricId;
-            NetworkDevices = networkDevices;
-            ProvisioningState = provisioningState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -91,15 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
-        /// <summary> Network Rack SKU name. </summary>
-        public NetworkRackType? NetworkRackType { get; set; }
-        /// <summary> ARM resource ID of the Network Fabric. </summary>
-        public ResourceIdentifier NetworkFabricId { get; set; }
-        /// <summary> List of network device ARM resource IDs. </summary>
-        public IReadOnlyList<ResourceIdentifier> NetworkDevices { get; }
-        /// <summary> Provisioning state of the resource. </summary>
-        public NetworkFabricProvisioningState? ProvisioningState { get; }
+        /// <summary> The NetworkRack properties. </summary>
+        public NetworkRackProperties Properties { get; set; }
     }
 }

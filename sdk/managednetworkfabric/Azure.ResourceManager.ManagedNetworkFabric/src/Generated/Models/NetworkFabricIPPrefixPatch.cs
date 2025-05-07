@@ -11,28 +11,60 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The IP Prefix patch resource definition. </summary>
-    public partial class NetworkFabricIPPrefixPatch : NetworkRackPatch
+    public partial class NetworkFabricIPPrefixPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPPrefixPatch"/>. </summary>
         public NetworkFabricIPPrefixPatch()
         {
-            IPPrefixRules = new ChangeTrackingList<IPPrefixRule>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPPrefixPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> IP Prefix patchable properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="ipPrefixRules"> The list of IP Prefix Rules. </param>
-        internal NetworkFabricIPPrefixPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string annotation, IList<IPPrefixRule> ipPrefixRules) : base(tags, serializedAdditionalRawData)
+        internal NetworkFabricIPPrefixPatch(IDictionary<string, string> tags, IPPrefixPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Annotation = annotation;
-            IPPrefixRules = ipPrefixRules;
+            Tags = tags;
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
-        /// <summary> The list of IP Prefix Rules. </summary>
-        public IList<IPPrefixRule> IPPrefixRules { get; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+        /// <summary> IP Prefix patchable properties. </summary>
+        public IPPrefixPatchProperties Properties { get; set; }
     }
 }

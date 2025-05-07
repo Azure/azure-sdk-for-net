@@ -14,6 +14,7 @@ clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
+  sample: false
 skip-csproj: true
 modelerfour:
   flatten-payloads: false

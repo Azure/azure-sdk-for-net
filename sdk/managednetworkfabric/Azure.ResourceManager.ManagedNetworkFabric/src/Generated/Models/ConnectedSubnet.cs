@@ -11,8 +11,40 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Connected Subnet properties. </summary>
-    public partial class ConnectedSubnet : AnnotationResourceProperties
+    public partial class ConnectedSubnet
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ConnectedSubnet"/>. </summary>
         /// <param name="prefix"> Prefix of the Connected Subnet. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prefix"/> is null. </exception>
@@ -25,11 +57,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="ConnectedSubnet"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="prefix"> Prefix of the Connected Subnet. </param>
-        internal ConnectedSubnet(string annotation, IDictionary<string, BinaryData> serializedAdditionalRawData, string prefix) : base(annotation, serializedAdditionalRawData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectedSubnet(string annotation, string prefix, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Annotation = annotation;
             Prefix = prefix;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectedSubnet"/> for deserialization. </summary>
@@ -37,6 +71,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
         }
 
+        /// <summary> Switch configuration description. </summary>
+        public string Annotation { get; set; }
         /// <summary> Prefix of the Connected Subnet. </summary>
         public string Prefix { get; set; }
     }

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class IPCommunityIdList : IUtf8JsonSerializable, IJsonModel<IPCommunityIdList>
+    internal partial class IPCommunityIdList : IUtf8JsonSerializable, IJsonModel<IPCommunityIdList>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPCommunityIdList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

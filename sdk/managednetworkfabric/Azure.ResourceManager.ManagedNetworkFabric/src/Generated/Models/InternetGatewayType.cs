@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string InfrastructureValue = "Infrastructure";
         private const string WorkloadValue = "Workload";
 
-        /// <summary> Infrastructure. </summary>
+        /// <summary> GatewayType Infrastructure. </summary>
         public static InternetGatewayType Infrastructure { get; } = new InternetGatewayType(InfrastructureValue);
-        /// <summary> Workload. </summary>
+        /// <summary> GatewayType Workload. </summary>
         public static InternetGatewayType Workload { get; } = new InternetGatewayType(WorkloadValue);
         /// <summary> Determines if two <see cref="InternetGatewayType"/> values are the same. </summary>
         public static bool operator ==(InternetGatewayType left, InternetGatewayType right) => left.Equals(right);

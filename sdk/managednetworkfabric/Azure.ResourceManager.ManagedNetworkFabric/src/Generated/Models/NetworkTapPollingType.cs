@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string PullValue = "Pull";
         private const string PushValue = "Push";
 
-        /// <summary> Pull. </summary>
+        /// <summary> PollingType-Pull. </summary>
         public static NetworkTapPollingType Pull { get; } = new NetworkTapPollingType(PullValue);
-        /// <summary> Push. </summary>
+        /// <summary> PollingType-Push. </summary>
         public static NetworkTapPollingType Push { get; } = new NetworkTapPollingType(PushValue);
         /// <summary> Determines if two <see cref="NetworkTapPollingType"/> values are the same. </summary>
         public static bool operator ==(NetworkTapPollingType left, NetworkTapPollingType right) => left.Equals(right);

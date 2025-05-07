@@ -36,13 +36,51 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
             writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToString());
-            writer.WritePropertyName("addressList"u8);
-            writer.WriteStartArray();
-            foreach (var item in AddressList)
+            if (Optional.IsCollectionDefined(AddressList))
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("addressList"u8);
+                writer.WriteStartArray();
+                foreach (var item in AddressList)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
+            if (Optional.IsDefined(Condition))
+            {
+                writer.WritePropertyName("condition"u8);
+                writer.WriteStringValue(Condition.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(DestinationAddressList))
+            {
+                writer.WritePropertyName("destinationAddressList"u8);
+                writer.WriteStartArray();
+                foreach (var item in DestinationAddressList)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SourceAddressList))
+            {
+                writer.WritePropertyName("sourceAddressList"u8);
+                writer.WriteStartArray();
+                foreach (var item in SourceAddressList)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(HeaderAddressList))
+            {
+                writer.WritePropertyName("headerAddressList"u8);
+                writer.WriteStartArray();
+                foreach (var item in HeaderAddressList)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -82,6 +120,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             InternetGatewayRuleAction action = default;
             IList<string> addressList = default;
+            RuleCondition? condition = default;
+            IList<string> destinationAddressList = default;
+            IList<string> sourceAddressList = default;
+            IList<HeaderAddressProperties> headerAddressList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,6 +135,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (property.NameEquals("addressList"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -101,13 +147,71 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     addressList = array;
                     continue;
                 }
+                if (property.NameEquals("condition"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    condition = new RuleCondition(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("destinationAddressList"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    destinationAddressList = array;
+                    continue;
+                }
+                if (property.NameEquals("sourceAddressList"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    sourceAddressList = array;
+                    continue;
+                }
+                if (property.NameEquals("headerAddressList"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<HeaderAddressProperties> array = new List<HeaderAddressProperties>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(HeaderAddressProperties.DeserializeHeaderAddressProperties(item, options));
+                    }
+                    headerAddressList = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new InternetGatewayRules(action, addressList, serializedAdditionalRawData);
+            return new InternetGatewayRules(
+                action,
+                addressList ?? new ChangeTrackingList<string>(),
+                condition,
+                destinationAddressList ?? new ChangeTrackingList<string>(),
+                sourceAddressList ?? new ChangeTrackingList<string>(),
+                headerAddressList ?? new ChangeTrackingList<HeaderAddressProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InternetGatewayRules>.Write(ModelReaderWriterOptions options)

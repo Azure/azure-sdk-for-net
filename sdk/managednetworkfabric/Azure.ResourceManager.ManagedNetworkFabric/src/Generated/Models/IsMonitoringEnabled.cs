@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string TrueValue = "True";
         private const string FalseValue = "False";
 
-        /// <summary> True. </summary>
+        /// <summary> IsMonitoringEnabled-True. </summary>
         public static IsMonitoringEnabled True { get; } = new IsMonitoringEnabled(TrueValue);
-        /// <summary> False. </summary>
+        /// <summary> IsMonitoringEnabled-False. </summary>
         public static IsMonitoringEnabled False { get; } = new IsMonitoringEnabled(FalseValue);
         /// <summary> Determines if two <see cref="IsMonitoringEnabled"/> values are the same. </summary>
         public static bool operator ==(IsMonitoringEnabled left, IsMonitoringEnabled right) => left.Equals(right);

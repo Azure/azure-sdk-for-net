@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricPortCondition"/>. </summary>
         /// <param name="layer4Protocol"> Layer4 protocol type that needs to be matched. </param>

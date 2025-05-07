@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2024-06-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2024-06-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2024-06-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2024-06-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2024-06-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2024-06-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2024-06-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2024-06-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -438,19 +438,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Update Static Route BFD for external Network.
+        /// BFD administrative state for either static or bgp for internalNetwork.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}/updateStaticRouteBfdAdministrativeState</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}/updateBfdAdministrativeState</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExternalNetworks_UpdateStaticRouteBfdAdministrativeState</description>
+        /// <description>ExternalNetworks_UpdateBfdAdministrativeState</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2024-06-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -462,16 +462,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpdateStaticRouteBfdAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ExternalNetworkBfdAdministrativeStateResponse>> UpdateBfdAdministrativeStateAsync(WaitUntil waitUntil, ExternalNetworkBfdAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkFabricExternalNetworkExternalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkResource.UpdateStaticRouteBfdAdministrativeState");
+            using var scope = _networkFabricExternalNetworkExternalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkResource.UpdateBfdAdministrativeState");
             scope.Start();
             try
             {
-                var response = await _networkFabricExternalNetworkExternalNetworksRestClient.UpdateStaticRouteBfdAdministrativeStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(new StateUpdateCommonPostActionResultOperationSource(), _networkFabricExternalNetworkExternalNetworksClientDiagnostics, Pipeline, _networkFabricExternalNetworkExternalNetworksRestClient.CreateUpdateStaticRouteBfdAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkFabricExternalNetworkExternalNetworksRestClient.UpdateBfdAdministrativeStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation<ExternalNetworkBfdAdministrativeStateResponse>(new ExternalNetworkBfdAdministrativeStateResponseOperationSource(), _networkFabricExternalNetworkExternalNetworksClientDiagnostics, Pipeline, _networkFabricExternalNetworkExternalNetworksRestClient.CreateUpdateBfdAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -484,19 +484,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Update Static Route BFD for external Network.
+        /// BFD administrative state for either static or bgp for internalNetwork.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}/updateStaticRouteBfdAdministrativeState</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}/updateBfdAdministrativeState</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ExternalNetworks_UpdateStaticRouteBfdAdministrativeState</description>
+        /// <description>ExternalNetworks_UpdateBfdAdministrativeState</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
+        /// <description>2024-06-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -508,16 +508,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<StateUpdateCommonPostActionResult> UpdateStaticRouteBfdAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ExternalNetworkBfdAdministrativeStateResponse> UpdateBfdAdministrativeState(WaitUntil waitUntil, ExternalNetworkBfdAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkFabricExternalNetworkExternalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkResource.UpdateStaticRouteBfdAdministrativeState");
+            using var scope = _networkFabricExternalNetworkExternalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkResource.UpdateBfdAdministrativeState");
             scope.Start();
             try
             {
-                var response = _networkFabricExternalNetworkExternalNetworksRestClient.UpdateStaticRouteBfdAdministrativeState(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(new StateUpdateCommonPostActionResultOperationSource(), _networkFabricExternalNetworkExternalNetworksClientDiagnostics, Pipeline, _networkFabricExternalNetworkExternalNetworksRestClient.CreateUpdateStaticRouteBfdAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _networkFabricExternalNetworkExternalNetworksRestClient.UpdateBfdAdministrativeState(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation<ExternalNetworkBfdAdministrativeStateResponse>(new ExternalNetworkBfdAdministrativeStateResponseOperationSource(), _networkFabricExternalNetworkExternalNetworksClientDiagnostics, Pipeline, _networkFabricExternalNetworkExternalNetworksRestClient.CreateUpdateBfdAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

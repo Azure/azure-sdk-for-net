@@ -38,65 +38,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
-            {
-                writer.WritePropertyName("annotation"u8);
-                writer.WriteStringValue(Annotation);
-            }
-            if (Optional.IsDefined(ImportRoutePolicyId))
-            {
-                writer.WritePropertyName("importRoutePolicyId"u8);
-                writer.WriteStringValue(ImportRoutePolicyId);
-            }
-            if (Optional.IsDefined(ExportRoutePolicyId))
-            {
-                writer.WritePropertyName("exportRoutePolicyId"u8);
-                writer.WriteStringValue(ExportRoutePolicyId);
-            }
-            if (Optional.IsDefined(ImportRoutePolicy))
-            {
-                writer.WritePropertyName("importRoutePolicy"u8);
-                writer.WriteObjectValue(ImportRoutePolicy, options);
-            }
-            if (Optional.IsDefined(ExportRoutePolicy))
-            {
-                writer.WritePropertyName("exportRoutePolicy"u8);
-                writer.WriteObjectValue(ExportRoutePolicy, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(NetworkToNetworkInterconnectId))
-            {
-                writer.WritePropertyName("networkToNetworkInterconnectId"u8);
-                writer.WriteStringValue(NetworkToNetworkInterconnectId);
-            }
-            writer.WritePropertyName("peeringOption"u8);
-            writer.WriteStringValue(PeeringOption.ToString());
-            if (Optional.IsDefined(OptionBProperties))
-            {
-                writer.WritePropertyName("optionBProperties"u8);
-                writer.WriteObjectValue(OptionBProperties, options);
-            }
-            if (Optional.IsDefined(OptionAProperties))
-            {
-                writer.WritePropertyName("optionAProperties"u8);
-                writer.WriteObjectValue(OptionAProperties, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
-            {
-                writer.WritePropertyName("configurationState"u8);
-                writer.WriteStringValue(ConfigurationState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
-            {
-                writer.WritePropertyName("administrativeState"u8);
-                writer.WriteStringValue(AdministrativeState.Value.ToString());
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties, options);
         }
 
         NetworkFabricExternalNetworkData IJsonModel<NetworkFabricExternalNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -119,26 +61,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
+            ExternalNetworkProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string annotation = default;
-            ResourceIdentifier importRoutePolicyId = default;
-            ResourceIdentifier exportRoutePolicyId = default;
-            ImportRoutePolicy importRoutePolicy = default;
-            ExportRoutePolicy exportRoutePolicy = default;
-            ResourceIdentifier networkToNetworkInterconnectId = default;
-            PeeringOption peeringOption = default;
-            L3OptionBProperties optionBProperties = default;
-            ExternalNetworkOptionAProperties optionAProperties = default;
-            NetworkFabricConfigurationState? configurationState = default;
-            NetworkFabricProvisioningState? provisioningState = default;
-            NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = ExternalNetworkProperties.DeserializeExternalNetworkProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -163,118 +99,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("annotation"u8))
-                        {
-                            annotation = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("importRoutePolicyId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            importRoutePolicyId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("exportRoutePolicyId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            exportRoutePolicyId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("importRoutePolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            importRoutePolicy = ImportRoutePolicy.DeserializeImportRoutePolicy(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("exportRoutePolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            exportRoutePolicy = ExportRoutePolicy.DeserializeExportRoutePolicy(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("networkToNetworkInterconnectId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            networkToNetworkInterconnectId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("peeringOption"u8))
-                        {
-                            peeringOption = new PeeringOption(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("optionBProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            optionBProperties = L3OptionBProperties.DeserializeL3OptionBProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("optionAProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            optionAProperties = ExternalNetworkOptionAProperties.DeserializeExternalNetworkOptionAProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("configurationState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            configurationState = new NetworkFabricConfigurationState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("administrativeState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            administrativeState = new NetworkFabricAdministrativeState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -286,18 +110,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 name,
                 type,
                 systemData,
-                annotation,
-                importRoutePolicyId,
-                exportRoutePolicyId,
-                importRoutePolicy,
-                exportRoutePolicy,
-                networkToNetworkInterconnectId,
-                peeringOption,
-                optionBProperties,
-                optionAProperties,
-                configurationState,
-                provisioningState,
-                administrativeState,
+                properties,
                 serializedAdditionalRawData);
         }
 

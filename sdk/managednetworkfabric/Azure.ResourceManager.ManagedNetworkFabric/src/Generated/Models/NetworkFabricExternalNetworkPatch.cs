@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -52,43 +51,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricExternalNetworkPatch"/>. </summary>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="importRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
-        /// <param name="exportRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
-        /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
-        /// <param name="exportRoutePolicy"> Export Route Policy either IPv4 or IPv6. </param>
-        /// <param name="peeringOption"> Peering option list. </param>
-        /// <param name="optionBProperties"> option B properties object. </param>
-        /// <param name="optionAProperties"> option A properties object. </param>
+        /// <param name="properties"> External Network Patch properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricExternalNetworkPatch(string annotation, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, PeeringOption? peeringOption, L3OptionBProperties optionBProperties, ExternalNetworkPatchOptionAProperties optionAProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkFabricExternalNetworkPatch(ExternalNetworkPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Annotation = annotation;
-            ImportRoutePolicyId = importRoutePolicyId;
-            ExportRoutePolicyId = exportRoutePolicyId;
-            ImportRoutePolicy = importRoutePolicy;
-            ExportRoutePolicy = exportRoutePolicy;
-            PeeringOption = peeringOption;
-            OptionBProperties = optionBProperties;
-            OptionAProperties = optionAProperties;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
-        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
-        public ResourceIdentifier ImportRoutePolicyId { get; set; }
-        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
-        public ResourceIdentifier ExportRoutePolicyId { get; set; }
-        /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
-        public ImportRoutePolicy ImportRoutePolicy { get; set; }
-        /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
-        public ExportRoutePolicy ExportRoutePolicy { get; set; }
-        /// <summary> Peering option list. </summary>
-        public PeeringOption? PeeringOption { get; set; }
-        /// <summary> option B properties object. </summary>
-        public L3OptionBProperties OptionBProperties { get; set; }
-        /// <summary> option A properties object. </summary>
-        public ExternalNetworkPatchOptionAProperties OptionAProperties { get; set; }
+        /// <summary> External Network Patch properties. </summary>
+        public ExternalNetworkPatchProperties Properties { get; set; }
     }
 }

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ConnectedSubnetRoutePolicy : IUtf8JsonSerializable, IJsonModel<ConnectedSubnetRoutePolicy>
+    internal partial class ConnectedSubnetRoutePolicy : IUtf8JsonSerializable, IJsonModel<ConnectedSubnetRoutePolicy>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectedSubnetRoutePolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -34,11 +34,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(ConnectedSubnetRoutePolicy)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(ExportRoutePolicyId))
-            {
-                writer.WritePropertyName("exportRoutePolicyId"u8);
-                writer.WriteStringValue(ExportRoutePolicyId);
-            }
             if (Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
@@ -81,21 +76,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            ResourceIdentifier exportRoutePolicyId = default;
             L3ExportRoutePolicy exportRoutePolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("exportRoutePolicyId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    exportRoutePolicyId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("exportRoutePolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -111,7 +96,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConnectedSubnetRoutePolicy(exportRoutePolicyId, exportRoutePolicy, serializedAdditionalRawData);
+            return new ConnectedSubnetRoutePolicy(exportRoutePolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectedSubnetRoutePolicy>.Write(ModelReaderWriterOptions options)

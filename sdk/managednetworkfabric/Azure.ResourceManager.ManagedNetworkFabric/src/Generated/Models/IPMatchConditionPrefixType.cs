@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string PrefixValue = "Prefix";
         private const string LongestPrefixValue = "LongestPrefix";
 
-        /// <summary> Prefix. </summary>
+        /// <summary> PrefixType Prefix. </summary>
         public static IPMatchConditionPrefixType Prefix { get; } = new IPMatchConditionPrefixType(PrefixValue);
-        /// <summary> LongestPrefix. </summary>
+        /// <summary> PrefixType LongestPrefix. </summary>
         public static IPMatchConditionPrefixType LongestPrefix { get; } = new IPMatchConditionPrefixType(LongestPrefixValue);
         /// <summary> Determines if two <see cref="IPMatchConditionPrefixType"/> values are the same. </summary>
         public static bool operator ==(IPMatchConditionPrefixType left, IPMatchConditionPrefixType right) => left.Equals(right);

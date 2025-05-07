@@ -38,97 +38,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
+            writer.WriteObjectValue(Properties, options);
+            if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("annotation"u8);
-                writer.WriteStringValue(Annotation);
+                writer.WritePropertyName("identity"u8);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            writer.WritePropertyName("networkFabricSku"u8);
-            writer.WriteStringValue(NetworkFabricSku);
-            if (options.Format != "W" && Optional.IsDefined(FabricVersion))
-            {
-                writer.WritePropertyName("fabricVersion"u8);
-                writer.WriteStringValue(FabricVersion);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RouterIds))
-            {
-                writer.WritePropertyName("routerIds"u8);
-                writer.WriteStartArray();
-                foreach (var item in RouterIds)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WritePropertyName("networkFabricControllerId"u8);
-            writer.WriteStringValue(NetworkFabricControllerId);
-            if (Optional.IsDefined(RackCount))
-            {
-                writer.WritePropertyName("rackCount"u8);
-                writer.WriteNumberValue(RackCount.Value);
-            }
-            writer.WritePropertyName("serverCountPerRack"u8);
-            writer.WriteNumberValue(ServerCountPerRack);
-            writer.WritePropertyName("ipv4Prefix"u8);
-            writer.WriteStringValue(IPv4Prefix);
-            if (Optional.IsDefined(IPv6Prefix))
-            {
-                writer.WritePropertyName("ipv6Prefix"u8);
-                writer.WriteStringValue(IPv6Prefix);
-            }
-            writer.WritePropertyName("fabricASN"u8);
-            writer.WriteNumberValue(FabricAsn);
-            writer.WritePropertyName("terminalServerConfiguration"u8);
-            writer.WriteObjectValue(TerminalServerConfiguration, options);
-            writer.WritePropertyName("managementNetworkConfiguration"u8);
-            writer.WriteObjectValue(ManagementNetworkConfiguration, options);
-            if (options.Format != "W" && Optional.IsCollectionDefined(Racks))
-            {
-                writer.WritePropertyName("racks"u8);
-                writer.WriteStartArray();
-                foreach (var item in Racks)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(L2IsolationDomains))
-            {
-                writer.WritePropertyName("l2IsolationDomains"u8);
-                writer.WriteStartArray();
-                foreach (var item in L2IsolationDomains)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(L3IsolationDomains))
-            {
-                writer.WritePropertyName("l3IsolationDomains"u8);
-                writer.WriteStartArray();
-                foreach (var item in L3IsolationDomains)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
-            {
-                writer.WritePropertyName("configurationState"u8);
-                writer.WriteStringValue(ConfigurationState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
-            {
-                writer.WritePropertyName("administrativeState"u8);
-                writer.WriteStringValue(AdministrativeState.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
         NetworkFabricData IJsonModel<NetworkFabricData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -151,34 +67,33 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
+            NetworkFabricProperties properties = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string annotation = default;
-            string networkFabricSku = default;
-            string fabricVersion = default;
-            IReadOnlyList<string> routerIds = default;
-            ResourceIdentifier networkFabricControllerId = default;
-            int? rackCount = default;
-            int serverCountPerRack = default;
-            string ipv4Prefix = default;
-            string ipv6Prefix = default;
-            long fabricAsn = default;
-            TerminalServerConfiguration terminalServerConfiguration = default;
-            ManagementNetworkConfigurationProperties managementNetworkConfiguration = default;
-            IReadOnlyList<string> racks = default;
-            IReadOnlyList<string> l2IsolationDomains = default;
-            IReadOnlyList<string> l3IsolationDomains = default;
-            NetworkFabricConfigurationState? configurationState = default;
-            NetworkFabricProvisioningState? provisioningState = default;
-            NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = NetworkFabricProperties.DeserializeNetworkFabricProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -222,160 +137,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("annotation"u8))
-                        {
-                            annotation = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("networkFabricSku"u8))
-                        {
-                            networkFabricSku = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("fabricVersion"u8))
-                        {
-                            fabricVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("routerIds"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            routerIds = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("networkFabricControllerId"u8))
-                        {
-                            networkFabricControllerId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("rackCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            rackCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("serverCountPerRack"u8))
-                        {
-                            serverCountPerRack = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("ipv4Prefix"u8))
-                        {
-                            ipv4Prefix = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("ipv6Prefix"u8))
-                        {
-                            ipv6Prefix = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("fabricASN"u8))
-                        {
-                            fabricAsn = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("terminalServerConfiguration"u8))
-                        {
-                            terminalServerConfiguration = TerminalServerConfiguration.DeserializeTerminalServerConfiguration(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("managementNetworkConfiguration"u8))
-                        {
-                            managementNetworkConfiguration = ManagementNetworkConfigurationProperties.DeserializeManagementNetworkConfigurationProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("racks"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            racks = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("l2IsolationDomains"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            l2IsolationDomains = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("l3IsolationDomains"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            l3IsolationDomains = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("configurationState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            configurationState = new NetworkFabricConfigurationState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("administrativeState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            administrativeState = new NetworkFabricAdministrativeState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -389,24 +150,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                annotation,
-                networkFabricSku,
-                fabricVersion,
-                routerIds ?? new ChangeTrackingList<string>(),
-                networkFabricControllerId,
-                rackCount,
-                serverCountPerRack,
-                ipv4Prefix,
-                ipv6Prefix,
-                fabricAsn,
-                terminalServerConfiguration,
-                managementNetworkConfiguration,
-                racks ?? new ChangeTrackingList<string>(),
-                l2IsolationDomains ?? new ChangeTrackingList<string>(),
-                l3IsolationDomains ?? new ChangeTrackingList<string>(),
-                configurationState,
-                provisioningState,
-                administrativeState,
+                properties,
+                identity,
                 serializedAdditionalRawData);
         }
 

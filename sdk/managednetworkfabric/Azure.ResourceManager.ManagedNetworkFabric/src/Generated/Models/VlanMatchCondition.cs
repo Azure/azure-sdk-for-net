@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VlanMatchCondition"/>. </summary>
-        /// <param name="vlans"> List of vlans that need to be matched. </param>
-        /// <param name="innerVlans"> List of inner vlans that need to be matched. </param>
+        /// <param name="vlans"> List of vlans that need to be matched. Inputs can be single vlan or the range of vlans. </param>
+        /// <param name="innerVlans"> List of inner vlans that need to be matched.Inputs can be single vlan or the range of vlans. </param>
         /// <param name="vlanGroupNames"> List of vlan group names that need to be matched. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VlanMatchCondition(IList<string> vlans, IList<string> innerVlans, IList<string> vlanGroupNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of vlans that need to be matched. </summary>
+        /// <summary> List of vlans that need to be matched. Inputs can be single vlan or the range of vlans. </summary>
         public IList<string> Vlans { get; }
-        /// <summary> List of inner vlans that need to be matched. </summary>
+        /// <summary> List of inner vlans that need to be matched.Inputs can be single vlan or the range of vlans. </summary>
         public IList<string> InnerVlans { get; }
         /// <summary> List of vlan group names that need to be matched. </summary>
         public IList<string> VlanGroupNames { get; }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
@@ -54,16 +53,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Initializes a new instance of <see cref="NetworkTapData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="networkPacketBrokerId"> ARM resource ID of the Network Packet Broker. </param>
-        /// <param name="destinations"> List of destinations to send the filter traffic. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkPacketBrokerId"/> or <paramref name="destinations"/> is null. </exception>
-        public NetworkTapData(AzureLocation location, ResourceIdentifier networkPacketBrokerId, IEnumerable<NetworkTapPropertiesDestinationsItem> destinations) : base(location)
+        /// <param name="properties"> The NetworkTap Properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public NetworkTapData(AzureLocation location, NetworkTapProperties properties) : base(location)
         {
-            Argument.AssertNotNull(networkPacketBrokerId, nameof(networkPacketBrokerId));
-            Argument.AssertNotNull(destinations, nameof(destinations));
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            NetworkPacketBrokerId = networkPacketBrokerId;
-            Destinations = destinations.ToList();
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkTapData"/>. </summary>
@@ -73,25 +69,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="networkPacketBrokerId"> ARM resource ID of the Network Packet Broker. </param>
-        /// <param name="sourceTapRuleId"> Source Tap Rule Id. ARM Resource ID of the Network Tap Rule. </param>
-        /// <param name="destinations"> List of destinations to send the filter traffic. </param>
-        /// <param name="pollingType"> Polling type. </param>
-        /// <param name="configurationState"> Gets the configurations state of the resource. </param>
-        /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of Network Tap provisioning. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. Example -Enabled/Disabled. </param>
+        /// <param name="properties"> The NetworkTap Properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkTapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier networkPacketBrokerId, ResourceIdentifier sourceTapRuleId, IList<NetworkTapPropertiesDestinationsItem> destinations, NetworkTapPollingType? pollingType, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkTapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkTapProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Annotation = annotation;
-            NetworkPacketBrokerId = networkPacketBrokerId;
-            SourceTapRuleId = sourceTapRuleId;
-            Destinations = destinations;
-            PollingType = pollingType;
-            ConfigurationState = configurationState;
-            ProvisioningState = provisioningState;
-            AdministrativeState = administrativeState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -100,21 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
-        /// <summary> ARM resource ID of the Network Packet Broker. </summary>
-        public ResourceIdentifier NetworkPacketBrokerId { get; set; }
-        /// <summary> Source Tap Rule Id. ARM Resource ID of the Network Tap Rule. </summary>
-        public ResourceIdentifier SourceTapRuleId { get; }
-        /// <summary> List of destinations to send the filter traffic. </summary>
-        public IList<NetworkTapPropertiesDestinationsItem> Destinations { get; }
-        /// <summary> Polling type. </summary>
-        public NetworkTapPollingType? PollingType { get; set; }
-        /// <summary> Gets the configurations state of the resource. </summary>
-        public NetworkFabricConfigurationState? ConfigurationState { get; }
-        /// <summary> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of Network Tap provisioning. </summary>
-        public NetworkFabricProvisioningState? ProvisioningState { get; }
-        /// <summary> Administrative state of the resource. Example -Enabled/Disabled. </summary>
-        public NetworkFabricAdministrativeState? AdministrativeState { get; }
+        /// <summary> The NetworkTap Properties. </summary>
+        public NetworkTapProperties Properties { get; set; }
     }
 }

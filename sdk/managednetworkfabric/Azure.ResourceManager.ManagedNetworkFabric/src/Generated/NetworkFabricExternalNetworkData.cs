@@ -52,10 +52,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricExternalNetworkData"/>. </summary>
-        /// <param name="peeringOption"> Peering option list. </param>
-        public NetworkFabricExternalNetworkData(PeeringOption peeringOption)
+        /// <param name="properties"> External Network Properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public NetworkFabricExternalNetworkData(ExternalNetworkProperties properties)
         {
-            PeeringOption = peeringOption;
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricExternalNetworkData"/>. </summary>
@@ -63,33 +66,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="importRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
-        /// <param name="exportRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
-        /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
-        /// <param name="exportRoutePolicy"> Export Route Policy either IPv4 or IPv6. </param>
-        /// <param name="networkToNetworkInterconnectId"> Gets the networkToNetworkInterconnectId of the resource. </param>
-        /// <param name="peeringOption"> Peering option list. </param>
-        /// <param name="optionBProperties"> option B properties object. </param>
-        /// <param name="optionAProperties"> option A properties object. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <param name="properties"> External Network Properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricExternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier networkToNetworkInterconnectId, PeeringOption peeringOption, L3OptionBProperties optionBProperties, ExternalNetworkOptionAProperties optionAProperties, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkFabricExternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExternalNetworkProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Annotation = annotation;
-            ImportRoutePolicyId = importRoutePolicyId;
-            ExportRoutePolicyId = exportRoutePolicyId;
-            ImportRoutePolicy = importRoutePolicy;
-            ExportRoutePolicy = exportRoutePolicy;
-            NetworkToNetworkInterconnectId = networkToNetworkInterconnectId;
-            PeeringOption = peeringOption;
-            OptionBProperties = optionBProperties;
-            OptionAProperties = optionAProperties;
-            ConfigurationState = configurationState;
-            ProvisioningState = provisioningState;
-            AdministrativeState = administrativeState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -98,29 +79,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
-        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
-        public ResourceIdentifier ImportRoutePolicyId { get; set; }
-        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
-        public ResourceIdentifier ExportRoutePolicyId { get; set; }
-        /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
-        public ImportRoutePolicy ImportRoutePolicy { get; set; }
-        /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
-        public ExportRoutePolicy ExportRoutePolicy { get; set; }
-        /// <summary> Gets the networkToNetworkInterconnectId of the resource. </summary>
-        public ResourceIdentifier NetworkToNetworkInterconnectId { get; }
-        /// <summary> Peering option list. </summary>
-        public PeeringOption PeeringOption { get; set; }
-        /// <summary> option B properties object. </summary>
-        public L3OptionBProperties OptionBProperties { get; set; }
-        /// <summary> option A properties object. </summary>
-        public ExternalNetworkOptionAProperties OptionAProperties { get; set; }
-        /// <summary> Configuration state of the resource. </summary>
-        public NetworkFabricConfigurationState? ConfigurationState { get; }
-        /// <summary> Provisioning state of the resource. </summary>
-        public NetworkFabricProvisioningState? ProvisioningState { get; }
-        /// <summary> Administrative state of the resource. </summary>
-        public NetworkFabricAdministrativeState? AdministrativeState { get; }
+        /// <summary> External Network Properties. </summary>
+        public ExternalNetworkProperties Properties { get; set; }
     }
 }

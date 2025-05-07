@@ -30,19 +30,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string RedirectValue = "Redirect";
         private const string MirrorValue = "Mirror";
 
-        /// <summary> Drop. </summary>
+        /// <summary> TapRuleActionType-Drop. </summary>
         public static TapRuleActionType Drop { get; } = new TapRuleActionType(DropValue);
-        /// <summary> Count. </summary>
+        /// <summary> TapRuleActionType-Count. </summary>
         public static TapRuleActionType Count { get; } = new TapRuleActionType(CountValue);
-        /// <summary> Log. </summary>
+        /// <summary> TapRuleActionType-Log. </summary>
         public static TapRuleActionType Log { get; } = new TapRuleActionType(LogValue);
-        /// <summary> Replicate. </summary>
+        /// <summary> TapRuleActionType-Replicate. </summary>
         public static TapRuleActionType Replicate { get; } = new TapRuleActionType(ReplicateValue);
-        /// <summary> Goto. </summary>
+        /// <summary> TapRuleActionType-Goto. </summary>
         public static TapRuleActionType Goto { get; } = new TapRuleActionType(GotoValue);
-        /// <summary> Redirect. </summary>
+        /// <summary> TapRuleActionType-Redirect. </summary>
         public static TapRuleActionType Redirect { get; } = new TapRuleActionType(RedirectValue);
-        /// <summary> Mirror. </summary>
+        /// <summary> TapRuleActionType-Mirror. </summary>
         public static TapRuleActionType Mirror { get; } = new TapRuleActionType(MirrorValue);
         /// <summary> Determines if two <see cref="TapRuleActionType"/> values are the same. </summary>
         public static bool operator ==(TapRuleActionType left, TapRuleActionType right) => left.Equals(right);

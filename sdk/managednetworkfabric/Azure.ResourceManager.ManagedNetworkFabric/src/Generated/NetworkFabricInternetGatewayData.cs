@@ -53,15 +53,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="typePropertiesType"> Gateway Type of the resource. </param>
-        /// <param name="networkFabricControllerId"> ARM Resource ID of the Network Fabric Controller. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricControllerId"/> is null. </exception>
-        public NetworkFabricInternetGatewayData(AzureLocation location, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId) : base(location)
+        /// <param name="properties"> The Internet Gateway Properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public NetworkFabricInternetGatewayData(AzureLocation location, InternetGatewayProperties properties) : base(location)
         {
-            Argument.AssertNotNull(networkFabricControllerId, nameof(networkFabricControllerId));
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            TypePropertiesType = typePropertiesType;
-            NetworkFabricControllerId = networkFabricControllerId;
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayData"/>. </summary>
@@ -71,23 +69,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="internetGatewayRuleId"> ARM Resource ID of the Internet Gateway Rule. </param>
-        /// <param name="ipV4Address"> IPv4 Address of Internet Gateway. </param>
-        /// <param name="port"> Port number of Internet Gateway. </param>
-        /// <param name="typePropertiesType"> Gateway Type of the resource. </param>
-        /// <param name="networkFabricControllerId"> ARM Resource ID of the Network Fabric Controller. </param>
-        /// <param name="provisioningState"> Provisioning state of resource. </param>
+        /// <param name="properties"> The Internet Gateway Properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricInternetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier internetGatewayRuleId, string ipV4Address, int? port, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricInternetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, InternetGatewayProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Annotation = annotation;
-            InternetGatewayRuleId = internetGatewayRuleId;
-            IPV4Address = ipV4Address;
-            Port = port;
-            TypePropertiesType = typePropertiesType;
-            NetworkFabricControllerId = networkFabricControllerId;
-            ProvisioningState = provisioningState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -96,19 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
-        /// <summary> ARM Resource ID of the Internet Gateway Rule. </summary>
-        public ResourceIdentifier InternetGatewayRuleId { get; set; }
-        /// <summary> IPv4 Address of Internet Gateway. </summary>
-        public string IPV4Address { get; }
-        /// <summary> Port number of Internet Gateway. </summary>
-        public int? Port { get; }
-        /// <summary> Gateway Type of the resource. </summary>
-        public InternetGatewayType TypePropertiesType { get; set; }
-        /// <summary> ARM Resource ID of the Network Fabric Controller. </summary>
-        public ResourceIdentifier NetworkFabricControllerId { get; set; }
-        /// <summary> Provisioning state of resource. </summary>
-        public NetworkFabricProvisioningState? ProvisioningState { get; }
+        /// <summary> The Internet Gateway Properties. </summary>
+        public InternetGatewayProperties Properties { get; set; }
     }
 }

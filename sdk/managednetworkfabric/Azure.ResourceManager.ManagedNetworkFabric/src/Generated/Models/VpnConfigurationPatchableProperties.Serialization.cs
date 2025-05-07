@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             ResourceIdentifier networkToNetworkInterconnectId = default;
             PeeringOption? peeringOption = default;
-            OptionBProperties optionBProperties = default;
-            VpnConfigurationPatchableOptionAProperties optionAProperties = default;
+            VpnOptionBPatchProperties optionBProperties = default;
+            VpnOptionAPatchProperties optionAProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    optionBProperties = OptionBProperties.DeserializeOptionBProperties(property.Value, options);
+                    optionBProperties = VpnOptionBPatchProperties.DeserializeVpnOptionBPatchProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("optionAProperties"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    optionAProperties = VpnConfigurationPatchableOptionAProperties.DeserializeVpnConfigurationPatchableOptionAProperties(property.Value, options);
+                    optionAProperties = VpnOptionAPatchProperties.DeserializeVpnOptionAPatchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -11,11 +11,49 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> OptionB Layer3 Configuration properties. </summary>
-    public partial class OptionBLayer3Configuration : Layer3IPPrefixProperties
+    public partial class OptionBLayer3Configuration
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="OptionBLayer3Configuration"/>. </summary>
-        public OptionBLayer3Configuration()
+        /// <param name="peerAsn"> ASN of PE devices for CE/PE connectivity.Example : 28. </param>
+        /// <param name="vlanId"> VLAN for CE/PE Layer 3 connectivity.Example : 501. </param>
+        public OptionBLayer3Configuration(long peerAsn, int vlanId)
         {
+            PeerAsn = peerAsn;
+            VlanId = vlanId;
+            PeLoopbackIPAddress = new ChangeTrackingList<string>();
+            PrefixLimits = new ChangeTrackingList<OptionBLayer3PrefixLimitProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OptionBLayer3Configuration"/>. </summary>
@@ -23,22 +61,62 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
         /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="peerAsn"> ASN of PE devices for CE/PE connectivity.Example : 28. </param>
         /// <param name="vlanId"> VLAN for CE/PE Layer 3 connectivity.Example : 501. </param>
         /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
-        internal OptionBLayer3Configuration(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, IDictionary<string, BinaryData> serializedAdditionalRawData, long? peerAsn, int? vlanId, long? fabricAsn) : base(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, serializedAdditionalRawData)
+        /// <param name="peLoopbackIPAddress"> Provider Edge (PE) Loopback IP Address. </param>
+        /// <param name="bmpConfiguration"> BGP Monitoring Protocol (BMP) Configuration. </param>
+        /// <param name="prefixLimits"> OptionB Layer3 prefix limit configuration. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OptionBLayer3Configuration(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, long peerAsn, int vlanId, long? fabricAsn, IList<string> peLoopbackIPAddress, NniBmpProperties bmpConfiguration, IList<OptionBLayer3PrefixLimitProperties> prefixLimits, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            PrimaryIPv4Prefix = primaryIPv4Prefix;
+            PrimaryIPv6Prefix = primaryIPv6Prefix;
+            SecondaryIPv4Prefix = secondaryIPv4Prefix;
+            SecondaryIPv6Prefix = secondaryIPv6Prefix;
             PeerAsn = peerAsn;
             VlanId = vlanId;
             FabricAsn = fabricAsn;
+            PeLoopbackIPAddress = peLoopbackIPAddress;
+            BmpConfiguration = bmpConfiguration;
+            PrefixLimits = prefixLimits;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="OptionBLayer3Configuration"/> for deserialization. </summary>
+        internal OptionBLayer3Configuration()
+        {
+        }
+
+        /// <summary> IPv4 Address Prefix. </summary>
+        public string PrimaryIPv4Prefix { get; set; }
+        /// <summary> IPv6 Address Prefix. </summary>
+        public string PrimaryIPv6Prefix { get; set; }
+        /// <summary> Secondary IPv4 Address Prefix. </summary>
+        public string SecondaryIPv4Prefix { get; set; }
+        /// <summary> Secondary IPv6 Address Prefix. </summary>
+        public string SecondaryIPv6Prefix { get; set; }
         /// <summary> ASN of PE devices for CE/PE connectivity.Example : 28. </summary>
-        public long? PeerAsn { get; set; }
+        public long PeerAsn { get; set; }
         /// <summary> VLAN for CE/PE Layer 3 connectivity.Example : 501. </summary>
-        public int? VlanId { get; set; }
+        public int VlanId { get; set; }
         /// <summary> ASN of CE devices for CE/PE connectivity. </summary>
         public long? FabricAsn { get; }
+        /// <summary> Provider Edge (PE) Loopback IP Address. </summary>
+        public IList<string> PeLoopbackIPAddress { get; }
+        /// <summary> BGP Monitoring Protocol (BMP) Configuration. </summary>
+        internal NniBmpProperties BmpConfiguration { get; set; }
+        /// <summary> BGP Monitoring Protocol (BMP) Configuration State. </summary>
+        public BmpConfigurationState? BmpConfigurationState
+        {
+            get => BmpConfiguration is null ? default(BmpConfigurationState?) : BmpConfiguration.ConfigurationState;
+            set
+            {
+                BmpConfiguration = value.HasValue ? new NniBmpProperties(value.Value) : null;
+            }
+        }
+
+        /// <summary> OptionB Layer3 prefix limit configuration. </summary>
+        public IList<OptionBLayer3PrefixLimitProperties> PrefixLimits { get; }
     }
 }
