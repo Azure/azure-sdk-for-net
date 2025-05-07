@@ -37,15 +37,10 @@ namespace Azure.AI.Projects
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("data"u8);
             writer.WriteObjectValue(Data, options);
-            if (Optional.IsDefined(Target))
-            {
-                writer.WritePropertyName("target"u8);
-                writer.WriteObjectValue(Target, options);
-            }
             if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
@@ -55,11 +50,6 @@ namespace Azure.AI.Projects
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                writer.WriteObjectValue(SystemData, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -135,10 +125,8 @@ namespace Azure.AI.Projects
             }
             string id = default;
             InputData data = default;
-            EvaluationTarget target = default;
             string displayName = default;
             string description = default;
-            SystemData systemData = default;
             string status = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, string> properties = default;
@@ -157,15 +145,6 @@ namespace Azure.AI.Projects
                     data = InputData.DeserializeInputData(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("target"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    target = EvaluationTarget.DeserializeEvaluationTarget(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
@@ -174,15 +153,6 @@ namespace Azure.AI.Projects
                 if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = SystemData.DeserializeSystemData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -237,10 +207,8 @@ namespace Azure.AI.Projects
             return new Evaluation(
                 id,
                 data,
-                target,
                 displayName,
                 description,
-                systemData,
                 status,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),

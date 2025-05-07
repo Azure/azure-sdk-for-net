@@ -13,13 +13,15 @@ namespace Azure.AI.Projects
     /// <summary> Client options for AIProjectClient. </summary>
     public partial class AIProjectClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_07_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2025_05_15_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2024-07-01-preview". </summary>
-            V2024_07_01_Preview = 1,
+            /// <summary> Service version "2025-05-01". </summary>
+            V2025_05_01 = 1,
+            /// <summary> Service version "2025-05-15-preview". </summary>
+            V2025_05_15_Preview = 2,
         }
 
         internal string Version { get; }
@@ -29,7 +31,8 @@ namespace Azure.AI.Projects
         {
             Version = version switch
             {
-                ServiceVersion.V2024_07_01_Preview => "2024-07-01-preview",
+                ServiceVersion.V2025_05_01 => "2025-05-01",
+                ServiceVersion.V2025_05_15_Preview => "2025-05-15-preview",
                 _ => throw new NotSupportedException()
             };
         }

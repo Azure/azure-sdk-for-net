@@ -77,8 +77,7 @@ namespace Azure.AI.Projects
             {
                 switch (discriminator.GetString())
                 {
-                    case "app_insights": return ApplicationInsightsConfiguration.DeserializeApplicationInsightsConfiguration(element, options);
-                    case "dataset": return Dataset.DeserializeDataset(element, options);
+                    case "dataset": return InputDataset.DeserializeInputDataset(element, options);
                 }
             }
             return UnknownInputData.DeserializeUnknownInputData(element, options);
