@@ -12,7 +12,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
-    <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net472'">net462</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
