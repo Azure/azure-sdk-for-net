@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ManagedServices
 
         ManagedServicesMarketplaceRegistrationData IJsonModel<ManagedServicesMarketplaceRegistrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedServicesMarketplaceRegistrationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedServicesMarketplaceRegistrationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagedServicesMarketplaceRegistrationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedServicesMarketplaceRegistrationData>(Data, options, AzureResourceManagerManagedServicesContext.Default);
 
-        ManagedServicesMarketplaceRegistrationData IPersistableModel<ManagedServicesMarketplaceRegistrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedServicesMarketplaceRegistrationData>(data, options);
+        ManagedServicesMarketplaceRegistrationData IPersistableModel<ManagedServicesMarketplaceRegistrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedServicesMarketplaceRegistrationData>(data, options, AzureResourceManagerManagedServicesContext.Default);
 
         string IPersistableModel<ManagedServicesMarketplaceRegistrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedServicesMarketplaceRegistrationData>)Data).GetFormatFromOptions(options);
     }

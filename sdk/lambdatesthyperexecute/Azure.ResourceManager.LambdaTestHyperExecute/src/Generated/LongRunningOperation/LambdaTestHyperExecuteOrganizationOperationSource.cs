@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
 
         LambdaTestHyperExecuteOrganizationResource IOperationSource<LambdaTestHyperExecuteOrganizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LambdaTestHyperExecuteOrganizationData>(response.Content);
+            var data = ModelReaderWriter.Read<LambdaTestHyperExecuteOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerLambdaTestHyperExecuteContext.Default);
             return new LambdaTestHyperExecuteOrganizationResource(_client, data);
         }
 
         async ValueTask<LambdaTestHyperExecuteOrganizationResource> IOperationSource<LambdaTestHyperExecuteOrganizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LambdaTestHyperExecuteOrganizationData>(response.Content);
+            var data = ModelReaderWriter.Read<LambdaTestHyperExecuteOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerLambdaTestHyperExecuteContext.Default);
             return await Task.FromResult(new LambdaTestHyperExecuteOrganizationResource(_client, data)).ConfigureAwait(false);
         }
     }

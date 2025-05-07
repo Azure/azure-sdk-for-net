@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         MySqlFlexibleServerBackupData IJsonModel<MySqlFlexibleServerBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MySqlFlexibleServerBackupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MySqlFlexibleServerBackupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MySqlFlexibleServerBackupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MySqlFlexibleServerBackupData>(Data, options, AzureResourceManagerMySqlContext.Default);
 
-        MySqlFlexibleServerBackupData IPersistableModel<MySqlFlexibleServerBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MySqlFlexibleServerBackupData>(data, options);
+        MySqlFlexibleServerBackupData IPersistableModel<MySqlFlexibleServerBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MySqlFlexibleServerBackupData>(data, options, AzureResourceManagerMySqlContext.Default);
 
         string IPersistableModel<MySqlFlexibleServerBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MySqlFlexibleServerBackupData>)Data).GetFormatFromOptions(options);
     }

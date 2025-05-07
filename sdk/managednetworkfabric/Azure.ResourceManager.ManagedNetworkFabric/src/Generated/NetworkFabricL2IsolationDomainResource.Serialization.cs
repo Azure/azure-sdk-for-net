@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         NetworkFabricL2IsolationDomainData IJsonModel<NetworkFabricL2IsolationDomainData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricL2IsolationDomainData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkFabricL2IsolationDomainData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkFabricL2IsolationDomainData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFabricL2IsolationDomainData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        NetworkFabricL2IsolationDomainData IPersistableModel<NetworkFabricL2IsolationDomainData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricL2IsolationDomainData>(data, options);
+        NetworkFabricL2IsolationDomainData IPersistableModel<NetworkFabricL2IsolationDomainData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricL2IsolationDomainData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
         string IPersistableModel<NetworkFabricL2IsolationDomainData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricL2IsolationDomainData>)Data).GetFormatFromOptions(options);
     }

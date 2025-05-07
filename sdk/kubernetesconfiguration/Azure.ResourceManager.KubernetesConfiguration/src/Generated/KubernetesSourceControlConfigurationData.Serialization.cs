@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesConfigurationContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

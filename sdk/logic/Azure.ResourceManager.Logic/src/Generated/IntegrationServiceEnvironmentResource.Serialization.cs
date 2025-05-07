@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Logic
 
         IntegrationServiceEnvironmentData IJsonModel<IntegrationServiceEnvironmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IntegrationServiceEnvironmentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IntegrationServiceEnvironmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<IntegrationServiceEnvironmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IntegrationServiceEnvironmentData>(Data, options, AzureResourceManagerLogicContext.Default);
 
-        IntegrationServiceEnvironmentData IPersistableModel<IntegrationServiceEnvironmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IntegrationServiceEnvironmentData>(data, options);
+        IntegrationServiceEnvironmentData IPersistableModel<IntegrationServiceEnvironmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IntegrationServiceEnvironmentData>(data, options, AzureResourceManagerLogicContext.Default);
 
         string IPersistableModel<IntegrationServiceEnvironmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IntegrationServiceEnvironmentData>)Data).GetFormatFromOptions(options);
     }

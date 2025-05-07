@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MachineLearning
 
         MachineLearningDataVersionData IJsonModel<MachineLearningDataVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningDataVersionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MachineLearningDataVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MachineLearningDataVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningDataVersionData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        MachineLearningDataVersionData IPersistableModel<MachineLearningDataVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningDataVersionData>(data, options);
+        MachineLearningDataVersionData IPersistableModel<MachineLearningDataVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningDataVersionData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
         string IPersistableModel<MachineLearningDataVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningDataVersionData>)Data).GetFormatFromOptions(options);
     }
