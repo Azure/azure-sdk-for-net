@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            CookiesMatchConditionParameters parameters = default;
+            CookiesMatchCondition parameters = default;
             MatchVariable name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = CookiesMatchConditionParameters.DeserializeCookiesMatchConditionParameters(property.Value, options);
+                    parameters = CookiesMatchCondition.DeserializeCookiesMatchCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleResponseHeaderAction"/>. </summary>
         /// <param name="properties"> Defines the parameters for the action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DeliveryRuleResponseHeaderAction(HeaderActionParameters properties)
+        public DeliveryRuleResponseHeaderAction(HeaderActionProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Defines the parameters for the action. </param>
-        internal DeliveryRuleResponseHeaderAction(DeliveryRuleActionType name, IDictionary<string, BinaryData> serializedAdditionalRawData, HeaderActionParameters properties) : base(name, serializedAdditionalRawData)
+        internal DeliveryRuleResponseHeaderAction(DeliveryRuleActionType name, IDictionary<string, BinaryData> serializedAdditionalRawData, HeaderActionProperties properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
             Name = name;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Defines the parameters for the action. </summary>
-        public HeaderActionParameters Properties { get; set; }
+        public HeaderActionProperties Properties { get; set; }
     }
 }

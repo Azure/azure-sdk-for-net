@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "CdnCertificateSourceParameters": return CdnCertificateSourceParameters.DeserializeCdnCertificateSourceParameters(element, options);
-                    case "KeyVaultCertificateSourceParameters": return KeyVaultCertificateSourceParameters.DeserializeKeyVaultCertificateSourceParameters(element, options);
+                    case "CdnCertificateSourceParameters": return CdnCertificateSource.DeserializeCdnCertificateSource(element, options);
+                    case "KeyVaultCertificateSourceParameters": return KeyVaultCertificateSource.DeserializeKeyVaultCertificateSource(element, options);
                 }
             }
             return UnknownCertificateSourceParameters.DeserializeUnknownCertificateSourceParameters(element, options);

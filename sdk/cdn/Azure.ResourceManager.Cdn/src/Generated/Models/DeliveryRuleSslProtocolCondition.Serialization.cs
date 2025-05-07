@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            SslProtocolMatchConditionParameters parameters = default;
+            DeliveryRuleSslProtocolMatchCondition parameters = default;
             MatchVariable name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = SslProtocolMatchConditionParameters.DeserializeSslProtocolMatchConditionParameters(property.Value, options);
+                    parameters = DeliveryRuleSslProtocolMatchCondition.DeserializeDeliveryRuleSslProtocolMatchCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="customizedCipherSuiteSet"> Customized cipher suites object that will be used for Https when cipherSuiteSetType is Customized. </param>
         /// <param name="secret"> Resource reference to the secret. ie. subs/rg/profile/secret. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorCustomDomainHttpsContent(FrontDoorCertificateType certificateType, AfdCipherSuiteSetType? cipherSuiteSetType, FrontDoorMinimumTlsVersion? minimumTlsVersion, FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet customizedCipherSuiteSet, FrontDoorCustomDomainHttpsContentSecret secret, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FrontDoorCustomDomainHttpsContent(FrontDoorCertificateType certificateType, AfdCipherSuiteSetType? cipherSuiteSetType, FrontDoorMinimumTlsVersion? minimumTlsVersion, FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet customizedCipherSuiteSet, WritableSubResource secret, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CertificateType = certificateType;
             CipherSuiteSetType = cipherSuiteSetType;

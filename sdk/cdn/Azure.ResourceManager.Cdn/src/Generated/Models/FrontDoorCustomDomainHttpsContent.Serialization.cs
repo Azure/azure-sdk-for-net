@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Cdn.Models
             AfdCipherSuiteSetType? cipherSuiteSetType = default;
             FrontDoorMinimumTlsVersion? minimumTlsVersion = default;
             FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet customizedCipherSuiteSet = default;
-            FrontDoorCustomDomainHttpsContentSecret secret = default;
+            WritableSubResource secret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

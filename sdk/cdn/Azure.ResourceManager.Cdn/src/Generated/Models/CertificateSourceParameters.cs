@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary>
     /// Defines the parameters for certificate source
     /// Please note <see cref="CertificateSourceParameters"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="CdnCertificateSourceParameters"/> and <see cref="KeyVaultCertificateSourceParameters"/>.
+    /// The available derived classes include <see cref="CdnCertificateSource"/> and <see cref="KeyVaultCertificateSource"/>.
     /// </summary>
     public abstract partial class CertificateSourceParameters
     {

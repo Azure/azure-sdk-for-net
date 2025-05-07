@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            RouteConfigurationOverrideActionParameters parameters = default;
+            RouteConfigurationOverrideActionProperties parameters = default;
             DeliveryRuleActionType name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = RouteConfigurationOverrideActionParameters.DeserializeRouteConfigurationOverrideActionParameters(property.Value, options);
+                    parameters = RouteConfigurationOverrideActionProperties.DeserializeRouteConfigurationOverrideActionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

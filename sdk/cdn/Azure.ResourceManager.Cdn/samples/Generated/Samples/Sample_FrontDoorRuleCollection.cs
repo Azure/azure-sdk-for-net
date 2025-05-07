@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Cdn.Samples
             FrontDoorRuleData data = new FrontDoorRuleData
             {
                 Order = 1,
-                Conditions = {new DeliveryRuleRequestMethodCondition(new RequestMethodMatchConditionParameters(RequestMethodOperator.Equal)
+                Conditions = {new DeliveryRuleRequestMethodCondition(new RequestMethodMatchCondition(RequestMethodOperator.Equal)
 {
 NegateCondition = false,
 MatchValues = {RequestMethodMatchConditionMatchValue.Get},
 })},
-                Actions = {new DeliveryRuleResponseHeaderAction(new HeaderActionParameters(HeaderAction.Overwrite, "X-CDN")
+                Actions = {new DeliveryRuleResponseHeaderAction(new HeaderActionProperties(HeaderAction.Overwrite, "X-CDN")
 {
 Value = "MSFT",
 })},

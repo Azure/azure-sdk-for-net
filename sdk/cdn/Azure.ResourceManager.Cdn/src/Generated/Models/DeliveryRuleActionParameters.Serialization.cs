@@ -77,14 +77,14 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DeliveryRuleCacheExpirationActionParameters": return CacheExpirationActionParameters.DeserializeCacheExpirationActionParameters(element, options);
-                    case "DeliveryRuleCacheKeyQueryStringBehaviorActionParameters": return CacheKeyQueryStringActionParameters.DeserializeCacheKeyQueryStringActionParameters(element, options);
-                    case "DeliveryRuleHeaderActionParameters": return HeaderActionParameters.DeserializeHeaderActionParameters(element, options);
-                    case "DeliveryRuleOriginGroupOverrideActionParameters": return OriginGroupOverrideActionParameters.DeserializeOriginGroupOverrideActionParameters(element, options);
-                    case "DeliveryRuleRouteConfigurationOverrideActionParameters": return RouteConfigurationOverrideActionParameters.DeserializeRouteConfigurationOverrideActionParameters(element, options);
-                    case "DeliveryRuleUrlRedirectActionParameters": return UriRedirectActionParameters.DeserializeUriRedirectActionParameters(element, options);
-                    case "DeliveryRuleUrlRewriteActionParameters": return UriRewriteActionParameters.DeserializeUriRewriteActionParameters(element, options);
-                    case "DeliveryRuleUrlSigningActionParameters": return UriSigningActionParameters.DeserializeUriSigningActionParameters(element, options);
+                    case "DeliveryRuleCacheExpirationActionParameters": return CacheExpirationActionProperties.DeserializeCacheExpirationActionProperties(element, options);
+                    case "DeliveryRuleCacheKeyQueryStringBehaviorActionParameters": return CacheKeyQueryStringActionProperties.DeserializeCacheKeyQueryStringActionProperties(element, options);
+                    case "DeliveryRuleHeaderActionParameters": return HeaderActionProperties.DeserializeHeaderActionProperties(element, options);
+                    case "DeliveryRuleOriginGroupOverrideActionParameters": return OriginGroupOverrideActionProperties.DeserializeOriginGroupOverrideActionProperties(element, options);
+                    case "DeliveryRuleRouteConfigurationOverrideActionParameters": return RouteConfigurationOverrideActionProperties.DeserializeRouteConfigurationOverrideActionProperties(element, options);
+                    case "DeliveryRuleUrlRedirectActionParameters": return UriRedirectActionProperties.DeserializeUriRedirectActionProperties(element, options);
+                    case "DeliveryRuleUrlRewriteActionParameters": return UriRewriteActionProperties.DeserializeUriRewriteActionProperties(element, options);
+                    case "DeliveryRuleUrlSigningActionParameters": return UriSigningActionProperties.DeserializeUriSigningActionProperties(element, options);
                 }
             }
             return UnknownDeliveryRuleActionParameters.DeserializeUnknownDeliveryRuleActionParameters(element, options);

@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Cdn.Samples
             FrontDoorRulePatch patch = new FrontDoorRulePatch
             {
                 Order = 1,
-                Actions = {new DeliveryRuleResponseHeaderAction(new HeaderActionParameters(HeaderAction.Overwrite, "X-CDN")
+                Actions = {new DeliveryRuleResponseHeaderAction(new HeaderActionProperties(HeaderAction.Overwrite, "X-CDN")
 {
 Value = "MSFT",
 })},

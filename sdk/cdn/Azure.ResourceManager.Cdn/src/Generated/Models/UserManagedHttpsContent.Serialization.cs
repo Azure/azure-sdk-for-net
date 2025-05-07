@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            KeyVaultCertificateSourceParameters certificateSourceParameters = default;
+            KeyVaultCertificateSource certificateSourceParameters = default;
             CertificateSource certificateSource = default;
             SecureDeliveryProtocolType protocolType = default;
             CdnMinimumTlsVersion? minimumTlsVersion = default;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("certificateSourceParameters"u8))
                 {
-                    certificateSourceParameters = KeyVaultCertificateSourceParameters.DeserializeKeyVaultCertificateSourceParameters(property.Value, options);
+                    certificateSourceParameters = KeyVaultCertificateSource.DeserializeKeyVaultCertificateSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("certificateSource"u8))

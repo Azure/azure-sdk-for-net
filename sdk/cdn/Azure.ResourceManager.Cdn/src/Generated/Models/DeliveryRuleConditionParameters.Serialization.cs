@@ -77,25 +77,25 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DeliveryRuleClientPortConditionParameters": return ClientPortMatchConditionParameters.DeserializeClientPortMatchConditionParameters(element, options);
-                    case "DeliveryRuleCookiesConditionParameters": return CookiesMatchConditionParameters.DeserializeCookiesMatchConditionParameters(element, options);
-                    case "DeliveryRuleHostNameConditionParameters": return HostNameMatchConditionParameters.DeserializeHostNameMatchConditionParameters(element, options);
-                    case "DeliveryRuleHttpVersionConditionParameters": return HttpVersionMatchConditionParameters.DeserializeHttpVersionMatchConditionParameters(element, options);
-                    case "DeliveryRuleIsDeviceConditionParameters": return IsDeviceMatchConditionParameters.DeserializeIsDeviceMatchConditionParameters(element, options);
-                    case "DeliveryRulePostArgsConditionParameters": return PostArgsMatchConditionParameters.DeserializePostArgsMatchConditionParameters(element, options);
-                    case "DeliveryRuleQueryStringConditionParameters": return QueryStringMatchConditionParameters.DeserializeQueryStringMatchConditionParameters(element, options);
-                    case "DeliveryRuleRemoteAddressConditionParameters": return RemoteAddressMatchConditionParameters.DeserializeRemoteAddressMatchConditionParameters(element, options);
-                    case "DeliveryRuleRequestBodyConditionParameters": return RequestBodyMatchConditionParameters.DeserializeRequestBodyMatchConditionParameters(element, options);
-                    case "DeliveryRuleRequestHeaderConditionParameters": return RequestHeaderMatchConditionParameters.DeserializeRequestHeaderMatchConditionParameters(element, options);
-                    case "DeliveryRuleRequestMethodConditionParameters": return RequestMethodMatchConditionParameters.DeserializeRequestMethodMatchConditionParameters(element, options);
-                    case "DeliveryRuleRequestSchemeConditionParameters": return RequestSchemeMatchConditionParameters.DeserializeRequestSchemeMatchConditionParameters(element, options);
-                    case "DeliveryRuleRequestUriConditionParameters": return RequestUriMatchConditionParameters.DeserializeRequestUriMatchConditionParameters(element, options);
-                    case "DeliveryRuleServerPortConditionParameters": return ServerPortMatchConditionParameters.DeserializeServerPortMatchConditionParameters(element, options);
-                    case "DeliveryRuleSocketAddrConditionParameters": return SocketAddrMatchConditionParameters.DeserializeSocketAddrMatchConditionParameters(element, options);
-                    case "DeliveryRuleSslProtocolConditionParameters": return SslProtocolMatchConditionParameters.DeserializeSslProtocolMatchConditionParameters(element, options);
-                    case "DeliveryRuleUrlFileExtensionMatchConditionParameters": return UriFileExtensionMatchConditionParameters.DeserializeUriFileExtensionMatchConditionParameters(element, options);
-                    case "DeliveryRuleUrlFilenameConditionParameters": return UriFileNameMatchConditionParameters.DeserializeUriFileNameMatchConditionParameters(element, options);
-                    case "DeliveryRuleUrlPathMatchConditionParameters": return UriPathMatchConditionParameters.DeserializeUriPathMatchConditionParameters(element, options);
+                    case "DeliveryRuleClientPortConditionParameters": return ClientPortMatchCondition.DeserializeClientPortMatchCondition(element, options);
+                    case "DeliveryRuleCookiesConditionParameters": return CookiesMatchCondition.DeserializeCookiesMatchCondition(element, options);
+                    case "DeliveryRuleHostNameConditionParameters": return HostNameMatchCondition.DeserializeHostNameMatchCondition(element, options);
+                    case "DeliveryRuleHttpVersionConditionParameters": return HttpVersionMatchCondition.DeserializeHttpVersionMatchCondition(element, options);
+                    case "DeliveryRuleIsDeviceConditionParameters": return IsDeviceMatchCondition.DeserializeIsDeviceMatchCondition(element, options);
+                    case "DeliveryRulePostArgsConditionParameters": return PostArgsMatchCondition.DeserializePostArgsMatchCondition(element, options);
+                    case "DeliveryRuleQueryStringConditionParameters": return QueryStringMatchCondition.DeserializeQueryStringMatchCondition(element, options);
+                    case "DeliveryRuleRemoteAddressConditionParameters": return RemoteAddressMatchCondition.DeserializeRemoteAddressMatchCondition(element, options);
+                    case "DeliveryRuleRequestBodyConditionParameters": return RequestBodyMatchCondition.DeserializeRequestBodyMatchCondition(element, options);
+                    case "DeliveryRuleRequestHeaderConditionParameters": return RequestHeaderMatchCondition.DeserializeRequestHeaderMatchCondition(element, options);
+                    case "DeliveryRuleRequestMethodConditionParameters": return RequestMethodMatchCondition.DeserializeRequestMethodMatchCondition(element, options);
+                    case "DeliveryRuleRequestSchemeConditionParameters": return RequestSchemeMatchCondition.DeserializeRequestSchemeMatchCondition(element, options);
+                    case "DeliveryRuleRequestUriConditionParameters": return RequestUriMatchCondition.DeserializeRequestUriMatchCondition(element, options);
+                    case "DeliveryRuleServerPortConditionParameters": return ServerPortMatchCondition.DeserializeServerPortMatchCondition(element, options);
+                    case "DeliveryRuleSocketAddrConditionParameters": return SocketAddressMatchCondition.DeserializeSocketAddressMatchCondition(element, options);
+                    case "DeliveryRuleSslProtocolConditionParameters": return DeliveryRuleSslProtocolMatchCondition.DeserializeDeliveryRuleSslProtocolMatchCondition(element, options);
+                    case "DeliveryRuleUrlFileExtensionMatchConditionParameters": return UriFileExtensionMatchCondition.DeserializeUriFileExtensionMatchCondition(element, options);
+                    case "DeliveryRuleUrlFilenameConditionParameters": return UriFileNameMatchCondition.DeserializeUriFileNameMatchCondition(element, options);
+                    case "DeliveryRuleUrlPathMatchConditionParameters": return UriPathMatchCondition.DeserializeUriPathMatchCondition(element, options);
                 }
             }
             return UnknownDeliveryRuleConditionParameters.DeserializeUnknownDeliveryRuleConditionParameters(element, options);
