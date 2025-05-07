@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         SwiftVirtualNetworkData IJsonModel<SwiftVirtualNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SwiftVirtualNetworkData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SwiftVirtualNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SwiftVirtualNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SwiftVirtualNetworkData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        SwiftVirtualNetworkData IPersistableModel<SwiftVirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SwiftVirtualNetworkData>(data, options);
+        SwiftVirtualNetworkData IPersistableModel<SwiftVirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SwiftVirtualNetworkData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<SwiftVirtualNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SwiftVirtualNetworkData>)Data).GetFormatFromOptions(options);
     }

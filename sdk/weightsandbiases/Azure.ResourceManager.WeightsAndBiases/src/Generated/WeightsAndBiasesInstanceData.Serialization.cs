@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWeightsAndBiasesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WeightsAndBiasesInstanceData)} does not support writing '{options.Format}' format.");
             }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.WebPubSub
 
         WebPubSubData IJsonModel<WebPubSubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebPubSubData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WebPubSubData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WebPubSubData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WebPubSubData>(Data, options, AzureResourceManagerWebPubSubContext.Default);
 
-        WebPubSubData IPersistableModel<WebPubSubData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebPubSubData>(data, options);
+        WebPubSubData IPersistableModel<WebPubSubData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebPubSubData>(data, options, AzureResourceManagerWebPubSubContext.Default);
 
         string IPersistableModel<WebPubSubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebPubSubData>)Data).GetFormatFromOptions(options);
     }

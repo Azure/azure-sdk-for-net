@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         RecommendationRuleData IJsonModel<RecommendationRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RecommendationRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RecommendationRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RecommendationRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RecommendationRuleData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        RecommendationRuleData IPersistableModel<RecommendationRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RecommendationRuleData>(data, options);
+        RecommendationRuleData IPersistableModel<RecommendationRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RecommendationRuleData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<RecommendationRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RecommendationRuleData>)Data).GetFormatFromOptions(options);
     }

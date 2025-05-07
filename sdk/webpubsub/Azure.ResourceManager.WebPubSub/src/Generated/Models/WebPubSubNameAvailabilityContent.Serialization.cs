@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWebPubSubContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WebPubSubNameAvailabilityContent)} does not support writing '{options.Format}' format.");
             }

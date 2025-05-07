@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         WebAppRequestHistoryData IJsonModel<WebAppRequestHistoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebAppRequestHistoryData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WebAppRequestHistoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WebAppRequestHistoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WebAppRequestHistoryData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        WebAppRequestHistoryData IPersistableModel<WebAppRequestHistoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebAppRequestHistoryData>(data, options);
+        WebAppRequestHistoryData IPersistableModel<WebAppRequestHistoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebAppRequestHistoryData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<WebAppRequestHistoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebAppRequestHistoryData>)Data).GetFormatFromOptions(options);
     }

@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Subscription.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSubscriptionContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcceptOwnershipStatus)} does not support writing '{options.Format}' format.");
             }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.StorageSync
 
         CloudEndpointData IJsonModel<CloudEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudEndpointData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CloudEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CloudEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CloudEndpointData>(Data, options, AzureResourceManagerStorageSyncContext.Default);
 
-        CloudEndpointData IPersistableModel<CloudEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudEndpointData>(data, options);
+        CloudEndpointData IPersistableModel<CloudEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudEndpointData>(data, options, AzureResourceManagerStorageSyncContext.Default);
 
         string IPersistableModel<CloudEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudEndpointData>)Data).GetFormatFromOptions(options);
     }
