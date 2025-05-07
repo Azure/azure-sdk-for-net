@@ -898,6 +898,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal HDInsightClusterGatewaySettings() { }
         public bool? IsCredentialEnabled { get { throw null; } }
         public string Password { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.EntraUserInfo> RestAuthEntraUsers { get { throw null; } }
         public string UserName { get { throw null; } }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterGatewaySettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterGatewaySettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterGatewaySettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

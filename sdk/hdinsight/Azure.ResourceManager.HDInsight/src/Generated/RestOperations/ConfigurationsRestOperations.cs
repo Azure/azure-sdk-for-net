@@ -49,7 +49,6 @@ namespace Azure.ResourceManager.HDInsight
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/configurations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            Console.WriteLine(uri.ToString());
             return uri;
         }
 
