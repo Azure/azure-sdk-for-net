@@ -50,11 +50,11 @@ namespace MgmtTypeSpec.Models
         /// <param name="value"> The value. </param>
         public static implicit operator ExtendedLocationType(string value) => new ExtendedLocationType(value);
 
-        /// <param name="obj"> The object to compare. </param>
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExtendedLocationType other && Equals(other);
 
-        /// <param name="other"> The instance to compare. </param>
+        /// <inheritdoc/>
         public bool Equals(ExtendedLocationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>

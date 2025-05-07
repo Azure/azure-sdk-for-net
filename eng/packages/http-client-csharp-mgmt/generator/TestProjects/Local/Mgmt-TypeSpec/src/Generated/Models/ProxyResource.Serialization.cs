@@ -18,6 +18,8 @@ namespace MgmtTypeSpec.Models
     /// <summary></summary>
     public partial class ProxyResource : IJsonModel<ProxyResource>
     {
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProxyResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -37,6 +39,8 @@ namespace MgmtTypeSpec.Models
             base.JsonModelWriteCore(writer, options);
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ProxyResource IJsonModel<ProxyResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ProxyResource)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -52,6 +56,8 @@ namespace MgmtTypeSpec.Models
             return DeserializeProxyResource(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static ProxyResource DeserializeProxyResource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -101,6 +107,7 @@ namespace MgmtTypeSpec.Models
             return new ProxyResource(id, name, @type, systemData, additionalBinaryDataProperties);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ProxyResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -110,12 +117,14 @@ namespace MgmtTypeSpec.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ProxyResource)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ProxyResource IPersistableModel<ProxyResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (ProxyResource)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
@@ -135,6 +144,7 @@ namespace MgmtTypeSpec.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ProxyResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="proxyResource"> The <see cref="ProxyResource"/> to serialize into <see cref="RequestContent"/>. </param>
