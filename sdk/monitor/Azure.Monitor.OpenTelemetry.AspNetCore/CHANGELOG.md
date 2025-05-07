@@ -10,6 +10,10 @@
 
 ### Other Changes
 
+* Updated the code of vendored resource detector library `OpenTelemetry.Resources.Azure` from the OpenTelemetry .NET contrib repository.
+  Code has been updated to [1.11.0-beta.2](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/Resources.Azure-1.11.0-beta.2/src/OpenTelemetry.Resources.Azure).
+  ([#49351](https://github.com/Azure/azure-sdk-for-net/pull/49351))
+
 ## 1.3.0-beta.3 (2025-04-08)
 
 ### Other Changes

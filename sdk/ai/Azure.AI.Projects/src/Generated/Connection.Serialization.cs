@@ -41,6 +41,11 @@ namespace Azure.AI.Projects
             }
             if (options.Format != "W")
             {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.ToString());
             }
@@ -108,6 +113,7 @@ namespace Azure.AI.Projects
                 return null;
             }
             string name = default;
+            string id = default;
             ConnectionType type = default;
             string target = default;
             bool isDefault = default;
@@ -120,6 +126,11 @@ namespace Azure.AI.Projects
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -160,6 +171,7 @@ namespace Azure.AI.Projects
             serializedAdditionalRawData = rawDataDictionary;
             return new Connection(
                 name,
+                id,
                 type,
                 target,
                 isDefault,

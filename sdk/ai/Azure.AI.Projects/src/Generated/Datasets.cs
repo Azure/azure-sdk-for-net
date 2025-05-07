@@ -18,7 +18,7 @@ namespace Azure.AI.Projects
     /// <summary> The Datasets sub-client. </summary>
     public partial class Datasets
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -845,7 +845,7 @@ namespace Azure.AI.Projects
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
             request.Content = content;
             return message;
         }

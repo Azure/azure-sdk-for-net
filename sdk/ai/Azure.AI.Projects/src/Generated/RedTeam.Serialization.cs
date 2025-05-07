@@ -37,31 +37,43 @@ namespace Azure.AI.Projects
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ScanName))
+            if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("scanName"u8);
-                writer.WriteStringValue(ScanName);
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
             }
-            writer.WritePropertyName("numTurns"u8);
-            writer.WriteNumberValue(NumTurns);
-            writer.WritePropertyName("attackStrategies"u8);
-            writer.WriteStartArray();
-            foreach (var item in AttackStrategies)
+            if (Optional.IsDefined(NumTurns))
             {
-                writer.WriteStringValue(item.ToString());
+                writer.WritePropertyName("numTurns"u8);
+                writer.WriteNumberValue(NumTurns.Value);
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("simulationOnly"u8);
-            writer.WriteBooleanValue(SimulationOnly);
-            writer.WritePropertyName("riskCategories"u8);
-            writer.WriteStartArray();
-            foreach (var item in RiskCategories)
+            if (Optional.IsCollectionDefined(AttackStrategies))
             {
-                writer.WriteStringValue(item.ToString());
+                writer.WritePropertyName("attackStrategies"u8);
+                writer.WriteStartArray();
+                foreach (var item in AttackStrategies)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
+            if (Optional.IsDefined(SimulationOnly))
+            {
+                writer.WritePropertyName("simulationOnly"u8);
+                writer.WriteBooleanValue(SimulationOnly.Value);
+            }
+            if (Optional.IsCollectionDefined(RiskCategories))
+            {
+                writer.WritePropertyName("riskCategories"u8);
+                writer.WriteStartArray();
+                foreach (var item in RiskCategories)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(ApplicationScenario))
             {
                 writer.WritePropertyName("applicationScenario"u8);
@@ -94,8 +106,8 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            writer.WritePropertyName("targetConfig"u8);
-            writer.WriteObjectValue(TargetConfig, options);
+            writer.WritePropertyName("target"u8);
+            writer.WriteObjectValue(Target, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -134,16 +146,16 @@ namespace Azure.AI.Projects
                 return null;
             }
             string id = default;
-            string scanName = default;
-            int numTurns = default;
+            string displayName = default;
+            int? numTurns = default;
             IList<AttackStrategy> attackStrategies = default;
-            bool simulationOnly = default;
+            bool? simulationOnly = default;
             IList<RiskCategory> riskCategories = default;
             string applicationScenario = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, string> properties = default;
             string status = default;
-            TargetConfig targetConfig = default;
+            TargetConfig target = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,18 +165,26 @@ namespace Azure.AI.Projects
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scanName"u8))
+                if (property.NameEquals("displayName"u8))
                 {
-                    scanName = property.Value.GetString();
+                    displayName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("numTurns"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     numTurns = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("attackStrategies"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<AttackStrategy> array = new List<AttackStrategy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -175,11 +195,19 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("simulationOnly"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     simulationOnly = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("riskCategories"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<RiskCategory> array = new List<RiskCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -226,9 +254,9 @@ namespace Azure.AI.Projects
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetConfig"u8))
+                if (property.NameEquals("target"u8))
                 {
-                    targetConfig = TargetConfig.DeserializeTargetConfig(property.Value, options);
+                    target = TargetConfig.DeserializeTargetConfig(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -239,16 +267,16 @@ namespace Azure.AI.Projects
             serializedAdditionalRawData = rawDataDictionary;
             return new RedTeam(
                 id,
-                scanName,
+                displayName,
                 numTurns,
-                attackStrategies,
+                attackStrategies ?? new ChangeTrackingList<AttackStrategy>(),
                 simulationOnly,
-                riskCategories,
+                riskCategories ?? new ChangeTrackingList<RiskCategory>(),
                 applicationScenario,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 status,
-                targetConfig,
+                target,
                 serializedAdditionalRawData);
         }
 

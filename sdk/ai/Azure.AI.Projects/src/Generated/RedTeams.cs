@@ -18,7 +18,7 @@ namespace Azure.AI.Projects
     /// <summary> The RedTeams sub-client. </summary>
     public partial class RedTeams
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -56,7 +56,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Get a redteam by name. </summary>
-        /// <param name="name"> Identifier of the red team. </param>
+        /// <param name="name"> Identifier of the red team run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -71,7 +71,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Get a redteam by name. </summary>
-        /// <param name="name"> Identifier of the red team. </param>
+        /// <param name="name"> Identifier of the red team run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -100,7 +100,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> Identifier of the red team. </param>
+        /// <param name="name"> Identifier of the red team run. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -140,7 +140,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> Identifier of the red team. </param>
+        /// <param name="name"> Identifier of the red team run. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -169,14 +169,14 @@ namespace Azure.AI.Projects
         /// <param name="redTeam"> Redteam to be run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="redTeam"/> is null. </exception>
-        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='CreateRunAsync(RedTeam,CancellationToken)']/*" />
-        public virtual async Task<Response<RedTeam>> CreateRunAsync(RedTeam redTeam, CancellationToken cancellationToken = default)
+        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='CreateAsync(RedTeam,CancellationToken)']/*" />
+        public virtual async Task<Response<RedTeam>> CreateAsync(RedTeam redTeam, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(redTeam, nameof(redTeam));
 
             using RequestContent content = redTeam.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateRunAsync(content, context).ConfigureAwait(false);
+            Response response = await CreateAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(RedTeam.FromResponse(response), response);
         }
 
@@ -184,14 +184,14 @@ namespace Azure.AI.Projects
         /// <param name="redTeam"> Redteam to be run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="redTeam"/> is null. </exception>
-        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='CreateRun(RedTeam,CancellationToken)']/*" />
-        public virtual Response<RedTeam> CreateRun(RedTeam redTeam, CancellationToken cancellationToken = default)
+        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='Create(RedTeam,CancellationToken)']/*" />
+        public virtual Response<RedTeam> Create(RedTeam redTeam, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(redTeam, nameof(redTeam));
 
             using RequestContent content = redTeam.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateRun(content, context);
+            Response response = Create(content, context);
             return Response.FromValue(RedTeam.FromResponse(response), response);
         }
 
@@ -205,7 +205,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateRunAsync(RedTeam,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateAsync(RedTeam,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -215,16 +215,16 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='CreateRunAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateRunAsync(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='CreateAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("RedTeams.CreateRun");
+            using var scope = ClientDiagnostics.CreateScope("RedTeams.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRunRequest(content, context);
+                using HttpMessage message = CreateCreateRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -244,7 +244,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateRun(RedTeam,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Create(RedTeam,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -254,16 +254,16 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='CreateRun(RequestContent,RequestContext)']/*" />
-        public virtual Response CreateRun(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='Create(RequestContent,RequestContext)']/*" />
+        public virtual Response Create(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("RedTeams.CreateRun");
+            using var scope = ClientDiagnostics.CreateScope("RedTeams.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRunRequest(content, context);
+                using HttpMessage message = CreateCreateRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -400,7 +400,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal HttpMessage CreateCreateRunRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
             var request = message.Request;

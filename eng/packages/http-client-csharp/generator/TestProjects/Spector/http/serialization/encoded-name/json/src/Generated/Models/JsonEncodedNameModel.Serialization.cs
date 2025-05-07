@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Serialization.EncodedName.Json.Models
+namespace Serialization.EncodedName.Json._Property
 {
     public partial class JsonEncodedNameModel : IJsonModel<JsonEncodedNameModel>
     {

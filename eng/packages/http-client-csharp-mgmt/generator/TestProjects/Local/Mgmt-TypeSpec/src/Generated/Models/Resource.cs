@@ -16,6 +16,7 @@ namespace MgmtTypeSpec.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected string _name;
 
         internal Resource()
         {

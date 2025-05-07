@@ -489,238 +489,189 @@
  "clients": [
   {
    "$id": "64",
+   "kind": "client",
    "name": "SingleDiscriminatorClient",
    "namespace": "Type.Model.Inheritance.SingleDiscriminator",
    "doc": "Illustrates inheritance with single discriminator.",
-   "operations": [
+   "methods": [
     {
      "$id": "65",
+     "kind": "basic",
      "name": "getModel",
-     "resourceName": "SingleDiscriminator",
      "accessibility": "public",
-     "parameters": [
-      {
-       "$id": "66",
-       "name": "accept",
-       "nameInRequest": "Accept",
-       "type": {
+     "apiVersions": [],
+     "operation": {
+      "$id": "66",
+      "name": "getModel",
+      "resourceName": "SingleDiscriminator",
+      "accessibility": "public",
+      "parameters": [
+       {
         "$id": "67",
-        "kind": "constant",
-        "valueType": {
+        "name": "accept",
+        "nameInRequest": "Accept",
+        "type": {
          "$id": "68",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
+         "kind": "constant",
+         "valueType": {
+          "$id": "69",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "value": "application/json",
          "decorators": []
         },
-        "value": "application/json",
-        "decorators": []
-       },
-       "location": "Header",
-       "isApiVersion": false,
-       "isContentType": false,
-       "isEndpoint": false,
-       "explode": false,
-       "isRequired": true,
-       "kind": "Constant",
-       "decorators": [],
-       "skipUrlEncoding": false
-      }
-     ],
-     "responses": [
-      {
-       "$id": "69",
-       "statusCodes": [
-        200
-       ],
-       "bodyType": {
-        "$ref": "2"
-       },
-       "headers": [],
-       "isErrorResponse": false,
-       "contentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "httpMethod": "GET",
-     "uri": "{endpoint}",
-     "path": "/type/model/inheritance/single-discriminator/model",
-     "bufferResponse": true,
-     "generateProtocolMethod": true,
-     "generateConvenienceMethod": true,
-     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getModel",
-     "decorators": []
-    },
-    {
-     "$id": "70",
-     "name": "putModel",
-     "resourceName": "SingleDiscriminator",
-     "accessibility": "public",
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Constant",
+        "decorators": [],
+        "skipUrlEncoding": false
+       }
+      ],
+      "responses": [
+       {
+        "$id": "70",
+        "statusCodes": [
+         200
+        ],
+        "bodyType": {
+         "$ref": "2"
+        },
+        "headers": [],
+        "isErrorResponse": false,
+        "contentTypes": [
+         "application/json"
+        ]
+       }
+      ],
+      "httpMethod": "GET",
+      "uri": "{endpoint}",
+      "path": "/type/model/inheritance/single-discriminator/model",
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getModel",
+      "decorators": []
+     },
      "parameters": [
       {
        "$id": "71",
-       "name": "contentType",
-       "nameInRequest": "Content-Type",
-       "doc": "Body parameter's content type. Known values are application/json",
+       "name": "accept",
+       "nameInRequest": "accept",
        "type": {
-        "$id": "72",
-        "kind": "constant",
-        "valueType": {
-         "$id": "73",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
+        "$ref": "68"
        },
        "location": "Header",
        "isApiVersion": false,
-       "isContentType": true,
+       "isContentType": false,
        "isEndpoint": false,
        "explode": false,
        "isRequired": true,
        "kind": "Constant",
        "decorators": [],
        "skipUrlEncoding": false
-      },
-      {
-       "$id": "74",
-       "name": "input",
-       "nameInRequest": "input",
-       "type": {
-        "$ref": "2"
-       },
-       "location": "Body",
-       "isApiVersion": false,
-       "isContentType": false,
-       "isEndpoint": false,
-       "explode": false,
-       "isRequired": true,
-       "kind": "Method",
-       "decorators": [],
-       "skipUrlEncoding": false
       }
      ],
-     "responses": [
-      {
-       "$id": "75",
-       "statusCodes": [
-        204
-       ],
-       "headers": [],
-       "isErrorResponse": false
+     "response": {
+      "$id": "72",
+      "type": {
+       "$ref": "2"
       }
-     ],
-     "httpMethod": "PUT",
-     "uri": "{endpoint}",
-     "path": "/type/model/inheritance/single-discriminator/model",
-     "requestMediaTypes": [
-      "application/json"
-     ],
-     "bufferResponse": true,
-     "generateProtocolMethod": true,
-     "generateConvenienceMethod": true,
-     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putModel",
-     "decorators": []
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getModel"
     },
     {
-     "$id": "76",
-     "name": "getRecursiveModel",
-     "resourceName": "SingleDiscriminator",
+     "$id": "73",
+     "kind": "basic",
+     "name": "putModel",
      "accessibility": "public",
-     "parameters": [
-      {
-       "$id": "77",
-       "name": "accept",
-       "nameInRequest": "Accept",
-       "type": {
-        "$id": "78",
-        "kind": "constant",
-        "valueType": {
-         "$id": "79",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
+     "apiVersions": [],
+     "operation": {
+      "$id": "74",
+      "name": "putModel",
+      "resourceName": "SingleDiscriminator",
+      "accessibility": "public",
+      "parameters": [
+       {
+        "$id": "75",
+        "name": "contentType",
+        "nameInRequest": "Content-Type",
+        "doc": "Body parameter's content type. Known values are application/json",
+        "type": {
+         "$id": "76",
+         "kind": "constant",
+         "valueType": {
+          "$id": "77",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "value": "application/json",
          "decorators": []
         },
-        "value": "application/json",
-        "decorators": []
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": true,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Constant",
+        "decorators": [],
+        "skipUrlEncoding": false
        },
-       "location": "Header",
-       "isApiVersion": false,
-       "isContentType": false,
-       "isEndpoint": false,
-       "explode": false,
-       "isRequired": true,
-       "kind": "Constant",
-       "decorators": [],
-       "skipUrlEncoding": false
-      }
-     ],
-     "responses": [
+       {
+        "$id": "78",
+        "name": "input",
+        "nameInRequest": "input",
+        "type": {
+         "$ref": "2"
+        },
+        "location": "Body",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       }
+      ],
+      "responses": [
+       {
+        "$id": "79",
+        "statusCodes": [
+         204
+        ],
+        "headers": [],
+        "isErrorResponse": false
+       }
+      ],
+      "httpMethod": "PUT",
+      "uri": "{endpoint}",
+      "path": "/type/model/inheritance/single-discriminator/model",
+      "requestMediaTypes": [
+       "application/json"
+      ],
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putModel",
+      "decorators": []
+     },
+     "parameters": [
       {
        "$id": "80",
-       "statusCodes": [
-        200
-       ],
-       "bodyType": {
-        "$ref": "2"
-       },
-       "headers": [],
-       "isErrorResponse": false,
-       "contentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "httpMethod": "GET",
-     "uri": "{endpoint}",
-     "path": "/type/model/inheritance/single-discriminator/recursivemodel",
-     "bufferResponse": true,
-     "generateProtocolMethod": true,
-     "generateConvenienceMethod": true,
-     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getRecursiveModel",
-     "decorators": []
-    },
-    {
-     "$id": "81",
-     "name": "putRecursiveModel",
-     "resourceName": "SingleDiscriminator",
-     "accessibility": "public",
-     "parameters": [
-      {
-       "$id": "82",
-       "name": "contentType",
-       "nameInRequest": "Content-Type",
-       "doc": "Body parameter's content type. Known values are application/json",
-       "type": {
-        "$id": "83",
-        "kind": "constant",
-        "valueType": {
-         "$id": "84",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
-       },
-       "location": "Header",
-       "isApiVersion": false,
-       "isContentType": true,
-       "isEndpoint": false,
-       "explode": false,
-       "isRequired": true,
-       "kind": "Constant",
-       "decorators": [],
-       "skipUrlEncoding": false
-      },
-      {
-       "$id": "85",
        "name": "input",
        "nameInRequest": "input",
        "type": {
@@ -735,52 +686,14 @@
        "kind": "Method",
        "decorators": [],
        "skipUrlEncoding": false
-      }
-     ],
-     "responses": [
+      },
       {
-       "$id": "86",
-       "statusCodes": [
-        204
-       ],
-       "headers": [],
-       "isErrorResponse": false
-      }
-     ],
-     "httpMethod": "PUT",
-     "uri": "{endpoint}",
-     "path": "/type/model/inheritance/single-discriminator/recursivemodel",
-     "requestMediaTypes": [
-      "application/json"
-     ],
-     "bufferResponse": true,
-     "generateProtocolMethod": true,
-     "generateConvenienceMethod": true,
-     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putRecursiveModel",
-     "decorators": []
-    },
-    {
-     "$id": "87",
-     "name": "getMissingDiscriminator",
-     "resourceName": "SingleDiscriminator",
-     "accessibility": "public",
-     "parameters": [
-      {
-       "$id": "88",
-       "name": "accept",
-       "nameInRequest": "Accept",
+       "$id": "81",
+       "name": "contentType",
+       "nameInRequest": "contentType",
+       "doc": "Body parameter's content type. Known values are application/json",
        "type": {
-        "$id": "89",
-        "kind": "constant",
-        "valueType": {
-         "$id": "90",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
+        "$ref": "76"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -793,53 +706,86 @@
        "skipUrlEncoding": false
       }
      ],
-     "responses": [
-      {
-       "$id": "91",
-       "statusCodes": [
-        200
-       ],
-       "bodyType": {
-        "$ref": "2"
-       },
-       "headers": [],
-       "isErrorResponse": false,
-       "contentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "httpMethod": "GET",
-     "uri": "{endpoint}",
-     "path": "/type/model/inheritance/single-discriminator/missingdiscriminator",
-     "bufferResponse": true,
-     "generateProtocolMethod": true,
-     "generateConvenienceMethod": true,
-     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getMissingDiscriminator",
-     "decorators": []
+     "response": {
+      "$id": "82"
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putModel"
     },
     {
-     "$id": "92",
-     "name": "getWrongDiscriminator",
-     "resourceName": "SingleDiscriminator",
+     "$id": "83",
+     "kind": "basic",
+     "name": "getRecursiveModel",
      "accessibility": "public",
-     "parameters": [
-      {
-       "$id": "93",
-       "name": "accept",
-       "nameInRequest": "Accept",
-       "type": {
-        "$id": "94",
-        "kind": "constant",
-        "valueType": {
-         "$id": "95",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
+     "apiVersions": [],
+     "operation": {
+      "$id": "84",
+      "name": "getRecursiveModel",
+      "resourceName": "SingleDiscriminator",
+      "accessibility": "public",
+      "parameters": [
+       {
+        "$id": "85",
+        "name": "accept",
+        "nameInRequest": "Accept",
+        "type": {
+         "$id": "86",
+         "kind": "constant",
+         "valueType": {
+          "$id": "87",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "value": "application/json",
          "decorators": []
         },
-        "value": "application/json",
-        "decorators": []
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Constant",
+        "decorators": [],
+        "skipUrlEncoding": false
+       }
+      ],
+      "responses": [
+       {
+        "$id": "88",
+        "statusCodes": [
+         200
+        ],
+        "bodyType": {
+         "$ref": "2"
+        },
+        "headers": [],
+        "isErrorResponse": false,
+        "contentTypes": [
+         "application/json"
+        ]
+       }
+      ],
+      "httpMethod": "GET",
+      "uri": "{endpoint}",
+      "path": "/type/model/inheritance/single-discriminator/recursivemodel",
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getRecursiveModel",
+      "decorators": []
+     },
+     "parameters": [
+      {
+       "$id": "89",
+       "name": "accept",
+       "nameInRequest": "accept",
+       "type": {
+        "$ref": "86"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -852,53 +798,122 @@
        "skipUrlEncoding": false
       }
      ],
-     "responses": [
-      {
-       "$id": "96",
-       "statusCodes": [
-        200
-       ],
-       "bodyType": {
-        "$ref": "2"
-       },
-       "headers": [],
-       "isErrorResponse": false,
-       "contentTypes": [
-        "application/json"
-       ]
+     "response": {
+      "$id": "90",
+      "type": {
+       "$ref": "2"
       }
-     ],
-     "httpMethod": "GET",
-     "uri": "{endpoint}",
-     "path": "/type/model/inheritance/single-discriminator/wrongdiscriminator",
-     "bufferResponse": true,
-     "generateProtocolMethod": true,
-     "generateConvenienceMethod": true,
-     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getWrongDiscriminator",
-     "decorators": []
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getRecursiveModel"
     },
     {
-     "$id": "97",
-     "name": "getLegacyModel",
-     "resourceName": "SingleDiscriminator",
+     "$id": "91",
+     "kind": "basic",
+     "name": "putRecursiveModel",
      "accessibility": "public",
+     "apiVersions": [],
+     "operation": {
+      "$id": "92",
+      "name": "putRecursiveModel",
+      "resourceName": "SingleDiscriminator",
+      "accessibility": "public",
+      "parameters": [
+       {
+        "$id": "93",
+        "name": "contentType",
+        "nameInRequest": "Content-Type",
+        "doc": "Body parameter's content type. Known values are application/json",
+        "type": {
+         "$id": "94",
+         "kind": "constant",
+         "valueType": {
+          "$id": "95",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "value": "application/json",
+         "decorators": []
+        },
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": true,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Constant",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "96",
+        "name": "input",
+        "nameInRequest": "input",
+        "type": {
+         "$ref": "2"
+        },
+        "location": "Body",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       }
+      ],
+      "responses": [
+       {
+        "$id": "97",
+        "statusCodes": [
+         204
+        ],
+        "headers": [],
+        "isErrorResponse": false
+       }
+      ],
+      "httpMethod": "PUT",
+      "uri": "{endpoint}",
+      "path": "/type/model/inheritance/single-discriminator/recursivemodel",
+      "requestMediaTypes": [
+       "application/json"
+      ],
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putRecursiveModel",
+      "decorators": []
+     },
      "parameters": [
       {
        "$id": "98",
-       "name": "accept",
-       "nameInRequest": "Accept",
+       "name": "input",
+       "nameInRequest": "input",
        "type": {
-        "$id": "99",
-        "kind": "constant",
-        "valueType": {
-         "$id": "100",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
+        "$ref": "2"
+       },
+       "location": "Body",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
+      {
+       "$id": "99",
+       "name": "contentType",
+       "nameInRequest": "contentType",
+       "doc": "Body parameter's content type. Known values are application/json",
+       "type": {
+        "$ref": "94"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -911,40 +926,308 @@
        "skipUrlEncoding": false
       }
      ],
-     "responses": [
+     "response": {
+      "$id": "100"
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putRecursiveModel"
+    },
+    {
+     "$id": "101",
+     "kind": "basic",
+     "name": "getMissingDiscriminator",
+     "accessibility": "public",
+     "apiVersions": [],
+     "operation": {
+      "$id": "102",
+      "name": "getMissingDiscriminator",
+      "resourceName": "SingleDiscriminator",
+      "accessibility": "public",
+      "parameters": [
+       {
+        "$id": "103",
+        "name": "accept",
+        "nameInRequest": "Accept",
+        "type": {
+         "$id": "104",
+         "kind": "constant",
+         "valueType": {
+          "$id": "105",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "value": "application/json",
+         "decorators": []
+        },
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Constant",
+        "decorators": [],
+        "skipUrlEncoding": false
+       }
+      ],
+      "responses": [
+       {
+        "$id": "106",
+        "statusCodes": [
+         200
+        ],
+        "bodyType": {
+         "$ref": "2"
+        },
+        "headers": [],
+        "isErrorResponse": false,
+        "contentTypes": [
+         "application/json"
+        ]
+       }
+      ],
+      "httpMethod": "GET",
+      "uri": "{endpoint}",
+      "path": "/type/model/inheritance/single-discriminator/missingdiscriminator",
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getMissingDiscriminator",
+      "decorators": []
+     },
+     "parameters": [
       {
-       "$id": "101",
-       "statusCodes": [
-        200
-       ],
-       "bodyType": {
-        "$ref": "48"
+       "$id": "107",
+       "name": "accept",
+       "nameInRequest": "accept",
+       "type": {
+        "$ref": "104"
        },
-       "headers": [],
-       "isErrorResponse": false,
-       "contentTypes": [
-        "application/json"
-       ]
+       "location": "Header",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Constant",
+       "decorators": [],
+       "skipUrlEncoding": false
       }
      ],
-     "httpMethod": "GET",
-     "uri": "{endpoint}",
-     "path": "/type/model/inheritance/single-discriminator/legacy-model",
-     "bufferResponse": true,
-     "generateProtocolMethod": true,
-     "generateConvenienceMethod": true,
-     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getLegacyModel",
-     "decorators": []
+     "response": {
+      "$id": "108",
+      "type": {
+       "$ref": "2"
+      }
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getMissingDiscriminator"
+    },
+    {
+     "$id": "109",
+     "kind": "basic",
+     "name": "getWrongDiscriminator",
+     "accessibility": "public",
+     "apiVersions": [],
+     "operation": {
+      "$id": "110",
+      "name": "getWrongDiscriminator",
+      "resourceName": "SingleDiscriminator",
+      "accessibility": "public",
+      "parameters": [
+       {
+        "$id": "111",
+        "name": "accept",
+        "nameInRequest": "Accept",
+        "type": {
+         "$id": "112",
+         "kind": "constant",
+         "valueType": {
+          "$id": "113",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "value": "application/json",
+         "decorators": []
+        },
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Constant",
+        "decorators": [],
+        "skipUrlEncoding": false
+       }
+      ],
+      "responses": [
+       {
+        "$id": "114",
+        "statusCodes": [
+         200
+        ],
+        "bodyType": {
+         "$ref": "2"
+        },
+        "headers": [],
+        "isErrorResponse": false,
+        "contentTypes": [
+         "application/json"
+        ]
+       }
+      ],
+      "httpMethod": "GET",
+      "uri": "{endpoint}",
+      "path": "/type/model/inheritance/single-discriminator/wrongdiscriminator",
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getWrongDiscriminator",
+      "decorators": []
+     },
+     "parameters": [
+      {
+       "$id": "115",
+       "name": "accept",
+       "nameInRequest": "accept",
+       "type": {
+        "$ref": "112"
+       },
+       "location": "Header",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Constant",
+       "decorators": [],
+       "skipUrlEncoding": false
+      }
+     ],
+     "response": {
+      "$id": "116",
+      "type": {
+       "$ref": "2"
+      }
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getWrongDiscriminator"
+    },
+    {
+     "$id": "117",
+     "kind": "basic",
+     "name": "getLegacyModel",
+     "accessibility": "public",
+     "apiVersions": [],
+     "operation": {
+      "$id": "118",
+      "name": "getLegacyModel",
+      "resourceName": "SingleDiscriminator",
+      "accessibility": "public",
+      "parameters": [
+       {
+        "$id": "119",
+        "name": "accept",
+        "nameInRequest": "Accept",
+        "type": {
+         "$id": "120",
+         "kind": "constant",
+         "valueType": {
+          "$id": "121",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "value": "application/json",
+         "decorators": []
+        },
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Constant",
+        "decorators": [],
+        "skipUrlEncoding": false
+       }
+      ],
+      "responses": [
+       {
+        "$id": "122",
+        "statusCodes": [
+         200
+        ],
+        "bodyType": {
+         "$ref": "48"
+        },
+        "headers": [],
+        "isErrorResponse": false,
+        "contentTypes": [
+         "application/json"
+        ]
+       }
+      ],
+      "httpMethod": "GET",
+      "uri": "{endpoint}",
+      "path": "/type/model/inheritance/single-discriminator/legacy-model",
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getLegacyModel",
+      "decorators": []
+     },
+     "parameters": [
+      {
+       "$id": "123",
+       "name": "accept",
+       "nameInRequest": "accept",
+       "type": {
+        "$ref": "120"
+       },
+       "location": "Header",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Constant",
+       "decorators": [],
+       "skipUrlEncoding": false
+      }
+     ],
+     "response": {
+      "$id": "124",
+      "type": {
+       "$ref": "48"
+      }
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getLegacyModel"
     }
    ],
    "parameters": [
     {
-     "$id": "102",
+     "$id": "125",
      "name": "endpoint",
      "nameInRequest": "endpoint",
      "doc": "Service host",
      "type": {
-      "$id": "103",
+      "$id": "126",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -958,9 +1241,9 @@
      "explode": false,
      "kind": "Client",
      "defaultValue": {
-      "$id": "104",
+      "$id": "127",
       "type": {
-       "$id": "105",
+       "$id": "128",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"
@@ -970,7 +1253,8 @@
     }
    ],
    "decorators": [],
-   "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator"
+   "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator",
+   "apiVersions": []
   }
  ]
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -16,7 +15,7 @@ namespace Azure.AI.Projects
     /// <summary> The ServicePatterns sub-client. </summary>
     public partial class ServicePatterns
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -48,14 +47,6 @@ namespace Azure.AI.Projects
             _pipeline = pipeline;
             _tokenCredential = tokenCredential;
             _endpoint = endpoint;
-        }
-
-        private ServicePatternsBuildingBlocks _cachedServicePatternsBuildingBlocks;
-
-        /// <summary> Initializes a new instance of ServicePatternsBuildingBlocks. </summary>
-        public virtual ServicePatternsBuildingBlocks GetServicePatternsBuildingBlocksClient()
-        {
-            return Volatile.Read(ref _cachedServicePatternsBuildingBlocks) ?? Interlocked.CompareExchange(ref _cachedServicePatternsBuildingBlocks, new ServicePatternsBuildingBlocks(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint), null) ?? _cachedServicePatternsBuildingBlocks;
         }
     }
 }

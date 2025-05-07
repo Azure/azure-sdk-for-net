@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace _Type.Model.Inheritance.NestedDiscriminator.Models
+namespace _Type.Model.Inheritance.NestedDiscriminator
 {
     public partial class Shark : IJsonModel<Shark>
     {

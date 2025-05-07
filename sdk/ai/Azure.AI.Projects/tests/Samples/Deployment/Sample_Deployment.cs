@@ -5,7 +5,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.AI.Projects;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 

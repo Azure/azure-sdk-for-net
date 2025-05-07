@@ -243,7 +243,7 @@ This example generates a CustomEvent structured like this:
         }
     }
 }
-``
+```
 
 ## Troubleshooting
 
@@ -259,3 +259,27 @@ For more information on Azure SDK, please refer to [this website](https://azure.
 ## Contributing
 
 See [CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md) for details on contribution process.
+
+## AOT (Ahead-of-Time) Support
+
+This library supports usage in .NET applications compiled with [AOT (Ahead-of-Time) compilation](https://learn.microsoft.com/dotnet/core/deploying/native-aot/).
+All core features of the Azure Monitor Exporter are compatible with AOT, including telemetry export for traces, metrics, and logs.
+
+**Important:**  
+While AOT is supported, automatic configuration binding from `appsettings.json` or other `IConfiguration` sources is **not** supported in AOT-compiled applications.
+This is due to .NET limitations on reflection-based binding APIs (such as `ConfigurationBinder.Bind` and `Get<T>()`) in AOT scenarios.  
+  
+**Workaround:**  
+In AOT scenarios, you can configure the Azure Monitor Exporter using one of the following approaches:
+
+- **Environment Variable:** Set the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable to configure the connection string.
+
+- **Programmatic Configuration:** Set the `AzureMonitorExporterOptions` directly in your application code:
+    ```csharp
+    builder.Services.AddOpenTelemetry()
+        .UseAzureMonitorExporter(options =>
+        {
+            options.ConnectionString = "<your-connection-string>";
+            // Set other options as needed
+        });
+    ```

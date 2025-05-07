@@ -55,9 +55,9 @@ Console.WriteLine(result.GetProperty("data").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("evaluators").GetProperty("<key>").GetProperty("id").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateRunAsync(Evaluation,CancellationToken)">
+    <member name="CreateAsync(Evaluation,CancellationToken)">
       <example>
-This sample shows how to call CreateRunAsync.
+This sample shows how to call CreateAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
@@ -86,21 +86,23 @@ Evaluation evaluation = new Evaluation(null, new Dictionary<string, EvaluatorCon
         ["key9192"] = "e"
     },
 };
-Response<Evaluation> response = await client.CreateRunAsync(evaluation);
+
+Response<Evaluation> response = await client.CreateAsync(evaluation);
 ]]></code>
-This sample shows how to call CreateRunAsync.
+This sample shows how to call CreateAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 Evaluation evaluation = new Evaluation(null, new Dictionary<string, EvaluatorConfiguration>());
-Response<Evaluation> response = await client.CreateRunAsync(evaluation);
+
+Response<Evaluation> response = await client.CreateAsync(evaluation);
 ]]></code></example>
     </member>
-    <member name="CreateRun(Evaluation,CancellationToken)">
+    <member name="Create(Evaluation,CancellationToken)">
       <example>
-This sample shows how to call CreateRun.
+This sample shows how to call Create.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
@@ -129,21 +131,23 @@ Evaluation evaluation = new Evaluation(null, new Dictionary<string, EvaluatorCon
         ["key9192"] = "e"
     },
 };
-Response<Evaluation> response = client.CreateRun(evaluation);
+
+Response<Evaluation> response = client.Create(evaluation);
 ]]></code>
-This sample shows how to call CreateRun.
+This sample shows how to call Create.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 Evaluation evaluation = new Evaluation(null, new Dictionary<string, EvaluatorConfiguration>());
-Response<Evaluation> response = client.CreateRun(evaluation);
+
+Response<Evaluation> response = client.Create(evaluation);
 ]]></code></example>
     </member>
-    <member name="CreateRunAsync(RequestContent,RequestContext)">
+    <member name="CreateAsync(RequestContent,RequestContext)">
       <example>
-This sample shows how to call CreateRunAsync and parse the result.
+This sample shows how to call CreateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
@@ -174,14 +178,16 @@ using RequestContent content = RequestContent.Create(new
         },
     },
 });
-Response response = await client.CreateRunAsync(content);
+
+Response response = await client.CreateAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("data").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("evaluators").GetProperty("<key>").GetProperty("id").ToString());
 ]]></code>
-This sample shows how to call CreateRunAsync and parse the result.
+
+This sample shows how to call CreateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
@@ -191,7 +197,7 @@ using RequestContent content = RequestContent.Create(new
 {
     evaluators = new object(),
 });
-Response response = await client.CreateRunAsync(content);
+Response response = await client.CreateAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -199,9 +205,10 @@ Console.WriteLine(result.GetProperty("data").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("evaluators").GetProperty("<key>").GetProperty("id").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateRun(RequestContent,RequestContext)">
+
+    <member name="Create(RequestContent,RequestContext)">
       <example>
-This sample shows how to call CreateRun and parse the result.
+This sample shows how to call Create and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
@@ -232,14 +239,14 @@ using RequestContent content = RequestContent.Create(new
         },
     },
 });
-Response response = client.CreateRun(content);
-
+Response response = client.Create(content);
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("data").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("evaluators").GetProperty("<key>").GetProperty("id").ToString());
 ]]></code>
-This sample shows how to call CreateRun and parse the result.
+
+This sample shows how to call Create and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
@@ -249,7 +256,8 @@ using RequestContent content = RequestContent.Create(new
 {
     evaluators = new object(),
 });
-Response response = client.CreateRun(content);
+
+Response response = client.Create(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());

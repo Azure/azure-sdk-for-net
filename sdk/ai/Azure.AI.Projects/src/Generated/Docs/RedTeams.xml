@@ -35,11 +35,8 @@ Response response = await client.GetRedTeamAsync("apwpcf", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("numTurns").ToString());
-Console.WriteLine(result.GetProperty("attackStrategies")[0].ToString());
-Console.WriteLine(result.GetProperty("simulationOnly").ToString());
-Console.WriteLine(result.GetProperty("riskCategories")[0].ToString());
-Console.WriteLine(result.GetProperty("targetConfig").GetProperty("type").ToString());
+
+Console.WriteLine(result.GetProperty("target").GetProperty("type").ToString());
 ]]></code></example>
     </member>
     <member name="GetRedTeam(string,RequestContext)">
@@ -54,24 +51,24 @@ Response response = client.GetRedTeam("apwpcf", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("numTurns").ToString());
-Console.WriteLine(result.GetProperty("attackStrategies")[0].ToString());
-Console.WriteLine(result.GetProperty("simulationOnly").ToString());
-Console.WriteLine(result.GetProperty("riskCategories")[0].ToString());
-Console.WriteLine(result.GetProperty("targetConfig").GetProperty("type").ToString());
+
+Console.WriteLine(result.GetProperty("target").GetProperty("type").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateRunAsync(RedTeam,CancellationToken)">
+    <member name="CreateAsync(RedTeam,CancellationToken)">
       <example>
-This sample shows how to call CreateRunAsync.
+This sample shows how to call CreateAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 RedTeams client = new AIProjectClient(endpoint, credential).GetRedTeamsClient(apiVersion: "2025-05-15-preview");
 
-RedTeam redTeam = new RedTeam(10, new AttackStrategy[] { AttackStrategy.Easy }, true, new RiskCategory[] { RiskCategory.HateUnfairness }, null)
+RedTeam redTeam = new RedTeam(null)
 {
-    ScanName = "edmalfvznuay",
+    NumTurns = 10,
+    AttackStrategies = { AttackStrategy.Easy },
+    SimulationOnly = true,
+    RiskCategories = { RiskCategory.HateUnfairness },
     ApplicationScenario = "qaxxxhjp",
     Tags =
     {
@@ -82,29 +79,40 @@ RedTeam redTeam = new RedTeam(10, new AttackStrategy[] { AttackStrategy.Easy }, 
         ["key9280"] = "fwzjtipl"
     },
 };
-Response<RedTeam> response = await client.CreateRunAsync(redTeam);
+
+Response<RedTeam> response = await client.CreateAsync(redTeam);
 ]]></code>
-This sample shows how to call CreateRunAsync.
+This sample shows how to call CreateAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 RedTeams client = new AIProjectClient(endpoint, credential).GetRedTeamsClient(apiVersion: "2025-05-15-preview");
 
-RedTeam redTeam = new RedTeam(10, new AttackStrategy[] { AttackStrategy.Easy }, true, new RiskCategory[] { RiskCategory.HateUnfairness }, null);
-Response<RedTeam> response = await client.CreateRunAsync(redTeam);
+
+RedTeam redTeam = new RedTeam(null)
+{
+    NumTurns = 10,
+    AttackStrategies = { AttackStrategy.Easy },
+    SimulationOnly = true,
+    RiskCategories = { RiskCategory.HateUnfairness },
+};
+Response<RedTeam> response = await client.CreateAsync(redTeam);
 ]]></code></example>
     </member>
-    <member name="CreateRun(RedTeam,CancellationToken)">
+    <member name="Create(RedTeam,CancellationToken)">
       <example>
-This sample shows how to call CreateRun.
+This sample shows how to call Create.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 RedTeams client = new AIProjectClient(endpoint, credential).GetRedTeamsClient(apiVersion: "2025-05-15-preview");
 
-RedTeam redTeam = new RedTeam(10, new AttackStrategy[] { AttackStrategy.Easy }, true, new RiskCategory[] { RiskCategory.HateUnfairness }, null)
+RedTeam redTeam = new RedTeam(null)
 {
-    ScanName = "edmalfvznuay",
+    NumTurns = 10,
+    AttackStrategies = { AttackStrategy.Easy },
+    SimulationOnly = true,
+    RiskCategories = { RiskCategory.HateUnfairness },
     ApplicationScenario = "qaxxxhjp",
     Tags =
     {
@@ -115,21 +123,29 @@ RedTeam redTeam = new RedTeam(10, new AttackStrategy[] { AttackStrategy.Easy }, 
         ["key9280"] = "fwzjtipl"
     },
 };
-Response<RedTeam> response = client.CreateRun(redTeam);
+
+Response<RedTeam> response = client.Create(redTeam);
 ]]></code>
-This sample shows how to call CreateRun.
+This sample shows how to call Create.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 RedTeams client = new AIProjectClient(endpoint, credential).GetRedTeamsClient(apiVersion: "2025-05-15-preview");
 
-RedTeam redTeam = new RedTeam(10, new AttackStrategy[] { AttackStrategy.Easy }, true, new RiskCategory[] { RiskCategory.HateUnfairness }, null);
-Response<RedTeam> response = client.CreateRun(redTeam);
+
+RedTeam redTeam = new RedTeam(null)
+{
+    NumTurns = 10,
+    AttackStrategies = { AttackStrategy.Easy },
+    SimulationOnly = true,
+    RiskCategories = { RiskCategory.HateUnfairness },
+};
+Response<RedTeam> response = client.Create(redTeam);
 ]]></code></example>
     </member>
-    <member name="CreateRunAsync(RequestContent,RequestContext)">
+    <member name="CreateAsync(RequestContent,RequestContext)">
       <example>
-This sample shows how to call CreateRunAsync and parse the result.
+This sample shows how to call CreateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
@@ -137,7 +153,6 @@ RedTeams client = new AIProjectClient(endpoint, credential).GetRedTeamsClient(ap
 
 using RequestContent content = RequestContent.Create(new
 {
-    scanName = "edmalfvznuay",
     numTurns = 10,
     attackStrategies = new object[]
     {
@@ -158,17 +173,14 @@ using RequestContent content = RequestContent.Create(new
         key9280 = "fwzjtipl",
     },
 });
-Response response = await client.CreateRunAsync(content);
+
+Response response = await client.CreateAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("numTurns").ToString());
-Console.WriteLine(result.GetProperty("attackStrategies")[0].ToString());
-Console.WriteLine(result.GetProperty("simulationOnly").ToString());
-Console.WriteLine(result.GetProperty("riskCategories")[0].ToString());
-Console.WriteLine(result.GetProperty("targetConfig").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("target").GetProperty("type").ToString());
 ]]></code>
-This sample shows how to call CreateRunAsync and parse the result.
+This sample shows how to call CreateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
@@ -187,20 +199,18 @@ using RequestContent content = RequestContent.Create(new
         "HateUnfairness"
     },
 });
-Response response = await client.CreateRunAsync(content);
+
+Response response = await client.CreateAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("numTurns").ToString());
-Console.WriteLine(result.GetProperty("attackStrategies")[0].ToString());
-Console.WriteLine(result.GetProperty("simulationOnly").ToString());
-Console.WriteLine(result.GetProperty("riskCategories")[0].ToString());
-Console.WriteLine(result.GetProperty("targetConfig").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("target").GetProperty("type").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateRun(RequestContent,RequestContext)">
+    <member name="Create(RequestContent,RequestContext)">
       <example>
-This sample shows how to call CreateRun and parse the result.
+This sample shows how to call Create and parse the result.
+
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
@@ -208,7 +218,6 @@ RedTeams client = new AIProjectClient(endpoint, credential).GetRedTeamsClient(ap
 
 using RequestContent content = RequestContent.Create(new
 {
-    scanName = "edmalfvznuay",
     numTurns = 10,
     attackStrategies = new object[]
     {
@@ -229,17 +238,14 @@ using RequestContent content = RequestContent.Create(new
         key9280 = "fwzjtipl",
     },
 });
-Response response = client.CreateRun(content);
+
+Response response = client.Create(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("numTurns").ToString());
-Console.WriteLine(result.GetProperty("attackStrategies")[0].ToString());
-Console.WriteLine(result.GetProperty("simulationOnly").ToString());
-Console.WriteLine(result.GetProperty("riskCategories")[0].ToString());
-Console.WriteLine(result.GetProperty("targetConfig").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("target").GetProperty("type").ToString());
 ]]></code>
-This sample shows how to call CreateRun and parse the result.
+This sample shows how to call Create and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
@@ -258,15 +264,12 @@ using RequestContent content = RequestContent.Create(new
         "HateUnfairness"
     },
 });
-Response response = client.CreateRun(content);
+
+Response response = client.Create(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("numTurns").ToString());
-Console.WriteLine(result.GetProperty("attackStrategies")[0].ToString());
-Console.WriteLine(result.GetProperty("simulationOnly").ToString());
-Console.WriteLine(result.GetProperty("riskCategories")[0].ToString());
-Console.WriteLine(result.GetProperty("targetConfig").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("target").GetProperty("type").ToString());
 ]]></code></example>
     </member>
     <member name="GetRedTeamsAsync(int?,int?,int?,CancellationToken)">
@@ -307,11 +310,8 @@ await foreach (BinaryData item in client.GetRedTeamsAsync(null, 8, 21, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("numTurns").ToString());
-    Console.WriteLine(result.GetProperty("attackStrategies")[0].ToString());
-    Console.WriteLine(result.GetProperty("simulationOnly").ToString());
-    Console.WriteLine(result.GetProperty("riskCategories")[0].ToString());
-    Console.WriteLine(result.GetProperty("targetConfig").GetProperty("type").ToString());
+
+    Console.WriteLine(result.GetProperty("target").GetProperty("type").ToString());
 }
 ]]></code></example>
     </member>
@@ -327,11 +327,8 @@ foreach (BinaryData item in client.GetRedTeams(null, 8, 21, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("numTurns").ToString());
-    Console.WriteLine(result.GetProperty("attackStrategies")[0].ToString());
-    Console.WriteLine(result.GetProperty("simulationOnly").ToString());
-    Console.WriteLine(result.GetProperty("riskCategories")[0].ToString());
-    Console.WriteLine(result.GetProperty("targetConfig").GetProperty("type").ToString());
+
+    Console.WriteLine(result.GetProperty("target").GetProperty("type").ToString());
 }
 ]]></code></example>
     </member>

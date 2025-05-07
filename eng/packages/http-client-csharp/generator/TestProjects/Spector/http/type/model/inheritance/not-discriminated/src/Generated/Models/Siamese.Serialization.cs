@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace _Type.Model.Inheritance.NotDiscriminated.Models
+namespace _Type.Model.Inheritance.NotDiscriminated
 {
     public partial class Siamese : IJsonModel<Siamese>
     {
