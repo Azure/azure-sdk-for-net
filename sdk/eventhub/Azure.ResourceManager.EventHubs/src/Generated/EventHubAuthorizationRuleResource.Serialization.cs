@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.EventHubs
 
         EventHubsAuthorizationRuleData IJsonModel<EventHubsAuthorizationRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsAuthorizationRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EventHubsAuthorizationRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<EventHubsAuthorizationRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventHubsAuthorizationRuleData>(Data, options, AzureResourceManagerEventHubsContext.Default);
 
-        EventHubsAuthorizationRuleData IPersistableModel<EventHubsAuthorizationRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventHubsAuthorizationRuleData>(data, options);
+        EventHubsAuthorizationRuleData IPersistableModel<EventHubsAuthorizationRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventHubsAuthorizationRuleData>(data, options, AzureResourceManagerEventHubsContext.Default);
 
         string IPersistableModel<EventHubsAuthorizationRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventHubsAuthorizationRuleData>)Data).GetFormatFromOptions(options);
     }

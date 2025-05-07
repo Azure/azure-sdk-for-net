@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDynatraceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DynatraceBillingPlanInfo)} does not support writing '{options.Format}' format.");
             }

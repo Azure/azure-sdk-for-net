@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Dynatrace
 
         DynatraceTagRuleData IJsonModel<DynatraceTagRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DynatraceTagRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DynatraceTagRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DynatraceTagRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DynatraceTagRuleData>(Data, options, AzureResourceManagerDynatraceContext.Default);
 
-        DynatraceTagRuleData IPersistableModel<DynatraceTagRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DynatraceTagRuleData>(data, options);
+        DynatraceTagRuleData IPersistableModel<DynatraceTagRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DynatraceTagRuleData>(data, options, AzureResourceManagerDynatraceContext.Default);
 
         string IPersistableModel<DynatraceTagRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DynatraceTagRuleData>)Data).GetFormatFromOptions(options);
     }

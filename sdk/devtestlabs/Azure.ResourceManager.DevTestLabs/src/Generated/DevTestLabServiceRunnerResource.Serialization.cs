@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DevTestLabs
 
         DevTestLabServiceRunnerData IJsonModel<DevTestLabServiceRunnerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabServiceRunnerData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevTestLabServiceRunnerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevTestLabServiceRunnerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevTestLabServiceRunnerData>(Data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        DevTestLabServiceRunnerData IPersistableModel<DevTestLabServiceRunnerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabServiceRunnerData>(data, options);
+        DevTestLabServiceRunnerData IPersistableModel<DevTestLabServiceRunnerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabServiceRunnerData>(data, options, AzureResourceManagerDevTestLabsContext.Default);
 
         string IPersistableModel<DevTestLabServiceRunnerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabServiceRunnerData>)Data).GetFormatFromOptions(options);
     }

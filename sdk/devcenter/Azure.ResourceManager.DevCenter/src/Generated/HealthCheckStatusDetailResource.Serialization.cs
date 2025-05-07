@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DevCenter
 
         HealthCheckStatusDetailData IJsonModel<HealthCheckStatusDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthCheckStatusDetailData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HealthCheckStatusDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HealthCheckStatusDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HealthCheckStatusDetailData>(Data, options, AzureResourceManagerDevCenterContext.Default);
 
-        HealthCheckStatusDetailData IPersistableModel<HealthCheckStatusDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthCheckStatusDetailData>(data, options);
+        HealthCheckStatusDetailData IPersistableModel<HealthCheckStatusDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthCheckStatusDetailData>(data, options, AzureResourceManagerDevCenterContext.Default);
 
         string IPersistableModel<HealthCheckStatusDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthCheckStatusDetailData>)Data).GetFormatFromOptions(options);
     }

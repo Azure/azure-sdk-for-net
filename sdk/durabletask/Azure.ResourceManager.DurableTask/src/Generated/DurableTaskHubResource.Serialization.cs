@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DurableTask
 
         DurableTaskHubData IJsonModel<DurableTaskHubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DurableTaskHubData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DurableTaskHubData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DurableTaskHubData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DurableTaskHubData>(Data, options, AzureResourceManagerDurableTaskContext.Default);
 
-        DurableTaskHubData IPersistableModel<DurableTaskHubData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DurableTaskHubData>(data, options);
+        DurableTaskHubData IPersistableModel<DurableTaskHubData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DurableTaskHubData>(data, options, AzureResourceManagerDurableTaskContext.Default);
 
         string IPersistableModel<DurableTaskHubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DurableTaskHubData>)Data).GetFormatFromOptions(options);
     }

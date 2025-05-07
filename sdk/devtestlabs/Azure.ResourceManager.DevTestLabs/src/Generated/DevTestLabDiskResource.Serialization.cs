@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DevTestLabs
 
         DevTestLabDiskData IJsonModel<DevTestLabDiskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabDiskData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevTestLabDiskData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevTestLabDiskData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevTestLabDiskData>(Data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        DevTestLabDiskData IPersistableModel<DevTestLabDiskData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabDiskData>(data, options);
+        DevTestLabDiskData IPersistableModel<DevTestLabDiskData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabDiskData>(data, options, AzureResourceManagerDevTestLabsContext.Default);
 
         string IPersistableModel<DevTestLabDiskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabDiskData>)Data).GetFormatFromOptions(options);
     }
