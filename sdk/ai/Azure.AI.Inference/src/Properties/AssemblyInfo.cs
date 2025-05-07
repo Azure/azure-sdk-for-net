@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Runtime.CompilerServices;
+using Azure.Core;
 
 // Replace with test project/test project public key and uncomment to make internal members visible to
 // your test project. If not needed, this can be deleted.
@@ -11,3 +12,5 @@ using System.Runtime.CompilerServices;
 // See https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/azure-services-resource-providers
 // for the list of possible values.
 [assembly: Azure.Core.AzureResourceProviderNamespace("Microsoft.CognitiveServices")]
+
+[assembly: CodeGenSuppressType("Azure.AI.Inference.AzureAIInferenceClientOptions")]

@@ -6,14 +6,17 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using static Azure.AI.Inference.AzureAIInferenceClientOptions;
 using File = System.IO.File;
 
 namespace Azure.AI.Inference.Tests
@@ -125,7 +128,7 @@ namespace Azure.AI.Inference.Tests
             var entraIdCredential = TestEnvironment.Credential;
 
             CaptureRequestPayloadPolicy captureRequestPayloadPolicy = new CaptureRequestPayloadPolicy();
-            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
+            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions(ServiceVersion.V2024_05_01_Preview);
             clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
 
             BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(entraIdCredential, new string[] { "https://cognitiveservices.azure.com/.default" });

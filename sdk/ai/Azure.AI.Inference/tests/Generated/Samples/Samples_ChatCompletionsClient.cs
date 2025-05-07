@@ -17,13 +17,13 @@ namespace Azure.AI.Inference.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Client1_GetModelInfo_MaximumSetModelInformation()
+        public void Example_Client1_GetModelInfo_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
-            Response response = client.GetModelInfo(null);
+            Response response = client.GetModelInfo(null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("model_name").ToString());
@@ -33,13 +33,13 @@ namespace Azure.AI.Inference.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Client1_GetModelInfo_MaximumSetModelInformation_Async()
+        public async Task Example_Client1_GetModelInfo_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
-            Response response = await client.GetModelInfoAsync(null);
+            Response response = await client.GetModelInfoAsync(null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("model_name").ToString());
@@ -49,7 +49,7 @@ namespace Azure.AI.Inference.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Client1_GetModelInfo_MaximumSetModelInformation_Convenience()
+        public void Example_Client1_GetModelInfo_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -60,7 +60,7 @@ namespace Azure.AI.Inference.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Client1_GetModelInfo_MaximumSetModelInformation_Convenience_Async()
+        public async Task Example_Client1_GetModelInfo_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -71,13 +71,13 @@ namespace Azure.AI.Inference.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Client1_GetModelInfo_MinimumSetModelInformation()
+        public void Example_Client1_GetModelInfo_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
-            Response response = client.GetModelInfo(null);
+            Response response = client.GetModelInfo("<model>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("model_name").ToString());
@@ -87,13 +87,13 @@ namespace Azure.AI.Inference.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Client1_GetModelInfo_MinimumSetModelInformation_Async()
+        public async Task Example_Client1_GetModelInfo_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
-            Response response = await client.GetModelInfoAsync(null);
+            Response response = await client.GetModelInfoAsync("<model>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("model_name").ToString());
@@ -103,24 +103,24 @@ namespace Azure.AI.Inference.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Client1_GetModelInfo_MinimumSetModelInformation_Convenience()
+        public void Example_Client1_GetModelInfo_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
-            Response<ModelInfo> response = client.GetModelInfo();
+            Response<ModelInfo> response = client.GetModelInfo(model: "<model>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Client1_GetModelInfo_MinimumSetModelInformation_Convenience_Async()
+        public async Task Example_Client1_GetModelInfo_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
-            Response<ModelInfo> response = await client.GetModelInfoAsync();
+            Response<ModelInfo> response = await client.GetModelInfoAsync(model: "<model>");
         }
     }
 }

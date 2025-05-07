@@ -40,6 +40,16 @@ namespace Azure.AI.Inference
             writer.WriteNumberValue(PromptTokens);
             writer.WritePropertyName("total_tokens"u8);
             writer.WriteNumberValue(TotalTokens);
+            if (Optional.IsDefined(CompletionTokensDetails))
+            {
+                writer.WritePropertyName("completion_tokens_details"u8);
+                writer.WriteObjectValue(CompletionTokensDetails, options);
+            }
+            if (Optional.IsDefined(PromptTokensDetails))
+            {
+                writer.WritePropertyName("prompt_tokens_details"u8);
+                writer.WriteObjectValue(PromptTokensDetails, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,6 +90,8 @@ namespace Azure.AI.Inference
             int completionTokens = default;
             int promptTokens = default;
             int totalTokens = default;
+            CompletionsUsageDetails completionTokensDetails = default;
+            PromptUsageDetails promptTokensDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,13 +111,37 @@ namespace Azure.AI.Inference
                     totalTokens = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("completion_tokens_details"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    completionTokensDetails = CompletionsUsageDetails.DeserializeCompletionsUsageDetails(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("prompt_tokens_details"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    promptTokensDetails = PromptUsageDetails.DeserializePromptUsageDetails(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CompletionsUsage(completionTokens, promptTokens, totalTokens, serializedAdditionalRawData);
+            return new CompletionsUsage(
+                completionTokens,
+                promptTokens,
+                totalTokens,
+                completionTokensDetails,
+                promptTokensDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CompletionsUsage>.Write(ModelReaderWriterOptions options)

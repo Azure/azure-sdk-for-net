@@ -148,6 +148,7 @@ namespace Azure.AI.Inference.Tests
                         role: roles[i],
                         content: messages[i],
                         toolCalls: toolCalls[i],
+                        reasoningContent: null,
                         serializedAdditionalRawData: new Dictionary<string, BinaryData>()
                     ),
                     serializedAdditionalRawData: new Dictionary<string, BinaryData>()));

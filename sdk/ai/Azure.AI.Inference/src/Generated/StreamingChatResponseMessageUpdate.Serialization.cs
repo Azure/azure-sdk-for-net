@@ -53,6 +53,11 @@ namespace Azure.AI.Inference
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(ReasoningContent))
+            {
+                writer.WritePropertyName("reasoning_content"u8);
+                writer.WriteStringValue(ReasoningContent);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

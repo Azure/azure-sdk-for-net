@@ -92,22 +92,50 @@ namespace Azure.AI.Inference
         /// The tool calls that must be resolved and have their outputs appended to subsequent input messages for the chat
         /// completions request to resolve as configured.
         /// </param>
+        /// <param name="reasoningContent"> The reasoning content the model used for generating the response. </param>
         /// <returns> A new <see cref="Inference.ChatResponseMessage"/> instance for mocking. </returns>
-        public static ChatResponseMessage ChatResponseMessage(ChatRole role = default, string content = null, IEnumerable<ChatCompletionsToolCall> toolCalls = null)
+        public static ChatResponseMessage ChatResponseMessage(ChatRole role = default, string content = null, IEnumerable<ChatCompletionsToolCall> toolCalls = null, string reasoningContent = null)
         {
             toolCalls ??= new List<ChatCompletionsToolCall>();
 
-            return new ChatResponseMessage(role, content, toolCalls?.ToList(), serializedAdditionalRawData: null);
+            return new ChatResponseMessage(role, content, toolCalls?.ToList(), reasoningContent, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Inference.CompletionsUsage"/>. </summary>
         /// <param name="completionTokens"> The number of tokens generated across all completions emissions. </param>
         /// <param name="promptTokens"> The number of tokens in the provided prompts for the completions request. </param>
         /// <param name="totalTokens"> The total number of tokens processed for the completions request and response. </param>
+        /// <param name="completionTokensDetails"> Breakdown of tokens used in a completion. </param>
+        /// <param name="promptTokensDetails"> Breakdown of tokens used in the prompt/chat history. </param>
         /// <returns> A new <see cref="Inference.CompletionsUsage"/> instance for mocking. </returns>
-        public static CompletionsUsage CompletionsUsage(int completionTokens = default, int promptTokens = default, int totalTokens = default)
+        public static CompletionsUsage CompletionsUsage(int completionTokens = default, int promptTokens = default, int totalTokens = default, CompletionsUsageDetails completionTokensDetails = null, PromptUsageDetails promptTokensDetails = null)
         {
-            return new CompletionsUsage(completionTokens, promptTokens, totalTokens, serializedAdditionalRawData: null);
+            return new CompletionsUsage(
+                completionTokens,
+                promptTokens,
+                totalTokens,
+                completionTokensDetails,
+                promptTokensDetails,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Inference.CompletionsUsageDetails"/>. </summary>
+        /// <param name="audioTokens"> The number of tokens corresponding to audio input. </param>
+        /// <param name="reasoningTokens"> The number of tokens corresponding to reasoning. </param>
+        /// <param name="totalTokens"> The total number of tokens processed for the completions request and response. </param>
+        /// <returns> A new <see cref="Inference.CompletionsUsageDetails"/> instance for mocking. </returns>
+        public static CompletionsUsageDetails CompletionsUsageDetails(int audioTokens = default, int reasoningTokens = default, int totalTokens = default)
+        {
+            return new CompletionsUsageDetails(audioTokens, reasoningTokens, totalTokens, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Inference.PromptUsageDetails"/>. </summary>
+        /// <param name="audioTokens"> The number of tokens corresponding to audio input. </param>
+        /// <param name="cachedTokens"> The total number of tokens cached. </param>
+        /// <returns> A new <see cref="Inference.PromptUsageDetails"/> instance for mocking. </returns>
+        public static PromptUsageDetails PromptUsageDetails(int audioTokens = default, int cachedTokens = default)
+        {
+            return new PromptUsageDetails(audioTokens, cachedTokens, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Inference.ModelInfo"/>. </summary>
@@ -213,12 +241,13 @@ namespace Azure.AI.Inference
         /// The tool calls that must be resolved and have their outputs appended to subsequent input messages for the chat
         /// completions request to resolve as configured.
         /// </param>
+        /// <param name="reasoningContent"> The reasoning content the model used for generating the response. </param>
         /// <returns> A new <see cref="Inference.StreamingChatResponseMessageUpdate"/> instance for mocking. </returns>
-        public static StreamingChatResponseMessageUpdate StreamingChatResponseMessageUpdate(ChatRole? role = null, string content = null, IEnumerable<StreamingChatResponseToolCallUpdate> toolCalls = null)
+        public static StreamingChatResponseMessageUpdate StreamingChatResponseMessageUpdate(ChatRole? role = null, string content = null, IEnumerable<StreamingChatResponseToolCallUpdate> toolCalls = null, string reasoningContent = null)
         {
             toolCalls ??= new List<StreamingChatResponseToolCallUpdate>();
 
-            return new StreamingChatResponseMessageUpdate(role, content, toolCalls?.ToList(), serializedAdditionalRawData: null);
+            return new StreamingChatResponseMessageUpdate(role, content, toolCalls?.ToList(), reasoningContent, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Inference.StreamingChatResponseToolCallUpdate"/>. </summary>

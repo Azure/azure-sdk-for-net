@@ -4,11 +4,15 @@
 
 ### Features Added
 
+- Added a new `audience` parameter to `AzureAIInferenceClientOptions`, which will allow users to customize the authorization scope when using entra ID auth, without the need for a custom pipeline policy.
+- Added support for `reasoningContent` in chat completions, for models which support it.
+- Added `CompletionsUsageDetails` and `PromptUsageDetails` to `CompletionsUsage`, to provide more details on tokens usage.
+- Added a new `model` parameter to `GetModelInfo` methods, allowing users to specify a model to target when using an Azure AI Services endpoint.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Updated default API version to "2025-05-01".
+- Changed default authorization audience to "https://ai.azure.com/.default" when using entra ID auth. This will support more model endpoints by default. See the new `AzureAIInferenceClientOptions` parameter for customizing provided auth scope if necessary.
 
 ## 1.0.0-beta.4 (2025-03-18)
 
