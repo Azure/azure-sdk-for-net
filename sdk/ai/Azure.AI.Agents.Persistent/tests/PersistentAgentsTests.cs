@@ -31,6 +31,34 @@ namespace Azure.AI.Agents.Persistent.Tests
         public PersistentAgentsTests(bool isAsync) : base(isAsync) {
             TestDiagnostics = false;
         }
+        private class CompositeDisposable : IDisposable
+        {
+            private readonly List<IDisposable> _disposables = new List<IDisposable>();
+
+            public CompositeDisposable(params IDisposable[] disposables)
+            {
+                for (int i = 0; i < disposables.Length; i++)
+                {
+                    _disposables.Add(disposables[i]);
+                }
+            }
+
+            public void Dispose()
+            {
+                foreach (IDisposable d in _disposables)
+                {
+                    d?.Dispose();
+                }
+            }
+        }
+
+        public IDisposable SetTestSwitch()
+        {
+            return new CompositeDisposable(
+            new TestAppContextSwitch(new() {
+                { PersistantAgensConstants.UseOldConnectionString, true.ToString() },
+            }));
+        }
 
         #region enumerations
         public enum ArgumentType
@@ -76,6 +104,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(ArgumentType.Stream)]
         public async Task TestCreatePersistentAgent(ArgumentType argType)
         {
+            using var _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
             string id;
             string name;
@@ -113,6 +142,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(ArgumentType.Stream)]
         public async Task TestUpdatePersistentAgent(ArgumentType argType)
         {
+            using var _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
             PersistentAgent agent = await GetAgent(client);
             string name = default;
@@ -144,6 +174,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [RecordedTest]
         public async Task TestListAgent()
         {
+            using var _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
             HashSet<string> ids = new();
             int initialAgentCount = await CountElementsAndRemoveIds(client, ids);
@@ -173,6 +204,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [RecordedTest]
         public async Task TestThreadPageable()
         {
+            using var _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
             PersistentAgent agent = await GetAgent(client, AGENT_NAME);
             AsyncPageable<PersistentAgentThread> pgThreads = client.Threads.GetThreadsAsync(limit: 2);
@@ -227,6 +259,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(ArgumentType.Stream)]
         public async Task TestCreateThread(ArgumentType argType)
         {
+            using var _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
             PersistentAgent agent = await GetAgent(client);
 
@@ -272,6 +305,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(ArgumentType.Stream)]
         public async Task TestUpdateThread(ArgumentType argType)
         {
+            using var _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
             PersistentAgentThread thread = await GetThread(client);
             Assert.AreEqual(0, thread.Metadata.Count);
@@ -317,6 +351,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(ArgumentType.Stream)]
         public async Task TestCreateMessage(ArgumentType argType)
         {
+            using var _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
             PersistentAgentThread thread = await GetThread(client);
             ThreadMessage tmTest;
@@ -349,6 +384,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(ArgumentType.Stream)]
         public async Task TestUpdateMessage(ArgumentType argType)
         {
+            using var _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
             PersistentAgentThread thread = await GetThread(client);
             ThreadMessage tmTest;
@@ -386,6 +422,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [RecordedTest]
         public async Task TestListMessage()
         {
+            using var _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
             PersistentAgentThread thread = await GetThread(client);
             AsyncPageable<ThreadMessage> msgResp = client.Messages.GetMessagesAsync(thread.Id);
@@ -420,6 +457,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(ArgumentType.Stream)]
         public async Task TestCreateRun(ArgumentType argType)
         {
+            using var _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
             PersistentAgent agent = await GetAgent(client);
             PersistentAgentThread thread = await GetThread(client);
@@ -462,6 +500,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [RecordedTest]
         public async Task TestCreateThreadAndRun()
         {
+            using var _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
             PersistentAgent agent = await GetAgent(client);
             ThreadRun result;
@@ -536,6 +575,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [RecordedTest]
         public async Task ListDeleteRuns()
         {
+            using var _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
             PersistentAgent agent = await GetAgent(client);
             PersistentAgentThread thread = await GetThread(client);
@@ -565,6 +605,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(ArgumentType.Metadata, false, true)]
         public async Task TestSubmitToolOutputs(ArgumentType argType, bool parallelToolCalls, bool CreateThreadAndRun)
         {
+            using var _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
             FunctionToolDefinition getFavouriteNameTool = new(
                 name: "getFavouriteWord",
@@ -686,6 +727,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(VecrorStoreTestType.File, false, true)]
         public async Task TestCreateVectorStore(VecrorStoreTestType testType, bool useFileSource, bool useStreaming)
         {
+            using var _ = SetTestSwitch();
             if (useFileSource && Mode != RecordedTestMode.Live)
                 Assert.Inconclusive(FILE_UPLOAD_CONSTRAINT);
             if (useStreaming && !IsAsync)
@@ -822,6 +864,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(false, false)]
         public async Task TestCreateWithMessageAttachment(bool useFileSource, bool attachmentOnThread)
         {
+            using var _ = SetTestSwitch();
             if (useFileSource && Mode != RecordedTestMode.Live)
                 Assert.Inconclusive(FILE_UPLOAD_CONSTRAINT);
             PersistentAgentsClient client = GetClient();
@@ -888,6 +931,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(false, false)]
         public async Task TestFileSearchWithCodeInterpreter(bool useFileSource, bool useThreads)
         {
+            using var _ = SetTestSwitch();
             if (useFileSource && Mode != RecordedTestMode.Live)
                 Assert.Inconclusive(FILE_UPLOAD_CONSTRAINT);
             PersistentAgentsClient client = GetClient();
@@ -936,6 +980,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [RecordedTest]
         public async Task TestCreateVectorStoreOnline()
         {
+            using var _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
             VectorStoreDataSource vectorStoreDataSource = new(
                 assetIdentifier: TestEnvironment.AZURE_BLOB_URI,
@@ -979,6 +1024,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(false, false)]
         public async Task TestIncludeFileSearchContent(bool useStream, bool includeContent)
         {
+            using var _ = SetTestSwitch();
             if (useStream && !IsAsync)
                 Assert.Inconclusive(STREAMING_CONSTRAINT);
             PersistentAgentsClient client = GetClient();
@@ -1063,6 +1109,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [RecordedTest]
         public async Task TestAzureFunctionCall()
         {
+            using var _ = SetTestSwitch();
             // Note: This test was recorded in westus region as for now
             // 2025-02-05 it is not supported in test region (East US 2)
             AzureFunctionToolDefinition azureFnTool = new(
@@ -1143,6 +1190,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [RecordedTest]
         public async Task TestClientWithThreadMessages()
         {
+            using var _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
             PersistentAgent agent = await GetAgent(
                 client,
@@ -1164,6 +1212,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [RecordedTest]
         public async Task TestGenerateImageFile()
         {
+            using var _ = SetTestSwitch();
             string tempDir = CreateTempDirMayBe();
             FileInfo file = new(Path.Combine(tempDir, FILE_NAME2));
             using (FileStream stream = file.OpenWrite())
@@ -1226,6 +1275,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(AzureAISearchQueryTypeEnum.VectorSemanticHybrid)]
         public async Task TestAzureAiSearch(AzureAISearchQueryTypeEnum queryType)
         {
+            using var _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
 
             ToolResources searchResource = GetAISearchToolResource(queryType);
@@ -1308,6 +1358,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(AzureAISearchQueryTypeEnum.VectorSemanticHybrid)]
         public async Task TestAzureAiSearchStreaming(AzureAISearchQueryTypeEnum queryType)
         {
+            using var _ = SetTestSwitch();
             if (!IsAsync)
                 Assert.Inconclusive(STREAMING_CONSTRAINT);
             PersistentAgentsClient client = GetClient();

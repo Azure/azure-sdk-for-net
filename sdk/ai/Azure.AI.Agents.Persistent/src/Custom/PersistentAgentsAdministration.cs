@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel.Design;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -13,6 +14,9 @@ namespace Azure.AI.Agents.Persistent
     [CodeGenClient("PersistentAgentsAdministrationClient")]
     public partial class PersistentAgentsAdministration
     {
+        private static readonly bool s_is_test_run = AppContextSwitchHelper.GetConfigValue(
+            PersistantAgensConstants.UseOldConnectionString,
+            PersistantAgensConstants.UseOldConnectionStringEnvVar);
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal virtual ClientDiagnostics ClientDiagnostics { get; }
         // TODO: Replace project connections string by PROJECT_ENDPOINT when 1DP will be available.
@@ -56,22 +60,23 @@ namespace Azure.AI.Agents.Persistent
             // TODO: Remve this code when 1DP endpoint will be available and just call the upsteam constructor.
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new PersistentAgentsAdministrationClientOptions();
 
-            if (endpoint.Split(';').Length != 4)
+            if (s_is_test_run && endpoint.Split(';').Length == 4)
             {
-                ClientDiagnostics = new ClientDiagnostics(options, true);
-                _tokenCredential = credential;
-                _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) }, new ResponseClassifier());
-                _endpoint = new Uri(endpoint);
-                _apiVersion = options.Version;
-            }
-            else
-            {
+                options ??= new PersistentAgentsAdministrationClientOptions(PersistentAgentsAdministrationClientOptions.ServiceVersion.V2025_05_01);
                 ClientDiagnostics = new ClientDiagnostics(options, true);
                 _tokenCredential = credential;
                 _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, ["https://management.azure.com/.default"]) }, new ResponseClassifier());
                 _endpoint = new Uri($"{ClientHelper.ParseConnectionString(endpoint, "endpoint")}/agents/v1.0/subscriptions/{ClientHelper.ParseConnectionString(endpoint, "subscriptionid")}/resourceGroups/{ClientHelper.ParseConnectionString(endpoint, "resourcegroupname")}/providers/Microsoft.MachineLearningServices/workspaces/{ClientHelper.ParseConnectionString(endpoint, "projectname")}");
+                _apiVersion = options.Version;
+            }
+            else
+            {
+                options ??= new PersistentAgentsAdministrationClientOptions();
+                ClientDiagnostics = new ClientDiagnostics(options, true);
+                _tokenCredential = credential;
+                _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+                _endpoint = new Uri(endpoint);
                 _apiVersion = options.Version;
             }
         }
