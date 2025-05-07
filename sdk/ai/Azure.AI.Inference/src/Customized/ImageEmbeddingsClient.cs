@@ -16,8 +16,8 @@ using Azure.AI.Inference.Telemetry;
 namespace Azure.AI.Inference
 {
     [SuppressMessage("Azure Analysis", "AZC0007", Justification = "Analyzer is incorrectly flagging valid overloads.")]
-    [CodeGenSuppress("Embed", typeof(IEnumerable<ImageEmbeddingInput>), typeof(int?), typeof(EmbeddingEncodingFormat?), typeof(EmbeddingInputType?), typeof(string), typeof(ExtraParameters?), typeof(CancellationToken))]
-    [CodeGenSuppress("EmbedAsync", typeof(IEnumerable<ImageEmbeddingInput>), typeof(int?), typeof(EmbeddingEncodingFormat?), typeof(EmbeddingInputType?), typeof(string), typeof(ExtraParameters?), typeof(CancellationToken))]
+    [CodeGenSuppress("Embed", typeof(ImageEmbeddingsOptions), typeof(ExtraParameters?), typeof(CancellationToken))]
+    [CodeGenSuppress("EmbedAsync", typeof(ImageEmbeddingsOptions), typeof(ExtraParameters?), typeof(CancellationToken))]
     public partial class ImageEmbeddingsClient
     {
         /// <summary> Initializes a new instance of ImageEmbeddingsClient. </summary>

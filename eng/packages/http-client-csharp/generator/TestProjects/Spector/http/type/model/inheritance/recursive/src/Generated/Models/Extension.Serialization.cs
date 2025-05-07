@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace _Type.Model.Inheritance.Recursive.Models
+namespace _Type.Model.Inheritance.Recursive
 {
     public partial class Extension : IJsonModel<Extension>
     {

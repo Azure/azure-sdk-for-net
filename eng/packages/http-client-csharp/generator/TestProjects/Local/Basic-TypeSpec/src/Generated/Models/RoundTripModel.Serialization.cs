@@ -11,9 +11,8 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using BasicTypeSpec;
 
-namespace BasicTypeSpec.Models
+namespace BasicTypeSpec
 {
     /// <summary></summary>
     public partial class RoundTripModel : IJsonModel<RoundTripModel>

@@ -51,7 +51,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             pathScanner.Setup(p => p.ScanAsync(
                 mainClient.Object,
                 default,
-                default,
+                It.IsAny<ShareFileStorageResourceOptions>(),
                 It.IsAny<ShareFileTraits>(),
                 It.IsAny<CancellationToken>()))
                 .Returns<ShareDirectoryClient, ShareClient, ShareFileStorageResourceOptions, ShareFileTraits, CancellationToken>(

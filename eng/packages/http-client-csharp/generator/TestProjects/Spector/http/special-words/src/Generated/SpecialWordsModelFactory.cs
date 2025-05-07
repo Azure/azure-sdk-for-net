@@ -5,12 +5,13 @@
 
 #nullable disable
 
-namespace SpecialWords._Models
+using SpecialWords._ModelProperties;
+using SpecialWords._Models;
+
+namespace SpecialWords
 {
     public static partial class SpecialWordsModelFactory
     {
-        public static SameAsModel SameAsModel(string sameAsModelProperty = default) => throw null;
-
         public static And And(string name = default) => throw null;
 
         public static As As(string name = default) => throw null;
@@ -76,5 +77,7 @@ namespace SpecialWords._Models
         public static With With(string name = default) => throw null;
 
         public static Yield Yield(string name = default) => throw null;
+
+        public static SameAsModel SameAsModel(string sameAsModelProperty = default) => throw null;
     }
 }

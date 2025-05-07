@@ -12,29 +12,36 @@ namespace Azure.Messaging.EventHubs.Processor
     public enum LoadBalancingStrategy
     {
         /// <summary>
-        ///   An event processor will take a measured approach to requesting
-        ///   partition ownership when balancing work with other processors, slowly
-        ///   claiming partitions until a stabilized distribution is achieved.
+        ///   An event processor will take a slow approach to requesting
+        ///   partition ownership when balancing work with other processors, waiting
+        ///   until a load balancing cycle is schedule to run, claiming 1 partition
+        ///   per cycle until a stabilized distribution is achieved.
         ///
-        ///   <para>When using this strategy, it may take longer for all partitions of
+        ///   <para>When using this strategy, it will be considerably longer for all partitions of
         ///   an Event Hub to be owned by a processor when processing first starts, the
-        ///   number of active processors changes, or when partitions are scaled.  The
-        ///   Balanced strategy will reduce contention for a partition, ensuring that once
-        ///   it is claimed, processing will be more likely to be steady and consistent.</para>
+        ///   number of active processors changes, or when partitions are scaled.</para>
+        ///
+        ///   <para>The Balanced strategy is generally not recommended, as it does not provide
+        ///   any tangible benefits unless the load balancing interval is set below 10 seconds,
+        ///   which is strongly discouraged.  The Balanced strategy mainly exists to ensure backwards
+        ///   compatibility with earlier library versions.</para>
         /// </summary>
         ///
         Balanced,
 
         /// <summary>
         ///   An event processor will attempt to claim ownership of its fair share of
-        ///   partitions aggressively when balancing work with other processors.
+        ///   partitions consistently, claiming 1 partition at a time until work is balanced
+        ///   between all active processors.
         ///
-        ///   <para>When using this strategy, all partitions of an Event Hub will be claimed
-        ///   quickly when processing first starts, the number of active processors changes, or
-        ///   when partitions are scaled.  The Greedy strategy is likely to cause competition for
-        ///   ownership of a given partition, causing it to see sporadic processing and some amount of
-        ///   duplicate events until balance has been reached and work is distributed equally among the
-        ///   active processors.</para>
+        ///   <para>When using this strategy, load balancing cycles run without delay until
+        ///   ownership is evenly distributed, ensuring that partitions are processed more quickly
+        ///   when processing first starts, the number of active processors changes, or
+        ///   when partitions are scaled.</para>
+        ///
+        ///   <para>The Greedy strategy will not cause additional competition for township of a given
+        ///   when compared to other strategies, as it allows claims from other processors to safely
+        ///   interleave.  Greedy is the recommended default strategy for processors.</para>
         /// </summary>
         ///
         Greedy

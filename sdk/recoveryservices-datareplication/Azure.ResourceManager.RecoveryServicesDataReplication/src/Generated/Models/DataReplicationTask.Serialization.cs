@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WritePropertyName("customProperties"u8);
                 writer.WriteObjectValue(CustomProperties, options);
             }
-            if (Optional.IsCollectionDefined(ChildrenWorkflows))
+            if (Optional.IsCollectionDefined(ChildrenJobs))
             {
-                writer.WritePropertyName("childrenWorkflows"u8);
+                writer.WritePropertyName("childrenJobs"u8);
                 writer.WriteStartArray();
-                foreach (var item in ChildrenWorkflows)
+                foreach (var item in ChildrenJobs)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             DataReplicationTaskState? state = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
-            TaskModelCustomProperties customProperties = default;
-            IReadOnlyList<DataReplicationWorkflowData> childrenWorkflows = default;
+            DataReplicationTaskCustomProperties customProperties = default;
+            IReadOnlyList<DataReplicationJobData> childrenJobs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,21 +154,21 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    customProperties = TaskModelCustomProperties.DeserializeTaskModelCustomProperties(property.Value, options);
+                    customProperties = DataReplicationTaskCustomProperties.DeserializeDataReplicationTaskCustomProperties(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("childrenWorkflows"u8))
+                if (property.NameEquals("childrenJobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<DataReplicationWorkflowData> array = new List<DataReplicationWorkflowData>();
+                    List<DataReplicationJobData> array = new List<DataReplicationJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationWorkflowData.DeserializeDataReplicationWorkflowData(item, options));
+                        array.Add(DataReplicationJobData.DeserializeDataReplicationJobData(item, options));
                     }
-                    childrenWorkflows = array;
+                    childrenJobs = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 startTime,
                 endTime,
                 customProperties,
-                childrenWorkflows ?? new ChangeTrackingList<DataReplicationWorkflowData>(),
+                childrenJobs ?? new ChangeTrackingList<DataReplicationJobData>(),
                 serializedAdditionalRawData);
         }
 

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// The UE's usage setting
-    /// Serialized Name: UeUsageSetting
-    /// </summary>
+    /// <summary> The UE's usage setting. </summary>
     public readonly partial struct UEUsageSetting : IEquatable<UEUsageSetting>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string VoiceCentricValue = "VoiceCentric";
         private const string DataCentricValue = "DataCentric";
 
-        /// <summary>
-        /// VoiceCentric
-        /// Serialized Name: UeUsageSetting.VoiceCentric
-        /// </summary>
+        /// <summary> VoiceCentric. </summary>
         public static UEUsageSetting VoiceCentric { get; } = new UEUsageSetting(VoiceCentricValue);
-        /// <summary>
-        /// DataCentric
-        /// Serialized Name: UeUsageSetting.DataCentric
-        /// </summary>
+        /// <summary> DataCentric. </summary>
         public static UEUsageSetting DataCentric { get; } = new UEUsageSetting(DataCentricValue);
         /// <summary> Determines if two <see cref="UEUsageSetting"/> values are the same. </summary>
         public static bool operator ==(UEUsageSetting left, UEUsageSetting right) => left.Equals(right);

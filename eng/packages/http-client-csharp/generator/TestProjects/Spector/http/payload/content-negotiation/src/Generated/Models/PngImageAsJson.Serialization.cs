@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Payload.ContentNegotiation.Models
+namespace Payload.ContentNegotiation._DifferentBody
 {
     public partial class PngImageAsJson : IJsonModel<PngImageAsJson>
     {

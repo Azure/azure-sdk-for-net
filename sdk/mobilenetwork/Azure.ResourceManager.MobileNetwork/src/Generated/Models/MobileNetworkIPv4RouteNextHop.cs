@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// The next hop in an IPv4 route.
-    /// Serialized Name: Ipv4RouteNextHop
-    /// </summary>
+    /// <summary> The next hop in an IPv4 route. </summary>
     public partial class MobileNetworkIPv4RouteNextHop
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkIPv4RouteNextHop"/>. </summary>
-        /// <param name="address">
-        /// The next hop address.
-        /// Serialized Name: Ipv4RouteNextHop.address
-        /// </param>
-        /// <param name="priority">
-        /// The priority of this next hop. Next hops with lower preference values are preferred.
-        /// Serialized Name: Ipv4RouteNextHop.priority
-        /// </param>
+        /// <param name="address"> The next hop address. </param>
+        /// <param name="priority"> The priority of this next hop. Next hops with lower preference values are preferred. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MobileNetworkIPv4RouteNextHop(string address, int? priority, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The next hop address.
-        /// Serialized Name: Ipv4RouteNextHop.address
-        /// </summary>
+        /// <summary> The next hop address. </summary>
         [WirePath("address")]
         public string Address { get; set; }
-        /// <summary>
-        /// The priority of this next hop. Next hops with lower preference values are preferred.
-        /// Serialized Name: Ipv4RouteNextHop.priority
-        /// </summary>
+        /// <summary> The priority of this next hop. Next hops with lower preference values are preferred. </summary>
         [WirePath("priority")]
         public int? Priority { get; set; }
     }

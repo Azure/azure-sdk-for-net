@@ -52,7 +52,7 @@ namespace Azure.AI.Projects
                     throw new ArgumentException($"The API key is missing or invalid for {connectionId}.");
                 }
 
-                var newConnection = new ClientConnection(connectionId, apiKeyAuthProperties.Target, apiKeyAuthProperties.Credentials.Key);
+                var newConnection = new ClientConnection(connectionId, apiKeyAuthProperties.Target, apiKeyAuthProperties.Credentials.Key, CredentialKind.ApiKeyString);
                 return _connections.GetOrAdd(connectionId, newConnection);
             }
             else if (connection.Properties.AuthType == AuthenticationType.EntraId)
@@ -63,7 +63,7 @@ namespace Azure.AI.Projects
                     throw new ArgumentException($"The AAD authentication target URI is missing or invalid for {connectionId}.");
                 }
 
-                var newConnection = new ClientConnection(connectionId, aadAuthProperties.Target, _tokenCredential);
+                var newConnection = new ClientConnection(connectionId, aadAuthProperties.Target, _tokenCredential, CredentialKind.TokenCredential);
                 return _connections.GetOrAdd(connectionId, newConnection);
             }
 

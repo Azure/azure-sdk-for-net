@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace _Type.Model.Inheritance.SingleDiscriminator.Models
+namespace _Type.Model.Inheritance.SingleDiscriminator
 {
     [PersistableModelProxy(typeof(UnknownDinosaur))]
     public abstract partial class Dinosaur : IJsonModel<Dinosaur>

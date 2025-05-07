@@ -83,7 +83,7 @@ namespace Azure.Compute.Batch
         /// <param name="networkConfiguration"> The network configuration for the Job. </param>
         /// <param name="metadata"> A list of name-value pairs associated with the Job as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </param>
         /// <param name="executionInfo"> The execution information for the Job. </param>
-        /// <param name="stats"> Resource usage statistics for the entire lifetime of the Job. This property is populated only if the CloudJob was retrieved with an expand clause including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </param>
+        /// <param name="stats"> Resource usage statistics for the entire lifetime of the Job. This property is populated only if the BatchJob was retrieved with an expand clause including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BatchJob(string id, string displayName, bool? usesTaskDependencies, string url, string eTag, DateTimeOffset? lastModified, DateTimeOffset? creationTime, BatchJobState? state, DateTimeOffset? stateTransitionTime, BatchJobState? previousState, DateTimeOffset? previousStateTransitionTime, int? priority, bool? allowTaskPreemption, int? maxParallelTasks, BatchJobConstraints constraints, BatchJobManagerTask jobManagerTask, BatchJobPreparationTask jobPreparationTask, BatchJobReleaseTask jobReleaseTask, IReadOnlyList<EnvironmentSetting> commonEnvironmentSettings, BatchPoolInfo poolInfo, OnAllBatchTasksComplete? onAllTasksComplete, OnBatchTaskFailure? onTaskFailure, BatchJobNetworkConfiguration networkConfiguration, IList<MetadataItem> metadata, BatchJobExecutionInfo executionInfo, BatchJobStatistics stats, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -171,7 +171,7 @@ namespace Azure.Compute.Batch
         public IList<MetadataItem> Metadata { get; }
         /// <summary> The execution information for the Job. </summary>
         public BatchJobExecutionInfo ExecutionInfo { get; }
-        /// <summary> Resource usage statistics for the entire lifetime of the Job. This property is populated only if the CloudJob was retrieved with an expand clause including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </summary>
+        /// <summary> Resource usage statistics for the entire lifetime of the Job. This property is populated only if the BatchJob was retrieved with an expand clause including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </summary>
         public BatchJobStatistics Stats { get; }
     }
 }

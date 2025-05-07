@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// The supported NAS Encryption types.
-    /// Serialized Name: NasEncryptionType
-    /// </summary>
+    /// <summary> The supported NAS Encryption types. </summary>
     public readonly partial struct MobileNetworkNasEncryptionType : IEquatable<MobileNetworkNasEncryptionType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string NEA1EEA1Value = "NEA1/EEA1";
         private const string NEA2EEA2Value = "NEA2/EEA2";
 
-        /// <summary>
-        /// NAS signaling is not encrypted.
-        /// Serialized Name: NasEncryptionType.NEA0/EEA0
-        /// </summary>
+        /// <summary> NAS signaling is not encrypted. </summary>
         public static MobileNetworkNasEncryptionType NEA0EEA0 { get; } = new MobileNetworkNasEncryptionType(NEA0EEA0Value);
-        /// <summary>
-        /// NAS signaling is encrypted with SNOW 3G cipher.
-        /// Serialized Name: NasEncryptionType.NEA1/EEA1
-        /// </summary>
+        /// <summary> NAS signaling is encrypted with SNOW 3G cipher. </summary>
         public static MobileNetworkNasEncryptionType NEA1EEA1 { get; } = new MobileNetworkNasEncryptionType(NEA1EEA1Value);
-        /// <summary>
-        ///  NAS signaling is encrypted with AES cipher.
-        /// Serialized Name: NasEncryptionType.NEA2/EEA2
-        /// </summary>
+        /// <summary> NAS signaling is encrypted with AES cipher. </summary>
         public static MobileNetworkNasEncryptionType NEA2EEA2 { get; } = new MobileNetworkNasEncryptionType(NEA2EEA2Value);
         /// <summary> Determines if two <see cref="MobileNetworkNasEncryptionType"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkNasEncryptionType left, MobileNetworkNasEncryptionType right) => left.Equals(right);

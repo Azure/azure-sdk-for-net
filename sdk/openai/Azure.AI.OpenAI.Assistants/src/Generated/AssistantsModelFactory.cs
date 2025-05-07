@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -227,6 +228,16 @@ namespace Azure.AI.OpenAI.Assistants
         public static RunStepError RunStepError(RunStepErrorCode code = default, string message = null)
         {
             return new RunStepError(code, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Assistants.UploadFileRequest"/>. </summary>
+        /// <param name="data"> The file data (not filename) to upload. </param>
+        /// <param name="purpose"> The intended purpose of the file. </param>
+        /// <param name="filename"> A filename to associate with the uploaded data. </param>
+        /// <returns> A new <see cref="Assistants.UploadFileRequest"/> instance for mocking. </returns>
+        public static UploadFileRequest UploadFileRequest(Stream data = null, OpenAIFilePurpose purpose = default, string filename = null)
+        {
+            return new UploadFileRequest(data, purpose, filename, serializedAdditionalRawData: null);
         }
     }
 }

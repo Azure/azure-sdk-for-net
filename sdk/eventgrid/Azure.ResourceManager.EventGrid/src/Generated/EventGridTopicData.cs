@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
@@ -67,10 +66,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="sku"> The Sku pricing tier for the topic. </param>
         /// <param name="identity"> Identity information for the resource. </param>
-        /// <param name="kind"> Kind of the resource. </param>
-        /// <param name="extendedLocation"> Extended location of the resource. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="provisioningState"> Provisioning state of the topic. </param>
         /// <param name="endpoint"> Endpoint for the topic. </param>
@@ -94,12 +90,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="isLocalAuthDisabled"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only AAD token will be used to authenticate if user is allowed to publish to the topic. </param>
         /// <param name="dataResidencyBoundary"> Data Residency Boundary of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceSku sku, ManagedServiceIdentity identity, ResourceKind? kind, ExtendedLocation extendedLocation, IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, EventGridTopicProvisioningState? provisioningState, Uri endpoint, PartnerTopicEventTypeInfo eventTypeInfo, TlsVersion? minimumTlsVersionAllowed, EventGridInputSchema? inputSchema, EventGridInputSchemaMapping inputSchemaMapping, string metricResourceId, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, DataResidencyBoundary? dataResidencyBoundary, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal EventGridTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, EventGridTopicProvisioningState? provisioningState, Uri endpoint, PartnerTopicEventTypeInfo eventTypeInfo, TlsVersion? minimumTlsVersionAllowed, EventGridInputSchema? inputSchema, EventGridInputSchemaMapping inputSchemaMapping, string metricResourceId, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, DataResidencyBoundary? dataResidencyBoundary, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Sku = sku;
             Identity = identity;
-            Kind = kind;
-            ExtendedLocation = extendedLocation;
             PrivateEndpointConnections = privateEndpointConnections;
             ProvisioningState = provisioningState;
             Endpoint = endpoint;
@@ -120,30 +113,9 @@ namespace Azure.ResourceManager.EventGrid
         {
         }
 
-        /// <summary> The Sku pricing tier for the topic. </summary>
-        internal ResourceSku Sku { get; set; }
-        /// <summary> The Sku name of the resource. The possible values are: Basic or Premium. </summary>
-        [WirePath("sku.name")]
-        public EventGridSku? SkuName
-        {
-            get => Sku is null ? default : Sku.Name;
-            set
-            {
-                if (Sku is null)
-                    Sku = new ResourceSku();
-                Sku.Name = value;
-            }
-        }
-
         /// <summary> Identity information for the resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Kind of the resource. </summary>
-        [WirePath("kind")]
-        public ResourceKind? Kind { get; set; }
-        /// <summary> Extended location of the resource. </summary>
-        [WirePath("extendedLocation")]
-        public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> List of private endpoint connections. </summary>
         [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections { get; }

@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace _Type.Model.Usage.Models
+namespace _Type.Model.Usage
 {
     public partial class InputRecord : IJsonModel<InputRecord>
     {
