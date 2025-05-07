@@ -30,6 +30,25 @@ namespace Azure.Communication.CallAutomation
             AdditionalCallerInformation = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="TeamsPhoneCallerDetails"/>. </summary>
+        /// <param name="caller"> Caller's ID. </param>
+        /// <param name="name"> Caller's name. </param>
+        /// <param name="phoneNumber"> Caller's phone number. </param>
+        /// <param name="recordId"> Caller's record ID (ex in CRM). </param>
+        /// <param name="screenPopUrl"> Caller's screen pop URL. </param>
+        /// <param name="isAuthenticated"> Flag indicating whether the caller was authenticated. </param>
+        /// <param name="additionalCallerInformation"> A set of key value pairs (max 10, any additional entries would be ignored) which a bot author wants to pass to the Teams Client for display to the agent. </param>
+        public TeamsPhoneCallerDetails(CommunicationIdentifier caller, string name, string phoneNumber, string recordId, string screenPopUrl, bool? isAuthenticated, IDictionary<string, string> additionalCallerInformation)
+        {
+            Caller = caller;
+            Name = name;
+            PhoneNumber = phoneNumber;
+            RecordId = recordId;
+            ScreenPopUrl = screenPopUrl;
+            IsAuthenticated = isAuthenticated;
+            AdditionalCallerInformation = additionalCallerInformation;
+        }
+
         /// <summary> Caller's ID. </summary>
         internal CommunicationIdentifier Caller { get; set; }
         /// <summary> Caller's name. </summary>
