@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         WorkloadClassifierResource IOperationSource<WorkloadClassifierResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WorkloadClassifierData>(response.Content);
+            var data = ModelReaderWriter.Read<WorkloadClassifierData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new WorkloadClassifierResource(_client, data);
         }
 
         async ValueTask<WorkloadClassifierResource> IOperationSource<WorkloadClassifierResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WorkloadClassifierData>(response.Content);
+            var data = ModelReaderWriter.Read<WorkloadClassifierData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new WorkloadClassifierResource(_client, data)).ConfigureAwait(false);
         }
     }

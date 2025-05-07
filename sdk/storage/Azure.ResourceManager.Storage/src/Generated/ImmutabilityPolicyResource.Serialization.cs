@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Storage
 
         ImmutabilityPolicyData IJsonModel<ImmutabilityPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ImmutabilityPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ImmutabilityPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ImmutabilityPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ImmutabilityPolicyData>(Data, options, AzureResourceManagerStorageContext.Default);
 
-        ImmutabilityPolicyData IPersistableModel<ImmutabilityPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ImmutabilityPolicyData>(data, options);
+        ImmutabilityPolicyData IPersistableModel<ImmutabilityPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ImmutabilityPolicyData>(data, options, AzureResourceManagerStorageContext.Default);
 
         string IPersistableModel<ImmutabilityPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ImmutabilityPolicyData>)Data).GetFormatFromOptions(options);
     }

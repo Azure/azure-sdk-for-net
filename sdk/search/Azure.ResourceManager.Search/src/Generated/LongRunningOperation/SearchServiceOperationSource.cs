@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Search
 
         SearchServiceResource IOperationSource<SearchServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SearchServiceData>(response.Content);
+            var data = ModelReaderWriter.Read<SearchServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSearchContext.Default);
             return new SearchServiceResource(_client, data);
         }
 
         async ValueTask<SearchServiceResource> IOperationSource<SearchServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SearchServiceData>(response.Content);
+            var data = ModelReaderWriter.Read<SearchServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSearchContext.Default);
             return await Task.FromResult(new SearchServiceResource(_client, data)).ConfigureAwait(false);
         }
     }

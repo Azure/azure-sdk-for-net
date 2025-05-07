@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.StandbyPool
 
         StandbyVirtualMachinePoolData IJsonModel<StandbyVirtualMachinePoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StandbyVirtualMachinePoolData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StandbyVirtualMachinePoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StandbyVirtualMachinePoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StandbyVirtualMachinePoolData>(Data, options, AzureResourceManagerStandbyPoolContext.Default);
 
-        StandbyVirtualMachinePoolData IPersistableModel<StandbyVirtualMachinePoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StandbyVirtualMachinePoolData>(data, options);
+        StandbyVirtualMachinePoolData IPersistableModel<StandbyVirtualMachinePoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StandbyVirtualMachinePoolData>(data, options, AzureResourceManagerStandbyPoolContext.Default);
 
         string IPersistableModel<StandbyVirtualMachinePoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StandbyVirtualMachinePoolData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SignalR
 
         SignalRSharedPrivateLinkResourceData IJsonModel<SignalRSharedPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SignalRSharedPrivateLinkResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SignalRSharedPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SignalRSharedPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SignalRSharedPrivateLinkResourceData>(Data, options, AzureResourceManagerSignalRContext.Default);
 
-        SignalRSharedPrivateLinkResourceData IPersistableModel<SignalRSharedPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SignalRSharedPrivateLinkResourceData>(data, options);
+        SignalRSharedPrivateLinkResourceData IPersistableModel<SignalRSharedPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SignalRSharedPrivateLinkResourceData>(data, options, AzureResourceManagerSignalRContext.Default);
 
         string IPersistableModel<SignalRSharedPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SignalRSharedPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
     }

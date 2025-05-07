@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         DevOpsRepositoryData IJsonModel<DevOpsRepositoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevOpsRepositoryData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevOpsRepositoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevOpsRepositoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevOpsRepositoryData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        DevOpsRepositoryData IPersistableModel<DevOpsRepositoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevOpsRepositoryData>(data, options);
+        DevOpsRepositoryData IPersistableModel<DevOpsRepositoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevOpsRepositoryData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         string IPersistableModel<DevOpsRepositoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevOpsRepositoryData>)Data).GetFormatFromOptions(options);
     }

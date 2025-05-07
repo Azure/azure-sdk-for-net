@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         IPv6FirewallRuleData IJsonModel<IPv6FirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IPv6FirewallRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IPv6FirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<IPv6FirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IPv6FirewallRuleData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        IPv6FirewallRuleData IPersistableModel<IPv6FirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IPv6FirewallRuleData>(data, options);
+        IPv6FirewallRuleData IPersistableModel<IPv6FirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IPv6FirewallRuleData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<IPv6FirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IPv6FirewallRuleData>)Data).GetFormatFromOptions(options);
     }
