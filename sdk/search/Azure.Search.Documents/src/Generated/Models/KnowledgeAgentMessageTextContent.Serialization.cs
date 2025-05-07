@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Agents.Models
 {
     public partial class KnowledgeAgentMessageTextContent : IUtf8JsonSerializable
     {

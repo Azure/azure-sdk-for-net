@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Agents.Models
 {
     /// <summary> The type of message content. </summary>
     public readonly partial struct KnowledgeAgentMessageContentType : IEquatable<KnowledgeAgentMessageContentType>

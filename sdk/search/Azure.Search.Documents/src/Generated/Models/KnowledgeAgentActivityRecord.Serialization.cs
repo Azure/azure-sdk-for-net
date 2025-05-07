@@ -6,8 +6,9 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Search.Documents.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Agents.Models
 {
     public partial class KnowledgeAgentActivityRecord
     {

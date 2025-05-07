@@ -7,7 +7,7 @@
 
 using System.Text.Json;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Agents.Models
 {
     public partial class KnowledgeAgentModelQueryPlanningActivityRecord
     {

@@ -6,8 +6,9 @@
 #nullable disable
 
 using System;
+using Azure.Search.Documents.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Agents.Models
 {
     /// <summary> Text message type. </summary>
     public partial class KnowledgeAgentMessageImageContent : KnowledgeAgentMessageContent

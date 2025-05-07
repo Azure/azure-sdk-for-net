@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Search.Documents.Agents.Models;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Unknown version of KnowledgeAgentReference. </summary>

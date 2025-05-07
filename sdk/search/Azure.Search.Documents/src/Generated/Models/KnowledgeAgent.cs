@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Models = models;
             TargetIndexes = targetIndexes;
             RequestLimits = requestLimits;
-            ETag = eTag;
+            _eTag = eTag;
             EncryptionKey = encryptionKey;
             Description = description;
         }
@@ -69,8 +69,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public IList<KnowledgeAgentTargetIndex> TargetIndexes { get; }
         /// <summary> Guardrails to limit how much resources are utilized for a single agent retrieval request. </summary>
         public KnowledgeAgentRequestLimits RequestLimits { get; set; }
-        /// <summary> The ETag of the agent. </summary>
-        public string ETag { get; set; }
         /// <summary> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your agent definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your agent definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your agent definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </summary>
         public SearchResourceEncryptionKey EncryptionKey { get; set; }
         /// <summary> The description of the agent. </summary>

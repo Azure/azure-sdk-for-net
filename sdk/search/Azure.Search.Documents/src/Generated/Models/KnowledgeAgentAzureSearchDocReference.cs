@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Agents.Models
 {
     /// <summary> Represents an Azure Search document reference. </summary>
     public partial class KnowledgeAgentAzureSearchDocReference : KnowledgeAgentReference

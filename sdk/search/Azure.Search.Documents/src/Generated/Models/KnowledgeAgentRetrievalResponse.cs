@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Agents.Models
 {
     /// <summary> The output contract for the retrieval response. </summary>
     public partial class KnowledgeAgentRetrievalResponse

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Agents.Models
 {
     /// <summary> The KnowledgeAgentIndexParams. </summary>
     public partial class KnowledgeAgentIndexParams

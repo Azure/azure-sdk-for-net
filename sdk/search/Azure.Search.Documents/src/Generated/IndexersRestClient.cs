@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -178,7 +177,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateResyncRequest(string indexerName, IEnumerable<IndexerResyncOption> indexerResyncOptions)
+        internal HttpMessage CreateResyncRequest(string indexerName, IndexerResyncBody indexerResync)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -191,38 +190,30 @@ namespace Azure.Search.Documents
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
-            if (indexerResyncOptions != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteStartArray();
-                foreach (var item in indexerResyncOptions)
-                {
-                    content.JsonWriter.WriteStringValue(item.ToString());
-                }
-                content.JsonWriter.WriteEndArray();
-                request.Content = content;
-            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(indexerResync);
+            request.Content = content;
             return message;
         }
 
         /// <summary> Resync selective options from the datasource to be re-ingested by the indexer. </summary>
         /// <param name="indexerName"> The name of the indexer to resync for. </param>
-        /// <param name="indexerResyncOptions"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="IndexerResyncOption"/> to use. </param>
+        /// <param name="indexerResync"> The <see cref="IndexerResyncBody"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="indexerResyncOptions"/> is null. </exception>
-        public async Task<Response> ResyncAsync(string indexerName, IEnumerable<IndexerResyncOption> indexerResyncOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="indexerResync"/> is null. </exception>
+        public async Task<Response> ResyncAsync(string indexerName, IndexerResyncBody indexerResync, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {
                 throw new ArgumentNullException(nameof(indexerName));
             }
-            if (indexerResyncOptions == null)
+            if (indexerResync == null)
             {
-                throw new ArgumentNullException(nameof(indexerResyncOptions));
+                throw new ArgumentNullException(nameof(indexerResync));
             }
 
-            using var message = CreateResyncRequest(indexerName, indexerResyncOptions);
+            using var message = CreateResyncRequest(indexerName, indexerResync);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -235,21 +226,21 @@ namespace Azure.Search.Documents
 
         /// <summary> Resync selective options from the datasource to be re-ingested by the indexer. </summary>
         /// <param name="indexerName"> The name of the indexer to resync for. </param>
-        /// <param name="indexerResyncOptions"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="IndexerResyncOption"/> to use. </param>
+        /// <param name="indexerResync"> The <see cref="IndexerResyncBody"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="indexerResyncOptions"/> is null. </exception>
-        public Response Resync(string indexerName, IEnumerable<IndexerResyncOption> indexerResyncOptions, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="indexerResync"/> is null. </exception>
+        public Response Resync(string indexerName, IndexerResyncBody indexerResync, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {
                 throw new ArgumentNullException(nameof(indexerName));
             }
-            if (indexerResyncOptions == null)
+            if (indexerResync == null)
             {
-                throw new ArgumentNullException(nameof(indexerResyncOptions));
+                throw new ArgumentNullException(nameof(indexerResync));
             }
 
-            using var message = CreateResyncRequest(indexerName, indexerResyncOptions);
+            using var message = CreateResyncRequest(indexerName, indexerResync);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

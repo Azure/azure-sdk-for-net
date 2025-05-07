@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Search.Documents.Agents.Models;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
@@ -377,19 +378,19 @@ namespace Azure.Search.Documents.Models
             return new IndexStatisticsSummary(name, documentCount, storageSize, vectorIndexSize);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.KnowledgeAgentRetrievalResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentRetrievalResponse"/>. </summary>
         /// <param name="response"></param>
         /// <param name="activity">
         /// The activity records for tracking progress and billing implications.
-        /// Please note <see cref="Models.KnowledgeAgentActivityRecord"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.KnowledgeAgentSearchActivityRecord"/>, <see cref="Models.KnowledgeAgentSemanticRankerActivityRecord"/> and <see cref="Models.KnowledgeAgentModelQueryPlanningActivityRecord"/>.
+        /// Please note <see cref="Agents.Models.KnowledgeAgentActivityRecord"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Agents.Models.KnowledgeAgentSearchActivityRecord"/>, <see cref="Agents.Models.KnowledgeAgentSemanticRankerActivityRecord"/> and <see cref="Agents.Models.KnowledgeAgentModelQueryPlanningActivityRecord"/>.
         /// </param>
         /// <param name="references">
         /// The references for the retrieval data used in the response.
-        /// Please note <see cref="Models.KnowledgeAgentReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.KnowledgeAgentAzureSearchDocReference"/>.
+        /// Please note <see cref="Agents.Models.KnowledgeAgentReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Agents.Models.KnowledgeAgentAzureSearchDocReference"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.KnowledgeAgentRetrievalResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentRetrievalResponse"/> instance for mocking. </returns>
         public static KnowledgeAgentRetrievalResponse KnowledgeAgentRetrievalResponse(IEnumerable<KnowledgeAgentMessage> response = null, IEnumerable<KnowledgeAgentActivityRecord> activity = null, IEnumerable<KnowledgeAgentReference> references = null)
         {
             response ??= new List<KnowledgeAgentMessage>();
@@ -399,33 +400,33 @@ namespace Azure.Search.Documents.Models
             return new KnowledgeAgentRetrievalResponse(response?.ToList(), activity?.ToList(), references?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.KnowledgeAgentActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
-        /// <returns> A new <see cref="Models.KnowledgeAgentActivityRecord"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentActivityRecord"/> instance for mocking. </returns>
         public static KnowledgeAgentActivityRecord KnowledgeAgentActivityRecord(int id = default, string type = null)
         {
             return new UnknownKnowledgeAgentActivityRecord(id, type);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.KnowledgeAgentReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentReference"/>. </summary>
         /// <param name="type"> The type of the reference. </param>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
-        /// <returns> A new <see cref="Models.KnowledgeAgentReference"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentReference"/> instance for mocking. </returns>
         public static KnowledgeAgentReference KnowledgeAgentReference(string type = null, string id = null, int activitySource = default)
         {
             return new UnknownKnowledgeAgentReference(type, id, activitySource);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.KnowledgeAgentSearchActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentSearchActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="targetIndex"> The target index for the retrieval activity. </param>
         /// <param name="query"> The query details for the retrieval activity. </param>
         /// <param name="queryTime"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
-        /// <returns> A new <see cref="Models.KnowledgeAgentSearchActivityRecord"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentSearchActivityRecord"/> instance for mocking. </returns>
         public static KnowledgeAgentSearchActivityRecord KnowledgeAgentSearchActivityRecord(int id = default, string targetIndex = null, KnowledgeAgentSearchActivityRecordQuery query = null, DateTimeOffset? queryTime = null, int? count = null, int? elapsedMs = null)
         {
             return new KnowledgeAgentSearchActivityRecord(
@@ -447,33 +448,33 @@ namespace Azure.Search.Documents.Models
             return new KnowledgeAgentSearchActivityRecordQuery(search, filter);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.KnowledgeAgentModelQueryPlanningActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentModelQueryPlanningActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="inputTokens"> The number of input tokens for the LLM query planning activity. </param>
         /// <param name="outputTokens"> The number of output tokens for the LLM query planning activity. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the model activity. </param>
-        /// <returns> A new <see cref="Models.KnowledgeAgentModelQueryPlanningActivityRecord"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentModelQueryPlanningActivityRecord"/> instance for mocking. </returns>
         public static KnowledgeAgentModelQueryPlanningActivityRecord KnowledgeAgentModelQueryPlanningActivityRecord(int id = default, int? inputTokens = null, int? outputTokens = null, int? elapsedMs = null)
         {
             return new KnowledgeAgentModelQueryPlanningActivityRecord(id, "ModelQueryPlanning", inputTokens, outputTokens, elapsedMs);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.KnowledgeAgentSemanticRankerActivityRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentSemanticRankerActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="inputTokens"> The number of input tokens for the semantic ranker activity. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the model activity. </param>
-        /// <returns> A new <see cref="Models.KnowledgeAgentSemanticRankerActivityRecord"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentSemanticRankerActivityRecord"/> instance for mocking. </returns>
         public static KnowledgeAgentSemanticRankerActivityRecord KnowledgeAgentSemanticRankerActivityRecord(int id = default, int? inputTokens = null, int? elapsedMs = null)
         {
             return new KnowledgeAgentSemanticRankerActivityRecord(id, "AzureSearchSemanticRanker", inputTokens, elapsedMs);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.KnowledgeAgentAzureSearchDocReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentAzureSearchDocReference"/>. </summary>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
         /// <param name="docKey"> The document key for the reference. </param>
         /// <param name="sourceData"> Dictionary of &lt;any&gt;. </param>
-        /// <returns> A new <see cref="Models.KnowledgeAgentAzureSearchDocReference"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.Models.KnowledgeAgentAzureSearchDocReference"/> instance for mocking. </returns>
         public static KnowledgeAgentAzureSearchDocReference KnowledgeAgentAzureSearchDocReference(string id = null, int activitySource = default, string docKey = null, IReadOnlyDictionary<string, object> sourceData = null)
         {
             sourceData ??= new Dictionary<string, object>();

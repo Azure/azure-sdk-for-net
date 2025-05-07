@@ -37,10 +37,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("requestLimits"u8);
                 writer.WriteObjectValue(RequestLimits);
             }
-            if (Optional.IsDefined(ETag))
+            if (Optional.IsDefined(_eTag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(_eTag);
             }
             if (Optional.IsDefined(EncryptionKey))
             {

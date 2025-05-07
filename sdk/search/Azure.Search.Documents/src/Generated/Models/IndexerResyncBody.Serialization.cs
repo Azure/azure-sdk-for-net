@@ -8,29 +8,29 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Agents.Models
+namespace Azure.Search.Documents.Models
 {
-    public partial class KnowledgeAgentRetrievalRequest : IUtf8JsonSerializable
+    public partial class IndexerResyncBody : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("messages"u8);
-            writer.WriteStartArray();
-            foreach (var item in Messages)
+            if (Optional.IsCollectionDefined(Options))
             {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(TargetIndexParams))
-            {
-                writer.WritePropertyName("targetIndexParams"u8);
-                writer.WriteStartArray();
-                foreach (var item in TargetIndexParams)
+                if (Options != null)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WritePropertyName("options"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Options)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("options");
+                }
             }
             writer.WriteEndObject();
         }
