@@ -9,7 +9,7 @@ parameters:
 
 jobs:
 - ${{ if eq(parameters.Registry, 'https://registry.npmjs.org/') }}:
-  - deployment: PublishPackage_${{ replace(parameters.Artifact.name, '-', '_') }}
+  - deployment: PublishPackage_${{ parameters.Artifact.name }}
     variables:
       - ${{ each var in parameters.VarDependencies }}:
         - name: ${{ var.key }}
@@ -79,20 +79,20 @@ jobs:
               ServiceEndpointUrl: 'https://api.esrp.microsoft.com'
               MainPublisher: 'ESRPRELPACMANTEST'
               productstate: $(Tag)
-  - job: VerifyPackageTags_${{ replace(parameters.Artifact.name, '-', '_') }}
+  - job: VerifyPackageTags_${{ parameters.Artifact.name }}
     dependsOn:
-      - PublishPackage_${{ replace(parameters.Artifact.name, '-', '_') }}
+      - PublishPackage_${{ parameters.Artifact.name }}
       - ${{ each dep in parameters.DependsOn }}:
         - ${{ dep }}
     condition: succeeded()
     variables:
       - template: /eng/pipelines/templates/variables/image.yml
       - name: PackageName
-        value: $[dependencies.PublishPackage_${{ replace(parameters.Artifact.name, '-', '_') }}.outputs['PublishPackage_${{ replace(parameters.Artifact.name, '-', '_') }}.SetPackageVar.PackageName']]
+        value: $[dependencies.PublishPackage_${{ parameters.Artifact.name }}.outputs['PublishPackage_${{ parameters.Artifact.name }}.SetPackageVar.PackageName']]
       - name: OriginalTags
-        value: $[dependencies.PublishPackage_${{ replace(parameters.Artifact.name, '-', '_') }}.outputs['PublishPackage_${{ replace(parameters.Artifact.name, '-', '_') }}.SetPackageVar.OriginalTags']]
+        value: $[dependencies.PublishPackage_${{ parameters.Artifact.name }}.outputs['PublishPackage_${{ parameters.Artifact.name }}.SetPackageVar.OriginalTags']]
       - name: IntendedTagVersion
-        value: $[dependencies.PublishPackage_${{ replace(parameters.Artifact.name, '-', '_') }}.outputs['PublishPackage_${{ replace(parameters.Artifact.name, '-', '_') }}.SetPackageVar.IntendedTagVersion']]
+        value: $[dependencies.PublishPackage_${{ parameters.Artifact.name }}.outputs['PublishPackage_${{ parameters.Artifact.name }}.SetPackageVar.IntendedTagVersion']]
       - ${{ each var in parameters.VarDependencies }}:
         - name: ${{ var.key }}
           value: ${{ var.value }}
@@ -125,7 +125,7 @@ jobs:
         pwsh: true
       condition: and(succeeded(), ne(variables['AdditionalTag'], ''))
 - ${{ else }}:
-  - job: PublishDevPackage_${{ replace(parameters.Artifact.name, '-', '_') }}
+  - job: PublishDevPackage_${{ parameters.Artifact.name }}
     dependsOn: ${{ parameters.DependsOn }}
     templateContext:
       type: releaseJob
