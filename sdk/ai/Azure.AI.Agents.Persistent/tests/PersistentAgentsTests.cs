@@ -1428,6 +1428,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             if (Mode == RecordedTestMode.Playback)
             {
                 admClient = InstrumentClient(new PersistentAgentsAdministration(connectionString, new MockCredential(), opts));
+                return new PersistentAgentsClient(admClient);
             }
             // For local testing if you are using non default account
             // add USE_CLI_CREDENTIAL into the .runsettings and set it to true,
