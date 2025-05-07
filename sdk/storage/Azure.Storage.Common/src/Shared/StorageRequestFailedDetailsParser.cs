@@ -47,6 +47,7 @@ namespace Azure.Core.Pipeline
                             }
                         }
 
+                        // Clarify exception message if customer has send an x-ms-vesion not enabled on their storage account.
                         if (errorCode == Constants.ErrorCodes.InvalidHeaderValue
                             && headerName != null
                             && headerName == Constants.HeaderNames.Version)
