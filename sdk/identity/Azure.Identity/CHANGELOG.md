@@ -10,6 +10,10 @@
 
 ### Other Changes
 
+- Marked `SharedTokenCacheUsername` as obsolete because it doesn't support multifactor authentication (MFA). See https://aka.ms/azsdk/identity/mfa for details about MFA enforcement for Microsoft Entra ID and migration guidance. 
+- Removed references to `Username`, `Password`, `AZURE_USERNAME`, and `AZURE_PASSWORD` in XML comments from `EnvironmentCredentialOptions` and `EnvironmentCredential` due to lack of MFA support. See [MFA enforcement details](https://aka.ms/azsdk/identity/mfa).
+- Marked `AZURE_USERNAME` and `AZURE_PASSWORD` as obsolete due to lack of MFA support. See [MFA enforcement details](https://aka.ms/azsdk/identity/mfa).
+
 ## 1.14.0-beta.4 (2025-05-01)
 
 ### Bugs Fixed
