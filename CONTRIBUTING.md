@@ -3,12 +3,12 @@
 ## Prerequisites:
 
 - Install Visual Studio 2022 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
-  - Need at least .NET Framework 4.6.1 and 4.7 development tools
-- Install the **.NET cross-platform development** workloads in VisualStudio
-- Install **.NET 8.0.100 SDK** for your specific platform. (or a higher version within the 8.0.*** band)  (https://dotnet.microsoft.com/download/dotnet-core/8.0)
+  - Install the **.NET desktop development** workload in VisualStudio
+  - Need at least .NET Framework 4.6.2 and 4.7.1 development tools 
+- Install **.NET 9.0.102 SDK** for your specific [platform](https://dotnet.microsoft.com/download). (or a higher version within the 9.0.*** band)  
 - Install the latest version of git (https://git-scm.com/downloads)
-- Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 6 or higher, if you plan to make public API changes or are working with generated code snippets.
-- Install [NodeJS](https://nodejs.org/) (16.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
+- Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 7 or higher, if you plan to make public API changes or are working with generated code snippets.
+- Install [NodeJS](https://nodejs.org/) (22.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
 - [Fork the repository](https://docs.github.com/get-started/quickstart/fork-a-repo); work will be done on a [topic branch](https://docs.github.com/get-started/quickstart/github-flow#create-a-branch) in your fork and a [pull request opened](https://docs.github.com/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) against the `main` branch of the Azure SDK for .NET repository when ready for review.
 
 ## GENERAL THINGS TO KNOW:

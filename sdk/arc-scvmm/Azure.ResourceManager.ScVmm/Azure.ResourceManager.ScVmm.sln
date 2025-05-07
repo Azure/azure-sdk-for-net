@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.ScVmm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.ScVmm.Tests", "tests\Azure.ResourceManager.ScVmm.Tests.csproj", "{ED4AF246-F1C9-47E1-B883-187D791F649B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.ScVmm.Samples", "samples\Azure.ResourceManager.ScVmm.Samples.csproj", "{FB238127-13FF-4870-8EB7-8025FF98F8CE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,18 +41,6 @@ Global
 		{ED4AF246-F1C9-47E1-B883-187D791F649B}.Release|x64.Build.0 = Release|Any CPU
 		{ED4AF246-F1C9-47E1-B883-187D791F649B}.Release|x86.ActiveCfg = Release|Any CPU
 		{ED4AF246-F1C9-47E1-B883-187D791F649B}.Release|x86.Build.0 = Release|Any CPU
-		{FB238127-13FF-4870-8EB7-8025FF98F8CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB238127-13FF-4870-8EB7-8025FF98F8CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB238127-13FF-4870-8EB7-8025FF98F8CE}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{FB238127-13FF-4870-8EB7-8025FF98F8CE}.Debug|x64.Build.0 = Debug|Any CPU
-		{FB238127-13FF-4870-8EB7-8025FF98F8CE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{FB238127-13FF-4870-8EB7-8025FF98F8CE}.Debug|x86.Build.0 = Debug|Any CPU
-		{FB238127-13FF-4870-8EB7-8025FF98F8CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FB238127-13FF-4870-8EB7-8025FF98F8CE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FB238127-13FF-4870-8EB7-8025FF98F8CE}.Release|x64.ActiveCfg = Release|Any CPU
-		{FB238127-13FF-4870-8EB7-8025FF98F8CE}.Release|x64.Build.0 = Release|Any CPU
-		{FB238127-13FF-4870-8EB7-8025FF98F8CE}.Release|x86.ActiveCfg = Release|Any CPU
-		{FB238127-13FF-4870-8EB7-8025FF98F8CE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -49,16 +49,19 @@ namespace Azure.ResourceManager.Sql.Models
         internal ManagedInstancePrivateLinkProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
+            RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedInstancePrivateLinkProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource required zone names. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstancePrivateLinkProperties(string groupId, IReadOnlyList<string> requiredMembers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedInstancePrivateLinkProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
+            RequiredZoneNames = requiredZoneNames;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -68,5 +71,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The private link resource required member names. </summary>
         [WirePath("requiredMembers")]
         public IReadOnlyList<string> RequiredMembers { get; }
+        /// <summary> The private link resource required zone names. </summary>
+        [WirePath("requiredZoneNames")]
+        public IReadOnlyList<string> RequiredZoneNames { get; }
     }
 }

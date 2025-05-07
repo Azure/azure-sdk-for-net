@@ -7,6 +7,7 @@ using System;
 using System.Diagnostics;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using OpenTelemetry;
@@ -71,6 +72,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     // name, delegates for all signals will mix together. See:
                     // https://github.com/open-telemetry/opentelemetry-dotnet/issues/4043
                     configure(exporterOptions);
+                }
+
+                if (exporterOptions.EnableLiveMetrics == true)
+                {
+                    AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(methodName: nameof(AddAzureMonitorTraceExporter));
                 }
 
                 builder.SetSampler(new ApplicationInsightsSampler(exporterOptions.SamplingRatio));
@@ -138,6 +144,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     configure(exporterOptions);
                 }
 
+                if (exporterOptions.EnableLiveMetrics == true)
+                {
+                    AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(methodName: nameof(AddAzureMonitorMetricExporter));
+                }
+
                 if (credential != null)
                 {
                     // Credential can be set by either AzureMonitorExporterOptions or Extension Method Parameter.
@@ -175,6 +186,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             var options = new AzureMonitorExporterOptions();
             configure?.Invoke(options);
+
+            if (options.EnableLiveMetrics == true)
+            {
+                AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(methodName: nameof(AddAzureMonitorLogExporter));
+            }
 
             if (credential != null)
             {
@@ -234,6 +250,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     // When using named options we can properly utilize Options
                     // API to create or reuse an instance.
                     exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(finalOptionsName);
+                }
+
+                if (exporterOptions.EnableLiveMetrics == true)
+                {
+                    AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(methodName: nameof(AddAzureMonitorLogExporter));
                 }
 
                 if (credential != null)

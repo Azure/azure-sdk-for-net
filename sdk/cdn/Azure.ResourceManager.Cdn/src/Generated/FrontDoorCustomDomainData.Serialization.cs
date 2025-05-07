@@ -57,15 +57,8 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(PreValidatedCustomDomainResource))
             {
-                if (PreValidatedCustomDomainResource != null)
-                {
-                    writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
-                    writer.WriteObjectValue(PreValidatedCustomDomainResource, options);
-                }
-                else
-                {
-                    writer.WriteNull("preValidatedCustomDomainResourceId");
-                }
+                writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
+                JsonSerializer.Serialize(writer, PreValidatedCustomDomainResource);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -133,7 +126,7 @@ namespace Azure.ResourceManager.Cdn
             string profileName = default;
             FrontDoorCustomDomainHttpsContent tlsSettings = default;
             WritableSubResource azureDnsZone = default;
-            FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId preValidatedCustomDomainResourceId = default;
+            WritableSubResource preValidatedCustomDomainResourceId = default;
             FrontDoorProvisioningState? provisioningState = default;
             FrontDoorDeploymentStatus? deploymentStatus = default;
             DomainValidationState? domainValidationState = default;
@@ -204,10 +197,9 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                preValidatedCustomDomainResourceId = null;
                                 continue;
                             }
-                            preValidatedCustomDomainResourceId = FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId.DeserializeFrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(property0.Value, options);
+                            preValidatedCustomDomainResourceId = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

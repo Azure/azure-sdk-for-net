@@ -74,6 +74,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("fullyQualifiedDomainName"u8);
                 writer.WriteStringValue(FullyQualifiedDomainName);
             }
+            if (Optional.IsDefined(IsGeneralPurposeV2))
+            {
+                writer.WritePropertyName("isGeneralPurposeV2"u8);
+                writer.WriteBooleanValue(IsGeneralPurposeV2.Value);
+            }
             if (Optional.IsDefined(AdministratorLogin))
             {
                 writer.WritePropertyName("administratorLogin"u8);
@@ -99,6 +104,16 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
+            if (Optional.IsDefined(HybridSecondaryUsage))
+            {
+                writer.WritePropertyName("hybridSecondaryUsage"u8);
+                writer.WriteStringValue(HybridSecondaryUsage.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(HybridSecondaryUsageDetected))
+            {
+                writer.WritePropertyName("hybridSecondaryUsageDetected"u8);
+                writer.WriteStringValue(HybridSecondaryUsageDetected.Value.ToString());
+            }
             if (Optional.IsDefined(VCores))
             {
                 writer.WritePropertyName("vCores"u8);
@@ -108,6 +123,16 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 writer.WritePropertyName("storageSizeInGB"u8);
                 writer.WriteNumberValue(StorageSizeInGB.Value);
+            }
+            if (Optional.IsDefined(StorageIOps))
+            {
+                writer.WritePropertyName("storageIOps"u8);
+                writer.WriteNumberValue(StorageIOps.Value);
+            }
+            if (Optional.IsDefined(StorageThroughputMBps))
+            {
+                writer.WritePropertyName("storageThroughputMBps"u8);
+                writer.WriteNumberValue(StorageThroughputMBps.Value);
             }
             if (Optional.IsDefined(Collation))
             {
@@ -209,6 +234,36 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("servicePrincipal"u8);
                 writer.WriteObjectValue(ServicePrincipal, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(VirtualClusterId))
+            {
+                writer.WritePropertyName("virtualClusterId"u8);
+                writer.WriteStringValue(VirtualClusterId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExternalGovernanceStatus))
+            {
+                writer.WritePropertyName("externalGovernanceStatus"u8);
+                writer.WriteStringValue(ExternalGovernanceStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(PricingModel))
+            {
+                writer.WritePropertyName("pricingModel"u8);
+                writer.WriteStringValue(PricingModel.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreateOn))
+            {
+                writer.WritePropertyName("createTime"u8);
+                writer.WriteStringValue(CreateOn.Value, "O");
+            }
+            if (Optional.IsDefined(AuthenticationMetadata))
+            {
+                writer.WritePropertyName("authenticationMetadata"u8);
+                writer.WriteStringValue(AuthenticationMetadata.Value.ToString());
+            }
+            if (Optional.IsDefined(DatabaseFormat))
+            {
+                writer.WritePropertyName("databaseFormat"u8);
+                writer.WriteStringValue(DatabaseFormat.Value.ToString());
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -253,13 +308,18 @@ namespace Azure.ResourceManager.Sql.Models
             ManagedInstancePropertiesProvisioningState? provisioningState = default;
             ManagedServerCreateMode? managedInstanceCreateMode = default;
             string fullyQualifiedDomainName = default;
+            bool? isGeneralPurposeV2 = default;
             string administratorLogin = default;
             string administratorLoginPassword = default;
             ResourceIdentifier subnetId = default;
             string state = default;
             ManagedInstanceLicenseType? licenseType = default;
+            HybridSecondaryUsage? hybridSecondaryUsage = default;
+            HybridSecondaryUsageDetected? hybridSecondaryUsageDetected = default;
             int? vCores = default;
             int? storageSizeInGB = default;
+            int? storageIOps = default;
+            int? storageThroughputMBps = default;
             string collation = default;
             string dnsZone = default;
             ResourceIdentifier dnsZonePartner = default;
@@ -279,6 +339,12 @@ namespace Azure.ResourceManager.Sql.Models
             Uri keyId = default;
             ManagedInstanceExternalAdministrator administrators = default;
             SqlServicePrincipal servicePrincipal = default;
+            ResourceIdentifier virtualClusterId = default;
+            ExternalGovernanceStatus? externalGovernanceStatus = default;
+            SqlManagedInstancePricingModel? pricingModel = default;
+            DateTimeOffset? createTime = default;
+            AuthMetadataLookupMode? authenticationMetadata = default;
+            ManagedInstanceDatabaseFormat? databaseFormat = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -348,6 +414,15 @@ namespace Azure.ResourceManager.Sql.Models
                             fullyQualifiedDomainName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("isGeneralPurposeV2"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isGeneralPurposeV2 = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("administratorLogin"u8))
                         {
                             administratorLogin = property0.Value.GetString();
@@ -381,6 +456,24 @@ namespace Azure.ResourceManager.Sql.Models
                             licenseType = new ManagedInstanceLicenseType(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("hybridSecondaryUsage"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            hybridSecondaryUsage = new HybridSecondaryUsage(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("hybridSecondaryUsageDetected"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            hybridSecondaryUsageDetected = new HybridSecondaryUsageDetected(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("vCores"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -397,6 +490,24 @@ namespace Azure.ResourceManager.Sql.Models
                                 continue;
                             }
                             storageSizeInGB = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("storageIOps"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            storageIOps = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("storageThroughputMBps"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            storageThroughputMBps = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("collation"u8))
@@ -559,6 +670,60 @@ namespace Azure.ResourceManager.Sql.Models
                             servicePrincipal = SqlServicePrincipal.DeserializeSqlServicePrincipal(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("virtualClusterId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            virtualClusterId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("externalGovernanceStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            externalGovernanceStatus = new ExternalGovernanceStatus(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("pricingModel"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            pricingModel = new SqlManagedInstancePricingModel(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("createTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            createTime = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("authenticationMetadata"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            authenticationMetadata = new AuthMetadataLookupMode(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("databaseFormat"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            databaseFormat = new ManagedInstanceDatabaseFormat(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -575,13 +740,18 @@ namespace Azure.ResourceManager.Sql.Models
                 provisioningState,
                 managedInstanceCreateMode,
                 fullyQualifiedDomainName,
+                isGeneralPurposeV2,
                 administratorLogin,
                 administratorLoginPassword,
                 subnetId,
                 state,
                 licenseType,
+                hybridSecondaryUsage,
+                hybridSecondaryUsageDetected,
                 vCores,
                 storageSizeInGB,
+                storageIOps,
+                storageThroughputMBps,
                 collation,
                 dnsZone,
                 dnsZonePartner,
@@ -601,6 +771,12 @@ namespace Azure.ResourceManager.Sql.Models
                 keyId,
                 administrators,
                 servicePrincipal,
+                virtualClusterId,
+                externalGovernanceStatus,
+                pricingModel,
+                createTime,
+                authenticationMetadata,
+                databaseFormat,
                 serializedAdditionalRawData);
         }
 

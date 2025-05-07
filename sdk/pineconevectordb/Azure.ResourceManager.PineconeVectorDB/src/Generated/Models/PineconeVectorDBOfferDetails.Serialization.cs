@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPineconeVectorDBContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PineconeVectorDBOfferDetails)} does not support writing '{options.Format}' format.");
             }

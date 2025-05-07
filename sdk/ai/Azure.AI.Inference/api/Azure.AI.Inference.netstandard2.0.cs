@@ -2,8 +2,8 @@ namespace Azure.AI.Inference
 {
     public static partial class AIInferenceExtensions
     {
-        public static Azure.AI.Inference.ChatCompletionsClient GetChatCompletionsClient(this System.ClientModel.Primitives.ConnectionProvider provider) { throw null; }
-        public static Azure.AI.Inference.EmbeddingsClient GetEmbeddingsClient(this System.ClientModel.Primitives.ConnectionProvider provider) { throw null; }
+        public static Azure.AI.Inference.ChatCompletionsClient GetChatCompletionsClient(this System.ClientModel.Primitives.ClientConnectionProvider provider) { throw null; }
+        public static Azure.AI.Inference.EmbeddingsClient GetEmbeddingsClient(this System.ClientModel.Primitives.ClientConnectionProvider provider) { throw null; }
     }
     public static partial class AIInferenceModelFactory
     {

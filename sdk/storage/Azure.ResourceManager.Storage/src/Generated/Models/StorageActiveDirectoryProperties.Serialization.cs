@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("domainGuid"u8))
                 {
-                    domainGuid = property.Value.GetGuid();
+                    DeserializeNullableGuid(property, ref domainGuid);
                     continue;
                 }
                 if (property.NameEquals("domainSid"u8))

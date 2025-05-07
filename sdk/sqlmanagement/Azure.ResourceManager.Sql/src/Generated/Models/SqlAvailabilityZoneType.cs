@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Specifies the availability zone the pool's primary replica is pinned to. </summary>
+    /// <summary> Specifies the availability zone the database is pinned to. </summary>
     public readonly partial struct SqlAvailabilityZoneType : IEquatable<SqlAvailabilityZoneType>
     {
         private readonly string _value;

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Chaos.Models
             }
 
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(FilterType.ToString());
+            writer.WriteStringValue(Type.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

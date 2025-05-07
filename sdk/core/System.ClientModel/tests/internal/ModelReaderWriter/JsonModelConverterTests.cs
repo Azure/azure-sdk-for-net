@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using System.ClientModel.Tests.ModelReaderWriterTests;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Text.Json;
+using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
 {
@@ -148,7 +147,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         public void ConvertWithBadContext()
         {
             var options = new JsonSerializerOptions();
-            var converter = new JsonModelConverter(ModelReaderWriterOptions.Json, TestContext.Default);
+            var converter = new JsonModelConverter(ModelReaderWriterOptions.Json, SystemClientModelTestsInternalContext.Default);
             options.Converters.Add(converter);
             var ex = Assert.Throws<InvalidOperationException>(() => JsonSerializer.Deserialize("{}", typeof(PersistableModel), options));
             Assert.IsNotNull(ex);
