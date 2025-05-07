@@ -1,7 +1,7 @@
 {
   "main": "dist/src/index.js",
   "dependencies": {
-    "@azure-tools/typespec-csharp": "0.2.0-beta.20250409.1"
+    "@azure-tools/typespec-csharp": "0.2.0-beta.20250410.1"
   },
   "devDependencies": {
     "@azure-tools/typespec-autorest": "0.54.0",
@@ -16,7 +16,7 @@
     "@typespec/openapi": "1.0.0-rc.0",
     "@typespec/rest": "0.68.0",
     "@typespec/sse": "0.68.0",
-    "@typespec/streams": "0.68",
+    "@typespec/streams": "0.68.0",
     "@typespec/versioning": "0.68.0",
     "@typespec/xml": "0.68.0"
   }

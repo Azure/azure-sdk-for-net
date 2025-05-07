@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.4.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,15 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0-beta.2 (2025-04-14)
+
+### Features Added
+
+- Added extensions to `System.Diagnostics.Activity` and `System.Diagnostics.ActivitySource` to simplify instrumentation of client libraries
+- Added new overloads to `System.ClientModel.ModelReaderWriter` which take in a new 
+[ModelReaderWriterContext](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md)
+which allows reading and writing of collections of `IPersistableModel<>`.  In addition any calls to the new overloads are AOT compatible.
 
 ## 1.4.0-beta.1 (2025-03-06)
 

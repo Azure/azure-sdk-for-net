@@ -41,6 +41,7 @@
  "clients": [
   {
    "$id": "5",
+   "kind": "client",
    "name": "EmptyClient",
    "namespace": "Type.Model.Empty",
    "doc": "Illustrates usage of empty model used in operation's parameters and responses.",
@@ -319,7 +320,8 @@
     }
    ],
    "decorators": [],
-   "crossLanguageDefinitionId": "Type.Model.Empty"
+   "crossLanguageDefinitionId": "Type.Model.Empty",
+   "apiVersions": []
   }
  ]
 }

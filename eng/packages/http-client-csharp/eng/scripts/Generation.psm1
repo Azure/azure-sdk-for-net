@@ -25,12 +25,11 @@ function Get-TspCommand {
         [string]$specFile,
         [string]$generationDir,
         [bool]$generateStub = $false,
-        [string]$apiVersion = $null,
-        [bool]$forceNewProject = $false
+        [string]$apiVersion = $null
     )
     $command = "npx tsp compile $specFile"
     $command += " --trace @azure-typespec/http-client-csharp"
-    $command += " --emit @azure-typespec/http-client-csharp"
+    $command += " --emit $repoRoot/.."
     $configFile = Join-Path $generationDir "tspconfig.yaml"
     if (Test-Path $configFile) {
         $command += " --config=$configFile"
@@ -45,9 +44,7 @@ function Get-TspCommand {
         $command += " --option @azure-typespec/http-client-csharp.api-version=$apiVersion"
     }
 
-    if ($forceNewProject) {
-        $command += " --option @azure-typespec/http-client-csharp.new-project=true"
-    }
+    $command += " --option @azure-typespec/http-client-csharp.new-project=true"
 
     return $command
 }
@@ -62,7 +59,8 @@ function Get-Mgmt-TspCommand {
     )
     $command = "npx tsp compile $specFile"
     $command += " --trace @azure-typespec/http-client-csharp-mgmt"
-    $command += " --emit @azure-typespec/http-client-csharp-mgmt"
+    $command += " --emit $repoRoot/../../http-client-csharp-mgmt"
+
     $configFile = Join-Path $generationDir "tspconfig.yaml"
     if (Test-Path $configFile) {
         $command += " --config=$configFile"
@@ -72,7 +70,7 @@ function Get-Mgmt-TspCommand {
     if ($generateStub) {
         $command += " --option @azure-typespec/http-client-csharp-mgmt.plugin-name=AzureStubPlugin"
     }
-    
+
     if ($apiVersion) {
         $command += " --option @azure-typespec/http-client-csharp-mgmt.api-version=$apiVersion"
     }
@@ -86,7 +84,7 @@ function Get-Mgmt-TspCommand {
 
 function Refresh-Build {
     Write-Host "Building emitter and generator" -ForegroundColor Cyan
-    Invoke "npm run build:emitter" 
+    Invoke "npm run build:emitter"
     # exit if the generation failed
     if ($LASTEXITCODE -ne 0) {
         exit $LASTEXITCODE

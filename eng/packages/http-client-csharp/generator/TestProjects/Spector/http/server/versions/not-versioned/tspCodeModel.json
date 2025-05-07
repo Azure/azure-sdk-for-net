@@ -7,6 +7,7 @@
  "clients": [
   {
    "$id": "2",
+   "kind": "client",
    "name": "NotVersionedClient",
    "namespace": "Server.Versions.NotVersioned",
    "doc": "Illustrates not-versioned server.",
@@ -154,7 +155,8 @@
     }
    ],
    "decorators": [],
-   "crossLanguageDefinitionId": "Server.Versions.NotVersioned"
+   "crossLanguageDefinitionId": "Server.Versions.NotVersioned",
+   "apiVersions": []
   }
  ]
 }

@@ -126,6 +126,8 @@ namespace Azure.Storage.DataMovement
         public System.Collections.Generic.IDictionary<string, object> RawProperties { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public long? ResourceLength { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public System.Uri Uri { get { throw null; } set { } }
     }
     public abstract partial class StorageResourceProvider
     {

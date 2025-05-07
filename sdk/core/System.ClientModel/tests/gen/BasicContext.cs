@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
-using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas;
 using System.Collections.Generic;
@@ -11,6 +10,13 @@ namespace System.ClientModel.SourceGeneration.Tests
 {
     [ModelReaderWriterBuildable(typeof(ReadOnlyMemory<JsonModel>))]
     [ModelReaderWriterBuildable(typeof(List<BaseModel>))]
+    [ModelReaderWriterBuildable(typeof(List<SubNamespace.JsonModel>))]
+    [ModelReaderWriterBuildable(typeof(Dictionary<string, SubNamespace.JsonModel>))]
+    [ModelReaderWriterBuildable(typeof(SubNamespace.JsonModel[]))]
+    [ModelReaderWriterBuildable(typeof(SubNamespace.JsonModel[,]))]
+    [ModelReaderWriterBuildable(typeof(SubNamespace.JsonModel[][]))]
+    [ModelReaderWriterBuildable(typeof(ReadOnlyMemory<SubNamespace.JsonModel>))]
+    [ModelReaderWriterBuildable(typeof(List<SubNamespace.AvailabilitySetData>))]
     public partial class BasicContext : ModelReaderWriterContext
     {
         partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories)

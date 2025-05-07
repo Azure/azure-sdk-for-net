@@ -44,42 +44,15 @@
     {
      "$id": "7",
      "kind": "property",
-     "name": "queryProp",
-     "serializedName": "queryProp",
-     "doc": "Required int32, illustrating a query property.",
-     "type": {
-      "$id": "8",
-      "kind": "int32",
-      "name": "int32",
-      "crossLanguageDefinitionId": "TypeSpec.int32",
-      "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Model.Visibility.VisibilityModel.queryProp",
-     "serializationOptions": {
-      "$id": "9",
-      "json": {
-       "$id": "10",
-       "name": "queryProp"
-      }
-     }
-    },
-    {
-     "$id": "11",
-     "kind": "property",
      "name": "createProp",
      "serializedName": "createProp",
      "doc": "Required string[], illustrating a create property.",
      "type": {
-      "$id": "12",
+      "$id": "8",
       "kind": "array",
       "name": "Array",
       "valueType": {
-       "$id": "13",
+       "$id": "9",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string",
@@ -95,25 +68,25 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Type.Model.Visibility.VisibilityModel.createProp",
      "serializationOptions": {
-      "$id": "14",
+      "$id": "10",
       "json": {
-       "$id": "15",
+       "$id": "11",
        "name": "createProp"
       }
      }
     },
     {
-     "$id": "16",
+     "$id": "12",
      "kind": "property",
      "name": "updateProp",
      "serializedName": "updateProp",
      "doc": "Required int32[], illustrating a update property.",
      "type": {
-      "$id": "17",
+      "$id": "13",
       "kind": "array",
-      "name": "Array",
+      "name": "Array1",
       "valueType": {
-       "$id": "18",
+       "$id": "14",
        "kind": "int32",
        "name": "int32",
        "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -129,21 +102,21 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Type.Model.Visibility.VisibilityModel.updateProp",
      "serializationOptions": {
-      "$id": "19",
+      "$id": "15",
       "json": {
-       "$id": "20",
+       "$id": "16",
        "name": "updateProp"
       }
      }
     },
     {
-     "$id": "21",
+     "$id": "17",
      "kind": "property",
      "name": "deleteProp",
      "serializedName": "deleteProp",
      "doc": "Required bool, illustrating a delete property.",
      "type": {
-      "$id": "22",
+      "$id": "18",
       "kind": "boolean",
       "name": "boolean",
       "crossLanguageDefinitionId": "TypeSpec.boolean",
@@ -156,9 +129,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Type.Model.Visibility.VisibilityModel.deleteProp",
      "serializationOptions": {
-      "$id": "23",
+      "$id": "19",
       "json": {
-       "$id": "24",
+       "$id": "20",
        "name": "deleteProp"
       }
      }
@@ -166,7 +139,7 @@
    ]
   },
   {
-   "$id": "25",
+   "$id": "21",
    "kind": "model",
    "name": "ReadOnlyModel",
    "namespace": "Type.Model.Visibility",
@@ -176,20 +149,20 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "26",
+     "$id": "22",
      "kind": "property",
      "name": "optionalNullableIntList",
      "serializedName": "optionalNullableIntList",
      "doc": "Optional readonly nullable int list.",
      "type": {
-      "$id": "27",
+      "$id": "23",
       "kind": "nullable",
       "type": {
-       "$id": "28",
+       "$id": "24",
        "kind": "array",
-       "name": "Array",
+       "name": "Array1",
        "valueType": {
-        "$id": "29",
+        "$id": "25",
         "kind": "int32",
         "name": "int32",
         "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -207,31 +180,31 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Type.Model.Visibility.ReadOnlyModel.optionalNullableIntList",
      "serializationOptions": {
-      "$id": "30",
+      "$id": "26",
       "json": {
-       "$id": "31",
+       "$id": "27",
        "name": "optionalNullableIntList"
       }
      }
     },
     {
-     "$id": "32",
+     "$id": "28",
      "kind": "property",
      "name": "optionalStringRecord",
      "serializedName": "optionalStringRecord",
      "doc": "Optional readonly string dictionary.",
      "type": {
-      "$id": "33",
+      "$id": "29",
       "kind": "dict",
       "keyType": {
-       "$id": "34",
+       "$id": "30",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string",
        "decorators": []
       },
       "valueType": {
-       "$id": "35",
+       "$id": "31",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string",
@@ -246,9 +219,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Type.Model.Visibility.ReadOnlyModel.optionalStringRecord",
      "serializationOptions": {
-      "$id": "36",
+      "$id": "32",
       "json": {
-       "$id": "37",
+       "$id": "33",
        "name": "optionalStringRecord"
       }
      }
@@ -258,27 +231,50 @@
  ],
  "clients": [
   {
-   "$id": "38",
+   "$id": "34",
+   "kind": "client",
    "name": "VisibilityClient",
    "namespace": "Type.Model.Visibility",
    "doc": "Illustrates models with visibility properties.",
    "operations": [
     {
-     "$id": "39",
+     "$id": "35",
      "name": "getModel",
      "resourceName": "Visibility",
      "accessibility": "public",
      "parameters": [
       {
-       "$id": "40",
+       "$id": "36",
+       "name": "queryProp",
+       "nameInRequest": "queryProp",
+       "doc": "Required int32, illustrating a query property.",
+       "type": {
+        "$id": "37",
+        "kind": "int32",
+        "name": "int32",
+        "crossLanguageDefinitionId": "TypeSpec.int32",
+        "decorators": []
+       },
+       "location": "Query",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
+      {
+       "$id": "38",
        "name": "contentType",
        "nameInRequest": "Content-Type",
        "doc": "Body parameter's content type. Known values are application/json",
        "type": {
-        "$id": "41",
+        "$id": "39",
         "kind": "constant",
         "valueType": {
-         "$id": "42",
+         "$id": "40",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -298,14 +294,14 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "43",
+       "$id": "41",
        "name": "accept",
        "nameInRequest": "Accept",
        "type": {
-        "$id": "44",
+        "$id": "42",
         "kind": "constant",
         "valueType": {
-         "$id": "45",
+         "$id": "43",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -325,7 +321,7 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "46",
+       "$id": "44",
        "name": "input",
        "nameInRequest": "input",
        "type": {
@@ -344,7 +340,7 @@
      ],
      "responses": [
       {
-       "$id": "47",
+       "$id": "45",
        "statusCodes": [
         200
        ],
@@ -371,11 +367,33 @@
      "decorators": []
     },
     {
-     "$id": "48",
+     "$id": "46",
      "name": "headModel",
      "resourceName": "Visibility",
      "accessibility": "public",
      "parameters": [
+      {
+       "$id": "47",
+       "name": "queryProp",
+       "nameInRequest": "queryProp",
+       "doc": "Required int32, illustrating a query property.",
+       "type": {
+        "$id": "48",
+        "kind": "int32",
+        "name": "int32",
+        "crossLanguageDefinitionId": "TypeSpec.int32",
+        "decorators": []
+       },
+       "location": "Query",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
       {
        "$id": "49",
        "name": "contentType",
@@ -806,7 +824,7 @@
        "name": "input",
        "nameInRequest": "input",
        "type": {
-        "$ref": "25"
+        "$ref": "21"
        },
        "location": "Body",
        "isApiVersion": false,
@@ -826,7 +844,7 @@
         200
        ],
        "bodyType": {
-        "$ref": "25"
+        "$ref": "21"
        },
        "headers": [],
        "isErrorResponse": false,
@@ -881,7 +899,8 @@
     }
    ],
    "decorators": [],
-   "crossLanguageDefinitionId": "Type.Model.Visibility"
+   "crossLanguageDefinitionId": "Type.Model.Visibility",
+   "apiVersions": []
   }
  ]
 }

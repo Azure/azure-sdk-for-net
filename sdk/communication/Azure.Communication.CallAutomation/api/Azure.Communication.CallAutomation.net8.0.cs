@@ -819,8 +819,13 @@ namespace Azure.Communication.CallAutomation
         public System.Collections.Generic.IDictionary<string, string> SipHeaders { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> VoipHeaders { get { throw null; } }
         public void AddSipUui(string value) { }
-        public void AddSipX(string key, string value) { }
+        public void AddSipX(string key, string value, Azure.Communication.CallAutomation.CustomCallingContext.SipHeaderPrefix prefix = Azure.Communication.CallAutomation.CustomCallingContext.SipHeaderPrefix.XMSCustom) { }
         public void AddVoip(string key, string value) { }
+        public enum SipHeaderPrefix
+        {
+            XMSCustom = 0,
+            X = 1,
+        }
     }
     public partial class DialogCompleted : Azure.Communication.CallAutomation.CallAutomationEventBase
     {

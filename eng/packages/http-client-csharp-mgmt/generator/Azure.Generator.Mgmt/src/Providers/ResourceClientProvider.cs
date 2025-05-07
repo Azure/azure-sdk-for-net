@@ -32,20 +32,20 @@ namespace Azure.Generator.Management.Providers
     internal class ResourceClientProvider : TypeProvider
     {
         private IReadOnlyCollection<InputOperation> _resourceOperations;
-        private ClientProvider _clientProvider;
         private readonly IReadOnlyList<string> _contextualParameters;
         private bool _isSingleton;
 
         private FieldProvider _dataField;
-        private FieldProvider _clientDiagonosticsField;
-        private FieldProvider _restClientField;
         private FieldProvider _resourcetypeField;
+        protected ClientProvider _clientProvider;
+        protected FieldProvider _clientDiagonosticsField;
+        protected FieldProvider _restClientField;
 
         public ResourceClientProvider(InputClient inputClient)
         {
             var resourceMetadata = inputClient.Decorators.Single(d => d.Name.Equals(KnownDecorators.ResourceMetadata));
             var codeModelId = resourceMetadata.Arguments?[KnownDecorators.ResourceModel].ToObjectFromJson<string>()!;
-            _isSingleton = _isSingleton = resourceMetadata.Arguments?.TryGetValue("isSingleton", out var isSingleton) == true ? isSingleton.ToObjectFromJson<string>() == "true" : false;
+            _isSingleton = resourceMetadata.Arguments?.TryGetValue("isSingleton", out var isSingleton) == true ? isSingleton.ToObjectFromJson<string>() == "true" : false;
             var resourceType = resourceMetadata.Arguments?[KnownDecorators.ResourceType].ToObjectFromJson<string>()!;
             _resourcetypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resourceType));
             var resourceModel = ManagementClientGenerator.Instance.InputLibrary.GetModelByCrossLanguageDefinitionId(codeModelId)!;
@@ -144,7 +144,7 @@ namespace Azure.Generator.Management.Providers
             return new ConstructorProvider(signature, bodyStatements, this);
         }
 
-        private ConstructorProvider BuildInitializationConstructor()
+        protected ConstructorProvider BuildInitializationConstructor()
         {
             var idParameter = new ParameterProvider("id", $"The identifier of the resource that is the target of operations.", typeof(ResourceIdentifier));
             var parameters = new List<ParameterProvider>
@@ -164,7 +164,7 @@ namespace Azure.Generator.Management.Providers
 
             var bodyStatements = new MethodBodyStatement[]
             {
-                _clientDiagonosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourcetypeField.Property(nameof(ResourceType.Namespace)), This.Property("Diagnostics"))).Terminate(),
+                _clientDiagonosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), ResourceTypeExpression.Property(nameof(ResourceType.Namespace)), This.Property("Diagnostics"))).Terminate(),
                 TryGetApiVersion(out var apiVersion).Terminate(),
                 _restClientField.Assign(New.Instance(_clientProvider.Type, This.Property("Pipeline"), This.Property("Endpoint"), apiVersion)).Terminate(),
                 Static(Type).Invoke(ValidateResourceIdMethodName, idParameter).Terminate()
@@ -174,7 +174,7 @@ namespace Azure.Generator.Management.Providers
         }
 
         private const string ValidateResourceIdMethodName = "ValidateResourceId";
-        private MethodProvider BuildValidateResourceIdMethod()
+        protected MethodProvider BuildValidateResourceIdMethod()
         {
             var idParameter = new ParameterProvider("id", $"", typeof(ResourceIdentifier));
             var signature = new MethodSignature(
@@ -187,12 +187,16 @@ namespace Azure.Generator.Management.Providers
                     idParameter
                 ],
                 [new AttributeStatement(typeof(ConditionalAttribute), Literal("DEBUG"))]);
-            var bodyStatements = new IfStatement(idParameter.NotEqual(_resourcetypeField))
+            var bodyStatements = new IfStatement(idParameter.NotEqual(ExpectedResourceTypeForValidation))
             {
-                Throw(New.ArgumentException(idParameter, StringSnippets.Format(Literal("Invalid resource type {0} expected {1}"), idParameter.Property(nameof(ResourceIdentifier.ResourceType)), _resourcetypeField), false))
+                Throw(New.ArgumentException(idParameter, StringSnippets.Format(Literal("Invalid resource type {0} expected {1}"), idParameter.Property(nameof(ResourceIdentifier.ResourceType)), ResourceTypeExpression), false))
             };
             return new MethodProvider(signature, bodyStatements, this);
         }
+
+        protected virtual ValueExpression ResourceTypeExpression => _resourcetypeField;
+
+        protected virtual ValueExpression ExpectedResourceTypeForValidation => _resourcetypeField;
 
         protected override CSharpType[] BuildImplements() => [typeof(ArmResource)];
 
@@ -246,7 +250,7 @@ namespace Azure.Generator.Management.Providers
             return new MethodProvider(signature, bodyStatements, this);
         }
 
-        private IReadOnlyList<ParameterProvider> GetOperationMethodParameters(MethodProvider convenienceMethod, bool isLongRunning)
+        protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters(MethodProvider convenienceMethod, bool isLongRunning)
         {
             var result = new List<ParameterProvider>();
             if (isLongRunning)
@@ -263,7 +267,7 @@ namespace Azure.Generator.Management.Providers
             return result;
         }
 
-        private CSharpType GetOperationMethodReturnType(bool isAsync, bool isLongRunningOperation, IReadOnlyList<InputOperationResponse> operationResponses, out bool isGeneric)
+        protected CSharpType GetOperationMethodReturnType(bool isAsync, bool isLongRunningOperation, IReadOnlyList<InputOperationResponse> operationResponses, out bool isGeneric)
         {
             isGeneric = false;
             if (isLongRunningOperation)
@@ -372,7 +376,7 @@ namespace Azure.Generator.Management.Providers
         }
 
         // TODO: get clean name of operation Name
-        private MethodProvider GetCorrespondingConvenienceMethod(InputOperation operation, bool isAsync)
+        protected MethodProvider GetCorrespondingConvenienceMethod(InputOperation operation, bool isAsync)
             => _clientProvider.CanonicalView.Methods.Single(m => m.Signature.Name.Equals(isAsync ? $"{operation.Name}Async" : operation.Name, StringComparison.OrdinalIgnoreCase) && m.Signature.Parameters.Any(p => p.Type.Equals(typeof(CancellationToken))));
 
         private MethodProvider GetCorrespondingRequestMethod(InputOperation operation)
@@ -382,7 +386,7 @@ namespace Azure.Generator.Management.Providers
         {
             var apiVersionDeclaration = new VariableExpression(typeof(string), $"{SpecName.ToLower()}ApiVersion");
             apiVersion = apiVersionDeclaration.As<string>();
-            var invocation = new InvokeMethodExpression(This, "TryGetApiVersion", [_resourcetypeField, new DeclarationExpression(apiVersionDeclaration, true)]);
+            var invocation = new InvokeMethodExpression(This, "TryGetApiVersion", [ResourceTypeExpression, new DeclarationExpression(apiVersionDeclaration, true)]);
             return invocation.As<bool>();
         }
     }

@@ -56,6 +56,26 @@ namespace Azure.AI.Projects
             return new ThreadMessageOptions(role, content, attachments?.ToList(), metadata, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Projects.OpenAIPageableListOfAgentThread"/>. </summary>
+        /// <param name="object"> The object type, which is always list. </param>
+        /// <param name="data"> The requested list of items. </param>
+        /// <param name="firstId"> The first ID represented in this list. </param>
+        /// <param name="lastId"> The last ID represented in this list. </param>
+        /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
+        /// <returns> A new <see cref="Projects.OpenAIPageableListOfAgentThread"/> instance for mocking. </returns>
+        public static OpenAIPageableListOfAgentThread OpenAIPageableListOfAgentThread(OpenAIPageableListOfAgentThreadObject @object = default, IEnumerable<AgentThread> data = null, string firstId = null, string lastId = null, bool hasMore = default)
+        {
+            data ??= new List<AgentThread>();
+
+            return new OpenAIPageableListOfAgentThread(
+                @object,
+                data?.ToList(),
+                firstId,
+                lastId,
+                hasMore,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Projects.MessageIncompleteDetails"/>. </summary>
         /// <param name="reason"> The provided reason describing why the message was marked as incomplete. </param>
         /// <returns> A new <see cref="Projects.MessageIncompleteDetails"/> instance for mocking. </returns>

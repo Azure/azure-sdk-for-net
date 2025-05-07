@@ -356,14 +356,16 @@ if (connections?.Value == null || connections.Value.Count == 0)
 
 ConnectionResponse connection = connections.Value[0];
 
-AISearchIndexResource indexList = new(connection.Id, "sample_index");
-indexList.QueryType = AzureAISearchQueryType.VectorSemanticHybrid;
-ToolResources searchResource = new ToolResources
+AzureAISearchResource searchResource = new(
+    connection.Id,
+    "sample_index",
+    5,
+    "category eq 'sleeping bag'",
+    AzureAISearchQueryType.Simple
+);
+ToolResources toolResource = new()
 {
-    AzureAISearch = new AzureAISearchResource
-    {
-        IndexList = { indexList }
-    }
+    AzureAISearch = searchResource
 };
 
 AgentsClient agentClient = projectClient.GetAgentsClient();
@@ -373,7 +375,7 @@ Agent agent = await agentClient.CreateAgentAsync(
    name: "my-assistant",
    instructions: "You are a helpful assistant.",
    tools: [ new AzureAISearchToolDefinition() ],
-   toolResources: searchResource);
+   toolResources: toolResource);
 ```
 
 If the agent has found the relevant information in the index, the reference
@@ -844,7 +846,8 @@ OpenApiToolDefinition openapiTool = new(
     name: "get_weather",
     description: "Retrieve weather information for a location",
     spec: BinaryData.FromBytes(File.ReadAllBytes(file_path)),
-    auth: oaiAuth
+    auth: oaiAuth,
+    defaultParams: ["format"]
 );
 
 Agent agent = await client.CreateAgentAsync(

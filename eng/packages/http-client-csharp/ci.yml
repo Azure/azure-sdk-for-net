@@ -5,7 +5,6 @@ trigger:
   paths:
     include:
       - eng/packages/http-client-csharp
-      - eng/packages/http-client-csharp-mgmt
       - eng/scripts/typespec
 pr:
   branches:
@@ -17,14 +16,9 @@ pr:
   paths:
     include:
       - eng/packages/http-client-csharp
-      - eng/packages/http-client-csharp-mgmt
       - eng/scripts/typespec
 
 parameters:
-  - name: BuildPrereleaseVersion
-    displayName: "Build prerelease version"
-    type: boolean
-    default: true
   - name: UseTypeSpecNext
     displayName: "Use TypeSpec Next"
     type: boolean
@@ -48,15 +42,17 @@ variables:
 extends:
   template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
   parameters:
-    EmitterPackageJsonPath: /eng/azure-typespec-emitter-package.json
+    EmitterPackageJsonOutputPath: eng/http-client-csharp-emitter-package.json
+    EmitterPackagePath: eng/packages/http-client-csharp
     SparseCheckoutPaths:
       - /sdk/core/Azure.Core/src/Shared
       - /sdk/core/Azure.Core.TestFramework/src
-    BuildPrereleaseVersion: ${{ parameters.BuildPrereleaseVersion }}
+    BuildPrereleaseVersion: true
     UseTypeSpecNext: ${{ parameters.UseTypeSpecNext }}
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:
       ${{ if eq(variables['Build.Reason'], 'Manual') }}:
         ShouldPublish: ${{ parameters.ShouldPublish }}
+        ShouldRegenerate: ${{ parameters.ShouldRegenerate }}
         ${{ if startswith(variables['Build.SourceBranch'], 'refs/pull/') }}:  # PR ref's can't be published to public, even in a manual run
           PublishPublic: false
           PublishDependsOnTest: false
@@ -65,6 +61,7 @@ extends:
            PublishDependsOnTest: ${{ parameters.PublishPublic }}
       ${{ else }}: # All automatic runs publish, but only CI of main goes public
         ShouldPublish: true
+        ShouldRegenerate: true
         PublishDependsOnTest: false
         PublishPublic: ${{ and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}
       RegenerationJobCount: 5

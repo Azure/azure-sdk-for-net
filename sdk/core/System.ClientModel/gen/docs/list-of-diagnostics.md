@@ -108,3 +108,92 @@ Move the attribute usage to a partial class inheriting from `ModelReaderWriterCo
 - public class MyClass { } // This will cause SCM0003
 + public partial class MyContext : ModelReaderWriterContext { }
 ```
+
+## SCM0004
+
+### Cause
+
+The source generator found an `IPersistableModel` that was abstract and didn't have a `PersistableModelAttribute` applied to it.
+
+### How to fix violation
+
+Add a `PersistableModelAttribute` to the abstract class and set the ProxyType parameter to the type of the class that will be used to create instances of the abstract class.
+
+### Example of a violation
+
+#### Description
+
+The following code defines an abstract class that implements `IPersistableModel` but does not have a `PersistableModelAttribute` applied to it.
+
+#### Code
+
+```c#
+public abstract class MyClass : IPersistableModel<MyClass> { } // This will cause SCM0004
+```
+
+### Example of how to fix
+
+#### Description
+
+Add a proxy class that can be used to create instances of the abstract class and add a `PersistableModelAttribute` to the abstract class.
+
+#### Code
+
+```diff
++ [PersistableModelAttribute(typeof(ProxyClass))]
+public abstract class MyClass : IPersistableModel<MyClass> { }
++ public class MyClassProxy : IPersistableModel<MyClass> { }
+```
+
+## SCM0005
+
+### Cause
+
+Types that implement IPersistableModel and do not have a `PersistableModelProxyAttribute` must have a public or internal parameterless constructor.
+
+### How to fix violation
+
+Add a public or internal parameterless constructor to the class.
+
+### Example of a violation
+
+#### Description
+
+The following code defines a class that implements `IPersistableModel` but does not have a `PersistableModelProxyAttribute` applied to it
+or a public or internal parameterless constructor.
+
+#### Code
+
+```c#
+public class MyClass : IPersistableModel<MyClass>
+{
+    private MyClass() { } // This will cause SCM0005
+}
+```
+
+### Example of how to fix
+
+#### Description
+
+Add a proxy class that can be used to create instances of the class or add a `PersistableModelAttribute` to the class.
+
+#### Code
+
+```diff
+public class MyClass : IPersistableModel<MyClass>
+{
+    private MyClass() { }
++   internal MyClass() { }
+}
+```
+
+OR
+
+```diff
++ [PersistableModelAttribute(typeof(ProxyClass))]
+public class MyClass : IPersistableModel<MyClass>
+{
+    private MyClass() { }
+}
++ public class MyClassProxy : IPersistableModel<MyClass> { }
+```

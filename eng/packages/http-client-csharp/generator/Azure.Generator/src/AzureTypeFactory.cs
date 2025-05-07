@@ -51,9 +51,7 @@ namespace Azure.Generator
         /// </summary>
         protected internal virtual IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> AzureDependencyPackages =>
             [
-                new("Azure.Core"),
-                new("System.ClientModel"),
-                new("System.Text.Json")
+                new("Azure.Core")
             ];
 
         /// <inheritdoc/>

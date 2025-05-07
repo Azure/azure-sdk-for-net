@@ -47,6 +47,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
         internal bool _isFileMetadataSet = false;
 
         /// <summary>
+        /// Optional. Specifies whether the Share uses NFS or SMB protocol.
+        /// By default this value is set to false.
+        /// Applies to copy, upload, and download transfers.
+        /// </summary>
+        public bool IsNfs { get; set; } = false;
+
+        /// <summary>
         /// Optional. See <see cref="ShareFileRequestConditions"/>.
         /// Access conditions on the copying of data from this source storage resource share file.
         ///

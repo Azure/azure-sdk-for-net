@@ -128,6 +128,7 @@
  "clients": [
   {
    "$id": "17",
+   "kind": "client",
    "name": "NotDiscriminatedClient",
    "namespace": "Type.Model.Inheritance.NotDiscriminated",
    "doc": "Illustrates not-discriminated inheritance model.",
@@ -406,7 +407,8 @@
     }
    ],
    "decorators": [],
-   "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated"
+   "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated",
+   "apiVersions": []
   }
  ]
 }

@@ -1064,8 +1064,14 @@
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
 
+# PRLabel: %Recovery Services Data-Replication
+/sdk/recoveryservices-datareplication/Azure.ResourceManager.*/     @helen-afework
+
+# ServiceLabel: %Recovery Services Data-Replication %Mgmt
+# ServiceOwners:                                                   @helen-afework
+
 # (Remove this when uncommenting path) PRLabel: %Secret Store Extension
-#/sdk/edgeworkloadsecurity/Azure.ResourceManager.*/                 @cjoprey @locomotiveviaduct
+#/sdk/edgeworkloadsecurity/Azure.ResourceManager.*/                @cjoprey @locomotiveviaduct
 
 # ServiceLabel: %Secret Store Extension %Mgmt
 # ServiceOwners:                                                   @cjoprey @locomotiveviaduct
@@ -1074,7 +1080,7 @@
 /sdk/selfhelp/Azure.ResourceManager.*/                             @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Service Fabric
-/sdk/servicefabric/Azure.ResourceManager.*/                       @QingChenmsft @vaishnavk @juhacket
+/sdk/servicefabric/Azure.ResourceManager.*/                        @QingChenmsft @vaishnavk @juhacket
 
 # ServiceLabel: %Service Fabric
 # ServiceOwners:                                                   @QingChenmsft @vaishnavk @juhacket
@@ -1086,7 +1092,7 @@
 # ServiceOwners:                                                   @sunkun99
 
 # PRLabel: %Migration Assessment
-/sdk/migrationassessment/Azure.ResourceManager.*/                   @srilipta-swain
+/sdk/migrationassessment/Azure.ResourceManager.*/                  @srilipta-swain
 
 # ServiceLabel: %%Migration Assessment %Mgmt
 # ServiceOwners:                                                   @srilipta-swain
@@ -1108,10 +1114,13 @@
 # Add owners for package dependency changes
 /eng/Packages.Data.props                                           @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @tg-msft @jsquire @m-nash @ArthurMa1978
 
+# Add owners for emitter version changes
+/eng/http-client-csharp-emitter-package.json                       @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @nisha-bhatia
+
 # ######## Code Generation ########
 
 #PRLabel: %CodeGen %Client
-/eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @jsquire
+/eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @jsquire @nisha-bhatia
 
 #PRLabel: %CodeGen %Mgmt
 /eng/packages/http-client-csharp-mgmt/                             @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
@@ -1120,7 +1129,7 @@
 # AzureSdkOwners:                                                  @JoshLove-msft
 
 # ServiceLabel: %CodeGen %Mgmt
-# AzureSdkOwners:                                                  @live1206 @ArcturusZhang
+# AzureSdkOwners:                                                  @live1206 @ArcturusZhang @ArthurMa1978
 
 #PRLabel: %CodeGen %Client
 /eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @live1206 @ArcturusZhang

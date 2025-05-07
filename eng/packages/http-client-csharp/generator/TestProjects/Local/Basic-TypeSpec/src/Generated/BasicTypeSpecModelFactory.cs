@@ -139,13 +139,13 @@ namespace BasicTypeSpec.Models
             return new FriendModel(name, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> this is a model with a projected name. </summary>
-        /// <param name="name"> name of the ModelWithProjectedName. </param>
-        /// <returns> A new <see cref="Models.ProjectedModel"/> instance for mocking. </returns>
-        public static ProjectedModel ProjectedModel(string name = default)
+        /// <summary> this is a model with a client name. </summary>
+        /// <param name="name"> name of the ModelWithClientName. </param>
+        /// <returns> A new <see cref="Models.RenamedModel"/> instance for mocking. </returns>
+        public static RenamedModel RenamedModel(string name = default)
         {
 
-            return new ProjectedModel(name, additionalBinaryDataProperties: null);
+            return new RenamedModel(name, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ReturnsAnonymousModelResponse. </summary>

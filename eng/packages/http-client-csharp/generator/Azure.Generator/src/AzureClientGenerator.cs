@@ -7,7 +7,6 @@ using Microsoft.TypeSpec.Generator.ClientModel;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
-using System.Linq;
 
 namespace Azure.Generator;
 
@@ -42,7 +41,7 @@ public class AzureClientGenerator : ScmCodeModelGenerator
     /// <summary>
     /// Customize the generation output for Azure client SDK.
     /// </summary>
-    public override void Configure()
+    protected override void Configure()
     {
         base.Configure();
         // Include Azure.Core
@@ -51,12 +50,4 @@ public class AzureClientGenerator : ScmCodeModelGenerator
         AddSharedSourceDirectory(sharedSourceDirectory);
         AddVisitor(new NamespaceVisitor());
     }
-
-    /// <summary>
-    /// Customize the license string for Azure client SDK.
-    /// </summary>
-    public override string LicenseString => """
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-""";
 }

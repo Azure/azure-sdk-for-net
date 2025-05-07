@@ -82,18 +82,26 @@ namespace Azure.Storage.DataMovement.Files.Shares
             IDictionary<string, string> metadata = _options?.GetFileMetadata(properties?.RawProperties);
             string filePermission = _options?.GetFilePermission(properties?.RawProperties);
             FileSmbProperties smbProperties = _options?.GetFileSmbProperties(properties, _destinationPermissionKey);
+            FilePosixProperties posixProperties = _options?.GetFilePosixProperties(properties);
+
             // if transfer is not empty and File Attribute contains ReadOnly, we should not set it before creating the file.
             if ((properties == null || properties.ResourceLength > 0) && IsReadOnlySet(smbProperties.FileAttributes))
             {
                 smbProperties.FileAttributes = default;
             }
 
+            ShareFileCreateOptions options = new ShareFileCreateOptions()
+            {
+                HttpHeaders = httpHeaders,
+                Metadata = metadata,
+                FilePermission = new() { Permission = filePermission },
+                SmbProperties = smbProperties,
+                PosixProperties = posixProperties
+            };
+
             await ShareFileClient.CreateAsync(
                     maxSize: maxSize,
-                    httpHeaders: httpHeaders,
-                    metadata: metadata,
-                    smbProperties: smbProperties,
-                    filePermission: filePermission,
+                    options: options,
                     conditions: _options?.DestinationConditions,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
         }
@@ -112,6 +120,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
             StorageResourceItemProperties sourceProperties = completeTransferOptions?.SourceProperties;
             FileSmbProperties smbProperties = _options?.GetFileSmbProperties(sourceProperties);
+            FilePosixProperties posixProperties = _options?.GetFilePosixProperties(sourceProperties);
             // Call Set Properties
             // if transfer is not empty and original File Attribute contains ReadOnly
             // or if FileChangedOn is to be preserved or manually set
@@ -123,6 +132,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 {
                     HttpHeaders = httpHeaders,
                     SmbProperties = smbProperties,
+                    PosixProperties = posixProperties
                 },
                 cancellationToken: cancellationToken).ConfigureAwait(false);
             }
@@ -242,6 +252,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 ResourceProperties = response.Value.ToStorageResourceItemProperties();
             }
+            ResourceProperties.Uri = Uri;
             return ResourceProperties;
         }
 

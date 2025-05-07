@@ -90,6 +90,7 @@
  "clients": [
   {
    "$id": "12",
+   "kind": "client",
    "name": "RecursiveClient",
    "namespace": "Type.Model.Inheritance.Recursive",
    "doc": "Illustrates inheritance recursion",
@@ -261,7 +262,8 @@
     }
    ],
    "decorators": [],
-   "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive"
+   "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive",
+   "apiVersions": []
   }
  ]
 }

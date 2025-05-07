@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 
@@ -158,6 +159,56 @@ public class ClientCacheTests
         Assert.IsNotNull(clients, "The _clients field is null.");
         Assert.IsTrue(clients!.ContainsKey((typeof(object), "client1")), "Client1 should be in the cache.");
         Assert.IsTrue(clients!.ContainsKey((typeof(object), "client2")), "Client2 should be in the cache.");
+    }
+
+    [Test]
+    public void ClientCacheShouldRespectMaxCacheSize()
+    {
+        var cache = new ClientCache(maxSize: 3);
+
+        // Insert 3 clients
+        cache.GetClient(() => new DummyClient("A"), "A");
+        cache.GetClient(() => new DummyClient("B"), "B");
+        cache.GetClient(() => new DummyClient("C"), "C");
+
+        // Access client A to mark it as most recently used
+        cache.GetClient<DummyClient>(() => throw new Exception("Should not recreate A"), "A");
+
+        // Add a new client D to trigger eviction
+        cache.GetClient(() => new DummyClient("D"), "D");
+
+        // A should still be in the cache (was recently used), so this should not call the factory
+        var wasRecreated = false;
+        cache.GetClient(() =>
+        {
+            wasRecreated = true;
+            return new DummyClient("A");
+        }, "A");
+
+        Assert.False(wasRecreated, "Client A was unexpectedly recreated");
+
+        var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
+        var clients = clientsField?.GetValue(cache) as Dictionary<(Type, string), ClientEntry>;
+
+        Assert.IsNotNull(clients, "_clients dictionary should not be null");
+
+        var keys = clients!.Keys.Select(k => k.Item2).ToList();
+
+        // Verify that the cache contains the expected clients
+        CollectionAssert.AreEquivalent(new[] { "A", "C", "D" }, keys, "Cache should contain A, C, and D");
+
+        // Ensure B was evicted as it was the least recently used
+        Assert.IsFalse(keys.Contains("B"), "Client B should have been evicted.");
+    }
+}
+
+internal class DummyClient
+{
+    public string Id { get; }
+
+    public DummyClient(string id)
+    {
+        Id = id;
     }
 }
 

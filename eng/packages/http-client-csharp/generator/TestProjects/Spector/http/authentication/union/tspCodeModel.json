@@ -7,6 +7,7 @@
  "clients": [
   {
    "$id": "2",
+   "kind": "client",
    "name": "UnionClient",
    "namespace": "Authentication.Union",
    "doc": "Illustrates clients generated with ApiKey and OAuth2 authentication.",
@@ -97,7 +98,8 @@
     }
    ],
    "decorators": [],
-   "crossLanguageDefinitionId": "Authentication.Union"
+   "crossLanguageDefinitionId": "Authentication.Union",
+   "apiVersions": []
   }
  ],
  "auth": {
