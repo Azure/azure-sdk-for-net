@@ -717,7 +717,7 @@ namespace Azure.Search.Documents
         /// </remarks>
         public virtual Response<T> GetDocument<T>(
             string key,
-            string querySourceAuthorization = null,
+            string querySourceAuthorization,
             GetDocumentOptions options = null,
             CancellationToken cancellationToken = default) =>
             GetDocumentInternal<T>(
@@ -936,7 +936,7 @@ namespace Azure.Search.Documents
         /// </remarks>
         public virtual async Task<Response<T>> GetDocumentAsync<T>(
             string key,
-            string querySourceAuthorization = null,
+            string querySourceAuthorization,
             GetDocumentOptions options = null,
             CancellationToken cancellationToken = default) =>
             await GetDocumentInternal<T>(
@@ -1161,7 +1161,7 @@ namespace Azure.Search.Documents
         /// </remarks>
         public virtual Response<SearchResults<T>> Search<T>(
             string searchText,
-            string querySourceAuthorization = null,
+            string querySourceAuthorization,
             SearchOptions options = null,
             CancellationToken cancellationToken = default) =>
             SearchInternal<T>(
@@ -1224,7 +1224,7 @@ namespace Azure.Search.Documents
         /// </remarks>
         public async virtual Task<Response<SearchResults<T>>> SearchAsync<T>(
             string searchText,
-            string querySourceAuthorization = null,
+            string querySourceAuthorization,
             SearchOptions options = null,
             CancellationToken cancellationToken = default) =>
             await SearchInternal<T>(
