@@ -135,7 +135,7 @@ namespace Azure.Storage.DataMovement
             _checkpointer = checkpointer;
             _generateTransferId = generateTransferId ?? (() => Guid.NewGuid().ToString());
 
-            ThroughputMonitor ThroughputMonitor = new();
+            ThroughputMonitor = new();
             ConfigureProcessorCallbacks();
         }
 
