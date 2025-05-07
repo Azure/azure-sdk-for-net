@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class UsageName : IUtf8JsonSerializable, IJsonModel<UsageName>
+    public partial class NetAppUsageName : IUtf8JsonSerializable, IJsonModel<NetAppUsageName>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UsageName>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppUsageName>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<UsageName>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetAppUsageName>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UsageName>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppUsageName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UsageName)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppUsageName)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Value))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        UsageName IJsonModel<UsageName>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetAppUsageName IJsonModel<NetAppUsageName>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UsageName>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppUsageName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UsageName)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppUsageName)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUsageName(document.RootElement, options);
+            return DeserializeNetAppUsageName(document.RootElement, options);
         }
 
-        internal static UsageName DeserializeUsageName(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetAppUsageName DeserializeNetAppUsageName(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -103,38 +103,38 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UsageName(value, localizedValue, serializedAdditionalRawData);
+            return new NetAppUsageName(value, localizedValue, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<UsageName>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetAppUsageName>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UsageName>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppUsageName>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UsageName)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppUsageName)} does not support writing '{options.Format}' format.");
             }
         }
 
-        UsageName IPersistableModel<UsageName>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetAppUsageName IPersistableModel<NetAppUsageName>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UsageName>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppUsageName>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeUsageName(document.RootElement, options);
+                        return DeserializeNetAppUsageName(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UsageName)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppUsageName)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<UsageName>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetAppUsageName>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

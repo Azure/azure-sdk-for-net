@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             string id = default;
-            UsageName name = default;
+            NetAppUsageName name = default;
             int? currentValue = default;
             int? limit = default;
             string unit = default;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    name = UsageName.DeserializeUsageName(property.Value, options);
+                    name = NetAppUsageName.DeserializeNetAppUsageName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

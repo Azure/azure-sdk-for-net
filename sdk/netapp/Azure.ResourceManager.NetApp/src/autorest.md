@@ -257,6 +257,7 @@ rename-mapping:
   QuotaReport: NetAppVolumeQuotaReport
   GetKeyVaultStatusResponse: NetAppKeyVaultStatusResult
   UsageResult : NetAppUsageResult
+  UsageName: NetAppUsageName
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties

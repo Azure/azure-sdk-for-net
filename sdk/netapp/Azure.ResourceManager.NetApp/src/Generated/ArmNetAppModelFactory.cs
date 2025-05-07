@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="limit"> The limit of the usage. </param>
         /// <param name="unit"> The unit of the usage. </param>
         /// <returns> A new <see cref="Models.NetAppUsageResult"/> instance for mocking. </returns>
-        public static NetAppUsageResult NetAppUsageResult(string id = null, UsageName name = null, int? currentValue = null, int? limit = null, string unit = null)
+        public static NetAppUsageResult NetAppUsageResult(string id = null, NetAppUsageName name = null, int? currentValue = null, int? limit = null, string unit = null)
         {
             return new NetAppUsageResult(
                 id,
@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.NetApp.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.UsageName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppUsageName"/>. </summary>
         /// <param name="value"> The name of the usage. </param>
         /// <param name="localizedValue"> The localized name of the usage. </param>
-        /// <returns> A new <see cref="Models.UsageName"/> instance for mocking. </returns>
-        public static UsageName UsageName(string value = null, string localizedValue = null)
+        /// <returns> A new <see cref="Models.NetAppUsageName"/> instance for mocking. </returns>
+        public static NetAppUsageName NetAppUsageName(string value = null, string localizedValue = null)
         {
-            return new UsageName(value, localizedValue, serializedAdditionalRawData: null);
+            return new NetAppUsageName(value, localizedValue, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppSubscriptionQuotaItem"/>. </summary>

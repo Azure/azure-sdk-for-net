@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="limit"> The limit of the usage. </param>
         /// <param name="unit"> The unit of the usage. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppUsageResult(string id, UsageName name, int? currentValue, int? limit, string unit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppUsageResult(string id, NetAppUsageName name, int? currentValue, int? limit, string unit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> The id of the usage. </summary>
         public string Id { get; }
         /// <summary> The name of the usage. </summary>
-        public UsageName Name { get; }
+        public NetAppUsageName Name { get; }
         /// <summary> The current usage value for the subscription. </summary>
         public int? CurrentValue { get; }
         /// <summary> The limit of the usage. </summary>
