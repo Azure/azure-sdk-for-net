@@ -10,6 +10,13 @@
 
 ### Other Changes
 
+* Changed `AzureMonitorLogExporter` to be internal to match the other Exporters (Trace and Metric).
+  ([#49849](https://github.com/Azure/azure-sdk-for-net/pull/49849))
+
+* Update OpenTelemetry dependencies
+  ([#49861](https://github.com/Azure/azure-sdk-for-net/pull/49861))
+  - OpenTelemetry 1.12.0
+
 ## 1.4.0-beta.3 (2025-04-01)
 
 ### Features Added
