@@ -154,8 +154,14 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageResourceContainer destinationContainer = default,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
+            // Suffix the slash when searching if there's a prefix specified,
+            // to only list blobs in the specified virtual directory.
+            string fullPrefix = string.IsNullOrEmpty(DirectoryPrefix) ?
+                "" :
+                string.Concat(DirectoryPrefix, Constants.PathBackSlashDelimiter);
+
             Queue<string> prefixes = new();
-            prefixes.Enqueue(DirectoryPrefix); // Start with the initial prefix
+            prefixes.Enqueue(fullPrefix); // Start with the initial prefix
 
             while (prefixes.Count > 0)
             {
@@ -180,7 +186,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     else if (blobHierarchyItem.IsPrefix)
                     {
                         // Return the blob virtual directory as a StorageResourceContainer
-                        yield return GetChildStorageResourceContainer(blobHierarchyItem.Prefix);
+                        yield return GetChildStorageResourceContainer(blobHierarchyItem.Prefix.Substring(fullPrefix.Length));
                         // Enqueue the prefix for further traversal
                         prefixes.Enqueue(blobHierarchyItem.Prefix);
                     }
