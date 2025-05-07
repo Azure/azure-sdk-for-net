@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net.Http.Headers;
 
@@ -10,7 +11,11 @@ namespace Azure.Identity
 {
     internal class EnvironmentVariables
     {
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This credential is deprecated because it doesn't support multifactor authentication (MFA). See https://aka.ms/azsdk/identity/mfa for details about MFA enforcement for Microsoft Entra ID and migration guidance.")]
         public static string Username => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("AZURE_USERNAME"));
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This credential is deprecated because it doesn't support multifactor authentication (MFA). See https://aka.ms/azsdk/identity/mfa for details about MFA enforcement for Microsoft Entra ID and migration guidance.")]
         public static string Password => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("AZURE_PASSWORD"));
         public static string TenantId => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("AZURE_TENANT_ID"));
         public static List<string> AdditionallyAllowedTenants => (Environment.GetEnvironmentVariable("AZURE_ADDITIONALLY_ALLOWED_TENANTS") ?? string.Empty).Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries).ToList();

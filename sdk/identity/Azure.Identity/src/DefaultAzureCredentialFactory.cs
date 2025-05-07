@@ -169,9 +169,11 @@ namespace Azure.Identity
 
             options.TenantId = Options.SharedTokenCacheTenantId;
 
+#pragma warning disable CS0618 // Type or member is obsolete
             options.Username = Options.SharedTokenCacheUsername;
 
             return new SharedTokenCacheCredential(Options.SharedTokenCacheTenantId, Options.SharedTokenCacheUsername, options, Pipeline);
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         public virtual TokenCredential CreateInteractiveBrowserCredential()
