@@ -367,7 +367,7 @@ rename-mapping:
   TrustScope: ServerTrustGroupPropertiesTrustScopesItem
   GeoBackupPolicy.properties.state: GeoBackupPolicyState
   DistributedAvailabilityGroup: SqlDistributedAvailabilityGroup
-#   RecommendedAction.properties.details: AdditionalDetails
+  RecommendedAction.properties.details: AdditionalDetails
   ManagedDatabase.properties.crossSubscriptionSourceDatabaseId: -|arm-id
   ManagedDatabase.properties.crossSubscriptionRestorableDroppedDatabaseId: -|arm-id
   ManagedDatabaseUpdate.properties.crossSubscriptionSourceDatabaseId: -|arm-id
@@ -716,4 +716,15 @@ directive:
               "type": "string",
               "format": "date-time",
               "description": "The next reset time for the metric (ISO8601 format)."
+            };
+    - from: swagger-document
+      where: $.definitions.RecommendedActionProperties.properties
+      transform: >
+          $['details'] = {
+          "description": "Gets additional details specific to this recommended action.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "readOnly": true
             };
