@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
         }
 
         [RecordedTest]
-        public async Task TestCreateClusterWithWASBMsi()
+        public async Task TestCreateClusterWithStorageWASBMsi()
         {
             string clusterName = "hdi-wasbmsi";
             _storageAccountName = "yk01wasb666666666666";
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
         }
 
         [RecordedTest]
-        public async Task TestCreateClusterWithADLSGen2Msi()
+        public async Task TestCreateClusterWithStorageADLSGen2Msi()
         {
             string clusterName = "hdi-adlsgen2";
             _storageAccountName = "ykadlsgen2storage1";
