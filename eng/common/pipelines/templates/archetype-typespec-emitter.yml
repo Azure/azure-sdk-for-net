@@ -241,6 +241,11 @@ extends:
               Paths:
               - "/*"
               - "!SessionRecords"
+          
+          - task: UseNode@1
+            displayName: 'Install Node.js'
+            inputs:
+              version: '22.x'
 
           - download: current
             displayName: Download pipeline artifacts
@@ -312,6 +317,11 @@ extends:
               Paths:
               - "/*"
               - "!SessionRecords"
+
+          - task: UseNode@1
+            displayName: 'Install Node.js'
+            inputs:
+              version: '22.x'
 
           - download: current
             displayName: Download pipeline artifacts

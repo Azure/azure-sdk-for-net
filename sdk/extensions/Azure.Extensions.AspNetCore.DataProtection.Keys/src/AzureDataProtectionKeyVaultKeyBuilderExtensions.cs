@@ -97,6 +97,22 @@ namespace Microsoft.AspNetCore.DataProtection
             Argument.AssertNotNull(tokenCredentialFactory, nameof(tokenCredentialFactory));
             Argument.AssertNotNullOrEmpty(keyIdentifier, nameof(keyIdentifier));
 
+            return builder.ProtectKeysWithAzureKeyVault(_ => keyIdentifier, tokenCredentialFactory);
+        }
+
+        /// <summary>
+        /// Configures the data protection system to protect keys with specified key in Azure Key Vault.
+        /// </summary>
+        /// <param name="builder">The builder instance to modify.</param>
+        /// <param name="keyIdentifierFactory">The factory delgate to creat the Azure Key Vault key identifier used for key encryption.</param>
+        /// <param name="tokenCredentialFactory">The factory delegate to create the <see cref="TokenCredential"/> to use for authenticating Key Vault access.</param>
+        /// <returns>The value <paramref name="builder"/>.</returns>
+        public static IDataProtectionBuilder ProtectKeysWithAzureKeyVault(this IDataProtectionBuilder builder, Func<IServiceProvider, string> keyIdentifierFactory, Func<IServiceProvider, TokenCredential> tokenCredentialFactory)
+        {
+            Argument.AssertNotNull(builder, nameof(builder));
+            Argument.AssertNotNull(tokenCredentialFactory, nameof(tokenCredentialFactory));
+            Argument.AssertNotNull(keyIdentifierFactory, nameof(keyIdentifierFactory));
+
             builder.Services.AddSingleton<IActivator, DecryptorTypeForwardingActivator>();
 
             builder.Services.AddSingleton<IKeyEncryptionKeyResolver>(sp =>
@@ -108,7 +124,7 @@ namespace Microsoft.AspNetCore.DataProtection
             builder.Services.AddSingleton(sp =>
             {
                 var keyResolver = sp.GetRequiredService<IKeyEncryptionKeyResolver>();
-                return new AzureKeyVaultXmlEncryptor(keyResolver, keyIdentifier);
+                return new AzureKeyVaultXmlEncryptor(keyResolver, keyIdentifierFactory(sp));
             });
 
             builder.Services.AddSingleton<IConfigureOptions<KeyManagementOptions>, ConfigureKeyManagementKeyVaultEncryptorClientOptions>();

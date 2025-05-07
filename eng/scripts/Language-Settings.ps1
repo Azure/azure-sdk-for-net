@@ -11,7 +11,8 @@ $PackageRepositoryUri = "https://www.nuget.org/packages"
 
 $DependencyCalculationPackages = @(
   "Azure.Core",
-  "Azure.ResourceManager"
+  "Azure.ResourceManager",
+  "System.ClientModel"
 )
 
 function processTestProject($projPath) {
@@ -41,15 +42,15 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   # Save-Package-Properties.ps1
   $shouldAddDevVersion = Get-Variable -Name 'addDevVersion' -ValueOnly -ErrorAction 'Ignore'
   $ServiceProj = Join-Path -Path $EngDir -ChildPath "service.proj"
-  Write-Host "Get-AllPackageInfoFromRepo::Executing msbuild"
-  Write-Host "dotnet msbuild /nologo /t:GetPackageInfo $ServiceProj /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion"
+  Write-Host "dotnet msbuild /nologo /t:GetPackageInfo ""$ServiceProj"" /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion -tl:off"
 
   $msbuildOutput = dotnet msbuild `
     /nologo `
     /t:GetPackageInfo `
-    $ServiceProj `
+    "$ServiceProj" `
     /p:ServiceDirectory=$serviceDirectory `
-    /p:AddDevVersion=$shouldAddDevVersion
+    /p:AddDevVersion=$shouldAddDevVersion `
+    -tl:off
 
   foreach ($projectOutput in $msbuildOutput)
   {
@@ -58,7 +59,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       continue
     }
 
-    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder = $projectOutput.Split(' ',[System.StringSplitOptions]::RemoveEmptyEntries).Trim("'")
+    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder = $projectOutput.Split("' '", [System.StringSplitOptions]::RemoveEmptyEntries).Trim("' ")
     if(!(Test-Path $pkgPath)) {
       Write-Host "Parsed package path `$pkgPath` does not exist so skipping the package line '$projectOutput'."
       continue
