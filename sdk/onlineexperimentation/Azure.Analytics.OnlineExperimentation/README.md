@@ -64,9 +64,8 @@ All client instances are thread-safe. It's recommended to reuse client instances
 
 Explore common scenarios using the [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/onlineexperimentation/Azure.Analytics.OnlineExperimentation/samples):
 
-- [Creating Experiment Metrics](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/onlineexperimentation/Azure.Analytics.OnlineExperimentation/samples/Sample1_CreateExperimentMetrics.md)
-- [Updating Experiment Metrics](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/onlineexperimentation/Azure.Analytics.OnlineExperimentation/samples/Sample2_UpdateExperimentMetrics.md)
-- [Validating and Deleting Metrics](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/onlineexperimentation/Azure.Analytics.OnlineExperimentation/samples/Sample3_ValidateAndDeleteMetrics.md)
+- [Creating Experiment Metrics](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/onlineexperimentation/Azure.Analytics.OnlineExperimentation/samples/Sample2_CreateExperimentMetrics.md)
+- [Updating Experiment Metrics](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/onlineexperimentation/Azure.Analytics.OnlineExperimentation/samples/Sample5_UpdateExperimentMetrics.md)
 
 ## Troubleshooting
 
