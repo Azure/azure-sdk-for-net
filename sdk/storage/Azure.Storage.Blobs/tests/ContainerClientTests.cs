@@ -1806,7 +1806,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(container.GetBlobLeaseClient(id)).AcquireAsync(duration: duration),
-                e => StringAssert.Contains("InvalidHeaderValue", e.ErrorCode));
+                e => StringAssert.Contains("InvalidHeaderValueErrorCode", e.ErrorCode));
         }
 
         [RecordedTest]
@@ -4478,8 +4478,8 @@ namespace Azure.Storage.Blobs.Test
                 containerClient.CreateAsync(),
                 e =>
                 {
-                    Assert.AreEqual("InvalidHeaderValue", e.ErrorCode);
-                    Assert.IsTrue(e.Message.Contains("The provided x-ms-version header is not enabled on this storage account.  Please see https://learn.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services for additional information."));
+                    Assert.AreEqual(Constants.ErrorCodes.InvalidHeaderValue, e.ErrorCode);
+                    Assert.IsTrue(e.Message.Contains(Constants.Errors.InvalidVersionHeaderMessage));
                 });
         }
 

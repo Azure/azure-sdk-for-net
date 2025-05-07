@@ -132,6 +132,14 @@ namespace Azure.Storage
         public const string DefaultScope = "/.default";
 
         /// <summary>
+        /// Error string constant values.
+        /// </summary>
+        internal static class Errors
+        {
+            public const string InvalidVersionHeaderMessage = "The provided service version is not enabled on this storage account.  Please see https://learn.microsoft.com/rest/api/storageservices/versioning-for-the-azure-storage-services for additional information.\n";
+        }
+
+        /// <summary>
         /// Storage Connection String constant values.
         /// </summary>
         internal static class ConnectionStrings
@@ -210,6 +218,7 @@ namespace Azure.Storage
             public const string ServerBusy = "ServerBusy";
             public const string ContainerAlreadyExists = "ContainerAlreadyExists";
             public const string BlobAlreadyExists = "BlobAlreadyExists";
+            public const string InvalidHeaderValue = "InvalidHeaderValue";
         }
 
         /// <summary>

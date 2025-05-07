@@ -47,9 +47,11 @@ namespace Azure.Core.Pipeline
                             }
                         }
 
-                        if (headerName != null && headerName == Constants.HeaderNames.Version)
+                        if (errorCode == Constants.ErrorCodes.InvalidHeaderValue
+                            && headerName != null
+                            && headerName == Constants.HeaderNames.Version)
                         {
-                            error = new ResponseError(errorCode, "The provided x-ms-version header is not enabled on this storage account.  Please see https://learn.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services for additional information.\n");
+                            error = new ResponseError(errorCode, Constants.Errors.InvalidVersionHeaderMessage);
                         }
                         else
                         {
