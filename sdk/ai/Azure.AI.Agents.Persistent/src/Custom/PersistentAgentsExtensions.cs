@@ -5,6 +5,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Runtime.Serialization;
 using Azure.Core;
 
 namespace Azure.AI.Agents.Persistent
@@ -33,9 +34,9 @@ namespace Azure.AI.Agents.Persistent
             {
                 throw new InvalidOperationException("Invalid URI.");
             }
-            return connection.CredentialKind == CredentialKind.TokenCredential
-            ? new PersistentAgentsAdministration(uri, connection.Credential as TokenCredential)
-            : new PersistentAgentsAdministration(uri, new AzureKeyCredential((string)connection.Credential!));
+            if (connection.Credential is TokenCredential cred)
+                return new PersistentAgentsAdministration(uri, cred);
+            throw new InvalidOperationException($"PersistentAgentsAdministration does not support {connection.CredentialKind}.");
         }
 
         private record PersistentAgentsAdministrationKey();

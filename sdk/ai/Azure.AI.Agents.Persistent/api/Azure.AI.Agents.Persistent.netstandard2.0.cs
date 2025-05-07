@@ -1106,12 +1106,8 @@ namespace Azure.AI.Agents.Persistent
     public partial class PersistentAgentsAdministration
     {
         protected PersistentAgentsAdministration() { }
-        public PersistentAgentsAdministration(string endpoint, Azure.AzureKeyCredential credential) { }
-        public PersistentAgentsAdministration(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions options) { }
         public PersistentAgentsAdministration(string endpoint, Azure.Core.TokenCredential credential) { }
         public PersistentAgentsAdministration(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions options) { }
-        public PersistentAgentsAdministration(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public PersistentAgentsAdministration(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions options) { }
         public PersistentAgentsAdministration(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public PersistentAgentsAdministration(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -1144,8 +1140,6 @@ namespace Azure.AI.Agents.Persistent
     public partial class PersistentAgentsClient
     {
         protected PersistentAgentsClient() { }
-        public PersistentAgentsClient(string endpoint, Azure.AzureKeyCredential credential) { }
-        public PersistentAgentsClient(string endpoint, Azure.AzureKeyCredential credential, Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions options) { }
         public PersistentAgentsClient(string endpoint, Azure.Core.TokenCredential credential) { }
         public PersistentAgentsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions options) { }
         public Azure.AI.Agents.Persistent.PersistentAgentsAdministration Administration { get { throw null; } }
@@ -3123,7 +3117,6 @@ namespace Microsoft.Extensions.Azure
     public static partial class AIAgentsPersistentClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Agents.Persistent.PersistentAgentsAdministration, Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions> AddPersistentAgentsAdministration<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Agents.Persistent.PersistentAgentsAdministration, Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions> AddPersistentAgentsAdministration<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Agents.Persistent.PersistentAgentsAdministration, Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions> AddPersistentAgentsAdministration<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }
