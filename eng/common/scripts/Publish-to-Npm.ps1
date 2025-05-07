@@ -20,7 +20,7 @@ function replaceText($oldText,$newText,$filePath){
 
 function updateContents($dirName, $version){
     foreach ($md in $(dir $dirName -r -i *.md)){
-        replaceText "https://github.com/Azure/azure-sdk-for-js/tree/[^/]*" "" $md.Fullname
+        replaceText "https://github.com/[^/]*/[^/]*/tree/[^/]*" "" $md.Fullname
     }
     foreach ($file in $(dir $dirName -r -i *.js,*.ts,*.json)){
         replaceText $version "VERSION_REMOVED" $file.Fullname
