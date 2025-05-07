@@ -47,9 +47,10 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="capabilities"> Capabilities of a phone number. </param>
         /// <param name="cost"> The incurred cost for a single phone number. </param>
         /// <param name="searchExpiresOn"> The date that this search result expires and phone numbers are no longer on hold. A search result expires in less than 15min, e.g. 2020-11-19T16:31:49.048Z. </param>
+        /// <param name="isAgreementToNotResellRequired"> Indicates if do not resell agreement is required. If true, the phone numbers cannot be acquired unless the customer provides explicit agreement to not resell them. </param>
         /// <param name="errorCode"> The error code of the search. </param>
         /// <param name="error"> Mapping Error Messages to Codes. </param>
-        internal PhoneNumberSearchResult(string searchId, IReadOnlyList<string> phoneNumbers, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCapabilities capabilities, PhoneNumberCost cost, DateTimeOffset searchExpiresOn, int? errorCode, PhoneNumberSearchResultError? error)
+        internal PhoneNumberSearchResult(string searchId, IReadOnlyList<string> phoneNumbers, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType assignmentType, PhoneNumberCapabilities capabilities, PhoneNumberCost cost, DateTimeOffset searchExpiresOn, bool? isAgreementToNotResellRequired, int? errorCode, PhoneNumberSearchResultError? error)
         {
             SearchId = searchId;
             PhoneNumbers = phoneNumbers;
@@ -58,6 +59,7 @@ namespace Azure.Communication.PhoneNumbers
             Capabilities = capabilities;
             Cost = cost;
             SearchExpiresOn = searchExpiresOn;
+            IsAgreementToNotResellRequired = isAgreementToNotResellRequired;
             ErrorCode = errorCode;
             Error = error;
         }
@@ -74,6 +76,8 @@ namespace Azure.Communication.PhoneNumbers
         public PhoneNumberCapabilities Capabilities { get; }
         /// <summary> The incurred cost for a single phone number. </summary>
         public PhoneNumberCost Cost { get; }
+        /// <summary> Indicates if do not resell agreement is required. If true, the phone numbers cannot be acquired unless the customer provides explicit agreement to not resell them. </summary>
+        public bool? IsAgreementToNotResellRequired { get; }
         /// <summary> The error code of the search. </summary>
         public int? ErrorCode { get; }
         /// <summary> Mapping Error Messages to Codes. </summary>

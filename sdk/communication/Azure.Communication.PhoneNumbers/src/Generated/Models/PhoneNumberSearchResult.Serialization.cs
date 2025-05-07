@@ -26,6 +26,7 @@ namespace Azure.Communication.PhoneNumbers
             PhoneNumberCapabilities capabilities = default;
             PhoneNumberCost cost = default;
             DateTimeOffset searchExpiresBy = default;
+            bool? isAgreementToNotResellRequired = default;
             int? errorCode = default;
             PhoneNumberSearchResultError? error = default;
             foreach (var property in element.EnumerateObject())
@@ -70,6 +71,15 @@ namespace Azure.Communication.PhoneNumbers
                     searchExpiresBy = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("isAgreementToNotResellRequired"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isAgreementToNotResellRequired = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("errorCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -97,6 +107,7 @@ namespace Azure.Communication.PhoneNumbers
                 capabilities,
                 cost,
                 searchExpiresBy,
+                isAgreementToNotResellRequired,
                 errorCode,
                 error);
         }

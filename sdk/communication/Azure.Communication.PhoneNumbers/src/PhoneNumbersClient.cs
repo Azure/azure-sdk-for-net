@@ -2,15 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using Azure.Communication.Pipeline;
+using Azure.Communication.PhoneNumbers.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -245,7 +242,7 @@ namespace Azure.Communication.PhoneNumbers
             scope.Start();
             try
             {
-                var originalResponse = await InternalClient.StartPurchasePhoneNumbersAsync(searchId, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await InternalClient.StartPurchasePhoneNumbersAsync(searchId, false, cancellationToken).ConfigureAwait(false);
                 return new PurchasePhoneNumbersOperation(originalResponse);
             }
             catch (Exception e)
@@ -264,7 +261,47 @@ namespace Azure.Communication.PhoneNumbers
             scope.Start();
             try
             {
-                var originalResponse = InternalClient.StartPurchasePhoneNumbers(searchId, cancellationToken);
+                var originalResponse = InternalClient.StartPurchasePhoneNumbers(searchId, false, cancellationToken);
+                return new PurchasePhoneNumbersOperation(originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Purchases phone numbers. </summary>
+        /// <param name="searchId"> The search id. </param>
+        /// <param name="agreeToNotResell"> The user-provided agreement to not resell the numbers purchased by this operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<PurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId, bool agreeToNotResell, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartPurchasePhoneNumbers)}");
+            scope.Start();
+            try
+            {
+                var originalResponse = await InternalClient.StartPurchasePhoneNumbersAsync(searchId, agreeToNotResell, cancellationToken).ConfigureAwait(false);
+                return new PurchasePhoneNumbersOperation(originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Purchases phone numbers. </summary>
+        /// <param name="searchId"> The search id. </param>
+        /// <param name="agreeToNotResell"> The user-provided agreement to not resell the numbers purchased by this operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual PurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId, bool agreeToNotResell, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartPurchasePhoneNumbers)}");
+            scope.Start();
+            try
+            {
+                var originalResponse = InternalClient.StartPurchasePhoneNumbers(searchId, agreeToNotResell, cancellationToken);
                 return new PurchasePhoneNumbersOperation(originalResponse);
             }
             catch (Exception e)
@@ -754,6 +791,330 @@ namespace Azure.Communication.PhoneNumbers
             {
                 var response = InternalClient.OperatorInformationSearch(phoneNumbers, options, cancellationToken);
                 return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Browse available phone numbers.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<PhoneNumbersBrowseResult>> BrowseAvailableNumbersAsync(PhoneNumbersBrowseOptions options, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(BrowseAvailableNumbers)}");
+            scope.Start();
+            try
+            {
+                var response = await InternalClient.BrowseAvailableNumbersAsync(options.CountryCode, options, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Browse available phone numbers.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<PhoneNumbersBrowseResult> BrowseAvailableNumbers(PhoneNumbersBrowseOptions options, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(BrowseAvailableNumbers)}");
+            scope.Start();
+            try
+            {
+                var response =  InternalClient.BrowseAvailableNumbers(options.CountryCode, options, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get phone numbers reservation.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<PhoneNumbersReservation>> GetReservationAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetReservation)}");
+            scope.Start();
+            try
+            {
+                return await InternalClient.GetReservationAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get phone numbers reservation.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<PhoneNumbersReservation> GetReservation(Guid id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetReservation)}");
+            scope.Start();
+            try
+            {
+                return InternalClient.GetReservation(id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the list of all phone numbers reservations.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual AsyncPageable<PhoneNumbersReservation> GetReservationsAsync(CancellationToken cancellationToken= default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetReservations)}");
+                scope.Start();
+                try
+                {
+                    return RestClient.CreateListReservationsRequest(pageSizeHint);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink)
+            {
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetReservations)}");
+                scope.Start();
+                try
+                {
+                    return RestClient.CreateListReservationsNextPageRequest(nextLink, pageSizeHint);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PhoneNumbersReservation.DeserializePhoneNumbersReservation, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListReservations", "reservations", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieves the list of all phone numbers reservations.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Pageable<PhoneNumbersReservation> GetReservations(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetReservations)}");
+                scope.Start();
+                try
+                {
+                    return RestClient.CreateListReservationsRequest(pageSizeHint);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink)
+            {
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetReservations)}");
+                scope.Start();
+                try
+                {
+                    return RestClient.CreateListReservationsNextPageRequest(nextLink, pageSizeHint);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PhoneNumbersReservation.DeserializePhoneNumbersReservation, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListReservations", "reservations", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Update a phone numbers reservation.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<PhoneNumbersReservation>> CreateOrUpdateReservationAsync(CreateOrUpdateReservationOptions options, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(CreateOrUpdateReservation)}");
+            scope.Start();
+            try
+            {
+                var numbersDictionary = new Dictionary<string, AvailablePhoneNumber>();
+                if (options.PhoneNumbersToAdd != null)
+                {
+                    foreach (var number in options.PhoneNumbersToAdd)
+                    {
+                        numbersDictionary[number.Id] = number;
+                    }
+                }
+                if (options.PhoneNumbersToRemove != null)
+                {
+                    foreach (var number in options.PhoneNumbersToRemove)
+                    {
+                        numbersDictionary[number] = null;
+                    }
+                }
+
+                return await InternalClient.CreateOrUpdateReservationAsync(options.ReservationId, numbersDictionary, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a phone numbers reservation.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<PhoneNumbersReservation> CreateOrUpdateReservation(CreateOrUpdateReservationOptions options, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(CreateOrUpdateReservation)}");
+            scope.Start();
+            try
+            {
+                var numbersDictionary = new Dictionary<string, AvailablePhoneNumber>();
+                if (options.PhoneNumbersToAdd != null)
+                {
+                    foreach (var number in options.PhoneNumbersToAdd)
+                    {
+                        numbersDictionary[number.Id] = number;
+                    }
+                }
+                if (options.PhoneNumbersToRemove != null)
+                {
+                    foreach (var number in options.PhoneNumbersToRemove)
+                    {
+                        numbersDictionary[number] = null;
+                    }
+                }
+
+                return InternalClient.CreateOrUpdateReservation(options.ReservationId, numbersDictionary, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a phone numbers reservation.
+        /// </summary>
+        /// <param name="reservationId">The ID of an existing reservation to delete.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response> DeleteReservationAsync(Guid reservationId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(DeleteReservation)}");
+            scope.Start();
+            try
+            {
+                return await InternalClient.DeleteReservationAsync(reservationId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a phone numbers reservation.
+        /// </summary>
+        /// <param name="reservationId">The ID of an existing reservation to delete.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response DeleteReservation(Guid reservationId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(DeleteReservation)}");
+            scope.Start();
+            try
+            {
+                return InternalClient.DeleteReservation(reservationId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Start a phone numbers reservation purchase.
+        /// </summary>
+        /// <param name="reservationId"></param>
+        /// <param name="agreeToNotResell"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<PurchaseReservationOperation> StartPurchaseReservationAsync(Guid reservationId, bool agreeToNotResell = false, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartPurchaseReservation)}");
+            scope.Start();
+            try
+            {
+                var originalResponse = await InternalClient.StartPurchaseReservationAsync(reservationId, agreeToNotResell, cancellationToken).ConfigureAwait(false);
+                return new PurchaseReservationOperation(originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Start a phone numbers reservation purchase.
+        /// </summary>
+        /// <param name="reservationId"></param>
+        /// <param name="agreeToNotResell"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual PurchaseReservationOperation StartPurchaseReservation(Guid reservationId, bool agreeToNotResell = false, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartPurchaseReservation)}");
+            scope.Start();
+            try
+            {
+                var originalResponse = InternalClient.StartPurchaseReservation(reservationId, agreeToNotResell, cancellationToken);
+                return new PurchaseReservationOperation(originalResponse);
             }
             catch (Exception e)
             {
