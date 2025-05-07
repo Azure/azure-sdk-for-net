@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ContainerService
 
         ContainerServiceTrustedAccessRoleBindingData IJsonModel<ContainerServiceTrustedAccessRoleBindingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServiceTrustedAccessRoleBindingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContainerServiceTrustedAccessRoleBindingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ContainerServiceTrustedAccessRoleBindingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerServiceTrustedAccessRoleBindingData>(Data, options, AzureResourceManagerContainerServiceContext.Default);
 
-        ContainerServiceTrustedAccessRoleBindingData IPersistableModel<ContainerServiceTrustedAccessRoleBindingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerServiceTrustedAccessRoleBindingData>(data, options);
+        ContainerServiceTrustedAccessRoleBindingData IPersistableModel<ContainerServiceTrustedAccessRoleBindingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerServiceTrustedAccessRoleBindingData>(data, options, AzureResourceManagerContainerServiceContext.Default);
 
         string IPersistableModel<ContainerServiceTrustedAccessRoleBindingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerServiceTrustedAccessRoleBindingData>)Data).GetFormatFromOptions(options);
     }

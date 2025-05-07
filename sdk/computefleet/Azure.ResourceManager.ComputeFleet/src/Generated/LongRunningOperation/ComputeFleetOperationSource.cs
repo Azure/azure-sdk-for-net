@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ComputeFleet
 
         ComputeFleetResource IOperationSource<ComputeFleetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ComputeFleetData>(response.Content);
+            var data = ModelReaderWriter.Read<ComputeFleetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeFleetContext.Default);
             return new ComputeFleetResource(_client, data);
         }
 
         async ValueTask<ComputeFleetResource> IOperationSource<ComputeFleetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ComputeFleetData>(response.Content);
+            var data = ModelReaderWriter.Read<ComputeFleetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeFleetContext.Default);
             return await Task.FromResult(new ComputeFleetResource(_client, data)).ConfigureAwait(false);
         }
     }

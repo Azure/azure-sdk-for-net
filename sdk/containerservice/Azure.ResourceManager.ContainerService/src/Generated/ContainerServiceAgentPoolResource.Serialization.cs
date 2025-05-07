@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ContainerService
 
         ContainerServiceAgentPoolData IJsonModel<ContainerServiceAgentPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServiceAgentPoolData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContainerServiceAgentPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ContainerServiceAgentPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerServiceAgentPoolData>(Data, options, AzureResourceManagerContainerServiceContext.Default);
 
-        ContainerServiceAgentPoolData IPersistableModel<ContainerServiceAgentPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerServiceAgentPoolData>(data, options);
+        ContainerServiceAgentPoolData IPersistableModel<ContainerServiceAgentPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerServiceAgentPoolData>(data, options, AzureResourceManagerContainerServiceContext.Default);
 
         string IPersistableModel<ContainerServiceAgentPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerServiceAgentPoolData>)Data).GetFormatFromOptions(options);
     }

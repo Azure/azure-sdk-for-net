@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Communication.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCommunicationContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

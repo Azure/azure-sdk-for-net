@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.CosmosDB
 
         MongoDBDatabaseResource IOperationSource<MongoDBDatabaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MongoDBDatabaseData>(response.Content);
+            var data = ModelReaderWriter.Read<MongoDBDatabaseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
             return new MongoDBDatabaseResource(_client, data);
         }
 
         async ValueTask<MongoDBDatabaseResource> IOperationSource<MongoDBDatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MongoDBDatabaseData>(response.Content);
+            var data = ModelReaderWriter.Read<MongoDBDatabaseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
             return await Task.FromResult(new MongoDBDatabaseResource(_client, data)).ConfigureAwait(false);
         }
     }

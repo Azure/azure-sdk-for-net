@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CosmosDB
 
         CosmosDBAccountData IJsonModel<CosmosDBAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBAccountData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CosmosDBAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CosmosDBAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBAccountData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        CosmosDBAccountData IPersistableModel<CosmosDBAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBAccountData>(data, options);
+        CosmosDBAccountData IPersistableModel<CosmosDBAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBAccountData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
         string IPersistableModel<CosmosDBAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBAccountData>)Data).GetFormatFromOptions(options);
     }
