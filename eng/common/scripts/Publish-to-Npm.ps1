@@ -5,7 +5,6 @@ param (
   $additionalTag="",
   $registry,
   $npmToken,
-  $filterArg="",
   $basicDeployment=$false,
   $devopsFeed=$false,
   $skipDiff=$false,
@@ -92,15 +91,10 @@ $PSNativeCommandUseErrorActionPreference = $true
 
 try {
     $regAuth=$registry.replace("https:","")
-    $filterPackageList= $filterArg -split "," | % { return $_.trim() }
     $packageList = @()
     #We need to run the npm pack before we set NPM_TOKEN in npmrc so that the npmrc file is in default (empty) state
     foreach ($p in $(dir $pathToArtifacts -r -i *.tgz)) {
-        foreach($filterItem in $filterPackageList) {
-            if($p.BaseName.contains($filterItem)) {
-                $packageList += extractPackage $p
-            }
-        }
+        $packageList += extractPackage $p
     }
 
     $publishToNpm = $false
@@ -163,14 +157,12 @@ try {
         elseif ($addTag -and $publishToNpm) {
             $nameAndVersion = $p.Project.name + "@" + $p.Project.version
             if ($tag) {
-                Write-Host "Adding tag for package"
+                Write-Host "Adding tag '$tag'"
                 Write-Host "npm dist-tag add $nameAndVersion $tag"
                 npm dist-tag add $nameAndVersion $tag
             }
             if (![string]::IsNullOrWhitespace($additionalTag) -and ($additionalTag -ne $tag)) {
-                Write-Host "Tag: '$tag'"
-                Write-Host "Additional tag: '$additionalTag'"
-                Write-Host "Adding additional tag for package"
+                Write-Host "Adding tags '$tag' and '$additionalTag'"
                 Write-Host "npm dist-tag add $nameAndVersion $additionalTag"
                 npm dist-tag add $nameAndVersion $additionalTag
             }
