@@ -23,9 +23,6 @@ namespace Azure.AI.Agents.Persistent
     /// </summary>
     public partial class VectorStoreFileBatches
     {
-        private const string AuthorizationHeader = "Authorization";
-        private readonly AzureKeyCredential _keyCredential;
-        private const string AuthorizationApiKeyPrefix = "Bearer";
         private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
@@ -46,15 +43,13 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of VectorStoreFileBatches. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal VectorStoreFileBatches(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal VectorStoreFileBatches(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
-            _keyCredential = keyCredential;
             _tokenCredential = tokenCredential;
             _endpoint = endpoint;
             _apiVersion = apiVersion;

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure;
 using Azure.AI.Agents.Persistent;
 using Azure.Core.Extensions;
 
@@ -15,16 +14,6 @@ namespace Microsoft.Extensions.Azure
     /// <summary> Extension methods to add <see cref="PersistentAgentsAdministration"/> to client builder. </summary>
     public static partial class AIAgentsPersistentClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="PersistentAgentsAdministration"/> instance. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        public static IAzureClientBuilder<PersistentAgentsAdministration, PersistentAgentsAdministrationClientOptions> AddPersistentAgentsAdministration<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
-        where TBuilder : IAzureClientFactoryBuilder
-        {
-            return builder.RegisterClientFactory<PersistentAgentsAdministration, PersistentAgentsAdministrationClientOptions>((options) => new PersistentAgentsAdministration(endpoint, credential, options));
-        }
-
         /// <summary> Registers a <see cref="PersistentAgentsAdministration"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
