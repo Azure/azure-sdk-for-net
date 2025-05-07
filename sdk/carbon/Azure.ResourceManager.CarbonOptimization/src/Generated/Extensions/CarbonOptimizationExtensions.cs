@@ -23,70 +23,6 @@ namespace Azure.ResourceManager.CarbonOptimization
         }
 
         /// <summary>
-        /// API for Carbon Emissions Reports
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Carbon/carbonEmissionReports</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CarbonService_QueryCarbonEmissionReports</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCarbonOptimizationTenantResource.QueryCarbonEmissionReportsCarbonServices(QueryFilter,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="queryParameters"> Query parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="queryParameters"/> is null. </exception>
-        public static async Task<Response<CarbonEmissionDataListResult>> QueryCarbonEmissionReportsCarbonServicesAsync(this TenantResource tenantResource, QueryFilter queryParameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return await GetMockableCarbonOptimizationTenantResource(tenantResource).QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// API for Carbon Emissions Reports
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Carbon/carbonEmissionReports</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CarbonService_QueryCarbonEmissionReports</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCarbonOptimizationTenantResource.QueryCarbonEmissionReportsCarbonServices(QueryFilter,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="queryParameters"> Query parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="queryParameters"/> is null. </exception>
-        public static Response<CarbonEmissionDataListResult> QueryCarbonEmissionReportsCarbonServices(this TenantResource tenantResource, QueryFilter queryParameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableCarbonOptimizationTenantResource(tenantResource).QueryCarbonEmissionReportsCarbonServices(queryParameters, cancellationToken);
-        }
-
-        /// <summary>
         /// API for query carbon emission data available date range
         /// <list type="bullet">
         /// <item>
@@ -110,7 +46,7 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<CarbonEmissionDataAvailableDateRange>> QueryCarbonEmissionDataAvailableDateRangeCarbonServiceAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        public static async Task<Response<CarbonEmissionAvailableDateRange>> QueryCarbonEmissionDataAvailableDateRangeCarbonServiceAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -141,7 +77,7 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<CarbonEmissionDataAvailableDateRange> QueryCarbonEmissionDataAvailableDateRangeCarbonService(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        public static Response<CarbonEmissionAvailableDateRange> QueryCarbonEmissionDataAvailableDateRangeCarbonService(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

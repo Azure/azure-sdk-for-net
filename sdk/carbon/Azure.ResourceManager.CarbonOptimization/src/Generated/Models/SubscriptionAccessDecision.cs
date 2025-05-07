@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
     /// <summary> Access Decision for each Subscription. </summary>
-    public partial class SubscriptionAccessDecision
+    internal partial class SubscriptionAccessDecision
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="subscriptionId"> Id of Subscription. </param>
         /// <param name="decision"> Access decision to subscription. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        internal SubscriptionAccessDecision(string subscriptionId, AccessDecisionEnum decision)
+        internal SubscriptionAccessDecision(string subscriptionId, CarbonEmissionAccessDecision decision)
         {
             Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="decision"> Access decision to subscription. </param>
         /// <param name="denialReason"> The reason why access request got denied. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionAccessDecision(string subscriptionId, AccessDecisionEnum decision, string denialReason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SubscriptionAccessDecision(string subscriptionId, CarbonEmissionAccessDecision decision, string denialReason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubscriptionId = subscriptionId;
             Decision = decision;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <summary> Id of Subscription. </summary>
         public string SubscriptionId { get; }
         /// <summary> Access decision to subscription. </summary>
-        public AccessDecisionEnum Decision { get; }
+        public CarbonEmissionAccessDecision Decision { get; }
         /// <summary> The reason why access request got denied. </summary>
         public string DenialReason { get; }
     }

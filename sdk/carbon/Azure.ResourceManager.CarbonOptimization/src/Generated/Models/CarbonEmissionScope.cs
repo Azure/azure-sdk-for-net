@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
     /// <summary> Supported carbon emission scopes to be used with QueryParameter, as defined by the GHG Protocol. At least one scope must be specified. The output will return a total of all specified scopes. </summary>
-    public readonly partial struct EmissionScopeEnum : IEquatable<EmissionScopeEnum>
+    public readonly partial struct CarbonEmissionScope : IEquatable<CarbonEmissionScope>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="EmissionScopeEnum"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CarbonEmissionScope"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EmissionScopeEnum(string value)
+        public CarbonEmissionScope(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -27,23 +27,23 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         private const string Scope3Value = "Scope3";
 
         /// <summary> Scope1 carbon emission. </summary>
-        public static EmissionScopeEnum Scope1 { get; } = new EmissionScopeEnum(Scope1Value);
+        public static CarbonEmissionScope Scope1 { get; } = new CarbonEmissionScope(Scope1Value);
         /// <summary> Scope2 carbon emission. </summary>
-        public static EmissionScopeEnum Scope2 { get; } = new EmissionScopeEnum(Scope2Value);
+        public static CarbonEmissionScope Scope2 { get; } = new CarbonEmissionScope(Scope2Value);
         /// <summary> Scope3 carbon emission. </summary>
-        public static EmissionScopeEnum Scope3 { get; } = new EmissionScopeEnum(Scope3Value);
-        /// <summary> Determines if two <see cref="EmissionScopeEnum"/> values are the same. </summary>
-        public static bool operator ==(EmissionScopeEnum left, EmissionScopeEnum right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="EmissionScopeEnum"/> values are not the same. </summary>
-        public static bool operator !=(EmissionScopeEnum left, EmissionScopeEnum right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EmissionScopeEnum"/>. </summary>
-        public static implicit operator EmissionScopeEnum(string value) => new EmissionScopeEnum(value);
+        public static CarbonEmissionScope Scope3 { get; } = new CarbonEmissionScope(Scope3Value);
+        /// <summary> Determines if two <see cref="CarbonEmissionScope"/> values are the same. </summary>
+        public static bool operator ==(CarbonEmissionScope left, CarbonEmissionScope right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="CarbonEmissionScope"/> values are not the same. </summary>
+        public static bool operator !=(CarbonEmissionScope left, CarbonEmissionScope right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CarbonEmissionScope"/>. </summary>
+        public static implicit operator CarbonEmissionScope(string value) => new CarbonEmissionScope(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EmissionScopeEnum other && Equals(other);
+        public override bool Equals(object obj) => obj is CarbonEmissionScope other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(EmissionScopeEnum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CarbonEmissionScope other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

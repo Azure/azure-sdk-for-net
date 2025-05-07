@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="categoryType"> Specifies the category type to retrieve top-emitting items, aggregated by month. See supported types in CategoryTypeEnum. </param>
         /// <param name="topItems"> The number of top items to return, based on emissions. Must be between 1 and 10. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dateRange"/>, <paramref name="subscriptionList"/> or <paramref name="carbonScopeList"/> is null. </exception>
-        public TopItemsMonthlySummaryReportQueryFilter(DateRange dateRange, IEnumerable<string> subscriptionList, IEnumerable<EmissionScopeEnum> carbonScopeList, CategoryTypeEnum categoryType, int topItems) : base(dateRange, subscriptionList, carbonScopeList)
+        public TopItemsMonthlySummaryReportQueryFilter(CarbonEmissionQueryDateRange dateRange, IEnumerable<string> subscriptionList, IEnumerable<CarbonEmissionScope> carbonScopeList, CarbonEmissionCategoryType categoryType, int topItems) : base(dateRange, subscriptionList, carbonScopeList)
         {
             Argument.AssertNotNull(dateRange, nameof(dateRange));
             Argument.AssertNotNull(subscriptionList, nameof(subscriptionList));
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
 
             CategoryType = categoryType;
             TopItems = topItems;
-            ReportType = ReportTypeEnum.TopItemsMonthlySummaryReport;
+            ReportType = CarbonEmissionReportType.TopItemsMonthlySummaryReport;
         }
 
         /// <summary> Initializes a new instance of <see cref="TopItemsMonthlySummaryReportQueryFilter"/>. </summary>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="categoryType"> Specifies the category type to retrieve top-emitting items, aggregated by month. See supported types in CategoryTypeEnum. </param>
         /// <param name="topItems"> The number of top items to return, based on emissions. Must be between 1 and 10. </param>
-        internal TopItemsMonthlySummaryReportQueryFilter(ReportTypeEnum reportType, DateRange dateRange, IList<string> subscriptionList, IList<string> resourceGroupUrlList, IList<string> resourceTypeList, IList<string> locationList, IList<EmissionScopeEnum> carbonScopeList, IDictionary<string, BinaryData> serializedAdditionalRawData, CategoryTypeEnum categoryType, int topItems) : base(reportType, dateRange, subscriptionList, resourceGroupUrlList, resourceTypeList, locationList, carbonScopeList, serializedAdditionalRawData)
+        internal TopItemsMonthlySummaryReportQueryFilter(CarbonEmissionReportType reportType, CarbonEmissionQueryDateRange dateRange, IList<string> subscriptionList, IList<string> resourceGroupUrlList, IList<string> resourceTypeList, IList<string> locationList, IList<CarbonEmissionScope> carbonScopeList, IDictionary<string, BinaryData> serializedAdditionalRawData, CarbonEmissionCategoryType categoryType, int topItems) : base(reportType, dateRange, subscriptionList, resourceGroupUrlList, resourceTypeList, locationList, carbonScopeList, serializedAdditionalRawData)
         {
             CategoryType = categoryType;
             TopItems = topItems;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         }
 
         /// <summary> Specifies the category type to retrieve top-emitting items, aggregated by month. See supported types in CategoryTypeEnum. </summary>
-        public CategoryTypeEnum CategoryType { get; }
+        public CarbonEmissionCategoryType CategoryType { get; }
         /// <summary> The number of top items to return, based on emissions. Must be between 1 and 10. </summary>
         public int TopItems { get; }
     }

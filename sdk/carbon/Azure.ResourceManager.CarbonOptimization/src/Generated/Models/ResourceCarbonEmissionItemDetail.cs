@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="resourceGroup"> Resource Group. </param>
         /// <param name="resourceId"> The fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="itemName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="resourceId"/> is null. </exception>
-        internal ResourceCarbonEmissionItemDetail(double latestMonthEmissions, double previousMonthEmissions, string itemName, CategoryTypeEnum categoryType, string subscriptionId, string resourceGroup, string resourceId) : base(latestMonthEmissions, previousMonthEmissions)
+        internal ResourceCarbonEmissionItemDetail(double latestMonthEmissions, double previousMonthEmissions, string itemName, CarbonEmissionCategoryType categoryType, string subscriptionId, string resourceGroup, string resourceId) : base(latestMonthEmissions, previousMonthEmissions)
         {
             Argument.AssertNotNull(itemName, nameof(itemName));
             Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="resourceId"> The fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="location"> Resource Location (e.g., 'east us'). </param>
         /// <param name="resourceType"> The type of resource, for example: microsoft.storage/storageaccounts. </param>
-        internal ResourceCarbonEmissionItemDetail(ResponseDataTypeEnum dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemName, CategoryTypeEnum categoryType, string subscriptionId, string resourceGroup, string resourceId, string location, string resourceType) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, serializedAdditionalRawData)
+        internal ResourceCarbonEmissionItemDetail(ResponseDataTypeEnum dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemName, CarbonEmissionCategoryType categoryType, string subscriptionId, string resourceGroup, string resourceId, string location, string resourceType) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, serializedAdditionalRawData)
         {
             ItemName = itemName;
             CategoryType = categoryType;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <summary> It's resource name. </summary>
         public string ItemName { get; }
         /// <summary> Resource Item category, see supported value defined in CategoryTypeEnum. </summary>
-        public CategoryTypeEnum CategoryType { get; }
+        public CarbonEmissionCategoryType CategoryType { get; }
         /// <summary> Subscription Id. </summary>
         public string SubscriptionId { get; }
         /// <summary> Resource Group. </summary>

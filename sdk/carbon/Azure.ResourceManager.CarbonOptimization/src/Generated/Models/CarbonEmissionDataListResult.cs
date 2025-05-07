@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
     /// <summary> List of carbon emission results. </summary>
-    public partial class CarbonEmissionDataListResult
+    internal partial class CarbonEmissionDataListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 return null;
             }
             string itemName = default;
-            CategoryTypeEnum categoryType = default;
+            CarbonEmissionCategoryType categoryType = default;
             string subscriptionId = default;
             string resourceGroupUrl = default;
             ResponseDataTypeEnum dataType = default;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 }
                 if (property.NameEquals("categoryType"u8))
                 {
-                    categoryType = new CategoryTypeEnum(property.Value.GetString());
+                    categoryType = new CarbonEmissionCategoryType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subscriptionId"u8))

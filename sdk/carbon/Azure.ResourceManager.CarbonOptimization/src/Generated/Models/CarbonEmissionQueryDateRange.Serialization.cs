@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
-    public partial class DateRange : IUtf8JsonSerializable, IJsonModel<DateRange>
+    public partial class CarbonEmissionQueryDateRange : IUtf8JsonSerializable, IJsonModel<CarbonEmissionQueryDateRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DateRange>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CarbonEmissionQueryDateRange>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DateRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CarbonEmissionQueryDateRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DateRange>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionQueryDateRange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DateRange)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CarbonEmissionQueryDateRange)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("start"u8);
-            writer.WriteStringValue(Start, "D");
+            writer.WriteStringValue(StartOn, "D");
             writer.WritePropertyName("end"u8);
-            writer.WriteStringValue(End, "D");
+            writer.WriteStringValue(EndOn, "D");
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             }
         }
 
-        DateRange IJsonModel<DateRange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CarbonEmissionQueryDateRange IJsonModel<CarbonEmissionQueryDateRange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DateRange>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionQueryDateRange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DateRange)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CarbonEmissionQueryDateRange)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDateRange(document.RootElement, options);
+            return DeserializeCarbonEmissionQueryDateRange(document.RootElement, options);
         }
 
-        internal static DateRange DeserializeDateRange(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CarbonEmissionQueryDateRange DeserializeCarbonEmissionQueryDateRange(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -97,38 +97,38 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DateRange(start, end, serializedAdditionalRawData);
+            return new CarbonEmissionQueryDateRange(start, end, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DateRange>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CarbonEmissionQueryDateRange>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DateRange>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionQueryDateRange>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DateRange)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CarbonEmissionQueryDateRange)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DateRange IPersistableModel<DateRange>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CarbonEmissionQueryDateRange IPersistableModel<CarbonEmissionQueryDateRange>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DateRange>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionQueryDateRange>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDateRange(document.RootElement, options);
+                        return DeserializeCarbonEmissionQueryDateRange(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DateRange)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CarbonEmissionQueryDateRange)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DateRange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CarbonEmissionQueryDateRange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

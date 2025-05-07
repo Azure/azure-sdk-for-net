@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
-    /// <summary> Date range to be used with QueryParameter, it should be within 12 months between start and end date. In certain cases, start and end dates must be the same date. </summary>
-    public partial class DateRange
+    /// <summary> Response for available date range of carbon emission data. </summary>
+    public partial class CarbonEmissionAvailableDateRange
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,34 +45,34 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DateRange"/>. </summary>
-        /// <param name="start"> Start date parameter in yyyy-MM-01 format. Only the first day of each month is accepted. </param>
-        /// <param name="end"> End date parameter in yyyy-MM-01 format. Only the first day of each month is accepted. </param>
-        public DateRange(DateTimeOffset start, DateTimeOffset end)
+        /// <summary> Initializes a new instance of <see cref="CarbonEmissionAvailableDateRange"/>. </summary>
+        /// <param name="startOn"> Start date parameter, format is yyyy-MM-dd. </param>
+        /// <param name="endOn"> End date parameter, format is yyyy-MM-dd. </param>
+        internal CarbonEmissionAvailableDateRange(DateTimeOffset startOn, DateTimeOffset endOn)
         {
-            Start = start;
-            End = end;
+            StartOn = startOn;
+            EndOn = endOn;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DateRange"/>. </summary>
-        /// <param name="start"> Start date parameter in yyyy-MM-01 format. Only the first day of each month is accepted. </param>
-        /// <param name="end"> End date parameter in yyyy-MM-01 format. Only the first day of each month is accepted. </param>
+        /// <summary> Initializes a new instance of <see cref="CarbonEmissionAvailableDateRange"/>. </summary>
+        /// <param name="startOn"> Start date parameter, format is yyyy-MM-dd. </param>
+        /// <param name="endOn"> End date parameter, format is yyyy-MM-dd. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DateRange(DateTimeOffset start, DateTimeOffset end, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CarbonEmissionAvailableDateRange(DateTimeOffset startOn, DateTimeOffset endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Start = start;
-            End = end;
+            StartOn = startOn;
+            EndOn = endOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DateRange"/> for deserialization. </summary>
-        internal DateRange()
+        /// <summary> Initializes a new instance of <see cref="CarbonEmissionAvailableDateRange"/> for deserialization. </summary>
+        internal CarbonEmissionAvailableDateRange()
         {
         }
 
-        /// <summary> Start date parameter in yyyy-MM-01 format. Only the first day of each month is accepted. </summary>
-        public DateTimeOffset Start { get; }
-        /// <summary> End date parameter in yyyy-MM-01 format. Only the first day of each month is accepted. </summary>
-        public DateTimeOffset End { get; }
+        /// <summary> Start date parameter, format is yyyy-MM-dd. </summary>
+        public DateTimeOffset StartOn { get; }
+        /// <summary> End date parameter, format is yyyy-MM-dd. </summary>
+        public DateTimeOffset EndOn { get; }
     }
 }

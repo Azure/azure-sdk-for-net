@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="locationList"> List of locations(Azure Region Display Name) for carbon emissions data, with each location specified in lowercase (e.g., 'east us'). Optional. You can use the command 'az account list-locations -o table' to find Azure Region Display Names. </param>
         /// <param name="carbonScopeList"> List of carbon emission scopes. Required. Accepts one or more values from EmissionScopeEnum (e.g., Scope1, Scope2, Scope3) in list form. The output will include the total emissions for the specified scopes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownQueryFilter(ReportTypeEnum reportType, DateRange dateRange, IList<string> subscriptionList, IList<string> resourceGroupUrlList, IList<string> resourceTypeList, IList<string> locationList, IList<EmissionScopeEnum> carbonScopeList, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(reportType, dateRange, subscriptionList, resourceGroupUrlList, resourceTypeList, locationList, carbonScopeList, serializedAdditionalRawData)
+        internal UnknownQueryFilter(CarbonEmissionReportType reportType, CarbonEmissionQueryDateRange dateRange, IList<string> subscriptionList, IList<string> resourceGroupUrlList, IList<string> resourceTypeList, IList<string> locationList, IList<CarbonEmissionScope> carbonScopeList, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(reportType, dateRange, subscriptionList, resourceGroupUrlList, resourceTypeList, locationList, carbonScopeList, serializedAdditionalRawData)
         {
             ReportType = reportType;
         }

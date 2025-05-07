@@ -57,25 +57,25 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             {
                 return null;
             }
-            ReportTypeEnum reportType = "Unknown";
-            DateRange dateRange = default;
+            CarbonEmissionReportType reportType = "Unknown";
+            CarbonEmissionQueryDateRange dateRange = default;
             IList<string> subscriptionList = default;
             IList<string> resourceGroupUrlList = default;
             IList<string> resourceTypeList = default;
             IList<string> locationList = default;
-            IList<EmissionScopeEnum> carbonScopeList = default;
+            IList<CarbonEmissionScope> carbonScopeList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reportType"u8))
                 {
-                    reportType = new ReportTypeEnum(property.Value.GetString());
+                    reportType = new CarbonEmissionReportType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dateRange"u8))
                 {
-                    dateRange = DateRange.DeserializeDateRange(property.Value, options);
+                    dateRange = CarbonEmissionQueryDateRange.DeserializeCarbonEmissionQueryDateRange(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("subscriptionList"u8))
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 }
                 if (property.NameEquals("carbonScopeList"u8))
                 {
-                    List<EmissionScopeEnum> array = new List<EmissionScopeEnum>();
+                    List<CarbonEmissionScope> array = new List<CarbonEmissionScope>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new EmissionScopeEnum(item.GetString()));
+                        array.Add(new CarbonEmissionScope(item.GetString()));
                     }
                     carbonScopeList = array;
                     continue;

@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="subscriptionList"> List of subscription IDs for which carbon emissions data is requested. Required. Each subscription ID should be in lowercase format. The max length of list is 100. </param>
         /// <param name="carbonScopeList"> List of carbon emission scopes. Required. Accepts one or more values from EmissionScopeEnum (e.g., Scope1, Scope2, Scope3) in list form. The output will include the total emissions for the specified scopes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dateRange"/>, <paramref name="subscriptionList"/> or <paramref name="carbonScopeList"/> is null. </exception>
-        public MonthlySummaryReportQueryFilter(DateRange dateRange, IEnumerable<string> subscriptionList, IEnumerable<EmissionScopeEnum> carbonScopeList) : base(dateRange, subscriptionList, carbonScopeList)
+        public MonthlySummaryReportQueryFilter(CarbonEmissionQueryDateRange dateRange, IEnumerable<string> subscriptionList, IEnumerable<CarbonEmissionScope> carbonScopeList) : base(dateRange, subscriptionList, carbonScopeList)
         {
             Argument.AssertNotNull(dateRange, nameof(dateRange));
             Argument.AssertNotNull(subscriptionList, nameof(subscriptionList));
             Argument.AssertNotNull(carbonScopeList, nameof(carbonScopeList));
 
-            ReportType = ReportTypeEnum.MonthlySummaryReport;
+            ReportType = CarbonEmissionReportType.MonthlySummaryReport;
         }
 
         /// <summary> Initializes a new instance of <see cref="MonthlySummaryReportQueryFilter"/>. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="locationList"> List of locations(Azure Region Display Name) for carbon emissions data, with each location specified in lowercase (e.g., 'east us'). Optional. You can use the command 'az account list-locations -o table' to find Azure Region Display Names. </param>
         /// <param name="carbonScopeList"> List of carbon emission scopes. Required. Accepts one or more values from EmissionScopeEnum (e.g., Scope1, Scope2, Scope3) in list form. The output will include the total emissions for the specified scopes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonthlySummaryReportQueryFilter(ReportTypeEnum reportType, DateRange dateRange, IList<string> subscriptionList, IList<string> resourceGroupUrlList, IList<string> resourceTypeList, IList<string> locationList, IList<EmissionScopeEnum> carbonScopeList, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(reportType, dateRange, subscriptionList, resourceGroupUrlList, resourceTypeList, locationList, carbonScopeList, serializedAdditionalRawData)
+        internal MonthlySummaryReportQueryFilter(CarbonEmissionReportType reportType, CarbonEmissionQueryDateRange dateRange, IList<string> subscriptionList, IList<string> resourceGroupUrlList, IList<string> resourceTypeList, IList<string> locationList, IList<CarbonEmissionScope> carbonScopeList, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(reportType, dateRange, subscriptionList, resourceGroupUrlList, resourceTypeList, locationList, carbonScopeList, serializedAdditionalRawData)
         {
             ReportType = reportType;
         }

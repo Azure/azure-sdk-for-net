@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
-    public partial class SubscriptionAccessDecision : IUtf8JsonSerializable, IJsonModel<SubscriptionAccessDecision>
+    internal partial class SubscriptionAccessDecision : IUtf8JsonSerializable, IJsonModel<SubscriptionAccessDecision>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionAccessDecision>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 return null;
             }
             string subscriptionId = default;
-            AccessDecisionEnum decision = default;
+            CarbonEmissionAccessDecision decision = default;
             string denialReason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 }
                 if (property.NameEquals("decision"u8))
                 {
-                    decision = new AccessDecisionEnum(property.Value.GetString());
+                    decision = new CarbonEmissionAccessDecision(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("denialReason"u8))

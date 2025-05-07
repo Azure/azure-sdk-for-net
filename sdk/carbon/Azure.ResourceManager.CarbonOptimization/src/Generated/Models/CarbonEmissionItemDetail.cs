@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="itemName"> Item name, it can be resource name, resource type name, location, resource group name or subscriptionId. It depends on category type. </param>
         /// <param name="categoryType"> Item category, see supported type value defined in CategoryTypeEnum. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="itemName"/> is null. </exception>
-        internal CarbonEmissionItemDetail(double latestMonthEmissions, double previousMonthEmissions, string itemName, CategoryTypeEnum categoryType) : base(latestMonthEmissions, previousMonthEmissions)
+        internal CarbonEmissionItemDetail(double latestMonthEmissions, double previousMonthEmissions, string itemName, CarbonEmissionCategoryType categoryType) : base(latestMonthEmissions, previousMonthEmissions)
         {
             Argument.AssertNotNull(itemName, nameof(itemName));
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemName"> Item name, it can be resource name, resource type name, location, resource group name or subscriptionId. It depends on category type. </param>
         /// <param name="categoryType"> Item category, see supported type value defined in CategoryTypeEnum. </param>
-        internal CarbonEmissionItemDetail(ResponseDataTypeEnum dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemName, CategoryTypeEnum categoryType) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, serializedAdditionalRawData)
+        internal CarbonEmissionItemDetail(ResponseDataTypeEnum dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemName, CarbonEmissionCategoryType categoryType) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, serializedAdditionalRawData)
         {
             ItemName = itemName;
             CategoryType = categoryType;
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <summary> Item name, it can be resource name, resource type name, location, resource group name or subscriptionId. It depends on category type. </summary>
         public string ItemName { get; }
         /// <summary> Item category, see supported type value defined in CategoryTypeEnum. </summary>
-        public CategoryTypeEnum CategoryType { get; }
+        public CarbonEmissionCategoryType CategoryType { get; }
     }
 }

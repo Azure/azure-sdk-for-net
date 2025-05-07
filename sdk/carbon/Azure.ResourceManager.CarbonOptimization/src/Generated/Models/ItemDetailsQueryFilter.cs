@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="sortDirection"> Direction for sorting results. See supported values in SortDirectionEnum. </param>
         /// <param name="pageSize"> Number of items to return in one request, max value is 5000. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dateRange"/>, <paramref name="subscriptionList"/> or <paramref name="carbonScopeList"/> is null. </exception>
-        public ItemDetailsQueryFilter(DateRange dateRange, IEnumerable<string> subscriptionList, IEnumerable<EmissionScopeEnum> carbonScopeList, CategoryTypeEnum categoryType, OrderByColumnEnum orderBy, SortDirectionEnum sortDirection, int pageSize) : base(dateRange, subscriptionList, carbonScopeList)
+        public ItemDetailsQueryFilter(CarbonEmissionQueryDateRange dateRange, IEnumerable<string> subscriptionList, IEnumerable<CarbonEmissionScope> carbonScopeList, CarbonEmissionCategoryType categoryType, OrderByColumnEnum orderBy, SortDirectionEnum sortDirection, int pageSize) : base(dateRange, subscriptionList, carbonScopeList)
         {
             Argument.AssertNotNull(dateRange, nameof(dateRange));
             Argument.AssertNotNull(subscriptionList, nameof(subscriptionList));
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             OrderBy = orderBy;
             SortDirection = sortDirection;
             PageSize = pageSize;
-            ReportType = ReportTypeEnum.ItemDetailsReport;
+            ReportType = CarbonEmissionReportType.ItemDetailsReport;
         }
 
         /// <summary> Initializes a new instance of <see cref="ItemDetailsQueryFilter"/>. </summary>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="sortDirection"> Direction for sorting results. See supported values in SortDirectionEnum. </param>
         /// <param name="pageSize"> Number of items to return in one request, max value is 5000. </param>
         /// <param name="skipToken"> Pagination token for fetching the next page of data. This token is nullable and will be returned in the previous response if additional data pages are available. </param>
-        internal ItemDetailsQueryFilter(ReportTypeEnum reportType, DateRange dateRange, IList<string> subscriptionList, IList<string> resourceGroupUrlList, IList<string> resourceTypeList, IList<string> locationList, IList<EmissionScopeEnum> carbonScopeList, IDictionary<string, BinaryData> serializedAdditionalRawData, CategoryTypeEnum categoryType, OrderByColumnEnum orderBy, SortDirectionEnum sortDirection, int pageSize, string skipToken) : base(reportType, dateRange, subscriptionList, resourceGroupUrlList, resourceTypeList, locationList, carbonScopeList, serializedAdditionalRawData)
+        internal ItemDetailsQueryFilter(CarbonEmissionReportType reportType, CarbonEmissionQueryDateRange dateRange, IList<string> subscriptionList, IList<string> resourceGroupUrlList, IList<string> resourceTypeList, IList<string> locationList, IList<CarbonEmissionScope> carbonScopeList, IDictionary<string, BinaryData> serializedAdditionalRawData, CarbonEmissionCategoryType categoryType, OrderByColumnEnum orderBy, SortDirectionEnum sortDirection, int pageSize, string skipToken) : base(reportType, dateRange, subscriptionList, resourceGroupUrlList, resourceTypeList, locationList, carbonScopeList, serializedAdditionalRawData)
         {
             CategoryType = categoryType;
             OrderBy = orderBy;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         }
 
         /// <summary> Specifies the category type for detailed emissions data, such as Resource, ResourceGroup, ResourceType, Location, or Subscription. See supported types in CategoryTypeEnum. </summary>
-        public CategoryTypeEnum CategoryType { get; }
+        public CarbonEmissionCategoryType CategoryType { get; }
         /// <summary> The column name to order the results by. See supported values in OrderByColumnEnum. </summary>
         public OrderByColumnEnum OrderBy { get; }
         /// <summary> Direction for sorting results. See supported values in SortDirectionEnum. </summary>

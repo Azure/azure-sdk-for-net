@@ -33,16 +33,19 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
 
             // invoke the operation and iterate over the result
             QueryFilter queryParameters = new ItemDetailsQueryFilter(
-                new DateRange(DateTimeOffset.Parse("2024-05-01"), DateTimeOffset.Parse("2024-05-01")),
+                new CarbonEmissionQueryDateRange(DateTimeOffset.Parse("2024-05-01"), DateTimeOffset.Parse("2024-05-01")),
                 new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" },
-                new EmissionScopeEnum[] { EmissionScopeEnum.Scope1, EmissionScopeEnum.Scope3 },
-                CategoryTypeEnum.Location,
+                new CarbonEmissionScope[] { CarbonEmissionScope.Scope1, CarbonEmissionScope.Scope3 },
+                CarbonEmissionCategoryType.Location,
                 OrderByColumnEnum.LatestMonthEmissions,
                 SortDirectionEnum.Desc,
                 100);
-            CarbonEmissionDataListResult result = await tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters);
+            await foreach (CarbonEmission item in tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -60,10 +63,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            QueryFilter queryParameters = new MonthlySummaryReportQueryFilter(new DateRange(DateTimeOffset.Parse("2024-03-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000" }, new EmissionScopeEnum[] { EmissionScopeEnum.Scope1, EmissionScopeEnum.Scope3 });
-            CarbonEmissionDataListResult result = await tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters);
+            QueryFilter queryParameters = new MonthlySummaryReportQueryFilter(new CarbonEmissionQueryDateRange(DateTimeOffset.Parse("2024-03-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000" }, new CarbonEmissionScope[] { CarbonEmissionScope.Scope1, CarbonEmissionScope.Scope3 });
+            await foreach (CarbonEmission item in tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -81,15 +87,18 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            QueryFilter queryParameters = new MonthlySummaryReportQueryFilter(new DateRange(DateTimeOffset.Parse("2024-03-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000" }, new EmissionScopeEnum[] { EmissionScopeEnum.Scope1, EmissionScopeEnum.Scope3 })
+            QueryFilter queryParameters = new MonthlySummaryReportQueryFilter(new CarbonEmissionQueryDateRange(DateTimeOffset.Parse("2024-03-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000" }, new CarbonEmissionScope[] { CarbonEmissionScope.Scope1, CarbonEmissionScope.Scope3 })
             {
                 ResourceGroupUrlList = { "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg-name" },
                 ResourceTypeList = { "microsoft.storage/storageaccounts", "microsoft.databricks/workspaces" },
                 LocationList = { "east us", "west us" },
             };
-            CarbonEmissionDataListResult result = await tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters);
+            await foreach (CarbonEmission item in tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -107,10 +116,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            QueryFilter queryParameters = new OverallSummaryReportQueryFilter(new DateRange(DateTimeOffset.Parse("2023-06-01"), DateTimeOffset.Parse("2023-06-01")), new string[] { "00000000-0000-0000-0000-000000000000" }, new EmissionScopeEnum[] { EmissionScopeEnum.Scope1, EmissionScopeEnum.Scope3 });
-            CarbonEmissionDataListResult result = await tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters);
+            QueryFilter queryParameters = new OverallSummaryReportQueryFilter(new CarbonEmissionQueryDateRange(DateTimeOffset.Parse("2023-06-01"), DateTimeOffset.Parse("2023-06-01")), new string[] { "00000000-0000-0000-0000-000000000000" }, new CarbonEmissionScope[] { CarbonEmissionScope.Scope1, CarbonEmissionScope.Scope3 });
+            await foreach (CarbonEmission item in tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -128,15 +140,18 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            QueryFilter queryParameters = new OverallSummaryReportQueryFilter(new DateRange(DateTimeOffset.Parse("2023-06-01"), DateTimeOffset.Parse("2023-06-01")), new string[] { "00000000-0000-0000-0000-000000000000" }, new EmissionScopeEnum[] { EmissionScopeEnum.Scope1, EmissionScopeEnum.Scope3 })
+            QueryFilter queryParameters = new OverallSummaryReportQueryFilter(new CarbonEmissionQueryDateRange(DateTimeOffset.Parse("2023-06-01"), DateTimeOffset.Parse("2023-06-01")), new string[] { "00000000-0000-0000-0000-000000000000" }, new CarbonEmissionScope[] { CarbonEmissionScope.Scope1, CarbonEmissionScope.Scope3 })
             {
                 ResourceGroupUrlList = { "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg-name" },
                 ResourceTypeList = { "microsoft.storage/storageaccounts", "microsoft.databricks/workspaces" },
                 LocationList = { "east us", "west us" },
             };
-            CarbonEmissionDataListResult result = await tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters);
+            await foreach (CarbonEmission item in tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -155,16 +170,19 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
 
             // invoke the operation and iterate over the result
             QueryFilter queryParameters = new ItemDetailsQueryFilter(
-                new DateRange(DateTimeOffset.Parse("2024-05-01"), DateTimeOffset.Parse("2024-05-01")),
+                new CarbonEmissionQueryDateRange(DateTimeOffset.Parse("2024-05-01"), DateTimeOffset.Parse("2024-05-01")),
                 new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" },
-                new EmissionScopeEnum[] { EmissionScopeEnum.Scope1, EmissionScopeEnum.Scope3 },
-                CategoryTypeEnum.ResourceGroup,
+                new CarbonEmissionScope[] { CarbonEmissionScope.Scope1, CarbonEmissionScope.Scope3 },
+                CarbonEmissionCategoryType.ResourceGroup,
                 OrderByColumnEnum.LatestMonthEmissions,
                 SortDirectionEnum.Desc,
                 100);
-            CarbonEmissionDataListResult result = await tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters);
+            await foreach (CarbonEmission item in tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -183,16 +201,19 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
 
             // invoke the operation and iterate over the result
             QueryFilter queryParameters = new ItemDetailsQueryFilter(
-                new DateRange(DateTimeOffset.Parse("2024-05-01"), DateTimeOffset.Parse("2024-05-01")),
+                new CarbonEmissionQueryDateRange(DateTimeOffset.Parse("2024-05-01"), DateTimeOffset.Parse("2024-05-01")),
                 new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" },
-                new EmissionScopeEnum[] { EmissionScopeEnum.Scope1, EmissionScopeEnum.Scope3 },
-                CategoryTypeEnum.Resource,
+                new CarbonEmissionScope[] { CarbonEmissionScope.Scope1, CarbonEmissionScope.Scope3 },
+                CarbonEmissionCategoryType.Resource,
                 OrderByColumnEnum.LatestMonthEmissions,
                 SortDirectionEnum.Desc,
                 100);
-            CarbonEmissionDataListResult result = await tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters);
+            await foreach (CarbonEmission item in tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -211,19 +232,22 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
 
             // invoke the operation and iterate over the result
             QueryFilter queryParameters = new ItemDetailsQueryFilter(
-                new DateRange(DateTimeOffset.Parse("2024-05-01"), DateTimeOffset.Parse("2024-05-01")),
+                new CarbonEmissionQueryDateRange(DateTimeOffset.Parse("2024-05-01"), DateTimeOffset.Parse("2024-05-01")),
                 new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" },
-                new EmissionScopeEnum[] { EmissionScopeEnum.Scope1, EmissionScopeEnum.Scope3 },
-                CategoryTypeEnum.Resource,
+                new CarbonEmissionScope[] { CarbonEmissionScope.Scope1, CarbonEmissionScope.Scope3 },
+                CarbonEmissionCategoryType.Resource,
                 OrderByColumnEnum.LatestMonthEmissions,
                 SortDirectionEnum.Desc,
                 100)
             {
                 SkipToken = "dGVzZGZhZGZzZnNkZg==",
             };
-            CarbonEmissionDataListResult result = await tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters);
+            await foreach (CarbonEmission item in tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -242,16 +266,19 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
 
             // invoke the operation and iterate over the result
             QueryFilter queryParameters = new ItemDetailsQueryFilter(
-                new DateRange(DateTimeOffset.Parse("2024-05-01"), DateTimeOffset.Parse("2024-05-01")),
+                new CarbonEmissionQueryDateRange(DateTimeOffset.Parse("2024-05-01"), DateTimeOffset.Parse("2024-05-01")),
                 new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" },
-                new EmissionScopeEnum[] { EmissionScopeEnum.Scope1, EmissionScopeEnum.Scope3 },
-                CategoryTypeEnum.ResourceType,
+                new CarbonEmissionScope[] { CarbonEmissionScope.Scope1, CarbonEmissionScope.Scope3 },
+                CarbonEmissionCategoryType.ResourceType,
                 OrderByColumnEnum.LatestMonthEmissions,
                 SortDirectionEnum.Desc,
                 100);
-            CarbonEmissionDataListResult result = await tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters);
+            await foreach (CarbonEmission item in tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -270,16 +297,19 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
 
             // invoke the operation and iterate over the result
             QueryFilter queryParameters = new ItemDetailsQueryFilter(
-                new DateRange(DateTimeOffset.Parse("2024-05-01"), DateTimeOffset.Parse("2024-05-01")),
+                new CarbonEmissionQueryDateRange(DateTimeOffset.Parse("2024-05-01"), DateTimeOffset.Parse("2024-05-01")),
                 new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" },
-                new EmissionScopeEnum[] { EmissionScopeEnum.Scope1, EmissionScopeEnum.Scope3 },
-                CategoryTypeEnum.Subscription,
+                new CarbonEmissionScope[] { CarbonEmissionScope.Scope1, CarbonEmissionScope.Scope3 },
+                CarbonEmissionCategoryType.Subscription,
                 OrderByColumnEnum.LatestMonthEmissions,
                 SortDirectionEnum.Desc,
                 100);
-            CarbonEmissionDataListResult result = await tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters);
+            await foreach (CarbonEmission item in tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -297,10 +327,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            QueryFilter queryParameters = new TopItemsMonthlySummaryReportQueryFilter(new DateRange(DateTimeOffset.Parse("2024-03-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" }, new EmissionScopeEnum[] { EmissionScopeEnum.Scope1, EmissionScopeEnum.Scope3 }, CategoryTypeEnum.Location, 2);
-            CarbonEmissionDataListResult result = await tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters);
+            QueryFilter queryParameters = new TopItemsMonthlySummaryReportQueryFilter(new CarbonEmissionQueryDateRange(DateTimeOffset.Parse("2024-03-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" }, new CarbonEmissionScope[] { CarbonEmissionScope.Scope1, CarbonEmissionScope.Scope3 }, CarbonEmissionCategoryType.Location, 2);
+            await foreach (CarbonEmission item in tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -318,10 +351,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            QueryFilter queryParameters = new TopItemsSummaryReportQueryFilter(new DateRange(DateTimeOffset.Parse("2024-05-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" }, new EmissionScopeEnum[] { EmissionScopeEnum.Scope1, EmissionScopeEnum.Scope3 }, CategoryTypeEnum.Location, 5);
-            CarbonEmissionDataListResult result = await tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters);
+            QueryFilter queryParameters = new TopItemsSummaryReportQueryFilter(new CarbonEmissionQueryDateRange(DateTimeOffset.Parse("2024-05-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" }, new CarbonEmissionScope[] { CarbonEmissionScope.Scope1, CarbonEmissionScope.Scope3 }, CarbonEmissionCategoryType.Location, 5);
+            await foreach (CarbonEmission item in tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -339,10 +375,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            QueryFilter queryParameters = new TopItemsMonthlySummaryReportQueryFilter(new DateRange(DateTimeOffset.Parse("2024-03-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" }, new EmissionScopeEnum[] { EmissionScopeEnum.Scope1, EmissionScopeEnum.Scope3 }, CategoryTypeEnum.ResourceGroup, 2);
-            CarbonEmissionDataListResult result = await tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters);
+            QueryFilter queryParameters = new TopItemsMonthlySummaryReportQueryFilter(new CarbonEmissionQueryDateRange(DateTimeOffset.Parse("2024-03-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" }, new CarbonEmissionScope[] { CarbonEmissionScope.Scope1, CarbonEmissionScope.Scope3 }, CarbonEmissionCategoryType.ResourceGroup, 2);
+            await foreach (CarbonEmission item in tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -360,10 +399,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            QueryFilter queryParameters = new TopItemsSummaryReportQueryFilter(new DateRange(DateTimeOffset.Parse("2024-05-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" }, new EmissionScopeEnum[] { EmissionScopeEnum.Scope1, EmissionScopeEnum.Scope3 }, CategoryTypeEnum.ResourceGroup, 5);
-            CarbonEmissionDataListResult result = await tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters);
+            QueryFilter queryParameters = new TopItemsSummaryReportQueryFilter(new CarbonEmissionQueryDateRange(DateTimeOffset.Parse("2024-05-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" }, new CarbonEmissionScope[] { CarbonEmissionScope.Scope1, CarbonEmissionScope.Scope3 }, CarbonEmissionCategoryType.ResourceGroup, 5);
+            await foreach (CarbonEmission item in tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -381,10 +423,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            QueryFilter queryParameters = new TopItemsMonthlySummaryReportQueryFilter(new DateRange(DateTimeOffset.Parse("2024-03-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" }, new EmissionScopeEnum[] { EmissionScopeEnum.Scope1, EmissionScopeEnum.Scope3 }, CategoryTypeEnum.Resource, 2);
-            CarbonEmissionDataListResult result = await tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters);
+            QueryFilter queryParameters = new TopItemsMonthlySummaryReportQueryFilter(new CarbonEmissionQueryDateRange(DateTimeOffset.Parse("2024-03-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" }, new CarbonEmissionScope[] { CarbonEmissionScope.Scope1, CarbonEmissionScope.Scope3 }, CarbonEmissionCategoryType.Resource, 2);
+            await foreach (CarbonEmission item in tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -402,10 +447,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            QueryFilter queryParameters = new TopItemsSummaryReportQueryFilter(new DateRange(DateTimeOffset.Parse("2024-05-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" }, new EmissionScopeEnum[] { EmissionScopeEnum.Scope1, EmissionScopeEnum.Scope3 }, CategoryTypeEnum.Resource, 5);
-            CarbonEmissionDataListResult result = await tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters);
+            QueryFilter queryParameters = new TopItemsSummaryReportQueryFilter(new CarbonEmissionQueryDateRange(DateTimeOffset.Parse("2024-05-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" }, new CarbonEmissionScope[] { CarbonEmissionScope.Scope1, CarbonEmissionScope.Scope3 }, CarbonEmissionCategoryType.Resource, 5);
+            await foreach (CarbonEmission item in tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -423,10 +471,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            QueryFilter queryParameters = new TopItemsMonthlySummaryReportQueryFilter(new DateRange(DateTimeOffset.Parse("2024-03-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" }, new EmissionScopeEnum[] { EmissionScopeEnum.Scope1, EmissionScopeEnum.Scope3 }, CategoryTypeEnum.ResourceType, 2);
-            CarbonEmissionDataListResult result = await tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters);
+            QueryFilter queryParameters = new TopItemsMonthlySummaryReportQueryFilter(new CarbonEmissionQueryDateRange(DateTimeOffset.Parse("2024-03-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" }, new CarbonEmissionScope[] { CarbonEmissionScope.Scope1, CarbonEmissionScope.Scope3 }, CarbonEmissionCategoryType.ResourceType, 2);
+            await foreach (CarbonEmission item in tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -444,10 +495,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            QueryFilter queryParameters = new TopItemsSummaryReportQueryFilter(new DateRange(DateTimeOffset.Parse("2024-05-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" }, new EmissionScopeEnum[] { EmissionScopeEnum.Scope1, EmissionScopeEnum.Scope3 }, CategoryTypeEnum.ResourceType, 5);
-            CarbonEmissionDataListResult result = await tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters);
+            QueryFilter queryParameters = new TopItemsSummaryReportQueryFilter(new CarbonEmissionQueryDateRange(DateTimeOffset.Parse("2024-05-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" }, new CarbonEmissionScope[] { CarbonEmissionScope.Scope1, CarbonEmissionScope.Scope3 }, CarbonEmissionCategoryType.ResourceType, 5);
+            await foreach (CarbonEmission item in tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -465,10 +519,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            QueryFilter queryParameters = new TopItemsMonthlySummaryReportQueryFilter(new DateRange(DateTimeOffset.Parse("2024-03-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" }, new EmissionScopeEnum[] { EmissionScopeEnum.Scope1, EmissionScopeEnum.Scope3 }, CategoryTypeEnum.Subscription, 2);
-            CarbonEmissionDataListResult result = await tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters);
+            QueryFilter queryParameters = new TopItemsMonthlySummaryReportQueryFilter(new CarbonEmissionQueryDateRange(DateTimeOffset.Parse("2024-03-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" }, new CarbonEmissionScope[] { CarbonEmissionScope.Scope1, CarbonEmissionScope.Scope3 }, CarbonEmissionCategoryType.Subscription, 2);
+            await foreach (CarbonEmission item in tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -486,10 +543,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            QueryFilter queryParameters = new TopItemsSummaryReportQueryFilter(new DateRange(DateTimeOffset.Parse("2024-05-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" }, new EmissionScopeEnum[] { EmissionScopeEnum.Scope1, EmissionScopeEnum.Scope3 }, CategoryTypeEnum.Subscription, 5);
-            CarbonEmissionDataListResult result = await tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters);
+            QueryFilter queryParameters = new TopItemsSummaryReportQueryFilter(new CarbonEmissionQueryDateRange(DateTimeOffset.Parse("2024-05-01"), DateTimeOffset.Parse("2024-05-01")), new string[] { "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000001,", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000007", "00000000-0000-0000-0000-000000000008" }, new CarbonEmissionScope[] { CarbonEmissionScope.Scope1, CarbonEmissionScope.Scope3 }, CarbonEmissionCategoryType.Subscription, 5);
+            await foreach (CarbonEmission item in tenantResource.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -507,7 +567,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
-            CarbonEmissionDataAvailableDateRange result = await tenantResource.QueryCarbonEmissionDataAvailableDateRangeCarbonServiceAsync();
+            CarbonEmissionAvailableDateRange result = await tenantResource.QueryCarbonEmissionDataAvailableDateRangeCarbonServiceAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

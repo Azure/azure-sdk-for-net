@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CarbonOptimization
 
         /// <summary> API for query carbon emission data available date range. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CarbonEmissionDataAvailableDateRange>> QueryCarbonEmissionDataAvailableDateRangeAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<CarbonEmissionAvailableDateRange>> QueryCarbonEmissionDataAvailableDateRangeAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateQueryCarbonEmissionDataAvailableDateRangeRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.CarbonOptimization
             {
                 case 200:
                     {
-                        CarbonEmissionDataAvailableDateRange value = default;
+                        CarbonEmissionAvailableDateRange value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = CarbonEmissionDataAvailableDateRange.DeserializeCarbonEmissionDataAvailableDateRange(document.RootElement);
+                        value = CarbonEmissionAvailableDateRange.DeserializeCarbonEmissionAvailableDateRange(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.CarbonOptimization
 
         /// <summary> API for query carbon emission data available date range. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CarbonEmissionDataAvailableDateRange> QueryCarbonEmissionDataAvailableDateRange(CancellationToken cancellationToken = default)
+        public Response<CarbonEmissionAvailableDateRange> QueryCarbonEmissionDataAvailableDateRange(CancellationToken cancellationToken = default)
         {
             using var message = CreateQueryCarbonEmissionDataAvailableDateRangeRequest();
             _pipeline.Send(message, cancellationToken);
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.CarbonOptimization
             {
                 case 200:
                     {
-                        CarbonEmissionDataAvailableDateRange value = default;
+                        CarbonEmissionAvailableDateRange value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = CarbonEmissionDataAvailableDateRange.DeserializeCarbonEmissionDataAvailableDateRange(document.RootElement);
+                        value = CarbonEmissionAvailableDateRange.DeserializeCarbonEmissionAvailableDateRange(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

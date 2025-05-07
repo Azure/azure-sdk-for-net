@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
-    public partial class CarbonEmissionDataListResult : IUtf8JsonSerializable, IJsonModel<CarbonEmissionDataListResult>
+    internal partial class CarbonEmissionDataListResult : IUtf8JsonSerializable, IJsonModel<CarbonEmissionDataListResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CarbonEmissionDataListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
