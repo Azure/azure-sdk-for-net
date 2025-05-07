@@ -75,6 +75,11 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("backupStorageRedundancy"u8);
                 writer.WriteStringValue(BackupStorageRedundancy.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(BackupStorageAccessTier))
+            {
+                writer.WritePropertyName("backupStorageAccessTier"u8);
+                writer.WriteStringValue(BackupStorageAccessTier.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -109,6 +114,7 @@ namespace Azure.ResourceManager.Sql
             DateTimeOffset? backupTime = default;
             DateTimeOffset? backupExpirationTime = default;
             SqlBackupStorageRedundancy? backupStorageRedundancy = default;
+            SqlBackupStorageAccessTier? backupStorageAccessTier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,6 +207,15 @@ namespace Azure.ResourceManager.Sql
                             backupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("backupStorageAccessTier"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            backupStorageAccessTier = new SqlBackupStorageAccessTier(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -222,6 +237,7 @@ namespace Azure.ResourceManager.Sql
                 backupTime,
                 backupExpirationTime,
                 backupStorageRedundancy,
+                backupStorageAccessTier,
                 serializedAdditionalRawData);
         }
 
@@ -413,6 +429,21 @@ namespace Azure.ResourceManager.Sql
                 {
                     builder.Append("    backupStorageRedundancy: ");
                     builder.AppendLine($"'{BackupStorageRedundancy.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupStorageAccessTier), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    backupStorageAccessTier: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackupStorageAccessTier))
+                {
+                    builder.Append("    backupStorageAccessTier: ");
+                    builder.AppendLine($"'{BackupStorageAccessTier.Value.ToString()}'");
                 }
             }
 

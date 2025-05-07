@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.TypeSpec.Generator.Input;
 
 namespace Azure.Generator.Tests.Common
@@ -235,7 +237,7 @@ namespace Azure.Generator.Tests.Common
         /// <returns></returns>
         public static InputModelType Model(
             string name,
-            string clientNamespace = "Sample.Models",
+            string clientNamespace = "Samples.Models",
             string access = "public",
             InputModelTypeUsage usage = InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
             IEnumerable<InputModelProperty>? properties = null,

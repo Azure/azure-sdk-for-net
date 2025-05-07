@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="deliveryPolicy"> A policy that specifies the delivery rules to be used for an endpoint. </param>
         /// <param name="webApplicationFirewallPolicyLink"> Defines the Web Application Firewall policy for the endpoint (if applicable). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CdnEndpointPatch(IDictionary<string, string> tags, string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, EndpointPropertiesUpdateParametersDefaultOriginGroup defaultOriginGroup, IList<UriSigningKey> uriSigningKeys, EndpointDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CdnEndpointPatch(IDictionary<string, string> tags, string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, WritableSubResource defaultOriginGroup, IList<UriSigningKey> uriSigningKeys, EndpointDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             OriginPath = originPath;
@@ -115,15 +116,15 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> List of rules defining the user's geo access within a CDN endpoint. Each geo filter defines an access rule to a specified path or content, e.g. block APAC for path /pictures/. </summary>
         public IList<GeoFilter> GeoFilters { get; }
         /// <summary> A reference to the origin group. </summary>
-        internal EndpointPropertiesUpdateParametersDefaultOriginGroup DefaultOriginGroup { get; set; }
-        /// <summary> Resource ID. </summary>
+        internal WritableSubResource DefaultOriginGroup { get; set; }
+        /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier DefaultOriginGroupId
         {
             get => DefaultOriginGroup is null ? default : DefaultOriginGroup.Id;
             set
             {
                 if (DefaultOriginGroup is null)
-                    DefaultOriginGroup = new EndpointPropertiesUpdateParametersDefaultOriginGroup();
+                    DefaultOriginGroup = new WritableSubResource();
                 DefaultOriginGroup.Id = value;
             }
         }
