@@ -17,7 +17,6 @@ namespace Azure.Communication.CallAutomation
         {
         }
 
-
         /// <summary> Initializes a new instance of <see cref="TeamsPhoneCallDetails"/>. </summary>
         /// <param name="teamsPhoneCallerDetails"> Container for details relating to the original caller of the call. </param>
         /// <param name="teamsPhoneSourceDetails"> Container for details relating to the entity responsible for the creation of these call details. </param>

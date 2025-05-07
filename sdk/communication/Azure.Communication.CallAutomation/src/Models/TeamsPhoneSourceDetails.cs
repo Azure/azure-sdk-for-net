@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
             IntendedTargets = new ChangeTrackingDictionary<string, CommunicationIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TeamsPhoneSourceDetailsInternal"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TeamsPhoneSourceDetails"/>. </summary>
         /// <param name="source"> ID of the source entity passing along the call details (ex. Application Instance ID of - CQ/AA). </param>
         /// <param name="language"> Language of the source entity passing along the call details, passed in the ISO-639 standard. </param>
         /// <param name="status"> Status of the source entity passing along the call details. </param>
@@ -42,7 +42,6 @@ namespace Azure.Communication.CallAutomation
             Status = status;
             IntendedTargets = intendedTargets;
         }
-
 
         /// <summary> ID of the source entity passing along the call details (ex. Application Instance ID of - CQ/AA). </summary>
         public CommunicationIdentifier Source { get; set; }
