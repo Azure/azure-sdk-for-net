@@ -38,7 +38,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="screenPopUrl"> Caller's screen pop URL. </param>
         /// <param name="isAuthenticated"> Flag indicating whether the caller was authenticated. </param>
         /// <param name="additionalCallerInformation"> A set of key value pairs (max 10, any additional entries would be ignored) which a bot author wants to pass to the Teams Client for display to the agent. </param>
-        public TeamsPhoneCallerDetails(CommunicationIdentifier caller, string name, string phoneNumber, string recordId, string screenPopUrl, bool? isAuthenticated, IDictionary<string, string> additionalCallerInformation)
+        internal TeamsPhoneCallerDetails(CommunicationIdentifier caller, string name, string phoneNumber, string recordId, string screenPopUrl, bool? isAuthenticated, IDictionary<string, string> additionalCallerInformation)
         {
             Caller = caller;
             Name = name;

@@ -24,7 +24,7 @@ namespace Azure.Communication.CallAutomation
             From = CommunicationIdentifierSerializer.Deserialize(internalEvent.From);
             ServerCallId = internalEvent.ServerCallId;
             CallerDisplayName = internalEvent.CallerDisplayName;
-            CustomContext = new CustomCallingContext(internalEvent.CustomContext?.VoipHeaders, internalEvent.CustomContext?.SipHeaders, CreateTeamsPhoneCallDetails(internalEvent.CustomContext?.TeamsPhoneCallDetails));
+            CustomContext = new CustomCallingContext(internalEvent.CustomContext?.VoipHeaders, internalEvent.CustomContext?.SipHeaders, CustomCallContextHelpers.CreateTeamsPhoneCallDetails(internalEvent.CustomContext?.TeamsPhoneCallDetails));
 
             IncomingCallContext = internalEvent.IncomingCallContext;
 
@@ -61,55 +61,6 @@ namespace Azure.Communication.CallAutomation
 
             var internalEvent = IncomingCallInternal.DeserializeIncomingCallInternal(element);
             return new IncomingCall(internalEvent);
-        }
-
-        private static TeamsPhoneCallDetails CreateTeamsPhoneCallDetails(TeamsPhoneCallDetailsInternal internalTeamsPhoneCallDetails)
-        {
-            if (internalTeamsPhoneCallDetails == null)
-            {
-                return null;
-            }
-            return new TeamsPhoneCallDetails(
-                CreateTeamsPhoneCallerDetails(internalTeamsPhoneCallDetails.TeamsPhoneCallerDetails),
-                CreateTeamsPhoneSourceDetails(internalTeamsPhoneCallDetails.TeamsPhoneSourceDetails),
-                internalTeamsPhoneCallDetails.SessionId,
-                internalTeamsPhoneCallDetails.Intent,
-                internalTeamsPhoneCallDetails.CallTopic,
-                internalTeamsPhoneCallDetails.CallContext,
-                internalTeamsPhoneCallDetails.TranscriptUrl,
-                internalTeamsPhoneCallDetails.CallSentiment,
-                internalTeamsPhoneCallDetails.SuggestedActions);
-        }
-        private static TeamsPhoneCallerDetails CreateTeamsPhoneCallerDetails(TeamsPhoneCallerDetailsInternal internalTeamsPhoneCallerDetails)
-        {
-            if (internalTeamsPhoneCallerDetails == null)
-            {
-                return null;
-            }
-            return new TeamsPhoneCallerDetails(
-                CommunicationIdentifierSerializer.Deserialize(internalTeamsPhoneCallerDetails.Caller),
-                internalTeamsPhoneCallerDetails.Name,
-                internalTeamsPhoneCallerDetails.PhoneNumber,
-                internalTeamsPhoneCallerDetails.RecordId,
-                internalTeamsPhoneCallerDetails.ScreenPopUrl,
-                internalTeamsPhoneCallerDetails.IsAuthenticated,
-                internalTeamsPhoneCallerDetails.AdditionalCallerInformation
-                );
-        }
-        private static TeamsPhoneSourceDetails CreateTeamsPhoneSourceDetails(TeamsPhoneSourceDetailsInternal internalTeamsPhoneSourceDetails)
-        {
-            if (internalTeamsPhoneSourceDetails == null)
-            {
-                return null;
-            }
-            return new TeamsPhoneSourceDetails(
-                CommunicationIdentifierSerializer.Deserialize(internalTeamsPhoneSourceDetails.Source),
-                internalTeamsPhoneSourceDetails.Language,
-                internalTeamsPhoneSourceDetails.Status,
-                internalTeamsPhoneSourceDetails.IntendedTargets?.ToDictionary(
-                    pair => pair.Key,
-                    pair => CommunicationIdentifierSerializer.Deserialize(pair.Value))
-                );
         }
     }
 }

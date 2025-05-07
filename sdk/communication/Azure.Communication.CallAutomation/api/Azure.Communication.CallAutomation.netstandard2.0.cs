@@ -1877,7 +1877,6 @@ namespace Azure.Communication.CallAutomation
     public partial class TeamsPhoneCallDetails
     {
         public TeamsPhoneCallDetails() { }
-        public TeamsPhoneCallDetails(Azure.Communication.CallAutomation.TeamsPhoneCallerDetails teamsPhoneCallerDetails, Azure.Communication.CallAutomation.TeamsPhoneSourceDetails teamsPhoneSourceDetails, string sessionId, string intent, string callTopic, string callContext, string transcriptUrl, string callSentiment, string suggestedActions) { }
         public string CallContext { get { throw null; } set { } }
         public string CallSentiment { get { throw null; } set { } }
         public string CallTopic { get { throw null; } set { } }
@@ -1891,7 +1890,6 @@ namespace Azure.Communication.CallAutomation
     public partial class TeamsPhoneCallerDetails
     {
         public TeamsPhoneCallerDetails(Azure.Communication.CommunicationIdentifier caller, string name, string phoneNumber) { }
-        public TeamsPhoneCallerDetails(Azure.Communication.CommunicationIdentifier caller, string name, string phoneNumber, string recordId, string screenPopUrl, bool? isAuthenticated, System.Collections.Generic.IDictionary<string, string> additionalCallerInformation) { }
         public System.Collections.Generic.IDictionary<string, string> AdditionalCallerInformation { get { throw null; } }
         public bool? IsAuthenticated { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
@@ -1903,7 +1901,6 @@ namespace Azure.Communication.CallAutomation
     public partial class TeamsPhoneSourceDetails
     {
         public TeamsPhoneSourceDetails(Azure.Communication.CommunicationIdentifier source, string language, string status) { }
-        public TeamsPhoneSourceDetails(Azure.Communication.CommunicationIdentifier source, string language, string status, System.Collections.Generic.IDictionary<string, Azure.Communication.CommunicationIdentifier> intendedTargets) { }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.CommunicationIdentifier> IntendedTargets { get { throw null; } }
         public string Language { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier Source { get { throw null; } set { } }

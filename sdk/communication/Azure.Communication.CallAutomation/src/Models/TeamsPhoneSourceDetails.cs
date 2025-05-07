@@ -35,7 +35,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="language"> Language of the source entity passing along the call details, passed in the ISO-639 standard. </param>
         /// <param name="status"> Status of the source entity passing along the call details. </param>
         /// <param name="intendedTargets"> Intended targets of the source entity passing along the call details. </param>
-        public TeamsPhoneSourceDetails(CommunicationIdentifier source, string language, string status, IDictionary<string, CommunicationIdentifier> intendedTargets)
+        internal TeamsPhoneSourceDetails(CommunicationIdentifier source, string language, string status, IDictionary<string, CommunicationIdentifier> intendedTargets)
         {
             Source = source;
             Language = language;

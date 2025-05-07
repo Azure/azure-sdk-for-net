@@ -27,7 +27,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="transcriptUrl"> Url for fetching the transcript of the call. </param>
         /// <param name="callSentiment"> Sentiment of the call thus far. </param>
         /// <param name="suggestedActions"> Recommendations for resolving the issue based on the customer’s intent and interaction history. </param>
-        public TeamsPhoneCallDetails(TeamsPhoneCallerDetails teamsPhoneCallerDetails, TeamsPhoneSourceDetails teamsPhoneSourceDetails, string sessionId, string intent, string callTopic, string callContext, string transcriptUrl, string callSentiment, string suggestedActions)
+        internal TeamsPhoneCallDetails(TeamsPhoneCallerDetails teamsPhoneCallerDetails, TeamsPhoneSourceDetails teamsPhoneSourceDetails, string sessionId, string intent, string callTopic, string callContext, string transcriptUrl, string callSentiment, string suggestedActions)
         {
             TeamsPhoneCallerDetails = teamsPhoneCallerDetails;
             TeamsPhoneSourceDetails = teamsPhoneSourceDetails;
