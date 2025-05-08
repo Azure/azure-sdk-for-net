@@ -588,16 +588,17 @@ Accept wildcard characters: False
 
 ### -OutFile
 Save test environment settings into a .env file next to test resources template.
-The contents of the file are protected via the .NET Data Protection API (DPAPI).
-This is supported only on Windows.
-The environment file is scoped to the current
-service directory.
 
+On Windows in the Azure/azure-sdk-for-net repository,
+the contents of the file are protected via the .NET Data Protection API (DPAPI).
+The environment file is scoped to the current service directory.
 The environment file will be named for the test resources template that it was
-generated for.
-For ARM templates, it will be test-resources.json.env.
-For
+generated for. For ARM templates, it will be test-resources.json.env. For
 Bicep templates, test-resources.bicep.env.
+
+If enabled in other repositories or on other platforms, a .env file is written
+unencrypted to the service directory if and only if it is in .gitignore.
+Enable -OutFile automatically by putting `"Dotenv": true` in your assets.json file.
 
 ```yaml
 Type: SwitchParameter
