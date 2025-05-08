@@ -92,10 +92,8 @@ namespace Azure.Identity
             string clientCertificatePath = envCredOptions.ClientCertificatePath;
             string clientCertificatePassword = envCredOptions.ClientCertificatePassword;
             bool sendCertificateChain = envCredOptions.SendCertificateChain;
-#pragma warning disable CS0618 // Type or member is obsolete
             string username = envCredOptions.Username;
             string password = envCredOptions.Password;
-#pragma warning restore CS0618
 
             if (!string.IsNullOrEmpty(tenantId) && !string.IsNullOrEmpty(clientId))
             {

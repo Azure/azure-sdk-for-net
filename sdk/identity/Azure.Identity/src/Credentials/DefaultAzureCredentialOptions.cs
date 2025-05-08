@@ -186,8 +186,6 @@ namespace Azure.Identity
         /// the cache, the SharedTokenCacheCredential won't be used for authentication.
         /// Defaults to the value of environment variable <c>AZURE_USERNAME</c>.
         /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("SharedTokenCacheCredential is deprecated because it doesn't support multifactor authentication (MFA). See https://aka.ms/azsdk/identity/mfa for details about MFA enforcement for Microsoft Entra ID and migration guidance.")]
         public string SharedTokenCacheUsername { get; set; } = EnvironmentVariables.Username;
 
         /// <summary>

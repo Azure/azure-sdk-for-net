@@ -45,13 +45,11 @@ namespace Azure.Identity
         /// <summary>
         /// The username of the user account the credential will authenticate. This value defaults to the value of the environment variable AZURE_USERNAME.
         /// </summary>
-        [Obsolete("This credential is deprecated because it doesn't support multifactor authentication (MFA). See https://aka.ms/azsdk/identity/mfa for details about MFA enforcement for Microsoft Entra ID and migration guidance.")]
         internal string Username { get; set; } = EnvironmentVariables.Username;
 
         /// <summary>
         /// The password of used to authenticate the user. This value defaults to the value of the environment variable AZURE_PASSWORD.
         /// </summary>
-        [Obsolete("This credential is deprecated because it doesn't support multifactor authentication (MFA). See https://aka.ms/azsdk/identity/mfa for details about MFA enforcement for Microsoft Entra ID and migration guidance.")]
         internal string Password { get; set; } = EnvironmentVariables.Password;
 
         /// <summary>
