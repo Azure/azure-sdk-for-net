@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             ItemName = itemName;
             CategoryType = categoryType;
             Date = date;
-            DataType = ResponseDataTypeEnum.TopItemsMonthlySummaryData;
+            DataType = CarbonEmissionDataType.TopItemsMonthlySummaryData;
         }
 
         /// <summary> Initializes a new instance of <see cref="CarbonEmissionTopItemMonthlySummary"/>. </summary>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="itemName"> Item name, it can be resource name, resource type name, location, resource group name or subscriptionId. It depends on category type. </param>
         /// <param name="categoryType"> Item category, see supported type value defined in CategoryTypeEnum. </param>
         /// <param name="date"> The date, representing the month, for which the emissions data is reported, formatted as yyyy-MM-dd (e.g., 2024-03-01). </param>
-        internal CarbonEmissionTopItemMonthlySummary(ResponseDataTypeEnum dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemName, CarbonEmissionCategoryType categoryType, string date) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, serializedAdditionalRawData)
+        internal CarbonEmissionTopItemMonthlySummary(CarbonEmissionDataType dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemName, CarbonEmissionCategoryType categoryType, string date) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, serializedAdditionalRawData)
         {
             ItemName = itemName;
             CategoryType = categoryType;

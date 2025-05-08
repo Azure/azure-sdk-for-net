@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
     /// <summary> Enum for Access Decision. </summary>
-    internal readonly partial struct CarbonEmissionAccessDecision : IEquatable<CarbonEmissionAccessDecision>
+    public readonly partial struct CarbonEmissionAccessDecision : IEquatable<CarbonEmissionAccessDecision>
     {
         private readonly string _value;
 

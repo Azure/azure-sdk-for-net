@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CarbonService_QueryCarbonEmissionDataAvailableDateRange</description>
+        /// <description>CarbonService_QueryCarbonEmissionAvailableDateRange</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CarbonEmissionAvailableDateRange>> QueryCarbonEmissionDataAvailableDateRangeCarbonServiceAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CarbonEmissionAvailableDateRange>> QueryCarbonEmissionAvailableDateRangeAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = CarbonServiceClientDiagnostics.CreateScope("MockableCarbonOptimizationTenantResource.QueryCarbonEmissionDataAvailableDateRangeCarbonService");
+            using var scope = CarbonServiceClientDiagnostics.CreateScope("MockableCarbonOptimizationTenantResource.QueryCarbonEmissionAvailableDateRange");
             scope.Start();
             try
             {
-                var response = await CarbonServiceRestClient.QueryCarbonEmissionDataAvailableDateRangeAsync(cancellationToken).ConfigureAwait(false);
+                var response = await CarbonServiceRestClient.QueryCarbonEmissionAvailableDateRangeAsync(cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CarbonService_QueryCarbonEmissionDataAvailableDateRange</description>
+        /// <description>CarbonService_QueryCarbonEmissionAvailableDateRange</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -94,13 +94,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CarbonEmissionAvailableDateRange> QueryCarbonEmissionDataAvailableDateRangeCarbonService(CancellationToken cancellationToken = default)
+        public virtual Response<CarbonEmissionAvailableDateRange> QueryCarbonEmissionAvailableDateRange(CancellationToken cancellationToken = default)
         {
-            using var scope = CarbonServiceClientDiagnostics.CreateScope("MockableCarbonOptimizationTenantResource.QueryCarbonEmissionDataAvailableDateRangeCarbonService");
+            using var scope = CarbonServiceClientDiagnostics.CreateScope("MockableCarbonOptimizationTenantResource.QueryCarbonEmissionAvailableDateRange");
             scope.Start();
             try
             {
-                var response = CarbonServiceRestClient.QueryCarbonEmissionDataAvailableDateRange(cancellationToken);
+                var response = CarbonServiceRestClient.QueryCarbonEmissionAvailableDateRange(cancellationToken);
                 return response;
             }
             catch (Exception e)

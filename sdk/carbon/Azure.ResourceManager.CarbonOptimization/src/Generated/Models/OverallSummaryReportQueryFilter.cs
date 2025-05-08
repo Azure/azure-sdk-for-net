@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
     /// <summary> Query filter parameter to configure OverallSummaryReport queries. </summary>
-    public partial class OverallSummaryReportQueryFilter : QueryFilter
+    public partial class OverallSummaryReportQueryFilter : CarbonEmissionQueryFilter
     {
         /// <summary> Initializes a new instance of <see cref="OverallSummaryReportQueryFilter"/>. </summary>
         /// <param name="dateRange"> The start and end dates for carbon emissions data. Required. For ItemDetailsReport and TopItemsSummaryReport, only one month of data is supported at a time, so start and end dates should be equal within DateRange (e.g., start: 2024-06-01 and end: 2024-06-01). </param>
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             Argument.AssertNotNull(subscriptionList, nameof(subscriptionList));
             Argument.AssertNotNull(carbonScopeList, nameof(carbonScopeList));
 
-            ReportType = CarbonEmissionReportType.OverallSummaryReport;
+            ReportType = CarbonEmissionQueryReportType.OverallSummaryReport;
         }
 
         /// <summary> Initializes a new instance of <see cref="OverallSummaryReportQueryFilter"/>. </summary>
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="locationList"> List of locations(Azure Region Display Name) for carbon emissions data, with each location specified in lowercase (e.g., 'east us'). Optional. You can use the command 'az account list-locations -o table' to find Azure Region Display Names. </param>
         /// <param name="carbonScopeList"> List of carbon emission scopes. Required. Accepts one or more values from EmissionScopeEnum (e.g., Scope1, Scope2, Scope3) in list form. The output will include the total emissions for the specified scopes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OverallSummaryReportQueryFilter(CarbonEmissionReportType reportType, CarbonEmissionQueryDateRange dateRange, IList<string> subscriptionList, IList<string> resourceGroupUrlList, IList<string> resourceTypeList, IList<string> locationList, IList<CarbonEmissionScope> carbonScopeList, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(reportType, dateRange, subscriptionList, resourceGroupUrlList, resourceTypeList, locationList, carbonScopeList, serializedAdditionalRawData)
+        internal OverallSummaryReportQueryFilter(CarbonEmissionQueryReportType reportType, CarbonEmissionQueryDateRange dateRange, IList<string> subscriptionList, IList<string> resourceGroupUrlList, IList<ResourceType> resourceTypeList, IList<AzureLocation> locationList, IList<CarbonEmissionScope> carbonScopeList, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(reportType, dateRange, subscriptionList, resourceGroupUrlList, resourceTypeList, locationList, carbonScopeList, serializedAdditionalRawData)
         {
             ReportType = reportType;
         }

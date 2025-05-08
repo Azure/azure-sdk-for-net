@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="resourceGroup"> Resource Group. </param>
         /// <param name="resourceId"> The fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="itemName"/>, <paramref name="date"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="resourceId"/> is null. </exception>
-        internal ResourceCarbonEmissionTopItemMonthlySummary(double latestMonthEmissions, double previousMonthEmissions, string itemName, CarbonEmissionCategoryType categoryType, string date, string subscriptionId, string resourceGroup, string resourceId) : base(latestMonthEmissions, previousMonthEmissions)
+        internal ResourceCarbonEmissionTopItemMonthlySummary(double latestMonthEmissions, double previousMonthEmissions, string itemName, CarbonEmissionCategoryType categoryType, string date, string subscriptionId, string resourceGroup, ResourceIdentifier resourceId) : base(latestMonthEmissions, previousMonthEmissions)
         {
             Argument.AssertNotNull(itemName, nameof(itemName));
             Argument.AssertNotNull(date, nameof(date));
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             SubscriptionId = subscriptionId;
             ResourceGroup = resourceGroup;
             ResourceId = resourceId;
-            DataType = ResponseDataTypeEnum.ResourceTopItemsMonthlySummaryData;
+            DataType = CarbonEmissionDataType.ResourceTopItemsMonthlySummaryData;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceCarbonEmissionTopItemMonthlySummary"/>. </summary>
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="resourceGroup"> Resource Group. </param>
         /// <param name="resourceId"> The fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        internal ResourceCarbonEmissionTopItemMonthlySummary(ResponseDataTypeEnum dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemName, CarbonEmissionCategoryType categoryType, string date, string subscriptionId, string resourceGroup, string resourceId) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, serializedAdditionalRawData)
+        internal ResourceCarbonEmissionTopItemMonthlySummary(CarbonEmissionDataType dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemName, CarbonEmissionCategoryType categoryType, string date, string subscriptionId, string resourceGroup, ResourceIdentifier resourceId) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, serializedAdditionalRawData)
         {
             ItemName = itemName;
             CategoryType = categoryType;
@@ -80,6 +81,6 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <summary> Resource Group. </summary>
         public string ResourceGroup { get; }
         /// <summary> The fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
     }
 }

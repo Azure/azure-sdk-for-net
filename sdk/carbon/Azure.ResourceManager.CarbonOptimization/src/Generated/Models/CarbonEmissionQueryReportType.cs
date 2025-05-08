@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
     /// <summary> Enum for Report Type, specifying different report formats for carbon emissions data. Each report type returns different aggregations of carbon emissions across various categories, date range, emissions scope, and other parameters. </summary>
-    internal readonly partial struct CarbonEmissionReportType : IEquatable<CarbonEmissionReportType>
+    internal readonly partial struct CarbonEmissionQueryReportType : IEquatable<CarbonEmissionQueryReportType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="CarbonEmissionReportType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CarbonEmissionQueryReportType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CarbonEmissionReportType(string value)
+        public CarbonEmissionQueryReportType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -29,27 +29,27 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         private const string ItemDetailsReportValue = "ItemDetailsReport";
 
         /// <summary> Overall summary report provides total carbon emissions for the specified date range and query parameters, as well as comparative values for a high-level overview. This report type can accept different values in the start and end fields within DateRange (e.g., start: 2024-03-01 and end: 2024-06-01). </summary>
-        public static CarbonEmissionReportType OverallSummaryReport { get; } = new CarbonEmissionReportType(OverallSummaryReportValue);
+        public static CarbonEmissionQueryReportType OverallSummaryReport { get; } = new CarbonEmissionQueryReportType(OverallSummaryReportValue);
         /// <summary> MonthlySummaryReport provides carbon emissions data by month for the specified query parameters. This report type can accept different values in the start and end fields within DateRange (e.g., start: 2024-03-01 and end: 2024-06-01). </summary>
-        public static CarbonEmissionReportType MonthlySummaryReport { get; } = new CarbonEmissionReportType(MonthlySummaryReportValue);
+        public static CarbonEmissionQueryReportType MonthlySummaryReport { get; } = new CarbonEmissionQueryReportType(MonthlySummaryReportValue);
         /// <summary> TopItemsSummaryReport provides the N highest-emitting items for the specified query filters. This report returns data for a single month at a time, so it requires the same values for the start and end fields within DateRange. A maximum of N=10 items can be returned at a time. </summary>
-        public static CarbonEmissionReportType TopItemsSummaryReport { get; } = new CarbonEmissionReportType(TopItemsSummaryReportValue);
+        public static CarbonEmissionQueryReportType TopItemsSummaryReport { get; } = new CarbonEmissionQueryReportType(TopItemsSummaryReportValue);
         /// <summary> TopItemsMonthlyReport provides the N highest-emitting items by month for the specified query filter. Returns emissions data for the top N items by month within the given date range. A maximum of N=10 items can be returned at a time. </summary>
-        public static CarbonEmissionReportType TopItemsMonthlySummaryReport { get; } = new CarbonEmissionReportType(TopItemsMonthlySummaryReportValue);
+        public static CarbonEmissionQueryReportType TopItemsMonthlySummaryReport { get; } = new CarbonEmissionQueryReportType(TopItemsMonthlySummaryReportValue);
         /// <summary> ItemDetailsReport provides a granular list of items based on the specified CategoryType (e.g., Resource, ResourceGroup, ResourceType, Location, or Subscription) for the query filter. This report can be queried for only one month at a time, requiring the same values in the start and end fields within DateRange. </summary>
-        public static CarbonEmissionReportType ItemDetailsReport { get; } = new CarbonEmissionReportType(ItemDetailsReportValue);
-        /// <summary> Determines if two <see cref="CarbonEmissionReportType"/> values are the same. </summary>
-        public static bool operator ==(CarbonEmissionReportType left, CarbonEmissionReportType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="CarbonEmissionReportType"/> values are not the same. </summary>
-        public static bool operator !=(CarbonEmissionReportType left, CarbonEmissionReportType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CarbonEmissionReportType"/>. </summary>
-        public static implicit operator CarbonEmissionReportType(string value) => new CarbonEmissionReportType(value);
+        public static CarbonEmissionQueryReportType ItemDetailsReport { get; } = new CarbonEmissionQueryReportType(ItemDetailsReportValue);
+        /// <summary> Determines if two <see cref="CarbonEmissionQueryReportType"/> values are the same. </summary>
+        public static bool operator ==(CarbonEmissionQueryReportType left, CarbonEmissionQueryReportType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="CarbonEmissionQueryReportType"/> values are not the same. </summary>
+        public static bool operator !=(CarbonEmissionQueryReportType left, CarbonEmissionQueryReportType right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CarbonEmissionQueryReportType"/>. </summary>
+        public static implicit operator CarbonEmissionQueryReportType(string value) => new CarbonEmissionQueryReportType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CarbonEmissionReportType other && Equals(other);
+        public override bool Equals(object obj) => obj is CarbonEmissionQueryReportType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(CarbonEmissionReportType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CarbonEmissionQueryReportType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

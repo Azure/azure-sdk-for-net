@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
     /// <summary> List of carbon emission results. </summary>
-    internal partial class CarbonEmissionDataListResult
+    public partial class CarbonEmissionListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,14 +46,14 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CarbonEmissionDataListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CarbonEmissionListResult"/>. </summary>
         /// <param name="value">
         /// The CarbonEmissionData items on this page
         /// Please note <see cref="CarbonEmission"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CarbonEmissionItemDetail"/>, <see cref="CarbonEmissionMonthlySummary"/>, <see cref="CarbonEmissionOverallSummary"/>, <see cref="ResourceGroupCarbonEmissionItemDetail"/>, <see cref="ResourceGroupCarbonEmissionTopItemMonthlySummary"/>, <see cref="ResourceGroupCarbonEmissionTopItemsSummary"/>, <see cref="ResourceCarbonEmissionItemDetail"/>, <see cref="ResourceCarbonEmissionTopItemMonthlySummary"/>, <see cref="ResourceCarbonEmissionTopItemsSummary"/>, <see cref="CarbonEmissionTopItemMonthlySummary"/> and <see cref="CarbonEmissionTopItemsSummary"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal CarbonEmissionDataListResult(IEnumerable<CarbonEmission> value)
+        internal CarbonEmissionListResult(IEnumerable<CarbonEmission> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             SubscriptionAccessDecisionList = new ChangeTrackingList<SubscriptionAccessDecision>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CarbonEmissionDataListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CarbonEmissionListResult"/>. </summary>
         /// <param name="value">
         /// The CarbonEmissionData items on this page
         /// Please note <see cref="CarbonEmission"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="skipToken"> The pagination token to fetch next page data, it's null or empty if it doesn't have next page data. </param>
         /// <param name="subscriptionAccessDecisionList"> The access decision list for each input subscription. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CarbonEmissionDataListResult(IReadOnlyList<CarbonEmission> value, string skipToken, IReadOnlyList<SubscriptionAccessDecision> subscriptionAccessDecisionList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CarbonEmissionListResult(IReadOnlyList<CarbonEmission> value, string skipToken, IReadOnlyList<SubscriptionAccessDecision> subscriptionAccessDecisionList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             SkipToken = skipToken;
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CarbonEmissionDataListResult"/> for deserialization. </summary>
-        internal CarbonEmissionDataListResult()
+        /// <summary> Initializes a new instance of <see cref="CarbonEmissionListResult"/> for deserialization. </summary>
+        internal CarbonEmissionListResult()
         {
         }
 

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="monthOverMonthEmissionsChangeRatio"> The percentage change in carbon emissions between the current and previous DateRange. This is calculated as: (latestMonthEmissions - previousMonthEmissions) / previousMonthEmissions. </param>
         /// <param name="monthlyEmissionsChangeValue"> The change in carbon emissions between the current and previous period, calculated as: latestMonthEmissions - previousMonthEmissions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CarbonEmission(ResponseDataTypeEnum dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CarbonEmission(CarbonEmissionDataType dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataType = dataType;
             LatestMonthEmissions = latestMonthEmissions;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         }
 
         /// <summary> The data type of the query result, indicating the format of the returned response. </summary>
-        internal ResponseDataTypeEnum DataType { get; set; }
+        internal CarbonEmissionDataType DataType { get; set; }
         /// <summary> Total carbon emissions for the specified query parameters, measured in kgCO2E. This value represents total emissions over the specified date range (e.g., March-June). </summary>
         public double LatestMonthEmissions { get; }
         /// <summary> Total carbon emissions for the previous month’s date range, which is the same period as the specified date range but shifted left by one month (e.g., if the specified range is March - June, the previous month’s range will be Feb - May). The value is measured in kgCO2E. </summary>

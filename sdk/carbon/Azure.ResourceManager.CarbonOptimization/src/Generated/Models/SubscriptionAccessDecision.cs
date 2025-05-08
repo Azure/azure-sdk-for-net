@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
     /// <summary> Access Decision for each Subscription. </summary>
-    internal partial class SubscriptionAccessDecision
+    public partial class SubscriptionAccessDecision
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

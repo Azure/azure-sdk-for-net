@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
     /// <summary> Sorting is supported for columns in ItemDetailsReport. This object includes the column names that sorting is allowed for. Select one of these supported values. </summary>
-    public readonly partial struct OrderByColumnEnum : IEquatable<OrderByColumnEnum>
+    public readonly partial struct CarbonEmissionQueryOrderByColumn : IEquatable<CarbonEmissionQueryOrderByColumn>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="OrderByColumnEnum"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CarbonEmissionQueryOrderByColumn"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OrderByColumnEnum(string value)
+        public CarbonEmissionQueryOrderByColumn(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -30,29 +30,29 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         private const string ResourceGroupValue = "ResourceGroup";
 
         /// <summary> The itemName filed in ItemDetailsReport result, see CarbonEmissionItemDetailData for more information. </summary>
-        public static OrderByColumnEnum ItemName { get; } = new OrderByColumnEnum(ItemNameValue);
+        public static CarbonEmissionQueryOrderByColumn ItemName { get; } = new CarbonEmissionQueryOrderByColumn(ItemNameValue);
         /// <summary> The latestMonthEmissions filed in ItemDetailsReport result, see CarbonEmissionItemDetailData for more information. </summary>
-        public static OrderByColumnEnum LatestMonthEmissions { get; } = new OrderByColumnEnum(LatestMonthEmissionsValue);
+        public static CarbonEmissionQueryOrderByColumn LatestMonthEmissions { get; } = new CarbonEmissionQueryOrderByColumn(LatestMonthEmissionsValue);
         /// <summary> The previousMonthEmissions filed in ItemDetailsReport result, see CarbonEmissionItemDetailData for more information. </summary>
-        public static OrderByColumnEnum PreviousMonthEmissions { get; } = new OrderByColumnEnum(PreviousMonthEmissionsValue);
+        public static CarbonEmissionQueryOrderByColumn PreviousMonthEmissions { get; } = new CarbonEmissionQueryOrderByColumn(PreviousMonthEmissionsValue);
         /// <summary> The monthOverMonthEmissionsChangeRatio filed in ItemDetailsReport result, see CarbonEmissionItemDetailData for more information. </summary>
-        public static OrderByColumnEnum MonthOverMonthEmissionsChangeRatio { get; } = new OrderByColumnEnum(MonthOverMonthEmissionsChangeRatioValue);
+        public static CarbonEmissionQueryOrderByColumn MonthOverMonthEmissionsChangeRatio { get; } = new CarbonEmissionQueryOrderByColumn(MonthOverMonthEmissionsChangeRatioValue);
         /// <summary> The monthlyEmissionsChangeValue filed in ItemDetailsReport result, see CarbonEmissionItemDetailData for more information. </summary>
-        public static OrderByColumnEnum MonthlyEmissionsChangeValue { get; } = new OrderByColumnEnum(MonthlyEmissionsChangeValueValue);
+        public static CarbonEmissionQueryOrderByColumn MonthlyEmissionsChangeValue { get; } = new CarbonEmissionQueryOrderByColumn(MonthlyEmissionsChangeValueValue);
         /// <summary> The resourceGroup filed in ResourceCarbonEmissionItemDetailData result, see ResourceCarbonEmissionItemDetailData for more information. </summary>
-        public static OrderByColumnEnum ResourceGroup { get; } = new OrderByColumnEnum(ResourceGroupValue);
-        /// <summary> Determines if two <see cref="OrderByColumnEnum"/> values are the same. </summary>
-        public static bool operator ==(OrderByColumnEnum left, OrderByColumnEnum right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="OrderByColumnEnum"/> values are not the same. </summary>
-        public static bool operator !=(OrderByColumnEnum left, OrderByColumnEnum right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OrderByColumnEnum"/>. </summary>
-        public static implicit operator OrderByColumnEnum(string value) => new OrderByColumnEnum(value);
+        public static CarbonEmissionQueryOrderByColumn ResourceGroup { get; } = new CarbonEmissionQueryOrderByColumn(ResourceGroupValue);
+        /// <summary> Determines if two <see cref="CarbonEmissionQueryOrderByColumn"/> values are the same. </summary>
+        public static bool operator ==(CarbonEmissionQueryOrderByColumn left, CarbonEmissionQueryOrderByColumn right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="CarbonEmissionQueryOrderByColumn"/> values are not the same. </summary>
+        public static bool operator !=(CarbonEmissionQueryOrderByColumn left, CarbonEmissionQueryOrderByColumn right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CarbonEmissionQueryOrderByColumn"/>. </summary>
+        public static implicit operator CarbonEmissionQueryOrderByColumn(string value) => new CarbonEmissionQueryOrderByColumn(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is OrderByColumnEnum other && Equals(other);
+        public override bool Equals(object obj) => obj is CarbonEmissionQueryOrderByColumn other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(OrderByColumnEnum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CarbonEmissionQueryOrderByColumn other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

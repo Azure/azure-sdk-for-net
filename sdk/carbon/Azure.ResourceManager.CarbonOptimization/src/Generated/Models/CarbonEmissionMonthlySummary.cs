@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
 
             Date = date;
             CarbonIntensity = carbonIntensity;
-            DataType = ResponseDataTypeEnum.MonthlySummaryData;
+            DataType = CarbonEmissionDataType.MonthlySummaryData;
         }
 
         /// <summary> Initializes a new instance of <see cref="CarbonEmissionMonthlySummary"/>. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="date"> The date, representing the month, for which the emissions data is reported, formatted as yyyy-MM-dd (e.g., 2024-03-01). </param>
         /// <param name="carbonIntensity"> Carbon intensity for the specified month, typically in units of kgCO2E per unit of normalized usage. </param>
-        internal CarbonEmissionMonthlySummary(ResponseDataTypeEnum dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> serializedAdditionalRawData, string date, double carbonIntensity) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, serializedAdditionalRawData)
+        internal CarbonEmissionMonthlySummary(CarbonEmissionDataType dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> serializedAdditionalRawData, string date, double carbonIntensity) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, serializedAdditionalRawData)
         {
             Date = date;
             CarbonIntensity = carbonIntensity;

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="resourceGroup"> Resource Group. </param>
         /// <param name="resourceId"> The fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="itemName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="resourceId"/> is null. </exception>
-        internal ResourceCarbonEmissionItemDetail(double latestMonthEmissions, double previousMonthEmissions, string itemName, CarbonEmissionCategoryType categoryType, string subscriptionId, string resourceGroup, string resourceId) : base(latestMonthEmissions, previousMonthEmissions)
+        internal ResourceCarbonEmissionItemDetail(double latestMonthEmissions, double previousMonthEmissions, string itemName, CarbonEmissionCategoryType categoryType, string subscriptionId, string resourceGroup, ResourceIdentifier resourceId) : base(latestMonthEmissions, previousMonthEmissions)
         {
             Argument.AssertNotNull(itemName, nameof(itemName));
             Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             SubscriptionId = subscriptionId;
             ResourceGroup = resourceGroup;
             ResourceId = resourceId;
-            DataType = ResponseDataTypeEnum.ResourceItemDetailsData;
+            DataType = CarbonEmissionDataType.ResourceItemDetailsData;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceCarbonEmissionItemDetail"/>. </summary>
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="resourceId"> The fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="location"> Resource Location (e.g., 'east us'). </param>
         /// <param name="resourceType"> The type of resource, for example: microsoft.storage/storageaccounts. </param>
-        internal ResourceCarbonEmissionItemDetail(ResponseDataTypeEnum dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemName, CarbonEmissionCategoryType categoryType, string subscriptionId, string resourceGroup, string resourceId, string location, string resourceType) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, serializedAdditionalRawData)
+        internal ResourceCarbonEmissionItemDetail(CarbonEmissionDataType dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemName, CarbonEmissionCategoryType categoryType, string subscriptionId, string resourceGroup, ResourceIdentifier resourceId, AzureLocation? location, ResourceType? resourceType) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, serializedAdditionalRawData)
         {
             ItemName = itemName;
             CategoryType = categoryType;
@@ -77,10 +78,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <summary> Resource Group. </summary>
         public string ResourceGroup { get; }
         /// <summary> The fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary> Resource Location (e.g., 'east us'). </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> The type of resource, for example: microsoft.storage/storageaccounts. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
     }
 }

@@ -8,15 +8,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
     /// <summary>
     /// Shared query filter parameter to configure carbon emissions data queries for all different report type defined in ReportTypeEnum.
-    /// Please note <see cref="QueryFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="CarbonEmissionQueryFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ItemDetailsQueryFilter"/>, <see cref="MonthlySummaryReportQueryFilter"/>, <see cref="OverallSummaryReportQueryFilter"/>, <see cref="TopItemsMonthlySummaryReportQueryFilter"/> and <see cref="TopItemsSummaryReportQueryFilter"/>.
     /// </summary>
-    public abstract partial class QueryFilter
+    public abstract partial class CarbonEmissionQueryFilter
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,12 +51,12 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// </summary>
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="QueryFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CarbonEmissionQueryFilter"/>. </summary>
         /// <param name="dateRange"> The start and end dates for carbon emissions data. Required. For ItemDetailsReport and TopItemsSummaryReport, only one month of data is supported at a time, so start and end dates should be equal within DateRange (e.g., start: 2024-06-01 and end: 2024-06-01). </param>
         /// <param name="subscriptionList"> List of subscription IDs for which carbon emissions data is requested. Required. Each subscription ID should be in lowercase format. The max length of list is 100. </param>
         /// <param name="carbonScopeList"> List of carbon emission scopes. Required. Accepts one or more values from EmissionScopeEnum (e.g., Scope1, Scope2, Scope3) in list form. The output will include the total emissions for the specified scopes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dateRange"/>, <paramref name="subscriptionList"/> or <paramref name="carbonScopeList"/> is null. </exception>
-        protected QueryFilter(CarbonEmissionQueryDateRange dateRange, IEnumerable<string> subscriptionList, IEnumerable<CarbonEmissionScope> carbonScopeList)
+        protected CarbonEmissionQueryFilter(CarbonEmissionQueryDateRange dateRange, IEnumerable<string> subscriptionList, IEnumerable<CarbonEmissionScope> carbonScopeList)
         {
             Argument.AssertNotNull(dateRange, nameof(dateRange));
             Argument.AssertNotNull(subscriptionList, nameof(subscriptionList));
@@ -64,12 +65,12 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             DateRange = dateRange;
             SubscriptionList = subscriptionList.ToList();
             ResourceGroupUrlList = new ChangeTrackingList<string>();
-            ResourceTypeList = new ChangeTrackingList<string>();
-            LocationList = new ChangeTrackingList<string>();
+            ResourceTypeList = new ChangeTrackingList<ResourceType>();
+            LocationList = new ChangeTrackingList<AzureLocation>();
             CarbonScopeList = carbonScopeList.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="QueryFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CarbonEmissionQueryFilter"/>. </summary>
         /// <param name="reportType"> The ReportType requested for carbon emissions data. Required. Specifies how data is aggregated and displayed in the output, as explained in the ReportTypeEnum. </param>
         /// <param name="dateRange"> The start and end dates for carbon emissions data. Required. For ItemDetailsReport and TopItemsSummaryReport, only one month of data is supported at a time, so start and end dates should be equal within DateRange (e.g., start: 2024-06-01 and end: 2024-06-01). </param>
         /// <param name="subscriptionList"> List of subscription IDs for which carbon emissions data is requested. Required. Each subscription ID should be in lowercase format. The max length of list is 100. </param>
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="locationList"> List of locations(Azure Region Display Name) for carbon emissions data, with each location specified in lowercase (e.g., 'east us'). Optional. You can use the command 'az account list-locations -o table' to find Azure Region Display Names. </param>
         /// <param name="carbonScopeList"> List of carbon emission scopes. Required. Accepts one or more values from EmissionScopeEnum (e.g., Scope1, Scope2, Scope3) in list form. The output will include the total emissions for the specified scopes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QueryFilter(CarbonEmissionReportType reportType, CarbonEmissionQueryDateRange dateRange, IList<string> subscriptionList, IList<string> resourceGroupUrlList, IList<string> resourceTypeList, IList<string> locationList, IList<CarbonEmissionScope> carbonScopeList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CarbonEmissionQueryFilter(CarbonEmissionQueryReportType reportType, CarbonEmissionQueryDateRange dateRange, IList<string> subscriptionList, IList<string> resourceGroupUrlList, IList<ResourceType> resourceTypeList, IList<AzureLocation> locationList, IList<CarbonEmissionScope> carbonScopeList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReportType = reportType;
             DateRange = dateRange;
@@ -90,13 +91,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="QueryFilter"/> for deserialization. </summary>
-        internal QueryFilter()
+        /// <summary> Initializes a new instance of <see cref="CarbonEmissionQueryFilter"/> for deserialization. </summary>
+        internal CarbonEmissionQueryFilter()
         {
         }
 
         /// <summary> The ReportType requested for carbon emissions data. Required. Specifies how data is aggregated and displayed in the output, as explained in the ReportTypeEnum. </summary>
-        internal CarbonEmissionReportType ReportType { get; set; }
+        internal CarbonEmissionQueryReportType ReportType { get; set; }
         /// <summary> The start and end dates for carbon emissions data. Required. For ItemDetailsReport and TopItemsSummaryReport, only one month of data is supported at a time, so start and end dates should be equal within DateRange (e.g., start: 2024-06-01 and end: 2024-06-01). </summary>
         public CarbonEmissionQueryDateRange DateRange { get; }
         /// <summary> List of subscription IDs for which carbon emissions data is requested. Required. Each subscription ID should be in lowercase format. The max length of list is 100. </summary>
@@ -104,9 +105,9 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <summary> List of resource group URLs for carbon emissions data. Optional. Each URL must follow the format '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}', and should be in all lowercase. </summary>
         public IList<string> ResourceGroupUrlList { get; }
         /// <summary> List of resource types for carbon emissions data. Optional. Each resource type should be specified in lowercase, following the format 'microsoft.{service}/{resourceType}', e.g., 'microsoft.storage/storageaccounts'. </summary>
-        public IList<string> ResourceTypeList { get; }
+        public IList<ResourceType> ResourceTypeList { get; }
         /// <summary> List of locations(Azure Region Display Name) for carbon emissions data, with each location specified in lowercase (e.g., 'east us'). Optional. You can use the command 'az account list-locations -o table' to find Azure Region Display Names. </summary>
-        public IList<string> LocationList { get; }
+        public IList<AzureLocation> LocationList { get; }
         /// <summary> List of carbon emission scopes. Required. Accepts one or more values from EmissionScopeEnum (e.g., Scope1, Scope2, Scope3) in list form. The output will include the total emissions for the specified scopes. </summary>
         public IList<CarbonEmissionScope> CarbonScopeList { get; }
     }

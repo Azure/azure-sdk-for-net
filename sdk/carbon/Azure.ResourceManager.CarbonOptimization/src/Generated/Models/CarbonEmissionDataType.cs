@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
     /// <summary> The response data type of Carbon emission data. </summary>
-    internal readonly partial struct ResponseDataTypeEnum : IEquatable<ResponseDataTypeEnum>
+    internal readonly partial struct CarbonEmissionDataType : IEquatable<CarbonEmissionDataType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ResponseDataTypeEnum"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CarbonEmissionDataType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ResponseDataTypeEnum(string value)
+        public CarbonEmissionDataType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -35,39 +35,39 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         private const string ResourceGroupItemDetailsDataValue = "ResourceGroupItemDetailsData";
 
         /// <summary> The response data type for OverallSummaryReport. </summary>
-        public static ResponseDataTypeEnum OverallSummaryData { get; } = new ResponseDataTypeEnum(OverallSummaryDataValue);
+        public static CarbonEmissionDataType OverallSummaryData { get; } = new CarbonEmissionDataType(OverallSummaryDataValue);
         /// <summary> The response data type for MonthlySummaryReport. </summary>
-        public static ResponseDataTypeEnum MonthlySummaryData { get; } = new ResponseDataTypeEnum(MonthlySummaryDataValue);
+        public static CarbonEmissionDataType MonthlySummaryData { get; } = new CarbonEmissionDataType(MonthlySummaryDataValue);
         /// <summary> The response data type for TopItemsSummaryReport. </summary>
-        public static ResponseDataTypeEnum TopItemsSummaryData { get; } = new ResponseDataTypeEnum(TopItemsSummaryDataValue);
+        public static CarbonEmissionDataType TopItemsSummaryData { get; } = new CarbonEmissionDataType(TopItemsSummaryDataValue);
         /// <summary> The response data type for Resource's TopItemsSummaryReport. </summary>
-        public static ResponseDataTypeEnum ResourceTopItemsSummaryData { get; } = new ResponseDataTypeEnum(ResourceTopItemsSummaryDataValue);
+        public static CarbonEmissionDataType ResourceTopItemsSummaryData { get; } = new CarbonEmissionDataType(ResourceTopItemsSummaryDataValue);
         /// <summary> The response data type for ResourceGroup's TopItemsSummaryReport. </summary>
-        public static ResponseDataTypeEnum ResourceGroupTopItemsSummaryData { get; } = new ResponseDataTypeEnum(ResourceGroupTopItemsSummaryDataValue);
+        public static CarbonEmissionDataType ResourceGroupTopItemsSummaryData { get; } = new CarbonEmissionDataType(ResourceGroupTopItemsSummaryDataValue);
         /// <summary> The response data type for TopItemsMonthlySummaryReport. </summary>
-        public static ResponseDataTypeEnum TopItemsMonthlySummaryData { get; } = new ResponseDataTypeEnum(TopItemsMonthlySummaryDataValue);
+        public static CarbonEmissionDataType TopItemsMonthlySummaryData { get; } = new CarbonEmissionDataType(TopItemsMonthlySummaryDataValue);
         /// <summary> The response data type for Resource's TopItemsMonthlySummaryReport. </summary>
-        public static ResponseDataTypeEnum ResourceTopItemsMonthlySummaryData { get; } = new ResponseDataTypeEnum(ResourceTopItemsMonthlySummaryDataValue);
+        public static CarbonEmissionDataType ResourceTopItemsMonthlySummaryData { get; } = new CarbonEmissionDataType(ResourceTopItemsMonthlySummaryDataValue);
         /// <summary> The response data type for ResourceGroup's TopItemsMonthlySummaryReport. </summary>
-        public static ResponseDataTypeEnum ResourceGroupTopItemsMonthlySummaryData { get; } = new ResponseDataTypeEnum(ResourceGroupTopItemsMonthlySummaryDataValue);
+        public static CarbonEmissionDataType ResourceGroupTopItemsMonthlySummaryData { get; } = new CarbonEmissionDataType(ResourceGroupTopItemsMonthlySummaryDataValue);
         /// <summary> The response data type for ItemDetailsReport. </summary>
-        public static ResponseDataTypeEnum ItemDetailsData { get; } = new ResponseDataTypeEnum(ItemDetailsDataValue);
+        public static CarbonEmissionDataType ItemDetailsData { get; } = new CarbonEmissionDataType(ItemDetailsDataValue);
         /// <summary> The response data type for Resource's ItemDetailsReport. </summary>
-        public static ResponseDataTypeEnum ResourceItemDetailsData { get; } = new ResponseDataTypeEnum(ResourceItemDetailsDataValue);
+        public static CarbonEmissionDataType ResourceItemDetailsData { get; } = new CarbonEmissionDataType(ResourceItemDetailsDataValue);
         /// <summary> The response data type for ResourceGroup's ItemDetailsReport. </summary>
-        public static ResponseDataTypeEnum ResourceGroupItemDetailsData { get; } = new ResponseDataTypeEnum(ResourceGroupItemDetailsDataValue);
-        /// <summary> Determines if two <see cref="ResponseDataTypeEnum"/> values are the same. </summary>
-        public static bool operator ==(ResponseDataTypeEnum left, ResponseDataTypeEnum right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ResponseDataTypeEnum"/> values are not the same. </summary>
-        public static bool operator !=(ResponseDataTypeEnum left, ResponseDataTypeEnum right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResponseDataTypeEnum"/>. </summary>
-        public static implicit operator ResponseDataTypeEnum(string value) => new ResponseDataTypeEnum(value);
+        public static CarbonEmissionDataType ResourceGroupItemDetailsData { get; } = new CarbonEmissionDataType(ResourceGroupItemDetailsDataValue);
+        /// <summary> Determines if two <see cref="CarbonEmissionDataType"/> values are the same. </summary>
+        public static bool operator ==(CarbonEmissionDataType left, CarbonEmissionDataType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="CarbonEmissionDataType"/> values are not the same. </summary>
+        public static bool operator !=(CarbonEmissionDataType left, CarbonEmissionDataType right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CarbonEmissionDataType"/>. </summary>
+        public static implicit operator CarbonEmissionDataType(string value) => new CarbonEmissionDataType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ResponseDataTypeEnum other && Equals(other);
+        public override bool Equals(object obj) => obj is CarbonEmissionDataType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(ResponseDataTypeEnum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CarbonEmissionDataType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

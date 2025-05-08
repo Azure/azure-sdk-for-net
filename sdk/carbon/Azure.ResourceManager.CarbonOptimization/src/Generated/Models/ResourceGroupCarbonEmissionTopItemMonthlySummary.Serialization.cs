@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             writer.WritePropertyName("subscriptionId"u8);
             writer.WriteStringValue(SubscriptionId);
             writer.WritePropertyName("resourceGroupUrl"u8);
-            writer.WriteStringValue(ResourceGroupUri);
+            writer.WriteStringValue(ResourceGroupId);
         }
 
         ResourceGroupCarbonEmissionTopItemMonthlySummary IJsonModel<ResourceGroupCarbonEmissionTopItemMonthlySummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             CarbonEmissionCategoryType categoryType = default;
             string date = default;
             string subscriptionId = default;
-            string resourceGroupUrl = default;
-            ResponseDataTypeEnum dataType = default;
+            ResourceIdentifier resourceGroupUrl = default;
+            CarbonEmissionDataType dataType = default;
             double latestMonthEmissions = default;
             double previousMonthEmissions = default;
             double? monthOverMonthEmissionsChangeRatio = default;
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 }
                 if (property.NameEquals("resourceGroupUrl"u8))
                 {
-                    resourceGroupUrl = property.Value.GetString();
+                    resourceGroupUrl = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataType"u8))
                 {
-                    dataType = new ResponseDataTypeEnum(property.Value.GetString());
+                    dataType = new CarbonEmissionDataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("latestMonthEmissions"u8))

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
@@ -20,21 +21,21 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="categoryType"> ResourceGroup Item category. </param>
         /// <param name="date"> Monthly date string, format is yyyy-MM-dd. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
-        /// <param name="resourceGroupUri"> Resource Group url, the format is '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}'. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemName"/>, <paramref name="date"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupUri"/> is null. </exception>
-        internal ResourceGroupCarbonEmissionTopItemMonthlySummary(double latestMonthEmissions, double previousMonthEmissions, string itemName, CarbonEmissionCategoryType categoryType, string date, string subscriptionId, string resourceGroupUri) : base(latestMonthEmissions, previousMonthEmissions)
+        /// <param name="resourceGroupId"> Resource Group url, the format is '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}'. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="itemName"/>, <paramref name="date"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupId"/> is null. </exception>
+        internal ResourceGroupCarbonEmissionTopItemMonthlySummary(double latestMonthEmissions, double previousMonthEmissions, string itemName, CarbonEmissionCategoryType categoryType, string date, string subscriptionId, ResourceIdentifier resourceGroupId) : base(latestMonthEmissions, previousMonthEmissions)
         {
             Argument.AssertNotNull(itemName, nameof(itemName));
             Argument.AssertNotNull(date, nameof(date));
             Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(resourceGroupUri, nameof(resourceGroupUri));
+            Argument.AssertNotNull(resourceGroupId, nameof(resourceGroupId));
 
             ItemName = itemName;
             CategoryType = categoryType;
             Date = date;
             SubscriptionId = subscriptionId;
-            ResourceGroupUri = resourceGroupUri;
-            DataType = ResponseDataTypeEnum.ResourceGroupTopItemsMonthlySummaryData;
+            ResourceGroupId = resourceGroupId;
+            DataType = CarbonEmissionDataType.ResourceGroupTopItemsMonthlySummaryData;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceGroupCarbonEmissionTopItemMonthlySummary"/>. </summary>
@@ -48,14 +49,14 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="categoryType"> ResourceGroup Item category. </param>
         /// <param name="date"> Monthly date string, format is yyyy-MM-dd. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
-        /// <param name="resourceGroupUri"> Resource Group url, the format is '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}'. </param>
-        internal ResourceGroupCarbonEmissionTopItemMonthlySummary(ResponseDataTypeEnum dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemName, CarbonEmissionCategoryType categoryType, string date, string subscriptionId, string resourceGroupUri) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, serializedAdditionalRawData)
+        /// <param name="resourceGroupId"> Resource Group url, the format is '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}'. </param>
+        internal ResourceGroupCarbonEmissionTopItemMonthlySummary(CarbonEmissionDataType dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemName, CarbonEmissionCategoryType categoryType, string date, string subscriptionId, ResourceIdentifier resourceGroupId) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, serializedAdditionalRawData)
         {
             ItemName = itemName;
             CategoryType = categoryType;
             Date = date;
             SubscriptionId = subscriptionId;
-            ResourceGroupUri = resourceGroupUri;
+            ResourceGroupId = resourceGroupId;
             DataType = dataType;
         }
 
@@ -73,6 +74,6 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <summary> Subscription Id. </summary>
         public string SubscriptionId { get; }
         /// <summary> Resource Group url, the format is '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroup}'. </summary>
-        public string ResourceGroupUri { get; }
+        public ResourceIdentifier ResourceGroupId { get; }
     }
 }

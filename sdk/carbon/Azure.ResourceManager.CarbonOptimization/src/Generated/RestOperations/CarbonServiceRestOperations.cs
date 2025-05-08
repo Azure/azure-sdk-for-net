@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CarbonOptimization
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateQueryCarbonEmissionReportsRequestUri(QueryFilter queryParameters)
+        internal RequestUriBuilder CreateQueryCarbonEmissionReportsRequestUri(CarbonEmissionQueryFilter queryParameters)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CarbonOptimization
             return uri;
         }
 
-        internal HttpMessage CreateQueryCarbonEmissionReportsRequest(QueryFilter queryParameters)
+        internal HttpMessage CreateQueryCarbonEmissionReportsRequest(CarbonEmissionQueryFilter queryParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// <param name="queryParameters"> Query parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queryParameters"/> is null. </exception>
-        public async Task<Response<CarbonEmissionDataListResult>> QueryCarbonEmissionReportsAsync(QueryFilter queryParameters, CancellationToken cancellationToken = default)
+        public async Task<Response<CarbonEmissionListResult>> QueryCarbonEmissionReportsAsync(CarbonEmissionQueryFilter queryParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(queryParameters, nameof(queryParameters));
 
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.CarbonOptimization
             {
                 case 200:
                     {
-                        CarbonEmissionDataListResult value = default;
+                        CarbonEmissionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = CarbonEmissionDataListResult.DeserializeCarbonEmissionDataListResult(document.RootElement);
+                        value = CarbonEmissionListResult.DeserializeCarbonEmissionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// <param name="queryParameters"> Query parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queryParameters"/> is null. </exception>
-        public Response<CarbonEmissionDataListResult> QueryCarbonEmissionReports(QueryFilter queryParameters, CancellationToken cancellationToken = default)
+        public Response<CarbonEmissionListResult> QueryCarbonEmissionReports(CarbonEmissionQueryFilter queryParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(queryParameters, nameof(queryParameters));
 
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.CarbonOptimization
             {
                 case 200:
                     {
-                        CarbonEmissionDataListResult value = default;
+                        CarbonEmissionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = CarbonEmissionDataListResult.DeserializeCarbonEmissionDataListResult(document.RootElement);
+                        value = CarbonEmissionListResult.DeserializeCarbonEmissionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CarbonOptimization
             }
         }
 
-        internal RequestUriBuilder CreateQueryCarbonEmissionDataAvailableDateRangeRequestUri()
+        internal RequestUriBuilder CreateQueryCarbonEmissionAvailableDateRangeRequestUri()
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CarbonOptimization
             return uri;
         }
 
-        internal HttpMessage CreateQueryCarbonEmissionDataAvailableDateRangeRequest()
+        internal HttpMessage CreateQueryCarbonEmissionAvailableDateRangeRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -138,9 +138,9 @@ namespace Azure.ResourceManager.CarbonOptimization
 
         /// <summary> API for query carbon emission data available date range. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CarbonEmissionAvailableDateRange>> QueryCarbonEmissionDataAvailableDateRangeAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<CarbonEmissionAvailableDateRange>> QueryCarbonEmissionAvailableDateRangeAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateQueryCarbonEmissionDataAvailableDateRangeRequest();
+            using var message = CreateQueryCarbonEmissionAvailableDateRangeRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.CarbonOptimization
 
         /// <summary> API for query carbon emission data available date range. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CarbonEmissionAvailableDateRange> QueryCarbonEmissionDataAvailableDateRange(CancellationToken cancellationToken = default)
+        public Response<CarbonEmissionAvailableDateRange> QueryCarbonEmissionAvailableDateRange(CancellationToken cancellationToken = default)
         {
-            using var message = CreateQueryCarbonEmissionDataAvailableDateRangeRequest();
+            using var message = CreateQueryCarbonEmissionAvailableDateRangeRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

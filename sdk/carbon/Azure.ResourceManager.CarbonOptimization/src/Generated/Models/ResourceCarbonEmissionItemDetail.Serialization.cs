@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
-                writer.WriteStringValue(ResourceType);
+                writer.WriteStringValue(ResourceType.Value);
             }
         }
 
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             CarbonEmissionCategoryType categoryType = default;
             string subscriptionId = default;
             string resourceGroup = default;
-            string resourceId = default;
-            string location = default;
-            string resourceType = default;
-            ResponseDataTypeEnum dataType = default;
+            ResourceIdentifier resourceId = default;
+            AzureLocation? location = default;
+            ResourceType? resourceType = default;
+            CarbonEmissionDataType dataType = default;
             double latestMonthEmissions = default;
             double previousMonthEmissions = default;
             double? monthOverMonthEmissionsChangeRatio = default;
@@ -115,22 +115,30 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 }
                 if (property.NameEquals("resourceId"u8))
                 {
-                    resourceId = property.Value.GetString();
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("location"u8))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataType"u8))
                 {
-                    dataType = new ResponseDataTypeEnum(property.Value.GetString());
+                    dataType = new CarbonEmissionDataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("latestMonthEmissions"u8))

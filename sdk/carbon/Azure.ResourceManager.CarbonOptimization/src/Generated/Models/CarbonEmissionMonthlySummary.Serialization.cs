@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             }
             string date = default;
             double carbonIntensity = default;
-            ResponseDataTypeEnum dataType = default;
+            CarbonEmissionDataType dataType = default;
             double latestMonthEmissions = default;
             double previousMonthEmissions = default;
             double? monthOverMonthEmissionsChangeRatio = default;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 }
                 if (property.NameEquals("dataType"u8))
                 {
-                    dataType = new ResponseDataTypeEnum(property.Value.GetString());
+                    dataType = new CarbonEmissionDataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("latestMonthEmissions"u8))

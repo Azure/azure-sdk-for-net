@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             {
                 return null;
             }
-            CarbonEmissionReportType reportType = default;
+            CarbonEmissionQueryReportType reportType = default;
             CarbonEmissionQueryDateRange dateRange = default;
             IList<string> subscriptionList = default;
             IList<string> resourceGroupUrlList = default;
-            IList<string> resourceTypeList = default;
-            IList<string> locationList = default;
+            IList<ResourceType> resourceTypeList = default;
+            IList<AzureLocation> locationList = default;
             IList<CarbonEmissionScope> carbonScopeList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             {
                 if (property.NameEquals("reportType"u8))
                 {
-                    reportType = new CarbonEmissionReportType(property.Value.GetString());
+                    reportType = new CarbonEmissionQueryReportType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dateRange"u8))
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceType> array = new List<ResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new ResourceType(item.GetString()));
                     }
                     resourceTypeList = array;
                     continue;
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locationList = array;
                     continue;
@@ -151,8 +151,8 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 dateRange,
                 subscriptionList,
                 resourceGroupUrlList ?? new ChangeTrackingList<string>(),
-                resourceTypeList ?? new ChangeTrackingList<string>(),
-                locationList ?? new ChangeTrackingList<string>(),
+                resourceTypeList ?? new ChangeTrackingList<ResourceType>(),
+                locationList ?? new ChangeTrackingList<AzureLocation>(),
                 carbonScopeList,
                 serializedAdditionalRawData);
         }

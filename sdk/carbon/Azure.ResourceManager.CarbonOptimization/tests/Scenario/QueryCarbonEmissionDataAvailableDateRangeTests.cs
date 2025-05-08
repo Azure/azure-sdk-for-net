@@ -1,15 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CarbonOptimization.Models;
 using Azure.ResourceManager.Resources;
-using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.CarbonOptimization.Tests
@@ -39,31 +35,12 @@ namespace Azure.ResourceManager.CarbonOptimization.Tests
         public async Task TestQueryCarbonEmissionDataAvailableDateRange()
         {
             // invoke the operation
-            CarbonEmissionDataAvailableDateRange result = await Tenant.QueryCarbonEmissionDataAvailableDateRangeCarbonServiceAsync();
+            CarbonEmissionAvailableDateRange result = await Tenant.QueryCarbonEmissionAvailableDateRangeAsync();
             Assert.IsNotNull(result);
 
             // validate the result startDate and endDate format is like 'yyyy-MM-dd'
-            Assert.IsNotNull(result.StartDate);
-            Assert.IsNotNull(result.EndDate);
-
-            string format = "yyyy-MM-dd";
-            bool isValid = DateTime.TryParseExact(
-                result.StartDate,
-                format,
-                CultureInfo.InvariantCulture,
-                DateTimeStyles.None,
-                out DateTime parsedDate
-            );
-            Assert.IsTrue(isValid, $"StartDate '{result.StartDate}' is not in the expected format '{format}'.");
-
-            isValid = DateTime.TryParseExact(
-                result.EndDate,
-                format,
-                CultureInfo.InvariantCulture,
-                DateTimeStyles.None,
-                out parsedDate
-            );
-            Assert.IsTrue(isValid, $"EndDate '{result.EndDate}' is not in the expected format '{format}'.");
+            Assert.IsNotNull(result.StartOn);
+            Assert.IsNotNull(result.EndOn);
         }
     }
 }

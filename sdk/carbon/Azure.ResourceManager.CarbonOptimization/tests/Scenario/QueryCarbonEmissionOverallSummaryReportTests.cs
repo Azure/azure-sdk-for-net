@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Tests
         {
             // invoke the operation
 
-            CarbonEmissionDataAvailableDateRange availableDatesRange = await Tenant.QueryCarbonEmissionDataAvailableDateRangeCarbonServiceAsync().ConfigureAwait(false);
+            CarbonEmissionAvailableDateRange availableDatesRange = await Tenant.QueryCarbonEmissionAvailableDateRangeAsync().ConfigureAwait(false);
 
             var subscriptionIds = new List<string>();
 
@@ -50,19 +50,19 @@ namespace Azure.ResourceManager.CarbonOptimization.Tests
                     break;
             }
 
-            QueryFilter queryParameters = new OverallSummaryReportQueryFilter(
-                new DateRange(DateTimeOffset.Parse(availableDatesRange.StartDate), DateTimeOffset.Parse(availableDatesRange.EndDate)),
+            CarbonEmissionQueryFilter queryParameters = new OverallSummaryReportQueryFilter(
+                new CarbonEmissionQueryDateRange(availableDatesRange.StartOn, availableDatesRange.EndOn),
                 subscriptionIds.ToArray(),
-                new EmissionScopeEnum[] { EmissionScopeEnum.Scope1, EmissionScopeEnum.Scope3 });
+                new CarbonEmissionScope[] { CarbonEmissionScope.Scope1, CarbonEmissionScope.Scope3 });
 
-            CarbonEmissionDataListResult result = await Tenant.QueryCarbonEmissionReportsCarbonServicesAsync(queryParameters);
+            CarbonEmissionListResult result = await Tenant.QueryCarbonEmissionReportsAsync(queryParameters);
 
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Value);
 
             var resultItem = (CarbonEmissionOverallSummary)result.Value[0];
             Assert.IsNotNull(resultItem.LatestMonthEmissions);
-            Assert.IsTrue(resultItem.DataType == ResponseDataTypeEnum.OverallSummaryData);
+            Assert.IsTrue(resultItem.DataType == CarbonEmissionDataType.OverallSummaryData);
         }
     }
 }

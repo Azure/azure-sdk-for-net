@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
-    internal partial class UnknownQueryFilter : IUtf8JsonSerializable, IJsonModel<QueryFilter>
+    internal partial class UnknownCarbonEmissionQueryFilter : IUtf8JsonSerializable, IJsonModel<CarbonEmissionQueryFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CarbonEmissionQueryFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<QueryFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CarbonEmissionQueryFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,28 +28,28 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QueryFilter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryFilter)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CarbonEmissionQueryFilter)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
         }
 
-        QueryFilter IJsonModel<QueryFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CarbonEmissionQueryFilter IJsonModel<CarbonEmissionQueryFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QueryFilter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryFilter)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CarbonEmissionQueryFilter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeQueryFilter(document.RootElement, options);
+            return DeserializeCarbonEmissionQueryFilter(document.RootElement, options);
         }
 
-        internal static UnknownQueryFilter DeserializeUnknownQueryFilter(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownCarbonEmissionQueryFilter DeserializeUnknownCarbonEmissionQueryFilter(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             {
                 return null;
             }
-            CarbonEmissionReportType reportType = "Unknown";
+            CarbonEmissionQueryReportType reportType = "Unknown";
             CarbonEmissionQueryDateRange dateRange = default;
             IList<string> subscriptionList = default;
             IList<string> resourceGroupUrlList = default;
-            IList<string> resourceTypeList = default;
-            IList<string> locationList = default;
+            IList<ResourceType> resourceTypeList = default;
+            IList<AzureLocation> locationList = default;
             IList<CarbonEmissionScope> carbonScopeList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             {
                 if (property.NameEquals("reportType"u8))
                 {
-                    reportType = new CarbonEmissionReportType(property.Value.GetString());
+                    reportType = new CarbonEmissionQueryReportType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dateRange"u8))
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceType> array = new List<ResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new ResourceType(item.GetString()));
                     }
                     resourceTypeList = array;
                     continue;
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locationList = array;
                     continue;
@@ -146,46 +146,46 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownQueryFilter(
+            return new UnknownCarbonEmissionQueryFilter(
                 reportType,
                 dateRange,
                 subscriptionList,
                 resourceGroupUrlList ?? new ChangeTrackingList<string>(),
-                resourceTypeList ?? new ChangeTrackingList<string>(),
-                locationList ?? new ChangeTrackingList<string>(),
+                resourceTypeList ?? new ChangeTrackingList<ResourceType>(),
+                locationList ?? new ChangeTrackingList<AzureLocation>(),
                 carbonScopeList,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<QueryFilter>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CarbonEmissionQueryFilter>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QueryFilter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QueryFilter)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CarbonEmissionQueryFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
-        QueryFilter IPersistableModel<QueryFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CarbonEmissionQueryFilter IPersistableModel<CarbonEmissionQueryFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QueryFilter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeQueryFilter(document.RootElement, options);
+                        return DeserializeCarbonEmissionQueryFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QueryFilter)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CarbonEmissionQueryFilter)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<QueryFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CarbonEmissionQueryFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
     /// <summary> Query filter parameter to configure TopItemsMonthlySummaryReport queries. </summary>
-    public partial class TopItemsMonthlySummaryReportQueryFilter : QueryFilter
+    public partial class TopItemsMonthlySummaryReportQueryFilter : CarbonEmissionQueryFilter
     {
         /// <summary> Initializes a new instance of <see cref="TopItemsMonthlySummaryReportQueryFilter"/>. </summary>
         /// <param name="dateRange"> The start and end dates for carbon emissions data. Required. For ItemDetailsReport and TopItemsSummaryReport, only one month of data is supported at a time, so start and end dates should be equal within DateRange (e.g., start: 2024-06-01 and end: 2024-06-01). </param>
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
 
             CategoryType = categoryType;
             TopItems = topItems;
-            ReportType = CarbonEmissionReportType.TopItemsMonthlySummaryReport;
+            ReportType = CarbonEmissionQueryReportType.TopItemsMonthlySummaryReport;
         }
 
         /// <summary> Initializes a new instance of <see cref="TopItemsMonthlySummaryReportQueryFilter"/>. </summary>
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="categoryType"> Specifies the category type to retrieve top-emitting items, aggregated by month. See supported types in CategoryTypeEnum. </param>
         /// <param name="topItems"> The number of top items to return, based on emissions. Must be between 1 and 10. </param>
-        internal TopItemsMonthlySummaryReportQueryFilter(CarbonEmissionReportType reportType, CarbonEmissionQueryDateRange dateRange, IList<string> subscriptionList, IList<string> resourceGroupUrlList, IList<string> resourceTypeList, IList<string> locationList, IList<CarbonEmissionScope> carbonScopeList, IDictionary<string, BinaryData> serializedAdditionalRawData, CarbonEmissionCategoryType categoryType, int topItems) : base(reportType, dateRange, subscriptionList, resourceGroupUrlList, resourceTypeList, locationList, carbonScopeList, serializedAdditionalRawData)
+        internal TopItemsMonthlySummaryReportQueryFilter(CarbonEmissionQueryReportType reportType, CarbonEmissionQueryDateRange dateRange, IList<string> subscriptionList, IList<string> resourceGroupUrlList, IList<ResourceType> resourceTypeList, IList<AzureLocation> locationList, IList<CarbonEmissionScope> carbonScopeList, IDictionary<string, BinaryData> serializedAdditionalRawData, CarbonEmissionCategoryType categoryType, int topItems) : base(reportType, dateRange, subscriptionList, resourceGroupUrlList, resourceTypeList, locationList, carbonScopeList, serializedAdditionalRawData)
         {
             CategoryType = categoryType;
             TopItems = topItems;

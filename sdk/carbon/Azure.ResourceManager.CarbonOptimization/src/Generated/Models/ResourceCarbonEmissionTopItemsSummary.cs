@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="resourceGroup"> Resource group name. </param>
         /// <param name="resourceId"> Resource Id, The URI of the resource for the Resource Category. This identifies the resource being reported. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="itemName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="resourceId"/> is null. </exception>
-        internal ResourceCarbonEmissionTopItemsSummary(double latestMonthEmissions, double previousMonthEmissions, string itemName, CarbonEmissionCategoryType categoryType, string subscriptionId, string resourceGroup, string resourceId) : base(latestMonthEmissions, previousMonthEmissions)
+        internal ResourceCarbonEmissionTopItemsSummary(double latestMonthEmissions, double previousMonthEmissions, string itemName, CarbonEmissionCategoryType categoryType, string subscriptionId, string resourceGroup, ResourceIdentifier resourceId) : base(latestMonthEmissions, previousMonthEmissions)
         {
             Argument.AssertNotNull(itemName, nameof(itemName));
             Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             SubscriptionId = subscriptionId;
             ResourceGroup = resourceGroup;
             ResourceId = resourceId;
-            DataType = ResponseDataTypeEnum.ResourceTopItemsSummaryData;
+            DataType = CarbonEmissionDataType.ResourceTopItemsSummaryData;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceCarbonEmissionTopItemsSummary"/>. </summary>
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="resourceGroup"> Resource group name. </param>
         /// <param name="resourceId"> Resource Id, The URI of the resource for the Resource Category. This identifies the resource being reported. </param>
-        internal ResourceCarbonEmissionTopItemsSummary(ResponseDataTypeEnum dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemName, CarbonEmissionCategoryType categoryType, string subscriptionId, string resourceGroup, string resourceId) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, serializedAdditionalRawData)
+        internal ResourceCarbonEmissionTopItemsSummary(CarbonEmissionDataType dataType, double latestMonthEmissions, double previousMonthEmissions, double? monthOverMonthEmissionsChangeRatio, double? monthlyEmissionsChangeValue, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemName, CarbonEmissionCategoryType categoryType, string subscriptionId, string resourceGroup, ResourceIdentifier resourceId) : base(dataType, latestMonthEmissions, previousMonthEmissions, monthOverMonthEmissionsChangeRatio, monthlyEmissionsChangeValue, serializedAdditionalRawData)
         {
             ItemName = itemName;
             CategoryType = categoryType;
@@ -73,6 +74,6 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <summary> Resource group name. </summary>
         public string ResourceGroup { get; }
         /// <summary> Resource Id, The URI of the resource for the Resource Category. This identifies the resource being reported. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
     }
 }
