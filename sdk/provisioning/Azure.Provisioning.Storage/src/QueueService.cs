@@ -13,4 +13,12 @@ public partial class QueueService
     /// </summary>
     private partial BicepValue<string> GetNameDefaultValue() =>
         new StringLiteralExpression("default");
+
+    /// <summary>
+    /// Gets the Name.
+    /// </summary>
+    public BicepValue<string> Name
+    {
+        get { Initialize(); return _name!; }
+    }
 }
