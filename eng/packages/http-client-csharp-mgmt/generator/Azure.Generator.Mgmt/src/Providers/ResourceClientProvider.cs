@@ -33,7 +33,6 @@ namespace Azure.Generator.Management.Providers
     {
         private IReadOnlyCollection<InputServiceMethod> _resourceServiceMethods;
         private readonly IReadOnlyList<string> _contextualParameters;
-        private bool _isSingleton;
 
         private FieldProvider _dataField;
         private FieldProvider _resourcetypeField;
@@ -45,7 +44,7 @@ namespace Azure.Generator.Management.Providers
         {
             var resourceMetadata = inputClient.Decorators.Single(d => d.Name.Equals(KnownDecorators.ResourceMetadata));
             var codeModelId = resourceMetadata.Arguments?[KnownDecorators.ResourceModel].ToObjectFromJson<string>()!;
-            _isSingleton = resourceMetadata.Arguments?.TryGetValue("isSingleton", out var isSingleton) == true ? isSingleton.ToObjectFromJson<string>() == "true" : false;
+            IsSingleton = resourceMetadata.Arguments?.TryGetValue("isSingleton", out var isSingleton) == true ? isSingleton.ToObjectFromJson<bool>() : false;
             var resourceType = resourceMetadata.Arguments?[KnownDecorators.ResourceType].ToObjectFromJson<string>()!;
             _resourcetypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resourceType));
             var resourceModel = ManagementClientGenerator.Instance.InputLibrary.GetModelByCrossLanguageDefinitionId(codeModelId)!;
@@ -85,6 +84,8 @@ namespace Azure.Generator.Management.Providers
 
         internal ModelProvider ResourceData { get; }
         internal string SpecName { get; }
+
+        public bool IsSingleton { get; }
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
@@ -214,7 +215,7 @@ namespace Azure.Generator.Management.Providers
                 }
 
                 // only update for non-singleton resource
-                var isUpdateOnly = method.Operation.HttpMethod == HttpMethod.Put.ToString() && !_isSingleton;
+                var isUpdateOnly = method.Operation.HttpMethod == HttpMethod.Put.ToString() && !IsSingleton;
                 operationMethods.Add(BuildOperationMethod(method, convenienceMethod, false, isUpdateOnly));
                 var asyncConvenienceMethod = GetCorrespondingConvenienceMethod(method.Operation, true);
                 operationMethods.Add(BuildOperationMethod(method, asyncConvenienceMethod, true, isUpdateOnly));
