@@ -18,6 +18,8 @@ namespace MgmtTypeSpec.Models
     /// <summary></summary>
     public partial class UserAssignedIdentity : IJsonModel<UserAssignedIdentity>
     {
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<UserAssignedIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -61,6 +63,8 @@ namespace MgmtTypeSpec.Models
             }
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         UserAssignedIdentity IJsonModel<UserAssignedIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -76,6 +80,8 @@ namespace MgmtTypeSpec.Models
             return DeserializeUserAssignedIdentity(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static UserAssignedIdentity DeserializeUserAssignedIdentity(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -113,6 +119,7 @@ namespace MgmtTypeSpec.Models
             return new UserAssignedIdentity(clientId, principalId, additionalBinaryDataProperties);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<UserAssignedIdentity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -122,12 +129,14 @@ namespace MgmtTypeSpec.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(UserAssignedIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         UserAssignedIdentity IPersistableModel<UserAssignedIdentity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
@@ -147,6 +156,7 @@ namespace MgmtTypeSpec.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<UserAssignedIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="userAssignedIdentity"> The <see cref="UserAssignedIdentity"/> to serialize into <see cref="RequestContent"/>. </param>
