@@ -23,14 +23,9 @@
     </InternalsVisibleTo>
   </ItemGroup>
 
-  <!-- TEMP until Azure.Core is released with updated SCM version -->
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\core\System.ClientModel\src\System.ClientModel.csproj" />
-  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
-  <!-- ==============================================================-->
 
   <Choose>
     <When Condition="'$(GAServiceVersionLabel)' != ''">
