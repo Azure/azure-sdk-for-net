@@ -22,6 +22,10 @@ namespace MgmtTypeSpec
         {
         }
 
+        /// <summary> Initializes a new instance of Foos. </summary>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
         internal Foos(HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             _endpoint = endpoint;

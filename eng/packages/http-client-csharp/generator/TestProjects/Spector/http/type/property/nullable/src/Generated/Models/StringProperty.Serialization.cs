@@ -15,6 +15,8 @@ namespace _Type.Property.Nullable
 {
     public partial class StringProperty : IJsonModel<StringProperty>
     {
+        internal StringProperty() => throw null;
+
         void IJsonModel<StringProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

@@ -15,12 +15,22 @@ namespace MgmtTypeSpec.Models
     /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </summary>
     public partial class TrackedResource : Resource
     {
+        /// <summary> Initializes a new instance of <see cref="TrackedResource"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         internal TrackedResource(string location)
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Location = location;
         }
 
+        /// <summary> Initializes a new instance of <see cref="TrackedResource"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         internal TrackedResource(ResourceIdentifier id, string name, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location) : base(id, name, @type, systemData, additionalBinaryDataProperties)
         {
             Tags = tags;
