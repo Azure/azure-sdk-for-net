@@ -46,41 +46,6 @@ namespace Azure.Storage.DataMovement
         private CancellationToken _cancellationToken => _cancellationTokenSource.Token;
 
         private readonly Func<string> _generateTransferId;
-        //private TransferOptions _transferOptions;
-        //private TransferOptions TransferOptions
-        //{
-        //    get => _transferOptions;
-        //    set
-        //    {
-        //        if (value is null)
-        //        {
-        //            _transferOptions = new TransferOptions()
-        //            {
-        //                ProgressHandlerOptions = new()
-        //                {
-        //                    TrackBytesTransferred = true
-        //                }
-        //            };
-        //        }
-        //        else if (value.ProgressHandlerOptions == null)
-        //        {
-        //            value.ProgressHandlerOptions = new()
-        //            {
-        //                TrackBytesTransferred = true
-        //            };
-        //            _transferOptions = value;
-        //        }
-        //        else if (value.ProgressHandlerOptions.TrackBytesTransferred == false)
-        //        {
-        //            value.ProgressHandlerOptions.TrackBytesTransferred = true;
-        //            _transferOptions = value;
-        //        }
-        //        else
-        //        {
-        //            _transferOptions = value;
-        //        }
-        //    }
-        //}
 
         /// <summary>
         /// Gets the <see cref="ThroughputMonitor"/> instance used to monitor the throughput of data transfers.
