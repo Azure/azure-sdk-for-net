@@ -35,14 +35,45 @@ export const resourceMetadataRegex =
   "Azure\\.ClientGenerator\\.Core\\.@resourceSchema";
 
 export function updateClients(codeModel: CodeModel) {
+  // first we flatten all possible clients in the code model
+  const clients = getAllClients(codeModel);
+
   // first pass to update all the clients with their own information
   const metadata: Map<InputClient, ResourceMetadata> = new Map();
-  for (const client of codeModel.clients) {
+  for (const client of clients) {
     gatherResourceMetadata(codeModel, client, metadata);
+  }
+
+  // populate parent resource
+
+  // add the decorator to the client
+  for (const client of clients) {
+    const resourceMetadata = metadata.get(client);
+    if (resourceMetadata) {
+      addResourceMetadata(client, resourceMetadata);
+    }
   }
 }
 
-export function gatherResourceMetadata(
+function getAllClients(codeModel: CodeModel): InputClient[] {
+  const clients: InputClient[] = [];
+  for (const client of codeModel.clients) {
+    traverseClient(client);
+  }
+
+  return clients;
+
+  function traverseClient(client: InputClient) {
+    clients.push(client);
+    if (client.children) {
+      for (const child of client.children) {
+        traverseClient(child);
+      }
+    }
+  }
+}
+
+function gatherResourceMetadata(
   codeModel: CodeModel,
   client: InputClient,
   metadataMap: Map<InputClient, ResourceMetadata>
@@ -114,10 +145,22 @@ export function gatherResourceMetadata(
     // resourceMetadataDecorator.arguments["resourceType"] = resourceType;
     // client.decorators.push(resourceMetadataDecorator);
   }
+}
 
-  if (client.children) {
-    for (const child of client.children) {
-      gatherResourceMetadata(codeModel, child, metadataMap);
+function addResourceMetadata(client: InputClient, metadata: ResourceMetadata) {
+  const resourceMetadataDecorator: DecoratorInfo = {
+    name: resourceMetadata,
+    arguments: {
+      resourceModel: metadata.resourceModel.crossLanguageDefinitionId,
+      isSingleton: metadata.isSingleton,
+      resourceType: metadata.resourceType,
+      parentResource: metadata.parentResourceClient?.crossLanguageDefinitionId
     }
+  };
+
+  if (!client.decorators) {
+    client.decorators = [];
   }
+
+  client.decorators.push(resourceMetadataDecorator);
 }
