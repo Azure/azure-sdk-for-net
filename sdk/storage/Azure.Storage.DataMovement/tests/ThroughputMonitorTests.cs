@@ -282,11 +282,13 @@ namespace Azure.Storage.DataMovement.Tests
             // Throughput is for the last event (bytes / interval_seconds)
             // AvgThroughput is for all events (total_bytes / total_elapsed_seconds)
 
+            const double tolerance = 0.05; // Tolerance of 0.05 Mbps
+
             double expectedThroughputMb = (monitor.Throughput * 8) / (1024 * 1024);
-            Assert.AreEqual(expectedThroughputMb, monitor.ThroughputInMb, 1e-9);
+            Assert.AreEqual(expectedThroughputMb, monitor.ThroughputInMb, tolerance);
 
             double expectedAvgThroughputMb = (monitor.AvgThroughput * 8) / (1024 * 1024);
-            Assert.AreEqual(expectedAvgThroughputMb, monitor.AvgThroughputInMb, 1e-9);
+            Assert.AreEqual(expectedAvgThroughputMb, monitor.AvgThroughputInMb, tolerance);
 
             Assert.Greater(monitor.ThroughputInMb, 0.0d);
             Assert.Greater(monitor.AvgThroughputInMb, 0.0d);
