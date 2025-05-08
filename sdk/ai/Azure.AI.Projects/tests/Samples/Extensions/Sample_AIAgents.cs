@@ -37,7 +37,6 @@ public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
             instructions: "You are a personal math tutor. Write and run code to answer math questions."
         );
 
-        /*
         //// Step 2: Create a thread
         PersistentAgentThread thread = agentsClient.Threads.CreateThread();
 
@@ -70,7 +69,6 @@ public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
             run.Status,
             run.LastError?.Message);
 
-
         Pageable<ThreadMessage> messages
             = agentsClient.Messages.GetMessages(
                 threadId: thread.Id, order: ListSortOrder.Ascending);
@@ -93,7 +91,6 @@ public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
         }
 
         agentsClient.Threads.DeleteThread(threadId: thread.Id);
-        */
         agentsClient.Administration.DeleteAgent(agentId: agent.Id);
         #endregion
 
