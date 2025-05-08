@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,7 +12,7 @@ using NUnit.Framework;
 namespace Azure.ResourceManager.OracleDatabase.Tests.Models
 {
     [TestFixture]
-    public class ExadbVmClusterPropertiesTests : OracleDatabaseManagementTestBase
+    public class ExaScaleTest : OracleDatabaseManagementTestBase
     {
         private ResourceIdentifier _vnetId;
         private ResourceIdentifier _subnetId;
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
 
         private const string DefaultSSHKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDAIdCVcZiGBSybKTvFBfrfVhYWRImneQB9ovsU/GYqPLyDpXkpdGusYc5OL6zHq27uKtJ+//0wCoENJmvBjiRMUWMKZ4NcUkxVWj+ipJTFDO1t3KRkpDCLQEBEihOaNHHN9j2ZggUxOQBgCIwjjH+B+6Z1KpvpmvDhbMhmmZJ6R4yJI+fE80SFCV0G5sZuq38W+eK6FQRNINCmayWLNYw8sk1cBzqxMTo7OeVRxjyfQYRS1o+sC1CkxT7BYw30qY/xzR45yxkRZ5FkugPR5MQ1NApRPGNOuZD1MRwcG1AZ5JfiX9ckz5xaKjfm0hhfwh/qT7mH6fXiX7nAmkvLxu6Xnzy3aign4e99QSWPkpjJ0X1gluLzR7/gwYMjA6sfflRNe/FP937kJTIa1F5BonWe9eS580IXoTUNaiAanOEf5fBdji4JEDk7nXKV7kTECkCX9ZDWwB8q/ayIXwmNMCgxCpdx2F6UWOGvF5UWJkyD3BxTgMOiPwxMMEvCGIIdaGU= generated-by-azure";
 
-        public ExadbVmClusterPropertiesTests() : base(true, RecordedTestMode.Playback)
+        public ExaScaleTest() : base(true, RecordedTestMode.Playback)
         {
         }
 
@@ -257,7 +260,6 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
 
         private ExadbVmClusterData GetDefaultExadbVmClusterData(string clusterName)
         {
-
             var exadbVmClusterProperties = new ExadbVmClusterProperties(
                 _vnetId,
                 _subnetId,
@@ -276,7 +278,6 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
                 TimeZone = "UTC",
                 Domain = "example.com",
                 SystemVersion = "19.2.12.0.0.200317",
-                GiVersion = "23.8.0.25.04"
                 ScanListenerPortTcp = 1521,
                 ScanListenerPortTcpSsl = 2484
             };
@@ -287,12 +288,6 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
             {
                 Properties = exadbVmClusterProperties
             };
-        }
-
-        private async Task<ExadbVmClusterCollection> GetExadbVmClusterCollectionAsync(string resourceGroupName)
-        {
-            ResourceGroupResource resourceGroup = await DefaultSubscription.GetResourceGroups().GetAsync(resourceGroupName);
-            return resourceGroup.GetExadbVmClusters();
         }
     }
 }

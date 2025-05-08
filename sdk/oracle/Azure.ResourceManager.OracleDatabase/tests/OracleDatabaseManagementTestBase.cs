@@ -66,5 +66,11 @@ namespace Azure.ResourceManager.OracleDatabase.Tests
             ResourceGroupResource rg = await GetResourceGroupResourceAsync(resourceGroupName);
             return rg.GetAutonomousDatabases();
         }
+
+         protected async Task<ExadbVmClusterCollection> GetExadbVmClusterCollectionAsync(string resourceGroupName)
+        {
+            ResourceGroupResource rg = await DefaultSubscription.GetResourceGroups().GetAsync(resourceGroupName);
+            return rg.GetExadbVmClusters();
+        }
     }
 }
