@@ -34,7 +34,9 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var dnsResolverDomainListName = Recording.GenerateAssetName("dnsResolverDomainList-");
             await CreateDnsResolverDomainListCollectionAsync();
-            var dnsResolverDomainListData = new DnsResolverDomainListData(this.DefaultLocation, new List<string>() { "example.com.", "contoso.com." });
+            var dnsResolverDomainListData = new DnsResolverDomainListData(this.DefaultLocation);
+            dnsResolverDomainListData.Domains.Add("example.com.");
+            dnsResolverDomainListData.Domains.Add("contoso.com.");
 
             // ACT
             var dnsResolverDomainList = await _dnsResolverDomainListCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverDomainListName, dnsResolverDomainListData);
@@ -45,12 +47,31 @@ namespace Azure.ResourceManager.DnsResolver.Tests
 
         [Test]
         [RecordedTest]
+        public async Task CreateDnsResolverDomainListNoDomainsAsync()
+        {
+            // ARRANGE
+            var dnsResolverDomainListName = Recording.GenerateAssetName("dnsResolverDomainList-");
+            await CreateDnsResolverDomainListCollectionAsync();
+            var dnsResolverDomainListData = new DnsResolverDomainListData(this.DefaultLocation);
+
+            // ACT
+            var dnsResolverDomainList = await _dnsResolverDomainListCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverDomainListName, dnsResolverDomainListData);
+
+            // ASSERT
+            Assert.AreEqual(dnsResolverDomainList.Value.Data.ProvisioningState, DnsResolverProvisioningState.Succeeded);
+            Assert.AreEqual(dnsResolverDomainList.Value.Data.Domains.Count, 0);
+        }
+
+        [Test]
+        [RecordedTest]
         public async Task GetDnsResolverDomainListAsync()
         {
             // ARRANGE
             var dnsResolverDomainListName = Recording.GenerateAssetName("dnsResolverDomainList-");
             await CreateDnsResolverDomainListCollectionAsync();
-            var dnsResolverDomainListData = new DnsResolverDomainListData(this.DefaultLocation, new List<string>() { "example.com.", "contoso.com." });
+            var dnsResolverDomainListData = new DnsResolverDomainListData(this.DefaultLocation);
+            dnsResolverDomainListData.Domains.Add("example.com.");
+            dnsResolverDomainListData.Domains.Add("contoso.com.");
 
             await _dnsResolverDomainListCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverDomainListName, dnsResolverDomainListData);
 
@@ -70,7 +91,9 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
             await CreateDnsResolverDomainListCollectionAsync();
-            var dnsResolverDomainListData = new DnsResolverDomainListData(this.DefaultLocation, new List<string>() { "example.com.", "contoso.com." });
+            var dnsResolverDomainListData = new DnsResolverDomainListData(this.DefaultLocation);
+            dnsResolverDomainListData.Domains.Add("example.com.");
+            dnsResolverDomainListData.Domains.Add("contoso.com.");
 
             var createdDnsResolverDomainList = await _dnsResolverDomainListCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverDomainListName, dnsResolverDomainListData);
 
@@ -88,7 +111,9 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var dnsResolverDomainListName = Recording.GenerateAssetName("dnsResolverDomainList-");
             await CreateDnsResolverDomainListCollectionAsync();
-            var dnsResolverDomainListData = new DnsResolverDomainListData(this.DefaultLocation, new List<string>() { "example.com." , "contoso.com."});
+            var dnsResolverDomainListData = new DnsResolverDomainListData(this.DefaultLocation);
+            dnsResolverDomainListData.Domains.Add("example.com.");
+            dnsResolverDomainListData.Domains.Add("contoso.com.");
 
             var dnsResolverDomainList = await _dnsResolverDomainListCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverDomainListName, dnsResolverDomainListData);
 

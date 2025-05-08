@@ -307,10 +307,11 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="location"> The location. </param>
         /// <param name="etag"> ETag of the DNS resolver domain list. </param>
         /// <param name="domains"> The domains in the domain list. </param>
+        /// <param name="domainsUri"> The URL for bulk upload or download for domain lists containing larger set of domains. </param>
         /// <param name="provisioningState"> The current provisioning state of the DNS resolver domain list. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the DNS resolver domain list resource. </param>
         /// <returns> A new <see cref="DnsResolver.DnsResolverDomainListData"/> instance for mocking. </returns>
-        public static DnsResolverDomainListData DnsResolverDomainListData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, IEnumerable<string> domains = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null)
+        public static DnsResolverDomainListData DnsResolverDomainListData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, IEnumerable<string> domains = null, Uri domainsUri = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null)
         {
             tags ??= new Dictionary<string, string>();
             domains ??= new List<string>();
@@ -324,6 +325,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 location,
                 etag,
                 domains?.ToList(),
+                domainsUri,
                 provisioningState,
                 resourceGuid,
                 serializedAdditionalRawData: null);

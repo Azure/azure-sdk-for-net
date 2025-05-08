@@ -1,5 +1,18 @@
 # Release History
 
+## 1.2.0 (2025-05-01)
+
+### Features Added
+- TODO change below link
+- Upgraded api-version tag from 'package-preview-2023-07' to 'package-2025-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/b26a190235f162b15d77dad889d104d06871fb4f/specification/dnsresolver/resource-manager/readme.md.
+- Adds new POST bulk API for large domain list usage.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
