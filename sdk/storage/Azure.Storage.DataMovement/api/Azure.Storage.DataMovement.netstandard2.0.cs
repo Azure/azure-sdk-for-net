@@ -25,7 +25,7 @@ namespace Azure.Storage.DataMovement
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected internal abstract Azure.Storage.DataMovement.StorageResourceCheckpointDetails GetSourceCheckpointDetails();
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        protected internal virtual System.Threading.Tasks.Task<(bool ValidateSource, bool ValidateDest)> ValidateTransferAsync(Azure.Storage.DataMovement.StorageResource sourceResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected internal virtual System.Threading.Tasks.Task ValidateTransferAsync(string transferId, Azure.Storage.DataMovement.StorageResource sourceResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public abstract partial class StorageResourceCheckpointDetails
