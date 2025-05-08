@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> NNI Bidirectional Forwarding Detection (BFD) Administrative State response. </summary>
-    public partial class NniBfdAdministrativeStateResponse
+    /// <summary> Internal Network Administrative State Response. </summary>
+    public partial class InternalNetworkBgpAdministrativeStateResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,28 +45,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NniBfdAdministrativeStateResponse"/>. </summary>
-        internal NniBfdAdministrativeStateResponse()
+        /// <summary> Initializes a new instance of <see cref="InternalNetworkBgpAdministrativeStateResult"/>. </summary>
+        internal InternalNetworkBgpAdministrativeStateResult()
         {
+            NeighborAddressAdministrativeStatus = new ChangeTrackingList<NeighborAddressBgpAdministrativeStatus>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NniBfdAdministrativeStateResponse"/>. </summary>
-        /// <param name="routeType"> Route Type. Choose either Static or OptionA. </param>
-        /// <param name="administrativeState"> State. Select either enable or disable. </param>
+        /// <summary> Initializes a new instance of <see cref="InternalNetworkBgpAdministrativeStateResult"/>. </summary>
+        /// <param name="neighborAddressAdministrativeStatus"> NeighborAddress administrative status. </param>
         /// <param name="error"> The error object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NniBfdAdministrativeStateResponse(RouteType? routeType, BfdAdministrativeState? administrativeState, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalNetworkBgpAdministrativeStateResult(IReadOnlyList<NeighborAddressBgpAdministrativeStatus> neighborAddressAdministrativeStatus, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            RouteType = routeType;
-            AdministrativeState = administrativeState;
+            NeighborAddressAdministrativeStatus = neighborAddressAdministrativeStatus;
             Error = error;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Route Type. Choose either Static or OptionA. </summary>
-        public RouteType? RouteType { get; }
-        /// <summary> State. Select either enable or disable. </summary>
-        public BfdAdministrativeState? AdministrativeState { get; }
+        /// <summary> NeighborAddress administrative status. </summary>
+        public IReadOnlyList<NeighborAddressBgpAdministrativeStatus> NeighborAddressAdministrativeStatus { get; }
         /// <summary> The error object. </summary>
         public ResponseError Error { get; }
     }

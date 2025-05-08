@@ -13,18 +13,18 @@ using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class DiscardCommitBatchResponseOperationSource : IOperationSource<DiscardCommitBatchResponse>
+    internal class DiscardCommitBatchResultOperationSource : IOperationSource<DiscardCommitBatchResult>
     {
-        DiscardCommitBatchResponse IOperationSource<DiscardCommitBatchResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        DiscardCommitBatchResult IOperationSource<DiscardCommitBatchResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return DiscardCommitBatchResponse.DeserializeDiscardCommitBatchResponse(document.RootElement);
+            return DiscardCommitBatchResult.DeserializeDiscardCommitBatchResult(document.RootElement);
         }
 
-        async ValueTask<DiscardCommitBatchResponse> IOperationSource<DiscardCommitBatchResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DiscardCommitBatchResult> IOperationSource<DiscardCommitBatchResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return DiscardCommitBatchResponse.DeserializeDiscardCommitBatchResponse(document.RootElement);
+            return DiscardCommitBatchResult.DeserializeDiscardCommitBatchResult(document.RootElement);
         }
     }
 }

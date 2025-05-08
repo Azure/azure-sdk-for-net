@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_IpPrefixesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpPrefixes_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/IpPrefixes_Get.json
             // this example is just showing the usage of "IpPrefixes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricIPPrefixResource created on azure
             // for more information of creating NetworkFabricIPPrefixResource, please refer to the document of NetworkFabricIPPrefixResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string ipPrefixName = "example-ipPrefix";
             ResourceIdentifier networkFabricIPPrefixResourceId = NetworkFabricIPPrefixResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipPrefixName);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_IpPrefixesDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpPrefixes_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/IpPrefixes_Delete.json
             // this example is just showing the usage of "IpPrefixes_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricIPPrefixResource created on azure
             // for more information of creating NetworkFabricIPPrefixResource, please refer to the document of NetworkFabricIPPrefixResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string ipPrefixName = "example-ipPrefix";
             ResourceIdentifier networkFabricIPPrefixResourceId = NetworkFabricIPPrefixResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipPrefixName);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_IpPrefixesUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpPrefixes_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/IpPrefixes_Update.json
             // this example is just showing the usage of "IpPrefixes_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricIPPrefixResource created on azure
             // for more information of creating NetworkFabricIPPrefixResource, please refer to the document of NetworkFabricIPPrefixResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string ipPrefixName = "example-ipPrefix";
             ResourceIdentifier networkFabricIPPrefixResourceId = NetworkFabricIPPrefixResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipPrefixName);
@@ -95,16 +95,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             // invoke the operation
             NetworkFabricIPPrefixPatch patch = new NetworkFabricIPPrefixPatch
             {
-                Annotation = "annotation",
-                IPPrefixRules = {new IPPrefixRule(CommunityActionType.Permit, 4155123341L, "10.10.10.10/30")
+                Tags =
+{
+["KeyId"] = "KeyValue"
+},
+                Properties = new IPPrefixPatchProperties
+                {
+                    Annotation = "annotation",
+                    IPPrefixRules = {new IPPrefixRule(CommunityActionType.Permit, 4155123341L, "10.10.10.10/30")
 {
 Condition = IPPrefixRuleCondition.GreaterThanOrEqualTo,
 SubnetMaskLength = "10",
 }},
-                Tags =
-{
-["keyID"] = "KeyValue"
-},
+                },
             };
             ArmOperation<NetworkFabricIPPrefixResource> lro = await networkFabricIPPrefix.UpdateAsync(WaitUntil.Completed, patch);
             NetworkFabricIPPrefixResource result = lro.Value;

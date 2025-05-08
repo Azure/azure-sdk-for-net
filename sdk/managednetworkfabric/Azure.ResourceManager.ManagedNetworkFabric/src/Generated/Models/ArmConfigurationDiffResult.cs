@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Internal Network BFD Administrative State response. </summary>
-    public partial class InternalNetworkBfdAdministrativeStateResponse
+    /// <summary> Arm Configuration Diff Response. </summary>
+    public partial class ArmConfigurationDiffResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="InternalNetworkBfdAdministrativeStateResponse"/>. </summary>
-        internal InternalNetworkBfdAdministrativeStateResponse()
+        /// <summary> Initializes a new instance of <see cref="ArmConfigurationDiffResult"/>. </summary>
+        internal ArmConfigurationDiffResult()
         {
-            NeighborAddressAdministrativeStatus = new ChangeTrackingList<NeighborAddressBfdAdministrativeStatus>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalNetworkBfdAdministrativeStateResponse"/>. </summary>
-        /// <param name="neighborAddressAdministrativeStatus"> NeighborAddress administrative status. </param>
+        /// <summary> Initializes a new instance of <see cref="ArmConfigurationDiffResult"/>. </summary>
+        /// <param name="configurationDiffUri"> Storage URL to the diff file. </param>
         /// <param name="error"> The error object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalNetworkBfdAdministrativeStateResponse(IReadOnlyList<NeighborAddressBfdAdministrativeStatus> neighborAddressAdministrativeStatus, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArmConfigurationDiffResult(Uri configurationDiffUri, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NeighborAddressAdministrativeStatus = neighborAddressAdministrativeStatus;
+            ConfigurationDiffUri = configurationDiffUri;
             Error = error;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> NeighborAddress administrative status. </summary>
-        public IReadOnlyList<NeighborAddressBfdAdministrativeStatus> NeighborAddressAdministrativeStatus { get; }
+        /// <summary> Storage URL to the diff file. </summary>
+        public Uri ConfigurationDiffUri { get; }
         /// <summary> The error object. </summary>
         public ResponseError Error { get; }
     }

@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(ConnectedSubnetRoutePolicyPatch)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(ExportRoutePolicy))
+            if (Optional.IsDefined(ConnectedExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
-                writer.WriteObjectValue(ExportRoutePolicy, options);
+                writer.WriteObjectValue(ConnectedExportRoutePolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

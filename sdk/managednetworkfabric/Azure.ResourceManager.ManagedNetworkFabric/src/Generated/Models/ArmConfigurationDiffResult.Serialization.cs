@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ArmConfigurationDiffResponse : IUtf8JsonSerializable, IJsonModel<ArmConfigurationDiffResponse>
+    public partial class ArmConfigurationDiffResult : IUtf8JsonSerializable, IJsonModel<ArmConfigurationDiffResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmConfigurationDiffResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmConfigurationDiffResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ArmConfigurationDiffResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ArmConfigurationDiffResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ArmConfigurationDiffResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmConfigurationDiffResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmConfigurationDiffResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmConfigurationDiffResult)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(ConfigurationDiffUri))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        ArmConfigurationDiffResponse IJsonModel<ArmConfigurationDiffResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ArmConfigurationDiffResult IJsonModel<ArmConfigurationDiffResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ArmConfigurationDiffResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmConfigurationDiffResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmConfigurationDiffResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmConfigurationDiffResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeArmConfigurationDiffResponse(document.RootElement, options);
+            return DeserializeArmConfigurationDiffResult(document.RootElement, options);
         }
 
-        internal static ArmConfigurationDiffResponse DeserializeArmConfigurationDiffResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ArmConfigurationDiffResult DeserializeArmConfigurationDiffResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ArmConfigurationDiffResponse(configurationDiffUrl, error, serializedAdditionalRawData);
+            return new ArmConfigurationDiffResult(configurationDiffUrl, error, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ArmConfigurationDiffResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ArmConfigurationDiffResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ArmConfigurationDiffResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmConfigurationDiffResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmConfigurationDiffResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmConfigurationDiffResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ArmConfigurationDiffResponse IPersistableModel<ArmConfigurationDiffResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ArmConfigurationDiffResult IPersistableModel<ArmConfigurationDiffResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ArmConfigurationDiffResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmConfigurationDiffResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeArmConfigurationDiffResponse(document.RootElement, options);
+                        return DeserializeArmConfigurationDiffResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmConfigurationDiffResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmConfigurationDiffResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ArmConfigurationDiffResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ArmConfigurationDiffResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

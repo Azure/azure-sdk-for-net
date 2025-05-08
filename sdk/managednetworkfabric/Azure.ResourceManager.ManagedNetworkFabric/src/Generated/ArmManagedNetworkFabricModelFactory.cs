@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="redistributeConnectedSubnets"> Advertise Connected Subnets. Ex: "True" | "False". </param>
         /// <param name="redistributeStaticRoutes"> Advertise Static Routes. Ex: "True" | "False". </param>
         /// <param name="aggregateRouteConfiguration"> Aggregate route configurations. </param>
-        /// <param name="exportRoutePolicy"> Connected Subnet RoutePolicy. </param>
+        /// <param name="connectedExportRoutePolicy"> Connected Subnet RoutePolicy. </param>
         /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
         /// <param name="exportRoutePolicy"> Static Route - route policy. </param>
         /// <param name="uniqueRds"> Unique Route Distinguisher configuration. </param>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <returns> A new <see cref="Models.L3IsolationDomainProperties"/> instance for mocking. </returns>
-        public static L3IsolationDomainProperties L3IsolationDomainProperties(string annotation = null, RedistributeConnectedSubnet? redistributeConnectedSubnets = null, RedistributeStaticRoute? redistributeStaticRoutes = null, AggregateRouteConfiguration aggregateRouteConfiguration = null, L3ExportRoutePolicy exportRoutePolicy = null, ResourceIdentifier networkFabricId = null, L3ExportRoutePolicy exportRoutePolicy = null, IEnumerable<string> uniqueRds = null, RoutePrefixLimitProperties routePrefixLimit = null, string lastOperationDetails = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
+        public static L3IsolationDomainProperties L3IsolationDomainProperties(string annotation = null, RedistributeConnectedSubnet? redistributeConnectedSubnets = null, RedistributeStaticRoute? redistributeStaticRoutes = null, AggregateRouteConfiguration aggregateRouteConfiguration = null, L3ExportRoutePolicy connectedExportRoutePolicy = null, ResourceIdentifier networkFabricId = null, L3ExportRoutePolicy exportRoutePolicy = null, IEnumerable<string> uniqueRds = null, RoutePrefixLimitProperties routePrefixLimit = null, string lastOperationDetails = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
         {
             uniqueRds ??= new List<string>();
 
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 redistributeConnectedSubnets,
                 redistributeStaticRoutes,
                 aggregateRouteConfiguration,
-                exportRoutePolicy != null ? new ConnectedSubnetRoutePolicy(exportRoutePolicy, serializedAdditionalRawData: null) : null,
+                connectedExportRoutePolicy != null ? new ConnectedSubnetRoutePolicy(connectedExportRoutePolicy, serializedAdditionalRawData: null) : null,
                 networkFabricId,
                 exportRoutePolicy != null ? new StaticRoutePolicy(exportRoutePolicy, serializedAdditionalRawData: null) : null,
                 uniqueRds != null ? new L3UniqueRouteDistinguisherProperties(uniqueRds?.ToList(), serializedAdditionalRawData: null) : null,
@@ -1362,14 +1362,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new BfdPatchConfiguration(administrativeState, intervalInMilliSeconds, multiplier, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExternalNetworkBfdAdministrativeStateResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExternalNetworkBfdAdministrativeStateResult"/>. </summary>
         /// <param name="routeType"> Route Type that helps to know which bfd we are updating. </param>
         /// <param name="administrativeState"> Administrative state. </param>
         /// <param name="error"> The error object. </param>
-        /// <returns> A new <see cref="Models.ExternalNetworkBfdAdministrativeStateResponse"/> instance for mocking. </returns>
-        public static ExternalNetworkBfdAdministrativeStateResponse ExternalNetworkBfdAdministrativeStateResponse(ExternalNetworkRouteType? routeType = null, BfdAdministrativeState? administrativeState = null, ResponseError error = null)
+        /// <returns> A new <see cref="Models.ExternalNetworkBfdAdministrativeStateResult"/> instance for mocking. </returns>
+        public static ExternalNetworkBfdAdministrativeStateResult ExternalNetworkBfdAdministrativeStateResult(ExternalNetworkRouteType? routeType = null, BfdAdministrativeState? administrativeState = null, ResponseError error = null)
         {
-            return new ExternalNetworkBfdAdministrativeStateResponse(routeType, administrativeState, error, serializedAdditionalRawData: null);
+            return new ExternalNetworkBfdAdministrativeStateResult(routeType, administrativeState, error, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricInternalNetworkData"/>. </summary>
@@ -1554,15 +1554,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NeighborAddressPatch(address, bfdAdministrativeState, bgpAdministrativeState, configurationState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.InternalNetworkBfdAdministrativeStateResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InternalNetworkBfdAdministrativeStateResult"/>. </summary>
         /// <param name="neighborAddressAdministrativeStatus"> NeighborAddress administrative status. </param>
         /// <param name="error"> The error object. </param>
-        /// <returns> A new <see cref="Models.InternalNetworkBfdAdministrativeStateResponse"/> instance for mocking. </returns>
-        public static InternalNetworkBfdAdministrativeStateResponse InternalNetworkBfdAdministrativeStateResponse(IEnumerable<NeighborAddressBfdAdministrativeStatus> neighborAddressAdministrativeStatus = null, ResponseError error = null)
+        /// <returns> A new <see cref="Models.InternalNetworkBfdAdministrativeStateResult"/> instance for mocking. </returns>
+        public static InternalNetworkBfdAdministrativeStateResult InternalNetworkBfdAdministrativeStateResult(IEnumerable<NeighborAddressBfdAdministrativeStatus> neighborAddressAdministrativeStatus = null, ResponseError error = null)
         {
             neighborAddressAdministrativeStatus ??= new List<NeighborAddressBfdAdministrativeStatus>();
 
-            return new InternalNetworkBfdAdministrativeStateResponse(neighborAddressAdministrativeStatus?.ToList(), error, serializedAdditionalRawData: null);
+            return new InternalNetworkBfdAdministrativeStateResult(neighborAddressAdministrativeStatus?.ToList(), error, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NeighborAddressBfdAdministrativeStatus"/>. </summary>
@@ -1575,15 +1575,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NeighborAddressBfdAdministrativeStatus(neighborAddress, administrativeState, error, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.InternalNetworkBgpAdministrativeStateResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InternalNetworkBgpAdministrativeStateResult"/>. </summary>
         /// <param name="neighborAddressAdministrativeStatus"> NeighborAddress administrative status. </param>
         /// <param name="error"> The error object. </param>
-        /// <returns> A new <see cref="Models.InternalNetworkBgpAdministrativeStateResponse"/> instance for mocking. </returns>
-        public static InternalNetworkBgpAdministrativeStateResponse InternalNetworkBgpAdministrativeStateResponse(IEnumerable<NeighborAddressBgpAdministrativeStatus> neighborAddressAdministrativeStatus = null, ResponseError error = null)
+        /// <returns> A new <see cref="Models.InternalNetworkBgpAdministrativeStateResult"/> instance for mocking. </returns>
+        public static InternalNetworkBgpAdministrativeStateResult InternalNetworkBgpAdministrativeStateResult(IEnumerable<NeighborAddressBgpAdministrativeStatus> neighborAddressAdministrativeStatus = null, ResponseError error = null)
         {
             neighborAddressAdministrativeStatus ??= new List<NeighborAddressBgpAdministrativeStatus>();
 
-            return new InternalNetworkBgpAdministrativeStateResponse(neighborAddressAdministrativeStatus?.ToList(), error, serializedAdditionalRawData: null);
+            return new InternalNetworkBgpAdministrativeStateResult(neighborAddressAdministrativeStatus?.ToList(), error, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NeighborAddressBgpAdministrativeStatus"/>. </summary>
@@ -1688,35 +1688,35 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new CommonPostActionResponseForDeviceRWCommands(error, configurationState, outputUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ArmConfigurationDiffResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmConfigurationDiffResult"/>. </summary>
         /// <param name="configurationDiffUri"> Storage URL to the diff file. </param>
         /// <param name="error"> The error object. </param>
-        /// <returns> A new <see cref="Models.ArmConfigurationDiffResponse"/> instance for mocking. </returns>
-        public static ArmConfigurationDiffResponse ArmConfigurationDiffResponse(Uri configurationDiffUri = null, ResponseError error = null)
+        /// <returns> A new <see cref="Models.ArmConfigurationDiffResult"/> instance for mocking. </returns>
+        public static ArmConfigurationDiffResult ArmConfigurationDiffResult(Uri configurationDiffUri = null, ResponseError error = null)
         {
-            return new ArmConfigurationDiffResponse(configurationDiffUri, error, serializedAdditionalRawData: null);
+            return new ArmConfigurationDiffResult(configurationDiffUri, error, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CommitBatchStatusResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CommitBatchStatusResult"/>. </summary>
         /// <param name="commitBatchId"> Commit Batch Identifier. </param>
         /// <param name="commitBatchState"> Commit Batch State. </param>
         /// <param name="commitBatchDetailsFailedDevices"> Commit Batch Details. </param>
         /// <param name="error"> The error object. </param>
-        /// <returns> A new <see cref="Models.CommitBatchStatusResponse"/> instance for mocking. </returns>
-        public static CommitBatchStatusResponse CommitBatchStatusResponse(string commitBatchId = null, CommitBatchState? commitBatchState = null, IEnumerable<string> commitBatchDetailsFailedDevices = null, ResponseError error = null)
+        /// <returns> A new <see cref="Models.CommitBatchStatusResult"/> instance for mocking. </returns>
+        public static CommitBatchStatusResult CommitBatchStatusResult(string commitBatchId = null, CommitBatchState? commitBatchState = null, IEnumerable<string> commitBatchDetailsFailedDevices = null, ResponseError error = null)
         {
             commitBatchDetailsFailedDevices ??= new List<string>();
 
-            return new CommitBatchStatusResponse(commitBatchId, commitBatchState, commitBatchDetailsFailedDevices != null ? new CommitBatchDetails(commitBatchDetailsFailedDevices?.ToList(), serializedAdditionalRawData: null) : null, error, serializedAdditionalRawData: null);
+            return new CommitBatchStatusResult(commitBatchId, commitBatchState, commitBatchDetailsFailedDevices != null ? new CommitBatchDetails(commitBatchDetailsFailedDevices?.ToList(), serializedAdditionalRawData: null) : null, error, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DiscardCommitBatchResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DiscardCommitBatchResult"/>. </summary>
         /// <param name="commitBatchId"> Commit Batch Identifier. </param>
         /// <param name="error"> The error object. </param>
-        /// <returns> A new <see cref="Models.DiscardCommitBatchResponse"/> instance for mocking. </returns>
-        public static DiscardCommitBatchResponse DiscardCommitBatchResponse(string commitBatchId = null, ResponseError error = null)
+        /// <returns> A new <see cref="Models.DiscardCommitBatchResult"/> instance for mocking. </returns>
+        public static DiscardCommitBatchResult DiscardCommitBatchResult(string commitBatchId = null, ResponseError error = null)
         {
-            return new DiscardCommitBatchResponse(commitBatchId, error, serializedAdditionalRawData: null);
+            return new DiscardCommitBatchResult(commitBatchId, error, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkToNetworkInterconnectData"/>. </summary>
@@ -1852,23 +1852,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NniBfdAdministrativeStateResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NniBfdAdministrativeStateResult"/>. </summary>
         /// <param name="routeType"> Route Type. Choose either Static or OptionA. </param>
         /// <param name="administrativeState"> State. Select either enable or disable. </param>
         /// <param name="error"> The error object. </param>
-        /// <returns> A new <see cref="Models.NniBfdAdministrativeStateResponse"/> instance for mocking. </returns>
-        public static NniBfdAdministrativeStateResponse NniBfdAdministrativeStateResponse(RouteType? routeType = null, BfdAdministrativeState? administrativeState = null, ResponseError error = null)
+        /// <returns> A new <see cref="Models.NniBfdAdministrativeStateResult"/> instance for mocking. </returns>
+        public static NniBfdAdministrativeStateResult NniBfdAdministrativeStateResult(RouteType? routeType = null, BfdAdministrativeState? administrativeState = null, ResponseError error = null)
         {
-            return new NniBfdAdministrativeStateResponse(routeType, administrativeState, error, serializedAdditionalRawData: null);
+            return new NniBfdAdministrativeStateResult(routeType, administrativeState, error, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ViewDeviceConfigurationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ViewDeviceConfigurationResult"/>. </summary>
         /// <param name="deviceConfigurationUri"> Storage URL to the device configuration file. </param>
         /// <param name="error"> The error object. </param>
-        /// <returns> A new <see cref="Models.ViewDeviceConfigurationResponse"/> instance for mocking. </returns>
-        public static ViewDeviceConfigurationResponse ViewDeviceConfigurationResponse(Uri deviceConfigurationUri = null, ResponseError error = null)
+        /// <returns> A new <see cref="Models.ViewDeviceConfigurationResult"/> instance for mocking. </returns>
+        public static ViewDeviceConfigurationResult ViewDeviceConfigurationResult(Uri deviceConfigurationUri = null, ResponseError error = null)
         {
-            return new ViewDeviceConfigurationResponse(deviceConfigurationUri, error, serializedAdditionalRawData: null);
+            return new ViewDeviceConfigurationResult(deviceConfigurationUri, error, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RoutePolicyStatementPatchProperties"/>. </summary>

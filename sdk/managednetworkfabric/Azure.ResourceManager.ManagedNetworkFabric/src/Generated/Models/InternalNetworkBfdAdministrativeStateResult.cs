@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Discard Commit Batch Response. </summary>
-    public partial class DiscardCommitBatchResponse
+    /// <summary> Internal Network BFD Administrative State response. </summary>
+    public partial class InternalNetworkBfdAdministrativeStateResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,24 +45,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DiscardCommitBatchResponse"/>. </summary>
-        internal DiscardCommitBatchResponse()
+        /// <summary> Initializes a new instance of <see cref="InternalNetworkBfdAdministrativeStateResult"/>. </summary>
+        internal InternalNetworkBfdAdministrativeStateResult()
         {
+            NeighborAddressAdministrativeStatus = new ChangeTrackingList<NeighborAddressBfdAdministrativeStatus>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiscardCommitBatchResponse"/>. </summary>
-        /// <param name="commitBatchId"> Commit Batch Identifier. </param>
+        /// <summary> Initializes a new instance of <see cref="InternalNetworkBfdAdministrativeStateResult"/>. </summary>
+        /// <param name="neighborAddressAdministrativeStatus"> NeighborAddress administrative status. </param>
         /// <param name="error"> The error object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiscardCommitBatchResponse(string commitBatchId, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalNetworkBfdAdministrativeStateResult(IReadOnlyList<NeighborAddressBfdAdministrativeStatus> neighborAddressAdministrativeStatus, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            CommitBatchId = commitBatchId;
+            NeighborAddressAdministrativeStatus = neighborAddressAdministrativeStatus;
             Error = error;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Commit Batch Identifier. </summary>
-        public string CommitBatchId { get; }
+        /// <summary> NeighborAddress administrative status. </summary>
+        public IReadOnlyList<NeighborAddressBfdAdministrativeStatus> NeighborAddressAdministrativeStatus { get; }
         /// <summary> The error object. </summary>
         public ResponseError Error { get; }
     }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ExternalNetworksCreateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/ExternalNetworks_Create_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/ExternalNetworks_Create.json
             // this example is just showing the usage of "ExternalNetworks_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricL3IsolationDomainResource created on azure
             // for more information of creating NetworkFabricL3IsolationDomainResource, please refer to the document of NetworkFabricL3IsolationDomainResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
-            string l3IsolationDomainName = "example-l3domain";
+            string l3IsolationDomainName = "example-externalnetwork";
             ResourceIdentifier networkFabricL3IsolationDomainResourceId = NetworkFabricL3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
             NetworkFabricL3IsolationDomainResource networkFabricL3IsolationDomain = client.GetNetworkFabricL3IsolationDomainResource(networkFabricL3IsolationDomainResourceId);
 
@@ -40,12 +40,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkFabricExternalNetworkCollection collection = networkFabricL3IsolationDomain.GetNetworkFabricExternalNetworks();
 
             // invoke the operation
-            string externalNetworkName = "example-externalnetwork";
-            NetworkFabricExternalNetworkData data = new NetworkFabricExternalNetworkData(PeeringOption.OptionA)
+            string externalNetworkName = "example-ext";
+            NetworkFabricExternalNetworkData data = new NetworkFabricExternalNetworkData(new ExternalNetworkProperties(PeeringOption.OptionA)
             {
                 Annotation = "annotation",
-                ImportRoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
-                ExportRoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
+                NetworkToNetworkInterconnectId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric/networkToNetworkInterconnects/example-nni"),
                 ImportRoutePolicy = new ImportRoutePolicy
                 {
                     ImportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
@@ -62,30 +61,53 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                     ExportRouteTargets = { "65046:10039" },
                     RouteTargets = new RouteTargetInformation
                     {
-                        ImportIPv4RouteTargets = { "65046:10039" },
-                        ImportIPv6RouteTargets = { "65046:10039" },
-                        ExportIPv4RouteTargets = { "65046:10039" },
-                        ExportIPv6RouteTargets = { "65046:10039" },
+                        ImportIPv4RouteTargets = { "65046:10050" },
+                        ImportIPv6RouteTargets = { "65046:10050" },
+                        ExportIPv4RouteTargets = { "65046:10050" },
+                        ExportIPv6RouteTargets = { "65046:10050" },
                     },
                 },
-                OptionAProperties = new ExternalNetworkOptionAProperties
+                OptionAProperties = new ExternalNetworkOptionAProperties(1001, 65047L)
                 {
-                    Mtu = 1500,
-                    VlanId = 1001,
-                    PeerAsn = 65047L,
-                    BfdConfiguration = new BfdConfiguration
-                    {
-                        IntervalInMilliSeconds = 300,
-                        Multiplier = 15,
-                    },
-                    IngressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
-                    EgressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
                     PrimaryIPv4Prefix = "10.1.1.0/30",
                     PrimaryIPv6Prefix = "3FFE:FFFF:0:CD30::a0/126",
                     SecondaryIPv4Prefix = "10.1.1.4/30",
                     SecondaryIPv6Prefix = "3FFE:FFFF:0:CD30::a4/126",
+                    Mtu = 1500,
+                    BfdConfiguration = new BfdConfiguration
+                    {
+                        IntervalInMilliSeconds = 300,
+                        Multiplier = 10,
+                    },
+                    IngressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
+                    BmpConfigurationState = BmpConfigurationState.Enabled,
+                    EgressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
+                    V4OverV6BgpSession = V4OverV6BgpSessionState.Enabled,
+                    V6OverV4BgpSession = V6OverV4BgpSessionState.Enabled,
+                    NativeIPv4PrefixLimits = {new PrefixLimitProperties
+{
+MaximumRoutes = 14,
+Threshold = 17,
+IdleTimeExpiry = 7,
+}},
+                    NativeIPv6PrefixLimits = {new PrefixLimitProperties
+{
+MaximumRoutes = 14,
+Threshold = 17,
+IdleTimeExpiry = 7,
+}},
                 },
-            };
+                StaticRouteConfiguration = new ExternalNetworkStaticRouteConfiguration
+                {
+                    BfdConfiguration = new BfdConfiguration
+                    {
+                        IntervalInMilliSeconds = 300,
+                        Multiplier = 10,
+                    },
+                    IPv4Routes = { new StaticRouteProperties("10.0.0.1/24", new string[] { "10.0.0.1" }) },
+                    IPv6Routes = { new StaticRouteProperties("2fff::/64", new string[] { "3ffe::1" }) },
+                },
+            });
             ArmOperation<NetworkFabricExternalNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, externalNetworkName, data);
             NetworkFabricExternalNetworkResource result = lro.Value;
 
@@ -100,7 +122,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ExternalNetworksGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/ExternalNetworks_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/ExternalNetworks_Get.json
             // this example is just showing the usage of "ExternalNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -110,9 +132,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricL3IsolationDomainResource created on azure
             // for more information of creating NetworkFabricL3IsolationDomainResource, please refer to the document of NetworkFabricL3IsolationDomainResource
-            string subscriptionId = "42EEDB3B-8E17-46E3-B0B4-B1CD9842D90D";
-            string resourceGroupName = "rgL3IsolationDomains";
-            string l3IsolationDomainName = "yhtr";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
+            string resourceGroupName = "example-rg";
+            string l3IsolationDomainName = "example-externalnetwork";
             ResourceIdentifier networkFabricL3IsolationDomainResourceId = NetworkFabricL3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
             NetworkFabricL3IsolationDomainResource networkFabricL3IsolationDomain = client.GetNetworkFabricL3IsolationDomainResource(networkFabricL3IsolationDomainResourceId);
 
@@ -120,7 +142,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkFabricExternalNetworkCollection collection = networkFabricL3IsolationDomain.GetNetworkFabricExternalNetworks();
 
             // invoke the operation
-            string externalNetworkName = "fltpszzikbalrzaqq";
+            string externalNetworkName = "example-ext";
             NetworkFabricExternalNetworkResource result = await collection.GetAsync(externalNetworkName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -134,7 +156,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ExternalNetworksListByL3IsolationDomainMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/ExternalNetworks_ListByL3IsolationDomain_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/ExternalNetworks_ListByL3IsolationDomain.json
             // this example is just showing the usage of "ExternalNetworks_ListByL3IsolationDomain" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -144,9 +166,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricL3IsolationDomainResource created on azure
             // for more information of creating NetworkFabricL3IsolationDomainResource, please refer to the document of NetworkFabricL3IsolationDomainResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
-            string l3IsolationDomainName = "example-l3domain";
+            string l3IsolationDomainName = "example-externalnetwork";
             ResourceIdentifier networkFabricL3IsolationDomainResourceId = NetworkFabricL3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
             NetworkFabricL3IsolationDomainResource networkFabricL3IsolationDomain = client.GetNetworkFabricL3IsolationDomainResource(networkFabricL3IsolationDomainResourceId);
 
@@ -170,7 +192,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ExternalNetworksGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/ExternalNetworks_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/ExternalNetworks_Get.json
             // this example is just showing the usage of "ExternalNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -180,9 +202,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricL3IsolationDomainResource created on azure
             // for more information of creating NetworkFabricL3IsolationDomainResource, please refer to the document of NetworkFabricL3IsolationDomainResource
-            string subscriptionId = "42EEDB3B-8E17-46E3-B0B4-B1CD9842D90D";
-            string resourceGroupName = "rgL3IsolationDomains";
-            string l3IsolationDomainName = "yhtr";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
+            string resourceGroupName = "example-rg";
+            string l3IsolationDomainName = "example-externalnetwork";
             ResourceIdentifier networkFabricL3IsolationDomainResourceId = NetworkFabricL3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
             NetworkFabricL3IsolationDomainResource networkFabricL3IsolationDomain = client.GetNetworkFabricL3IsolationDomainResource(networkFabricL3IsolationDomainResourceId);
 
@@ -190,7 +212,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkFabricExternalNetworkCollection collection = networkFabricL3IsolationDomain.GetNetworkFabricExternalNetworks();
 
             // invoke the operation
-            string externalNetworkName = "fltpszzikbalrzaqq";
+            string externalNetworkName = "example-ext";
             bool result = await collection.ExistsAsync(externalNetworkName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -200,7 +222,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ExternalNetworksGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/ExternalNetworks_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/ExternalNetworks_Get.json
             // this example is just showing the usage of "ExternalNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -210,9 +232,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricL3IsolationDomainResource created on azure
             // for more information of creating NetworkFabricL3IsolationDomainResource, please refer to the document of NetworkFabricL3IsolationDomainResource
-            string subscriptionId = "42EEDB3B-8E17-46E3-B0B4-B1CD9842D90D";
-            string resourceGroupName = "rgL3IsolationDomains";
-            string l3IsolationDomainName = "yhtr";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
+            string resourceGroupName = "example-rg";
+            string l3IsolationDomainName = "example-externalnetwork";
             ResourceIdentifier networkFabricL3IsolationDomainResourceId = NetworkFabricL3IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName);
             NetworkFabricL3IsolationDomainResource networkFabricL3IsolationDomain = client.GetNetworkFabricL3IsolationDomainResource(networkFabricL3IsolationDomainResourceId);
 
@@ -220,7 +242,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkFabricExternalNetworkCollection collection = networkFabricL3IsolationDomain.GetNetworkFabricExternalNetworks();
 
             // invoke the operation
-            string externalNetworkName = "fltpszzikbalrzaqq";
+            string externalNetworkName = "example-ext";
             NullableResponse<NetworkFabricExternalNetworkResource> response = await collection.GetIfExistsAsync(externalNetworkName);
             NetworkFabricExternalNetworkResource result = response.HasValue ? response.Value : null;
 

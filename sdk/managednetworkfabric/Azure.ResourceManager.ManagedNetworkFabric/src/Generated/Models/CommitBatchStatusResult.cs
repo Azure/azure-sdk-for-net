@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Internal Network Administrative State Response. </summary>
-    public partial class InternalNetworkBgpAdministrativeStateResponse
+    /// <summary> Commit Batch Status Response. </summary>
+    public partial class CommitBatchStatusResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="InternalNetworkBgpAdministrativeStateResponse"/>. </summary>
-        internal InternalNetworkBgpAdministrativeStateResponse()
+        /// <summary> Initializes a new instance of <see cref="CommitBatchStatusResult"/>. </summary>
+        internal CommitBatchStatusResult()
         {
-            NeighborAddressAdministrativeStatus = new ChangeTrackingList<NeighborAddressBgpAdministrativeStatus>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalNetworkBgpAdministrativeStateResponse"/>. </summary>
-        /// <param name="neighborAddressAdministrativeStatus"> NeighborAddress administrative status. </param>
+        /// <summary> Initializes a new instance of <see cref="CommitBatchStatusResult"/>. </summary>
+        /// <param name="commitBatchId"> Commit Batch Identifier. </param>
+        /// <param name="commitBatchState"> Commit Batch State. </param>
+        /// <param name="commitBatchDetails"> Commit Batch Details. </param>
         /// <param name="error"> The error object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalNetworkBgpAdministrativeStateResponse(IReadOnlyList<NeighborAddressBgpAdministrativeStatus> neighborAddressAdministrativeStatus, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CommitBatchStatusResult(string commitBatchId, CommitBatchState? commitBatchState, CommitBatchDetails commitBatchDetails, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NeighborAddressAdministrativeStatus = neighborAddressAdministrativeStatus;
+            CommitBatchId = commitBatchId;
+            CommitBatchState = commitBatchState;
+            CommitBatchDetails = commitBatchDetails;
             Error = error;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> NeighborAddress administrative status. </summary>
-        public IReadOnlyList<NeighborAddressBgpAdministrativeStatus> NeighborAddressAdministrativeStatus { get; }
+        /// <summary> Commit Batch Identifier. </summary>
+        public string CommitBatchId { get; }
+        /// <summary> Commit Batch State. </summary>
+        public CommitBatchState? CommitBatchState { get; }
+        /// <summary> Commit Batch Details. </summary>
+        internal CommitBatchDetails CommitBatchDetails { get; }
+        /// <summary> List of devices for which the commit operation failed. </summary>
+        public IReadOnlyList<string> CommitBatchDetailsFailedDevices
+        {
+            get => CommitBatchDetails?.FailedDevices;
+        }
+
         /// <summary> The error object. </summary>
         public ResponseError Error { get; }
     }

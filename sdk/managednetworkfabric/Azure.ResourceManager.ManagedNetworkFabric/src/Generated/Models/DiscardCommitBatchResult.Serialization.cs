@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ViewDeviceConfigurationResponse : IUtf8JsonSerializable, IJsonModel<ViewDeviceConfigurationResponse>
+    public partial class DiscardCommitBatchResult : IUtf8JsonSerializable, IJsonModel<DiscardCommitBatchResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ViewDeviceConfigurationResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiscardCommitBatchResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ViewDeviceConfigurationResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DiscardCommitBatchResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ViewDeviceConfigurationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscardCommitBatchResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ViewDeviceConfigurationResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscardCommitBatchResult)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(DeviceConfigurationUri))
+            if (Optional.IsDefined(CommitBatchId))
             {
-                writer.WritePropertyName("deviceConfigurationUrl"u8);
-                writer.WriteStringValue(DeviceConfigurationUri.AbsoluteUri);
+                writer.WritePropertyName("commitBatchId"u8);
+                writer.WriteStringValue(CommitBatchId);
             }
             if (Optional.IsDefined(Error))
             {
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        ViewDeviceConfigurationResponse IJsonModel<ViewDeviceConfigurationResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DiscardCommitBatchResult IJsonModel<DiscardCommitBatchResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ViewDeviceConfigurationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscardCommitBatchResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ViewDeviceConfigurationResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscardCommitBatchResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeViewDeviceConfigurationResponse(document.RootElement, options);
+            return DeserializeDiscardCommitBatchResult(document.RootElement, options);
         }
 
-        internal static ViewDeviceConfigurationResponse DeserializeViewDeviceConfigurationResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DiscardCommitBatchResult DeserializeDiscardCommitBatchResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,19 +81,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Uri deviceConfigurationUrl = default;
+            string commitBatchId = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceConfigurationUrl"u8))
+                if (property.NameEquals("commitBatchId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deviceConfigurationUrl = new Uri(property.Value.GetString());
+                    commitBatchId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -111,38 +107,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ViewDeviceConfigurationResponse(deviceConfigurationUrl, error, serializedAdditionalRawData);
+            return new DiscardCommitBatchResult(commitBatchId, error, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ViewDeviceConfigurationResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DiscardCommitBatchResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ViewDeviceConfigurationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscardCommitBatchResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ViewDeviceConfigurationResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscardCommitBatchResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ViewDeviceConfigurationResponse IPersistableModel<ViewDeviceConfigurationResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DiscardCommitBatchResult IPersistableModel<DiscardCommitBatchResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ViewDeviceConfigurationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscardCommitBatchResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeViewDeviceConfigurationResponse(document.RootElement, options);
+                        return DeserializeDiscardCommitBatchResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ViewDeviceConfigurationResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscardCommitBatchResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ViewDeviceConfigurationResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DiscardCommitBatchResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

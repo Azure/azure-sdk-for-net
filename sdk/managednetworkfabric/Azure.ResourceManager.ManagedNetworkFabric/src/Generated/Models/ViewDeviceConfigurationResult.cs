@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> View Device Configuration Response. </summary>
-    public partial class ViewDeviceConfigurationResponse
+    public partial class ViewDeviceConfigurationResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ViewDeviceConfigurationResponse"/>. </summary>
-        internal ViewDeviceConfigurationResponse()
+        /// <summary> Initializes a new instance of <see cref="ViewDeviceConfigurationResult"/>. </summary>
+        internal ViewDeviceConfigurationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ViewDeviceConfigurationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ViewDeviceConfigurationResult"/>. </summary>
         /// <param name="deviceConfigurationUri"> Storage URL to the device configuration file. </param>
         /// <param name="error"> The error object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ViewDeviceConfigurationResponse(Uri deviceConfigurationUri, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ViewDeviceConfigurationResult(Uri deviceConfigurationUri, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeviceConfigurationUri = deviceConfigurationUri;
             Error = error;

@@ -105,14 +105,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Connected Subnet RoutePolicy. </summary>
         internal ConnectedSubnetRoutePolicy ConnectedSubnetRoutePolicy { get; set; }
         /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
-        public L3ExportRoutePolicy ExportRoutePolicy
+        public L3ExportRoutePolicy ConnectedExportRoutePolicy
         {
-            get => ConnectedSubnetRoutePolicy is null ? default : ConnectedSubnetRoutePolicy.ExportRoutePolicy;
+            get => ConnectedSubnetRoutePolicy is null ? default : ConnectedSubnetRoutePolicy.ConnectedExportRoutePolicy;
             set
             {
                 if (ConnectedSubnetRoutePolicy is null)
                     ConnectedSubnetRoutePolicy = new ConnectedSubnetRoutePolicy();
-                ConnectedSubnetRoutePolicy.ExportRoutePolicy = value;
+                ConnectedSubnetRoutePolicy.ConnectedExportRoutePolicy = value;
             }
         }
 

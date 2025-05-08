@@ -14,7 +14,6 @@ clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
-  sample: false
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -75,6 +74,8 @@ rename-mapping:
   IpExtendedCommunity: NetworkFabricIpExtendedCommunity
   IpPrefix: NetworkFabricIpPrefix
   L2IsolationDomain: NetworkFabricL2IsolationDomain
+  ConnectedSubnetRoutePolicy.exportRoutePolicy: connectedExportRoutePolicy
+  ConnectedSubnetRoutePolicyPatch.exportRoutePolicy: connectedExportRoutePolicy
   L3IsolationDomain: NetworkFabricL3IsolationDomain
   NeighborGroup: NetworkFabricNeighborGroup
   NetworkDevice.properties.managementIpv4Address: -|ip-address
@@ -140,6 +141,14 @@ rename-mapping:
   ValidateConfigurationResponse: ValidateConfigurationResult
   VpnConfigurationPatchablePropertiesOptionAProperties: VpnConfigurationPatchableOptionAProperties
   VpnConfigurationPropertiesOptionAProperties: VpnConfigurationOptionAProperties
+  CommitBatchStatusResponse: CommitBatchStatusResult
+  InternalNetworkBfdAdministrativeStateResponse: InternalNetworkBfdAdministrativeStateResult
+  InternalNetworkBgpAdministrativeStateResponse: InternalNetworkBgpAdministrativeStateResult
+  DiscardCommitBatchResponse: DiscardCommitBatchResult
+  ArmConfigurationDiffResponse: ArmConfigurationDiffResult
+  ExternalNetworkBfdAdministrativeStateResponse: ExternalNetworkBfdAdministrativeStateResult
+  NniBfdAdministrativeStateResponse: NniBfdAdministrativeStateResult
+  ViewDeviceConfigurationResponse: ViewDeviceConfigurationResult
 
 directive:
   - from: NetworkFabricControllers.json

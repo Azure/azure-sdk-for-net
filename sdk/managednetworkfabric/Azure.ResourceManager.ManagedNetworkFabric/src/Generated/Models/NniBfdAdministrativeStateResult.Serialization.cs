@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class CommitBatchStatusResponse : IUtf8JsonSerializable, IJsonModel<CommitBatchStatusResponse>
+    public partial class NniBfdAdministrativeStateResult : IUtf8JsonSerializable, IJsonModel<NniBfdAdministrativeStateResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommitBatchStatusResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NniBfdAdministrativeStateResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CommitBatchStatusResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NniBfdAdministrativeStateResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,26 +28,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CommitBatchStatusResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NniBfdAdministrativeStateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommitBatchStatusResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NniBfdAdministrativeStateResult)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(CommitBatchId))
+            if (Optional.IsDefined(RouteType))
             {
-                writer.WritePropertyName("commitBatchId"u8);
-                writer.WriteStringValue(CommitBatchId);
+                writer.WritePropertyName("routeType"u8);
+                writer.WriteStringValue(RouteType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CommitBatchState))
+            if (Optional.IsDefined(AdministrativeState))
             {
-                writer.WritePropertyName("commitBatchState"u8);
-                writer.WriteStringValue(CommitBatchState.Value.ToString());
-            }
-            if (Optional.IsDefined(CommitBatchDetails))
-            {
-                writer.WritePropertyName("commitBatchDetails"u8);
-                writer.WriteObjectValue(CommitBatchDetails, options);
+                writer.WritePropertyName("administrativeState"u8);
+                writer.WriteStringValue(AdministrativeState.Value.ToString());
             }
             if (Optional.IsDefined(Error))
             {
@@ -71,19 +66,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        CommitBatchStatusResponse IJsonModel<CommitBatchStatusResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NniBfdAdministrativeStateResult IJsonModel<NniBfdAdministrativeStateResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CommitBatchStatusResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NniBfdAdministrativeStateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommitBatchStatusResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NniBfdAdministrativeStateResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCommitBatchStatusResponse(document.RootElement, options);
+            return DeserializeNniBfdAdministrativeStateResult(document.RootElement, options);
         }
 
-        internal static CommitBatchStatusResponse DeserializeCommitBatchStatusResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NniBfdAdministrativeStateResult DeserializeNniBfdAdministrativeStateResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -91,35 +86,29 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            string commitBatchId = default;
-            CommitBatchState? commitBatchState = default;
-            CommitBatchDetails commitBatchDetails = default;
+            RouteType? routeType = default;
+            BfdAdministrativeState? administrativeState = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("commitBatchId"u8))
-                {
-                    commitBatchId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("commitBatchState"u8))
+                if (property.NameEquals("routeType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    commitBatchState = new CommitBatchState(property.Value.GetString());
+                    routeType = new RouteType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("commitBatchDetails"u8))
+                if (property.NameEquals("administrativeState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    commitBatchDetails = CommitBatchDetails.DeserializeCommitBatchDetails(property.Value, options);
+                    administrativeState = new BfdAdministrativeState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -137,38 +126,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CommitBatchStatusResponse(commitBatchId, commitBatchState, commitBatchDetails, error, serializedAdditionalRawData);
+            return new NniBfdAdministrativeStateResult(routeType, administrativeState, error, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CommitBatchStatusResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NniBfdAdministrativeStateResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CommitBatchStatusResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NniBfdAdministrativeStateResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CommitBatchStatusResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NniBfdAdministrativeStateResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CommitBatchStatusResponse IPersistableModel<CommitBatchStatusResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NniBfdAdministrativeStateResult IPersistableModel<NniBfdAdministrativeStateResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CommitBatchStatusResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NniBfdAdministrativeStateResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCommitBatchStatusResponse(document.RootElement, options);
+                        return DeserializeNniBfdAdministrativeStateResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommitBatchStatusResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NniBfdAdministrativeStateResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CommitBatchStatusResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NniBfdAdministrativeStateResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

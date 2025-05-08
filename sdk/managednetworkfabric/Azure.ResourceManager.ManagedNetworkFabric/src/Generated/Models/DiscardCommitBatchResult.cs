@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Arm Configuration Diff Response. </summary>
-    public partial class ArmConfigurationDiffResponse
+    /// <summary> Discard Commit Batch Response. </summary>
+    public partial class DiscardCommitBatchResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,24 +45,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ArmConfigurationDiffResponse"/>. </summary>
-        internal ArmConfigurationDiffResponse()
+        /// <summary> Initializes a new instance of <see cref="DiscardCommitBatchResult"/>. </summary>
+        internal DiscardCommitBatchResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ArmConfigurationDiffResponse"/>. </summary>
-        /// <param name="configurationDiffUri"> Storage URL to the diff file. </param>
+        /// <summary> Initializes a new instance of <see cref="DiscardCommitBatchResult"/>. </summary>
+        /// <param name="commitBatchId"> Commit Batch Identifier. </param>
         /// <param name="error"> The error object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArmConfigurationDiffResponse(Uri configurationDiffUri, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiscardCommitBatchResult(string commitBatchId, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ConfigurationDiffUri = configurationDiffUri;
+            CommitBatchId = commitBatchId;
             Error = error;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Storage URL to the diff file. </summary>
-        public Uri ConfigurationDiffUri { get; }
+        /// <summary> Commit Batch Identifier. </summary>
+        public string CommitBatchId { get; }
         /// <summary> The error object. </summary>
         public ResponseError Error { get; }
     }

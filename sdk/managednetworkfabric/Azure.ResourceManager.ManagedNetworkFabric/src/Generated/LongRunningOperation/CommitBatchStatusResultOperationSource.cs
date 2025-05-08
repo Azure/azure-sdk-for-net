@@ -13,18 +13,18 @@ using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class CommitBatchStatusResponseOperationSource : IOperationSource<CommitBatchStatusResponse>
+    internal class CommitBatchStatusResultOperationSource : IOperationSource<CommitBatchStatusResult>
     {
-        CommitBatchStatusResponse IOperationSource<CommitBatchStatusResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        CommitBatchStatusResult IOperationSource<CommitBatchStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return CommitBatchStatusResponse.DeserializeCommitBatchStatusResponse(document.RootElement);
+            return CommitBatchStatusResult.DeserializeCommitBatchStatusResult(document.RootElement);
         }
 
-        async ValueTask<CommitBatchStatusResponse> IOperationSource<CommitBatchStatusResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CommitBatchStatusResult> IOperationSource<CommitBatchStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return CommitBatchStatusResponse.DeserializeCommitBatchStatusResponse(document.RootElement);
+            return CommitBatchStatusResult.DeserializeCommitBatchStatusResult(document.RootElement);
         }
     }
 }

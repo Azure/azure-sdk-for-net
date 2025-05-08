@@ -13,18 +13,18 @@ using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class ViewDeviceConfigurationResponseOperationSource : IOperationSource<ViewDeviceConfigurationResponse>
+    internal class ArmConfigurationDiffResultOperationSource : IOperationSource<ArmConfigurationDiffResult>
     {
-        ViewDeviceConfigurationResponse IOperationSource<ViewDeviceConfigurationResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        ArmConfigurationDiffResult IOperationSource<ArmConfigurationDiffResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return ViewDeviceConfigurationResponse.DeserializeViewDeviceConfigurationResponse(document.RootElement);
+            return ArmConfigurationDiffResult.DeserializeArmConfigurationDiffResult(document.RootElement);
         }
 
-        async ValueTask<ViewDeviceConfigurationResponse> IOperationSource<ViewDeviceConfigurationResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ArmConfigurationDiffResult> IOperationSource<ArmConfigurationDiffResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return ViewDeviceConfigurationResponse.DeserializeViewDeviceConfigurationResponse(document.RootElement);
+            return ArmConfigurationDiffResult.DeserializeArmConfigurationDiffResult(document.RootElement);
         }
     }
 }

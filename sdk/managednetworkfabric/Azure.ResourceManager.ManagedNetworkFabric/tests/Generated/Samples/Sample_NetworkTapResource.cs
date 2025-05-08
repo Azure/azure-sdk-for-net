@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_NetworkTapsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTaps_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkTaps_Get.json
             // this example is just showing the usage of "NetworkTaps_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkTapResource created on azure
             // for more information of creating NetworkTapResource, please refer to the document of NetworkTapResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string networkTapName = "example-networkTap";
             ResourceIdentifier networkTapResourceId = NetworkTapResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkTapName);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_NetworkTapsDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTaps_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkTaps_Delete.json
             // this example is just showing the usage of "NetworkTaps_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkTapResource created on azure
             // for more information of creating NetworkTapResource, please refer to the document of NetworkTapResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string networkTapName = "example-networkTap";
             ResourceIdentifier networkTapResourceId = NetworkTapResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkTapName);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_NetworkTapsUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTaps_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkTaps_Update.json
             // this example is just showing the usage of "NetworkTaps_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkTapResource created on azure
             // for more information of creating NetworkTapResource, please refer to the document of NetworkTapResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string networkTapName = "example-networkTap";
             ResourceIdentifier networkTapResourceId = NetworkTapResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkTapName);
@@ -95,24 +95,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             // invoke the operation
             NetworkTapPatch patch = new NetworkTapPatch
             {
-                Annotation = "annotation1",
-                PollingType = NetworkTapPollingType.Pull,
-                Destinations = {new NetworkTapPatchableParametersDestinationsItem
+                Tags =
+{
+["keyId"] = "keyValue"
+},
+                Properties = new NetworkTapPatchProperties
+                {
+                    Annotation = "annotation1",
+                    PollingType = NetworkTapPollingType.Pull,
+                    Destinations = {new DestinationPatchProperties
 {
 Name = "example-destinaionName",
 DestinationType = NetworkTapDestinationType.IsolationDomain,
 DestinationId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/l3IsloationDomains/example-l3Domain/internalNetworks/example-internalNetwork"),
-IsolationDomainProperties = new IsolationDomainProperties
+IsolationDomainProperties = new IsolationDomainPatchProperties
 {
 Encapsulation = IsolationDomainEncapsulationType.None,
 NeighborGroupIds = {new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/neighborGroups/example-neighborGroup")},
 },
 DestinationTapRuleId = new ResourceIdentifier("/subscriptions/xxxx-xxxx-xxxx-xxxx/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkTapRules/example-destinationTapRule"),
 }},
-                Tags =
-{
-["key6024"] = "1234"
-},
+                },
             };
             ArmOperation<NetworkTapResource> lro = await networkTap.UpdateAsync(WaitUntil.Completed, patch);
             NetworkTapResource result = lro.Value;
@@ -126,41 +129,9 @@ DestinationTapRuleId = new ResourceIdentifier("/subscriptions/xxxx-xxxx-xxxx-xxx
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task UpdateAdministrativeState_NetworkTapsUpdateAdministrativeStateMaximumSetGen()
-        {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTaps_UpdateAdministrativeState_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkTaps_UpdateAdministrativeState" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetworkTapResource created on azure
-            // for more information of creating NetworkTapResource, please refer to the document of NetworkTapResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
-            string resourceGroupName = "example-rg";
-            string networkTapName = "example-networkTap";
-            ResourceIdentifier networkTapResourceId = NetworkTapResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkTapName);
-            NetworkTapResource networkTap = client.GetNetworkTapResource(networkTapResourceId);
-
-            // invoke the operation
-            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent
-            {
-                State = AdministrativeEnableState.Enable,
-                ResourceIds = { new ResourceIdentifier("") },
-            };
-            ArmOperation<DeviceUpdateCommonPostActionResult> lro = await networkTap.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
-            DeviceUpdateCommonPostActionResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Resync_NetworkTapsResyncMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTaps_Resync_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkTaps_Resync.json
             // this example is just showing the usage of "NetworkTaps_Resync" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -170,7 +141,7 @@ DestinationTapRuleId = new ResourceIdentifier("/subscriptions/xxxx-xxxx-xxxx-xxx
 
             // this example assumes you already have this NetworkTapResource created on azure
             // for more information of creating NetworkTapResource, please refer to the document of NetworkTapResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string networkTapName = "example-networkTap";
             ResourceIdentifier networkTapResourceId = NetworkTapResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkTapName);
@@ -179,6 +150,38 @@ DestinationTapRuleId = new ResourceIdentifier("/subscriptions/xxxx-xxxx-xxxx-xxx
             // invoke the operation
             ArmOperation<StateUpdateCommonPostActionResult> lro = await networkTap.ResyncAsync(WaitUntil.Completed);
             StateUpdateCommonPostActionResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task UpdateAdministrativeState_NetworkTapsUpdateAdministrativeStateMaximumSetGen()
+        {
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkTaps_UpdateAdministrativeState.json
+            // this example is just showing the usage of "NetworkTaps_UpdateAdministrativeState" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkTapResource created on azure
+            // for more information of creating NetworkTapResource, please refer to the document of NetworkTapResource
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkTapName = "example-networkTap";
+            ResourceIdentifier networkTapResourceId = NetworkTapResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkTapName);
+            NetworkTapResource networkTap = client.GetNetworkTapResource(networkTapResourceId);
+
+            // invoke the operation
+            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent
+            {
+                ResourceIds = { "" },
+                State = AdministrativeEnableState.Enable,
+            };
+            ArmOperation<DeviceUpdateCommonPostActionResult> lro = await networkTap.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
+            DeviceUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

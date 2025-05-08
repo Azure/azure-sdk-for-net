@@ -51,15 +51,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectedSubnetRoutePolicy"/>. </summary>
-        /// <param name="exportRoutePolicy"> Array of ARM Resource ID of the RoutePolicies. </param>
+        /// <param name="connectedExportRoutePolicy"> Array of ARM Resource ID of the RoutePolicies. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedSubnetRoutePolicy(L3ExportRoutePolicy exportRoutePolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectedSubnetRoutePolicy(L3ExportRoutePolicy connectedExportRoutePolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ExportRoutePolicy = exportRoutePolicy;
+            ConnectedExportRoutePolicy = connectedExportRoutePolicy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
-        public L3ExportRoutePolicy ExportRoutePolicy { get; set; }
+        public L3ExportRoutePolicy ConnectedExportRoutePolicy { get; set; }
     }
 }

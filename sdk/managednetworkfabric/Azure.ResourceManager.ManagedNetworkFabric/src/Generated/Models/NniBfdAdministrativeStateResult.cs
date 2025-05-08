@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> External Network Administrative State response. </summary>
-    public partial class ExternalNetworkBfdAdministrativeStateResponse
+    /// <summary> NNI Bidirectional Forwarding Detection (BFD) Administrative State response. </summary>
+    public partial class NniBfdAdministrativeStateResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ExternalNetworkBfdAdministrativeStateResponse"/>. </summary>
-        internal ExternalNetworkBfdAdministrativeStateResponse()
+        /// <summary> Initializes a new instance of <see cref="NniBfdAdministrativeStateResult"/>. </summary>
+        internal NniBfdAdministrativeStateResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExternalNetworkBfdAdministrativeStateResponse"/>. </summary>
-        /// <param name="routeType"> Route Type that helps to know which bfd we are updating. </param>
-        /// <param name="administrativeState"> Administrative state. </param>
+        /// <summary> Initializes a new instance of <see cref="NniBfdAdministrativeStateResult"/>. </summary>
+        /// <param name="routeType"> Route Type. Choose either Static or OptionA. </param>
+        /// <param name="administrativeState"> State. Select either enable or disable. </param>
         /// <param name="error"> The error object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExternalNetworkBfdAdministrativeStateResponse(ExternalNetworkRouteType? routeType, BfdAdministrativeState? administrativeState, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NniBfdAdministrativeStateResult(RouteType? routeType, BfdAdministrativeState? administrativeState, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RouteType = routeType;
             AdministrativeState = administrativeState;
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Route Type that helps to know which bfd we are updating. </summary>
-        public ExternalNetworkRouteType? RouteType { get; }
-        /// <summary> Administrative state. </summary>
+        /// <summary> Route Type. Choose either Static or OptionA. </summary>
+        public RouteType? RouteType { get; }
+        /// <summary> State. Select either enable or disable. </summary>
         public BfdAdministrativeState? AdministrativeState { get; }
         /// <summary> The error object. </summary>
         public ResponseError Error { get; }

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class InternalNetworkBgpAdministrativeStateResponse : IUtf8JsonSerializable, IJsonModel<InternalNetworkBgpAdministrativeStateResponse>
+    public partial class InternalNetworkBfdAdministrativeStateResult : IUtf8JsonSerializable, IJsonModel<InternalNetworkBfdAdministrativeStateResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalNetworkBgpAdministrativeStateResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalNetworkBfdAdministrativeStateResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<InternalNetworkBgpAdministrativeStateResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<InternalNetworkBfdAdministrativeStateResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalNetworkBgpAdministrativeStateResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalNetworkBfdAdministrativeStateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalNetworkBgpAdministrativeStateResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalNetworkBfdAdministrativeStateResult)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(NeighborAddressAdministrativeStatus))
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        InternalNetworkBgpAdministrativeStateResponse IJsonModel<InternalNetworkBgpAdministrativeStateResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        InternalNetworkBfdAdministrativeStateResult IJsonModel<InternalNetworkBfdAdministrativeStateResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalNetworkBgpAdministrativeStateResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalNetworkBfdAdministrativeStateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalNetworkBgpAdministrativeStateResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalNetworkBfdAdministrativeStateResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalNetworkBgpAdministrativeStateResponse(document.RootElement, options);
+            return DeserializeInternalNetworkBfdAdministrativeStateResult(document.RootElement, options);
         }
 
-        internal static InternalNetworkBgpAdministrativeStateResponse DeserializeInternalNetworkBgpAdministrativeStateResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static InternalNetworkBfdAdministrativeStateResult DeserializeInternalNetworkBfdAdministrativeStateResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IReadOnlyList<NeighborAddressBgpAdministrativeStatus> neighborAddressAdministrativeStatus = default;
+            IReadOnlyList<NeighborAddressBfdAdministrativeStatus> neighborAddressAdministrativeStatus = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<NeighborAddressBgpAdministrativeStatus> array = new List<NeighborAddressBgpAdministrativeStatus>();
+                    List<NeighborAddressBfdAdministrativeStatus> array = new List<NeighborAddressBfdAdministrativeStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NeighborAddressBgpAdministrativeStatus.DeserializeNeighborAddressBgpAdministrativeStatus(item, options));
+                        array.Add(NeighborAddressBfdAdministrativeStatus.DeserializeNeighborAddressBfdAdministrativeStatus(item, options));
                     }
                     neighborAddressAdministrativeStatus = array;
                     continue;
@@ -121,38 +121,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new InternalNetworkBgpAdministrativeStateResponse(neighborAddressAdministrativeStatus ?? new ChangeTrackingList<NeighborAddressBgpAdministrativeStatus>(), error, serializedAdditionalRawData);
+            return new InternalNetworkBfdAdministrativeStateResult(neighborAddressAdministrativeStatus ?? new ChangeTrackingList<NeighborAddressBfdAdministrativeStatus>(), error, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<InternalNetworkBgpAdministrativeStateResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<InternalNetworkBfdAdministrativeStateResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalNetworkBgpAdministrativeStateResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalNetworkBfdAdministrativeStateResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InternalNetworkBgpAdministrativeStateResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalNetworkBfdAdministrativeStateResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        InternalNetworkBgpAdministrativeStateResponse IPersistableModel<InternalNetworkBgpAdministrativeStateResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        InternalNetworkBfdAdministrativeStateResult IPersistableModel<InternalNetworkBfdAdministrativeStateResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalNetworkBgpAdministrativeStateResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalNetworkBfdAdministrativeStateResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeInternalNetworkBgpAdministrativeStateResponse(document.RootElement, options);
+                        return DeserializeInternalNetworkBfdAdministrativeStateResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalNetworkBgpAdministrativeStateResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalNetworkBfdAdministrativeStateResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<InternalNetworkBgpAdministrativeStateResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<InternalNetworkBfdAdministrativeStateResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

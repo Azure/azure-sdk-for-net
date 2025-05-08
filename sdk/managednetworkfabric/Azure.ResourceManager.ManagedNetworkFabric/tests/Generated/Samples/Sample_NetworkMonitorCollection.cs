@@ -15,14 +15,14 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
-    public partial class Sample_NetworkFabricL3IsolationDomainCollection
+    public partial class Sample_NetworkMonitorCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_L3IsolationDomainsCreateMaximumSetGen()
+        public async Task CreateOrUpdate_NetworkMonitorsCreate()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/L3IsolationDomains_Create.json
-            // this example is just showing the usage of "L3IsolationDomains_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkMonitors_Create.json
+            // this example is just showing the usage of "NetworkMonitors_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -31,64 +31,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
             string resourceGroupName = "example-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this NetworkFabricL3IsolationDomainResource
-            NetworkFabricL3IsolationDomainCollection collection = resourceGroupResource.GetNetworkFabricL3IsolationDomains();
+            // get the collection of this NetworkMonitorResource
+            NetworkMonitorCollection collection = resourceGroupResource.GetNetworkMonitors();
 
             // invoke the operation
-            string l3IsolationDomainName = "example-l3domain";
-            NetworkFabricL3IsolationDomainData data = new NetworkFabricL3IsolationDomainData(new AzureLocation("eastus"), new L3IsolationDomainProperties(new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric"))
+            string networkMonitorName = "example-monitor";
+            NetworkMonitorData data = new NetworkMonitorData(new AzureLocation("eastus"), new NetworkMonitorProperties
             {
                 Annotation = "annotation",
-                RedistributeConnectedSubnets = RedistributeConnectedSubnet.True,
-                RedistributeStaticRoutes = RedistributeStaticRoute.True,
-                AggregateRouteConfiguration = new AggregateRouteConfiguration
+                BmpConfiguration = new BmpConfigurationProperties
                 {
-                    IPv4Routes = { new AggregateRoute("10.0.0.0/24") },
-                    IPv6Routes = { new AggregateRoute("3FFE:FFFF:0:CD30::a0/29") },
-                },
-                ConnectedExportRoutePolicy = new L3ExportRoutePolicy
-                {
-                    ExportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/example-routePolicy"),
-                    ExportIPv6RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/example-routePolicy"),
-                },
-                ExportRoutePolicy = new L3ExportRoutePolicy
-                {
-                    ExportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/example-routePolicy"),
-                    ExportIPv6RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/example-routePolicy"),
-                },
-                RoutePrefixLimit = new RoutePrefixLimitProperties
-                {
-                    HardLimit = 1,
-                    Threshold = 90,
+                    StationConfigurationState = StationConfigurationState.Enabled,
+                    ScopeResourceId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric"),
+                    StationName = "name",
+                    StationIP = "10.0.0.1",
+                    StationPort = 62695,
+                    StationConnectionMode = StationConnectionMode.Active,
+                    StationConnectionProperties = new StationConnectionProperties
+                    {
+                        KeepaliveIdleTime = 49,
+                        ProbeInterval = 3558,
+                        ProbeCount = 43,
+                    },
+                    StationNetwork = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/example-l3domain/internalNetworks/example-internalnetwork"),
+                    MonitoredNetworks = { new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/example-l3domain") },
+                    ExportPolicy = BmpExportPolicy.PrePolicy,
+                    MonitoredAddressFamilies = { BmpMonitoredAddressFamily.IPv4Unicast },
                 },
             })
             {
                 Tags =
 {
-["KeyId"] = "KeyValue"
+["key"] = "value"
 },
             };
-            ArmOperation<NetworkFabricL3IsolationDomainResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, l3IsolationDomainName, data);
-            NetworkFabricL3IsolationDomainResource result = lro.Value;
+            ArmOperation<NetworkMonitorResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkMonitorName, data);
+            NetworkMonitorResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            NetworkFabricL3IsolationDomainData resourceData = result.Data;
+            NetworkMonitorData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_L3IsolationDomainsGetMaximumSetGen()
+        public async Task Get_NetworkMonitorsGetMaximumSet()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/L3IsolationDomains_Get.json
-            // this example is just showing the usage of "L3IsolationDomains_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkMonitors_Get.json
+            // this example is just showing the usage of "NetworkMonitors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -97,31 +94,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
             string resourceGroupName = "example-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this NetworkFabricL3IsolationDomainResource
-            NetworkFabricL3IsolationDomainCollection collection = resourceGroupResource.GetNetworkFabricL3IsolationDomains();
+            // get the collection of this NetworkMonitorResource
+            NetworkMonitorCollection collection = resourceGroupResource.GetNetworkMonitors();
 
             // invoke the operation
-            string l3IsolationDomainName = "example-l3domain";
-            NetworkFabricL3IsolationDomainResource result = await collection.GetAsync(l3IsolationDomainName);
+            string networkMonitorName = "example-monitor";
+            NetworkMonitorResource result = await collection.GetAsync(networkMonitorName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            NetworkFabricL3IsolationDomainData resourceData = result.Data;
+            NetworkMonitorData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_L3IsolationDomainsListByResourceGroupMaximumSetGen()
+        public async Task GetAll_NetworkMonitorsListByResourceGroup()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/L3IsolationDomains_ListByResourceGroup.json
-            // this example is just showing the usage of "L3IsolationDomains_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkMonitors_ListByResourceGroup.json
+            // this example is just showing the usage of "NetworkMonitors_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -130,20 +127,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
             string resourceGroupName = "example-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this NetworkFabricL3IsolationDomainResource
-            NetworkFabricL3IsolationDomainCollection collection = resourceGroupResource.GetNetworkFabricL3IsolationDomains();
+            // get the collection of this NetworkMonitorResource
+            NetworkMonitorCollection collection = resourceGroupResource.GetNetworkMonitors();
 
             // invoke the operation and iterate over the result
-            await foreach (NetworkFabricL3IsolationDomainResource item in collection.GetAllAsync())
+            await foreach (NetworkMonitorResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetworkFabricL3IsolationDomainData resourceData = item.Data;
+                NetworkMonitorData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -153,10 +150,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_L3IsolationDomainsGetMaximumSetGen()
+        public async Task Exists_NetworkMonitorsGetMaximumSet()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/L3IsolationDomains_Get.json
-            // this example is just showing the usage of "L3IsolationDomains_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkMonitors_Get.json
+            // this example is just showing the usage of "NetworkMonitors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -165,27 +162,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
             string resourceGroupName = "example-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this NetworkFabricL3IsolationDomainResource
-            NetworkFabricL3IsolationDomainCollection collection = resourceGroupResource.GetNetworkFabricL3IsolationDomains();
+            // get the collection of this NetworkMonitorResource
+            NetworkMonitorCollection collection = resourceGroupResource.GetNetworkMonitors();
 
             // invoke the operation
-            string l3IsolationDomainName = "example-l3domain";
-            bool result = await collection.ExistsAsync(l3IsolationDomainName);
+            string networkMonitorName = "example-monitor";
+            bool result = await collection.ExistsAsync(networkMonitorName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_L3IsolationDomainsGetMaximumSetGen()
+        public async Task GetIfExists_NetworkMonitorsGetMaximumSet()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/L3IsolationDomains_Get.json
-            // this example is just showing the usage of "L3IsolationDomains_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkMonitors_Get.json
+            // this example is just showing the usage of "NetworkMonitors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -194,18 +191,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
             string resourceGroupName = "example-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this NetworkFabricL3IsolationDomainResource
-            NetworkFabricL3IsolationDomainCollection collection = resourceGroupResource.GetNetworkFabricL3IsolationDomains();
+            // get the collection of this NetworkMonitorResource
+            NetworkMonitorCollection collection = resourceGroupResource.GetNetworkMonitors();
 
             // invoke the operation
-            string l3IsolationDomainName = "example-l3domain";
-            NullableResponse<NetworkFabricL3IsolationDomainResource> response = await collection.GetIfExistsAsync(l3IsolationDomainName);
-            NetworkFabricL3IsolationDomainResource result = response.HasValue ? response.Value : null;
+            string networkMonitorName = "example-monitor";
+            NullableResponse<NetworkMonitorResource> response = await collection.GetIfExistsAsync(networkMonitorName);
+            NetworkMonitorResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -215,7 +212,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetworkFabricL3IsolationDomainData resourceData = result.Data;
+                NetworkMonitorData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

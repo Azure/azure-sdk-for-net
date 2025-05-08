@@ -13,18 +13,18 @@ using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class ArmConfigurationDiffResponseOperationSource : IOperationSource<ArmConfigurationDiffResponse>
+    internal class NniBfdAdministrativeStateResultOperationSource : IOperationSource<NniBfdAdministrativeStateResult>
     {
-        ArmConfigurationDiffResponse IOperationSource<ArmConfigurationDiffResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        NniBfdAdministrativeStateResult IOperationSource<NniBfdAdministrativeStateResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return ArmConfigurationDiffResponse.DeserializeArmConfigurationDiffResponse(document.RootElement);
+            return NniBfdAdministrativeStateResult.DeserializeNniBfdAdministrativeStateResult(document.RootElement);
         }
 
-        async ValueTask<ArmConfigurationDiffResponse> IOperationSource<ArmConfigurationDiffResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NniBfdAdministrativeStateResult> IOperationSource<NniBfdAdministrativeStateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return ArmConfigurationDiffResponse.DeserializeArmConfigurationDiffResponse(document.RootElement);
+            return NniBfdAdministrativeStateResult.DeserializeNniBfdAdministrativeStateResult(document.RootElement);
         }
     }
 }
