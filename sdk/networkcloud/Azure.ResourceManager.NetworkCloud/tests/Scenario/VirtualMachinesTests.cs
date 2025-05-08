@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 },
                 SshPublicKeys =
                 {
-                    new NetworkCloudSshPublicKey("ssh-rsa REDACTED")
+                    new NetworkCloudSshPublicKey(TestEnvironment.VMSSHPubicKey)
                 },
                 VmImageRepositoryCredentials = new ImageRepositoryCredentials
                 (

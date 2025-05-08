@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         public string VMImageRepoUri => GetRecordedVariable("VM_IMAGE_REPO_URI");
         public string VMImageRepoUser => GetRecordedVariable("VM_IMAGE_REPO_USER");
         public string VMName => GetRecordedVariable("VIRTUAL_MACHINE_NAME");
+        public string VMSSHPubicKey => GetRecordedVariable("VM_SSH_PUBLIC_KEY", options => options.IsSecret());
 
         // Console
 
