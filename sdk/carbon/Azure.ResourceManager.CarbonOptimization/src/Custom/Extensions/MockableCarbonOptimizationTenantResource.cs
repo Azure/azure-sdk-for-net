@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="queryParameters"/> is null. </exception>
         public virtual async Task<Response<CarbonEmissionListResult>> QueryCarbonEmissionReportsAsync(CarbonEmissionQueryFilter queryParameters, CancellationToken cancellationToken = default)
         {
-            using var scope = CarbonServiceClientDiagnostics.CreateScope("MockableCarbonOptimizationTenantResource.QueryCarbonEmissionReportsAsync");
+            using var scope = CarbonServiceClientDiagnostics.CreateScope("MockableCarbonOptimizationTenantResource.QueryCarbonEmissionReports");
             scope.Start();
             try
             {

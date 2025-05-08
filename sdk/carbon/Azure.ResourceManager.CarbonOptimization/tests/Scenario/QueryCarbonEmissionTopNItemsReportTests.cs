@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Tests
             }
 
             CarbonEmissionQueryFilter queryParameters = new TopItemsSummaryReportQueryFilter(
-                new CarbonEmissionQueryDateRange(availableDatesRange.StartOn, availableDatesRange.EndOn),
+                new CarbonEmissionQueryDateRange(availableDatesRange.EndOn, availableDatesRange.EndOn),
                 subscriptionIds.ToArray(),
                 new CarbonEmissionScope[] { CarbonEmissionScope.Scope1, CarbonEmissionScope.Scope3 },
                 categoryType, 5);
