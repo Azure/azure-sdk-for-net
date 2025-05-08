@@ -1113,7 +1113,11 @@
         "Tcps",
         "Ezconnect",
         "Ezconnectplus",
-        "Oltp"
+        "Oltp",
+        "exadb",
+        "Exadb",
+        "Exascale",
+        "exascale"
       ]
     },
     {
