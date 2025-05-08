@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="CacheExpirationActionProperties"/>. </summary>
         /// <param name="cacheBehavior"> Caching behavior for the requests. </param>
         /// <param name="cacheType"> The level at which the content needs to be cached. </param>
-        public CacheExpirationActionProperties(CacheBehaviorSetting cacheBehavior, CacheLevel cacheType)
+        public CacheExpirationActionProperties(CacheBehaviorSetting cacheBehavior, CdnCacheLevel cacheType)
         {
             CacheBehavior = cacheBehavior;
             CacheType = cacheType;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="cacheBehavior"> Caching behavior for the requests. </param>
         /// <param name="cacheType"> The level at which the content needs to be cached. </param>
         /// <param name="cacheDuration"> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </param>
-        internal CacheExpirationActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, CacheBehaviorSetting cacheBehavior, CacheLevel cacheType, TimeSpan? cacheDuration) : base(typeName, serializedAdditionalRawData)
+        internal CacheExpirationActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, CacheBehaviorSetting cacheBehavior, CdnCacheLevel cacheType, TimeSpan? cacheDuration) : base(typeName, serializedAdditionalRawData)
         {
             CacheBehavior = cacheBehavior;
             CacheType = cacheType;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Caching behavior for the requests. </summary>
         public CacheBehaviorSetting CacheBehavior { get; set; }
         /// <summary> The level at which the content needs to be cached. </summary>
-        public CacheLevel CacheType { get; set; }
+        public CdnCacheLevel CacheType { get; set; }
         /// <summary> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </summary>
         public TimeSpan? CacheDuration { get; set; }
     }

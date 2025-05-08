@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             RequestSchemeOperator = requestSchemeOperator;
             Transforms = new ChangeTrackingList<PreTransformCategory>();
-            MatchValues = new ChangeTrackingList<RequestSchemeMatchConditionMatchValue>();
+            MatchValues = new ChangeTrackingList<RequestSchemeMatchValue>();
             TypeName = DeliveryRuleConditionParametersType.DeliveryRuleRequestSchemeConditionParameters;
         }
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="transforms"> List of transforms. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
-        internal RequestSchemeMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, RequestSchemeOperator requestSchemeOperator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestSchemeMatchConditionMatchValue> matchValues) : base(typeName, serializedAdditionalRawData)
+        internal RequestSchemeMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, RequestSchemeOperator requestSchemeOperator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestSchemeMatchValue> matchValues) : base(typeName, serializedAdditionalRawData)
         {
             RequestSchemeOperator = requestSchemeOperator;
             NegateCondition = negateCondition;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> List of transforms. </summary>
         public IList<PreTransformCategory> Transforms { get; }
         /// <summary> The match value for the condition of the delivery rule. </summary>
-        public IList<RequestSchemeMatchConditionMatchValue> MatchValues { get; }
+        public IList<RequestSchemeMatchValue> MatchValues { get; }
     }
 }

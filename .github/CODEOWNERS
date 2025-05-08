@@ -1047,7 +1047,7 @@
 /sdk/neonpostgres/Azure.ResourceManager.*/                         @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Network - CDN
-/sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978
+/sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978 @Ptnan7
 
 # PRLabel: %Network - Front Door
 /sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978

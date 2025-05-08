@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             CacheBehaviorSetting cacheBehavior = default;
-            CacheLevel cacheType = default;
+            CdnCacheLevel cacheType = default;
             TimeSpan? cacheDuration = default;
             DeliveryRuleActionParametersType typeName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("cacheType"u8))
                 {
-                    cacheType = new CacheLevel(property.Value.GetString());
+                    cacheType = new CdnCacheLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cacheDuration"u8))

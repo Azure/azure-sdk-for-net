@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             RequestMethodOperator = requestMethodOperator;
             Transforms = new ChangeTrackingList<PreTransformCategory>();
-            MatchValues = new ChangeTrackingList<RequestMethodMatchConditionMatchValue>();
+            MatchValues = new ChangeTrackingList<RequestMethodMatchValue>();
             TypeName = DeliveryRuleConditionParametersType.DeliveryRuleRequestMethodConditionParameters;
         }
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="transforms"> List of transforms. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
-        internal RequestMethodMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, RequestMethodOperator requestMethodOperator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestMethodMatchConditionMatchValue> matchValues) : base(typeName, serializedAdditionalRawData)
+        internal RequestMethodMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, RequestMethodOperator requestMethodOperator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestMethodMatchValue> matchValues) : base(typeName, serializedAdditionalRawData)
         {
             RequestMethodOperator = requestMethodOperator;
             NegateCondition = negateCondition;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> List of transforms. </summary>
         public IList<PreTransformCategory> Transforms { get; }
         /// <summary> The match value for the condition of the delivery rule. </summary>
-        public IList<RequestMethodMatchConditionMatchValue> MatchValues { get; }
+        public IList<RequestMethodMatchValue> MatchValues { get; }
     }
 }
