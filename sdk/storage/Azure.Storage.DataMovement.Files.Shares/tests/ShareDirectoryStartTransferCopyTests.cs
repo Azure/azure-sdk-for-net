@@ -21,7 +21,6 @@ using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using DMShare::Azure.Storage.DataMovement.Files.Shares;
 using Azure.Core.TestFramework;
 using System.Text.RegularExpressions;
-using BaseShares::Azure.Storage.Sas;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
