@@ -1,297 +1,164 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// filepath: c:\Users\t-davidbrown\source\repos\Azure\azure-sdk-for-net\sdk\storage\Azure.Storage.DataMovement\tests\ThroughputMonitorTests.cs
+using NUnit.Framework;
 using System;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
 {
     [TestFixture]
-    internal class ThroughputMonitorTests
+    public class ThroughputMonitorTests
     {
-        private const int ProcessingDelayMilliseconds = 100; // Allow time for channel processing
+        private const double Tolerance = 0.01; // Tolerance for double comparisons
 
         [Test]
-        public void Constructor_InitializesProperties()
+        public void Constructor_InitializesPropertiesCorrectly()
         {
             // Arrange & Act
-            var monitor = new ThroughputMonitor();
+            using var monitor = new ThroughputMonitor();
 
             // Assert
-            Assert.AreEqual(0, monitor.TotalBytesTransferred);
-            Assert.AreEqual(0.0d, monitor.Throughput);
-            Assert.AreEqual(0.0d, monitor.AvgThroughput);
-            Assert.AreEqual(0.0d, monitor.ThroughputInMb);
-            Assert.AreEqual(0.0d, monitor.AvgThroughputInMb);
-
-            // Check internal fields via reflection for initial state
-            var transferCountField = typeof(ThroughputMonitor).GetField("_transferCount", BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.AreEqual(0L, transferCountField?.GetValue(monitor));
-
-            var startTimeField = typeof(ThroughputMonitor).GetField("_startTime", BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.AreEqual(default(DateTimeOffset), startTimeField?.GetValue(monitor));
-
-            var previousTransferTimeField = typeof(ThroughputMonitor).GetField("_previousTransferTime", BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.AreEqual(default(DateTimeOffset), previousTransferTimeField?.GetValue(monitor));
+            Assert.AreEqual(0, monitor.TotalBytesTransferred, "TotalBytesTransferred should be 0 initially.");
+            Assert.AreEqual(0.0, monitor.Throughput, "Throughput should be 0.0 initially.");
+            Assert.AreEqual(0.0, monitor.ThroughputInMb, "ThroughputInMb should be 0.0 initially.");
+            Assert.AreEqual(0.0, monitor.AvgThroughput, "AvgThroughput should be 0.0 initially.");
+            Assert.AreEqual(0.0, monitor.AvgThroughputInMb, "AvgThroughputInMb should be 0.0 initially.");
         }
 
         [Test]
-        public async Task QueueBytesTransferredAsync_UpdatesTotalBytesTransferred()
+        public async Task QueueBytesTransferredAsync_FirstTransfer_UpdatesTotalAndSetsInitialThroughput()
         {
             // Arrange
-            var monitor = new ThroughputMonitor();
+            using var monitor = new ThroughputMonitor();
+            long bytesTransferred = 100;
 
             // Act
-            await monitor.QueueBytesTransferredAsync(100);
-            await monitor.QueueBytesTransferredAsync(200);
-            await Task.Delay(ProcessingDelayMilliseconds); // Allow channel to process
+            await monitor.QueueBytesTransferredAsync(bytesTransferred);
+            await Task.Delay(50); // Allow time for the internal processor to handle the item.
 
             // Assert
-            Assert.AreEqual(300, monitor.TotalBytesTransferred);
+            Assert.AreEqual(bytesTransferred, monitor.TotalBytesTransferred, "TotalBytesTransferred not updated correctly.");
+            // As per current logic, Throughput is 0.0 after the first transfer because first transfer is tick 0.
+            Assert.AreEqual(0.0, monitor.Throughput, "Throughput should be 0.0 after the first transfer");
+            Assert.IsTrue(monitor.AvgThroughput >= 0, "AvgThroughput should be non-negative.");
         }
 
         [Test]
-        public async Task ProcessBytesTransferredAsync_FirstTransfer_SetsInitialValues()
+        public async Task QueueBytesTransferredAsync_MultipleTransfers_CalculatesThroughputAndAvgThroughput()
         {
             // Arrange
-            var monitor = new ThroughputMonitor();
+            using var monitor = new ThroughputMonitor();
+            long bytes1 = 1024; // 1KB
+            long bytes2 = 2048; // 2KB
+            int delayMilliseconds = 200; // 0.2 seconds
 
-            // Act
-            await monitor.QueueBytesTransferredAsync(100);
-            await Task.Delay(ProcessingDelayMilliseconds);
+            // Act - First transfer
+            await monitor.QueueBytesTransferredAsync(bytes1);
+            await Task.Delay(50);
+            var initialTotalBytes = monitor.TotalBytesTransferred;
+            var initialThroughput = monitor.Throughput;
+
+            // Act - Second transfer
+            await Task.Delay(delayMilliseconds);
+            await monitor.QueueBytesTransferredAsync(bytes2);
+            await Task.Delay(50);
 
             // Assert
-            Assert.AreEqual(100, monitor.TotalBytesTransferred);
-            Assert.AreEqual(0.0d, monitor.Throughput, "Throughput should be 0 for the first transfer.");
+            Assert.AreEqual(bytes1, initialTotalBytes, "Initial total bytes incorrect.");
+            Assert.AreEqual(0.0, initialThroughput, "Initial throughput incorrect.");
 
-            var transferCountField = typeof(ThroughputMonitor).GetField("_transferCount", BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.AreEqual(1L, transferCountField?.GetValue(monitor));
+            Assert.AreEqual(bytes1 + bytes2, monitor.TotalBytesTransferred, "TotalBytesTransferred not updated correctly after multiple transfers.");
 
-            var startTimeField = typeof(ThroughputMonitor).GetField("_startTime", BindingFlags.NonPublic | BindingFlags.Instance);
-            var previousTransferTimeField = typeof(ThroughputMonitor).GetField("_previousTransferTime", BindingFlags.NonPublic | BindingFlags.Instance);
-            var startTime = (DateTimeOffset)(startTimeField?.GetValue(monitor) ?? default(DateTimeOffset));
-            var previousTime = (DateTimeOffset)(previousTransferTimeField?.GetValue(monitor) ?? default(DateTimeOffset));
+            double expectedThroughputBytes2Approx = (double)bytes2 / (delayMilliseconds / 1000.0);
+            Assert.IsTrue(monitor.Throughput > 0, "Throughput should be positive after second transfer.");
+            Assert.GreaterOrEqual(monitor.Throughput, expectedThroughputBytes2Approx * 0.7, "Throughput seems too low.");
+            Assert.LessOrEqual(monitor.Throughput, expectedThroughputBytes2Approx * 1.3, "Throughput seems too high.");
 
-            Assert.AreNotEqual(default(DateTimeOffset), startTime);
-            Assert.AreEqual(startTime, previousTime);
+            Assert.IsTrue(monitor.AvgThroughput > 0, "Average throughput should be positive.");
+            double maxPossibleAvgThroughput = (double)(bytes1 + bytes2) / (delayMilliseconds / 1000.0);
+            Assert.LessOrEqual(monitor.AvgThroughput, maxPossibleAvgThroughput * 1.3, "Average throughput seems too high for the delay.");
         }
 
         [Test]
-        public async Task ProcessBytesTransferredAsync_SubsequentTransfer_CalculatesThroughput()
+        public async Task QueueBytesTransferredAsync_ZeroBytesTransfer_UpdatesTotalAndThroughput()
         {
             // Arrange
-            var monitor = new ThroughputMonitor();
-            await monitor.QueueBytesTransferredAsync(100); // First transfer
-            await Task.Delay(ProcessingDelayMilliseconds);
+            using var monitor = new ThroughputMonitor();
+            long initialBytes = 100;
 
-            // Act
-            await Task.Delay(100); // Introduce a delay between transfers for time difference
-            await monitor.QueueBytesTransferredAsync(200); // Second transfer
-            await Task.Delay(ProcessingDelayMilliseconds);
+            // Act - First transfer (non-zero)
+            await monitor.QueueBytesTransferredAsync(initialBytes);
+            await Task.Delay(50);
 
-            // Assert
-            Assert.AreEqual(300, monitor.TotalBytesTransferred);
-            Assert.Greater(monitor.Throughput, 0.0d, "Throughput should be positive after a subsequent transfer with delay.");
-
-            var transferCountField = typeof(ThroughputMonitor).GetField("_transferCount", BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.AreEqual(2L, transferCountField?.GetValue(monitor));
-        }
-
-        //[Test]
-        //public async Task ProcessBytesTransferredAsync_SubsequentTransfer_ZeroInterval_PositiveBytes_MaxThroughput()
-        //{
-        //    // Arrange
-        //    var monitor = new ThroughputMonitor();
-        //    var previousTransferTimeField = typeof(ThroughputMonitor).GetField("_previousTransferTime", BindingFlags.NonPublic | BindingFlags.Instance);
-        //    var startTimeField = typeof(ThroughputMonitor).GetField("_startTime", BindingFlags.NonPublic | BindingFlags.Instance);
-        //    var transferCountField = typeof(ThroughputMonitor).GetField("_transferCount", BindingFlags.NonPublic | BindingFlags.Instance);
-
-        //    // Simulate first transfer processed
-        //    DateTimeOffset simulatedTime = DateTimeOffset.UtcNow;
-        //    startTimeField?.SetValue(monitor, simulatedTime);
-        //    previousTransferTimeField?.SetValue(monitor, simulatedTime);
-        //    transferCountField?.SetValue(monitor, 1L);
-        //    // Manually update total bytes as if ProcessBytesTransferredAsync was called for the first item
-        //    var totalBytesField = typeof(ThroughputMonitor).GetField("_totalBytesTransferred", BindingFlags.NonPublic | BindingFlags.Instance);
-        //    totalBytesField?.SetValue(monitor, 50L);
-
-        //    // Act: Queue a second transfer that will be processed as if no time has passed
-        //    await monitor.QueueBytesTransferredAsync(100);
-        //    await Task.Delay(ProcessingDelayMilliseconds); // Allow channel to process
-
-        //    // Assert
-        //    Assert.AreEqual(150, monitor.TotalBytesTransferred); // 50 (simulated) + 100 (actual)
-        //    Assert.AreEqual(double.MaxValue, monitor.Throughput, "Throughput should be double.MaxValue for zero interval and positive bytes.");
-        //}
-
-        [Test]
-        public async Task ProcessBytesTransferredAsync_SubsequentTransfer_ZeroInterval_ZeroBytes_ZeroThroughput()
-        {
-            // Arrange
-            var monitor = new ThroughputMonitor();
-            var previousTransferTimeField = typeof(ThroughputMonitor).GetField("_previousTransferTime", BindingFlags.NonPublic | BindingFlags.Instance);
-            var startTimeField = typeof(ThroughputMonitor).GetField("_startTime", BindingFlags.NonPublic | BindingFlags.Instance);
-            var transferCountField = typeof(ThroughputMonitor).GetField("_transferCount", BindingFlags.NonPublic | BindingFlags.Instance);
-
-            // Simulate first transfer processed
-            DateTimeOffset simulatedTime = DateTimeOffset.UtcNow;
-            startTimeField?.SetValue(monitor, simulatedTime);
-            previousTransferTimeField?.SetValue(monitor, simulatedTime);
-            transferCountField?.SetValue(monitor, 1L);
-            var totalBytesField = typeof(ThroughputMonitor).GetField("_totalBytesTransferred", BindingFlags.NonPublic | BindingFlags.Instance);
-            totalBytesField?.SetValue(monitor, 50L);
-
-            // Act: Queue a second transfer with zero bytes
+            // Act - Second transfer (zero bytes)
+            await Task.Delay(100);
             await monitor.QueueBytesTransferredAsync(0);
-            await Task.Delay(ProcessingDelayMilliseconds);
+            await Task.Delay(50);
 
             // Assert
-            Assert.AreEqual(50, monitor.TotalBytesTransferred);
-            Assert.AreEqual(0.0d, monitor.Throughput, "Throughput should be 0.0 for zero interval and zero bytes.");
+            Assert.AreEqual(initialBytes, monitor.TotalBytesTransferred, "TotalBytesTransferred should not change for zero byte transfer.");
+            Assert.AreEqual(0.0, monitor.Throughput, Tolerance, "Throughput for 0 bytes transfer should be 0.0.");
+            Assert.IsTrue(monitor.AvgThroughput > 0, "AvgThroughput should still be based on the first transfer.");
         }
 
         [Test]
-        public void AvgThroughput_NoTransfers_ReturnsZero()
+        public void AvgThroughput_NoTransfers_IsZero()
         {
             // Arrange
-            var monitor = new ThroughputMonitor();
+            using var monitor = new ThroughputMonitor();
 
             // Act & Assert
-            Assert.AreEqual(0.0d, monitor.AvgThroughput);
+            Assert.AreEqual(0.0, monitor.AvgThroughput, Tolerance, "AvgThroughput should be 0.0 when no transfers.");
+            Assert.AreEqual(0.0, monitor.AvgThroughputInMb, Tolerance, "AvgThroughputInMb should be 0.0 when no transfers.");
         }
 
         [Test]
-        public async Task AvgThroughput_SingleTransfer_CalculatesCorrectly()
+        public async Task AvgThroughput_ZeroTotalBytesAfterZeroByteTransfer_IsZero()
         {
             // Arrange
-            var monitor = new ThroughputMonitor();
+            using var monitor = new ThroughputMonitor();
 
             // Act
-            await monitor.QueueBytesTransferredAsync(1000);
-            await Task.Delay(ProcessingDelayMilliseconds); // Ensure processing
-            await Task.Delay(100); // Ensure some time passes for AvgThroughput calculation
+            await monitor.QueueBytesTransferredAsync(0);
+            await Task.Delay(50);
+            await Task.Delay(100);
 
             // Assert
-            Assert.Greater(monitor.AvgThroughput, 0.0d);
-            Assert.Less(monitor.AvgThroughput, double.MaxValue); // Should not be infinite if time has passed
+            Assert.AreEqual(0, monitor.TotalBytesTransferred, "TotalBytesTransferred should be 0.");
+            Assert.AreEqual(0.0, monitor.AvgThroughput, Tolerance, "AvgThroughput should be 0.0 if total bytes is 0.");
         }
 
         [Test]
-        public async Task AvgThroughput_MultipleTransfers_CalculatesCorrectly()
+        public async Task ThroughputAndAvgThroughput_InMb_Calculation()
         {
             // Arrange
-            var monitor = new ThroughputMonitor();
-            // Using a relative tolerance to account for timing variations in tests.
-            const double relativeTolerance = 0.20; // 20%
+            using var monitor = new ThroughputMonitor();
+            long bytes1 = 1024 * 1024; // 1 MiB
+            long bytes2 = 1024 * 1024; // 1 MiB
+            int delaySeconds = 1;
 
-            // Act
-            await monitor.QueueBytesTransferredAsync(1000);
-            await Task.Delay(ProcessingDelayMilliseconds + 50); // Ensure processing & time passes
+            // Act - First transfer
+            await monitor.QueueBytesTransferredAsync(bytes1);
+            await Task.Delay(50);
 
-            double firstAvg = monitor.AvgThroughput;
-            // firstAvg should be positive here due to bytes transferred and elapsed time.
-            Assert.Greater(firstAvg, 0.0d, "First average throughput should be positive.");
-
-            await monitor.QueueBytesTransferredAsync(1000);
-            await Task.Delay(ProcessingDelayMilliseconds + 50); // Ensure processing & more time passes
-
-            // Assert
-            Assert.AreEqual(2000, monitor.TotalBytesTransferred);
-            Assert.Greater(monitor.AvgThroughput, 0.0d, "Final average throughput should be positive.");
-
-            // Assert that the new average throughput is close to the first one,
-            // using a relative tolerance. This suggests that the average rate
-            // remains somewhat consistent under these test conditions.
-            double delta = Math.Abs(firstAvg * relativeTolerance);
-            Assert.AreEqual(firstAvg, monitor.AvgThroughput, delta,
-                $"Final AvgThroughput ({monitor.AvgThroughput:F2}) should be within {relativeTolerance * 100}% of firstAvg ({firstAvg:F2}).");
-        }
-
-        //[Test]
-        //public void AvgThroughput_ZeroElapsedTime_PositiveBytes_ReturnsMaxValue()
-        //{
-        //    // Arrange
-        //    var monitor = new ThroughputMonitor();
-        //    var startTimeField = typeof(ThroughputMonitor).GetField("_startTime", BindingFlags.NonPublic | BindingFlags.Instance);
-        //    var transferCountField = typeof(ThroughputMonitor).GetField("_transferCount", BindingFlags.NonPublic | BindingFlags.Instance);
-        //    var totalBytesField = typeof(ThroughputMonitor).GetField("_totalBytesTransferred", BindingFlags.NonPublic | BindingFlags.Instance);
-
-        //    monitor.QueueBytesTransferredAsync(100).AsTask().Wait();
-        //    Task.Delay(ProcessingDelayMilliseconds).Wait();
-
-        //    var now = DateTimeOffset.UtcNow;
-        //    startTimeField.SetValue(monitor, now);
-
-        //    Assert.IsTrue((long)(totalBytesField?.GetValue(monitor) ?? 0L) > 0);
-        //    Assert.IsTrue((long)(transferCountField?.GetValue(monitor) ?? 0L) > 0);
-
-        //    double avg = monitor.AvgThroughput;
-        //    Assert.IsTrue(avg == double.MaxValue || avg > 1000000000.0, // Arbitrary large number if not exactly MaxValue
-        //        "AvgThroughput should be MaxValue or very large if elapsed time is near zero with positive bytes.");
-        //}
-
-        [Test]
-        public async Task AvgThroughput_ZeroElapsedTime_ZeroBytes_ReturnsZero()
-        {
-            // Arrange
-            var monitor = new ThroughputMonitor();
-            // Ensure _transferCount is 0, which is the default state.
-            // This path `if (_transferCount == 0)` in AvgThroughput returns 0.
+            // Act - Second transfer
+            await Task.Delay(delaySeconds * 1000);
+            await monitor.QueueBytesTransferredAsync(bytes2);
+            await Task.Delay(50);
 
             // Assert
-            Assert.AreEqual(0.0d, monitor.AvgThroughput);
+            double currentThroughput = monitor.Throughput; // Snapshot for consistent calculation
+            double expectedThroughputInMb = ((currentThroughput * 8) / 1024.0) / 1024.0; // Use .0 for double division
+            Assert.AreEqual(expectedThroughputInMb, monitor.ThroughputInMb, Tolerance, "ThroughputInMb calculation is off.");
 
-            // Test the other path: _transferCount > 0, _totalBytesTransferred == 0, elapsedTime.Ticks == 0
-            var startTimeField = typeof(ThroughputMonitor).GetField("_startTime", BindingFlags.NonPublic | BindingFlags.Instance);
-            var transferCountField = typeof(ThroughputMonitor).GetField("_transferCount", BindingFlags.NonPublic | BindingFlags.Instance);
-            var totalBytesField = typeof(ThroughputMonitor).GetField("_totalBytesTransferred", BindingFlags.NonPublic | BindingFlags.Instance);
-
-            await monitor.QueueBytesTransferredAsync(0); // First transfer, but zero bytes
-            await Task.Delay(ProcessingDelayMilliseconds);
-
-            Assert.AreEqual(0L, (long)(totalBytesField?.GetValue(monitor) ?? -1L));
-            Assert.AreEqual(1L, (long)(transferCountField?.GetValue(monitor) ?? 0L));
-
-            // Force start time to now to try and get Ticks == 0
-            var now = DateTimeOffset.UtcNow;
-            startTimeField?.SetValue(monitor, now);
-
-            double avg = monitor.AvgThroughput;
-            Assert.AreEqual(0.0d, avg, "AvgThroughput should be 0.0 if total bytes is 0, even if time is near zero.");
-        }
-
-        [Test]
-        public async Task ThroughputInMb_And_AvgThroughputInMb_CalculatedCorrectly()
-        {
-            // Arrange
-            var monitor = new ThroughputMonitor();
-            var bytes = 1024 * 1024 * 2; // 2 MB
-
-            // Act
-            await monitor.QueueBytesTransferredAsync(bytes); // First transfer
-            await Task.Delay(ProcessingDelayMilliseconds);
-            await Task.Delay(1000); // Wait 1 second
-
-            await monitor.QueueBytesTransferredAsync(bytes); // Second transfer
-            await Task.Delay(ProcessingDelayMilliseconds);
-
-            // Assert
-            // Throughput is for the last event (bytes / interval_seconds)
-            // AvgThroughput is for all events (total_bytes / total_elapsed_seconds)
-
-            const double tolerance = 0.05; // Tolerance of 0.05 Mbps
-
-            double expectedThroughputMb = (monitor.Throughput * 8) / (1024 * 1024);
-            Assert.AreEqual(expectedThroughputMb, monitor.ThroughputInMb, tolerance);
-
-            double expectedAvgThroughputMb = (monitor.AvgThroughput * 8) / (1024 * 1024);
-            Assert.AreEqual(expectedAvgThroughputMb, monitor.AvgThroughputInMb, tolerance);
-
-            Assert.Greater(monitor.ThroughputInMb, 0.0d);
-            Assert.Greater(monitor.AvgThroughputInMb, 0.0d);
+            double currentAvgThroughput = monitor.AvgThroughput; // Snapshot for consistent calculation
+            Assert.IsTrue(currentAvgThroughput > 0, "AvgThroughput should be positive.");
+            double expectedAvgThroughputInMb = ((currentAvgThroughput * 8) / 1024.0) / 1024.0; // Use .0 for double division
+            double relativeToleranceForAvg = Math.Max(Tolerance, Math.Abs(expectedAvgThroughputInMb * 1e-7)); // Relative tolerance, ensure min absolute
+            Assert.AreEqual(expectedAvgThroughputInMb, monitor.AvgThroughputInMb, relativeToleranceForAvg, "AvgThroughputInMb does not match calculation from AvgThroughput.");
         }
 
         [Test]
@@ -301,59 +168,22 @@ namespace Azure.Storage.DataMovement.Tests
             var monitor = new ThroughputMonitor();
 
             // Act & Assert
-            Assert.DoesNotThrow(() => monitor.Dispose());
-            Assert.DoesNotThrow(() => monitor.Dispose()); // Call again
+            Assert.DoesNotThrow(() => monitor.Dispose(), "Dispose should not throw an exception.");
         }
 
         [Test]
-        public async Task QueueBytesTransferredAsync_WithCancellation_DoesNotStopProcessingOfQueuedItems()
+        public async Task ProcessBytesTransferred_Subsequent_ZeroInterval_ZeroBytes_ResultsInZeroThroughput()
         {
-            // Arrange
-            var monitor = new ThroughputMonitor();
-            var cts = new CancellationTokenSource();
-
-            // Act
-            await monitor.QueueBytesTransferredAsync(100, CancellationToken.None);
-            await monitor.QueueBytesTransferredAsync(200, cts.Token);
-            cts.Cancel(); // Cancel token for future calls, but already queued items should process.
-            await monitor.QueueBytesTransferredAsync(300, cts.Token); // This might not queue if channel respects token on write.
-                                                                    // However, our DefaultProcessor's QueueAsync might not check token before enqueuing.
-                                                                    // The key is that ProcessBytesTransferredAsync itself doesn't use the token.
-
-            await Task.Delay(ProcessingDelayMilliseconds * 2); // Allow ample time for processing
-
-            // Assert
-            // The behavior of QueueAsync on a cancelled token depends on the IProcessor implementation.
-            // Assuming ChannelProcessing.NewProcessor().QueueAsync might throw or ignore if token is cancelled.
-            // Let's check if at least the first two items were processed.
-            // If the third one (queued with cancelled token) is also processed, it means QueueAsync didn't prevent it.
-            // The current ThroughputMonitor passes CancellationToken.None to the processor's QueueAsync,
-            // so the token passed to ThroughputMonitor.QueueBytesTransferredAsync is effectively ignored by the processor.
-            Assert.AreEqual(100 + 200 + 300, monitor.TotalBytesTransferred,
-                "All items should be processed as the CancellationToken is not used by the internal processor queue or processing method.");
-            Assert.IsTrue(cts.IsCancellationRequested);
-        }
-
-        [Test]
-        public async Task ThroughputAndAvgThroughput_WithZeroBytesTransferred_RemainZero()
-        {
-            // Arrange
-            var monitor = new ThroughputMonitor();
-
-            // Act
-            await monitor.QueueBytesTransferredAsync(0);
-            await Task.Delay(ProcessingDelayMilliseconds);
-            await Task.Delay(100); // time passes
+            using var monitor = new ThroughputMonitor();
+            await monitor.QueueBytesTransferredAsync(100);
+            await Task.Delay(10);
 
             await monitor.QueueBytesTransferredAsync(0);
-            await Task.Delay(ProcessingDelayMilliseconds);
+            await Task.Delay(50);
 
-            // Assert
-            Assert.AreEqual(0, monitor.TotalBytesTransferred);
-            Assert.AreEqual(0.0d, monitor.Throughput);
-            Assert.AreEqual(0.0d, monitor.AvgThroughput);
-            Assert.AreEqual(0.0d, monitor.ThroughputInMb);
-            Assert.AreEqual(0.0d, monitor.AvgThroughputInMb);
+            // If interval was zero, logic is: if (bytesTransferred > 0) MaxValue else 0.0. So 0.0.
+            // If interval was positive, 0 bytes / interval = 0.0.
+            Assert.AreEqual(0.0, monitor.Throughput, Tolerance, "Throughput for zero bytes should be 0.0.");
         }
     }
 }

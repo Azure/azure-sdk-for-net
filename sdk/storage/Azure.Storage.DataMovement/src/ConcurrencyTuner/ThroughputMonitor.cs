@@ -28,23 +28,23 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Gets the current throughput in bytes per second, calculated for the last transfer event.
         /// </summary>
-        internal virtual double Throughput { get; private set; }
+        internal virtual float Throughput { get; private set; }
 
         /// <summary>
         /// Gets the current throughput in megabits per second.
         /// </summary>
-        internal virtual double ThroughputInMb => ((Throughput * 8) / 1024) / 1024;
+        internal virtual float ThroughputInMb => ((Throughput * 8) / 1024) / 1024;
 
         /// <summary>
         /// Gets the average throughput in bytes per second since the monitor started.
         /// </summary>
-        internal virtual double AvgThroughput
+        internal virtual float AvgThroughput
         {
             get
             {
                 if (_transferCount == 0)
                 {
-                    return 0.0;
+                    return 0.0f;
                 }
 
                 DateTimeOffset currentTime = DateTimeOffset.UtcNow;
@@ -52,15 +52,15 @@ namespace Azure.Storage.DataMovement
 
                 if (elapsedTime.TotalSeconds > 0)
                 {
-                    return (double)_totalBytesTransferred / elapsedTime.TotalSeconds;
+                    return (float)_totalBytesTransferred / (float)elapsedTime.TotalSeconds;
                 }
                 else if (_totalBytesTransferred > 0 && elapsedTime.Ticks == 0)
                 {
-                    return double.MaxValue; // infinite throughput
+                    return float.MaxValue; // infinite throughput
                 }
                 else
                 {
-                    return 0.0;
+                    return 0.0f;
                 }
             }
         }
@@ -68,7 +68,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Gets the average throughput in megabits per second since the monitor started.
         /// </summary>
-        internal virtual double AvgThroughputInMb => ((AvgThroughput * 8) / 1024) / 1024;
+        internal virtual float AvgThroughputInMb => ((AvgThroughput * 8) / 1024) / 1024;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ThroughputMonitor"/> class with a custom processor.
@@ -103,7 +103,7 @@ namespace Azure.Storage.DataMovement
             if (_transferCount == 0)
             {
                 _startTime = currentTime;
-                Throughput = 0.0;
+                Throughput = 0.0f;
             }
             else
             {
@@ -111,17 +111,17 @@ namespace Azure.Storage.DataMovement
 
                 if (interval.Ticks > 0)
                 {
-                    Throughput = (double)bytesTransferred / interval.TotalSeconds;
+                    Throughput = (float)bytesTransferred / (float)interval.TotalSeconds;
                 }
                 else
                 {
                     if (bytesTransferred > 0)
                     {
-                        Throughput = double.MaxValue; //infinite throughput
+                        Throughput = float.MaxValue; //infinite throughput
                     }
                     else // bytesTransferred == 0
                     {
-                        Throughput = 0.0;
+                        Throughput = 0.0f;
                     }
                 }
             }
@@ -137,9 +137,14 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="bytesTransferred">The number of bytes transferred.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
-        public async ValueTask QueueBytesTransferredAsync(long bytesTransferred, CancellationToken cancellationToken = default)
+        internal async ValueTask QueueBytesTransferredAsync(long bytesTransferred, CancellationToken cancellationToken = default)
         {
             await _bytesTransferredProcessor.QueueAsync(bytesTransferred, CancellationToken.None).ConfigureAwait(false);
+        }
+
+       internal void SetStartTime(DateTimeOffset time)
+        {
+            _startTime = time;
         }
 
         /// <summary>
