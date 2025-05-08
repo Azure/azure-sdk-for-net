@@ -20,11 +20,11 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        public static PersistentAgentsAdministration GetPersistentAgentAdministrationClient(this ClientConnectionProvider provider)
+        public static PersistentAgentsClient GetPersistentAgentsClient(this ClientConnectionProvider provider)
         {
             PersistentAgentsAdministrationKey key = new();
             PersistentAgentsAdministration agentsClient = provider.Subclients.GetClient(key , () => CreateAdministrationAgentsClient(provider));
-            return agentsClient;
+            return new PersistentAgentsClient(agentsClient);
         }
 
         private static PersistentAgentsAdministration CreateAdministrationAgentsClient(this ClientConnectionProvider provider)
