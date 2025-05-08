@@ -5,7 +5,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Runtime.Serialization;
 using Azure.Core;
 
 namespace Azure.AI.Agents.Persistent
@@ -20,14 +19,14 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        public static PersistentAgentsAdministration GetPersistentAgentAdministrationClient(this ClientConnectionProvider provider)
+        public static PersistentAgentsClient GetPersistentAgentClient(this ClientConnectionProvider provider)
         {
-            PersistentAgentsAdministrationKey key = new();
-            PersistentAgentsAdministration agentsClient = provider.Subclients.GetClient(key , () => CreateAdministrationAgentsClient(provider));
+            PersistentAgentsKey key = new();
+            PersistentAgentsClient agentsClient = provider.Subclients.GetClient(key, () => CreateAgentsClient(provider));
             return agentsClient;
         }
 
-        private static PersistentAgentsAdministration CreateAdministrationAgentsClient(this ClientConnectionProvider provider)
+        private static PersistentAgentsClient CreateAgentsClient(this ClientConnectionProvider provider)
         {
             ClientConnection connection = provider.GetConnection(typeof(PersistentAgentsClient).FullName!);
             if (!connection.TryGetLocatorAsUri(out Uri? uri) || uri is null)
@@ -35,10 +34,10 @@ namespace Azure.AI.Agents.Persistent
                 throw new InvalidOperationException("Invalid URI.");
             }
             if (connection.Credential is TokenCredential cred)
-                return new PersistentAgentsAdministration(uri, cred);
+                return new PersistentAgentsClient(uri.AbsoluteUri, cred);
             throw new InvalidOperationException($"PersistentAgentsAdministration does not support {connection.CredentialKind}.");
         }
 
-        private record PersistentAgentsAdministrationKey();
+        private record PersistentAgentsKey();
     }
 }
