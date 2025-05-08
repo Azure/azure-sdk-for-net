@@ -15,24 +15,33 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         private ConfidentialLedgerResource _ledgerResource;
         public DeleteLedgerTest(string testFixtureName) : base(true, testFixtureName)
         {
+            // Override the default mode to Playback for this test
+            // This is necessary as CI is using None mode and does not run tests
+            if (Mode == RecordedTestMode.None || Mode == RecordedTestMode.Live)
+            {
+                Mode = RecordedTestMode.Playback;
+            }
         }
 
         [SetUp]
         public async Task FixtureSetup()
         {
-            await CreateLedger(LedgerName);
-            _ledgerResource = await GetLedgerByName(LedgerName);
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            {
+                await CreateLedger(LedgerNameInFixture);
+                _ledgerResource = await GetLedgerByName(LedgerNameInFixture);
+            }
         }
 
         [Test, Order(1)]
         [RecordedTest]
-        [LiveOnly(Reason = "Test relies on PrincipalId format which currently is not a valid GUID. This will be fixed when the sanitization migrates to the Test Proxy.")]
         public async Task TestDeleteLedger()
         {
+            IgnoreTestInLiveMode();
             await _ledgerResource.DeleteAsync(WaitUntil.Completed);
             try
             {
-                await GetLedgerByName(LedgerName);
+                await GetLedgerByName(LedgerNameInFixture);
                 Assert.Fail("Ledger should not exist after delete operation");
             }
             catch (Exception exception)
@@ -43,9 +52,9 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
 
         [Test, Order(2)]
         [RecordedTest]
-        [LiveOnly(Reason = "Test relies on PrincipalId format which currently is not a valid GUID. This will be fixed when the sanitization migrates to the Test Proxy.")]
         public async Task TestDeleteLedgerOnDeletedLedger()
         {
+            IgnoreTestInLiveMode();
             await _ledgerResource.DeleteAsync(WaitUntil.Completed);
 
             ArmOperation armOperation = await _ledgerResource.DeleteAsync(WaitUntil.Completed);

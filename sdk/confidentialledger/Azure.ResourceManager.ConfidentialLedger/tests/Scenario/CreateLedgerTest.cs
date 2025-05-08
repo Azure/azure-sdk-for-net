@@ -15,28 +15,33 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
     {
         public CreateLedgerTest(string testFixtureName) : base(true, testFixtureName)
         {
+            // Override the default mode to Playback for this test
+            // This is necessary as CI is using None mode and does not run tests
+            if (Mode == RecordedTestMode.None || Mode == RecordedTestMode.Live)
+            {
+                Mode = RecordedTestMode.Playback;
+            }
         }
 
         [Test, Order(1)]
         [RecordedTest]
         public async Task TestNameAvailabilityBeforeCreating()
         {
-            ConfidentialLedgerNameAvailabilityResult response = await GetLedgerNameAvailability(LedgerName);
+            IgnoreTestInLiveMode();
+            ConfidentialLedgerNameAvailabilityResult response = await GetLedgerNameAvailability(LedgerNameInFixture);
             Assert.True(response.IsNameAvailable);
         }
 
         [Test, Order(2)]
         [RecordedTest]
-        [LiveOnly(Reason = "Test relies on PrincipalId format which currently is not a valid GUID. This will be fixed when the sanitization migrates to the Test Proxy.")]
         public async Task TestCreateLedger()
         {
-            // Create the ledger
-            await CreateLedger(LedgerName);
-
-            ConfidentialLedgerResource ledgerResource = await GetLedgerByName(LedgerName);
+            IgnoreTestInLiveMode();
+            await CreateLedger(LedgerNameInFixture);
+            ConfidentialLedgerResource ledgerResource = await GetLedgerByName(LedgerNameInFixture);
 
             Assert.NotNull(ledgerResource);
-            Assert.AreEqual(LedgerName, ledgerResource.Data.Properties.LedgerName);
+            Assert.AreEqual(LedgerNameInFixture, ledgerResource.Data.Properties.LedgerName);
             Assert.NotNull(ledgerResource.Data.Properties.LedgerUri);
         }
 
@@ -44,7 +49,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         [RecordedTest]
         public async Task TestNameAvailabilityAfterCreating()
         {
-            ConfidentialLedgerNameAvailabilityResult response = await GetLedgerNameAvailability(LedgerName);
+            IgnoreTestInLiveMode();
+            ConfidentialLedgerNameAvailabilityResult response = await GetLedgerNameAvailability(LedgerNameInFixture);
             Assert.False(response.IsNameAvailable);
         }
 
