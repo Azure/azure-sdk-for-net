@@ -11,10 +11,12 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace _Type.Model.Inheritance.Recursive.Models
+namespace _Type.Model.Inheritance.Recursive
 {
     public partial class Extension : IJsonModel<Extension>
     {
+        internal Extension() => throw null;
+
         void IJsonModel<Extension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

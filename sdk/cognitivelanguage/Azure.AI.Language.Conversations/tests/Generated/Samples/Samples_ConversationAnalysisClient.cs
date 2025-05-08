@@ -41,6 +41,7 @@ namespace Azure.AI.Language.Conversations.Samples
                 {
                     projectName = "{project-name}",
                     deploymentName = "{deployment-name}",
+                    stringIndexType = "TextElement_V8",
                 },
             });
             Response response = client.AnalyzeConversation(content);
@@ -73,6 +74,7 @@ namespace Azure.AI.Language.Conversations.Samples
                 {
                     projectName = "{project-name}",
                     deploymentName = "{deployment-name}",
+                    stringIndexType = "TextElement_V8",
                 },
             });
             Response response = await client.AnalyzeConversationAsync(content);
@@ -89,7 +91,10 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Book a flight to Seattle on Oct 10th")), new ConversationLanguageUnderstandingActionContent("{project-name}", "{deployment-name}"));
+            AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Book a flight to Seattle on Oct 10th")), new ConversationLanguageUnderstandingActionContent("{project-name}", "{deployment-name}")
+            {
+                StringIndexType = new StringIndexType("TextElement_V8"),
+            });
             Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(analyzeConversationInput);
         }
 
@@ -101,7 +106,10 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
-            AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Book a flight to Seattle on Oct 10th")), new ConversationLanguageUnderstandingActionContent("{project-name}", "{deployment-name}"));
+            AnalyzeConversationInput analyzeConversationInput = new ConversationLanguageUnderstandingInput(new ConversationAnalysisInput(new TextConversationItem("1", "1", "Book a flight to Seattle on Oct 10th")), new ConversationLanguageUnderstandingActionContent("{project-name}", "{deployment-name}")
+            {
+                StringIndexType = new StringIndexType("TextElement_V8"),
+            });
             Response<AnalyzeConversationActionResult> response = await client.AnalyzeConversationAsync(analyzeConversationInput);
         }
 
@@ -133,6 +141,7 @@ namespace Azure.AI.Language.Conversations.Samples
                     deploymentName = "{deployment-name}",
                     verbose = true,
                     isLoggingEnabled = false,
+                    stringIndexType = "TextElement_V8",
                 },
             });
             Response response = client.AnalyzeConversation(content);
@@ -169,6 +178,7 @@ namespace Azure.AI.Language.Conversations.Samples
                     deploymentName = "{deployment-name}",
                     verbose = true,
                     isLoggingEnabled = false,
+                    stringIndexType = "TextElement_V8",
                 },
             });
             Response response = await client.AnalyzeConversationAsync(content);
@@ -193,6 +203,7 @@ namespace Azure.AI.Language.Conversations.Samples
             {
                 Verbose = true,
                 IsLoggingEnabled = false,
+                StringIndexType = new StringIndexType("TextElement_V8"),
             });
             Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(analyzeConversationInput);
         }
@@ -213,6 +224,7 @@ namespace Azure.AI.Language.Conversations.Samples
             {
                 Verbose = true,
                 IsLoggingEnabled = false,
+                StringIndexType = new StringIndexType("TextElement_V8"),
             });
             Response<AnalyzeConversationActionResult> response = await client.AnalyzeConversationAsync(analyzeConversationInput);
         }

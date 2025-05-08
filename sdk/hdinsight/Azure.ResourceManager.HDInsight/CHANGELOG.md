@@ -1,18 +1,24 @@
 # Release History
 
-## 1.2.0-beta.4 (Unreleased)
+## 1.2.0-beta.5 (Unreleased)
 
 ### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
-- Fix HDInsight GetHDInsightClustersAsync Exceptipn: Value cannot be an empty string. (Parameter 'resourceId'). Issue link: https://github.com/Azure/azure-sdk-for-net/issues/45709
-
 ### Other Changes
+
+## 1.2.0-beta.4 (2025-03-11)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+### Bugs Fixed
+
+- Fix HDInsight GetHDInsightClustersAsync Exceptipn: Value cannot be an empty string. (Parameter 'resourceId'). Issue link: https://github.com/Azure/azure-sdk-for-net/issues/45709
 
 ## 1.2.0-beta.3 (2024-09-09)
 

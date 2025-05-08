@@ -7,9 +7,6 @@
     <Version>12.0.0-preview.1</Version>
     <GenerateAPIListing>false</GenerateAPIListing>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="System.Text.Json" />
-  </ItemGroup>
     <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
   </ItemGroup>

@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorModelType))
+            if (options.Format != "W" && Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ErrorModelType);
+                writer.WriteStringValue(Type);
             }
             if (options.Format != "W" && Optional.IsDefined(Severity))
             {

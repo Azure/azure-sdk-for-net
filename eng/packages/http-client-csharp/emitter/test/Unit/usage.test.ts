@@ -3,16 +3,22 @@ import { UsageFlags } from "@azure-tools/typespec-client-generator-core";
 import { ok, strictEqual } from "assert";
 import { beforeEach, describe, it } from "vitest";
 import { createModel } from "@typespec/http-client-csharp";
-import { createCSharpSdkContext, createEmitterContext, createEmitterTestHost, typeSpecCompile, } from "./test-util.js";
+import {
+  createCSharpSdkContext,
+  createEmitterContext,
+  createEmitterTestHost,
+  typeSpecCompile
+} from "./test-util.js";
 
 describe("Test Usage", () => {
-    let runner: TestHost;
+  let runner: TestHost;
 
-    beforeEach(async () => {
-        runner = await createEmitterTestHost();
-    });
-    it("Test the usage of body parameter of azure core operation.", async () => {
-        const program = await typeSpecCompile(`
+  beforeEach(async () => {
+    runner = await createEmitterTestHost();
+  });
+  it("Test the usage of body parameter of azure core operation.", async () => {
+    const program = await typeSpecCompile(
+      `
             @doc("This is a model.")
             @resource("items")
             model Foo {
@@ -45,22 +51,36 @@ describe("Test Usage", () => {
                 @doc("create items")
                 addItems is ResourceAction<Foo, { @bodyRoot body: BatchCreateFooListItemsRequest }, BatchCreateTextListItemsResponse>;
             }
-      `, runner, { IsNamespaceNeeded: true });
-        const context = createEmitterContext(program);
-        const sdkContext = await createCSharpSdkContext(context);
-        const root = createModel(sdkContext);
-        const fooInfo = root.Models.find((model) => model.name === "FooInfo");
-        const batchCreateFooListItemsRequest = root.Models.find((model) => model.name === "BatchCreateFooListItemsRequest");
-        const batchCreateTextListItemsResponse = root.Models.find((model) => model.name === "BatchCreateTextListItemsResponse");
-        ok(fooInfo);
-        strictEqual(fooInfo.usage, UsageFlags.Input | UsageFlags.Json);
-        ok(batchCreateFooListItemsRequest);
-        strictEqual(batchCreateFooListItemsRequest.usage, UsageFlags.Input | UsageFlags.Json);
-        ok(batchCreateTextListItemsResponse);
-        strictEqual(batchCreateTextListItemsResponse.usage, UsageFlags.Output | UsageFlags.Json);
-    });
-    it("Test the usage of body parameter and return type of azure core resource operation.", async () => {
-        const program = await typeSpecCompile(`
+      `,
+      runner,
+      { IsNamespaceNeeded: true }
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+    const fooInfo = root.models.find((model) => model.name === "FooInfo");
+    const batchCreateFooListItemsRequest = root.models.find(
+      (model) => model.name === "BatchCreateFooListItemsRequest"
+    );
+    const batchCreateTextListItemsResponse = root.models.find(
+      (model) => model.name === "BatchCreateTextListItemsResponse"
+    );
+    ok(fooInfo);
+    strictEqual(fooInfo.usage, UsageFlags.Input | UsageFlags.Json);
+    ok(batchCreateFooListItemsRequest);
+    strictEqual(
+      batchCreateFooListItemsRequest.usage,
+      UsageFlags.Input | UsageFlags.Json
+    );
+    ok(batchCreateTextListItemsResponse);
+    strictEqual(
+      batchCreateTextListItemsResponse.usage,
+      UsageFlags.Output | UsageFlags.Json
+    );
+  });
+  it("Test the usage of body parameter and return type of azure core resource operation.", async () => {
+    const program = await typeSpecCompile(
+      `
             alias ResourceOperations = global.Azure.Core.ResourceOperations<NoConditionalRequests &
                 NoRepeatableRequests &
                 NoClientRequestId>;
@@ -80,16 +100,26 @@ describe("Test Usage", () => {
                 @doc("create Foo")
                 createFoo is ResourceOperations.ResourceCreateOrUpdate<Foo>;
             }
-      `, runner, { IsNamespaceNeeded: true });
-        const context = createEmitterContext(program);
-        const sdkContext = await createCSharpSdkContext(context);
-        const root = createModel(sdkContext);
-        const fooModel = root.Models.find((model) => model.name === "Foo");
-        ok(fooModel);
-        strictEqual(fooModel.usage, UsageFlags.Input | UsageFlags.Output | UsageFlags.JsonMergePatch | UsageFlags.Json);
-    });
-    it("Test the usage of body polymorphism type in azure core resource operation.", async () => {
-        const program = await typeSpecCompile(`
+      `,
+      runner,
+      { IsNamespaceNeeded: true }
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+    const fooModel = root.models.find((model) => model.name === "Foo");
+    ok(fooModel);
+    strictEqual(
+      fooModel.usage,
+      UsageFlags.Input |
+        UsageFlags.Output |
+        UsageFlags.JsonMergePatch |
+        UsageFlags.Json
+    );
+  });
+  it("Test the usage of body polymorphism type in azure core resource operation.", async () => {
+    const program = await typeSpecCompile(
+      `
             @doc("This is a model.")
             @resource("items")
             model Foo {
@@ -129,19 +159,27 @@ describe("Test Usage", () => {
                 {}
                 >;
             }
-      `, runner, { IsNamespaceNeeded: true });
-        const context = createEmitterContext(program);
-        const sdkContext = await createCSharpSdkContext(context);
-        const root = createModel(sdkContext);
-        const baseModel = root.Models.find((model) => model.name === "BaseModelWithDiscriminator");
-        const derivedModel = root.Models.find((model) => model.name === "DerivedModelWithDiscriminatorA");
-        ok(baseModel);
-        strictEqual(baseModel.usage, UsageFlags.Input | UsageFlags.Json);
-        ok(derivedModel);
-        strictEqual(derivedModel.usage, UsageFlags.Input | UsageFlags.Json);
-    });
-    it("Test the usage of response polymorphism type in azure core resource operation.", async () => {
-        const program = await typeSpecCompile(`
+      `,
+      runner,
+      { IsNamespaceNeeded: true }
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+    const baseModel = root.models.find(
+      (model) => model.name === "BaseModelWithDiscriminator"
+    );
+    const derivedModel = root.models.find(
+      (model) => model.name === "DerivedModelWithDiscriminatorA"
+    );
+    ok(baseModel);
+    strictEqual(baseModel.usage, UsageFlags.Input | UsageFlags.Json);
+    ok(derivedModel);
+    strictEqual(derivedModel.usage, UsageFlags.Input | UsageFlags.Json);
+  });
+  it("Test the usage of response polymorphism type in azure core resource operation.", async () => {
+    const program = await typeSpecCompile(
+      `
             @doc("This is a model.")
             @resource("items")
             model Foo {
@@ -190,22 +228,32 @@ describe("Test Usage", () => {
                 BaseModelWithDiscriminator
                 >;
             }
-      `, runner, { IsNamespaceNeeded: true });
-        const context = createEmitterContext(program);
-        const sdkContext = await createCSharpSdkContext(context);
-        const root = createModel(sdkContext);
-        const baseModel = root.Models.find((model) => model.name === "BaseModelWithDiscriminator");
-        const derivedModel = root.Models.find((model) => model.name === "DerivedModelWithDiscriminatorA");
-        const nestedModel = root.Models.find((model) => model.name === "NestedModel");
-        ok(baseModel);
-        strictEqual(baseModel.usage, UsageFlags.Output | UsageFlags.Json);
-        ok(derivedModel);
-        strictEqual(derivedModel.usage, UsageFlags.Output | UsageFlags.Json);
-        ok(nestedModel);
-        strictEqual(nestedModel.usage, UsageFlags.Output | UsageFlags.Json);
-    });
-    it("Test the usage of return type of a customized LRO operation.", async () => {
-        const program = await typeSpecCompile(`
+      `,
+      runner,
+      { IsNamespaceNeeded: true }
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+    const baseModel = root.models.find(
+      (model) => model.name === "BaseModelWithDiscriminator"
+    );
+    const derivedModel = root.models.find(
+      (model) => model.name === "DerivedModelWithDiscriminatorA"
+    );
+    const nestedModel = root.models.find(
+      (model) => model.name === "NestedModel"
+    );
+    ok(baseModel);
+    strictEqual(baseModel.usage, UsageFlags.Output | UsageFlags.Json);
+    ok(derivedModel);
+    strictEqual(derivedModel.usage, UsageFlags.Output | UsageFlags.Json);
+    ok(nestedModel);
+    strictEqual(nestedModel.usage, UsageFlags.Output | UsageFlags.Json);
+  });
+  it("Test the usage of return type of a customized LRO operation.", async () => {
+    const program = await typeSpecCompile(
+      `
 #suppress "@azure-tools/typespec-azure-core/documentation-required" "MUST fix in next version"
 @doc("The status of the processing job.")
 @lroStatus
@@ -303,7 +351,7 @@ model RadiologyInsightsResult
   @doc("The body of the Radiology Insights request.")
   model RadiologyInsightsData {
     ...Request;
-  
+
     @doc("Configuration affecting the Radiology Insights model's inference.")
     configuration?: string;
   }
@@ -329,7 +377,7 @@ interface LegacyLro {
     @route("/radiology-insights/jobs/{id}")
     @convenientAPI(false)
     getJob is HealthInsightsLongRunningPollOperation<RadiologyInsightsResult>;
-  
+
     #suppress "@azure-tools/typespec-azure-core/long-running-polling-operation-required" "Polling through operation-location"
     #suppress "@azure-tools/typespec-azure-core/use-standard-operations" "There is no long-running RPC template in Azure.Core"
     @summary("Create Radiology Insights job")
@@ -343,17 +391,21 @@ interface LegacyLro {
       RadiologyInsightsResult
     >;
   }
-      `, runner, {
-            IsNamespaceNeeded: true,
-            IsTCGCNeeded: true,
-        });
-        const context = createEmitterContext(program);
-        const sdkContext = await createCSharpSdkContext(context);
-        const root = createModel(sdkContext);
-        const radiologyInsightsInferenceResult = root.Models.find((model) => model.name === "RadiologyInsightsInferenceResult");
-        ok(radiologyInsightsInferenceResult);
-        // TODO -- TCGC now has a bug that the LRO final result does not have Json usage when the polling operation does not have convenientAPI but the LRO has convenientAPI. https://github.com/Azure/typespec-azure/issues/1964
-        //strictEqual(radiologyInsightsInferenceResult.usage, UsageFlags.Output | UsageFlags.Json);
-    });
+      `,
+      runner,
+      {
+        IsNamespaceNeeded: true,
+        IsTCGCNeeded: true
+      }
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+    const radiologyInsightsInferenceResult = root.models.find(
+      (model) => model.name === "RadiologyInsightsInferenceResult"
+    );
+    ok(radiologyInsightsInferenceResult);
+    // TODO -- TCGC now has a bug that the LRO final result does not have Json usage when the polling operation does not have convenientAPI but the LRO has convenientAPI. https://github.com/Azure/typespec-azure/issues/1964
+    //strictEqual(radiologyInsightsInferenceResult.usage, UsageFlags.Output | UsageFlags.Json);
+  });
 });
-//# sourceMappingURL=usage.test.js.map

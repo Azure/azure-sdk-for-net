@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Serialization.EncodedName.Json.Models;
+using Serialization.EncodedName.Json._Property;
 
 namespace Serialization.EncodedName.Json
 {

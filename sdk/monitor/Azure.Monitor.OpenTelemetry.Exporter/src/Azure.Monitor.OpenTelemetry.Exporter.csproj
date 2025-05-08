@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>An OpenTelemetry .NET exporter that exports to Azure Monitor</Description>
     <AssemblyTitle>AzureMonitor OpenTelemetry Exporter</AssemblyTitle>
-    <Version>1.4.0-beta.3</Version>
+    <Version>1.4.0-beta.4</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.3.0</ApiCompatVersion>
     <PackageTags>Azure Monitor OpenTelemetry Exporter ApplicationInsights</PackageTags>
@@ -17,6 +17,7 @@
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="OpenTelemetry" />
     <PackageReference Include="OpenTelemetry.PersistentStorage.FileSystem" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

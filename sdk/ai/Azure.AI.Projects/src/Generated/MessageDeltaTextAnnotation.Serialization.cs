@@ -81,6 +81,7 @@ namespace Azure.AI.Projects
                 {
                     case "file_citation": return MessageDeltaTextFileCitationAnnotation.DeserializeMessageDeltaTextFileCitationAnnotation(element, options);
                     case "file_path": return MessageDeltaTextFilePathAnnotation.DeserializeMessageDeltaTextFilePathAnnotation(element, options);
+                    case "url_citation": return MessageDeltaTextUrlCitationAnnotation.DeserializeMessageDeltaTextUrlCitationAnnotation(element, options);
                 }
             }
             return UnknownMessageDeltaTextAnnotation.DeserializeUnknownMessageDeltaTextAnnotation(element, options);

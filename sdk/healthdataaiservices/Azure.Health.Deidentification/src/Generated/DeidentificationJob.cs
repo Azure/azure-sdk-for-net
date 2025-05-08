@@ -59,8 +59,8 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary> Initializes a new instance of <see cref="DeidentificationJob"/>. </summary>
-        /// <param name="name"> The name of a job. </param>
-        /// <param name="operation"> Operation to perform on the input documents. </param>
+        /// <param name="jobName"> The name of a job. </param>
+        /// <param name="operationType"> Operation to perform on the input documents. </param>
         /// <param name="sourceLocation"> Storage location to perform the operation on. </param>
         /// <param name="targetLocation"> Target location to store output of operation. </param>
         /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
@@ -77,10 +77,10 @@ namespace Azure.Health.Deidentification
         /// <param name="startedAt"> Date and time when the job was started. </param>
         /// <param name="summary"> Summary of a job. Exists only when the job is completed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationJob(string name, DeidentificationOperationType? operation, SourceStorageLocation sourceLocation, TargetStorageLocation targetLocation, DeidentificationJobCustomizationOptions customizations, OperationState status, ResponseError error, DateTimeOffset lastUpdatedAt, DateTimeOffset createdAt, DateTimeOffset? startedAt, DeidentificationJobSummary summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeidentificationJob(string jobName, DeidentificationOperationType? operationType, SourceStorageLocation sourceLocation, TargetStorageLocation targetLocation, DeidentificationJobCustomizationOptions customizations, OperationStatus status, ResponseError error, DateTimeOffset lastUpdatedAt, DateTimeOffset createdAt, DateTimeOffset? startedAt, DeidentificationJobSummary summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            Operation = operation;
+            JobName = jobName;
+            OperationType = operationType;
             SourceLocation = sourceLocation;
             TargetLocation = targetLocation;
             Customizations = customizations;
@@ -99,9 +99,9 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary> The name of a job. </summary>
-        public string Name { get; }
+        public string JobName { get; }
         /// <summary> Operation to perform on the input documents. </summary>
-        public DeidentificationOperationType? Operation { get; set; }
+        public DeidentificationOperationType? OperationType { get; set; }
         /// <summary> Storage location to perform the operation on. </summary>
         public SourceStorageLocation SourceLocation { get; set; }
         /// <summary> Target location to store output of operation. </summary>
@@ -109,7 +109,7 @@ namespace Azure.Health.Deidentification
         /// <summary> Customization parameters to override default service behaviors. </summary>
         public DeidentificationJobCustomizationOptions Customizations { get; set; }
         /// <summary> Current status of a job. </summary>
-        public OperationState Status { get; }
+        public OperationStatus Status { get; }
         /// <summary> Error when job fails in it's entirety. </summary>
         public ResponseError Error { get; }
         /// <summary>

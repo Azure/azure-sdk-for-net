@@ -159,7 +159,7 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
             while (Directory.Exists(path) || File.Exists(path));
             Directory.CreateDirectory(path);
             TempDir = path;
-            SavedBicepModules = [.. Plan?.Save(TempDir)];
+            SavedBicepModules = [.. Plan!.Save(TempDir)];
         }
     }
 

@@ -959,7 +959,7 @@ namespace Azure.ResourceManager.Hci.Models
                 name,
                 resourceType,
                 systemData,
-                HciEdgeDeviceKind.HCI,
+                HciEdgeDeviceKind.Hci,
                 serializedAdditionalRawData: null,
                 properties);
         }

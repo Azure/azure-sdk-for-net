@@ -1,3 +1,5 @@
+. ${PSScriptRoot}\..\logging.ps1
+
 function MapLanguageToRequestParam($language)
 {
     $lang = $language
@@ -116,4 +118,174 @@ function Process-ReviewStatusCode($statusCode, $packageName, $apiApprovalStatus,
 
   $packageNameStatus.IsApproved = $packageNameApproved
   $packageNameStatus.Details = $packageNameApprovalDetails
+}
+
+function Set-ApiViewCommentForRelatedIssues {
+  param (
+    [Parameter(Mandatory = $true)]
+    [string]$HeadCommitish,
+    [string]$APIViewHost = "https://apiview.dev",
+    [ValidateNotNullOrEmpty()]
+    [Parameter(Mandatory = $true)]
+    $AuthToken
+  )
+  . ${PSScriptRoot}\..\common.ps1
+  $issuesForCommit = $null
+  try {
+    $issuesForCommit = Search-GitHubIssues -CommitHash $HeadCommitish
+    if ($issuesForCommit.items.Count -eq 0) {
+      LogInfo "No issues found for commit: $HeadCommitish"
+      Write-Host "##vso[task.complete result=SucceededWithIssues;]DONE"
+      exit 0
+    }
+  } catch {
+    LogError "No issues found for commit: $HeadCommitish"
+    exit 1
+  }
+  $issuesForCommit.items | ForEach-Object {
+    $urlParts = $_.url -split "/"
+    Set-ApiViewCommentForPR -RepoOwner $urlParts[4] -RepoName $urlParts[5] -PrNumber $urlParts[7] -HeadCommitish $HeadCommitish -APIViewHost $APIViewHost -AuthToken $AuthToken
+  }
+}
+
+function Set-ApiViewCommentForPR {
+  param (
+    [Parameter(Mandatory = $true)]
+    [string]$RepoOwner,
+    [Parameter(Mandatory = $true)]
+    [string]$RepoName,
+    [Parameter(Mandatory = $true)]
+    [string]$PrNumber,
+    [Parameter(Mandatory = $true)]
+    [string]$HeadCommitish,
+    [Parameter(Mandatory = $true)]
+    [string]$APIViewHost,
+    [ValidateNotNullOrEmpty()]
+    [Parameter(Mandatory = $true)]
+    $AuthToken
+  )
+  $repoFullName = "$RepoOwner/$RepoName"
+  $apiviewEndpoint = "$APIViewHost/api/pullrequests?pullRequestNumber=$PrNumber&repoName=$repoFullName&commitSHA=$HeadCommitish"
+  LogDebug "Get APIView information for PR using endpoint: $apiviewEndpoint"
+
+  $commentText = @()
+  $commentText += "## API Change Check"
+  try {
+    $response = Invoke-WebRequest -Uri $apiviewEndpoint -Method Get -MaximumRetryCount 3
+    LogInfo "OperationId: $($response.Headers['X-Operation-Id'])"
+    if ($response.StatusCode -ne 200) {
+      LogInfo "API changes are not detected in this pull request."
+      exit 0
+    }
+    else {
+      LogSuccess "APIView identified API level changes in this PR and created $($response.Count) API reviews"
+      $commentText += ""
+      $commentText += "APIView identified API level changes in this PR and created the following API reviews"
+      $commentText += ""
+
+      $responseContent = $response.Content | ConvertFrom-Json
+      if ($RepoName.StartsWith(("azure-sdk-for-"))) {
+        $responseContent | ForEach-Object {
+          $commentText += "[$($_.packageName)]($($_.url))"
+        }
+      } else {
+        $commentText += "| Language | API Review for Package |"
+        $commentText += "|----------|---------|"
+        $responseContent | ForEach-Object {
+          $commentText += "| $($_.language) | [$($_.packageName)]($($_.url)) |"
+        }
+      }
+    }
+  } catch{
+    LogError "Failed to get API View information for PR: $PrNumber in repo: $repoFullName with commitSHA: $Commitish. Error: $_"
+    exit 1
+  }
+
+  $commentText += "<!-- Fetch URI: $apiviewEndpoint -->"
+  $commentText = $commentText -join "`r`n"
+  $existingComment = $null;
+  $existingAPIViewComment = $null;
+
+  try {
+    $existingComment = Get-GitHubIssueComments -RepoOwner $RepoOwner -RepoName $RepoName -IssueNumber $PrNumber -AuthToken $AuthToken
+    $existingAPIViewComment = $existingComment | Where-Object { 
+      $_.body.StartsWith("**API Change Check**", [StringComparison]::OrdinalIgnoreCase) -or $_.body.StartsWith("## API Change Check", [StringComparison]::OrdinalIgnoreCase) }
+  } catch {
+    LogWarning "Failed to get comments from Pull Request: $PrNumber in repo: $repoFullName"
+  }
+  
+  try {
+    if ($existingAPIViewComment) {
+      LogDebug "Updating existing APIView comment..."
+      Update-GitHubIssueComment -RepoOwner $RepoOwner -RepoName $RepoName `
+                                -CommentId $existingAPIViewComment.id -Comment $commentText `
+                                -AuthToken $AuthToken
+    } else {
+      LogDebug "Creating new APIView comment..."
+      Add-GitHubIssueComment -RepoOwner $RepoOwner -RepoName $RepoName `
+                             -IssueNumber $PrNumber -Comment $commentText `
+                             -AuthToken $AuthToken
+    }
+  } catch {
+    LogError "Failed to set PR comment for APIView. Error: $_"
+    exit 1
+  }
+}
+
+# Helper function used to create API review requests for Spec generation SDKs pipelines
+function Create-API-Review {
+  param (
+    [string]$apiviewEndpoint = "https://apiview.dev/PullRequest/DetectAPIChanges",
+    [string]$specGenSDKArtifactPath,
+    [string]$apiviewArtifactName,
+    [string]$buildId,
+    [string]$commitish,
+    [string]$repoName,
+    [string]$pullRequestNumber
+  )
+  $specGenSDKContent = Get-Content -Path $SpecGenSDKArtifactPath -Raw | ConvertFrom-Json
+  $language = ($specGenSDKContent.language -split "-")[-1]
+  
+  foreach ($requestData in $specGenSDKContent.apiViewRequestData) {
+    $requestUri = [System.UriBuilder]$apiviewEndpoint
+    $requestParam = [System.Web.HttpUtility]::ParseQueryString('')
+    $requestParam.Add('artifactName', $apiviewArtifactName)
+    $requestParam.Add('buildId', $buildId)
+    $requestParam.Add('commitSha', $commitish)
+    $requestParam.Add('repoName', $repoName)
+    $requestParam.Add('pullRequestNumber', $pullRequestNumber)
+    $requestParam.Add('packageName', $requestData.packageName)
+    $requestParam.Add('filePath', $requestData.filePath)
+    $requestParam.Add('language', $language)
+    $requestUri.query = $requestParam.toString()
+    $correlationId = [System.Guid]::NewGuid().ToString()
+
+    $headers = @{
+      "Content-Type"  = "application/json"
+      "x-correlation-id" = $correlationId
+    }
+
+    LogInfo "Request URI: $($requestUri.Uri.OriginalString)"
+    LogInfo "Correlation ID: $correlationId"
+
+    try
+    {
+      $response = Invoke-WebRequest -Method 'GET' -Uri $requestUri.Uri -Headers $headers -MaximumRetryCount 3
+      if ($response.StatusCode -eq 201) {
+        LogSuccess "Status Code: $($response.StatusCode)`nAPI review request created successfully.`n$($response.Content)"
+      }
+      elseif ($response.StatusCode -eq 208) {
+        LogSuccess "Status Code: $($response.StatusCode)`nThere is no API change compared with the previous version."
+      }
+      else {
+        LogError "Failed to create API review request. $($response)"
+        exit 1
+      }
+    }
+    catch
+    {
+      LogError "Error : $($_.Exception)"
+      exit 1
+    }
+  }
 }
