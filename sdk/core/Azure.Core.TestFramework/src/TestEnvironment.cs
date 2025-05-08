@@ -740,5 +740,8 @@ namespace Azure.Core.TestFramework
                 }
             }
         }
+        // Misc.
+        public string BMMKeySetSSHPublicKey => GetRecordedVariable("BMM_KS_SSH_PUBLIC_KEY", options => options.IsSecret());
+        public string BMMKeySetGroupId => GetRecordedVariable("BMM_KS_GROUP_ID");
     }
 }

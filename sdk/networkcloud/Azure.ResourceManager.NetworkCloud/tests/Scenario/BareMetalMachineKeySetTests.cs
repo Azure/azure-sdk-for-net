@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             (
                 cluster.Data.Location,
                 cluster.Data.ClusterExtendedLocation,
-                "fake-id",
+                TestEnvironment.BMMKeySetGroupId,
                 TestEnvironment.DayFromNow,
                 new List<IPAddress>(),
                 BareMetalMachineKeySetPrivilegeLevel.Standard,
@@ -48,8 +48,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     new KeySetUser
                     (
                         "userABC",
-                        new NetworkCloudSshPublicKey("ssh-rsa REDACTED")
-                    ),
+                        new NetworkCloudSshPublicKey(TestEnvironment.BMMKeySetSSHPublicKey)
+                    )
+                    {
+                        UserPrincipalName = "userABC@contoso.com"
+                    }
                 }
             )
             {
