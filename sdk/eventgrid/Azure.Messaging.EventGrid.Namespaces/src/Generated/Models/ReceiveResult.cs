@@ -17,11 +17,16 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="ReceiveResult"/>. </summary>
+        /// <param name="details"> Array of receive responses, one per cloud event. </param>
         internal ReceiveResult(IEnumerable<ReceiveDetails> details)
         {
             Details = details.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ReceiveResult"/>. </summary>
+        /// <param name="details"> Array of receive responses, one per cloud event. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ReceiveResult(IList<ReceiveDetails> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Details = details;

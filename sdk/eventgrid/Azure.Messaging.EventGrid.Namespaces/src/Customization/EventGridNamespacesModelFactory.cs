@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    [CodeGenModel("MessagingEventGridNamespacesModelFactory")]
+    [CodeGenType("AzureMessagingEventGridNamespacesModelFactory")]
     public static partial class EventGridNamespacesModelFactory
     {
     }

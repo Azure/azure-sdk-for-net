@@ -15,10 +15,13 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="PublishResult"/>. </summary>
         internal PublishResult()
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="PublishResult"/>. </summary>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal PublishResult(IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

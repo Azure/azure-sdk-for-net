@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure;
@@ -14,37 +13,8 @@ using Azure.Messaging;
 namespace Azure.Messaging.EventGrid.Namespaces
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
-    public static partial class AzureMessagingEventGridNamespacesModelFactory
+    public static partial class EventGridNamespacesModelFactory
     {
-        /// <summary> Properties of an event published to an Azure Messaging EventGrid Namespace topic using the CloudEvent 1.0 Schema. </summary>
-        /// <param name="id"> An identifier for the event. The combination of id and source must be unique for each distinct event. </param>
-        /// <param name="source"> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </param>
-        /// <param name="data"> Event data specific to the event type. </param>
-        /// <param name="dataBase64"> Event data specific to the event type, encoded as a base64 string. </param>
-        /// <param name="type"> Type of event related to the originating occurrence. </param>
-        /// <param name="time"> The time (in UTC) the event was generated, in RFC3339 format. </param>
-        /// <param name="specversion"> The version of the CloudEvents specification which the event uses. </param>
-        /// <param name="dataschema"> Identifies the schema that data adheres to. </param>
-        /// <param name="datacontenttype"> Content type of data value. </param>
-        /// <param name="subject"> This describes the subject of the event in the context of the event producer (identified by source). </param>
-        /// <returns> A new <see cref="Namespaces.CloudEvent"/> instance for mocking. </returns>
-        public static CloudEvent CloudEvent(string id = default, string source = default, BinaryData data = default, BinaryData dataBase64 = default, string @type = default, DateTimeOffset? time = default, string specversion = default, string dataschema = default, string datacontenttype = default, string subject = default)
-        {
-
-            return new CloudEvent(
-                id,
-                source,
-                data,
-                dataBase64,
-                @type,
-                time,
-                specversion,
-                dataschema,
-                datacontenttype,
-                subject,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Details of the Receive operation response. </summary>
         /// <param name="details"> Array of receive responses, one per cloud event. </param>
         /// <returns> A new <see cref="Namespaces.ReceiveResult"/> instance for mocking. </returns>
@@ -59,7 +29,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="brokerProperties"> The Event Broker details. </param>
         /// <param name="event"> Cloud Event details. </param>
         /// <returns> A new <see cref="Namespaces.ReceiveDetails"/> instance for mocking. </returns>
-        public static ReceiveDetails ReceiveDetails(BrokerProperties brokerProperties = default, Messaging.CloudEvent @event = default)
+        public static ReceiveDetails ReceiveDetails(BrokerProperties brokerProperties = default, CloudEvent @event = default)
         {
 
             return new ReceiveDetails(brokerProperties, @event, additionalBinaryDataProperties: null);

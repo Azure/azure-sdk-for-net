@@ -64,11 +64,11 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="value"> The value. </param>
         public static implicit operator ReleaseDelay(string value) => new ReleaseDelay(value);
 
-        /// <param name="obj"> The object to compare. </param>
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReleaseDelay other && Equals(other);
 
-        /// <param name="other"> The instance to compare. </param>
+        /// <inheritdoc/>
         public bool Equals(ReleaseDelay other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>

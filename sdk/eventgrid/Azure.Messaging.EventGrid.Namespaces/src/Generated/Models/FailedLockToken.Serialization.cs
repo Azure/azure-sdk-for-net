@@ -17,10 +17,13 @@ namespace Azure.Messaging.EventGrid.Namespaces
     /// <summary></summary>
     public partial class FailedLockToken : IJsonModel<FailedLockToken>
     {
+        /// <summary> Initializes a new instance of <see cref="FailedLockToken"/> for deserialization. </summary>
         internal FailedLockToken()
         {
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FailedLockToken>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -58,6 +61,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         FailedLockToken IJsonModel<FailedLockToken>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -73,6 +78,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
             return DeserializeFailedLockToken(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static FailedLockToken DeserializeFailedLockToken(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -102,6 +109,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             return new FailedLockToken(lockToken, error, additionalBinaryDataProperties);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<FailedLockToken>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -111,12 +119,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridNamespacesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FailedLockToken)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         FailedLockToken IPersistableModel<FailedLockToken>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
@@ -136,6 +146,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FailedLockToken>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="failedLockToken"> The <see cref="FailedLockToken"/> to serialize into <see cref="RequestContent"/>. </param>

@@ -17,10 +17,13 @@ namespace Azure.Messaging.EventGrid.Namespaces
     /// <summary></summary>
     public partial class ReceiveResult : IJsonModel<ReceiveResult>
     {
+        /// <summary> Initializes a new instance of <see cref="ReceiveResult"/> for deserialization. </summary>
         internal ReceiveResult()
         {
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ReceiveResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -61,6 +64,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ReceiveResult IJsonModel<ReceiveResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -76,6 +81,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
             return DeserializeReceiveResult(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static ReceiveResult DeserializeReceiveResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -104,6 +111,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             return new ReceiveResult(details, additionalBinaryDataProperties);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ReceiveResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -113,12 +121,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridNamespacesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ReceiveResult)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ReceiveResult IPersistableModel<ReceiveResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
@@ -138,6 +148,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ReceiveResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="receiveResult"> The <see cref="ReceiveResult"/> to serialize into <see cref="RequestContent"/>. </param>

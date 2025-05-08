@@ -17,10 +17,13 @@ namespace Azure.Messaging.EventGrid.Namespaces
     /// <summary></summary>
     public partial class RenewLocksResult : IJsonModel<RenewLocksResult>
     {
+        /// <summary> Initializes a new instance of <see cref="RenewLocksResult"/> for deserialization. </summary>
         internal RenewLocksResult()
         {
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RenewLocksResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -73,6 +76,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RenewLocksResult IJsonModel<RenewLocksResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -88,6 +93,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
             return DeserializeRenewLocksResult(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static RenewLocksResult DeserializeRenewLocksResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -134,6 +141,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             return new RenewLocksResult(failedLockTokens, succeededLockTokens, additionalBinaryDataProperties);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RenewLocksResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -143,12 +151,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridNamespacesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RenewLocksResult)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RenewLocksResult IPersistableModel<RenewLocksResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
@@ -168,6 +178,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RenewLocksResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="renewLocksResult"> The <see cref="RenewLocksResult"/> to serialize into <see cref="RequestContent"/>. </param>

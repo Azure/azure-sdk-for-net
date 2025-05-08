@@ -14,6 +14,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
 {
     internal static partial class BinaryContentHelper
     {
+        /// <param name="enumerable"></param>
         public static RequestContent FromEnumerable<T>(IEnumerable<T> enumerable)
             where T : notnull 
         {
@@ -28,6 +29,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             return content;
         }
 
+        /// <param name="enumerable"></param>
         public static RequestContent FromEnumerable(IEnumerable<BinaryData> enumerable)
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
@@ -55,6 +57,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             return content;
         }
 
+        /// <param name="span"></param>
         public static RequestContent FromEnumerable<T>(ReadOnlySpan<T> span)
             where T : notnull 
         {
@@ -70,6 +73,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             return content;
         }
 
+        /// <param name="dictionary"></param>
         public static RequestContent FromDictionary<TValue>(IDictionary<string, TValue> dictionary)
             where TValue : notnull 
         {
@@ -85,6 +89,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             return content;
         }
 
+        /// <param name="dictionary"></param>
         public static RequestContent FromDictionary(IDictionary<string, BinaryData> dictionary)
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
@@ -113,6 +118,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             return content;
         }
 
+        /// <param name="value"></param>
         public static RequestContent FromObject(object value)
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
@@ -120,6 +126,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             return content;
         }
 
+        /// <param name="value"></param>
         public static RequestContent FromObject(BinaryData value)
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();

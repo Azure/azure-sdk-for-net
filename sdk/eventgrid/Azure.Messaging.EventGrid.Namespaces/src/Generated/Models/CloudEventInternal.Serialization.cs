@@ -14,14 +14,16 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary></summary>
-    public partial class CloudEvent : IJsonModel<CloudEvent>
+    internal partial class CloudEventInternal : IJsonModel<CloudEventInternal>
     {
-        internal CloudEvent()
+        /// <summary> Initializes a new instance of <see cref="CloudEventInternal"/> for deserialization. </summary>
+        internal CloudEventInternal()
         {
         }
 
-        void IJsonModel<CloudEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<CloudEventInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -32,10 +34,10 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudEvent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudEventInternal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudEvent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudEventInternal)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -99,22 +101,26 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
-        CloudEvent IJsonModel<CloudEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CloudEventInternal IJsonModel<CloudEventInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CloudEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CloudEventInternal JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudEvent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudEventInternal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudEvent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudEventInternal)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCloudEvent(document.RootElement, options);
+            return DeserializeCloudEventInternal(document.RootElement, options);
         }
 
-        internal static CloudEvent DeserializeCloudEvent(JsonElement element, ModelReaderWriterOptions options)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CloudEventInternal DeserializeCloudEventInternal(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -200,7 +206,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CloudEvent(
+            return new CloudEventInternal(
                 id,
                 source,
                 data,
@@ -214,60 +220,64 @@ namespace Azure.Messaging.EventGrid.Namespaces
                 additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<CloudEvent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CloudEventInternal>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudEvent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudEventInternal>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridNamespacesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CloudEvent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudEventInternal)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CloudEvent IPersistableModel<CloudEvent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CloudEventInternal IPersistableModel<CloudEventInternal>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CloudEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CloudEventInternal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudEvent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudEventInternal>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeCloudEvent(document.RootElement, options);
+                        return DeserializeCloudEventInternal(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudEvent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudEventInternal)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CloudEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CloudEventInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="cloudEvent"> The <see cref="CloudEvent"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(CloudEvent cloudEvent)
+        /// <param name="cloudEventInternal"> The <see cref="CloudEventInternal"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(CloudEventInternal cloudEventInternal)
         {
-            if (cloudEvent == null)
+            if (cloudEventInternal == null)
             {
                 return null;
             }
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(cloudEvent, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(cloudEventInternal, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="CloudEvent"/> from. </param>
-        public static explicit operator CloudEvent(Response result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="CloudEventInternal"/> from. </param>
+        public static explicit operator CloudEventInternal(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeCloudEvent(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeCloudEventInternal(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

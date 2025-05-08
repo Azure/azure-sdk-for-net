@@ -39,6 +39,19 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
+        /// <summary>
+        /// [Protocol Method] Publish a single Cloud Event to a namespace topic.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         internal virtual Response Send(string topicName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridSenderClient.Send");
@@ -55,6 +68,19 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
+        /// <summary>
+        /// [Protocol Method] Publish a single Cloud Event to a namespace topic.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> SendAsync(string topicName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridSenderClient.Send");
@@ -71,18 +97,41 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
-        internal virtual Response<PublishResult> Send(string topicName, CloudEvent @event, CancellationToken cancellationToken = default)
+        /// <summary> Publish a single Cloud Event to a namespace topic. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="event"> Single Cloud Event being published. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<PublishResult> Send(string topicName, CloudEventInternal @event, CancellationToken cancellationToken = default)
         {
             Response result = Send(topicName, @event, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((PublishResult)result, result);
         }
 
-        internal virtual async Task<Response<PublishResult>> SendAsync(string topicName, CloudEvent @event, CancellationToken cancellationToken = default)
+        /// <summary> Publish a single Cloud Event to a namespace topic. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="event"> Single Cloud Event being published. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<PublishResult>> SendAsync(string topicName, CloudEventInternal @event, CancellationToken cancellationToken = default)
         {
             Response result = await SendAsync(topicName, @event, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((PublishResult)result, result);
         }
 
+        /// <summary>
+        /// [Protocol Method] Publish a batch of Cloud Events to a namespace topic.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         internal virtual Response SendEvents(string topicName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridSenderClient.SendEvents");
@@ -99,6 +148,19 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
+        /// <summary>
+        /// [Protocol Method] Publish a batch of Cloud Events to a namespace topic.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> SendEventsAsync(string topicName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridSenderClient.SendEvents");
@@ -115,14 +177,24 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
-        internal virtual Response<PublishResult> SendEvents(string topicName, IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
+        /// <summary> Publish a batch of Cloud Events to a namespace topic. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="events"> Array of Cloud Events being published. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<PublishResult> SendEvents(string topicName, IEnumerable<CloudEventInternal> events, CancellationToken cancellationToken = default)
         {
             using RequestContent content = BinaryContentHelper.FromEnumerable(events);
             Response result = SendEvents(topicName, content, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((PublishResult)result, result);
         }
 
-        internal virtual async Task<Response<PublishResult>> SendEventsAsync(string topicName, IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
+        /// <summary> Publish a batch of Cloud Events to a namespace topic. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="events"> Array of Cloud Events being published. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<PublishResult>> SendEventsAsync(string topicName, IEnumerable<CloudEventInternal> events, CancellationToken cancellationToken = default)
         {
             using RequestContent content = BinaryContentHelper.FromEnumerable(events);
             Response result = await SendEventsAsync(topicName, content, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);

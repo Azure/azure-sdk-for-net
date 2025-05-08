@@ -17,12 +17,19 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="FailedLockToken"/>. </summary>
+        /// <param name="lockToken"> The lock token of an entry in the request. </param>
+        /// <param name="error"> Error information of the failed operation result for the lock token in the request. </param>
         internal FailedLockToken(string lockToken, ResponseError error)
         {
             LockToken = lockToken;
             Error = error;
         }
 
+        /// <summary> Initializes a new instance of <see cref="FailedLockToken"/>. </summary>
+        /// <param name="lockToken"> The lock token of an entry in the request. </param>
+        /// <param name="error"> Error information of the failed operation result for the lock token in the request. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal FailedLockToken(string lockToken, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LockToken = lockToken;

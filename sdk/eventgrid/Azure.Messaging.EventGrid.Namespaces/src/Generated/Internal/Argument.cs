@@ -13,6 +13,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
 {
     internal static partial class Argument
     {
+        /// <param name="value"> The value. </param>
+        /// <param name="name"> The name. </param>
         public static void AssertNotNull<T>(T value, string name)
         {
             if (value is null)
@@ -21,6 +23,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
+        /// <param name="value"> The value. </param>
+        /// <param name="name"> The name. </param>
         public static void AssertNotNull<T>(T? value, string name)
             where T : struct 
         {
@@ -30,6 +34,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
+        /// <param name="value"> The value. </param>
+        /// <param name="name"> The name. </param>
         public static void AssertNotNullOrEmpty<T>(IEnumerable<T> value, string name)
         {
             if (value is null)
@@ -51,6 +57,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
+        /// <param name="value"> The value. </param>
+        /// <param name="name"> The name. </param>
         public static void AssertNotNullOrEmpty(string value, string name)
         {
             if (value is null)
@@ -63,6 +71,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
+        /// <param name="value"> The value. </param>
+        /// <param name="name"> The name. </param>
         public static void AssertNotNullOrWhiteSpace(string value, string name)
         {
             if (value is null)
@@ -75,6 +85,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
+        /// <param name="value"> The value. </param>
+        /// <param name="name"> The name. </param>
         public static void AssertNotDefault<T>(ref T value, string name)
             where T : struct, IEquatable<T> 
         {
@@ -84,6 +96,10 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
+        /// <param name="value"> The value. </param>
+        /// <param name="minimum"> The minimum value. </param>
+        /// <param name="maximum"> The maximum value. </param>
+        /// <param name="name"> The name. </param>
         public static void AssertInRange<T>(T value, T minimum, T maximum, string name)
             where T : notnull, IComparable<T> 
         {
@@ -97,6 +113,9 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
+        /// <param name="enumType"> The enum value. </param>
+        /// <param name="value"> The value. </param>
+        /// <param name="name"> The name. </param>
         public static void AssertEnumDefined(Type enumType, object value, string name)
         {
             if (!Enum.IsDefined(enumType, value))
@@ -105,6 +124,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
+        /// <param name="value"> The value. </param>
+        /// <param name="name"> The name. </param>
         public static T CheckNotNull<T>(T value, string name)
             where T : class 
         {
@@ -112,12 +133,17 @@ namespace Azure.Messaging.EventGrid.Namespaces
             return value;
         }
 
+        /// <param name="value"> The value. </param>
+        /// <param name="name"> The name. </param>
         public static string CheckNotNullOrEmpty(string value, string name)
         {
             AssertNotNullOrEmpty(value, name);
             return value;
         }
 
+        /// <param name="value"> The value. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="message"> The message. </param>
         public static void AssertNull<T>(T value, string name, string message = null)
         {
             if (value != null)

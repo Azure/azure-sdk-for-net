@@ -17,11 +17,16 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="RejectRequest"/>. </summary>
+        /// <param name="lockTokens"> Array of lock tokens. </param>
         internal RejectRequest(IEnumerable<string> lockTokens)
         {
             LockTokens = lockTokens.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="RejectRequest"/>. </summary>
+        /// <param name="lockTokens"> Array of lock tokens. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal RejectRequest(IList<string> lockTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LockTokens = lockTokens;

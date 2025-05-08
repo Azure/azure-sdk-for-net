@@ -17,12 +17,19 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="AcknowledgeResult"/>. </summary>
+        /// <param name="failedLockTokens"> Array of FailedLockToken for failed cloud events. Each FailedLockToken includes the lock token along with the related error information (namely, the error code and description). </param>
+        /// <param name="succeededLockTokens"> Array of lock tokens for the successfully acknowledged cloud events. </param>
         internal AcknowledgeResult(IEnumerable<FailedLockToken> failedLockTokens, IEnumerable<string> succeededLockTokens)
         {
             FailedLockTokens = failedLockTokens.ToList();
             SucceededLockTokens = succeededLockTokens.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="AcknowledgeResult"/>. </summary>
+        /// <param name="failedLockTokens"> Array of FailedLockToken for failed cloud events. Each FailedLockToken includes the lock token along with the related error information (namely, the error code and description). </param>
+        /// <param name="succeededLockTokens"> Array of lock tokens for the successfully acknowledged cloud events. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal AcknowledgeResult(IList<FailedLockToken> failedLockTokens, IList<string> succeededLockTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FailedLockTokens = failedLockTokens;

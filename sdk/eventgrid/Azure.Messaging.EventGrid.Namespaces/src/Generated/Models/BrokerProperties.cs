@@ -16,12 +16,19 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="BrokerProperties"/>. </summary>
+        /// <param name="lockToken"> The token of the lock on the event. </param>
+        /// <param name="deliveryCount"> The attempt count for delivering the event. </param>
         internal BrokerProperties(string lockToken, int deliveryCount)
         {
             LockToken = lockToken;
             DeliveryCount = deliveryCount;
         }
 
+        /// <summary> Initializes a new instance of <see cref="BrokerProperties"/>. </summary>
+        /// <param name="lockToken"> The token of the lock on the event. </param>
+        /// <param name="deliveryCount"> The attempt count for delivering the event. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal BrokerProperties(string lockToken, int deliveryCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LockToken = lockToken;
