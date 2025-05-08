@@ -29,7 +29,7 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
 #endif
         PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
         #endregion
-        #region Snippet:AgentsBingGroundingAsync_GetConnection
+        #region Snippet:AgentsBingGrounding_GetConnection
         BingGroundingSearchConfigurationList configurationList = new(
             [new BingGroundingSearchConfiguration(connectionId)]
         );
@@ -122,12 +122,10 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
         var connectionId = TestEnvironment.BING_CONECTION_ID;
 #endif
         PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
-        #region Snippet:AgentsBingGrounding_GetConnection
         BingGroundingSearchConfigurationList configurationList = new(
             [new BingGroundingSearchConfiguration(connectionId)]
         );
         BingGroundingToolDefinition bingGroundingTool = new(configurationList);
-        #endregion
         #region Snippet:AgentsBingGrounding_CreateAgent
         PersistentAgent agent = agentClient.Administration.CreateAgent(
            model: modelDeploymentName,

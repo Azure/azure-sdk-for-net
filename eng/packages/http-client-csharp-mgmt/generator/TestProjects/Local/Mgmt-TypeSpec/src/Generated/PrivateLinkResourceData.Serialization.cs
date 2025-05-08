@@ -19,6 +19,8 @@ namespace MgmtTypeSpec.Models
     /// <summary></summary>
     internal partial class PrivateLinkResourceData : IJsonModel<PrivateLinkResourceData>
     {
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -48,6 +50,8 @@ namespace MgmtTypeSpec.Models
             }
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PrivateLinkResourceData IJsonModel<PrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PrivateLinkResourceData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -63,6 +67,8 @@ namespace MgmtTypeSpec.Models
             return DeserializePrivateLinkResourceData(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static PrivateLinkResourceData DeserializePrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -134,6 +140,7 @@ namespace MgmtTypeSpec.Models
                 identity);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -143,12 +150,14 @@ namespace MgmtTypeSpec.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PrivateLinkResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PrivateLinkResourceData IPersistableModel<PrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PrivateLinkResourceData)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
@@ -168,6 +177,7 @@ namespace MgmtTypeSpec.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="privateLinkResourceData"> The <see cref="PrivateLinkResourceData"/> to serialize into <see cref="RequestContent"/>. </param>

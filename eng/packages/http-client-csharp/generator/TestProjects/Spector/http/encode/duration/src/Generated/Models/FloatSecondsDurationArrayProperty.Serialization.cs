@@ -15,6 +15,8 @@ namespace Encode.Duration._Property
 {
     public partial class FloatSecondsDurationArrayProperty : IJsonModel<FloatSecondsDurationArrayProperty>
     {
+        internal FloatSecondsDurationArrayProperty() => throw null;
+
         void IJsonModel<FloatSecondsDurationArrayProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

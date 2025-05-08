@@ -1,4 +1,4 @@
-# Sample using agents with Image Fileas an input in Azure.AI.Agents.
+# Sample using agents with Image Fileas an input in Azure.AI.Agents.Persistent.
 
 Demonstrates examples of sending an image file (along with optional text) as a structured content block in a single message. The examples shows how to create an agent, open a thread, post content blocks combining text and image inputs, and then run the agent to see how it interprets the multimedia input.
 

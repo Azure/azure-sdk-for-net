@@ -1,6 +1,6 @@
-# Sample using agents with OpenAPI tool in Azure.AI.Agents.
+# Sample using agents with OpenAPI tool in Azure.AI.Agents.Persistent.
 
-In this example we will demonstrate the possibility to use services with [OpenAPI Specification](https://en.wikipedia.org/wiki/OpenAPI_Specification) with the agent. We will use [wttr.in](https://wttr.in) service to get weather and its specification file [weather_openapi.json](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/Samples/Agent/weather_openapi.json). To get this file we will use the utility function `GetFile`, which takes file located in the `C#` source directory.
+In this example we will demonstrate the possibility to use services with [OpenAPI Specification](https://en.wikipedia.org/wiki/OpenAPI_Specification) with the agent. We will use [wttr.in](https://wttr.in) service to get weather and its specification file [weather_openapi.json](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Agents.Persistent/tests/Samples/weather_openapi.json). To get this file we will use the utility function `GetFile`, which takes file located in the `C#` source directory.
 ```C# Snippet:AgentsOpenAPICallingExample_GetFile
 private static string GetFile([CallerFilePath] string pth = "")
 {
@@ -57,7 +57,7 @@ PersistentAgent agent = await client.Administration.CreateAgentAsync(
 );
 ```
 
-3. Now we will create a `ThreadRun` and wait until it is complete. If the run will not be successful, we will print the last error.
+3. Now we will create a run and wait until it is complete. If the run will not be successful, we will print the last error.
 
 Synchronous sample:
 ```C# Snippet:AgentsOpenAPISyncHandlePollingWithRequiredAction
@@ -159,7 +159,7 @@ await foreach (ThreadMessage threadMessage in messages)
 }
 ```
 
-5. Finally, we delete all the resources, we have created in this sample.
+5. Finally, delete all the resources, we have created in this sample.
 
 Synchronous sample:
 ```C# Snippet:AgentsOpenAPISync_Cleanup

@@ -1,4 +1,4 @@
-# Sample enterprise file search with agent in Azure.AI.Agents.
+# Sample enterprise file search with agent in Azure.AI.Agents.Persistent.
 
 In the enterprise file search, as opposed to regular file search, we are assuming that user has uploaded the file to Azure and have registered it in the Azure AI Foundry. In the example below we will utilize the asset ID from Azure as a data source for the `VectorStore`.
 
@@ -10,7 +10,7 @@ var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLO
 PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 ```
 
-2. To create agent capable of using Enterprise file search, we will create `VectorStoreDataSource` and will supply it to `VectorStore` constructor. The ID of the created vector store will be used in the `FileSearchToolResource` used for agent creation. 
+2. To create agent capable of using Enterprise file search, we will create `VectorStoreDataSource` and will supply it to `VectorStore` constructor. The ID of the created vector store is needed to create the `FileSearchToolResource` used for agent creation. 
 Synchronous sample: 
 ```C# Snippet:AgentsCreateVectorStoreBlobSync
 var ds = new VectorStoreDataSource(
@@ -119,7 +119,7 @@ Assert.AreEqual(
     run.LastError?.Message);
 ```
 
-4. When we create `VectorStore`, it ingests the contents of the Azure Blob, provided in the `VectorStoreDataSource` object and associates it with File ID. To provide the file name we will need to get the file name by ID, which in our case will be Azure Resource ID and take its last segment.
+4. When we create `VectorStore`, it ingests the contents of the Azure Blob, provided in the `VectorStoreDataSource` object and associates it with File ID. To get file name we will need to get the file name by ID, which in our case will be Azure Resource ID and take its last segment.
 
 Synchronous sample:
 ```C# Snippet:AgentsEnterpriseFileSearch_ListUpdatedMessages
