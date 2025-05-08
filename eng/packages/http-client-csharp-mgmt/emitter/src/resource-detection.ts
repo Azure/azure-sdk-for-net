@@ -12,6 +12,10 @@ import {
 } from "./resource-metadata.js";
 import { DecoratorInfo } from "@azure-tools/typespec-client-generator-core";
 
+// https://github.com/microsoft/typespec/blob/main/packages/rest/README.md#parentresource
+export const parentResource = "TypeSpec.Rest.@parentResource";
+export const parentResourceRegex = "TypeSpec\\.Rest\\.@parentResource";
+
 // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armresourceoperations
 export const armResourceOperations =
   "Azure.ResourceManager.@armResourceOperations";
@@ -41,10 +45,11 @@ export function updateClients(codeModel: CodeModel) {
   // first pass to update all the clients with their own information
   const metadata: Map<InputClient, ResourceMetadata> = new Map();
   for (const client of clients) {
-    gatherResourceMetadata(codeModel, client, metadata);
+    gatherResourceMetadata(client, metadata);
   }
 
   // populate parent resource
+  populateParentResource(clients, metadata);
 
   // add the decorator to the client
   for (const client of clients) {
@@ -73,8 +78,30 @@ function getAllClients(codeModel: CodeModel): InputClient[] {
   }
 }
 
+function populateParentResource(
+  clients: InputClient[],
+  metadata: Map<InputClient, ResourceMetadata>
+) {
+  // go over all the clients and metadata to see if their models have `@parentResource`
+  const modelToMetadata: Map<InputModelType, ResourceMetadata> = new Map();
+  for (const resourceMetadata of metadata.values()) {
+    modelToMetadata.set(resourceMetadata.resourceModel, resourceMetadata);
+  }
+
+  for (const [model, metadata] of modelToMetadata) {
+    const parentResourceDecorator = model.decorators?.find(
+      (d) => d.name == parentResource
+    );
+    metadata;
+    if (parentResourceDecorator) {
+      const args = parentResourceDecorator.arguments;
+      console.log(args);
+    }
+  }
+}
+
+
 function gatherResourceMetadata(
-  codeModel: CodeModel,
   client: InputClient,
   metadataMap: Map<InputClient, ResourceMetadata>
 ) {
@@ -134,16 +161,6 @@ function gatherResourceMetadata(
       };
       metadataMap.set(client, metadata);
     }
-
-    // const resourceMetadataDecorator: DecoratorInfo = {
-    //   name: resourceMetadata,
-    //   arguments: {}
-    // };
-    // resourceMetadataDecorator.arguments["resourceModel"] =
-    //   resourceModel?.crossLanguageDefinitionId;
-    // resourceMetadataDecorator.arguments["isSingleton"] = isSingleton.toString();
-    // resourceMetadataDecorator.arguments["resourceType"] = resourceType;
-    // client.decorators.push(resourceMetadataDecorator);
   }
 }
 

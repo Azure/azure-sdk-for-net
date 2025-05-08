@@ -6,6 +6,7 @@ import {
   armResourceCreateOrUpdateRegex,
   armResourceOperationsRegex,
   armResourceReadRegex,
+  parentResourceRegex,
   resourceMetadataRegex
 } from "./resource-detection.js";
 
@@ -22,8 +23,7 @@ export const azureSDKContextOptions: CreateSdkContextOptions = {
     armResourceOperationsRegex,
     armResourceCreateOrUpdateRegex,
     armResourceReadRegex,
-    // https://github.com/microsoft/typespec/blob/main/packages/rest/README.md#parentresource
-    "TypeSpec\\.Rest\\.parentResource",
+    parentResourceRegex,
     // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#singleton
     "Azure\\.ResourceManager\\.@singleton",
     "Azure\\.ResourceManager\\.Private\\.@armResourceInternal"

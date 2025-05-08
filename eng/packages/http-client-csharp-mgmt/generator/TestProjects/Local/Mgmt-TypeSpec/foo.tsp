@@ -14,6 +14,12 @@ model Foo is TrackedResource<FooProperties> {
     ...ExtendedLocationProperty;
 }
 
+@resource("bars")
+@parentResource(Foo)
+model Bar is TrackedResource<BarProperties> {
+    ...ResourceNameParameter<Bar, SegmentName = "bars">;
+}
+
 @useSystemTextJsonConverter("csharp")
 model FooProperties {
     /** the service url */
@@ -32,13 +38,29 @@ model FooProperties {
     doubleValue?: float64;
 }
 
+model BarProperties {
+    /** the value for Bar */
+    barValue?: string;
+}
+
 @armResourceOperations
 interface Foos {
     createOrUpdate is ArmResourceCreateOrUpdateAsync<Foo>;
 
     get is ArmResourceRead<Foo>;
-    
+
     delete is ArmResourceDeleteWithoutOkAsync<Foo>;
 
     list is ArmResourceListByParent<Foo>;
+}
+
+@armResourceOperations
+interface Bars {
+    createOrUpdate is ArmResourceCreateOrUpdateAsync<Bar>;
+
+    get is ArmResourceRead<Bar>;
+
+    delete is ArmResourceDeleteWithoutOkAsync<Bar>;
+
+    list is ArmResourceListByParent<Bar>;
 }
