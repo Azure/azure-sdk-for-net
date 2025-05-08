@@ -1,4 +1,4 @@
-# Sample for using additional messages while creating agent run in Azure.AI.Agents.
+# Sample for using additional messages while creating agent run in Azure.AI.Agents.Persistent.
 
 1. Create an agent client and use it to create and an agent.
 
@@ -142,4 +142,18 @@ await foreach (ThreadMessage threadMessage in messages)
         Console.WriteLine();
     }
 }
+```
+
+4. Finally, we delete all the resources, we have created in this sample.
+
+Synchronous sample:
+```C# Snippet:Sample_PersistentAgent_Multiple_Messages_Cleanup
+agentClient.Threads.DeleteThread(thread.Id);
+agentClient.Administration.DeleteAgent(agent.Id);
+```
+
+Asynchronous sample:
+```C# Snippet:Sample_PersistentAgent_Multiple_Messages_CleanupAsync
+await agentClient.Threads.DeleteThreadAsync(thread.Id);
+await agentClient.Administration.DeleteAgentAsync(agent.Id);
 ```
