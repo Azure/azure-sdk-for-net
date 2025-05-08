@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         VirtualApplicationGroupData IJsonModel<VirtualApplicationGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualApplicationGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VirtualApplicationGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VirtualApplicationGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualApplicationGroupData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
-        VirtualApplicationGroupData IPersistableModel<VirtualApplicationGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualApplicationGroupData>(data, options);
+        VirtualApplicationGroupData IPersistableModel<VirtualApplicationGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualApplicationGroupData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
         string IPersistableModel<VirtualApplicationGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualApplicationGroupData>)Data).GetFormatFromOptions(options);
     }

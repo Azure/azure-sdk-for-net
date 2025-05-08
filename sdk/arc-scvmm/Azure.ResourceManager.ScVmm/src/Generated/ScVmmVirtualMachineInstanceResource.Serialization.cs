@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ScVmm
 
         ScVmmVirtualMachineInstanceData IJsonModel<ScVmmVirtualMachineInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmVirtualMachineInstanceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ScVmmVirtualMachineInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ScVmmVirtualMachineInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScVmmVirtualMachineInstanceData>(Data, options, AzureResourceManagerScVmmContext.Default);
 
-        ScVmmVirtualMachineInstanceData IPersistableModel<ScVmmVirtualMachineInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScVmmVirtualMachineInstanceData>(data, options);
+        ScVmmVirtualMachineInstanceData IPersistableModel<ScVmmVirtualMachineInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScVmmVirtualMachineInstanceData>(data, options, AzureResourceManagerScVmmContext.Default);
 
         string IPersistableModel<ScVmmVirtualMachineInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScVmmVirtualMachineInstanceData>)Data).GetFormatFromOptions(options);
     }

@@ -12,6 +12,12 @@ namespace Azure.Search.Documents
         public int? Size { get { throw null; } set { } }
         public bool? UseFuzzyMatching { get { throw null; } set { } }
     }
+    public partial class AzureSearchDocumentsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureSearchDocumentsContext() { }
+        public static Azure.Search.Documents.AzureSearchDocumentsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class GetDocumentOptions
     {
         public GetDocumentOptions() { }

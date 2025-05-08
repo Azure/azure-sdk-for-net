@@ -818,7 +818,7 @@ After the processing, the output queue should contain the message with the follo
   "CorrelationId": "42"
 }
 ```
-Please note that the in input `CorrelationId` value is the same as in the output.
+Please note that the input `CorrelationId` value is the same as in the output.
 *Hint:* Place multiple messages to input queue and keep second internet browser window with the output queue open, hit the refresh button on the portal user interface, so that you will not miss the message. If the function completed with error the message instead gets into the `azure-function-foo-input-poison` queue. If that happened, please check your setup.
 After we have tested the function and confirmed that it works, please make sure that the Azure AI Project have the next roles for the storage account: `Storage Account Contributor`, `Storage Blob Data Contributor`, `Storage File Data Privileged Contributor`, `Storage Queue Data Contributor` and `Storage Table Data Contributor`. Now the function is ready to be used by the agent.
 

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 
         CosmosDBForPostgreSqlClusterServerData IJsonModel<CosmosDBForPostgreSqlClusterServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBForPostgreSqlClusterServerData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CosmosDBForPostgreSqlClusterServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CosmosDBForPostgreSqlClusterServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBForPostgreSqlClusterServerData>(Data, options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
 
-        CosmosDBForPostgreSqlClusterServerData IPersistableModel<CosmosDBForPostgreSqlClusterServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBForPostgreSqlClusterServerData>(data, options);
+        CosmosDBForPostgreSqlClusterServerData IPersistableModel<CosmosDBForPostgreSqlClusterServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBForPostgreSqlClusterServerData>(data, options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
 
         string IPersistableModel<CosmosDBForPostgreSqlClusterServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBForPostgreSqlClusterServerData>)Data).GetFormatFromOptions(options);
     }
