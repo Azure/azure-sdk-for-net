@@ -1,4 +1,4 @@
-# Sample for basic use of an agent in Azure.AI.Agents.
+# Sample for basic use of an agent in Azure.AI.Agents.Persistent.
 
 In this example we will demonstrate creation and basic use of an agent step by step.
 
@@ -29,7 +29,7 @@ PersistentAgent agent = await client.Administration.CreateAgentAsync(
 );
 ```
 
-3. We will create thread as a separate resource.
+3. Create thread as a separate resource.
 
 Synchronous sample:
 ```C# Snippet:AgentsOverviewCreateThreadSync
@@ -41,7 +41,7 @@ Asynchronous sample:
 PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 ```
 
-4. We will add the message to the thread, containing a question for agent. This message must have `User` role.
+4. Add the message to the thread, containing a question for agent. This message must have `User` role.
 
 Synchronous sample:
 ```C# Snippet:AgentsOverviewCreateMessageSync

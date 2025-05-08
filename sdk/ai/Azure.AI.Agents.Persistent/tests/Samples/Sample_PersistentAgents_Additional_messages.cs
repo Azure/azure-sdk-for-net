@@ -84,6 +84,10 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
             }
         }
         #endregion
+        #region Snippet:Sample_PersistentAgent_Multiple_Messages_CleanupAsync
+        await agentClient.Threads.DeleteThreadAsync(thread.Id);
+        await agentClient.Administration.DeleteAgentAsync(agent.Id);
+        #endregion
     }
 
     [Test]
@@ -157,6 +161,10 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
                 Console.WriteLine();
             }
         }
+        #endregion
+        #region Snippet:Sample_PersistentAgent_Multiple_Messages_Cleanup
+        agentClient.Threads.DeleteThread(thread.Id);
+        agentClient.Administration.DeleteAgent(agent.Id);
         #endregion
     }
 }
