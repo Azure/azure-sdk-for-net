@@ -289,16 +289,11 @@ namespace Azure.Storage.Tests
 
         [Test]
         [Combinatorial]
-        public async Task AlwaysObeysOneshotThreshold(
-            [Values(true, false)] bool overThreshold,
-            [Values(true, false)] bool seekable,
-            [Values(true, false)] bool providePredictedLength,
+        public async Task OneshotUnseekableDataUnderBlockSize(
+            [Values(1024, 1000, 123)] int dataSize,
             [Values(1, 8)] int concurrency)
         {
-            const int threshold = 123;
-            const int blockSize = 50;
-            int dataSize = overThreshold ? 200 : 100;
-            int totalBlocks = dataSize / blockSize;
+            const int blockSize = 2048;
 
             var dataBuffer = new byte[dataSize];
             new Random().NextBytes(dataBuffer);
@@ -306,84 +301,24 @@ namespace Azure.Storage.Tests
             {
                 CallBase = true,
             };
-            if (!seekable)
-            {
-                content.MakeUnseekable();
-            }
+            content.MakeUnseekable();
 
             var mocks = GetMockBehaviors(dataSize, blockSize);
             var partitionedUploader = new PartitionedUploader<object, object>(
                 mocks.ToBehaviors(),
                 new StorageTransferOptions()
                 {
-                    InitialTransferSize = threshold,
                     MaximumTransferSize = blockSize,
                     MaximumConcurrency = concurrency,
                 },
                 s_validationOptions,
                 operationName: s_operationName);
 
-            long? providedLen = providePredictedLength ? dataSize : default(long?);
-            await partitionedUploader.UploadInternal(content.Object, providedLen, s_objectArgs, s_progress, IsAsync, s_cancellation);
-
-            if (overThreshold)
-            {
-                Assert.AreEqual(totalBlocks, mocks.PartitionUploadStream.Invocations.Count);
-                Assert.AreEqual(1, mocks.Commit.Invocations.Count);
-                Assert.IsEmpty(mocks.SingleUploadStream.Invocations);
-            }
-            else
-            {
-                Assert.AreEqual(1, mocks.SingleUploadStream.Invocations.Count);
-                Assert.IsEmpty(mocks.PartitionUploadStream.Invocations);
-                Assert.IsEmpty(mocks.Commit.Invocations);
-            }
-        }
-
-        [TestCase(1024, 2048, 16)] // under threshold, even block distribution
-        [TestCase(1024, 2048, 10)] // under threshold, uneven block distribution
-        [TestCase(12345, 1234567, 123)] // under threshold, no powers of 2
-        public async Task RestitchStreamOnOneshot(
-            int dataSize,
-            int threshold,
-            int blockSize)
-        {
-            var dataBuffer = new byte[dataSize];
-            new Random().NextBytes(dataBuffer);
-            Mock<MemoryStream> content = new(dataBuffer)
-            {
-                CallBase = true,
-            };
-            // when unseekable, uploader will buffer multiple blocks of blocksize before reaching threshold
-            // when threshold not reached, will stitch back together as one stream to upload
-            content.MakeUnseekable();
-
-            Mock<MemoryStream> dest = new(dataBuffer)
-            {
-                CallBase = true,
-            };
-            var mocks = GetMockBehaviors(dataSize, blockSize, oneshotDest: dest.Object);
-            var partitionedUploader = new PartitionedUploader<object, object>(
-                mocks.ToBehaviors(),
-                new StorageTransferOptions()
-                {
-                    InitialTransferSize = threshold,
-                    MaximumTransferSize = blockSize,
-                },
-                s_validationOptions,
-                operationName: s_operationName);
-
             await partitionedUploader.UploadInternal(content.Object, default, s_objectArgs, s_progress, IsAsync, s_cancellation);
 
-            // check all the individual writes of exactly blockSize as indirect demonstration of the blocks being stitched back together
-            // just checking synchronous write works due to MemoryStream impl; don't need to branch check on async
-            dest.Verify(c => c.Write(It.IsAny<byte[]>(), It.IsAny<int>(), blockSize),
-                Times.Exactly(dataSize / blockSize));
-            if (dataSize % blockSize != 0)
-                dest.Verify(c => c.Write(It.IsAny<byte[]>(), It.IsAny<int>(), dataSize % blockSize), Times.Once);
-
-            // check data was resequenced correctly
-            Assert.That(dataBuffer, Is.EqualTo(dest.Object.ToArray()));
+            Assert.AreEqual(1, mocks.SingleUploadStream.Invocations.Count);
+            Assert.IsEmpty(mocks.PartitionUploadStream.Invocations);
+            Assert.IsEmpty(mocks.Commit.Invocations);
         }
 
         [TestCase(1024, 512, 16)] // over threshold, even block distribution

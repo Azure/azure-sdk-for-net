@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Shared;
 
@@ -31,6 +32,24 @@ internal static class EnumerableExtensions
             {
                 yield return elem;
             }
+        }
+    }
+
+    /// <summary>
+    /// Provides an async switch for <see cref="IAsyncEnumerator{T}.MoveNextAsync"/> to either
+    /// await it or <c>.EnsureCompleted()</c>.
+    /// </summary>
+    public static async ValueTask<bool> MoveNextInternal<T>(this IAsyncEnumerator<T> enumerator, bool async)
+    {
+        if (async)
+        {
+            return await enumerator.MoveNextAsync().ConfigureAwait(false);
+        }
+        else
+        {
+#pragma warning disable AZC0107 // DO NOT call public asynchronous method in synchronous scope.
+            return enumerator.MoveNextAsync().EnsureCompleted();
+#pragma warning restore AZC0107 // DO NOT call public asynchronous method in synchronous scope.
         }
     }
 

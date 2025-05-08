@@ -383,51 +383,55 @@ namespace Azure.Storage
             GetNextStreamPartition partitionGetter = content.CanSeek && _maxWorkerCount == 1
                 ? (GetNextStreamPartition)GetStreamedPartitionInternal
                 : /*   redundant cast   */GetBufferedPartitionInternal;
-            IAsyncEnumerator<ContentPartition<Stream>> partitionsEnumerator = GetStreamPartitionsAsync(
-                content, length, actualBlockSize, partitionGetter, async, cancellationToken)
-                .GetAsyncEnumerator(cancellationToken);
-            List<ContentPartition<Stream>> prebufferedPartitions = [];
+            IAsyncEnumerable<ContentPartition<Stream>> partitionsEnumerable = GetStreamPartitionsAsync(
+                content, length, actualBlockSize, partitionGetter, async, cancellationToken);
 
-            // If we don't know the length, we must buffer anyway. Upfront buffer up to _singleUploadThreshold
-            // to see if we can still manage a single upload.
-            // Buffer in increments of block size. If length over threshold, no need to allocate double memory
-            // to redivide buffer into blocks.
-            // (can't use spans over single array; must accommodate long-length partitions)
-            // (can't use WindowStream over large PooledMemoryStream; must have parallel access)
+            // If we don't know the length, we are buffering blocks anyway. Upfront buffer first two blocks.
+            // If there is only one total block, oneshot it. Otherwise proceed as normal.
             if (!length.HasValue)
             {
-                UploadTransferValidationOptions oneshotValidationOptions = ValidationOptions;
-                oneshotValidationOptions.PrecalculatedChecksum = _masterCrcSupplier?.Invoke() ?? default;
-
-                long bytesBuffered = 0;
-#pragma warning disable AZC0107 // DO NOT call public asynchronous method in synchronous scope.
-                while (bytesBuffered < _singleUploadThreshold &&
-                    (async ? await partitionsEnumerator.MoveNextAsync().ConfigureAwait(false) : partitionsEnumerator.MoveNextAsync().EnsureCompleted()))
-#pragma warning restore AZC0107 // DO NOT call public asynchronous method in synchronous scope.
+                IAsyncEnumerator<ContentPartition<Stream>> partitionsEnumerator = partitionsEnumerable.GetAsyncEnumerator(cancellationToken);
+                if (!(await partitionsEnumerator.MoveNextInternal(async).ConfigureAwait(false)))
                 {
-                    prebufferedPartitions.Add(partitionsEnumerator.Current);
-                    bytesBuffered += partitionsEnumerator.Current.Length;
-                    bucket.Add(partitionsEnumerator.Current.Content);
-                }
-
-                // if we buffered entire stream within the threshold; oneshot it
-                if (bytesBuffered < _singleUploadThreshold)
-                {
+                    // no content at all. oneshot zero-length data just to do something.
+                    using MemoryStream emptyStream = new();
                     return await OneshotStreamInternal(
-                        new ConcatStream(prebufferedPartitions.Select(p => p.Content)),
+                        emptyStream,
                         args,
                         progressHandler,
                         async,
                         cancellationToken)
                         .ConfigureAwait(false);
                 }
-            }
+                ContentPartition<Stream> firstPartition = partitionsEnumerator.Current;
+                ContentPartition<Stream>? secondPartition = default;
+                if (await partitionsEnumerator.MoveNextInternal(async).ConfigureAwait(false))
+                {
+                    secondPartition = partitionsEnumerator.Current;
+                }
 
-            IAsyncEnumerable<ContentPartition<Stream>> resequencedPartitions = prebufferedPartitions
-                .AsAsyncEnumerable()
-                .Concat(partitionsEnumerator.EnumerableWrap());
+                // if no second block; oneshot the first
+                if (!secondPartition.HasValue || secondPartition.Value.Length == 0L)
+                {
+                    using Stream oneshotContent = firstPartition.Content;
+                    return await OneshotStreamInternal(
+                        oneshotContent,
+                        args,
+                        progressHandler,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                else
+                {
+                    // multiblock scenario, restitch the enumerable of blocks to be handled by partitioned upload
+                    partitionsEnumerable = new List<ContentPartition<Stream>>() { firstPartition, secondPartition.Value }
+                        .AsAsyncEnumerable()
+                        .Concat(partitionsEnumerator.EnumerableWrap());
+                }
+            }
             return await UploadPartitionsInternal(
-                resequencedPartitions,
+                partitionsEnumerable,
                 args,
                 progressHandler,
                 StageStreamPartitionInternal,
