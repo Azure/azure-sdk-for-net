@@ -18,7 +18,7 @@ using System.Linq;
 
 namespace Azure.Generator.Management
 {
-    internal class SystemObjectTypeVisitor : ScmLibraryVisitor
+    internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     {
         protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
         {
@@ -53,8 +53,6 @@ namespace Azure.Generator.Management
             return type;
         }
 
-        // Only this is needed for the current visitor
-        // TODO: The rest of the visitor is temparary workaround for now, once we can generate Azure.ResourceManager from MPG generator, we can remove them
         private static void UpdateModelFactory(ModelFactoryProvider modelFactory)
         {
             var methods = new List<MethodProvider>();

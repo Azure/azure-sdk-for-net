@@ -43,6 +43,8 @@ namespace Azure.Generator.Management
             return transformedClient is null ? null : base.CreateClientCore(transformedClient);
         }
 
+        // TODO: right now, we are missing the connection between CsharpType and TypeProvider, that's why we need both CreateCSharpTypeCore and CreateModelCore
+        // Once we have the mapping between CsharpType and TypeProvider, we should only keep CreateModelCore
         /// <inheritdoc/>
         protected override CSharpType? CreateCSharpTypeCore(InputType inputType)
         {
