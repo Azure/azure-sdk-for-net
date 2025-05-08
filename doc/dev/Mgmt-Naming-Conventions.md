@@ -25,7 +25,7 @@ In addition to adhering to the [General Naming Conventions of .NET](https://lear
 
 **DO** End property or parameter names of type integer that represent intervals or durations with units, for example: `MonitoringInterval` -> `MonitoringIntervalInSeconds`.
 
-**DO** If a property or parameter name ends with `Interval` or `Duration` and its value is not in ISO 8601 duration format (e.g., P1DT2H59M59S) or ISO 8601 format (e.g., 2.2:59:59.5000000), rename the property or parameter to remove the `Interval` or `Duration` suffix.
+**DO** If a property or parameter name ends with `Interval` or `Duration` and its value is not in ISO 8601 duration format (e.g., P1DT2H59M59S) or ISO 8601 time format (e.g., 2.2:59:59.5000000), rename the property or parameter to remove the `Interval` or `Duration` suffix.
 
 **DO** Consider renaming TTL properties or parameters to `TimeToLiveIn<Unit>`. 
 
