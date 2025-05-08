@@ -84,7 +84,7 @@ namespace BasicTypeSpec
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
-        /// <summary> Gets the Pipeline. </summary>
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
