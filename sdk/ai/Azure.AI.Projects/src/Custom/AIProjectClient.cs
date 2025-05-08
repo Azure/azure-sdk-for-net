@@ -15,7 +15,6 @@ namespace Azure.AI.Projects
     public partial class AIProjectClient : ClientConnectionProvider
     {
         private readonly ConnectionCacheManager _cacheManager;
-        private readonly Connections _connectionsClient;
 
         /// <summary> Initializes a new instance of AIProjectClient for mocking. </summary>
         protected AIProjectClient() : base(maxCacheSize: 100)
@@ -57,8 +56,7 @@ namespace Azure.AI.Projects
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
 
-            _connectionsClient = GetConnectionsClient();
-            _cacheManager = new ConnectionCacheManager(_connectionsClient, _tokenCredential);
+            _cacheManager = new ConnectionCacheManager(_endpoint, _tokenCredential);
         }
 
         /// <summary>

@@ -6,7 +6,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System;
 using Azure.Core;
-using System.Linq;
 
 namespace Azure.AI.Projects
 {
@@ -16,13 +15,13 @@ namespace Azure.AI.Projects
     internal class ConnectionCacheManager
     {
         private readonly TokenCredential _tokenCredential;
-        private readonly Connections _connectionsClient;
-        private readonly ConcurrentDictionary<ConnectionType, Connection> _connectionCache = new();
+        private readonly Uri _endpoint;
+        private readonly ConcurrentDictionary<ConnectionType, Uri> _connectionCache = new();
         private readonly ConcurrentDictionary<string, ClientConnection> _connections = new();
 
-        public ConnectionCacheManager(Connections connectionsClient, TokenCredential tokenCredential)
+        public ConnectionCacheManager(Uri endpoint, TokenCredential tokenCredential)
         {
-            _connectionsClient = connectionsClient;
+            _endpoint = endpoint;
             _tokenCredential = tokenCredential;
         }
 
@@ -37,38 +36,15 @@ namespace Azure.AI.Projects
             }
 
             var connectionType = GetConnectionTypeFromId(connectionId);
-            var connection = _connectionCache.GetOrAdd(connectionType, type =>
-                _connectionsClient.GetConnections(type, true).FirstOrDefault());
+            var connection = _connectionCache.GetOrAdd(connectionType, _endpoint);
 
-            if (connection.Credentials.Type == CredentialType.ApiKey)
+            if (string.IsNullOrWhiteSpace(_endpoint.AbsoluteUri))
             {
-                if (string.IsNullOrWhiteSpace(connection.Target))
-                {
-                    throw new ArgumentException($"The API key authentication target URI is missing or invalid for {connectionId}.");
-                }
-
-                ApiKeyCredentials apiKeyCredentials = connection.Credentials as ApiKeyCredentials;
-
-                if (apiKeyCredentials.ApiKey is null or { Length: 0 })
-                {
-                    throw new ArgumentException($"The API key is missing or invalid for {connectionId}.");
-                }
-
-                var newConnection = new ClientConnection(connectionId, connection.Target, apiKeyCredentials.ApiKey, CredentialKind.ApiKeyString);
-                return _connections.GetOrAdd(connectionId, newConnection);
-            }
-            else if (connection.Credentials.Type == CredentialType.EntraId)
-            {
-                if (string.IsNullOrWhiteSpace(connection.Target))
-                {
-                    throw new ArgumentException($"The AAD authentication target URI is missing or invalid for {connectionId}.");
-                }
-
-                var newConnection = new ClientConnection(connectionId, connection.Target, _tokenCredential, CredentialKind.TokenCredential);
-                return _connections.GetOrAdd(connectionId, newConnection);
+                throw new ArgumentException($"The AAD authentication target URI is missing or invalid for {connectionId}.");
             }
 
-            throw new ArgumentException($"Cannot connect with {connectionId}! Unknown authentication type.");
+            var newConnection = new ClientConnection(connectionId, _endpoint.AbsoluteUri, _tokenCredential, CredentialKind.TokenCredential);
+            return _connections.GetOrAdd(connectionId, newConnection);
         }
 
         /// <summary>
