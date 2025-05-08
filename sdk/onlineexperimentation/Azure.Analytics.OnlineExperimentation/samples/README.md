@@ -4,7 +4,6 @@ languages:
 - csharp
 products:
 - azure
-- azure-analytics-onlineexperimentation
 name: Azure.Analytics.OnlineExperimentation samples for .NET
 description: Samples for the Azure.Analytics.OnlineExperimentation client library
 ---
