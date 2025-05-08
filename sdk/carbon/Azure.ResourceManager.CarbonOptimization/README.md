@@ -1,6 +1,12 @@
 # Microsoft Azure CarbonOptimization management client library for .NET
 
-**[Describe the service briefly first.]**
+Azure carbon optimization helps organizations measure and minimize the carbon impact of their Azure footprint. With this service, you can:
+
+    - Track and analyze emissions across Azure resources and subscriptions.
+    - Access carbon emissions data and insights via REST APIs and CSV exports.
+    - Optimize resource utilization to lower emissions and costs.
+
+As part of Microsoft's commitment to sustainability and environmental responsibility, and by using it, you can align your cloud strategy with your sustainability goals and demonstrate your leadership in addressing the global climate challenge.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -10,7 +16,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - Better error-handling.
     - Support uniform telemetry across all languages.
 
-## Getting started 
+## Getting started
 
 ### Install the package
 
