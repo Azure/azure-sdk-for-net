@@ -16,7 +16,7 @@ namespace _Type.Property.ValueTypes
 
         public ValueTypesClient(Uri endpoint, ValueTypesClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Boolean GetBooleanClient() => throw null;
 
