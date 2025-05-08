@@ -1,4 +1,4 @@
-# Sample enterprise file search on agent with message attachment and code interpreter in Azure.AI.Agents.
+# Sample enterprise file search on agent with message attachment and code interpreter in Azure.AI.Agents.Persistent.
 
 In this example we demonstrate, how the Azure Blob can be utilized for enterprize file search with `MessageAttachment`.
 
@@ -46,7 +46,7 @@ var attachment = new MessageAttachment(
 );
 ```
 
-4. Create a `ThreadMessage`, which contains the `VectorStoreDataSource` as an attachment.
+4. Create a message, which contains the `VectorStoreDataSource` as an attachment.
 
 Synchronous sample:
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearch_CreateThreadRun
@@ -206,7 +206,7 @@ WriteMessages(messages);
 ```
 
 
-8. Finally, we delete all the resources, we have created in this sample.
+8. Finally, delete all the resources, we have created in this sample.
 
 Synchronous sample:
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearch_Cleanup

@@ -1,7 +1,7 @@
-# Sample for use of an agent with Bing grounding in Azure.AI.Agents.
+# Sample for use of an agent with Bing grounding in Azure.AI.Agents.Persistent.
 
 To enable your Agent to perform search through Bing search API, you use `BingGroundingToolDefinition` along with a connection.
-1. First we need to create an agent and read the environment variables, which will be used in the next steps.
+1. First we need to create an agent client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:AgentsBingGrounding_CreateProject
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
@@ -12,16 +12,7 @@ PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCreden
 
 2. We will use the Bing connection ID to initialize the `BingGroundingToolDefinition`.
 
-Synchronous sample:
 ```C# Snippet:AgentsBingGrounding_GetConnection
-BingGroundingSearchConfigurationList configurationList = new(
-    [new BingGroundingSearchConfiguration(connectionId)]
-);
-BingGroundingToolDefinition bingGroundingTool = new(configurationList);
-```
-
-Asynchronous sample:
-```C# Snippet:AgentsBingGroundingAsync_GetConnection
 BingGroundingSearchConfigurationList configurationList = new(
     [new BingGroundingSearchConfiguration(connectionId)]
 );

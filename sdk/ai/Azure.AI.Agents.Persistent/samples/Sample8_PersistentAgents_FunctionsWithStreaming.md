@@ -1,4 +1,4 @@
-# Sample using agents with functions and streaming in Azure.AI.Agents.
+# Sample using agents with functions and streaming in Azure.AI.Agents.Persistent.
 
 In this example we are demonstrating how to use the local functions with the agents in streaming scenarios. The functions can be used to provide agent specific information in response to user question.
 
@@ -123,7 +123,7 @@ PersistentAgent agent = await client.Administration.CreateAgentAsync(
 );
 ```
 
-5. Create `Thread` with the message.
+5. Create thread with the message.
 
 Synchronous sample:
 ```C# Snippet:AgentsFunctionsWithStreamingSync_CreateThread
@@ -145,7 +145,7 @@ ThreadMessage message = await client.Messages.CreateMessageAsync(
     "What's the weather like in my favorite city?");
 ```
 
-6. Create a stream and wait for the stream update of the `RequiredActionUpdate` type. This update will mark the point, when we need to submit tool outputs to the stream. We will submit outputs in the inner cycle. Please note that `RequiredActionUpdate` keeps only one required action, while our run may require multiple function calls, this case is handled in the inner cycle, so that we can add tool output to the existing array of outputs. After all required actions were submitted we clean up the array of required actions.
+6. Create a stream and wait for the stream update of the `RequiredActionUpdate` type. This update will mark the point, when we need to submit tool outputs to the stream. We will store function outputs in `toolOutputs` and submit them to run, creating another stream. Please note that `RequiredActionUpdate` keeps only one required action, while our run may require multiple function calls. After all required actions were submitted we clean up the array of required actions (`toolOutputs`).
 
 Synchronous sample:
 ```C# Snippet:AgentsFunctionsWithStreamingSyncUpdateCycle

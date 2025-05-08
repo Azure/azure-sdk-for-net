@@ -15,6 +15,8 @@ namespace _Type.Property.AdditionalProperties
 {
     public partial class WidgetData0 : IJsonModel<WidgetData0>
     {
+        internal WidgetData0() => throw null;
+
         void IJsonModel<WidgetData0>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

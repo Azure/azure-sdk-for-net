@@ -1,4 +1,4 @@
-# Sample for Azure.AI.Agents and batch file search.
+# Sample for Azure.AI.Agents.Persistent and batch file search.
 
 1. To perform batch file search by an agent, we first need to upload a file, create a vector store, and associate the file to the vector store. Here is an example:
 
@@ -141,7 +141,7 @@ List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
 WriteMessages(messages, dtReferences);
 ```
 
-3. After the run complete, we will use `WriteMessages` method to swap reference placeholders by the actual file names.
+3. After the run complete, we will use `WriteMessages` method to swap reference placeholders by the actual file names or IDs.
 ```C# Snippet:AgentsVectorStoreBatchFileSearchParseResults
 private static void WriteMessages(IEnumerable<ThreadMessage> messages, Dictionary<string, string> fileIds)
 {
@@ -191,7 +191,7 @@ private static string replaceReferences(Dictionary<string, string> fileIds, stri
 }
 ```
 
-4. When the experiment is complete, we will clean up the resources.
+4. Finally we will clean up the resources.
 
 Synchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchFileSearchCleanup
