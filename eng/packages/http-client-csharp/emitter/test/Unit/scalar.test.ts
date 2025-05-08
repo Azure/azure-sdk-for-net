@@ -26,11 +26,12 @@ describe("Test GetInputType for scalar", () => {
     const context = await createCSharpSdkContext(createEmitterContext(program));
     const model = createModel(context);
 
-    const inputParamArray = model.Clients[0].Operations[0].Parameters.filter(
-      (p) => p.Name === "location"
-    );
+    const inputParamArray =
+      model.clients[0].methods[0].operation.parameters.filter(
+        (p) => p.name === "location"
+      );
     strictEqual(1, inputParamArray.length);
-    const type = inputParamArray[0].Type;
+    const type = inputParamArray[0].type;
     strictEqual(type.kind, "string");
     strictEqual(type.name, "azureLocation");
     strictEqual(type.crossLanguageDefinitionId, "Azure.Core.azureLocation");

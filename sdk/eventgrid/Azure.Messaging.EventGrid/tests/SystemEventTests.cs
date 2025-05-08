@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
 using Azure.Messaging.EventGrid.SystemEvents;
 using NUnit.Framework;
 
@@ -39,10 +40,9 @@ namespace Azure.Messaging.EventGrid.Tests
                 }
 
                 ValidateName(systemEvent.Name);
-                Assert.IsTrue(
-                    SystemEventExtensions.s_systemEventDeserializers.Values.Any(
-                        f => f.Method.ReturnType == systemEvent), systemEvent.Name);
+                Assert.IsNotNull(SystemEventExtensions.AsSystemEventData(systemEvent.Name, JsonDocument.Parse("{}").RootElement));
             }
+            Assert.IsNull(SystemEventExtensions.AsSystemEventData("DoesNotExist", JsonDocument.Parse("{}").RootElement));
         }
 
         [Test]

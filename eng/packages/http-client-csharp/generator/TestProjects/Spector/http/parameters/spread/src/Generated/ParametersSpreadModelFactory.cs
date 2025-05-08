@@ -11,7 +11,6 @@ namespace Parameters.Spread.Models
 {
     public static partial class ParametersSpreadModelFactory
     {
-
         public static BodyParameter BodyParameter(string name = default) => throw null;
     }
 }

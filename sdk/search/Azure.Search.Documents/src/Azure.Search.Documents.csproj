@@ -28,7 +28,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.ClientModel" VersionOverride="1.4.0-beta.1" />
+    <PackageReference Include="System.ClientModel" />
     <PackageReference Include="System.Threading.Channels" />
   </ItemGroup>
 

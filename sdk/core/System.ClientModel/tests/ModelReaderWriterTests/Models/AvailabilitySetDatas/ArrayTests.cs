@@ -2,65 +2,29 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+#if SOURCE_GENERATOR
+using System.ClientModel.SourceGeneration.Tests;
+#endif
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
 {
-    public class ArrayTests : MrwCollectionTests<AvailabilitySetData[], AvailabilitySetData>
+    public partial class ArrayTests : MrwCollectionTests<AvailabilitySetData[], AvailabilitySetData>
     {
         protected override string GetJsonCollectionType() => "List";
 
+        protected override string CollectionTypeName => "AvailabilitySetData[]";
+
+#if SOURCE_GENERATOR
+        protected override ModelReaderWriterContext Context => BasicContext.Default;
+#else
         protected override ModelReaderWriterContext Context => new LocalContext();
+#endif
 
         protected override void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, string format)
             => AvailabilitySetDataTests.CompareAvailabilitySetData(model, model2, format);
 
         protected override AvailabilitySetData[] GetModelInstance()
             => [ModelInstances.s_testAs_3375, ModelInstances.s_testAs_3376];
-
-#nullable disable
-        public class LocalContext : ModelReaderWriterContext
-        {
-            private static readonly Lazy<TestClientModelReaderWriterContext> s_libraryContext = new(() => new());
-            private Array_AvailabilitySetData_Builder _array_AvailabilitySetData_Builder;
-
-            protected override bool TryGetTypeBuilderCore(Type type, out ModelReaderWriterTypeBuilder builder)
-            {
-                builder = type switch
-                {
-                    Type t when t == typeof(AvailabilitySetData[]) => _array_AvailabilitySetData_Builder ??= new(),
-                    _ => GetFromDependencies(type)
-                };
-                return builder is not null;
-            }
-
-            private ModelReaderWriterTypeBuilder GetFromDependencies(Type type)
-            {
-                if (s_libraryContext.Value.TryGetTypeBuilder(type, out ModelReaderWriterTypeBuilder builder))
-                    return builder;
-
-                return null;
-            }
-
-            private class Array_AvailabilitySetData_Builder : ModelReaderWriterTypeBuilder
-            {
-                protected override Type BuilderType => typeof(List<AvailabilitySetData>);
-
-                protected override Type ItemType => typeof(AvailabilitySetData);
-
-                protected override bool IsCollection => true;
-
-                protected override object CreateInstance() => new List<AvailabilitySetData>();
-
-                protected override void AddItem(object collection, object item)
-                    => ((List<AvailabilitySetData>)collection).Add((AvailabilitySetData)item);
-
-                protected override object ToCollection(object builder)
-                    => ((List<AvailabilitySetData>)builder).ToArray();
-            }
-        }
-#nullable enable
     }
 }

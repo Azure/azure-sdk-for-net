@@ -5,12 +5,9 @@
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\http-client-csharp\generator\Azure.Generator\src\Azure.Generator.csproj" />
-  </ItemGroup>
-
 	<ItemGroup>
 		<PackageReference Include="Azure.Core" />
+		<PackageReference Include="Azure.Generator" />
 		<PackageReference Include="Azure.ResourceManager" />
 		<PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
 	</ItemGroup>
@@ -89,6 +86,12 @@
 		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\FixedDelayWithNoJitterStrategy.cs" LinkBase="Shared/Core">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\TypeFormatters.cs" LinkBase="Shared/Core">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\RequestHeaderExtensions.cs" LinkBase="Shared/Core">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
 	</ItemGroup>
 	
 </Project>

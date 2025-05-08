@@ -374,7 +374,7 @@ This example generates a CustomEvent structured like this:
         }
     }
 }
-``
+```
 
 ## Troubleshooting
 

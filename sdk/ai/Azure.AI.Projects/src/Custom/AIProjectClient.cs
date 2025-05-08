@@ -12,10 +12,15 @@ namespace Azure.AI.Projects
 {
     // Data plane generated client.
     /// <summary> The AzureAI service client. </summary>
-    public partial class AIProjectClient : ConnectionProvider
+    public partial class AIProjectClient : ClientConnectionProvider
     {
         private readonly ConnectionCacheManager _cacheManager;
         private readonly ConnectionsClient _connectionsClient;
+
+        /// <summary> Initializes a new instance of AIProjectClient for mocking. </summary>
+        protected AIProjectClient() : base(maxCacheSize: 100)
+        {
+        }
 
         /// <summary> Initializes a new instance of AzureAIClient. </summary>
         /// <param name="connectionString">The Azure AI Foundry project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
@@ -54,6 +59,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         public AIProjectClient(Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, TokenCredential credential, AIProjectClientOptions options)
+            : base(options.ClientCacheSize)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

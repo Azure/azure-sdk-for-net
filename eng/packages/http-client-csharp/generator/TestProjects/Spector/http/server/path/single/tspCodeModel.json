@@ -7,44 +7,60 @@
  "clients": [
   {
    "$id": "2",
+   "kind": "client",
    "name": "SingleClient",
    "namespace": "Server.Path.Single",
    "doc": "Illustrates server with a single path parameter @server",
-   "operations": [
+   "methods": [
     {
      "$id": "3",
+     "kind": "basic",
      "name": "myOp",
-     "resourceName": "Single",
      "accessibility": "public",
+     "apiVersions": [],
+     "operation": {
+      "$id": "4",
+      "name": "myOp",
+      "resourceName": "Single",
+      "accessibility": "public",
+      "parameters": [],
+      "responses": [
+       {
+        "$id": "5",
+        "statusCodes": [
+         200
+        ],
+        "headers": [],
+        "isErrorResponse": false
+       }
+      ],
+      "httpMethod": "HEAD",
+      "uri": "{endpoint}",
+      "path": "/server/path/single/myOp",
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "Server.Path.Single.myOp",
+      "decorators": []
+     },
      "parameters": [],
-     "responses": [
-      {
-       "$id": "4",
-       "statusCodes": [
-        200
-       ],
-       "headers": [],
-       "isErrorResponse": false
-      }
-     ],
-     "httpMethod": "HEAD",
-     "uri": "{endpoint}",
-     "path": "/server/path/single/myOp",
-     "bufferResponse": true,
-     "generateProtocolMethod": true,
-     "generateConvenienceMethod": true,
-     "crossLanguageDefinitionId": "Server.Path.Single.myOp",
-     "decorators": []
+     "response": {
+      "$id": "6"
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "Server.Path.Single.myOp"
     }
    ],
    "parameters": [
     {
-     "$id": "5",
+     "$id": "7",
      "name": "endpoint",
      "nameInRequest": "endpoint",
      "doc": "Need to be set as 'http://localhost:3000' in client.",
      "type": {
-      "$id": "6",
+      "$id": "8",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -60,7 +76,8 @@
     }
    ],
    "decorators": [],
-   "crossLanguageDefinitionId": "Server.Path.Single"
+   "crossLanguageDefinitionId": "Server.Path.Single",
+   "apiVersions": []
   }
  ]
 }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Error definition. </summary>
-    internal partial class ErrorInformation
+    public partial class ErrorInformation
     {
         /// <summary> Initializes a new instance of <see cref="ErrorInformation"/>. </summary>
         public ErrorInformation()

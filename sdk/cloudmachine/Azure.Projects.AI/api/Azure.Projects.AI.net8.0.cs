@@ -2,7 +2,7 @@ namespace Azure.AI.Models
 {
     public static partial class AIModelsExtensions
     {
-        public static Azure.AI.Models.ModelsClient GetModelsClient(this System.ClientModel.Primitives.ConnectionProvider provider, string? deploymentName = null) { throw null; }
+        public static Azure.AI.Models.ModelsClient GetModelsClient(this System.ClientModel.Primitives.ClientConnectionProvider provider, string? deploymentName = null) { throw null; }
     }
     public partial class ModelsClient
     {
@@ -25,8 +25,8 @@ namespace Azure.AI.OpenAI
         public static string AsText(this OpenAI.Chat.ChatCompletion completion) { throw null; }
         public static string AsText(this OpenAI.Chat.ChatMessageContent content) { throw null; }
         public static string AsText(this System.ClientModel.ClientResult<OpenAI.Chat.ChatCompletion> completionResult) { throw null; }
-        public static OpenAI.Chat.ChatClient GetOpenAIChatClient(this System.ClientModel.Primitives.ConnectionProvider provider, string? deploymentName = null) { throw null; }
-        public static OpenAI.Embeddings.EmbeddingClient GetOpenAIEmbeddingClient(this System.ClientModel.Primitives.ConnectionProvider provider, string? deploymentName = null) { throw null; }
+        public static OpenAI.Chat.ChatClient GetOpenAIChatClient(this System.ClientModel.Primitives.ClientConnectionProvider provider, string? deploymentName = null) { throw null; }
+        public static OpenAI.Embeddings.EmbeddingClient GetOpenAIEmbeddingClient(this System.ClientModel.Primitives.ClientConnectionProvider provider, string? deploymentName = null) { throw null; }
         public static void Trim(this System.Collections.Generic.List<OpenAI.Chat.ChatMessage> messages) { }
     }
 }
@@ -82,8 +82,9 @@ namespace Azure.Projects.AI
     }
     public partial class ChatTools
     {
-        public ChatTools() { }
+        public ChatTools(OpenAI.Embeddings.EmbeddingClient? embeddingClient = null) { }
         public ChatTools(params System.Type[] tools) { }
+        public bool CanFilterTools { get { throw null; } }
         public System.Collections.Generic.IList<OpenAI.Chat.ChatTool> Definitions { get { throw null; } }
         public void Add(System.Reflection.MethodInfo function) { }
         public void Add(System.Type functions) { }
@@ -95,6 +96,13 @@ namespace Azure.Projects.AI
         public System.Threading.Tasks.Task<Azure.Projects.AI.ToolCallResult> CallAllWithErrors(System.Collections.Generic.IEnumerable<OpenAI.Chat.ChatToolCall> toolCalls) { throw null; }
         public static implicit operator OpenAI.Chat.ChatCompletionOptions (Azure.Projects.AI.ChatTools tools) { throw null; }
         public OpenAI.Chat.ChatCompletionOptions ToOptions() { throw null; }
+        public OpenAI.Chat.ChatCompletionOptions ToOptions(string prompt, Azure.Projects.AI.ChatTools.ToolFindOptions? options = null) { throw null; }
+        public partial class ToolFindOptions
+        {
+            public ToolFindOptions() { }
+            public int MaxEntries { get { throw null; } set { } }
+            public float Threshold { get { throw null; } set { } }
+        }
     }
     public abstract partial class EmbeddingsStore
     {

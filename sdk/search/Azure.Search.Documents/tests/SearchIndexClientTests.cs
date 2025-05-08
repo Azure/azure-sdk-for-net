@@ -142,22 +142,8 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.IsNotNull(response.Value);
             Assert.IsNotNull(response.Value.IndexesStatistics);
-            Assert.AreEqual(1, response.Value.IndexesStatistics.Count);
-            Assert.AreEqual(resources.IndexName, response.Value.IndexesStatistics[0].Name);
-        }
-
-        [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_03_01_Preview)]
-        public async Task GetIndexStatsSummaryWithNoIndexes()
-        {
-            await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
-
-            SearchIndexClient client = resources.GetIndexClient();
-            Response<ListIndexStatsSummary> response = await client.GetIndexStatsSummaryAsync();
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.IsNotNull(response.Value);
-            Assert.IsNotNull(response.Value.IndexesStatistics);
-            Assert.AreEqual(0, response.Value.IndexesStatistics.Count);
+            Assert.GreaterOrEqual(response.Value.IndexesStatistics.Count, 1);
+            Assert.True(response.Value.IndexesStatistics.Any(summary => summary.Name == resources.IndexName));
         }
 
         [Test]

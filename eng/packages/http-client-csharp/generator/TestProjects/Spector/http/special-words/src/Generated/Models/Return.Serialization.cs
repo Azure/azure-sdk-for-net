@@ -15,6 +15,8 @@ namespace SpecialWords._Models
 {
     public partial class Return : IJsonModel<Return>
     {
+        internal Return() => throw null;
+
         void IJsonModel<Return>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

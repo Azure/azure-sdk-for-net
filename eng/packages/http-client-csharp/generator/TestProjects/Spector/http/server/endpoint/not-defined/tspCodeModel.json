@@ -7,44 +7,60 @@
  "clients": [
   {
    "$id": "2",
+   "kind": "client",
    "name": "NotDefinedClient",
    "namespace": "Server.Endpoint.NotDefined",
    "doc": "Illustrates server doesn't define endpoint. Client should automatically add an endpoint to let user pass in.",
-   "operations": [
+   "methods": [
     {
      "$id": "3",
+     "kind": "basic",
      "name": "valid",
-     "resourceName": "NotDefined",
      "accessibility": "public",
+     "apiVersions": [],
+     "operation": {
+      "$id": "4",
+      "name": "valid",
+      "resourceName": "NotDefined",
+      "accessibility": "public",
+      "parameters": [],
+      "responses": [
+       {
+        "$id": "5",
+        "statusCodes": [
+         200
+        ],
+        "headers": [],
+        "isErrorResponse": false
+       }
+      ],
+      "httpMethod": "HEAD",
+      "uri": "{endpoint}",
+      "path": "/server/endpoint/not-defined/valid",
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "Server.Endpoint.NotDefined.valid",
+      "decorators": []
+     },
      "parameters": [],
-     "responses": [
-      {
-       "$id": "4",
-       "statusCodes": [
-        200
-       ],
-       "headers": [],
-       "isErrorResponse": false
-      }
-     ],
-     "httpMethod": "HEAD",
-     "uri": "{endpoint}",
-     "path": "/server/endpoint/not-defined/valid",
-     "bufferResponse": true,
-     "generateProtocolMethod": true,
-     "generateConvenienceMethod": true,
-     "crossLanguageDefinitionId": "Server.Endpoint.NotDefined.valid",
-     "decorators": []
+     "response": {
+      "$id": "6"
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "Server.Endpoint.NotDefined.valid"
     }
    ],
    "parameters": [
     {
-     "$id": "5",
+     "$id": "7",
      "name": "endpoint",
      "nameInRequest": "endpoint",
      "doc": "Service host",
      "type": {
-      "$id": "6",
+      "$id": "8",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -60,7 +76,8 @@
     }
    ],
    "decorators": [],
-   "crossLanguageDefinitionId": "Server.Endpoint.NotDefined"
+   "crossLanguageDefinitionId": "Server.Endpoint.NotDefined",
+   "apiVersions": []
   }
  ]
 }

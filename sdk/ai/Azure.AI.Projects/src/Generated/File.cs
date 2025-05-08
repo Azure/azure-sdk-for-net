@@ -10,7 +10,42 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The File. </summary>
+    /// <summary>
+    /// A file in an HTTP request, response, or multipart payload.
+    ///
+    /// Files have a special meaning that the HTTP library understands. When the body of an HTTP request, response,
+    /// or multipart payload is _effectively_ an instance of `TypeSpec.Http.File` or any type that extends it, the
+    /// operation is treated as a file upload or download.
+    ///
+    /// When using file bodies, the fields of the file model are defined to come from particular locations by default:
+    ///
+    /// - `contentType`: The `Content-Type` header of the request, response, or multipart payload (CANNOT be overridden or changed).
+    /// - `contents`: The body of the request, response, or multipart payload (CANNOT be overridden or changed).
+    /// - `filename`: The `filename` parameter value of the `Content-Disposition` header of the response or multipart payload
+    /// (MAY be overridden or changed).
+    ///
+    /// A File may be used as a normal structured JSON object in a request or response, if the request specifies an explicit
+    /// `Content-Type` header. In this case, the entire File model is serialized as if it were any other model. In a JSON payload,
+    /// it will have a structure like:
+    ///
+    /// ```
+    /// {
+    ///   "contentType": &lt;string?&gt;,
+    ///   "filename": &lt;string?&gt;,
+    ///   "contents": &lt;string, base64&gt;
+    /// }
+    /// ```
+    ///
+    /// The `contentType` _within_ the file defines what media types the data inside the file can be, but if the specification
+    /// defines a `Content-Type` for the payload as HTTP metadata, that `Content-Type` metadata defines _how the file is
+    /// serialized_. See the examples below for more information.
+    ///
+    /// NOTE: The `filename` and `contentType` fields are optional. Furthermore, the default location of `filename`
+    /// (`Content-Disposition: &lt;disposition&gt;; filename=&lt;filename&gt;`) is only valid in HTTP responses and multipart payloads. If
+    /// you wish to send the `filename` in a request, you must use HTTP metadata decorators to describe the location of the
+    /// `filename` field. You can combine the metadata decorators with `@visibility` to control when the `filename` location
+    /// is overridden, as shown in the examples below.
+    /// </summary>
     internal partial class File
     {
         /// <summary>
@@ -46,7 +81,12 @@ namespace Azure.AI.Projects
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="File"/>. </summary>
-        /// <param name="contents"></param>
+        /// <param name="contents">
+        /// The contents of the file.
+        ///
+        /// In file bodies, this value comes from the body of the request, response, or multipart payload. In JSON bodies,
+        /// this value is serialized as a field in the response.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contents"/> is null. </exception>
         public File(BinaryData contents)
         {
@@ -56,9 +96,33 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of <see cref="File"/>. </summary>
-        /// <param name="contentType"></param>
-        /// <param name="filename"></param>
-        /// <param name="contents"></param>
+        /// <param name="contentType">
+        /// The allowed media (MIME) types of the file contents.
+        ///
+        /// In file bodies, this value comes from the `Content-Type` header of the request or response. In JSON bodies,
+        /// this value is serialized as a field in the response.
+        ///
+        /// NOTE: this is not _necessarily_ the same as the `Content-Type` header of the request or response, but
+        /// it will be for file bodies. It may be different if the file is serialized as a JSON object. It always refers to the
+        /// _contents_ of the file, and not necessarily the way the file itself is transmitted or serialized.
+        /// </param>
+        /// <param name="filename">
+        /// The name of the file, if any.
+        ///
+        /// In file bodies, this value comes from the `filename` parameter of the `Content-Disposition` header of the response
+        /// or multipart payload. In JSON bodies, this value is serialized as a field in the response.
+        ///
+        /// NOTE: By default, `filename` cannot be sent in request payloads and can only be sent in responses and multipart
+        /// payloads, as the `Content-Disposition` header is not valid in requests. If you want to send the `filename` in a request,
+        /// you must extend the `File` model and override the `filename` property with a different location defined by HTTP metadata
+        /// decorators.
+        /// </param>
+        /// <param name="contents">
+        /// The contents of the file.
+        ///
+        /// In file bodies, this value comes from the body of the request, response, or multipart payload. In JSON bodies,
+        /// this value is serialized as a field in the response.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal File(string contentType, string filename, BinaryData contents, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,12 +137,34 @@ namespace Azure.AI.Projects
         {
         }
 
-        /// <summary> Gets or sets the content type. </summary>
+        /// <summary>
+        /// The allowed media (MIME) types of the file contents.
+        ///
+        /// In file bodies, this value comes from the `Content-Type` header of the request or response. In JSON bodies,
+        /// this value is serialized as a field in the response.
+        ///
+        /// NOTE: this is not _necessarily_ the same as the `Content-Type` header of the request or response, but
+        /// it will be for file bodies. It may be different if the file is serialized as a JSON object. It always refers to the
+        /// _contents_ of the file, and not necessarily the way the file itself is transmitted or serialized.
+        /// </summary>
         public string ContentType { get; set; }
-        /// <summary> Gets or sets the filename. </summary>
+        /// <summary>
+        /// The name of the file, if any.
+        ///
+        /// In file bodies, this value comes from the `filename` parameter of the `Content-Disposition` header of the response
+        /// or multipart payload. In JSON bodies, this value is serialized as a field in the response.
+        ///
+        /// NOTE: By default, `filename` cannot be sent in request payloads and can only be sent in responses and multipart
+        /// payloads, as the `Content-Disposition` header is not valid in requests. If you want to send the `filename` in a request,
+        /// you must extend the `File` model and override the `filename` property with a different location defined by HTTP metadata
+        /// decorators.
+        /// </summary>
         public string Filename { get; set; }
         /// <summary>
-        /// Gets the contents
+        /// The contents of the file.
+        ///
+        /// In file bodies, this value comes from the body of the request, response, or multipart payload. In JSON bodies,
+        /// this value is serialized as a field in the response.
         /// <para>
         /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
         /// The byte[] will be serialized to a Base64 encoded string.

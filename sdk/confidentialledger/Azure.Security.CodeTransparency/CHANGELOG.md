@@ -1,5 +1,11 @@
 # Release History
 
+## 1.0.0-beta.4 (2025-05-06)
+
+### Other Changes
+
+- Added `virtual` keyword to method `CodeTransparencyClient.RunTransparentStatementVerification`
+
 ## 1.0.0-beta.3 (2025-03-31)
 
 ### Features Added

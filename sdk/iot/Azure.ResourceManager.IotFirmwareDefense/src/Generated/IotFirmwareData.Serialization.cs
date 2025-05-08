@@ -66,15 +66,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
             if (Optional.IsDefined(FileSize))
             {
-                if (FileSize != null)
-                {
-                    writer.WritePropertyName("fileSize"u8);
-                    writer.WriteNumberValue(FileSize.Value);
-                }
-                else
-                {
-                    writer.WriteNull("fileSize");
-                }
+                writer.WritePropertyName("fileSize"u8);
+                writer.WriteNumberValue(FileSize.Value);
             }
             if (Optional.IsDefined(Status))
             {
@@ -198,7 +191,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                fileSize = null;
                                 continue;
                             }
                             fileSize = property0.Value.GetInt64();

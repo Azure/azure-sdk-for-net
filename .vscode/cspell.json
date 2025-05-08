@@ -250,6 +250,12 @@
       ]
     },
     {
+      "filename": "**/sdk/arizeaiobservabilityeval/**/*.cs",
+      "words": [
+        "Arize"
+      ]
+    },
+    {
       "filename": "**/sdk/avs/**/*.cs",
       "words": [
         "dhcps",
@@ -423,6 +429,12 @@
         "dapr",
         "grpc",
         "proto"
+      ]
+    },
+    {
+      "filename": "**/sdk/containerregistry/**/*",
+      "words": [
+        "Abac"
       ]
     },
     {
@@ -1213,6 +1225,7 @@
       "filename": "**/sdk/recoveryservices-datareplication/**/*.cs",
       "words": [
         "dras",
+        "fqdns",
         "nics",
         "reprotect"
       ]
@@ -1372,7 +1385,8 @@
         "Stdev",
         "Unrestorable",
         "Vcores",
-        "Dtcs"
+        "Dtcs",
+        "Freemium"
       ]
     },
     {
@@ -1554,6 +1568,15 @@
       ]
     },
     {
+      "filename": "**/sdk/workloadssapvirtualinstance/**/*.cs",
+      "words": [
+        "acss",
+        "ascs",
+        "hana",
+        "mbps"
+      ]
+    },
+    {
       "filename": "**/sdk/containerinstance/**/*.cs",
       "words": [
         "Noreuse",
@@ -1622,13 +1645,14 @@
     {
       "filename": "**/sdk/iot/Azure.ResourceManager.IotFirmwareDefense/**/*.cs",
       "words": [
-        "RELRO",
-        "Relro",
         "relro",
-        "Rpath",
         "rpath",
         "runpath",
-        "Cves"
+        "cves",
+        "ocsp",
+        "sbom",
+        "diffie",
+        "iotfirmwaredefense"
       ]
     },
     {

@@ -12,16 +12,16 @@ AgentsClient client = new(connectionString, new DefaultAzureCredential());
 2 Define three toy functions: `GetUserFavoriteCity`that always returns "Seattle, WA" and `GetCityNickname`, which will handle only "Seattle, WA" and will throw exception in response to other city names. The last function `GetWeatherAtLocation` returns weather at Seattle, WA. For each function we need to create `FunctionToolDefinition`, which defines function name, description and parameters.
 ```C# Snippet:FunctionsWithStreaming_DefineFunctionTools
 // Example of a function that defines no parameters
-string GetUserFavoriteCity() => "Seattle, WA";
-FunctionToolDefinition getUserFavoriteCityTool = new("getUserFavoriteCity", "Gets the user's favorite city.");
+private string GetUserFavoriteCity() => "Seattle, WA";
+private FunctionToolDefinition getUserFavoriteCityTool = new("GetUserFavoriteCity", "Gets the user's favorite city.");
 // Example of a function with a single required parameter
-string GetCityNickname(string location) => location switch
+private string GetCityNickname(string location) => location switch
 {
     "Seattle, WA" => "The Emerald City",
     _ => throw new NotImplementedException(),
 };
-FunctionToolDefinition getCityNicknameTool = new(
-    name: "getCityNickname",
+private FunctionToolDefinition getCityNicknameTool = new(
+    name: "GetCityNickname",
     description: "Gets the nickname of a city, e.g. 'LA' for 'Los Angeles, CA'.",
     parameters: BinaryData.FromObjectAsJson(
         new
@@ -39,13 +39,13 @@ FunctionToolDefinition getCityNicknameTool = new(
         },
         new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
 // Example of a function with one required and one optional, enum parameter
-string GetWeatherAtLocation(string location, string temperatureUnit = "f") => location switch
+private string GetWeatherAtLocation(string location, string temperatureUnit = "f") => location switch
 {
     "Seattle, WA" => temperatureUnit == "f" ? "70f" : "21c",
     _ => throw new NotImplementedException()
 };
-FunctionToolDefinition getCurrentWeatherAtLocationTool = new(
-    name: "getCurrentWeatherAtLocation",
+private FunctionToolDefinition getCurrentWeatherAtLocationTool = new(
+    name: "GetWeatherAtLocation",
     description: "Gets the current weather at a provided location.",
     parameters: BinaryData.FromObjectAsJson(
         new
@@ -145,119 +145,92 @@ ThreadMessage message = await client.CreateMessageAsync(
     "What's the weather like in my favorite city?");
 ```
 
-6. Create a stream and wait for the stream update of the `RequiredActionUpdate` type. This update will mark the point, when we need to submit tool outputs to the stream. We will submit outputs in the inner cycle. Please note that `RequiredActionUpdate` keeps only one required action, while our run may require multiple function calls, this case is handled in the inner cycle, so that we can add tool output to the existing array of outputs. After all required actions were submitted we clean up the array of required actions.
+6. Create a stream and wait for the stream update of the `RequiredActionUpdate` type. This update will mark the point, when we need to submit tool outputs to the stream. `RequiredActionUpdate` keeps only one required action, while our run may require multiple function calls, when the last required action has been read, the stream terminates and we start a new stream by submitting tool call results. In the begin of each cycle up the array of required actions.
 
 Synchronous sample:
 ```C# Snippet:FunctionsWithStreamingSyncUpdateCycle
 List<ToolOutput> toolOutputs = [];
 ThreadRun streamRun = null;
-foreach (StreamingUpdate streamingUpdate in client.CreateRunStreaming(thread.Id, agent.Id))
+CollectionResult<StreamingUpdate> stream = client.CreateRunStreaming(thread.Id, agent.Id);
+do
 {
-    if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+    toolOutputs.Clear();
+    foreach (StreamingUpdate streamingUpdate in stream)
     {
-        Console.WriteLine("--- Run started! ---");
-    }
-    else if (streamingUpdate is RequiredActionUpdate submitToolOutputsUpdate)
-    {
-        streamRun = submitToolOutputsUpdate.Value;
-        RequiredActionUpdate newActionUpdate = submitToolOutputsUpdate;
-        while (streamRun.Status == RunStatus.RequiresAction)
+        if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
         {
+            Console.WriteLine("--- Run started! ---");
+        }
+        else if (streamingUpdate is RequiredActionUpdate submitToolOutputsUpdate)
+        {
+            RequiredActionUpdate newActionUpdate = submitToolOutputsUpdate;
             toolOutputs.Add(
                 GetResolvedToolOutput(
                     newActionUpdate.FunctionName,
                     newActionUpdate.ToolCallId,
                     newActionUpdate.FunctionArguments
             ));
-            foreach (StreamingUpdate actionUpdate in client.SubmitToolOutputsToStream(streamRun, toolOutputs))
-            {
-                if (actionUpdate is MessageContentUpdate contentUpdate)
-                {
-                    Console.Write(contentUpdate.Text);
-                }
-                else if (actionUpdate is RequiredActionUpdate newAction)
-                {
-                    newActionUpdate = newAction;
-                    toolOutputs.Add(
-                        GetResolvedToolOutput(
-                            newActionUpdate.FunctionName,
-                            newActionUpdate.ToolCallId,
-                            newActionUpdate.FunctionArguments
-                        )
-                    );
-                }
-                else if (actionUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("--- Run completed! ---");
-                }
-            }
-            streamRun = client.GetRun(thread.Id, streamRun.Id);
-            toolOutputs.Clear();
+            streamRun = submitToolOutputsUpdate.Value;
         }
-        break;
+        else if (streamingUpdate is MessageContentUpdate contentUpdate)
+        {
+            Console.Write(contentUpdate.Text);
+        }
+        else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
+        {
+            Console.WriteLine();
+            Console.WriteLine("--- Run completed! ---");
+        }
     }
-    else if (streamingUpdate is MessageContentUpdate contentUpdate)
+    if (toolOutputs.Count > 0)
     {
-        Console.Write(contentUpdate.Text);
+        stream = client.SubmitToolOutputsToStream(streamRun, toolOutputs);
     }
 }
+while (toolOutputs.Count > 0);
 ```
 
 Asynchronous sample:
 ```C# Snippet:FunctionsWithStreamingUpdateCycle
 List<ToolOutput> toolOutputs = [];
 ThreadRun streamRun = null;
-await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id))
+AsyncCollectionResult<StreamingUpdate> stream = client.CreateRunStreamingAsync(thread.Id, agent.Id);
+do
 {
-    if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+    toolOutputs.Clear();
+    await foreach (StreamingUpdate streamingUpdate in stream)
     {
-        Console.WriteLine("--- Run started! ---");
-    }
-    else if (streamingUpdate is RequiredActionUpdate submitToolOutputsUpdate)
-    {
-        streamRun = submitToolOutputsUpdate.Value;
-        RequiredActionUpdate newActionUpdate = submitToolOutputsUpdate;
-        while (streamRun.Status == RunStatus.RequiresAction) {
+        if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+        {
+            Console.WriteLine("--- Run started! ---");
+        }
+        else if (streamingUpdate is RequiredActionUpdate submitToolOutputsUpdate)
+        {
+            RequiredActionUpdate newActionUpdate = submitToolOutputsUpdate;
             toolOutputs.Add(
                 GetResolvedToolOutput(
                     newActionUpdate.FunctionName,
                     newActionUpdate.ToolCallId,
                     newActionUpdate.FunctionArguments
             ));
-            await foreach (StreamingUpdate actionUpdate in client.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs))
-            {
-                if (actionUpdate is MessageContentUpdate contentUpdate)
-                {
-                    Console.Write(contentUpdate.Text);
-                }
-                else if (actionUpdate is RequiredActionUpdate newAction)
-                {
-                    newActionUpdate = newAction;
-                    toolOutputs.Add(
-                        GetResolvedToolOutput(
-                            newActionUpdate.FunctionName,
-                            newActionUpdate.ToolCallId,
-                            newActionUpdate.FunctionArguments
-                        )
-                    );
-                }
-                else if (actionUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("--- Run completed! ---");
-                }
-            }
-            streamRun = client.GetRun(thread.Id, streamRun.Id);
-            toolOutputs.Clear();
+            streamRun = submitToolOutputsUpdate.Value;
         }
-        break;
+        else if (streamingUpdate is MessageContentUpdate contentUpdate)
+        {
+            Console.Write(contentUpdate.Text);
+        }
+        else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
+        {
+            Console.WriteLine();
+            Console.WriteLine("--- Run completed! ---");
+        }
     }
-    else if (streamingUpdate is MessageContentUpdate contentUpdate)
+    if (toolOutputs.Count > 0)
     {
-        Console.Write(contentUpdate.Text);
+        stream = client.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs);
     }
 }
+while (toolOutputs.Count > 0);
 ```
 
 7. Finally, we delete all the resources, we have created in this sample.
