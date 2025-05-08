@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace MgmtTypeSpec.Models
 {
-    /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
+    /// <summary> Resource. </summary>
     public partial class Resource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

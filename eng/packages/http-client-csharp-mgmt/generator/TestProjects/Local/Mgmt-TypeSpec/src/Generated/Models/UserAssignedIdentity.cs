@@ -22,20 +22,20 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UserAssignedIdentity"/>. </summary>
-        /// <param name="clientId"> The client ID of the assigned identity. </param>
         /// <param name="principalId"> The principal ID of the assigned identity. </param>
+        /// <param name="clientId"> The client ID of the assigned identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserAssignedIdentity(Guid? clientId, Guid? principalId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UserAssignedIdentity(Guid? principalId, Guid? clientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ClientId = clientId;
             PrincipalId = principalId;
+            ClientId = clientId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The client ID of the assigned identity. </summary>
-        public Guid? ClientId { get; }
-
         /// <summary> The principal ID of the assigned identity. </summary>
         public Guid? PrincipalId { get; }
+
+        /// <summary> The client ID of the assigned identity. </summary>
+        public Guid? ClientId { get; }
     }
 }

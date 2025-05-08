@@ -36,15 +36,15 @@ namespace MgmtTypeSpec.Models
             {
                 throw new FormatException($"The model {nameof(UserAssignedIdentity)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(ClientId))
-            {
-                writer.WritePropertyName("clientId"u8);
-                writer.WriteStringValue(ClientId.Value);
-            }
             if (options.Format != "W" && Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ClientId))
+            {
+                writer.WritePropertyName("clientId"u8);
+                writer.WriteStringValue(ClientId.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -88,20 +88,11 @@ namespace MgmtTypeSpec.Models
             {
                 return null;
             }
-            Guid? clientId = default;
             Guid? principalId = default;
+            Guid? clientId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("clientId"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    clientId = new Guid(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("principalId"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -111,12 +102,21 @@ namespace MgmtTypeSpec.Models
                     principalId = new Guid(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("clientId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientId = new Guid(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UserAssignedIdentity(clientId, principalId, additionalBinaryDataProperties);
+            return new UserAssignedIdentity(principalId, clientId, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -65,16 +65,16 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> User assigned identity properties. </summary>
-        /// <param name="clientId"> The client ID of the assigned identity. </param>
         /// <param name="principalId"> The principal ID of the assigned identity. </param>
+        /// <param name="clientId"> The client ID of the assigned identity. </param>
         /// <returns> A new <see cref="Models.UserAssignedIdentity"/> instance for mocking. </returns>
-        public static UserAssignedIdentity UserAssignedIdentity(Guid? clientId = default, Guid? principalId = default)
+        public static UserAssignedIdentity UserAssignedIdentity(Guid? principalId = default, Guid? clientId = default)
         {
 
-            return new UserAssignedIdentity(clientId, principalId, additionalBinaryDataProperties: null);
+            return new UserAssignedIdentity(principalId, clientId, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location. </summary>
+        /// <summary> Proxy Resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -86,7 +86,7 @@ namespace MgmtTypeSpec.Models
             return new ProxyResource(id, name, @type, systemData, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
+        /// <summary> Resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -174,7 +174,7 @@ namespace MgmtTypeSpec.Models
             return new ExtendedLocation(name, @type, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </summary>
+        /// <summary> Tracked Resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

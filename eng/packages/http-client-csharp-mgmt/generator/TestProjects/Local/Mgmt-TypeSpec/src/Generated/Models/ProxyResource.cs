@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace MgmtTypeSpec.Models
 {
-    /// <summary> The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location. </summary>
+    /// <summary> Proxy Resource. </summary>
     public partial class ProxyResource : Resource
     {
         /// <summary> Initializes a new instance of <see cref="ProxyResource"/>. </summary>

@@ -12,7 +12,7 @@ using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
 {
-    /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </summary>
+    /// <summary> Tracked Resource. </summary>
     public partial class TrackedResource : Resource
     {
         /// <summary> Initializes a new instance of <see cref="TrackedResource"/>. </summary>
