@@ -1,6 +1,6 @@
-# Sample using agents with functions in Azure.AI.Agents.
+# Sample using agents with functions in Azure.AI.Agents.Persistent.
 
-In this example we are demonstrating how to use the local functions with the agents. The functions can be used to provide agent specific information in response to user question.
+In this example we are demonstrating how to use the local functions with the agents. The functions can be used to provide agent with specific information in response to user question.
 
 1. First we need to create agent client and read the environment variables that will be used in the next steps.
 ```C# Snippet:AgentsFunctions_CreateClient

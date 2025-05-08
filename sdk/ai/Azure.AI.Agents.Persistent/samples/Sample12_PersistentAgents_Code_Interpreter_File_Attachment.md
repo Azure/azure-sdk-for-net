@@ -1,4 +1,4 @@
-# Sample file search on agent with message attachment and code interpreter in Azure.AI.Agents.
+# Sample file search on agent with message attachment and code interpreter in Azure.AI.Agents.Persistent.
 
 In this example we demonstrate, how to use file search with `MessageAttachment`.
 
@@ -9,7 +9,7 @@ var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLO
 PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 ```
 
-2. We need to create an agent, create and upload file and `ThreadMessage` with the uploaded file ID in the `MessageAttachment`.
+2. We need to create an agent, create and upload file and message with the uploaded file ID in the `MessageAttachment`.
 
 Synchronous sample:
 ```C# Snippet:AgentsCreateAgentWithInterpreterToolSync
@@ -77,7 +77,7 @@ ThreadMessage message = await client.Messages.CreateMessageAsync(
 );
 ```
 
-3. Next we will create a `ThreadRun` and wait until the run is completed. If the run was not successful we will print the last error message.
+3. Next we will create a run and wait until the run is completed. If the run was not successful we will print the last error message.
 
 Synchronous sample:
 ```C# Snippet:AgentsCodeInterpreterFileAttachmentSync_CreateRun
@@ -162,7 +162,7 @@ List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
 WriteMessages(messages);
 ```
 
-6. Finally, we delete all the resources, we have created in this sample.
+6. Finally, delete all the resources, we have created in this sample.
 
 Synchronous sample:
 ```C# Snippet:AgentsCodeInterpreterFileAttachmentSync_Cleanup

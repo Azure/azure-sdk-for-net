@@ -1,4 +1,4 @@
-# Sample file search with agent in Azure.AI.Agents.
+# Sample file search with agent in Azure.AI.Agents.Persistent.
 
 In this example we will create the local file, upload it to the newly created `VectorStore`, which will be used in the file search.
 
@@ -9,7 +9,7 @@ var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLO
 PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 ```
 
-2. Now we will create a file and upload it to the data store.
+2. Create a file and upload it to the data store.
 
 Synchronous sample:
 ```C# Snippet:AgentsUploadAgentFilesToUse_Sync
@@ -41,7 +41,7 @@ Dictionary<string, string> fileIds = new()
 };
 ```
 
-3.  To create agent capable of using file search, we will create `VectorStore`, with the ID of uploaded file.
+3. To create agent capable of using file search, we will create `VectorStore`, with the ID of uploaded file.
 
 Synchronous sample:
 ```C# Snippet:AgentsCreateVectorStore_Sync
@@ -62,7 +62,7 @@ VectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
 ```
 
 
-4  The ID of the created vector store will be used in the `FileSearchToolResource` used for agent creation.
+4  The ID of the created vector store will be used in the `FileSearchToolResource` needed for agent creation.
 
 Synchronous sample:
 ```C# Snippet:AgentsCreateAgentWithFiles_Sync
