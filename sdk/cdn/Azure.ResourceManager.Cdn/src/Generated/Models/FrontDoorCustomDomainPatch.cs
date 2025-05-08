@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="dnsZone"> Resource reference to the Azure DNS zone. </param>
         /// <param name="preValidatedCustomDomainResource"> Resource reference to the Azure resource where custom domain ownership was prevalidated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorCustomDomainPatch(string profileName, FrontDoorCustomDomainHttpsContent tlsSettings, WritableSubResource dnsZone, FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId preValidatedCustomDomainResource, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FrontDoorCustomDomainPatch(string profileName, FrontDoorCustomDomainHttpsContent tlsSettings, WritableSubResource dnsZone, WritableSubResource preValidatedCustomDomainResource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProfileName = profileName;
             TlsSettings = tlsSettings;
@@ -86,15 +86,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource reference to the Azure resource where custom domain ownership was prevalidated. </summary>
-        internal FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId PreValidatedCustomDomainResource { get; set; }
-        /// <summary> Resource ID. </summary>
+        internal WritableSubResource PreValidatedCustomDomainResource { get; set; }
+        /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier PreValidatedCustomDomainResourceId
         {
             get => PreValidatedCustomDomainResource is null ? default : PreValidatedCustomDomainResource.Id;
             set
             {
                 if (PreValidatedCustomDomainResource is null)
-                    PreValidatedCustomDomainResource = new FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId();
+                    PreValidatedCustomDomainResource = new WritableSubResource();
                 PreValidatedCustomDomainResource.Id = value;
             }
         }

@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomerFacingSizeInGB))
+            if (options.Format != "W" && Optional.IsDefined(SizeInGB))
             {
-                writer.WritePropertyName("customerFacingSizeInGB"u8);
-                writer.WriteNumberValue(CustomerFacingSizeInGB.Value);
+                writer.WritePropertyName("sizeInGB"u8);
+                writer.WriteNumberValue(SizeInGB.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 return null;
             }
             string name = default;
-            float? customerFacingSizeInGB = default;
+            float? sizeInGB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,13 +93,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customerFacingSizeInGB"u8))
+                if (property.NameEquals("sizeInGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    customerFacingSizeInGB = property.Value.GetSingle();
+                    sizeInGB = property.Value.GetSingle();
                     continue;
                 }
                 if (options.Format != "W")
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RedisEnterpriseSkuDetails(name, customerFacingSizeInGB, serializedAdditionalRawData);
+            return new RedisEnterpriseSkuDetails(name, sizeInGB, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -145,18 +145,18 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomerFacingSizeInGB), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SizeInGB), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  customerFacingSizeInGB: ");
+                builder.Append("  sizeInGB: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(CustomerFacingSizeInGB))
+                if (Optional.IsDefined(SizeInGB))
                 {
-                    builder.Append("  customerFacingSizeInGB: ");
-                    builder.AppendLine($"'{CustomerFacingSizeInGB.Value.ToString()}'");
+                    builder.Append("  sizeInGB: ");
+                    builder.AppendLine($"'{SizeInGB.Value.ToString()}'");
                 }
             }
 

@@ -49,5 +49,22 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
             Assert.IsInstanceOf<AzureKeyVaultXmlEncryptor>(options.Value.XmlEncryptor);
         }
+
+        [Test]
+        public void ProtectKeysWithAzureKeyVault_WithServiceProviderAndUriFuncs_UsesAzureKeyVaultXmlEncryptor()
+        {
+            // Arrange
+            var client = new KeyClient(new Uri("http://www.example.com/dummyKey"), new MockCredential());
+            var serviceCollection = new ServiceCollection();
+            var builder = serviceCollection.AddDataProtection();
+
+            // Act
+            builder.ProtectKeysWithAzureKeyVault(sp => "http://www.example.com/dummyKey", sp => new DefaultAzureCredential());
+            var services = serviceCollection.BuildServiceProvider();
+
+            // Assert
+            var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
+            Assert.IsInstanceOf<AzureKeyVaultXmlEncryptor>(options.Value.XmlEncryptor);
+        }
     }
 }

@@ -12,7 +12,7 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/c0a12a75b702054cf1e7
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
     # Not support generate samples from customized operations

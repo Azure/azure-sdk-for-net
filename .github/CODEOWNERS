@@ -189,10 +189,10 @@
 # ServiceLabel: %Bot Service
 # ServiceOwners:                                                   @sgellock
 
-# PRLabel: %Cloud Machine
+# PRLabel: %Azure Projects
 /sdk/cloudmachine/                                                 @christothes @KrzysztofCwalina
 
-# ServiceLabel: %Cloud Machine
+# ServiceLabel: %Azure Projects
 # AzureSdkOwners:                                                  @christothes @KrzysztofCwalina
 
 # PRLabel: %Cognitive - Language
@@ -369,10 +369,10 @@
 # ServiceOwners:                                                   @TravisCragg-MSFT @hilaryw29
 
 # PRLabel: %Confidential Ledger
-/sdk/confidentialledger/                                           @christothes @PallabPaul @amruthashree18
+/sdk/confidentialledger/                                           @christothes @PallabPaul @amruthashree18 @andpiccione @ivarprudnikov
 
 # ServiceLabel: %Confidential Ledger
-# ServiceOwners:                                                   @PallabPaul @amruthashree18
+# ServiceOwners:                                                   @PallabPaul @amruthashree18 @andpiccione @ivarprudnikov
 
 # ServiceLabel: %Consumption - Billing
 # ServiceOwners:                                                   @ccmbpxpcrew
@@ -885,6 +885,9 @@
 # ServiceLabel: %Storage
 # ServiceOwners:                                                   @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft @nickliu-msft
 
+# PRLabel: %Storage
+/sdk/storagesync/                                                  @ankushbindlish2 @anpint @jlindamood
+
 # ServiceLabel: %Storsimple
 # ServiceOwners:                                                   @anoobbacker @ganzee @manuaery
 
@@ -997,6 +1000,12 @@
 
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
+
+# PRLabel: %Durable Task Scheduler %Mgmt
+/sdk/durabletask/Azure.ResourceManager.*/                          @berndverst @kaibocai @torosent @RyanLettieri @philliphoff @cgillum
+
+# ServiceLabel: %Durable Task Scheduler  %Mgmt
+# ServiceOwners:                                                   @berndverst @kaibocai @torosent @RyanLettieri @philliphoff @cgillum
 
 # PRLabel: %Elastic
 /sdk/elastic/Azure.ResourceManager.Elastic/                        @ArthurMa1978
@@ -1142,7 +1151,7 @@
 /sdk/servicebus/tests.data.yml                                     @shankarsama @EldertGrootenboer
 
 # Add owners for package dependency changes
-/eng/Packages.Data.props                                           @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @tg-msft @jsquire @m-nash @ArthurMa1978
+/eng/Packages.Data.props                                           @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @tg-msft @jsquire @m-nash @ArthurMa1978 @jorgerangel-msft
 
 # Add owners for emitter version changes
 /eng/http-client-csharp-emitter-package.json                       @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @nisha-bhatia
