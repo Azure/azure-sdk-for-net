@@ -176,36 +176,18 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.AadBasedSecurityPrincipal>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.AadBasedSecurityPrincipal>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ApplicationType : System.IEquatable<Azure.ResourceManager.ConfidentialLedger.Models.ApplicationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ApplicationType(string value) { throw null; }
-        public static Azure.ResourceManager.ConfidentialLedger.Models.ApplicationType CodeTransparency { get { throw null; } }
-        public static Azure.ResourceManager.ConfidentialLedger.Models.ApplicationType ConfidentialLedger { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ConfidentialLedger.Models.ApplicationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ConfidentialLedger.Models.ApplicationType left, Azure.ResourceManager.ConfidentialLedger.Models.ApplicationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ConfidentialLedger.Models.ApplicationType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ConfidentialLedger.Models.ApplicationType left, Azure.ResourceManager.ConfidentialLedger.Models.ApplicationType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public static partial class ArmConfidentialLedgerModelFactory
     {
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackupContent ConfidentialLedgerBackupContent(string restoreRegion = null, System.Uri uri = null) { throw null; }
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackupResult ConfidentialLedgerBackupResult(string message = null) { throw null; }
         public static Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerData ConfidentialLedgerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityResult ConfidentialLedgerNameAvailabilityResult(bool? isNameAvailable = default(bool?), Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameUnavailableReason? reason = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameUnavailableReason?), string message = null) { throw null; }
-        public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProperties ConfidentialLedgerProperties(string ledgerName = null, System.Uri ledgerUri = null, System.Uri identityServiceUri = null, string ledgerInternalNamespace = null, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRunningState? runningState = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRunningState?), Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerType? ledgerType = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerType?), Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState? provisioningState = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState?), Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerSku? ledgerSku = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerSku?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConfidentialLedger.Models.AadBasedSecurityPrincipal> aadBasedSecurityPrincipals = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal> certBasedSecurityPrincipals = null, string hostLevel = null, int? maxBodySizeInMb = default(int?), string subjectName = null, int? nodeCount = default(int?), string writeLBAddressPrefix = null, int? workerThreads = default(int?), Azure.ResourceManager.ConfidentialLedger.Models.EnclavePlatform? enclavePlatform = default(Azure.ResourceManager.ConfidentialLedger.Models.EnclavePlatform?), Azure.ResourceManager.ConfidentialLedger.Models.ApplicationType? applicationType = default(Azure.ResourceManager.ConfidentialLedger.Models.ApplicationType?)) { throw null; }
+        public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProperties ConfidentialLedgerProperties(string ledgerName = null, System.Uri ledgerUri = null, System.Uri identityServiceUri = null, string ledgerInternalNamespace = null, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRunningState? runningState = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRunningState?), Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerType? ledgerType = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerType?), Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState? provisioningState = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState?), Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerSku? ledgerSku = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerSku?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConfidentialLedger.Models.AadBasedSecurityPrincipal> aadBasedSecurityPrincipals = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal> certBasedSecurityPrincipals = null, string hostLevel = null, int? maxBodySizeInMb = default(int?), string subjectName = null, int? nodeCount = default(int?), string writeLBAddressPrefix = null, int? workerThreads = default(int?), Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerEnclavePlatform? enclavePlatform = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerEnclavePlatform?), Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerApplicationType? applicationType = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerApplicationType?)) { throw null; }
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestoreResult ConfidentialLedgerRestoreResult(string message = null) { throw null; }
         public static Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackupContent ManagedCcfBackupContent(string restoreRegion = null, System.Uri uri = null) { throw null; }
         public static Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackupResult ManagedCcfBackupResult(string message = null) { throw null; }
         public static Azure.ResourceManager.ConfidentialLedger.ManagedCcfData ManagedCcfData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfProperties ManagedCcfProperties(string appName = null, System.Uri appUri = null, System.Uri identityServiceUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerMemberIdentityCertificate> memberIdentityCertificates = null, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerDeploymentType deploymentType = null, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRunningState? runningState = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRunningState?), Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState? provisioningState = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState?), int? nodeCount = default(int?), Azure.ResourceManager.ConfidentialLedger.Models.EnclavePlatform? enclavePlatform = default(Azure.ResourceManager.ConfidentialLedger.Models.EnclavePlatform?)) { throw null; }
+        public static Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfProperties ManagedCcfProperties(string appName = null, System.Uri appUri = null, System.Uri identityServiceUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerMemberIdentityCertificate> memberIdentityCertificates = null, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerDeploymentType deploymentType = null, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRunningState? runningState = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRunningState?), Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState? provisioningState = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState?), int? nodeCount = default(int?), Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerEnclavePlatform? enclavePlatform = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerEnclavePlatform?)) { throw null; }
         public static Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestoreResult ManagedCcfRestoreResult(string message = null) { throw null; }
     }
     public partial class CertBasedSecurityPrincipal : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal>
@@ -219,6 +201,24 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ConfidentialLedgerApplicationType : System.IEquatable<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerApplicationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ConfidentialLedgerApplicationType(string value) { throw null; }
+        public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerApplicationType CodeTransparency { get { throw null; } }
+        public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerApplicationType ConfidentialLedger { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerApplicationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerApplicationType left, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerApplicationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerApplicationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerApplicationType left, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerApplicationType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ConfidentialLedgerBackupContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackupContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackupContent>
     {
@@ -254,6 +254,24 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerDeploymentType System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerDeploymentType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerDeploymentType>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerDeploymentType>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ConfidentialLedgerEnclavePlatform : System.IEquatable<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerEnclavePlatform>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ConfidentialLedgerEnclavePlatform(string value) { throw null; }
+        public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerEnclavePlatform AmdSevSnp { get { throw null; } }
+        public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerEnclavePlatform IntelSgx { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerEnclavePlatform other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerEnclavePlatform left, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerEnclavePlatform right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerEnclavePlatform (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerEnclavePlatform left, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerEnclavePlatform right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConfidentialLedgerLanguageRuntime : System.IEquatable<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerLanguageRuntime>
@@ -333,9 +351,9 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     {
         public ConfidentialLedgerProperties() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ConfidentialLedger.Models.AadBasedSecurityPrincipal> AadBasedSecurityPrincipals { get { throw null; } }
-        public Azure.ResourceManager.ConfidentialLedger.Models.ApplicationType? ApplicationType { get { throw null; } set { } }
+        public Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerApplicationType? ApplicationType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal> CertBasedSecurityPrincipals { get { throw null; } }
-        public Azure.ResourceManager.ConfidentialLedger.Models.EnclavePlatform? EnclavePlatform { get { throw null; } set { } }
+        public Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerEnclavePlatform? EnclavePlatform { get { throw null; } set { } }
         public string HostLevel { get { throw null; } set { } }
         public System.Uri IdentityServiceUri { get { throw null; } }
         public string LedgerInternalNamespace { get { throw null; } }
@@ -482,24 +500,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static bool operator !=(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerType left, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EnclavePlatform : System.IEquatable<Azure.ResourceManager.ConfidentialLedger.Models.EnclavePlatform>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EnclavePlatform(string value) { throw null; }
-        public static Azure.ResourceManager.ConfidentialLedger.Models.EnclavePlatform AmdSevSnp { get { throw null; } }
-        public static Azure.ResourceManager.ConfidentialLedger.Models.EnclavePlatform IntelSgx { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ConfidentialLedger.Models.EnclavePlatform other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ConfidentialLedger.Models.EnclavePlatform left, Azure.ResourceManager.ConfidentialLedger.Models.EnclavePlatform right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ConfidentialLedger.Models.EnclavePlatform (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ConfidentialLedger.Models.EnclavePlatform left, Azure.ResourceManager.ConfidentialLedger.Models.EnclavePlatform right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ManagedCcfBackupContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackupContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackupContent>
     {
         public ManagedCcfBackupContent(System.Uri uri) { }
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public string AppName { get { throw null; } }
         public System.Uri AppUri { get { throw null; } }
         public Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerDeploymentType DeploymentType { get { throw null; } set { } }
-        public Azure.ResourceManager.ConfidentialLedger.Models.EnclavePlatform? EnclavePlatform { get { throw null; } set { } }
+        public Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerEnclavePlatform? EnclavePlatform { get { throw null; } set { } }
         public System.Uri IdentityServiceUri { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerMemberIdentityCertificate> MemberIdentityCertificates { get { throw null; } }
         public int? NodeCount { get { throw null; } set { } }

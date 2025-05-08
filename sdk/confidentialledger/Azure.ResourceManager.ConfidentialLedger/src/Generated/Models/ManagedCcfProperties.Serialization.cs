@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             ConfidentialLedgerRunningState? runningState = default;
             ConfidentialLedgerProvisioningState? provisioningState = default;
             int? nodeCount = default;
-            EnclavePlatform? enclavePlatform = default;
+            ConfidentialLedgerEnclavePlatform? enclavePlatform = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     {
                         continue;
                     }
-                    enclavePlatform = new EnclavePlatform(property.Value.GetString());
+                    enclavePlatform = new ConfidentialLedgerEnclavePlatform(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

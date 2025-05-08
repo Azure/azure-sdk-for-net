@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="nodeCount"> Number of CCF nodes in the Managed CCF. </param>
         /// <param name="enclavePlatform"> Enclave platform of Managed CCF. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedCcfProperties(string appName, Uri appUri, Uri identityServiceUri, IList<ConfidentialLedgerMemberIdentityCertificate> memberIdentityCertificates, ConfidentialLedgerDeploymentType deploymentType, ConfidentialLedgerRunningState? runningState, ConfidentialLedgerProvisioningState? provisioningState, int? nodeCount, EnclavePlatform? enclavePlatform, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedCcfProperties(string appName, Uri appUri, Uri identityServiceUri, IList<ConfidentialLedgerMemberIdentityCertificate> memberIdentityCertificates, ConfidentialLedgerDeploymentType deploymentType, ConfidentialLedgerRunningState? runningState, ConfidentialLedgerProvisioningState? provisioningState, int? nodeCount, ConfidentialLedgerEnclavePlatform? enclavePlatform, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AppName = appName;
             AppUri = appUri;
@@ -93,6 +93,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <summary> Number of CCF nodes in the Managed CCF. </summary>
         public int? NodeCount { get; set; }
         /// <summary> Enclave platform of Managed CCF. </summary>
-        public EnclavePlatform? EnclavePlatform { get; set; }
+        public ConfidentialLedgerEnclavePlatform? EnclavePlatform { get; set; }
     }
 }

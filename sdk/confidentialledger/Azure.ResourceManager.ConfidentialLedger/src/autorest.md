@@ -9,7 +9,7 @@ csharp: true
 library-name: ConfidentialLedger
 namespace: Azure.ResourceManager.ConfidentialLedger
 require: https://github.com/Azure/azure-rest-api-specs/blob/96955c9cf1998abe8b24d44a79ea2c5cce9b9c46/specification/confidentialledger/resource-manager/readme.md
-tag: package-preview-2024-09
+#tag: package-preview-2024-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -63,6 +63,8 @@ prepend-rp-prefix:
   - LanguageRuntime
   - RunningState
   - MemberIdentityCertificate
+  - ApplicationType
+  - EnclavePlatform
 
 rename-mapping:
   CheckNameAvailabilityRequest: ConfidentialLedgerNameAvailabilityContent
