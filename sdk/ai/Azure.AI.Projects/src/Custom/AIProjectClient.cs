@@ -12,10 +12,15 @@ namespace Azure.AI.Projects
 {
     // Data plane generated client.
     /// <summary> The AzureAI service client. </summary>
-    public partial class AIProjectClient : ConnectionProvider
+    public partial class AIProjectClient : ClientConnectionProvider
     {
         private readonly ConnectionCacheManager _cacheManager;
         private readonly Connections _connectionsClient;
+
+        /// <summary> Initializes a new instance of AIProjectClient for mocking. </summary>
+        protected AIProjectClient() : base(maxCacheSize: 100)
+        {
+        }
 
         /// <summary> Initializes a new instance of AIProjectClient. </summary>
         /// <param name="endpoint">
@@ -28,6 +33,7 @@ namespace Azure.AI.Projects
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public AIProjectClient(Uri endpoint, TokenCredential credential, AIProjectClientOptions options)
+            : base(options.ClientCacheSize)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
