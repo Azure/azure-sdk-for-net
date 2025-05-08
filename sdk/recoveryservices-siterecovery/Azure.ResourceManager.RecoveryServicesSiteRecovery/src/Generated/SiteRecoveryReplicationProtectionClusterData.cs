@@ -14,10 +14,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A class representing the ReplicationProtectionCluster data model.
+    /// A class representing the SiteRecoveryReplicationProtectionCluster data model.
     /// Replication protection Cluster.
     /// </summary>
-    public partial class ReplicationProtectionClusterData : ResourceData
+    public partial class SiteRecoveryReplicationProtectionClusterData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +51,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ReplicationProtectionClusterData"/>. </summary>
-        public ReplicationProtectionClusterData()
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryReplicationProtectionClusterData"/>. </summary>
+        public SiteRecoveryReplicationProtectionClusterData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReplicationProtectionClusterData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryReplicationProtectionClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The custom data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReplicationProtectionClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReplicationProtectionClusterProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SiteRecoveryReplicationProtectionClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryReplicationProtectionClusterProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The custom data. </summary>
-        public ReplicationProtectionClusterProperties Properties { get; set; }
+        public SiteRecoveryReplicationProtectionClusterProperties Properties { get; set; }
     }
 }

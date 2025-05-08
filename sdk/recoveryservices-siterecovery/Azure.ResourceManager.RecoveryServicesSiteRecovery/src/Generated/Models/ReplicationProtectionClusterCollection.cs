@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of <see cref="ReplicationProtectionClusterCollection"/>. </summary>
         internal ReplicationProtectionClusterCollection()
         {
-            Value = new ChangeTrackingList<ReplicationProtectionClusterData>();
+            Value = new ChangeTrackingList<SiteRecoveryReplicationProtectionClusterData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ReplicationProtectionClusterCollection"/>. </summary>
         /// <param name="value"> The Replication protection cluster details. </param>
         /// <param name="nextLink"> The value of next link. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReplicationProtectionClusterCollection(IReadOnlyList<ReplicationProtectionClusterData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReplicationProtectionClusterCollection(IReadOnlyList<SiteRecoveryReplicationProtectionClusterData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The Replication protection cluster details. </summary>
-        public IReadOnlyList<ReplicationProtectionClusterData> Value { get; }
+        public IReadOnlyList<SiteRecoveryReplicationProtectionClusterData> Value { get; }
         /// <summary> The value of next link. </summary>
         public string NextLink { get; }
     }

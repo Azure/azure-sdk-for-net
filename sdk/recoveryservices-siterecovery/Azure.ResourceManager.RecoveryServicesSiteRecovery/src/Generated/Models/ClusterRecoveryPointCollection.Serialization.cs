@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            IReadOnlyList<ClusterRecoveryPointData> value = default;
+            IReadOnlyList<SiteRecoveryClusterRecoveryPointData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<ClusterRecoveryPointData> array = new List<ClusterRecoveryPointData>();
+                    List<SiteRecoveryClusterRecoveryPointData> array = new List<SiteRecoveryClusterRecoveryPointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterRecoveryPointData.DeserializeClusterRecoveryPointData(item, options));
+                        array.Add(SiteRecoveryClusterRecoveryPointData.DeserializeSiteRecoveryClusterRecoveryPointData(item, options));
                     }
                     value = array;
                     continue;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ClusterRecoveryPointCollection(value ?? new ChangeTrackingList<ClusterRecoveryPointData>(), nextLink, serializedAdditionalRawData);
+            return new ClusterRecoveryPointCollection(value ?? new ChangeTrackingList<SiteRecoveryClusterRecoveryPointData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterRecoveryPointCollection>.Write(ModelReaderWriterOptions options)

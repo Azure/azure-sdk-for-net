@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Replication protection cluster custom data details. </summary>
-    public partial class ReplicationProtectionClusterProperties
+    public partial class SiteRecoveryReplicationProtectionClusterProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ReplicationProtectionClusterProperties"/>. </summary>
-        public ReplicationProtectionClusterProperties()
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryReplicationProtectionClusterProperties"/>. </summary>
+        public SiteRecoveryReplicationProtectionClusterProperties()
         {
             AllowedOperations = new ChangeTrackingList<string>();
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ClusterRegisteredNodes = new ChangeTrackingList<RegisteredClusterNodes>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReplicationProtectionClusterProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryReplicationProtectionClusterProperties"/>. </summary>
         /// <param name="protectionClusterType"> The type of protection cluster type. </param>
         /// <param name="primaryFabricFriendlyName"> The friendly name of the primary fabric. </param>
         /// <param name="primaryFabricProvider"> The fabric provider of the primary fabric. </param>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="sharedDiskProperties"> The shared disk properties. </param>
         /// <param name="policyId"> The Policy Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReplicationProtectionClusterProperties(string protectionClusterType, string primaryFabricFriendlyName, string primaryFabricProvider, string recoveryFabricFriendlyName, ResourceIdentifier recoveryFabricId, string primaryProtectionContainerFriendlyName, string recoveryProtectionContainerFriendlyName, string protectionState, string protectionStateDescription, string activeLocation, string testFailoverState, string testFailoverStateDescription, IList<string> allowedOperations, string replicationHealth, IList<SiteRecoveryHealthError> healthErrors, DateTimeOffset? lastSuccessfulFailoverOn, DateTimeOffset? lastSuccessfulTestFailoverOn, string policyFriendlyName, CurrentScenarioDetails currentScenario, ResourceIdentifier recoveryContainerId, string agentClusterId, string clusterFqdn, IList<string> clusterNodeFqdns, IList<ResourceIdentifier> clusterProtectedItemIds, string provisioningState, bool? areAllClusterNodesRegistered, IList<RegisteredClusterNodes> clusterRegisteredNodes, ReplicationClusterProviderSpecificSettings providerSpecificDetails, SharedDiskReplicationItemProperties sharedDiskProperties, ResourceIdentifier policyId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SiteRecoveryReplicationProtectionClusterProperties(string protectionClusterType, string primaryFabricFriendlyName, string primaryFabricProvider, string recoveryFabricFriendlyName, ResourceIdentifier recoveryFabricId, string primaryProtectionContainerFriendlyName, string recoveryProtectionContainerFriendlyName, string protectionState, string protectionStateDescription, string activeLocation, string testFailoverState, string testFailoverStateDescription, IList<string> allowedOperations, string replicationHealth, IList<SiteRecoveryHealthError> healthErrors, DateTimeOffset? lastSuccessfulFailoverOn, DateTimeOffset? lastSuccessfulTestFailoverOn, string policyFriendlyName, CurrentScenarioDetails currentScenario, ResourceIdentifier recoveryContainerId, string agentClusterId, string clusterFqdn, IList<string> clusterNodeFqdns, IList<ResourceIdentifier> clusterProtectedItemIds, string provisioningState, bool? areAllClusterNodesRegistered, IList<RegisteredClusterNodes> clusterRegisteredNodes, ReplicationClusterProviderSpecificSettings providerSpecificDetails, SharedDiskReplicationItemProperties sharedDiskProperties, ResourceIdentifier policyId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProtectionClusterType = protectionClusterType;
             PrimaryFabricFriendlyName = primaryFabricFriendlyName;

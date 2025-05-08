@@ -782,16 +782,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryComputeSizeErrorDetails(message, severity, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.ReplicationProtectionClusterData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryReplicationProtectionClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The custom data. </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.ReplicationProtectionClusterData"/> instance for mocking. </returns>
-        public static ReplicationProtectionClusterData ReplicationProtectionClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ReplicationProtectionClusterProperties properties = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryReplicationProtectionClusterData"/> instance for mocking. </returns>
+        public static SiteRecoveryReplicationProtectionClusterData SiteRecoveryReplicationProtectionClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteRecoveryReplicationProtectionClusterProperties properties = null)
         {
-            return new ReplicationProtectionClusterData(
+            return new SiteRecoveryReplicationProtectionClusterData(
                 id,
                 name,
                 resourceType,
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ReplicationProtectionClusterProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryReplicationProtectionClusterProperties"/>. </summary>
         /// <param name="protectionClusterType"> The type of protection cluster type. </param>
         /// <param name="primaryFabricFriendlyName"> The friendly name of the primary fabric. </param>
         /// <param name="primaryFabricProvider"> The fabric provider of the primary fabric. </param>
@@ -835,8 +835,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// </param>
         /// <param name="sharedDiskProperties"> The shared disk properties. </param>
         /// <param name="policyId"> The Policy Id. </param>
-        /// <returns> A new <see cref="Models.ReplicationProtectionClusterProperties"/> instance for mocking. </returns>
-        public static ReplicationProtectionClusterProperties ReplicationProtectionClusterProperties(string protectionClusterType = null, string primaryFabricFriendlyName = null, string primaryFabricProvider = null, string recoveryFabricFriendlyName = null, ResourceIdentifier recoveryFabricId = null, string primaryProtectionContainerFriendlyName = null, string recoveryProtectionContainerFriendlyName = null, string protectionState = null, string protectionStateDescription = null, string activeLocation = null, string testFailoverState = null, string testFailoverStateDescription = null, IEnumerable<string> allowedOperations = null, string replicationHealth = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, DateTimeOffset? lastSuccessfulFailoverOn = null, DateTimeOffset? lastSuccessfulTestFailoverOn = null, string policyFriendlyName = null, CurrentScenarioDetails currentScenario = null, ResourceIdentifier recoveryContainerId = null, string agentClusterId = null, string clusterFqdn = null, IEnumerable<string> clusterNodeFqdns = null, IEnumerable<ResourceIdentifier> clusterProtectedItemIds = null, string provisioningState = null, bool? areAllClusterNodesRegistered = null, IEnumerable<RegisteredClusterNodes> clusterRegisteredNodes = null, ReplicationClusterProviderSpecificSettings providerSpecificDetails = null, SharedDiskReplicationItemProperties sharedDiskProperties = null, ResourceIdentifier policyId = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryReplicationProtectionClusterProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryReplicationProtectionClusterProperties SiteRecoveryReplicationProtectionClusterProperties(string protectionClusterType = null, string primaryFabricFriendlyName = null, string primaryFabricProvider = null, string recoveryFabricFriendlyName = null, ResourceIdentifier recoveryFabricId = null, string primaryProtectionContainerFriendlyName = null, string recoveryProtectionContainerFriendlyName = null, string protectionState = null, string protectionStateDescription = null, string activeLocation = null, string testFailoverState = null, string testFailoverStateDescription = null, IEnumerable<string> allowedOperations = null, string replicationHealth = null, IEnumerable<SiteRecoveryHealthError> healthErrors = null, DateTimeOffset? lastSuccessfulFailoverOn = null, DateTimeOffset? lastSuccessfulTestFailoverOn = null, string policyFriendlyName = null, CurrentScenarioDetails currentScenario = null, ResourceIdentifier recoveryContainerId = null, string agentClusterId = null, string clusterFqdn = null, IEnumerable<string> clusterNodeFqdns = null, IEnumerable<ResourceIdentifier> clusterProtectedItemIds = null, string provisioningState = null, bool? areAllClusterNodesRegistered = null, IEnumerable<RegisteredClusterNodes> clusterRegisteredNodes = null, ReplicationClusterProviderSpecificSettings providerSpecificDetails = null, SharedDiskReplicationItemProperties sharedDiskProperties = null, ResourceIdentifier policyId = null)
         {
             allowedOperations ??= new List<string>();
             healthErrors ??= new List<SiteRecoveryHealthError>();
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             clusterProtectedItemIds ??= new List<ResourceIdentifier>();
             clusterRegisteredNodes ??= new List<RegisteredClusterNodes>();
 
-            return new ReplicationProtectionClusterProperties(
+            return new SiteRecoveryReplicationProtectionClusterProperties(
                 protectionClusterType,
                 primaryFabricFriendlyName,
                 primaryFabricProvider,
@@ -894,17 +894,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ApplyClusterRecoveryPointContentProperties(clusterRecoveryPointId, individualNodeRecoveryPoints?.ToList(), providerSpecificDetails, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.ClusterRecoveryPointData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryClusterRecoveryPointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="clusterRecoveryPointType"> The resource type. </param>
         /// <param name="properties"> The recovery point properties. </param>
-        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.ClusterRecoveryPointData"/> instance for mocking. </returns>
-        public static ClusterRecoveryPointData ClusterRecoveryPointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string clusterRecoveryPointType = null, ClusterRecoveryPointProperties properties = null)
+        /// <returns> A new <see cref="RecoveryServicesSiteRecovery.SiteRecoveryClusterRecoveryPointData"/> instance for mocking. </returns>
+        public static SiteRecoveryClusterRecoveryPointData SiteRecoveryClusterRecoveryPointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string clusterRecoveryPointType = null, SiteRecoveryClusterRecoveryPointProperties properties = null)
         {
-            return new ClusterRecoveryPointData(
+            return new SiteRecoveryClusterRecoveryPointData(
                 id,
                 name,
                 resourceType,
@@ -914,7 +914,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ClusterRecoveryPointProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryClusterRecoveryPointProperties"/>. </summary>
         /// <param name="recoveryPointOn"> The recovery point time. </param>
         /// <param name="recoveryPointType"> The recovery point type. </param>
         /// <param name="providerSpecificDetails">
@@ -922,10 +922,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Please note <see cref="ClusterProviderSpecificRecoveryPointDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.A2AClusterRecoveryPointDetails"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.ClusterRecoveryPointProperties"/> instance for mocking. </returns>
-        public static ClusterRecoveryPointProperties ClusterRecoveryPointProperties(DateTimeOffset? recoveryPointOn = null, ClusterRecoveryPointType? recoveryPointType = null, ClusterProviderSpecificRecoveryPointDetails providerSpecificDetails = null)
+        /// <returns> A new <see cref="Models.SiteRecoveryClusterRecoveryPointProperties"/> instance for mocking. </returns>
+        public static SiteRecoveryClusterRecoveryPointProperties SiteRecoveryClusterRecoveryPointProperties(DateTimeOffset? recoveryPointOn = null, ClusterRecoveryPointType? recoveryPointType = null, ClusterProviderSpecificRecoveryPointDetails providerSpecificDetails = null)
         {
-            return new ClusterRecoveryPointProperties(recoveryPointOn, recoveryPointType, providerSpecificDetails, serializedAdditionalRawData: null);
+            return new SiteRecoveryClusterRecoveryPointProperties(recoveryPointOn, recoveryPointType, providerSpecificDetails, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.ProtectionContainerMappingData"/>. </summary>

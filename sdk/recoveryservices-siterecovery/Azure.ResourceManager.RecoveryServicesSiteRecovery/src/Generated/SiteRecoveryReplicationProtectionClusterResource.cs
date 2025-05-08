@@ -16,14 +16,14 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A Class representing a ReplicationProtectionClusterResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ReplicationProtectionClusterResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetReplicationProtectionClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryProtectionContainerResource"/> using the GetReplicationProtectionClusterResource method.
+    /// A Class representing a SiteRecoveryReplicationProtectionClusterResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteRecoveryReplicationProtectionClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteRecoveryReplicationProtectionClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryProtectionContainerResource"/> using the GetSiteRecoveryReplicationProtectionClusterResource method.
     /// </summary>
-    public partial class ReplicationProtectionClusterResource : ArmResource
+    public partial class SiteRecoveryReplicationProtectionClusterResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ReplicationProtectionClusterResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="SiteRecoveryReplicationProtectionClusterResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="resourceName"> The resourceName. </param>
@@ -36,35 +36,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics;
-        private readonly ReplicationProtectionClustersRestOperations _replicationProtectionClusterResourceReplicationProtectionClustersRestClient;
-        private readonly ReplicationProtectionClusterData _data;
+        private readonly ClientDiagnostics _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics;
+        private readonly ReplicationProtectionClustersRestOperations _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient;
+        private readonly SiteRecoveryReplicationProtectionClusterData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectionClusters";
 
-        /// <summary> Initializes a new instance of the <see cref="ReplicationProtectionClusterResource"/> class for mocking. </summary>
-        protected ReplicationProtectionClusterResource()
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryReplicationProtectionClusterResource"/> class for mocking. </summary>
+        protected SiteRecoveryReplicationProtectionClusterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ReplicationProtectionClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryReplicationProtectionClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ReplicationProtectionClusterResource(ArmClient client, ReplicationProtectionClusterData data) : this(client, data.Id)
+        internal SiteRecoveryReplicationProtectionClusterResource(ArmClient client, SiteRecoveryReplicationProtectionClusterData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ReplicationProtectionClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryReplicationProtectionClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ReplicationProtectionClusterResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SiteRecoveryReplicationProtectionClusterResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string replicationProtectionClusterResourceReplicationProtectionClustersApiVersion);
-            _replicationProtectionClusterResourceReplicationProtectionClustersRestClient = new ReplicationProtectionClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, replicationProtectionClusterResourceReplicationProtectionClustersApiVersion);
+            _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersApiVersion);
+            _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient = new ReplicationProtectionClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ReplicationProtectionClusterData Data
+        public virtual SiteRecoveryReplicationProtectionClusterData Data
         {
             get
             {
@@ -91,78 +91,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ReplicationProtectionClusterOperationResultResources in the ReplicationProtectionClusterResource. </summary>
-        /// <returns> An object representing collection of ReplicationProtectionClusterOperationResultResources and their operations over a ReplicationProtectionClusterOperationResultResource. </returns>
-        public virtual ReplicationProtectionClusterOperationResultResourceCollection GetReplicationProtectionClusterOperationResultResources()
+        /// <summary> Gets a collection of SiteRecoveryClusterRecoveryPointResources in the SiteRecoveryReplicationProtectionClusterResource. </summary>
+        /// <returns> An object representing collection of SiteRecoveryClusterRecoveryPointResources and their operations over a SiteRecoveryClusterRecoveryPointResource. </returns>
+        public virtual SiteRecoveryClusterRecoveryPointCollection GetSiteRecoveryClusterRecoveryPoints()
         {
-            return GetCachedClient(client => new ReplicationProtectionClusterOperationResultResourceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Track the results of an asynchronous operation on the replication protection cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionClusters/{replicationProtectionClusterName}/operationResults/{jobId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionClusters_GetOperationResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectionClusterOperationResultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobId"> job id to track. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ReplicationProtectionClusterOperationResultResource>> GetReplicationProtectionClusterOperationResultResourceAsync(ResourceIdentifier jobId, CancellationToken cancellationToken = default)
-        {
-            return await GetReplicationProtectionClusterOperationResultResources().GetAsync(jobId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Track the results of an asynchronous operation on the replication protection cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionClusters/{replicationProtectionClusterName}/operationResults/{jobId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionClusters_GetOperationResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectionClusterOperationResultResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobId"> job id to track. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ReplicationProtectionClusterOperationResultResource> GetReplicationProtectionClusterOperationResultResource(ResourceIdentifier jobId, CancellationToken cancellationToken = default)
-        {
-            return GetReplicationProtectionClusterOperationResultResources().Get(jobId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ClusterRecoveryPointResources in the ReplicationProtectionClusterResource. </summary>
-        /// <returns> An object representing collection of ClusterRecoveryPointResources and their operations over a ClusterRecoveryPointResource. </returns>
-        public virtual ClusterRecoveryPointCollection GetClusterRecoveryPoints()
-        {
-            return GetCachedClient(client => new ClusterRecoveryPointCollection(client, Id));
+            return GetCachedClient(client => new SiteRecoveryClusterRecoveryPointCollection(client, Id));
         }
 
         /// <summary>
@@ -182,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ClusterRecoveryPointResource"/></description>
+        /// <description><see cref="SiteRecoveryClusterRecoveryPointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -191,9 +124,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ClusterRecoveryPointResource>> GetClusterRecoveryPointAsync(string recoveryPointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteRecoveryClusterRecoveryPointResource>> GetSiteRecoveryClusterRecoveryPointAsync(string recoveryPointName, CancellationToken cancellationToken = default)
         {
-            return await GetClusterRecoveryPoints().GetAsync(recoveryPointName, cancellationToken).ConfigureAwait(false);
+            return await GetSiteRecoveryClusterRecoveryPoints().GetAsync(recoveryPointName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -213,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ClusterRecoveryPointResource"/></description>
+        /// <description><see cref="SiteRecoveryClusterRecoveryPointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,9 +155,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ClusterRecoveryPointResource> GetClusterRecoveryPoint(string recoveryPointName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteRecoveryClusterRecoveryPointResource> GetSiteRecoveryClusterRecoveryPoint(string recoveryPointName, CancellationToken cancellationToken = default)
         {
-            return GetClusterRecoveryPoints().Get(recoveryPointName, cancellationToken);
+            return GetSiteRecoveryClusterRecoveryPoints().Get(recoveryPointName, cancellationToken);
         }
 
         /// <summary>
@@ -244,21 +177,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectionClusterResource"/></description>
+        /// <description><see cref="SiteRecoveryReplicationProtectionClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReplicationProtectionClusterResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteRecoveryReplicationProtectionClusterResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("ReplicationProtectionClusterResource.Get");
+            using var scope = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("SiteRecoveryReplicationProtectionClusterResource.Get");
             scope.Start();
             try
             {
-                var response = await _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReplicationProtectionClusterResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryReplicationProtectionClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -284,21 +217,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectionClusterResource"/></description>
+        /// <description><see cref="SiteRecoveryReplicationProtectionClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReplicationProtectionClusterResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SiteRecoveryReplicationProtectionClusterResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("ReplicationProtectionClusterResource.Get");
+            using var scope = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("SiteRecoveryReplicationProtectionClusterResource.Get");
             scope.Start();
             try
             {
-                var response = _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReplicationProtectionClusterResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryReplicationProtectionClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -324,7 +257,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectionClusterResource"/></description>
+        /// <description><see cref="SiteRecoveryReplicationProtectionClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,12 +265,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("ReplicationProtectionClusterResource.Delete");
+            using var scope = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("SiteRecoveryReplicationProtectionClusterResource.Delete");
             scope.Start();
             try
             {
-                var response = await _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.PurgeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation(_replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreatePurgeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.PurgeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation(_siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreatePurgeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -366,7 +299,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectionClusterResource"/></description>
+        /// <description><see cref="SiteRecoveryReplicationProtectionClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -374,12 +307,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("ReplicationProtectionClusterResource.Delete");
+            using var scope = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("SiteRecoveryReplicationProtectionClusterResource.Delete");
             scope.Start();
             try
             {
-                var response = _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.Purge(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation(_replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreatePurgeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.Purge(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation(_siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreatePurgeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -408,7 +341,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectionClusterResource"/></description>
+        /// <description><see cref="SiteRecoveryReplicationProtectionClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -416,16 +349,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="data"> Create replication protection cluster Input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ReplicationProtectionClusterResource>> UpdateAsync(WaitUntil waitUntil, ReplicationProtectionClusterData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteRecoveryReplicationProtectionClusterResource>> UpdateAsync(WaitUntil waitUntil, SiteRecoveryReplicationProtectionClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("ReplicationProtectionClusterResource.Update");
+            using var scope = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("SiteRecoveryReplicationProtectionClusterResource.Update");
             scope.Start();
             try
             {
-                var response = await _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionClusterResource>(new ReplicationProtectionClusterResourceOperationSource(Client), _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client), _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -454,7 +387,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectionClusterResource"/></description>
+        /// <description><see cref="SiteRecoveryReplicationProtectionClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -462,16 +395,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="data"> Create replication protection cluster Input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ReplicationProtectionClusterResource> Update(WaitUntil waitUntil, ReplicationProtectionClusterData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteRecoveryReplicationProtectionClusterResource> Update(WaitUntil waitUntil, SiteRecoveryReplicationProtectionClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("ReplicationProtectionClusterResource.Update");
+            using var scope = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("SiteRecoveryReplicationProtectionClusterResource.Update");
             scope.Start();
             try
             {
-                var response = _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionClusterResource>(new ReplicationProtectionClusterResourceOperationSource(Client), _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client), _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -500,7 +433,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectionClusterResource"/></description>
+        /// <description><see cref="SiteRecoveryReplicationProtectionClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -508,16 +441,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> Apply recovery point input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ReplicationProtectionClusterResource>> ApplyRecoveryPointAsync(WaitUntil waitUntil, ApplyClusterRecoveryPointContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteRecoveryReplicationProtectionClusterResource>> ApplyRecoveryPointAsync(WaitUntil waitUntil, ApplyClusterRecoveryPointContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("ReplicationProtectionClusterResource.ApplyRecoveryPoint");
+            using var scope = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("SiteRecoveryReplicationProtectionClusterResource.ApplyRecoveryPoint");
             scope.Start();
             try
             {
-                var response = await _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.ApplyRecoveryPointAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionClusterResource>(new ReplicationProtectionClusterResourceOperationSource(Client), _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateApplyRecoveryPointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.ApplyRecoveryPointAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client), _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateApplyRecoveryPointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -546,7 +479,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectionClusterResource"/></description>
+        /// <description><see cref="SiteRecoveryReplicationProtectionClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -554,16 +487,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> Apply recovery point input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ReplicationProtectionClusterResource> ApplyRecoveryPoint(WaitUntil waitUntil, ApplyClusterRecoveryPointContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteRecoveryReplicationProtectionClusterResource> ApplyRecoveryPoint(WaitUntil waitUntil, ApplyClusterRecoveryPointContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("ReplicationProtectionClusterResource.ApplyRecoveryPoint");
+            using var scope = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("SiteRecoveryReplicationProtectionClusterResource.ApplyRecoveryPoint");
             scope.Start();
             try
             {
-                var response = _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.ApplyRecoveryPoint(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionClusterResource>(new ReplicationProtectionClusterResourceOperationSource(Client), _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateApplyRecoveryPointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.ApplyRecoveryPoint(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client), _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateApplyRecoveryPointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -592,20 +525,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectionClusterResource"/></description>
+        /// <description><see cref="SiteRecoveryReplicationProtectionClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<ReplicationProtectionClusterResource>> FailoverCommitAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteRecoveryReplicationProtectionClusterResource>> FailoverCommitAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("ReplicationProtectionClusterResource.FailoverCommit");
+            using var scope = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("SiteRecoveryReplicationProtectionClusterResource.FailoverCommit");
             scope.Start();
             try
             {
-                var response = await _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.FailoverCommitAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionClusterResource>(new ReplicationProtectionClusterResourceOperationSource(Client), _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateFailoverCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.FailoverCommitAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client), _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateFailoverCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -634,20 +567,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectionClusterResource"/></description>
+        /// <description><see cref="SiteRecoveryReplicationProtectionClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<ReplicationProtectionClusterResource> FailoverCommit(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteRecoveryReplicationProtectionClusterResource> FailoverCommit(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("ReplicationProtectionClusterResource.FailoverCommit");
+            using var scope = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("SiteRecoveryReplicationProtectionClusterResource.FailoverCommit");
             scope.Start();
             try
             {
-                var response = _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.FailoverCommit(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionClusterResource>(new ReplicationProtectionClusterResourceOperationSource(Client), _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateFailoverCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.FailoverCommit(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client), _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateFailoverCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -676,20 +609,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectionClusterResource"/></description>
+        /// <description><see cref="SiteRecoveryReplicationProtectionClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<ReplicationProtectionClusterResource>> RepairReplicationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteRecoveryReplicationProtectionClusterResource>> RepairReplicationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("ReplicationProtectionClusterResource.RepairReplication");
+            using var scope = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("SiteRecoveryReplicationProtectionClusterResource.RepairReplication");
             scope.Start();
             try
             {
-                var response = await _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.RepairReplicationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionClusterResource>(new ReplicationProtectionClusterResourceOperationSource(Client), _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateRepairReplicationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.RepairReplicationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client), _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateRepairReplicationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -718,20 +651,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectionClusterResource"/></description>
+        /// <description><see cref="SiteRecoveryReplicationProtectionClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<ReplicationProtectionClusterResource> RepairReplication(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteRecoveryReplicationProtectionClusterResource> RepairReplication(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("ReplicationProtectionClusterResource.RepairReplication");
+            using var scope = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("SiteRecoveryReplicationProtectionClusterResource.RepairReplication");
             scope.Start();
             try
             {
-                var response = _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.RepairReplication(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionClusterResource>(new ReplicationProtectionClusterResourceOperationSource(Client), _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateRepairReplicationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.RepairReplication(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client), _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateRepairReplicationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -760,7 +693,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectionClusterResource"/></description>
+        /// <description><see cref="SiteRecoveryReplicationProtectionClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -768,16 +701,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> Cluster test failover input body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ReplicationProtectionClusterResource>> TestFailoverAsync(WaitUntil waitUntil, ClusterTestFailoverContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteRecoveryReplicationProtectionClusterResource>> TestFailoverAsync(WaitUntil waitUntil, ClusterTestFailoverContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("ReplicationProtectionClusterResource.TestFailover");
+            using var scope = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("SiteRecoveryReplicationProtectionClusterResource.TestFailover");
             scope.Start();
             try
             {
-                var response = await _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.TestFailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionClusterResource>(new ReplicationProtectionClusterResourceOperationSource(Client), _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateTestFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.TestFailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client), _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateTestFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -806,7 +739,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectionClusterResource"/></description>
+        /// <description><see cref="SiteRecoveryReplicationProtectionClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -814,16 +747,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> Cluster test failover input body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ReplicationProtectionClusterResource> TestFailover(WaitUntil waitUntil, ClusterTestFailoverContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteRecoveryReplicationProtectionClusterResource> TestFailover(WaitUntil waitUntil, ClusterTestFailoverContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("ReplicationProtectionClusterResource.TestFailover");
+            using var scope = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("SiteRecoveryReplicationProtectionClusterResource.TestFailover");
             scope.Start();
             try
             {
-                var response = _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.TestFailover(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionClusterResource>(new ReplicationProtectionClusterResourceOperationSource(Client), _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateTestFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.TestFailover(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client), _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateTestFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -852,7 +785,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectionClusterResource"/></description>
+        /// <description><see cref="SiteRecoveryReplicationProtectionClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -860,16 +793,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> Test failover cleanup input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ReplicationProtectionClusterResource>> TestFailoverCleanupAsync(WaitUntil waitUntil, ClusterTestFailoverCleanupContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteRecoveryReplicationProtectionClusterResource>> TestFailoverCleanupAsync(WaitUntil waitUntil, ClusterTestFailoverCleanupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("ReplicationProtectionClusterResource.TestFailoverCleanup");
+            using var scope = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("SiteRecoveryReplicationProtectionClusterResource.TestFailoverCleanup");
             scope.Start();
             try
             {
-                var response = await _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.TestFailoverCleanupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionClusterResource>(new ReplicationProtectionClusterResourceOperationSource(Client), _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateTestFailoverCleanupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.TestFailoverCleanupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client), _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateTestFailoverCleanupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -898,7 +831,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectionClusterResource"/></description>
+        /// <description><see cref="SiteRecoveryReplicationProtectionClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -906,16 +839,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> Test failover cleanup input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ReplicationProtectionClusterResource> TestFailoverCleanup(WaitUntil waitUntil, ClusterTestFailoverCleanupContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteRecoveryReplicationProtectionClusterResource> TestFailoverCleanup(WaitUntil waitUntil, ClusterTestFailoverCleanupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("ReplicationProtectionClusterResource.TestFailoverCleanup");
+            using var scope = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("SiteRecoveryReplicationProtectionClusterResource.TestFailoverCleanup");
             scope.Start();
             try
             {
-                var response = _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.TestFailoverCleanup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionClusterResource>(new ReplicationProtectionClusterResourceOperationSource(Client), _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateTestFailoverCleanupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.TestFailoverCleanup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client), _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateTestFailoverCleanupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -944,7 +877,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectionClusterResource"/></description>
+        /// <description><see cref="SiteRecoveryReplicationProtectionClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -952,16 +885,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> Failover input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ReplicationProtectionClusterResource>> UnplannedFailoverAsync(WaitUntil waitUntil, ClusterUnplannedFailoverContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteRecoveryReplicationProtectionClusterResource>> UnplannedFailoverAsync(WaitUntil waitUntil, ClusterUnplannedFailoverContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("ReplicationProtectionClusterResource.UnplannedFailover");
+            using var scope = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("SiteRecoveryReplicationProtectionClusterResource.UnplannedFailover");
             scope.Start();
             try
             {
-                var response = await _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.UnplannedFailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionClusterResource>(new ReplicationProtectionClusterResourceOperationSource(Client), _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateUnplannedFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.UnplannedFailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client), _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateUnplannedFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -990,7 +923,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectionClusterResource"/></description>
+        /// <description><see cref="SiteRecoveryReplicationProtectionClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -998,16 +931,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> Failover input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ReplicationProtectionClusterResource> UnplannedFailover(WaitUntil waitUntil, ClusterUnplannedFailoverContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteRecoveryReplicationProtectionClusterResource> UnplannedFailover(WaitUntil waitUntil, ClusterUnplannedFailoverContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("ReplicationProtectionClusterResource.UnplannedFailover");
+            using var scope = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics.CreateScope("SiteRecoveryReplicationProtectionClusterResource.UnplannedFailover");
             scope.Start();
             try
             {
-                var response = _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.UnplannedFailover(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionClusterResource>(new ReplicationProtectionClusterResourceOperationSource(Client), _replicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _replicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateUnplannedFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.UnplannedFailover(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client), _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersClientDiagnostics, Pipeline, _siteRecoveryReplicationProtectionClusterResourceReplicationProtectionClustersRestClient.CreateUnplannedFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -15,11 +15,11 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    public partial class ClusterRecoveryPointData : IUtf8JsonSerializable, IJsonModel<ClusterRecoveryPointData>
+    public partial class SiteRecoveryClusterRecoveryPointData : IUtf8JsonSerializable, IJsonModel<SiteRecoveryClusterRecoveryPointData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterRecoveryPointData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryClusterRecoveryPointData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ClusterRecoveryPointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SiteRecoveryClusterRecoveryPointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterRecoveryPointData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryClusterRecoveryPointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterRecoveryPointData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryClusterRecoveryPointData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
-        ClusterRecoveryPointData IJsonModel<ClusterRecoveryPointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SiteRecoveryClusterRecoveryPointData IJsonModel<SiteRecoveryClusterRecoveryPointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterRecoveryPointData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryClusterRecoveryPointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterRecoveryPointData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryClusterRecoveryPointData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClusterRecoveryPointData(document.RootElement, options);
+            return DeserializeSiteRecoveryClusterRecoveryPointData(document.RootElement, options);
         }
 
-        internal static ClusterRecoveryPointData DeserializeClusterRecoveryPointData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SiteRecoveryClusterRecoveryPointData DeserializeSiteRecoveryClusterRecoveryPointData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 return null;
             }
             string type = default;
-            ClusterRecoveryPointProperties properties = default;
+            SiteRecoveryClusterRecoveryPointProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type0 = default;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                     {
                         continue;
                     }
-                    properties = ClusterRecoveryPointProperties.DeserializeClusterRecoveryPointProperties(property.Value, options);
+                    properties = SiteRecoveryClusterRecoveryPointProperties.DeserializeSiteRecoveryClusterRecoveryPointProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ClusterRecoveryPointData(
+            return new SiteRecoveryClusterRecoveryPointData(
                 id,
                 name,
                 type0,
@@ -133,35 +133,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ClusterRecoveryPointData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SiteRecoveryClusterRecoveryPointData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterRecoveryPointData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryClusterRecoveryPointData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterRecoveryPointData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryClusterRecoveryPointData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ClusterRecoveryPointData IPersistableModel<ClusterRecoveryPointData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SiteRecoveryClusterRecoveryPointData IPersistableModel<SiteRecoveryClusterRecoveryPointData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterRecoveryPointData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryClusterRecoveryPointData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeClusterRecoveryPointData(document.RootElement, options);
+                        return DeserializeSiteRecoveryClusterRecoveryPointData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterRecoveryPointData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryClusterRecoveryPointData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ClusterRecoveryPointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SiteRecoveryClusterRecoveryPointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetReplicationProtectionClusters_GetsTheListOfReplicationProtectionClustersInVault()
+        public async Task GetSiteRecoveryReplicationProtectionClusterResources_GetsTheListOfReplicationProtectionClustersInVault()
         {
             // Generated from example definition: specification/recoveryservicessiterecovery/resource-manager/Microsoft.RecoveryServices/stable/2025-01-01/examples/ReplicationProtectionClusters_List.json
             // this example is just showing the usage of "ReplicationProtectionClusters_List" operation, for the dependent resources, they will have to be created separately.
@@ -233,10 +233,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // invoke the operation and iterate over the result
             string resourceName = "vault1";
             string filter = "SourceFabricName eq 'asr-a2a-default-eastus' and SourceFabricLocation eq 'East US' and InstanceType eq 'A2A'";
-            await foreach (ReplicationProtectionClusterData item in resourceGroupResource.GetReplicationProtectionClustersAsync(resourceName, filter: filter))
+            await foreach (SiteRecoveryReplicationProtectionClusterResource item in resourceGroupResource.GetSiteRecoveryReplicationProtectionClusterResourcesAsync(resourceName, filter: filter))
             {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SiteRecoveryReplicationProtectionClusterData resourceData = item.Data;
                 // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {item.Id}");
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
             Console.WriteLine("Succeeded");

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ReplicationProtectionClusterProperties : IUtf8JsonSerializable, IJsonModel<ReplicationProtectionClusterProperties>
+    public partial class SiteRecoveryReplicationProtectionClusterProperties : IUtf8JsonSerializable, IJsonModel<SiteRecoveryReplicationProtectionClusterProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicationProtectionClusterProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryReplicationProtectionClusterProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ReplicationProtectionClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SiteRecoveryReplicationProtectionClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicationProtectionClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryReplicationProtectionClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicationProtectionClusterProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryReplicationProtectionClusterProperties)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(ProtectionClusterType))
@@ -231,19 +231,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        ReplicationProtectionClusterProperties IJsonModel<ReplicationProtectionClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SiteRecoveryReplicationProtectionClusterProperties IJsonModel<SiteRecoveryReplicationProtectionClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicationProtectionClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryReplicationProtectionClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicationProtectionClusterProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryReplicationProtectionClusterProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeReplicationProtectionClusterProperties(document.RootElement, options);
+            return DeserializeSiteRecoveryReplicationProtectionClusterProperties(document.RootElement, options);
         }
 
-        internal static ReplicationProtectionClusterProperties DeserializeReplicationProtectionClusterProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SiteRecoveryReplicationProtectionClusterProperties DeserializeSiteRecoveryReplicationProtectionClusterProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ReplicationProtectionClusterProperties(
+            return new SiteRecoveryReplicationProtectionClusterProperties(
                 protectionClusterType,
                 primaryFabricFriendlyName,
                 primaryFabricProvider,
@@ -563,35 +563,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ReplicationProtectionClusterProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SiteRecoveryReplicationProtectionClusterProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicationProtectionClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryReplicationProtectionClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReplicationProtectionClusterProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryReplicationProtectionClusterProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ReplicationProtectionClusterProperties IPersistableModel<ReplicationProtectionClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SiteRecoveryReplicationProtectionClusterProperties IPersistableModel<SiteRecoveryReplicationProtectionClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicationProtectionClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryReplicationProtectionClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeReplicationProtectionClusterProperties(document.RootElement, options);
+                        return DeserializeSiteRecoveryReplicationProtectionClusterProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReplicationProtectionClusterProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryReplicationProtectionClusterProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ReplicationProtectionClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SiteRecoveryReplicationProtectionClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

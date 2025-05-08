@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
 {
-    public partial class Sample_ClusterRecoveryPointResource
+    public partial class Sample_SiteRecoveryClusterRecoveryPointResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ClusterRecoveryPointResource created on azure
-            // for more information of creating ClusterRecoveryPointResource, please refer to the document of ClusterRecoveryPointResource
+            // this example assumes you already have this SiteRecoveryClusterRecoveryPointResource created on azure
+            // for more information of creating SiteRecoveryClusterRecoveryPointResource, please refer to the document of SiteRecoveryClusterRecoveryPointResource
             string subscriptionId = "7c943c1b-5122-4097-90c8-861411bdd574";
             string resourceGroupName = "resourceGroupPS1";
             string resourceName = "vault1";
@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             string protectionContainerName = "pri-cloud-eastus";
             string replicationProtectionClusterName = "testcluster";
             string recoveryPointName = "06b9ae7f-f21d-4a76-9897-5cf5d6004d80";
-            ResourceIdentifier clusterRecoveryPointResourceId = ClusterRecoveryPointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicationProtectionClusterName, recoveryPointName);
-            ClusterRecoveryPointResource clusterRecoveryPoint = client.GetClusterRecoveryPointResource(clusterRecoveryPointResourceId);
+            ResourceIdentifier siteRecoveryClusterRecoveryPointResourceId = SiteRecoveryClusterRecoveryPointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicationProtectionClusterName, recoveryPointName);
+            SiteRecoveryClusterRecoveryPointResource siteRecoveryClusterRecoveryPoint = client.GetSiteRecoveryClusterRecoveryPointResource(siteRecoveryClusterRecoveryPointResourceId);
 
             // invoke the operation
-            ClusterRecoveryPointResource result = await clusterRecoveryPoint.GetAsync();
+            SiteRecoveryClusterRecoveryPointResource result = await siteRecoveryClusterRecoveryPoint.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ClusterRecoveryPointData resourceData = result.Data;
+            SiteRecoveryClusterRecoveryPointData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

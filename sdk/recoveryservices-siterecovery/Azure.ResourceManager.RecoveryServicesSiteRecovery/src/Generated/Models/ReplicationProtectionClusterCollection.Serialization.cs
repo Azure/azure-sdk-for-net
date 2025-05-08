@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            IReadOnlyList<ReplicationProtectionClusterData> value = default;
+            IReadOnlyList<SiteRecoveryReplicationProtectionClusterData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<ReplicationProtectionClusterData> array = new List<ReplicationProtectionClusterData>();
+                    List<SiteRecoveryReplicationProtectionClusterData> array = new List<SiteRecoveryReplicationProtectionClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationProtectionClusterData.DeserializeReplicationProtectionClusterData(item, options));
+                        array.Add(SiteRecoveryReplicationProtectionClusterData.DeserializeSiteRecoveryReplicationProtectionClusterData(item, options));
                     }
                     value = array;
                     continue;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ReplicationProtectionClusterCollection(value ?? new ChangeTrackingList<ReplicationProtectionClusterData>(), nextLink, serializedAdditionalRawData);
+            return new ReplicationProtectionClusterCollection(value ?? new ChangeTrackingList<SiteRecoveryReplicationProtectionClusterData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationProtectionClusterCollection>.Write(ModelReaderWriterOptions options)

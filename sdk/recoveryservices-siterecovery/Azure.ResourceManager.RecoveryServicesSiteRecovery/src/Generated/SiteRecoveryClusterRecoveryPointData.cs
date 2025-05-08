@@ -14,10 +14,10 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A class representing the ClusterRecoveryPoint data model.
+    /// A class representing the SiteRecoveryClusterRecoveryPoint data model.
     /// Recovery point.
     /// </summary>
-    public partial class ClusterRecoveryPointData : ResourceData
+    public partial class SiteRecoveryClusterRecoveryPointData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterRecoveryPointData"/>. </summary>
-        internal ClusterRecoveryPointData()
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryClusterRecoveryPointData"/>. </summary>
+        internal SiteRecoveryClusterRecoveryPointData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterRecoveryPointData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryClusterRecoveryPointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="clusterRecoveryPointType"> The resource type. </param>
         /// <param name="properties"> The recovery point properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterRecoveryPointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string clusterRecoveryPointType, ClusterRecoveryPointProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SiteRecoveryClusterRecoveryPointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string clusterRecoveryPointType, SiteRecoveryClusterRecoveryPointProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ClusterRecoveryPointType = clusterRecoveryPointType;
             Properties = properties;
@@ -74,6 +74,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <summary> The resource type. </summary>
         public string ClusterRecoveryPointType { get; }
         /// <summary> The recovery point properties. </summary>
-        public ClusterRecoveryPointProperties Properties { get; }
+        public SiteRecoveryClusterRecoveryPointProperties Properties { get; }
     }
 }

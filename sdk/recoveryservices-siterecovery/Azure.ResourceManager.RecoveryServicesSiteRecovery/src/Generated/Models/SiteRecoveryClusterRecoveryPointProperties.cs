@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Cluster recovery point properties. </summary>
-    public partial class ClusterRecoveryPointProperties
+    public partial class SiteRecoveryClusterRecoveryPointProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterRecoveryPointProperties"/>. </summary>
-        internal ClusterRecoveryPointProperties()
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryClusterRecoveryPointProperties"/>. </summary>
+        internal SiteRecoveryClusterRecoveryPointProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterRecoveryPointProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryClusterRecoveryPointProperties"/>. </summary>
         /// <param name="recoveryPointOn"> The recovery point time. </param>
         /// <param name="recoveryPointType"> The recovery point type. </param>
         /// <param name="providerSpecificDetails">
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The available derived classes include <see cref="A2AClusterRecoveryPointDetails"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterRecoveryPointProperties(DateTimeOffset? recoveryPointOn, ClusterRecoveryPointType? recoveryPointType, ClusterProviderSpecificRecoveryPointDetails providerSpecificDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SiteRecoveryClusterRecoveryPointProperties(DateTimeOffset? recoveryPointOn, ClusterRecoveryPointType? recoveryPointType, ClusterProviderSpecificRecoveryPointDetails providerSpecificDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RecoveryPointOn = recoveryPointOn;
             RecoveryPointType = recoveryPointType;

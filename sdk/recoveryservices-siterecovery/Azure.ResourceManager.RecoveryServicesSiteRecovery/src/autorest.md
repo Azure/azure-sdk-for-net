@@ -9,7 +9,7 @@ csharp: true
 library-name: RecoveryServicesSiteRecovery
 namespace: Azure.ResourceManager.RecoveryServicesSiteRecovery
 require: https://github.com/Azure/azure-rest-api-specs/blob/84eef1839d5db0edaf791fd0915b38a50b3b64b5/specification/recoveryservicessiterecovery/resource-manager/readme.md
-#tag: package-2023-08
+#tag: package-2025-01-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -78,6 +78,8 @@ rename-mapping:
   AzureToAzureUpdateNetworkMappingInput: A2AUpdateNetworkMappingContent
   AzureToAzureVmSyncedConfigDetails: A2AVmSyncedConfigDetails
   AzureVmDiskDetails: SiteRecoveryVmDiskDetails
+  ClusterRecoveryPoint: SiteRecoveryClusterRecoveryPoint
+  ClusterRecoveryPointProperties: SiteRecoveryClusterRecoveryPointProperties
   ConfigurationSettings: SiteRecoveryReplicationProviderSettings
   ConfigureAlertRequestProperties: SiteRecoveryConfigureAlertProperties
   CreateNetworkMappingInputProperties: SiteRecoveryCreateReplicationNetworkMappingProperties
@@ -250,6 +252,8 @@ rename-mapping:
   ReplicationEligibilityResultsProperties: ReplicationEligibilityResultProperties
   ReplicationProtectedItemCollection: ReplicationProtectedItemListResult
   ReplicationProtectedItemProperties.eventCorrelationId: -|uuid
+  ReplicationProtectionCluster: SiteRecoveryReplicationProtectionCluster
+  ReplicationProtectionClusterProperties: SiteRecoveryReplicationProtectionClusterProperties
   ReplicationProtectionIntentCollection: ReplicationProtectionIntentListResult
   ReplicationProtectionIntentProperties.creationTimeUTC: CreatedOn
   ReprotectAgentDetails.lastHeartbeatUtc: LastHeartbeatReceivedOn
@@ -397,8 +401,8 @@ request-path-to-parent:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationJobs/export: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationJobs/{jobName}
 
 request-path-to-resource-name:
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionClusters/{replicationProtectionClusterName}/operationResults/{jobId}: ReplicationProtectionClusterOperationResultResource
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionClusters/{replicationProtectionClusterName}: ReplicationProtectionClusterResource
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionClusters/{replicationProtectionClusterName}: SiteRecoveryReplicationProtectionClusterResource
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionClusters/{replicationProtectionClusterName}/operationResults/{jobId}: SiteRecoveryReplicationProtectionClusterResource
 
 directive:
   - remove-operation: Operations_List

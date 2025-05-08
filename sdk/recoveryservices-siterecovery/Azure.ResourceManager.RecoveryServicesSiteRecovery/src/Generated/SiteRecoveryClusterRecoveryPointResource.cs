@@ -15,14 +15,14 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A Class representing a ClusterRecoveryPoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ClusterRecoveryPointResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetClusterRecoveryPointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ReplicationProtectionClusterResource"/> using the GetClusterRecoveryPoint method.
+    /// A Class representing a SiteRecoveryClusterRecoveryPoint along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteRecoveryClusterRecoveryPointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteRecoveryClusterRecoveryPointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryReplicationProtectionClusterResource"/> using the GetSiteRecoveryClusterRecoveryPoint method.
     /// </summary>
-    public partial class ClusterRecoveryPointResource : ArmResource
+    public partial class SiteRecoveryClusterRecoveryPointResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ClusterRecoveryPointResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="SiteRecoveryClusterRecoveryPointResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="resourceName"> The resourceName. </param>
@@ -36,35 +36,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _clusterRecoveryPointClientDiagnostics;
-        private readonly ClusterRecoveryPointRestOperations _clusterRecoveryPointRestClient;
-        private readonly ClusterRecoveryPointData _data;
+        private readonly ClientDiagnostics _siteRecoveryClusterRecoveryPointClusterRecoveryPointClientDiagnostics;
+        private readonly ClusterRecoveryPointRestOperations _siteRecoveryClusterRecoveryPointClusterRecoveryPointRestClient;
+        private readonly SiteRecoveryClusterRecoveryPointData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectionClusters/recoveryPoints";
 
-        /// <summary> Initializes a new instance of the <see cref="ClusterRecoveryPointResource"/> class for mocking. </summary>
-        protected ClusterRecoveryPointResource()
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryClusterRecoveryPointResource"/> class for mocking. </summary>
+        protected SiteRecoveryClusterRecoveryPointResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ClusterRecoveryPointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryClusterRecoveryPointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ClusterRecoveryPointResource(ArmClient client, ClusterRecoveryPointData data) : this(client, data.Id)
+        internal SiteRecoveryClusterRecoveryPointResource(ArmClient client, SiteRecoveryClusterRecoveryPointData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ClusterRecoveryPointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryClusterRecoveryPointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ClusterRecoveryPointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SiteRecoveryClusterRecoveryPointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clusterRecoveryPointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string clusterRecoveryPointApiVersion);
-            _clusterRecoveryPointRestClient = new ClusterRecoveryPointRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, clusterRecoveryPointApiVersion);
+            _siteRecoveryClusterRecoveryPointClusterRecoveryPointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string siteRecoveryClusterRecoveryPointClusterRecoveryPointApiVersion);
+            _siteRecoveryClusterRecoveryPointClusterRecoveryPointRestClient = new ClusterRecoveryPointRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecoveryClusterRecoveryPointClusterRecoveryPointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ClusterRecoveryPointData Data
+        public virtual SiteRecoveryClusterRecoveryPointData Data
         {
             get
             {
@@ -108,21 +108,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ClusterRecoveryPointResource"/></description>
+        /// <description><see cref="SiteRecoveryClusterRecoveryPointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ClusterRecoveryPointResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteRecoveryClusterRecoveryPointResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clusterRecoveryPointClientDiagnostics.CreateScope("ClusterRecoveryPointResource.Get");
+            using var scope = _siteRecoveryClusterRecoveryPointClusterRecoveryPointClientDiagnostics.CreateScope("SiteRecoveryClusterRecoveryPointResource.Get");
             scope.Start();
             try
             {
-                var response = await _clusterRecoveryPointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _siteRecoveryClusterRecoveryPointClusterRecoveryPointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ClusterRecoveryPointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryClusterRecoveryPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,21 +148,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ClusterRecoveryPointResource"/></description>
+        /// <description><see cref="SiteRecoveryClusterRecoveryPointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ClusterRecoveryPointResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SiteRecoveryClusterRecoveryPointResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clusterRecoveryPointClientDiagnostics.CreateScope("ClusterRecoveryPointResource.Get");
+            using var scope = _siteRecoveryClusterRecoveryPointClusterRecoveryPointClientDiagnostics.CreateScope("SiteRecoveryClusterRecoveryPointResource.Get");
             scope.Start();
             try
             {
-                var response = _clusterRecoveryPointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _siteRecoveryClusterRecoveryPointClusterRecoveryPointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ClusterRecoveryPointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryClusterRecoveryPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
