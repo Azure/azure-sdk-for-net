@@ -22,12 +22,12 @@ namespace Azure.Generator.Management
     {
         protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
         {
-            if (type is SystemObjectTypeProvider systemType)
+            if (type is InheritableSystemObjectModelProvider systemType)
             {
                 UpdateNamespace(systemType);
             }
 
-            if (type is not SystemObjectTypeProvider && type?.BaseModelProvider is SystemObjectTypeProvider baseSystemType)
+            if (type is not InheritableSystemObjectModelProvider && type?.BaseModelProvider is InheritableSystemObjectModelProvider baseSystemType)
             {
                 Update(baseSystemType, type);
             }
@@ -41,12 +41,12 @@ namespace Azure.Generator.Management
                 UpdateModelFactory(modelFactory);
             }
 
-            if (type is SystemObjectTypeProvider systemType)
+            if (type is InheritableSystemObjectModelProvider systemType)
             {
                 UpdateNamespace(systemType);
             }
 
-            if (type is ModelProvider model && model is not SystemObjectTypeProvider && model.BaseModelProvider is SystemObjectTypeProvider baseSystemType)
+            if (type is ModelProvider model && model is not InheritableSystemObjectModelProvider && model.BaseModelProvider is InheritableSystemObjectModelProvider baseSystemType)
             {
                 Update(baseSystemType, model);
             }
@@ -70,14 +70,14 @@ namespace Azure.Generator.Management
             modelFactory.Update(methods: methods);
         }
 
-        private static void UpdateNamespace(SystemObjectTypeProvider systemType)
+        private static void UpdateNamespace(InheritableSystemObjectModelProvider systemType)
         {
             // This is needed because we updated the namespace with NamespaceVisitor in Azure generator earlier
             systemType.Type.Update(@namespace: systemType._type.Namespace);
         }
 
         private HashSet<ModelProvider> _updated = new();
-        private void Update(SystemObjectTypeProvider baseSystemType, ModelProvider model)
+        private void Update(InheritableSystemObjectModelProvider baseSystemType, ModelProvider model)
         {
             // Add cache to avoid duplicated update of PreVisitModel and VisitType
             if (_updated.Contains(model))
@@ -157,7 +157,7 @@ namespace Azure.Generator.Management
         private static FormattableString? FromString(string? s) =>
             s is null ? null : s.Length == 0 ? (FormattableString)$"" : $"{s}";
 
-        private static HashSet<string> EnumerateBaseModelProperties(SystemObjectTypeProvider baseSystemModel)
+        private static HashSet<string> EnumerateBaseModelProperties(InheritableSystemObjectModelProvider baseSystemModel)
         {
             var baseSystemPropertyNames = new HashSet<string>();
             ModelProvider? baseModel = baseSystemModel;

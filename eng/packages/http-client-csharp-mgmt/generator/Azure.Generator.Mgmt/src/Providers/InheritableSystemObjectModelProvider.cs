@@ -7,11 +7,11 @@ using System;
 
 namespace Azure.Generator.Management.Providers
 {
-    internal class SystemObjectTypeProvider : ModelProvider
+    internal class InheritableSystemObjectModelProvider : ModelProvider
     {
         internal readonly Type _type;
 
-        public SystemObjectTypeProvider(Type type, InputModelType inputModel) : base(inputModel)
+        public InheritableSystemObjectModelProvider(Type type, InputModelType inputModel) : base(inputModel)
         {
             _type = type;
         }
