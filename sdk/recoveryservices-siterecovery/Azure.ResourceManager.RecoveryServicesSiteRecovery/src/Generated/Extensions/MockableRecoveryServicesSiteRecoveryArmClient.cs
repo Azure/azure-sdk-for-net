@@ -191,6 +191,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ReplicationProtectionClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationProtectionClusterResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationProtectionClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ReplicationProtectionClusterResource"/> object. </returns>
+        public virtual ReplicationProtectionClusterResource GetReplicationProtectionClusterResource(ResourceIdentifier id)
+        {
+            ReplicationProtectionClusterResource.ValidateResourceId(id);
+            return new ReplicationProtectionClusterResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ReplicationProtectionClusterOperationResultResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationProtectionClusterOperationResultResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationProtectionClusterOperationResultResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ReplicationProtectionClusterOperationResultResource"/> object. </returns>
+        public virtual ReplicationProtectionClusterOperationResultResource GetReplicationProtectionClusterOperationResultResource(ResourceIdentifier id)
+        {
+            ReplicationProtectionClusterOperationResultResource.ValidateResourceId(id);
+            return new ReplicationProtectionClusterOperationResultResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ClusterRecoveryPointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ClusterRecoveryPointResource.CreateResourceIdentifier" /> to create a <see cref="ClusterRecoveryPointResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ClusterRecoveryPointResource"/> object. </returns>
+        public virtual ClusterRecoveryPointResource GetClusterRecoveryPointResource(ResourceIdentifier id)
+        {
+            ClusterRecoveryPointResource.ValidateResourceId(id);
+            return new ClusterRecoveryPointResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ProtectionContainerMappingResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ProtectionContainerMappingResource.CreateResourceIdentifier" /> to create a <see cref="ProtectionContainerMappingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

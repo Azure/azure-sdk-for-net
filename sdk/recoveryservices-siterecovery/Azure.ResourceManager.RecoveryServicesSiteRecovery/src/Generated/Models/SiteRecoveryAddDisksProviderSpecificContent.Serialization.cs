@@ -78,6 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 switch (discriminator.GetString())
                 {
                     case "A2A": return A2AAddDisksContent.DeserializeA2AAddDisksContent(element, options);
+                    case "InMageRcm": return InMageRcmAddDisksContent.DeserializeInMageRcmAddDisksContent(element, options);
                 }
             }
             return UnknownAddDisksProviderSpecificContent.DeserializeUnknownAddDisksProviderSpecificContent(element, options);

@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 throw new FormatException($"The model {nameof(SiteRecoveryHealthError)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(InnerHealthErrors))
+            if (Optional.IsCollectionDefined(SiteRecoveryInnerHealthErrorsList))
             {
                 writer.WritePropertyName("innerHealthErrors"u8);
                 writer.WriteStartArray();
-                foreach (var item in InnerHealthErrors)
+                foreach (var item in SiteRecoveryInnerHealthErrorsList)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            IReadOnlyList<SiteRecoveryInnerHealthError> innerHealthErrors = default;
+            IList<SiteRecoveryInnerHealthError> innerHealthErrors = default;
             string errorSource = default;
             string errorType = default;
             string errorLevel = default;
