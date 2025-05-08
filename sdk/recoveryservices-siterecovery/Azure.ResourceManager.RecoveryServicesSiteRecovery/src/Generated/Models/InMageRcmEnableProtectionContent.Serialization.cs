@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IList<UserCreatedResourceTag> targetManagedDiskTags = default;
             IList<UserCreatedResourceTag> targetNicTags = default;
             string userSelectedOSName = default;
-            SecurityProfileProperties targetVmSecurityProfile = default;
+            RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    targetVmSecurityProfile = SecurityProfileProperties.DeserializeSecurityProfileProperties(property.Value, options);
+                    targetVmSecurityProfile = RecoveryServicesSiteRecoverySecurityProfileProperties.DeserializeRecoveryServicesSiteRecoverySecurityProfileProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

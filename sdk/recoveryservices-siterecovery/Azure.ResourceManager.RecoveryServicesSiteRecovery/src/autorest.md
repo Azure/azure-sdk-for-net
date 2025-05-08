@@ -47,7 +47,6 @@ rename-mapping:
   A2AReplicationDetails.protectionClusterId: -|arm-id
   A2AReplicationProtectionClusterDetails.clusterManagementId: -|uuid
   A2AReplicationProtectionClusterDetails.multiVmGroupId: -|uuid
-  A2AReplicationProtectionClusterDetails.lifecycleId : -|uuid
   A2ASharedDiskReplicationDetails.managementId: -|uuid
   RegisteredClusterNodes.biosId: -|uuid
   RegisteredClusterNodes.machineId: -|uuid
@@ -80,6 +79,7 @@ rename-mapping:
   AzureVmDiskDetails: SiteRecoveryVmDiskDetails
   ClusterRecoveryPoint: SiteRecoveryClusterRecoveryPoint
   ClusterRecoveryPointProperties: SiteRecoveryClusterRecoveryPointProperties
+  ClusterSwitchProtectionJobDetails.newReplicationProtectionClusterId: -|arm-id
   ConfigurationSettings: SiteRecoveryReplicationProviderSettings
   ConfigureAlertRequestProperties: SiteRecoveryConfigureAlertProperties
   CreateNetworkMappingInputProperties: SiteRecoveryCreateReplicationNetworkMappingProperties
@@ -331,6 +331,8 @@ prepend-rp-prefix:
   - LinuxLicenseType
   - FailoverDirection
   - DiskState
+  - SecurityProfileProperties
+  - SecurityConfiguration
 
 format-by-name-rules:
   'tenantId': 'uuid'

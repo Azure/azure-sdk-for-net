@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="primaryExtendedLocation"> The primary Extended Location. </param>
         /// <param name="recoveryExtendedLocation"> The recovery Extended Location. </param>
         /// <param name="lifecycleId"> An id that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the "same" protected cluster even though other internal Ids/ARM Id might be changing. </param>
-        internal A2AReplicationProtectionClusterDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? multiVmGroupId, string multiVmGroupName, MultiVmGroupCreateOption? multiVmGroupCreateOption, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation, ResourceIdentifier failoverRecoveryPointId, Guid? clusterManagementId, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string initialPrimaryZone, AzureLocation? initialPrimaryFabricLocation, string initialRecoveryZone, AzureLocation? initialRecoveryFabricLocation, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation, string primaryAvailabilityZone, string recoveryAvailabilityZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, Guid? lifecycleId) : base(instanceType, serializedAdditionalRawData)
+        internal A2AReplicationProtectionClusterDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? multiVmGroupId, string multiVmGroupName, MultiVmGroupCreateOption? multiVmGroupCreateOption, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation, ResourceIdentifier failoverRecoveryPointId, Guid? clusterManagementId, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string initialPrimaryZone, AzureLocation? initialPrimaryFabricLocation, string initialRecoveryZone, AzureLocation? initialRecoveryFabricLocation, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation, string primaryAvailabilityZone, string recoveryAvailabilityZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, string lifecycleId) : base(instanceType, serializedAdditionalRawData)
         {
             MultiVmGroupId = multiVmGroupId;
             MultiVmGroupName = multiVmGroupName;
@@ -107,6 +107,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The recovery Extended Location. </summary>
         public SiteRecoveryExtendedLocation RecoveryExtendedLocation { get; set; }
         /// <summary> An id that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the "same" protected cluster even though other internal Ids/ARM Id might be changing. </summary>
-        public Guid? LifecycleId { get; set; }
+        public string LifecycleId { get; set; }
     }
 }

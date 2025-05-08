@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SecurityProfileProperties : IUtf8JsonSerializable, IJsonModel<SecurityProfileProperties>
+    public partial class RecoveryServicesSiteRecoverySecurityProfileProperties : IUtf8JsonSerializable, IJsonModel<RecoveryServicesSiteRecoverySecurityProfileProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityProfileProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryServicesSiteRecoverySecurityProfileProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SecurityProfileProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RecoveryServicesSiteRecoverySecurityProfileProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesSiteRecoverySecurityProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityProfileProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesSiteRecoverySecurityProfileProperties)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(TargetVmSecurityType))
@@ -76,19 +76,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        SecurityProfileProperties IJsonModel<SecurityProfileProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RecoveryServicesSiteRecoverySecurityProfileProperties IJsonModel<RecoveryServicesSiteRecoverySecurityProfileProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesSiteRecoverySecurityProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityProfileProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesSiteRecoverySecurityProfileProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSecurityProfileProperties(document.RootElement, options);
+            return DeserializeRecoveryServicesSiteRecoverySecurityProfileProperties(document.RootElement, options);
         }
 
-        internal static SecurityProfileProperties DeserializeSecurityProfileProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RecoveryServicesSiteRecoverySecurityProfileProperties DeserializeRecoveryServicesSiteRecoverySecurityProfileProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             SiteRecoveryVmSecurityType? targetVmSecurityType = default;
-            SecurityConfiguration? targetVmSecureBoot = default;
-            SecurityConfiguration? targetVmTpm = default;
-            SecurityConfiguration? targetVmMonitoring = default;
-            SecurityConfiguration? targetVmConfidentialEncryption = default;
+            RecoveryServicesSiteRecoverySecurityConfiguration? targetVmSecureBoot = default;
+            RecoveryServicesSiteRecoverySecurityConfiguration? targetVmTpm = default;
+            RecoveryServicesSiteRecoverySecurityConfiguration? targetVmMonitoring = default;
+            RecoveryServicesSiteRecoverySecurityConfiguration? targetVmConfidentialEncryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    targetVmSecureBoot = new SecurityConfiguration(property.Value.GetString());
+                    targetVmSecureBoot = new RecoveryServicesSiteRecoverySecurityConfiguration(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetVmTpm"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    targetVmTpm = new SecurityConfiguration(property.Value.GetString());
+                    targetVmTpm = new RecoveryServicesSiteRecoverySecurityConfiguration(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetVmMonitoring"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    targetVmMonitoring = new SecurityConfiguration(property.Value.GetString());
+                    targetVmMonitoring = new RecoveryServicesSiteRecoverySecurityConfiguration(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetVmConfidentialEncryption"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    targetVmConfidentialEncryption = new SecurityConfiguration(property.Value.GetString());
+                    targetVmConfidentialEncryption = new RecoveryServicesSiteRecoverySecurityConfiguration(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SecurityProfileProperties(
+            return new RecoveryServicesSiteRecoverySecurityProfileProperties(
                 targetVmSecurityType,
                 targetVmSecureBoot,
                 targetVmTpm,
@@ -165,35 +165,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SecurityProfileProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RecoveryServicesSiteRecoverySecurityProfileProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesSiteRecoverySecurityProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityProfileProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesSiteRecoverySecurityProfileProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SecurityProfileProperties IPersistableModel<SecurityProfileProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RecoveryServicesSiteRecoverySecurityProfileProperties IPersistableModel<RecoveryServicesSiteRecoverySecurityProfileProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesSiteRecoverySecurityProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSecurityProfileProperties(document.RootElement, options);
+                        return DeserializeRecoveryServicesSiteRecoverySecurityProfileProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityProfileProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesSiteRecoverySecurityProfileProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SecurityProfileProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RecoveryServicesSiteRecoverySecurityProfileProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

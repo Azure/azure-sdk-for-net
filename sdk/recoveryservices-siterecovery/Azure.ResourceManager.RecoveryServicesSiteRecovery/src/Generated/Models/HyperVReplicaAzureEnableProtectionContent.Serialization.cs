@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             SiteRecoveryLicenseType? licenseType = default;
             SiteRecoverySqlServerLicenseType? sqlServerLicenseType = default;
             RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = default;
-            SecurityProfileProperties targetVmSecurityProfile = default;
+            RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile = default;
             string targetVmSize = default;
             ResourceIdentifier targetProximityPlacementGroupId = default;
             string useManagedDisksForReplication = default;
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    targetVmSecurityProfile = SecurityProfileProperties.DeserializeSecurityProfileProperties(property.Value, options);
+                    targetVmSecurityProfile = RecoveryServicesSiteRecoverySecurityProfileProperties.DeserializeRecoveryServicesSiteRecoverySecurityProfileProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetVmSize"u8))

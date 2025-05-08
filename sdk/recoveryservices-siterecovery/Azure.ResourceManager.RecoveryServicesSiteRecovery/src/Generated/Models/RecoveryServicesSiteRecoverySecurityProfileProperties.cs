@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Security profile input. </summary>
-    public partial class SecurityProfileProperties
+    public partial class RecoveryServicesSiteRecoverySecurityProfileProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SecurityProfileProperties"/>. </summary>
-        public SecurityProfileProperties()
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecoverySecurityProfileProperties"/>. </summary>
+        public RecoveryServicesSiteRecoverySecurityProfileProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityProfileProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecoverySecurityProfileProperties"/>. </summary>
         /// <param name="targetVmSecurityType"> The target VM security type. </param>
         /// <param name="targetVmSecureBoot"> A value indicating whether secure boot to be enabled. </param>
         /// <param name="targetVmTpm"> A value indicating whether trusted platform module to be enabled. </param>
         /// <param name="targetVmMonitoring"> A value indicating whether integrity monitoring to be enabled. </param>
         /// <param name="targetVmConfidentialEncryption"> A value indicating whether confidential compute encryption to be enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityProfileProperties(SiteRecoveryVmSecurityType? targetVmSecurityType, SecurityConfiguration? targetVmSecureBoot, SecurityConfiguration? targetVmTpm, SecurityConfiguration? targetVmMonitoring, SecurityConfiguration? targetVmConfidentialEncryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RecoveryServicesSiteRecoverySecurityProfileProperties(SiteRecoveryVmSecurityType? targetVmSecurityType, RecoveryServicesSiteRecoverySecurityConfiguration? targetVmSecureBoot, RecoveryServicesSiteRecoverySecurityConfiguration? targetVmTpm, RecoveryServicesSiteRecoverySecurityConfiguration? targetVmMonitoring, RecoveryServicesSiteRecoverySecurityConfiguration? targetVmConfidentialEncryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetVmSecurityType = targetVmSecurityType;
             TargetVmSecureBoot = targetVmSecureBoot;
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The target VM security type. </summary>
         public SiteRecoveryVmSecurityType? TargetVmSecurityType { get; set; }
         /// <summary> A value indicating whether secure boot to be enabled. </summary>
-        public SecurityConfiguration? TargetVmSecureBoot { get; set; }
+        public RecoveryServicesSiteRecoverySecurityConfiguration? TargetVmSecureBoot { get; set; }
         /// <summary> A value indicating whether trusted platform module to be enabled. </summary>
-        public SecurityConfiguration? TargetVmTpm { get; set; }
+        public RecoveryServicesSiteRecoverySecurityConfiguration? TargetVmTpm { get; set; }
         /// <summary> A value indicating whether integrity monitoring to be enabled. </summary>
-        public SecurityConfiguration? TargetVmMonitoring { get; set; }
+        public RecoveryServicesSiteRecoverySecurityConfiguration? TargetVmMonitoring { get; set; }
         /// <summary> A value indicating whether confidential compute encryption to be enabled. </summary>
-        public SecurityConfiguration? TargetVmConfidentialEncryption { get; set; }
+        public RecoveryServicesSiteRecoverySecurityConfiguration? TargetVmConfidentialEncryption { get; set; }
     }
 }

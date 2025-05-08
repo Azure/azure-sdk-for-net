@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(LifecycleId))
             {
                 writer.WritePropertyName("lifecycleId"u8);
-                writer.WriteStringValue(LifecycleId.Value);
+                writer.WriteStringValue(LifecycleId);
             }
         }
 
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string recoveryAvailabilityZone = default;
             SiteRecoveryExtendedLocation primaryExtendedLocation = default;
             SiteRecoveryExtendedLocation recoveryExtendedLocation = default;
-            Guid? lifecycleId = default;
+            string lifecycleId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -335,11 +335,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("lifecycleId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    lifecycleId = property.Value.GetGuid();
+                    lifecycleId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

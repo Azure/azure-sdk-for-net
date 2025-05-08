@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetNicTags"> The tags for the target NICs. </param>
         /// <param name="userSelectedOSName"> The OS name selected by user. </param>
         /// <param name="targetVmSecurityProfile"> The target VM security profile. </param>
-        internal InMageRcmEnableProtectionContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string fabricDiscoveryMachineId, IList<InMageRcmDiskContent> disksToInclude, InMageRcmDisksDefaultContent disksDefault, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, string targetSubnetName, string testSubnetName, string targetVmName, string targetVmSize, SiteRecoveryLicenseType? licenseType, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, string runAsAccountId, Guid processServerId, string multiVmGroupName, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, IList<UserCreatedResourceTag> targetVmTags, IList<UserCreatedResourceTag> seedManagedDiskTags, IList<UserCreatedResourceTag> targetManagedDiskTags, IList<UserCreatedResourceTag> targetNicTags, string userSelectedOSName, SecurityProfileProperties targetVmSecurityProfile) : base(instanceType, serializedAdditionalRawData)
+        internal InMageRcmEnableProtectionContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string fabricDiscoveryMachineId, IList<InMageRcmDiskContent> disksToInclude, InMageRcmDisksDefaultContent disksDefault, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, string targetSubnetName, string testSubnetName, string targetVmName, string targetVmSize, SiteRecoveryLicenseType? licenseType, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, string runAsAccountId, Guid processServerId, string multiVmGroupName, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, IList<UserCreatedResourceTag> targetVmTags, IList<UserCreatedResourceTag> seedManagedDiskTags, IList<UserCreatedResourceTag> targetManagedDiskTags, IList<UserCreatedResourceTag> targetNicTags, string userSelectedOSName, RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile) : base(instanceType, serializedAdditionalRawData)
         {
             FabricDiscoveryMachineId = fabricDiscoveryMachineId;
             DisksToInclude = disksToInclude;
@@ -151,6 +151,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The OS name selected by user. </summary>
         public string UserSelectedOSName { get; set; }
         /// <summary> The target VM security profile. </summary>
-        public SecurityProfileProperties TargetVmSecurityProfile { get; set; }
+        public RecoveryServicesSiteRecoverySecurityProfileProperties TargetVmSecurityProfile { get; set; }
     }
 }

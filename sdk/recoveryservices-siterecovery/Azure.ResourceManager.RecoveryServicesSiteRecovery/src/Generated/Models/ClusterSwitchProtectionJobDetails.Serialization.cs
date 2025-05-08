@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            string newReplicationProtectionClusterId = default;
+            ResourceIdentifier newReplicationProtectionClusterId = default;
             string instanceType = default;
             IReadOnlyDictionary<string, string> affectedObjectDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -71,7 +71,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 if (property.NameEquals("newReplicationProtectionClusterId"u8))
                 {
-                    newReplicationProtectionClusterId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    newReplicationProtectionClusterId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

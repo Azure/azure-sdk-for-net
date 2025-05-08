@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -24,13 +25,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="newReplicationProtectionClusterId"> ARM Id of the new replication protection cluster. </param>
-        internal ClusterSwitchProtectionJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails, IDictionary<string, BinaryData> serializedAdditionalRawData, string newReplicationProtectionClusterId) : base(instanceType, affectedObjectDetails, serializedAdditionalRawData)
+        internal ClusterSwitchProtectionJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier newReplicationProtectionClusterId) : base(instanceType, affectedObjectDetails, serializedAdditionalRawData)
         {
             NewReplicationProtectionClusterId = newReplicationProtectionClusterId;
             InstanceType = instanceType ?? "ClusterSwitchProtectionJobDetails";
         }
 
         /// <summary> ARM Id of the new replication protection cluster. </summary>
-        public string NewReplicationProtectionClusterId { get; }
+        public ResourceIdentifier NewReplicationProtectionClusterId { get; }
     }
 }
