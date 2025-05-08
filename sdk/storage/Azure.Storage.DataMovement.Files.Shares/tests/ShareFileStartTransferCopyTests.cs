@@ -996,7 +996,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         [RecordedTest]
         [TestCase(true, false)]
         [TestCase(false, true)]
-        public async Task ValidateProtocolAsync_ShareTransferNotSupported(bool sourceIsNfs, bool destIsNfs)
+        public async Task ValidateProtocolAsync_ShareFileToShareFile_ShareTransferNotSupported(bool sourceIsNfs, bool destIsNfs)
         {
             // Arrange
             await using IDisposingContainer<ShareClient> source = await GetSourceDisposingContainerAsync();
