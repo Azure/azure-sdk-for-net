@@ -34,21 +34,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(NetworkTapDestinationProperties)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(DestinationType))
-            {
-                writer.WritePropertyName("destinationType"u8);
-                writer.WriteStringValue(DestinationType.Value.ToString());
-            }
-            if (Optional.IsDefined(DestinationId))
-            {
-                writer.WritePropertyName("destinationId"u8);
-                writer.WriteStringValue(DestinationId);
-            }
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("destinationType"u8);
+            writer.WriteStringValue(DestinationType.ToString());
+            writer.WritePropertyName("destinationId"u8);
+            writer.WriteStringValue(DestinationId);
             if (Optional.IsDefined(IsolationDomainProperties))
             {
                 writer.WritePropertyName("isolationDomainProperties"u8);
@@ -97,7 +88,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             string name = default;
-            NetworkTapDestinationType? destinationType = default;
+            NetworkTapDestinationType destinationType = default;
             ResourceIdentifier destinationId = default;
             IsolationDomainProperties isolationDomainProperties = default;
             ResourceIdentifier destinationTapRuleId = default;
@@ -112,19 +103,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (property.NameEquals("destinationType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     destinationType = new NetworkTapDestinationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("destinationId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     destinationId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AccessControlListMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -34,7 +34,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(AccessControlListMatchCondition)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsCollectionDefined(ProtocolTypes))
+            {
+                writer.WritePropertyName("protocolTypes"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProtocolTypes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(VlanMatchCondition))
+            {
+                writer.WritePropertyName("vlanMatchCondition"u8);
+                writer.WriteObjectValue(VlanMatchCondition, options);
+            }
+            if (Optional.IsDefined(IPCondition))
+            {
+                writer.WritePropertyName("ipCondition"u8);
+                writer.WriteObjectValue(IPCondition, options);
+            }
             if (Optional.IsCollectionDefined(EtherTypes))
             {
                 writer.WritePropertyName("etherTypes"u8);
@@ -85,10 +104,40 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(ProtocolNeighbors))
+            {
+                writer.WritePropertyName("protocolNeighbors"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProtocolNeighbors)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(PortCondition))
             {
                 writer.WritePropertyName("portCondition"u8);
                 writer.WriteObjectValue(PortCondition, options);
+            }
+            if (Optional.IsDefined(IcmpConfiguration))
+            {
+                writer.WritePropertyName("icmpConfiguration"u8);
+                writer.WriteObjectValue(IcmpConfiguration, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
         }
 
@@ -112,19 +161,53 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
+            IList<string> protocolTypes = default;
+            VlanMatchCondition vlanMatchCondition = default;
+            IPMatchCondition ipCondition = default;
             IList<string> etherTypes = default;
             IList<string> fragments = default;
             IList<string> ipLengths = default;
             IList<string> ttlValues = default;
             IList<string> dscpMarkings = default;
+            IList<string> protocolNeighbors = default;
             AccessControlListPortCondition portCondition = default;
-            IList<string> protocolTypes = default;
-            VlanMatchCondition vlanMatchCondition = default;
-            IPMatchCondition ipCondition = default;
+            IcmpConfigurationProperties icmpConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("protocolTypes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    protocolTypes = array;
+                    continue;
+                }
+                if (property.NameEquals("vlanMatchCondition"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vlanMatchCondition = VlanMatchCondition.DeserializeVlanMatchCondition(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("ipCondition"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipCondition = IPMatchCondition.DeserializeIPMatchCondition(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("etherTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -195,16 +278,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     dscpMarkings = array;
                     continue;
                 }
-                if (property.NameEquals("portCondition"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    portCondition = AccessControlListPortCondition.DeserializeAccessControlListPortCondition(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("protocolTypes"u8))
+                if (property.NameEquals("protocolNeighbors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -215,25 +289,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         array.Add(item.GetString());
                     }
-                    protocolTypes = array;
+                    protocolNeighbors = array;
                     continue;
                 }
-                if (property.NameEquals("vlanMatchCondition"u8))
+                if (property.NameEquals("portCondition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vlanMatchCondition = VlanMatchCondition.DeserializeVlanMatchCondition(property.Value, options);
+                    portCondition = AccessControlListPortCondition.DeserializeAccessControlListPortCondition(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("ipCondition"u8))
+                if (property.NameEquals("icmpConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ipCondition = IPMatchCondition.DeserializeIPMatchCondition(property.Value, options);
+                    icmpConfiguration = IcmpConfigurationProperties.DeserializeIcmpConfigurationProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -246,13 +320,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 protocolTypes ?? new ChangeTrackingList<string>(),
                 vlanMatchCondition,
                 ipCondition,
-                serializedAdditionalRawData,
                 etherTypes ?? new ChangeTrackingList<string>(),
                 fragments ?? new ChangeTrackingList<string>(),
                 ipLengths ?? new ChangeTrackingList<string>(),
                 ttlValues ?? new ChangeTrackingList<string>(),
                 dscpMarkings ?? new ChangeTrackingList<string>(),
-                portCondition);
+                protocolNeighbors ?? new ChangeTrackingList<string>(),
+                portCondition,
+                icmpConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccessControlListMatchCondition>.Write(ModelReaderWriterOptions options)

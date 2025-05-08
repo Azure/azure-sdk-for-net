@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectedSubnet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -34,9 +34,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(ConnectedSubnet)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Annotation))
+            {
+                writer.WritePropertyName("annotation"u8);
+                writer.WriteStringValue(Annotation);
+            }
             writer.WritePropertyName("prefix"u8);
             writer.WriteStringValue(Prefix);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         ConnectedSubnet IJsonModel<ConnectedSubnet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -59,20 +78,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            string prefix = default;
             string annotation = default;
+            string prefix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("prefix"u8))
-                {
-                    prefix = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("annotation"u8))
                 {
                     annotation = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("prefix"u8))
+                {
+                    prefix = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -81,7 +100,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConnectedSubnet(annotation, serializedAdditionalRawData, prefix);
+            return new ConnectedSubnet(annotation, prefix, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectedSubnet>.Write(ModelReaderWriterOptions options)

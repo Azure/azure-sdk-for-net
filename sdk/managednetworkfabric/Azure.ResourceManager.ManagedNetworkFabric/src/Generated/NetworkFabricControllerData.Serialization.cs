@@ -38,108 +38,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
-            {
-                writer.WritePropertyName("annotation"u8);
-                writer.WriteStringValue(Annotation);
-            }
-            if (Optional.IsCollectionDefined(InfrastructureExpressRouteConnections))
-            {
-                writer.WritePropertyName("infrastructureExpressRouteConnections"u8);
-                writer.WriteStartArray();
-                foreach (var item in InfrastructureExpressRouteConnections)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(WorkloadExpressRouteConnections))
-            {
-                writer.WritePropertyName("workloadExpressRouteConnections"u8);
-                writer.WriteStartArray();
-                foreach (var item in WorkloadExpressRouteConnections)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(InfrastructureServices))
-            {
-                writer.WritePropertyName("infrastructureServices"u8);
-                writer.WriteObjectValue(InfrastructureServices, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(WorkloadServices))
-            {
-                writer.WritePropertyName("workloadServices"u8);
-                writer.WriteObjectValue(WorkloadServices, options);
-            }
-            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
-            {
-                writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration, options);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkFabricIds))
-            {
-                writer.WritePropertyName("networkFabricIds"u8);
-                writer.WriteStartArray();
-                foreach (var item in NetworkFabricIds)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsWorkloadManagementNetwork))
-            {
-                writer.WritePropertyName("workloadManagementNetwork"u8);
-                writer.WriteBooleanValue(IsWorkloadManagementNetwork.Value);
-            }
-            if (Optional.IsDefined(IsWorkloadManagementNetworkEnabled))
-            {
-                writer.WritePropertyName("isWorkloadManagementNetworkEnabled"u8);
-                writer.WriteStringValue(IsWorkloadManagementNetworkEnabled.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(TenantInternetGatewayIds))
-            {
-                writer.WritePropertyName("tenantInternetGatewayIds"u8);
-                writer.WriteStartArray();
-                foreach (var item in TenantInternetGatewayIds)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IPv4AddressSpace))
-            {
-                writer.WritePropertyName("ipv4AddressSpace"u8);
-                writer.WriteStringValue(IPv4AddressSpace);
-            }
-            if (Optional.IsDefined(IPv6AddressSpace))
-            {
-                writer.WritePropertyName("ipv6AddressSpace"u8);
-                writer.WriteStringValue(IPv6AddressSpace);
-            }
-            if (Optional.IsDefined(NfcSku))
-            {
-                writer.WritePropertyName("nfcSku"u8);
-                writer.WriteStringValue(NfcSku.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties, options);
         }
 
         NetworkFabricControllerData IJsonModel<NetworkFabricControllerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -162,30 +61,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
+            NetworkFabricControllerProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string annotation = default;
-            IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections = default;
-            IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections = default;
-            NetworkFabricControllerServices infrastructureServices = default;
-            NetworkFabricControllerServices workloadServices = default;
-            ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
-            IReadOnlyList<ResourceIdentifier> networkFabricIds = default;
-            bool? workloadManagementNetwork = default;
-            IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled = default;
-            IReadOnlyList<ResourceIdentifier> tenantInternetGatewayIds = default;
-            string ipv4AddressSpace = default;
-            string ipv6AddressSpace = default;
-            NetworkFabricControllerSKU? nfcSku = default;
-            NetworkFabricProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = NetworkFabricControllerProperties.DeserializeNetworkFabricControllerProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -229,166 +120,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("annotation"u8))
-                        {
-                            annotation = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("infrastructureExpressRouteConnections"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ExpressRouteConnectionInformation> array = new List<ExpressRouteConnectionInformation>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ExpressRouteConnectionInformation.DeserializeExpressRouteConnectionInformation(item, options));
-                            }
-                            infrastructureExpressRouteConnections = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("workloadExpressRouteConnections"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ExpressRouteConnectionInformation> array = new List<ExpressRouteConnectionInformation>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ExpressRouteConnectionInformation.DeserializeExpressRouteConnectionInformation(item, options));
-                            }
-                            workloadExpressRouteConnections = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("infrastructureServices"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            infrastructureServices = NetworkFabricControllerServices.DeserializeNetworkFabricControllerServices(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("workloadServices"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            workloadServices = NetworkFabricControllerServices.DeserializeNetworkFabricControllerServices(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("managedResourceGroupConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("networkFabricIds"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(new ResourceIdentifier(item.GetString()));
-                                }
-                            }
-                            networkFabricIds = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("workloadManagementNetwork"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            workloadManagementNetwork = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("isWorkloadManagementNetworkEnabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isWorkloadManagementNetworkEnabled = new IsWorkloadManagementNetworkEnabled(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("tenantInternetGatewayIds"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(new ResourceIdentifier(item.GetString()));
-                                }
-                            }
-                            tenantInternetGatewayIds = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("ipv4AddressSpace"u8))
-                        {
-                            ipv4AddressSpace = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("ipv6AddressSpace"u8))
-                        {
-                            ipv6AddressSpace = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("nfcSku"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            nfcSku = new NetworkFabricControllerSKU(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -402,20 +133,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                annotation,
-                infrastructureExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>(),
-                workloadExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>(),
-                infrastructureServices,
-                workloadServices,
-                managedResourceGroupConfiguration,
-                networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                workloadManagementNetwork,
-                isWorkloadManagementNetworkEnabled,
-                tenantInternetGatewayIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                ipv4AddressSpace,
-                ipv6AddressSpace,
-                nfcSku,
-                provisioningState,
+                properties,
                 serializedAdditionalRawData);
         }
 
