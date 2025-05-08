@@ -73,7 +73,7 @@ namespace Azure.AI.Projects.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Evaluations_CreateRun_EvaluationsCreateRunMaximumSet()
+        public void Example_Evaluations_Create_EvaluationsCreateMaximumSet()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -104,7 +104,7 @@ namespace Azure.AI.Projects.Samples
                     },
                 },
             });
-            Response response = client.CreateRun(content);
+            Response response = client.Create(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -114,7 +114,7 @@ namespace Azure.AI.Projects.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Evaluations_CreateRun_EvaluationsCreateRunMaximumSet_Async()
+        public async Task Example_Evaluations_Create_EvaluationsCreateMaximumSet_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -145,7 +145,7 @@ namespace Azure.AI.Projects.Samples
                     },
                 },
             });
-            Response response = await client.CreateRunAsync(content);
+            Response response = await client.CreateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -155,7 +155,7 @@ namespace Azure.AI.Projects.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Evaluations_CreateRun_EvaluationsCreateRunMaximumSet_Convenience()
+        public void Example_Evaluations_Create_EvaluationsCreateMaximumSet_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -184,12 +184,12 @@ namespace Azure.AI.Projects.Samples
 ["key9192"] = "e"
 },
             };
-            Response<Evaluation> response = client.CreateRun(evaluation);
+            Response<Evaluation> response = client.Create(evaluation);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Evaluations_CreateRun_EvaluationsCreateRunMaximumSet_Convenience_Async()
+        public async Task Example_Evaluations_Create_EvaluationsCreateMaximumSet_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -218,12 +218,12 @@ namespace Azure.AI.Projects.Samples
 ["key9192"] = "e"
 },
             };
-            Response<Evaluation> response = await client.CreateRunAsync(evaluation);
+            Response<Evaluation> response = await client.CreateAsync(evaluation);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Evaluations_CreateRun_EvaluationsCreateRunMinimumSet()
+        public void Example_Evaluations_Create_EvaluationsCreateMinimumSet()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -233,7 +233,7 @@ namespace Azure.AI.Projects.Samples
             {
                 evaluators = new object(),
             });
-            Response response = client.CreateRun(content);
+            Response response = client.Create(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -243,7 +243,7 @@ namespace Azure.AI.Projects.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Evaluations_CreateRun_EvaluationsCreateRunMinimumSet_Async()
+        public async Task Example_Evaluations_Create_EvaluationsCreateMinimumSet_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -253,7 +253,7 @@ namespace Azure.AI.Projects.Samples
             {
                 evaluators = new object(),
             });
-            Response response = await client.CreateRunAsync(content);
+            Response response = await client.CreateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -263,26 +263,26 @@ namespace Azure.AI.Projects.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Evaluations_CreateRun_EvaluationsCreateRunMinimumSet_Convenience()
+        public void Example_Evaluations_Create_EvaluationsCreateMinimumSet_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
             Evaluation evaluation = new Evaluation(null, new Dictionary<string, EvaluatorConfiguration>());
-            Response<Evaluation> response = client.CreateRun(evaluation);
+            Response<Evaluation> response = client.Create(evaluation);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Evaluations_CreateRun_EvaluationsCreateRunMinimumSet_Convenience_Async()
+        public async Task Example_Evaluations_Create_EvaluationsCreateMinimumSet_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
             Evaluation evaluation = new Evaluation(null, new Dictionary<string, EvaluatorConfiguration>());
-            Response<Evaluation> response = await client.CreateRunAsync(evaluation);
+            Response<Evaluation> response = await client.CreateAsync(evaluation);
         }
 
         [Test]

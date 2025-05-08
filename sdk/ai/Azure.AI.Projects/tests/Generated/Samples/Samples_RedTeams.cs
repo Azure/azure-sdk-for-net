@@ -28,11 +28,7 @@ namespace Azure.AI.Projects.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("numTurns").ToString());
-            Console.WriteLine(result.GetProperty("attackStrategies")[0].ToString());
-            Console.WriteLine(result.GetProperty("simulationOnly").ToString());
-            Console.WriteLine(result.GetProperty("riskCategories")[0].ToString());
-            Console.WriteLine(result.GetProperty("targetConfig").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("target").GetProperty("type").ToString());
         }
 
         [Test]
@@ -47,11 +43,7 @@ namespace Azure.AI.Projects.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("numTurns").ToString());
-            Console.WriteLine(result.GetProperty("attackStrategies")[0].ToString());
-            Console.WriteLine(result.GetProperty("simulationOnly").ToString());
-            Console.WriteLine(result.GetProperty("riskCategories")[0].ToString());
-            Console.WriteLine(result.GetProperty("targetConfig").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("target").GetProperty("type").ToString());
         }
 
         [Test]
@@ -78,7 +70,7 @@ namespace Azure.AI.Projects.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RedTeams_CreateRun_RedTeamsCreateRunMaximumSet()
+        public void Example_RedTeams_Create_RedTeamsCreateMaximumSet()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -86,7 +78,6 @@ namespace Azure.AI.Projects.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                scanName = "edmalfvznuay",
                 numTurns = 10,
                 attackStrategies = new object[]
             {
@@ -107,20 +98,16 @@ namespace Azure.AI.Projects.Samples
                     key9280 = "fwzjtipl",
                 },
             });
-            Response response = client.CreateRun(content);
+            Response response = client.Create(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("numTurns").ToString());
-            Console.WriteLine(result.GetProperty("attackStrategies")[0].ToString());
-            Console.WriteLine(result.GetProperty("simulationOnly").ToString());
-            Console.WriteLine(result.GetProperty("riskCategories")[0].ToString());
-            Console.WriteLine(result.GetProperty("targetConfig").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("target").GetProperty("type").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RedTeams_CreateRun_RedTeamsCreateRunMaximumSet_Async()
+        public async Task Example_RedTeams_Create_RedTeamsCreateMaximumSet_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -128,7 +115,6 @@ namespace Azure.AI.Projects.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                scanName = "edmalfvznuay",
                 numTurns = 10,
                 attackStrategies = new object[]
             {
@@ -149,28 +135,27 @@ namespace Azure.AI.Projects.Samples
                     key9280 = "fwzjtipl",
                 },
             });
-            Response response = await client.CreateRunAsync(content);
+            Response response = await client.CreateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("numTurns").ToString());
-            Console.WriteLine(result.GetProperty("attackStrategies")[0].ToString());
-            Console.WriteLine(result.GetProperty("simulationOnly").ToString());
-            Console.WriteLine(result.GetProperty("riskCategories")[0].ToString());
-            Console.WriteLine(result.GetProperty("targetConfig").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("target").GetProperty("type").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RedTeams_CreateRun_RedTeamsCreateRunMaximumSet_Convenience()
+        public void Example_RedTeams_Create_RedTeamsCreateMaximumSet_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             RedTeams client = new AIProjectClient(endpoint, credential).GetRedTeamsClient(apiVersion: "2025-05-15-preview");
 
-            RedTeam redTeam = new RedTeam(10, new AttackStrategy[] { AttackStrategy.Easy }, true, new RiskCategory[] { RiskCategory.HateUnfairness }, null)
+            RedTeam redTeam = new RedTeam(null)
             {
-                ScanName = "edmalfvznuay",
+                NumTurns = 10,
+                AttackStrategies = { AttackStrategy.Easy },
+                SimulationOnly = true,
+                RiskCategories = { RiskCategory.HateUnfairness },
                 ApplicationScenario = "qaxxxhjp",
                 Tags =
 {
@@ -181,20 +166,23 @@ namespace Azure.AI.Projects.Samples
 ["key9280"] = "fwzjtipl"
 },
             };
-            Response<RedTeam> response = client.CreateRun(redTeam);
+            Response<RedTeam> response = client.Create(redTeam);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RedTeams_CreateRun_RedTeamsCreateRunMaximumSet_Convenience_Async()
+        public async Task Example_RedTeams_Create_RedTeamsCreateMaximumSet_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             RedTeams client = new AIProjectClient(endpoint, credential).GetRedTeamsClient(apiVersion: "2025-05-15-preview");
 
-            RedTeam redTeam = new RedTeam(10, new AttackStrategy[] { AttackStrategy.Easy }, true, new RiskCategory[] { RiskCategory.HateUnfairness }, null)
+            RedTeam redTeam = new RedTeam(null)
             {
-                ScanName = "edmalfvznuay",
+                NumTurns = 10,
+                AttackStrategies = { AttackStrategy.Easy },
+                SimulationOnly = true,
+                RiskCategories = { RiskCategory.HateUnfairness },
                 ApplicationScenario = "qaxxxhjp",
                 Tags =
 {
@@ -205,12 +193,12 @@ namespace Azure.AI.Projects.Samples
 ["key9280"] = "fwzjtipl"
 },
             };
-            Response<RedTeam> response = await client.CreateRunAsync(redTeam);
+            Response<RedTeam> response = await client.CreateAsync(redTeam);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RedTeams_CreateRun_RedTeamsCreateRunMinimumSet()
+        public void Example_RedTeams_Create_RedTeamsCreateMinimumSet()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -229,20 +217,16 @@ namespace Azure.AI.Projects.Samples
 "HateUnfairness"
             },
             });
-            Response response = client.CreateRun(content);
+            Response response = client.Create(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("numTurns").ToString());
-            Console.WriteLine(result.GetProperty("attackStrategies")[0].ToString());
-            Console.WriteLine(result.GetProperty("simulationOnly").ToString());
-            Console.WriteLine(result.GetProperty("riskCategories")[0].ToString());
-            Console.WriteLine(result.GetProperty("targetConfig").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("target").GetProperty("type").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RedTeams_CreateRun_RedTeamsCreateRunMinimumSet_Async()
+        public async Task Example_RedTeams_Create_RedTeamsCreateMinimumSet_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -261,39 +245,47 @@ namespace Azure.AI.Projects.Samples
 "HateUnfairness"
             },
             });
-            Response response = await client.CreateRunAsync(content);
+            Response response = await client.CreateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("numTurns").ToString());
-            Console.WriteLine(result.GetProperty("attackStrategies")[0].ToString());
-            Console.WriteLine(result.GetProperty("simulationOnly").ToString());
-            Console.WriteLine(result.GetProperty("riskCategories")[0].ToString());
-            Console.WriteLine(result.GetProperty("targetConfig").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("target").GetProperty("type").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RedTeams_CreateRun_RedTeamsCreateRunMinimumSet_Convenience()
+        public void Example_RedTeams_Create_RedTeamsCreateMinimumSet_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             RedTeams client = new AIProjectClient(endpoint, credential).GetRedTeamsClient(apiVersion: "2025-05-15-preview");
 
-            RedTeam redTeam = new RedTeam(10, new AttackStrategy[] { AttackStrategy.Easy }, true, new RiskCategory[] { RiskCategory.HateUnfairness }, null);
-            Response<RedTeam> response = client.CreateRun(redTeam);
+            RedTeam redTeam = new RedTeam(null)
+            {
+                NumTurns = 10,
+                AttackStrategies = { AttackStrategy.Easy },
+                SimulationOnly = true,
+                RiskCategories = { RiskCategory.HateUnfairness },
+            };
+            Response<RedTeam> response = client.Create(redTeam);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RedTeams_CreateRun_RedTeamsCreateRunMinimumSet_Convenience_Async()
+        public async Task Example_RedTeams_Create_RedTeamsCreateMinimumSet_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             RedTeams client = new AIProjectClient(endpoint, credential).GetRedTeamsClient(apiVersion: "2025-05-15-preview");
 
-            RedTeam redTeam = new RedTeam(10, new AttackStrategy[] { AttackStrategy.Easy }, true, new RiskCategory[] { RiskCategory.HateUnfairness }, null);
-            Response<RedTeam> response = await client.CreateRunAsync(redTeam);
+            RedTeam redTeam = new RedTeam(null)
+            {
+                NumTurns = 10,
+                AttackStrategies = { AttackStrategy.Easy },
+                SimulationOnly = true,
+                RiskCategories = { RiskCategory.HateUnfairness },
+            };
+            Response<RedTeam> response = await client.CreateAsync(redTeam);
         }
 
         [Test]
@@ -308,11 +300,7 @@ namespace Azure.AI.Projects.Samples
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("numTurns").ToString());
-                Console.WriteLine(result.GetProperty("attackStrategies")[0].ToString());
-                Console.WriteLine(result.GetProperty("simulationOnly").ToString());
-                Console.WriteLine(result.GetProperty("riskCategories")[0].ToString());
-                Console.WriteLine(result.GetProperty("targetConfig").GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("target").GetProperty("type").ToString());
             }
         }
 
@@ -328,11 +316,7 @@ namespace Azure.AI.Projects.Samples
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("numTurns").ToString());
-                Console.WriteLine(result.GetProperty("attackStrategies")[0].ToString());
-                Console.WriteLine(result.GetProperty("simulationOnly").ToString());
-                Console.WriteLine(result.GetProperty("riskCategories")[0].ToString());
-                Console.WriteLine(result.GetProperty("targetConfig").GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("target").GetProperty("type").ToString());
             }
         }
 

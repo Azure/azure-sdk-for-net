@@ -28,6 +28,7 @@ namespace Azure.AI.Projects.Samples
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("type").ToString());
                 Console.WriteLine(result.GetProperty("target").ToString());
                 Console.WriteLine(result.GetProperty("isDefault").ToString());
@@ -48,6 +49,7 @@ namespace Azure.AI.Projects.Samples
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("type").ToString());
                 Console.WriteLine(result.GetProperty("target").ToString());
                 Console.WriteLine(result.GetProperty("isDefault").ToString());

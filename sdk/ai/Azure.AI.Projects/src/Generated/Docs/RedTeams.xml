@@ -35,7 +35,6 @@ Response response = await client.GetRedTeamAsync("apwpcf", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
-
 Console.WriteLine(result.GetProperty("target").GetProperty("type").ToString());
 ]]></code></example>
     </member>
@@ -51,7 +50,6 @@ Response response = client.GetRedTeam("apwpcf", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
-
 Console.WriteLine(result.GetProperty("target").GetProperty("type").ToString());
 ]]></code></example>
     </member>
@@ -79,7 +77,6 @@ RedTeam redTeam = new RedTeam(null)
         ["key9280"] = "fwzjtipl"
     },
 };
-
 Response<RedTeam> response = await client.CreateAsync(redTeam);
 ]]></code>
 This sample shows how to call CreateAsync.
@@ -87,7 +84,6 @@ This sample shows how to call CreateAsync.
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 RedTeams client = new AIProjectClient(endpoint, credential).GetRedTeamsClient(apiVersion: "2025-05-15-preview");
-
 
 RedTeam redTeam = new RedTeam(null)
 {
@@ -123,7 +119,6 @@ RedTeam redTeam = new RedTeam(null)
         ["key9280"] = "fwzjtipl"
     },
 };
-
 Response<RedTeam> response = client.Create(redTeam);
 ]]></code>
 This sample shows how to call Create.
@@ -131,7 +126,6 @@ This sample shows how to call Create.
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 RedTeams client = new AIProjectClient(endpoint, credential).GetRedTeamsClient(apiVersion: "2025-05-15-preview");
-
 
 RedTeam redTeam = new RedTeam(null)
 {
@@ -173,7 +167,6 @@ using RequestContent content = RequestContent.Create(new
         key9280 = "fwzjtipl",
     },
 });
-
 Response response = await client.CreateAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -199,7 +192,6 @@ using RequestContent content = RequestContent.Create(new
         "HateUnfairness"
     },
 });
-
 Response response = await client.CreateAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -210,7 +202,6 @@ Console.WriteLine(result.GetProperty("target").GetProperty("type").ToString());
     <member name="Create(RequestContent,RequestContext)">
       <example>
 This sample shows how to call Create and parse the result.
-
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
@@ -238,7 +229,6 @@ using RequestContent content = RequestContent.Create(new
         key9280 = "fwzjtipl",
     },
 });
-
 Response response = client.Create(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -264,7 +254,6 @@ using RequestContent content = RequestContent.Create(new
         "HateUnfairness"
     },
 });
-
 Response response = client.Create(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -310,7 +299,6 @@ await foreach (BinaryData item in client.GetRedTeamsAsync(null, 8, 21, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
-
     Console.WriteLine(result.GetProperty("target").GetProperty("type").ToString());
 }
 ]]></code></example>
@@ -327,7 +315,6 @@ foreach (BinaryData item in client.GetRedTeams(null, 8, 21, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
-
     Console.WriteLine(result.GetProperty("target").GetProperty("type").ToString());
 }
 ]]></code></example>

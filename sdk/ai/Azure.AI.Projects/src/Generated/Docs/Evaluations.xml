@@ -86,7 +86,6 @@ Evaluation evaluation = new Evaluation(null, new Dictionary<string, EvaluatorCon
         ["key9192"] = "e"
     },
 };
-
 Response<Evaluation> response = await client.CreateAsync(evaluation);
 ]]></code>
 This sample shows how to call CreateAsync.
@@ -96,7 +95,6 @@ TokenCredential credential = new DefaultAzureCredential();
 Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 Evaluation evaluation = new Evaluation(null, new Dictionary<string, EvaluatorConfiguration>());
-
 Response<Evaluation> response = await client.CreateAsync(evaluation);
 ]]></code></example>
     </member>
@@ -131,7 +129,6 @@ Evaluation evaluation = new Evaluation(null, new Dictionary<string, EvaluatorCon
         ["key9192"] = "e"
     },
 };
-
 Response<Evaluation> response = client.Create(evaluation);
 ]]></code>
 This sample shows how to call Create.
@@ -141,7 +138,6 @@ TokenCredential credential = new DefaultAzureCredential();
 Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
 Evaluation evaluation = new Evaluation(null, new Dictionary<string, EvaluatorConfiguration>());
-
 Response<Evaluation> response = client.Create(evaluation);
 ]]></code></example>
     </member>
@@ -178,7 +174,6 @@ using RequestContent content = RequestContent.Create(new
         },
     },
 });
-
 Response response = await client.CreateAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -186,7 +181,6 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("data").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("evaluators").GetProperty("<key>").GetProperty("id").ToString());
 ]]></code>
-
 This sample shows how to call CreateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
@@ -205,7 +199,6 @@ Console.WriteLine(result.GetProperty("data").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("evaluators").GetProperty("<key>").GetProperty("id").ToString());
 ]]></code></example>
     </member>
-
     <member name="Create(RequestContent,RequestContext)">
       <example>
 This sample shows how to call Create and parse the result.
@@ -240,12 +233,12 @@ using RequestContent content = RequestContent.Create(new
     },
 });
 Response response = client.Create(content);
+
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("data").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("evaluators").GetProperty("<key>").GetProperty("id").ToString());
 ]]></code>
-
 This sample shows how to call Create and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
@@ -256,7 +249,6 @@ using RequestContent content = RequestContent.Create(new
 {
     evaluators = new object(),
 });
-
 Response response = client.Create(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
