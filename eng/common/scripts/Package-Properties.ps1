@@ -452,7 +452,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
 
             if ($shouldInclude) {
 
-                Write-Host $includeMsg
+                LogInfo $includeMsg
                 $packagesWithChanges += $pkg
 
                 if ($pkg.AdditionalValidationPackages) {
@@ -479,7 +479,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
 
             if ($pkg.Name -notin $existingPackageNames) {
                 $pkg.IncludedForValidation = $true
-                Write-Host "Including '$($pkg.Name)' for validation only because it is a dependency of another package."
+                LogInfo "Including '$($pkg.Name)' for validation only because it is a dependency of another package."
                 $packagesWithChanges += $pkg
             }
         }
@@ -491,7 +491,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
         $additionalPackages = &$AdditionalValidationPackagesFromPackageSetFn $packagesWithChanges $diff $allPackageProperties
         $packagesWithChanges += $additionalPackages
         foreach ($pkg in $additionalPackages) {
-            Write-Host "Including '$($pkg.Name)' from the additional validation package set."
+            LogInfo "Including '$($pkg.Name)' from the additional validation package set."
         }
     }
 
