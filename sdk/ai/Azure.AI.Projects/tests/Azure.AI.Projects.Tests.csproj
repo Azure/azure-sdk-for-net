@@ -25,6 +25,7 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="Azure.ResourceManager" />
     <PackageReference Include="Azure.ResourceManager.CognitiveServices" />
+    <PackageReference Include="System.Linq.Async" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 

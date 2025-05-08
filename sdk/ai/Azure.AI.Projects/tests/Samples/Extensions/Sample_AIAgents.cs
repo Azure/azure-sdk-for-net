@@ -111,6 +111,7 @@ public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
         PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
+        #endregion
 
         // Step 1: Create an agent
         #region Snippet:AgentsOverviewCreateAgent
