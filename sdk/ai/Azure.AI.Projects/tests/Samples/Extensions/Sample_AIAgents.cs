@@ -1,0 +1,127 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.AI.Agents.Persistent;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
+
+namespace Azure.AI.Projects.Tests;
+
+public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
+{
+    [Test]
+    [SyncOnly]
+    public void AgentsBasics()
+    {
+        #region Snippet:ExtensionsAgentsBasicsSync
+#if SNIPPET
+        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+#else
+        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+#endif
+        AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+        PersistentAgentsAdministration agentsClient = projectClient.GetPersistentAgentAdministrationClient();
+
+        // Step 1: Create an agent
+        PersistentAgent agent = agentsClient.CreateAgent(
+            model: modelDeploymentName,
+            name: "Math Tutor",
+            instructions: "You are a personal math tutor. Write and run code to answer math questions."
+        );
+
+        /*
+        //// Step 2: Create a thread
+        PersistentAgentThread thread = agentsClient.Threads.CreateThread();
+
+        // Step 3: Add a message to a thread
+        ThreadMessage message = agentsClient.Messages.CreateMessage(
+            thread.Id,
+            MessageRole.User,
+            "I need to solve the equation `3x + 11 = 14`. Can you help me?");
+
+        // Intermission: message is now correlated with thread
+        // Intermission: listing messages will retrieve the message just added
+
+        List<ThreadMessage> messagesList = [.. agentsClient.Messages.GetMessages(thread.Id)];
+        Assert.AreEqual(message.Id, messagesList[0].Id);
+
+        // Step 4: Run the agent
+        ThreadRun run = agentsClient.Runs.CreateRun(
+            thread.Id,
+            agent.Id,
+            additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
+        do
+        {
+            Thread.Sleep(TimeSpan.FromMilliseconds(500));
+            run = agentsClient.Runs.GetRun(thread.Id, run.Id);
+        }
+        while (run.Status == RunStatus.Queued
+            || run.Status == RunStatus.InProgress);
+        Assert.AreEqual(
+            RunStatus.Completed,
+            run.Status,
+            run.LastError?.Message);
+
+
+        Pageable<ThreadMessage> messages
+            = agentsClient.Messages.GetMessages(
+                threadId: thread.Id, order: ListSortOrder.Ascending);
+
+        foreach (ThreadMessage threadMessage in messages)
+        {
+            Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
+            foreach (MessageContent contentItem in threadMessage.ContentItems)
+            {
+                if (contentItem is MessageTextContent textItem)
+                {
+                    Console.Write(textItem.Text);
+                }
+                else if (contentItem is MessageImageFileContent imageFileItem)
+                {
+                    Console.Write($"<image from ID: {imageFileItem.FileId}");
+                }
+                Console.WriteLine();
+            }
+        }
+
+        agentsClient.Threads.DeleteThread(threadId: thread.Id);
+        */
+        agentsClient.DeleteAgent(agentId: agent.Id);
+        #endregion
+
+    }
+
+    [Test]
+    [AsyncOnly]
+    public async Task AgentsBasicsAsync()
+    {
+        #region Snippet:ExtensionsAgentsBasicsAsync
+#if SNIPPET
+        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+#else
+        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+#endif
+        AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+        PersistentAgentsAdministration agentsClient = projectClient.GetPersistentAgentAdministrationClient();
+
+        // Step 1: Create an agent
+        PersistentAgent agent = await agentsClient.CreateAgentAsync(
+            model: modelDeploymentName,
+            name: "Math Tutor",
+            instructions: "You are a personal math tutor. Write and run code to answer math questions."
+        );
+
+        await agentsClient.DeleteAgentAsync(agentId: agent.Id);
+        #endregion
+    }
+}

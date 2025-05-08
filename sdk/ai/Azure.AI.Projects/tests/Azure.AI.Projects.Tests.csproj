@@ -18,6 +18,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <PackageReference Include="Azure.AI.Agents.Persistent" VersionOverride="1.0.0-alpha.20250507.2" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
