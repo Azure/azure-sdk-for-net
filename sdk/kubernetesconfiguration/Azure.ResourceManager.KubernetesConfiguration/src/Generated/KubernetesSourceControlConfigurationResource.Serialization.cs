@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 
         KubernetesSourceControlConfigurationData IJsonModel<KubernetesSourceControlConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KubernetesSourceControlConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<KubernetesSourceControlConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<KubernetesSourceControlConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KubernetesSourceControlConfigurationData>(Data, options, AzureResourceManagerKubernetesConfigurationContext.Default);
 
-        KubernetesSourceControlConfigurationData IPersistableModel<KubernetesSourceControlConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KubernetesSourceControlConfigurationData>(data, options);
+        KubernetesSourceControlConfigurationData IPersistableModel<KubernetesSourceControlConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KubernetesSourceControlConfigurationData>(data, options, AzureResourceManagerKubernetesConfigurationContext.Default);
 
         string IPersistableModel<KubernetesSourceControlConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KubernetesSourceControlConfigurationData>)Data).GetFormatFromOptions(options);
     }

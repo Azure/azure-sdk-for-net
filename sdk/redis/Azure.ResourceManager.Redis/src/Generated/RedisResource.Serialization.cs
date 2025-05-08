@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Redis
 
         RedisData IJsonModel<RedisData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RedisData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RedisData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RedisData>(Data, options, AzureResourceManagerRedisContext.Default);
 
-        RedisData IPersistableModel<RedisData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisData>(data, options);
+        RedisData IPersistableModel<RedisData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisData>(data, options, AzureResourceManagerRedisContext.Default);
 
         string IPersistableModel<RedisData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisData>)Data).GetFormatFromOptions(options);
     }

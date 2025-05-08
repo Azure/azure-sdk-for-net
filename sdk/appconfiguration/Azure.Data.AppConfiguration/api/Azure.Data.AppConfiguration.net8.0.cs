@@ -19,6 +19,12 @@ namespace Azure.Data.AppConfiguration
         public static bool operator !=(Azure.Data.AppConfiguration.AppConfigurationAudience left, Azure.Data.AppConfiguration.AppConfigurationAudience right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class AzureDataAppConfigurationContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureDataAppConfigurationContext() { }
+        public static Azure.Data.AppConfiguration.AzureDataAppConfigurationContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ConfigurationClient
     {
         protected ConfigurationClient() { }

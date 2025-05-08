@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerConnectionPolicyData IJsonModel<SqlServerConnectionPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerConnectionPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlServerConnectionPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlServerConnectionPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerConnectionPolicyData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlServerConnectionPolicyData IPersistableModel<SqlServerConnectionPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerConnectionPolicyData>(data, options);
+        SqlServerConnectionPolicyData IPersistableModel<SqlServerConnectionPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerConnectionPolicyData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<SqlServerConnectionPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerConnectionPolicyData>)Data).GetFormatFromOptions(options);
     }

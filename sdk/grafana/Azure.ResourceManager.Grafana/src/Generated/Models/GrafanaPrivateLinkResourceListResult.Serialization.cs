@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Grafana.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GrafanaPrivateLinkResourceListResult)} does not support writing '{options.Format}' format.");
             }
