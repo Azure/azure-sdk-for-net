@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.ConfidentialLedger
 {
+    public partial class AzureResourceManagerConfidentialLedgerContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerConfidentialLedgerContext() { }
+        public static Azure.ResourceManager.ConfidentialLedger.AzureResourceManagerConfidentialLedgerContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ConfidentialLedgerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerResource>, System.Collections.IEnumerable
     {
         protected ConfidentialLedgerCollection() { }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ElasticSan
 
         ElasticSanVolumeResource IOperationSource<ElasticSanVolumeResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ElasticSanVolumeData>(response.Content);
+            var data = ModelReaderWriter.Read<ElasticSanVolumeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerElasticSanContext.Default);
             return new ElasticSanVolumeResource(_client, data);
         }
 
         async ValueTask<ElasticSanVolumeResource> IOperationSource<ElasticSanVolumeResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ElasticSanVolumeData>(response.Content);
+            var data = ModelReaderWriter.Read<ElasticSanVolumeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerElasticSanContext.Default);
             return await Task.FromResult(new ElasticSanVolumeResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NetApp
 
         NetAppVolumeSnapshotData IJsonModel<NetAppVolumeSnapshotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppVolumeSnapshotData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetAppVolumeSnapshotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetAppVolumeSnapshotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppVolumeSnapshotData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
-        NetAppVolumeSnapshotData IPersistableModel<NetAppVolumeSnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppVolumeSnapshotData>(data, options);
+        NetAppVolumeSnapshotData IPersistableModel<NetAppVolumeSnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppVolumeSnapshotData>(data, options, AzureResourceManagerNetAppContext.Default);
 
         string IPersistableModel<NetAppVolumeSnapshotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppVolumeSnapshotData>)Data).GetFormatFromOptions(options);
     }

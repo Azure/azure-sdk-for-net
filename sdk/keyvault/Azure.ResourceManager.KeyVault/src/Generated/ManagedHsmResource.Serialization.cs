@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.KeyVault
 
         ManagedHsmData IJsonModel<ManagedHsmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedHsmData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedHsmData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagedHsmData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedHsmData>(Data, options, AzureResourceManagerKeyVaultContext.Default);
 
-        ManagedHsmData IPersistableModel<ManagedHsmData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedHsmData>(data, options);
+        ManagedHsmData IPersistableModel<ManagedHsmData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedHsmData>(data, options, AzureResourceManagerKeyVaultContext.Default);
 
         string IPersistableModel<ManagedHsmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedHsmData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataLakeStore
 
         DataLakeStoreTrustedIdProviderData IJsonModel<DataLakeStoreTrustedIdProviderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeStoreTrustedIdProviderData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataLakeStoreTrustedIdProviderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataLakeStoreTrustedIdProviderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataLakeStoreTrustedIdProviderData>(Data, options, AzureResourceManagerDataLakeStoreContext.Default);
 
-        DataLakeStoreTrustedIdProviderData IPersistableModel<DataLakeStoreTrustedIdProviderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeStoreTrustedIdProviderData>(data, options);
+        DataLakeStoreTrustedIdProviderData IPersistableModel<DataLakeStoreTrustedIdProviderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeStoreTrustedIdProviderData>(data, options, AzureResourceManagerDataLakeStoreContext.Default);
 
         string IPersistableModel<DataLakeStoreTrustedIdProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataLakeStoreTrustedIdProviderData>)Data).GetFormatFromOptions(options);
     }

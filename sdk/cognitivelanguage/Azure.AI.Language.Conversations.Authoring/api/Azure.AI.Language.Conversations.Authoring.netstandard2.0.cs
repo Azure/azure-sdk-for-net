@@ -1,5 +1,11 @@
 namespace Azure.AI.Language.Conversations.Authoring
 {
+    public partial class AzureAILanguageConversationsAuthoringContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAILanguageConversationsAuthoringContext() { }
+        public static Azure.AI.Language.Conversations.Authoring.AzureAILanguageConversationsAuthoringContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ConversationAnalysisAuthoringClient
     {
         protected ConversationAnalysisAuthoringClient() { }

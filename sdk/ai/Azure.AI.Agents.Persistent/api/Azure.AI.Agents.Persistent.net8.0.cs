@@ -16,6 +16,12 @@ namespace Azure.AI.Agents.Persistent
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.AISearchIndexResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.AISearchIndexResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureAIAgentsPersistentContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAIAgentsPersistentContext() { }
+        public static Azure.AI.Agents.Persistent.AzureAIAgentsPersistentContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AzureAISearchQueryType : System.IEquatable<Azure.AI.Agents.Persistent.AzureAISearchQueryType>
     {

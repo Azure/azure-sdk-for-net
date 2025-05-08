@@ -198,8 +198,9 @@
 
     <!-- Add System.ClientModel.SourceGeneration project reference if System.ClientModel was contained in ProjectsToConvert -->
     <_DependsOnSystemClientModel Include="@(ProjectsToConvert)" Exclude="System.ClientModel" />
+    <_DependsOnAzureCore Include="@(ProjectsToConvert)" Exclude="Azure.Core" />
     <ProjectReference
-      Condition="'@(_DependsOnSystemClientModel)' != '@(ProjectsToConvert)'"
+      Condition="'@(_DependsOnSystemClientModel)' != '@(ProjectsToConvert)' or '@(_DependsOnAzureCore)' != '@(ProjectsToConvert)'"
       Include="$(RepoRoot)\sdk\core\System.ClientModel\gen\System.ClientModel.SourceGeneration.csproj"
       ReferenceOutputAssembly="false"
       OutputItemType="Analyzer" />

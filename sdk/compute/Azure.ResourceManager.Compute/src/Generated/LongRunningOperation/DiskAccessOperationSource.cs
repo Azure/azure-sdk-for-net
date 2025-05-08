@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Compute
 
         DiskAccessResource IOperationSource<DiskAccessResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DiskAccessData>(response.Content);
+            var data = ModelReaderWriter.Read<DiskAccessData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
             return new DiskAccessResource(_client, data);
         }
 
         async ValueTask<DiskAccessResource> IOperationSource<DiskAccessResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DiskAccessData>(response.Content);
+            var data = ModelReaderWriter.Read<DiskAccessData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
             return await Task.FromResult(new DiskAccessResource(_client, data)).ConfigureAwait(false);
         }
     }
