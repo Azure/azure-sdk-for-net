@@ -56,11 +56,11 @@ namespace Azure.Storage.DataMovement
                 }
                 else if (_totalBytesTransferred > 0 && elapsedTime.Ticks == 0)
                 {
-                    return 0.0
+                    return double.MaxValue; // infinite throughput
                 }
                 else
                 {
-                    return 0.0; 
+                    return 0.0;
                 }
             }
         }
@@ -113,11 +113,11 @@ namespace Azure.Storage.DataMovement
                 {
                     Throughput = (double)bytesTransferred / interval.TotalSeconds;
                 }
-                else // No measurable time difference (interval.Ticks <= 0)
+                else
                 {
                     if (bytesTransferred > 0)
                     {
-                        Throughput = 0.0
+                        Throughput = double.MaxValue; //infinite throughput
                     }
                     else // bytesTransferred == 0
                     {
@@ -145,9 +145,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Disposes the resources used by the <see cref="ThroughputMonitor"/> class asynchronously.
         /// </summary>
-        public DisposeAsync()
-        {
-            return ValueTask.CompletedTask;
-        }
+        public void Dispose()
+        { }
     }
 }
