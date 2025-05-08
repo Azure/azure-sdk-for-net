@@ -16,10 +16,19 @@ namespace MgmtTypeSpec.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="SystemData"/>. </summary>
         internal SystemData()
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SystemData"/>. </summary>
+        /// <param name="createdBy"> The identity that created the resource. </param>
+        /// <param name="createdByType"> The type of identity that created the resource. </param>
+        /// <param name="createdAt"> The timestamp of resource creation (UTC). </param>
+        /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
+        /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
+        /// <param name="lastModifiedAt"> The timestamp of resource last modification (UTC). </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal SystemData(string createdBy, CreatedByType? createdByType, DateTimeOffset? createdAt, string lastModifiedBy, CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedBy = createdBy;

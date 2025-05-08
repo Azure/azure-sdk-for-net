@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 
@@ -29,28 +30,28 @@ internal class ReflectionModelBuilder : ModelReaderWriterTypeBuilder
         //consistent behavior with all other collection error messages so we do this extra check
         if (returnType.IsArray)
         {
-            throw new InvalidOperationException($"{returnType.Name} does not implement {nameof(IPersistableModel<object>)}");
+            throw new InvalidOperationException($"{returnType.ToFriendlyName()} does not implement {nameof(IPersistableModel<object>)}");
         }
         //same thing with immutable and readonly collections
         if (returnType.IsGenericType)
         {
             if (returnType.Namespace?.Equals("System.Collections.Immutable") == true)
             {
-                throw new InvalidOperationException($"{returnType.Name} does not implement {nameof(IPersistableModel<object>)}");
+                throw new InvalidOperationException($"{returnType.ToFriendlyName()} does not implement {nameof(IPersistableModel<object>)}");
             }
 
             var genericType = returnType.GetGenericTypeDefinition();
 
             if (genericType.Equals(typeof(ReadOnlyCollection<>)) || genericType.Equals(typeof(ReadOnlyDictionary<,>)))
             {
-                throw new InvalidOperationException($"{returnType.Name} does not implement {nameof(IPersistableModel<object>)}");
+                throw new InvalidOperationException($"{returnType.ToFriendlyName()} does not implement {nameof(IPersistableModel<object>)}");
             }
         }
 
         var model = GetObjectInstance(returnType) as IPersistableModel<object>;
         if (model is null)
         {
-            throw new InvalidOperationException($"{returnType.Name} does not implement {nameof(IPersistableModel<object>)}");
+            throw new InvalidOperationException($"{returnType.ToFriendlyName()} does not implement {nameof(IPersistableModel<object>)}");
         }
         return model;
     }
@@ -62,14 +63,14 @@ internal class ReflectionModelBuilder : ModelReaderWriterTypeBuilder
 
         if (returnType.IsAbstract && attribute is null)
         {
-            throw new InvalidOperationException($"{returnType.Name} must be decorated with {nameof(PersistableModelProxyAttribute)} to be used with {nameof(ModelReaderWriter)}");
+            throw new InvalidOperationException($"{returnType.ToFriendlyName()} must be decorated with {nameof(PersistableModelProxyAttribute)} to be used with {nameof(ModelReaderWriter)}");
         }
 
         var obj = Activator.CreateInstance(typeToActivate, true);
         if (obj is null)
         {
             //we should never get here, but just in case
-            throw new InvalidOperationException($"Unable to create instance of {typeToActivate.Name}.");
+            throw new InvalidOperationException($"Unable to create instance of {typeToActivate.ToFriendlyName()}.");
         }
 
         return obj;

@@ -13,9 +13,9 @@
 
 	<Target Name="CheckEmitterBuild" BeforeTargets="Build">
 		<!-- Check if the folder does not exist -->
-		<Error Condition="!Exists('..\..\..\node_modules\@typespec\http-client-csharp')" Text="Emitter has not been built please run `npm ci` followed by `npm run build` from ./eng/packages/http-client-csharp folder." />
+		<Error Condition="!Exists('..\..\..\node_modules\@typespec\http-client-csharp')" Text="Emitter has not been built please run `npm ci` from repo root folder, and followed by `npm run build` from ./eng/packages/http-client-csharp folder." />
 	</Target>
-  
+
 	<!-- Copy output to package dist path for local execution -->
 	<Target Name="CopyForNpmPackage" AfterTargets="Build">
 		<Message Text="Copying output to dist path" Importance="high" />
@@ -32,6 +32,27 @@
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Compile>
 		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\RawRequestUriBuilder.cs" LinkBase="Shared/Core">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\TypeFormatters.cs" LinkBase="Shared/Core">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\RequestHeaderExtensions.cs" LinkBase="Shared/Core">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\AppContextSwitchHelper.cs" LinkBase="Shared/Core">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Compile>
+		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\ClientDiagnostics.cs" LinkBase="Shared/Core">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Compile>
+		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\DiagnosticScopeFactory.cs" LinkBase="Shared/Core">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Compile>
+		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\DiagnosticScope.cs" LinkBase="Shared/Core">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Compile>
+		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\HttpMessageSanitizer.cs" LinkBase="Shared/Core">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Compile>
 	</ItemGroup>

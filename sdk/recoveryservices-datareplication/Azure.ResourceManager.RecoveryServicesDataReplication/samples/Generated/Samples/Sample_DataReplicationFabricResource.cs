@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_FabricGet()
+        public async Task Get_GetsTheFabric()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/Fabric_Get.json
-            // this example is just showing the usage of "Fabric_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/Fabric_Get.json
+            // this example is just showing the usage of "FabricModel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_FabricDelete()
+        public async Task Delete_DeletesTheFabric()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/Fabric_Delete.json
-            // this example is just showing the usage of "Fabric_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/Fabric_Delete.json
+            // this example is just showing the usage of "FabricModel_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_FabricUpdate()
+        public async Task Update_UpdatesTheFabric()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/Fabric_Update.json
-            // this example is just showing the usage of "Fabric_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/Fabric_Update.json
+            // this example is just showing the usage of "FabricModel_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             // this example assumes you already have this DataReplicationFabricResource created on azure
             // for more information of creating DataReplicationFabricResource, please refer to the document of DataReplicationFabricResource
             string subscriptionId = "930CEC23-4430-4513-B855-DBA237E2F3BF";
-            string resourceGroupName = "rgrecoveryservicesdatareplication";
+            string resourceGroupName = "rgswagger_2024-09-01";
             string fabricName = "wPR";
             ResourceIdentifier dataReplicationFabricResourceId = DataReplicationFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fabricName);
             DataReplicationFabricResource dataReplicationFabric = client.GetDataReplicationFabricResource(dataReplicationFabricResourceId);
@@ -95,11 +95,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             // invoke the operation
             DataReplicationFabricPatch patch = new DataReplicationFabricPatch
             {
-                Tags =
-{
-["key6664"] = "def"
-},
-                Properties = new DataReplicationFabricProperties(new GeneralFabricModelCustomProperties()),
+                Tags = { },
+                Properties = new DataReplicationFabricProperties(null),
             };
             ArmOperation<DataReplicationFabricResource> lro = await dataReplicationFabric.UpdateAsync(WaitUntil.Completed, patch);
             DataReplicationFabricResource result = lro.Value;

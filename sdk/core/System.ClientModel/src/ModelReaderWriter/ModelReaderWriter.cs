@@ -63,7 +63,7 @@ public static class ModelReaderWriter
         }
         else
         {
-            throw new InvalidOperationException($"{model.GetType().Name} does not implement IPersistableModel");
+            throw new InvalidOperationException($"{model.GetType().ToFriendlyName()} does not implement IPersistableModel");
         }
     }
 
@@ -123,9 +123,14 @@ public static class ModelReaderWriter
         {
             return WritePersistable(iModel, options);
         }
+        else if (model is IPersistableModel<object> objModel)
+        {
+            //used for the class proxy case since the proxy does not need to implement reading and writing for itself
+            return WritePersistable(objModel, options);
+        }
         else
         {
-            var enumerable = model as IEnumerable ?? context.GetTypeBuilder(model!.GetType()).GetItems(model);
+            var enumerable = model as IEnumerable ?? context.GetTypeBuilder(model!.GetType()).ToEnumerable(model);
             if (enumerable is not null)
             {
                 var collectionWriter = CollectionWriter.GetCollectionWriter(enumerable, options);
@@ -133,7 +138,7 @@ public static class ModelReaderWriter
             }
             else
             {
-                throw new InvalidOperationException($"{model!.GetType().Name} must implement IEnumerable or IPersistableModel");
+                throw new InvalidOperationException($"{model!.GetType().ToFriendlyName()} must implement IEnumerable or IPersistableModel");
             }
         }
     }
@@ -276,7 +281,7 @@ public static class ModelReaderWriter
         }
         else
         {
-            throw new InvalidOperationException($"{returnType.Name} must implement IPersistableModel");
+            throw new InvalidOperationException($"{returnType.ToFriendlyName()} must implement IPersistableModel");
         }
     }
 

@@ -16,12 +16,19 @@ namespace MgmtTypeSpec.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
+        /// <param name="name"> The name of the extended location. </param>
+        /// <param name="type"> The type of the extended location. </param>
         internal ExtendedLocation(string name, ExtendedLocationType @type)
         {
             Name = name;
             Type = @type;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
+        /// <param name="name"> The name of the extended location. </param>
+        /// <param name="type"> The type of the extended location. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ExtendedLocation(string name, ExtendedLocationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;

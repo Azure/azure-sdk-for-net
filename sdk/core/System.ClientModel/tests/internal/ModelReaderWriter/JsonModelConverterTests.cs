@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using System.ClientModel.Tests.ModelReaderWriterTests;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Text.Json;
+using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
 {
@@ -141,18 +140,61 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             options.Converters.Add(converter);
             var ex = Assert.Throws<InvalidOperationException>(() => JsonSerializer.Deserialize("{}", typeof(PersistableModel), options));
             Assert.IsNotNull(ex);
-            Assert.AreEqual("No ModelBuilder found for PersistableModel.", ex!.Message);
+            Assert.AreEqual("No ModelReaderWriterTypeBuilder found for PersistableModel.  See 'https://aka.ms/no-modelreaderwritertypebuilder-found' for more info.", ex!.Message);
         }
 
         [Test]
         public void ConvertWithBadContext()
         {
             var options = new JsonSerializerOptions();
-            var converter = new JsonModelConverter(ModelReaderWriterOptions.Json, new BadContext());
+            var converter = new JsonModelConverter(ModelReaderWriterOptions.Json, SystemClientModelTestsInternalContext.Default);
             options.Converters.Add(converter);
             var ex = Assert.Throws<InvalidOperationException>(() => JsonSerializer.Deserialize("{}", typeof(PersistableModel), options));
             Assert.IsNotNull(ex);
             Assert.AreEqual("Either PersistableModel or the PersistableModelProxyAttribute defined needs to implement IJsonModel.", ex!.Message);
+        }
+
+        [Test]
+        public void ConverterAddedWithNoJsonModel()
+        {
+            var data = new Person
+            {
+                Name = "John Doe"
+            };
+            var jsonOptions = new JsonSerializerOptions { Converters = { new JsonModelConverter() } };
+            string json = JsonSerializer.Serialize(data, jsonOptions);
+            Assert.AreEqual("{\"Name\":\"John Doe\"}", json);
+        }
+
+        private class Person
+        {
+            public string? Name { get; init; }
+        }
+
+        [Test]
+        public void ConverterAddedWithMixedJsonModel()
+        {
+            var data = new PersonMixed
+            {
+                Name = "John Doe",
+                Model = new ModelX()
+                {
+                    Name = "MyName",
+                }
+            };
+            var jsonOptions = new JsonSerializerOptions { Converters = { new JsonModelConverter() } };
+            string json = JsonSerializer.Serialize(data, jsonOptions);
+            Assert.AreEqual("{\"Name\":\"John Doe\",\"Model\":{\"kind\":\"X\",\"name\":\"MyName\",\"fields\":[],\"keyValuePairs\":{},\"xProperty\":0}}", json);
+
+            //without converter we should get PascalCase and different property order
+            string json2 = JsonSerializer.Serialize(data);
+            Assert.AreEqual("{\"Name\":\"John Doe\",\"Model\":{\"XProperty\":0,\"Fields\":[],\"KeyValuePairs\":{},\"Kind\":\"X\",\"Name\":\"MyName\"}}", json2);
+        }
+
+        private class PersonMixed
+        {
+            public string? Name { get; init; }
+            public ModelX? Model { get; init; }
         }
 
         private static Dictionary<string, BinaryData> GetRawData(object model)
@@ -168,33 +210,11 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             return (Dictionary<string, BinaryData>)propertyInfo!.GetValue(model)!;
         }
 
-        private class BadContext : ModelReaderWriterContext
-        {
-            private PersistableModelInfo? _persistableModelInfo;
-
-            protected override bool TryGetTypeBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
-            {
-                builder = type switch
-                {
-                    Type t when t == typeof(PersistableModel) => _persistableModelInfo ??= new(),
-                    _ => null
-                };
-                return builder is not null;
-            }
-
-            private class PersistableModelInfo : ModelReaderWriterTypeBuilder
-            {
-                protected override Type BuilderType => typeof(DoesNotImplementPersistableModel);
-
-                protected override object CreateInstance() => new DoesNotImplementPersistableModel();
-            }
-        }
-
-        private class DoesNotImplementPersistableModel
+        internal class DoesNotImplementPersistableModel
         {
         }
 
-        private class PersistableModel : IJsonModel<PersistableModel>
+        internal class PersistableModel : IJsonModel<PersistableModel>
         {
             public PersistableModel Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new();
 

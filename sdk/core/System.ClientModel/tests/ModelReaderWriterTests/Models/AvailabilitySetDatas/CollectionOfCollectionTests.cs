@@ -3,15 +3,15 @@
 
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
 {
     public class CollectionOfCollectionTests : MrwCollectionTests<Collection<Collection<AvailabilitySetData>>, AvailabilitySetData>
     {
         protected override string GetJsonCollectionType() => "ListOfList";
+
+        protected override string CollectionTypeName => "Collection<Collection<AvailabilitySetData>>";
 
         protected override ModelReaderWriterContext Context => new LocalContext();
 
@@ -61,8 +61,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 protected override Type BuilderType => typeof(Collection<Collection<AvailabilitySetData>>);
 
                 protected override Type ItemType => typeof(Collection<AvailabilitySetData>);
-
-                protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new Collection<Collection<AvailabilitySetData>>();
 

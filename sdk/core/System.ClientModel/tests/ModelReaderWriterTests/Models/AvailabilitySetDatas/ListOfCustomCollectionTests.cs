@@ -12,6 +12,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
     {
         protected override string GetJsonCollectionType() => "ListOfList";
 
+        protected override string CollectionTypeName => "List<CustomCollection<AvailabilitySetData>>";
+
         protected override ModelReaderWriterContext Context => new LocalContext();
 
         protected override List<CustomCollection<AvailabilitySetData>> GetModelInstance()
@@ -54,8 +56,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 protected override Type BuilderType => typeof(List<CustomCollection<AvailabilitySetData>>);
 
                 protected override Type ItemType => typeof(CustomCollection<AvailabilitySetData>);
-
-                protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new List<CustomCollection<AvailabilitySetData>>();
 

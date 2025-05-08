@@ -18,10 +18,13 @@ namespace MgmtTypeSpec.Models
     /// <summary></summary>
     public partial class FooData : IJsonModel<FooData>
     {
+        /// <summary> Initializes a new instance of <see cref="FooData"/> for deserialization. </summary>
         internal FooData()
         {
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FooData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -51,6 +54,8 @@ namespace MgmtTypeSpec.Models
             }
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         FooData IJsonModel<FooData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FooData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -66,6 +71,8 @@ namespace MgmtTypeSpec.Models
             return DeserializeFooData(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static FooData DeserializeFooData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -73,13 +80,13 @@ namespace MgmtTypeSpec.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            string name = default;
             string @type = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
             string location = default;
             FooProperties properties = default;
+            string name = default;
             ExtendedLocation extendedLocation = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -90,11 +97,6 @@ namespace MgmtTypeSpec.Models
                         continue;
                     }
                     id = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -162,16 +164,17 @@ namespace MgmtTypeSpec.Models
             }
             return new FooData(
                 id,
-                name,
                 @type,
                 systemData,
                 additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                name,
                 extendedLocation);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<FooData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -181,12 +184,14 @@ namespace MgmtTypeSpec.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FooData)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         FooData IPersistableModel<FooData>.Create(BinaryData data, ModelReaderWriterOptions options) => (FooData)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
@@ -206,6 +211,7 @@ namespace MgmtTypeSpec.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FooData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="fooData"> The <see cref="FooData"/> to serialize into <see cref="RequestContent"/>. </param>

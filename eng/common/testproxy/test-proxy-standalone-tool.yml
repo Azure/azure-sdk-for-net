@@ -32,37 +32,54 @@ steps:
       }
 
       Write-Host "Installing test-proxy version $version"
+      Write-Host "${{ parameters.templateRoot }}/eng/common/testproxy/install-test-proxy.ps1 -Version $version -InstallDirectory $(Build.BinariesDirectory)/test-proxy"
       ${{ parameters.templateRoot }}/eng/common/testproxy/install-test-proxy.ps1 -Version $version -InstallDirectory $(Build.BinariesDirectory)/test-proxy
     displayName: "Install test-proxy"
     condition: and(succeeded(), ${{ parameters.condition }})
 
   - pwsh: |
+      Write-Host "Prepending path with the test proxy tool install location: '$(Build.BinariesDirectory)/test-proxy'"
       Write-Host "##vso[task.prependpath]$(Build.BinariesDirectory)/test-proxy"
     displayName: "Prepend path with test-proxy tool install location"
 
   - ${{ if eq(parameters.runProxy, 'true') }}:
     - pwsh: |
+        Write-Host "Setting ASPNETCORE_Kestrel__Certificates__Default__Path to '${{ parameters.templateRoot }}/eng/common/testproxy/dotnet-devcert.pfx'"
         Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Path]${{ parameters.templateRoot }}/eng/common/testproxy/dotnet-devcert.pfx"
+        Write-Host "Setting ASPNETCORE_Kestrel__Certificates__Default__Password to 'password'"
         Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Password]password"
+        Write-Host "Setting PROXY_MANUAL_START to 'true'"
         Write-Host "##vso[task.setvariable variable=PROXY_MANUAL_START]true"
       displayName: 'Configure Kestrel and PROXY_MANUAL_START Variables'
       condition: and(succeeded(), ${{ parameters.condition }})
 
     - pwsh: |
+        $invocation = @"
+        Start-Process $(PROXY_EXE)
+          -ArgumentList `"start -u --storage-location ${{ parameters.rootFolder }}`"
+          -NoNewWindow -PassThru -RedirectStandardOutput ${{ parameters.rootFolder }}/test-proxy.log
+          -RedirectStandardError ${{ parameters.rootFolder }}/test-proxy-error.log
+        "@
+        Write-Host $invocation
+
         $Process = Start-Process $(PROXY_EXE) `
           -ArgumentList "start -u --storage-location ${{ parameters.rootFolder }}" `
           -NoNewWindow -PassThru -RedirectStandardOutput ${{ parameters.rootFolder }}/test-proxy.log `
           -RedirectStandardError ${{ parameters.rootFolder }}/test-proxy-error.log
 
+        Write-Host "Setting PROXY_PID to $($Process.Id)"
         Write-Host "##vso[task.setvariable variable=PROXY_PID]$($Process.Id)"
       displayName: 'Run the testproxy - windows'
       condition: and(succeeded(), eq(variables['Agent.OS'],'Windows_NT'), ${{ parameters.condition }})
 
     # nohup does NOT continue beyond the current session if you use it within powershell
     - bash: |
+        echo "nohup $(PROXY_EXE) 1>${{ parameters.rootFolder }}/test-proxy.log 2>${{ parameters.rootFolder }}/test-proxy-error.log &"
         nohup $(PROXY_EXE) 1>${{ parameters.rootFolder }}/test-proxy.log 2>${{ parameters.rootFolder }}/test-proxy-error.log &
 
         echo $! > $(Build.SourcesDirectory)/test-proxy.pid
+
+        echo "Setting PROXY_PID to $(cat $(Build.SourcesDirectory)/test-proxy.pid)"
         echo "##vso[task.setvariable variable=PROXY_PID]$(cat $(Build.SourcesDirectory)/test-proxy.pid)"
       displayName: "Run the testproxy - linux/mac"
       condition: and(succeeded(), ne(variables['Agent.OS'],'Windows_NT'), ${{ parameters.condition }})
@@ -71,7 +88,9 @@ steps:
     - pwsh: |
         for ($i = 0; $i -lt 10; $i++) {
             try {
+                Write-Host "Invoke-WebRequest -Uri `"http://localhost:5000/Admin/IsAlive`" | Out-Null"
                 Invoke-WebRequest -Uri "http://localhost:5000/Admin/IsAlive" | Out-Null
+                Write-Host "Successfully connected to the test proxy on port 5000."
                 exit 0
             } catch {
                 Write-Warning "Failed to successfully connect to test proxy. Retrying..."

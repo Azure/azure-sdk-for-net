@@ -11,40 +11,35 @@ namespace Azure.Generator.Management.InputTransformation
     {
         public static InputClient? TransformInputClient(InputClient client)
         {
-            var operationsToKeep = new List<InputOperation>();
-            foreach (var operation in client.Operations)
+            var methodsToKeep = new List<InputServiceMethod>();
+            foreach (var method in client.Methods)
             {
+                var operation = method.Operation;
                 // operations_list has been covered in Azure.ResourceManager already, we don't need to generate it in the client
                 if (operation.CrossLanguageDefinitionId != "Azure.ResourceManager.Operations.list")
                 {
-                    var transformedOperation = new InputOperation(operation.Name, operation.ResourceName, operation.Summary, operation.Doc, operation.Deprecated, operation.Accessibility, TransformInputOperationParameters(operation), operation.Responses, operation.HttpMethod, operation.Uri, operation.Path, operation.ExternalDocsUrl, operation.RequestMediaTypes, operation.BufferResponse, operation.LongRunning, operation.Paging, operation.GenerateProtocolMethod, operation.GenerateConvenienceMethod, operation.CrossLanguageDefinitionId);
-                    operationsToKeep.Add(transformedOperation);
+                    SetSubscriptionIdToMethodParameter(operation);
+                    methodsToKeep.Add(method);
                 }
             }
 
             // We removed the list operation above, we should skip the empty client afterwards
             // There is no need to check sub-clients or custom code since it is specific to handle the above removing
-            if (operationsToKeep.Count == 0) return null;
+            if (methodsToKeep.Count == 0) return null;
 
-            return new InputClient(client.Name, client.Namespace, client.CrossLanguageDefinitionId, client.Summary, client.Doc, operationsToKeep, client.Parameters, client.Parent);
+            return new InputClient(client.Name, client.Namespace, client.CrossLanguageDefinitionId, client.Summary, client.Doc, methodsToKeep, client.Parameters, client.Parent, client.Children);
         }
 
-        private static IReadOnlyList<InputParameter> TransformInputOperationParameters(InputOperation operation)
+        private static void SetSubscriptionIdToMethodParameter(InputOperation operation)
         {
-            var parameters = new List<InputParameter>();
             foreach (var parameter in operation.Parameters)
             {
                 if (parameter.NameInRequest.Equals("subscriptionId", StringComparison.OrdinalIgnoreCase))
                 {
                     // Always set subscriptionId to method parameter
-                    parameters.Add(new InputParameter(parameter.Name, parameter.NameInRequest, parameter.Summary, parameter.Doc, parameter.Type, parameter.Location, parameter.DefaultValue, InputOperationParameterKind.Method, parameter.IsRequired, parameter.IsApiVersion, parameter.IsContentType, parameter.IsEndpoint, parameter.SkipUrlEncoding, parameter.Explode, parameter.ArraySerializationDelimiter, parameter.HeaderCollectionPrefix));
-                }
-                else
-                {
-                    parameters.Add(parameter);
+                    parameter.Update(InputParameterKind.Method);
                 }
             }
-            return parameters;
         }
     }
 }

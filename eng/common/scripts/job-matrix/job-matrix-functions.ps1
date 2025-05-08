@@ -101,8 +101,8 @@ function GenerateMatrix(
 ) {
     $result = ProcessImport $config.matrixParameters $selectFromMatrixType $nonSparseParameters $config.displayNamesLookup
 
-    $matrixParameters          = $result.Matrix
-    $importedMatrix            = $result.ImportedMatrix
+    $matrixParameters = $result.Matrix
+    $importedMatrix = $result.ImportedMatrix
     $combinedDisplayNameLookup = $result.DisplayNamesLookup
 
     if ($selectFromMatrixType -eq "sparse") {
@@ -148,7 +148,7 @@ function ProcessNonSparseParameters(
     $nonSparse = [MatrixParameter[]]@()
 
     foreach ($param in $parameters) {
-        if ($null -eq $param){
+        if ($null -eq $param) {
             continue
         }
         if ($param.Name -in $nonSparseParameters) {
@@ -430,9 +430,9 @@ function ProcessImport([MatrixParameter[]]$matrix, [String]$selection, [Array]$n
     }
     if ((!$matrix -and !$importPath) -or !$importPath) {
         return [PSCustomObject]@{
-            Matrix                = $matrix
-            ImportedMatrix        = @()
-            DisplayNamesLookup    = $displayNamesLookup
+            Matrix             = $matrix
+            ImportedMatrix     = @()
+            DisplayNamesLookup = $displayNamesLookup
         }
     }
 
@@ -456,9 +456,9 @@ function ProcessImport([MatrixParameter[]]$matrix, [String]$selection, [Array]$n
     }
 
     return [PSCustomObject]@{
-        Matrix                = $matrix ?? @()
-        ImportedMatrix        = $importedMatrix
-        DisplayNamesLookup    = $combinedDisplayNameLookup
+        Matrix             = $matrix ?? @()
+        ImportedMatrix     = $importedMatrix
+        DisplayNamesLookup = $combinedDisplayNameLookup
     }
 }
 
@@ -643,7 +643,7 @@ function InitializeMatrix {
 function GetMatrixDimensions([MatrixParameter[]]$parameters) {
     $dimensions = @()
     foreach ($param in $parameters) {
-        if ($null -eq $param){
+        if ($null -eq $param) {
             continue
         }
         $dimensions += $param.Length()
@@ -760,12 +760,12 @@ function Get4dMatrixIndex([int]$index, [Array]$dimensions) {
 
 function GenerateMatrixForConfig {
     param (
-      [Parameter(Mandatory = $true)][string] $ConfigPath,
-      [Parameter(Mandatory = $true)][string] $Selection,
-      [Parameter(Mandatory = $false)][string] $DisplayNameFilter,
-      [Parameter(Mandatory = $false)][array] $Filters,
-      [Parameter(Mandatory = $false)][array] $Replace,
-      [Parameter(Mandatory = $false)][Array] $NonSparseParameters = @()
+        [Parameter(Mandatory = $true)][string] $ConfigPath,
+        [Parameter(Mandatory = $true)][string] $Selection,
+        [Parameter(Mandatory = $false)][string] $DisplayNameFilter,
+        [Parameter(Mandatory = $false)][array] $Filters,
+        [Parameter(Mandatory = $false)][array] $Replace,
+        [Parameter(Mandatory = $false)][Array] $NonSparseParameters = @()
     )
     $matrixFile = Join-Path $PSScriptRoot ".." ".." ".." ".." $ConfigPath
 
@@ -776,12 +776,12 @@ function GenerateMatrixForConfig {
     $Filters = $Filters | Where-Object { $_ }
 
     [array]$matrix = GenerateMatrix `
-      -config $config `
-      -selectFromMatrixType $Selection `
-      -displayNameFilter $DisplayNameFilter `
-      -filters $Filters `
-      -replace $Replace `
-      -nonSparseParameters $NonSparseParameters
+        -config $config `
+        -selectFromMatrixType $Selection `
+        -displayNameFilter $DisplayNameFilter `
+        -filters $Filters `
+        -replace $Replace `
+        -nonSparseParameters $NonSparseParameters
 
     return , $matrix
 }

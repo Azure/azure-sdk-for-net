@@ -53,11 +53,13 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="ElasticPoolPerDatabaseSettings"/>. </summary>
         /// <param name="minCapacity"> The minimum capacity all databases are guaranteed. </param>
         /// <param name="maxCapacity"> The maximum capacity any one database can consume. </param>
+        /// <param name="autoPauseDelay"> Auto Pause Delay for per database within pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticPoolPerDatabaseSettings(double? minCapacity, double? maxCapacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticPoolPerDatabaseSettings(double? minCapacity, double? maxCapacity, int? autoPauseDelay, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MinCapacity = minCapacity;
             MaxCapacity = maxCapacity;
+            AutoPauseDelay = autoPauseDelay;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -67,5 +69,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The maximum capacity any one database can consume. </summary>
         [WirePath("maxCapacity")]
         public double? MaxCapacity { get; set; }
+        /// <summary> Auto Pause Delay for per database within pool. </summary>
+        [WirePath("autoPauseDelay")]
+        public int? AutoPauseDelay { get; set; }
     }
 }

@@ -31,10 +31,10 @@ namespace Azure.Generator.Providers
                 DefaultValue = Null
             };
 
-        public CollectionResultDefinition(ClientProvider client, InputOperation operation, CSharpType? itemModelType, bool isAsync)
+        public CollectionResultDefinition(ClientProvider client, InputPagingServiceMethod serviceMethod, CSharpType? itemModelType, bool isAsync)
         {
             _client = client;
-            _operation = operation;
+            _operation = serviceMethod.Operation;
             _itemModelType = itemModelType ?? new CSharpType(typeof(BinaryData));
             _isAsync = isAsync;
         }

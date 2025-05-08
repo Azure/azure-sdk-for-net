@@ -28,8 +28,10 @@ while (true)
     Console.Write("> ");
     string prompt = Console.ReadLine();
 
-    if (string.IsNullOrEmpty(prompt)) continue;
-    if (string.Equals(prompt, "bye", StringComparison.OrdinalIgnoreCase)) break;
+    if (string.IsNullOrEmpty(prompt))
+        continue;
+    if (string.Equals(prompt, "bye", StringComparison.OrdinalIgnoreCase))
+        break;
     if (prompt.StartsWith("fact:", StringComparison.OrdinalIgnoreCase))
     {
         string fact = prompt[5..].Trim();
@@ -38,7 +40,7 @@ while (true)
     }
     if (prompt.StartsWith("mcp:", StringComparison.OrdinalIgnoreCase))
     {
-        string mcp = prompt[7..].Trim();
+        string mcp = prompt[4..].Trim();
         Console.WriteLine($"adding MCP server {mcp}");
         await runner.Tools.AddMcpServerAsync(new Uri(mcp)).ConfigureAwait(false);
         continue;

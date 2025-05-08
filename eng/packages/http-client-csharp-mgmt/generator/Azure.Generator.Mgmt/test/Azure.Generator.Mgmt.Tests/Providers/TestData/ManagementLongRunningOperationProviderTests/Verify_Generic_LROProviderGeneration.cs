@@ -57,16 +57,12 @@ namespace Samples
                 new global::Azure.Core.SequentialDelayStrategy());
         }
 
-        /// <summary> Gets the Id. </summary>
         public override string Id => (_operationId ?? global::Azure.Core.NextLinkOperationImplementation.NotSet);
 
-        /// <summary> Gets the Value. </summary>
         public override T Value => _operation.Value;
 
-        /// <summary> Gets the HasValue. </summary>
         public override bool HasValue => _operation.HasValue;
 
-        /// <summary> Gets the HasCompleted. </summary>
         public override bool HasCompleted => _operation.HasCompleted;
 
         private string GetOperationId(global::Azure.Core.RehydrationToken? rehydrationToken)
@@ -79,28 +75,20 @@ namespace Samples
             return lroDetails["id"];
         }
 
-        /// <inheritdoc/>
         public override global::Azure.Core.RehydrationToken? GetRehydrationToken() => (_nextLinkOperation?.GetRehydrationToken() ?? _completeRehydrationToken);
 
-        /// <inheritdoc/>
         public override global::Azure.Response GetRawResponse() => _operation.RawResponse;
 
-        /// <inheritdoc/>
         public override global::Azure.Response UpdateStatus(global::System.Threading.CancellationToken cancellationToken = ((global::System.Threading.CancellationToken)default)) => _operation.UpdateStatus(cancellationToken);
 
-        /// <inheritdoc/>
         public override global::System.Threading.Tasks.ValueTask<global::Azure.Response> UpdateStatusAsync(global::System.Threading.CancellationToken cancellationToken = ((global::System.Threading.CancellationToken)default)) => _operation.UpdateStatusAsync(cancellationToken);
 
-        /// <inheritdoc/>
         public override global::Azure.Response<T> WaitForCompletion(global::System.Threading.CancellationToken cancellationToken = ((global::System.Threading.CancellationToken)default)) => _operation.WaitForCompletion(cancellationToken);
 
-        /// <inheritdoc/>
         public override global::Azure.Response<T> WaitForCompletion(global::System.TimeSpan pollingInterval, global::System.Threading.CancellationToken cancellationToken = ((global::System.Threading.CancellationToken)default)) => _operation.WaitForCompletion(pollingInterval, cancellationToken);
 
-        /// <inheritdoc/>
         public override global::System.Threading.Tasks.ValueTask<global::Azure.Response<T>> WaitForCompletionAsync(global::System.Threading.CancellationToken cancellationToken = ((global::System.Threading.CancellationToken)default)) => _operation.WaitForCompletionAsync(cancellationToken);
 
-        /// <inheritdoc/>
         public override global::System.Threading.Tasks.ValueTask<global::Azure.Response<T>> WaitForCompletionAsync(global::System.TimeSpan pollingInterval, global::System.Threading.CancellationToken cancellationToken = ((global::System.Threading.CancellationToken)default)) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

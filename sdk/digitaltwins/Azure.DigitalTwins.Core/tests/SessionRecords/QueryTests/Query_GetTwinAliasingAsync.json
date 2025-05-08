@@ -1,0 +1,3071 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Afloor%3B12572950?includeModelDefinition=true&api-version=2023-10-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-106c5f814a5081883a7cb3c12c3c95bc-277daefe6a48c57b-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET Framework 4.8.9300.0; Microsoft Windows 10.0.26100 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "212",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 02 May 2025 14:59:46 GMT",
+        "mise-correlation-id": "0e149d93-649d-42d3-81bb-e3dcc1ff01da",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-106c5f814a5081883a7cb3c12c3c95bc-5e9d7937949cde72-01",
+        "x-ms-error-code": "ModelNotFound"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ModelNotFound",
+          "message": "There is no Model(s) available that matches the provided id(s) dtmi:example:floor;12572950. Check that the Model ID provided is valid by doing a Model_List API call."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Aroom%3B113684847?includeModelDefinition=true&api-version=2023-10-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-6dca48c979173e7d2b73d8ae536622df-5d9f509e83e4991e-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET Framework 4.8.9300.0; Microsoft Windows 10.0.26100 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "212",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 02 May 2025 14:59:46 GMT",
+        "mise-correlation-id": "4e2e359d-7b23-4ae2-94e1-77686ecc81fe",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-6dca48c979173e7d2b73d8ae536622df-69e2a6ab4df1e881-01",
+        "x-ms-error-code": "ModelNotFound"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ModelNotFound",
+          "message": "There is no Model(s) available that matches the provided id(s) dtmi:example:room;113684847. Check that the Model ID provided is valid by doing a Model_List API call."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models?api-version=2023-10-31",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "804",
+        "Content-Type": "application/json",
+        "traceparent": "00-d159f71199944557d20563efed55ac5e-2dbaa56719404714-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET Framework 4.8.9300.0; Microsoft Windows 10.0.26100 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[{    \"@id\": \"dtmi:example:room;113684847\",    \"@type\": \"Interface\",    \"displayName\": \"Room\",    \"description\": \"An enclosure inside a building.\",    \"contents\": [        {            \"@type\": \"Relationship\",            \"name\": \"containedIn\",            \"target\": \"dtmi:example:floor;12572950\"        },        {            \"@type\": \"Property\",            \"name\": \"Temperature\",            \"schema\": \"double\"        },        {            \"@type\": \"Property\",            \"name\": \"Humidity\",            \"schema\": \"double\"        },        {            \"@type\": \"Property\",            \"name\": \"IsOccupied\",            \"schema\": \"boolean\"        },        {            \"@type\": \"Property\",            \"name\": \"EmployeeId\",            \"schema\": \"string\"        }    ],    \"@context\": \"dtmi:dtdl:context;2\"}]",
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "193",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 02 May 2025 14:59:46 GMT",
+        "mise-correlation-id": "1bbfd351-7379-4100-887e-65c66b654123",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-d159f71199944557d20563efed55ac5e-90e9eb759135d18a-01"
+      },
+      "ResponseBody": "[{\"id\":\"dtmi:example:room;113684847\",\"description\":{\"en\":\"An enclosure inside a building.\"},\"displayName\":{\"en\":\"Room\"},\"decommissioned\":false,\"uploadTime\":\"2025-05-02T14:59:46.6445502+00:00\"}]"
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models?includeModelDefinition=false&api-version=2023-10-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9acd70e8cd657c148c218e30b3ecab8b-992ad459af5f22d4-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET Framework 4.8.9300.0; Microsoft Windows 10.0.26100 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "6289",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 02 May 2025 14:59:46 GMT",
+        "mise-correlation-id": "539fe622-e785-42a0-9b79-b91bdddcce1e",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-9acd70e8cd657c148c218e30b3ecab8b-d3c388e500541430-01"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "dtmi:example:room;119382704",
+            "description": {
+              "en": "An enclosure inside a building."
+            },
+            "displayName": {
+              "en": "Room"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:44:45.4197809+00:00"
+          },
+          {
+            "id": "dtmi:example:room;114026432",
+            "description": {
+              "en": "An enclosure inside a building."
+            },
+            "displayName": {
+              "en": "Room"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:44:45.5534663+00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;111326234",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:46:47.6510037+00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;198987536",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:47:24.9968634+00:00"
+          },
+          {
+            "id": "dtmi:com:microsoft:azure:iot:model0;1",
+            "description": {
+              "en": "This is the description of model"
+            },
+            "displayName": {
+              "en": "This is the display name"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:47:28.9178575+00:00"
+          },
+          {
+            "id": "dtmi:com:microsoft:azure:iot:model1;1",
+            "description": {
+              "en": "This is the description of model"
+            },
+            "displayName": {
+              "en": "This is the display name"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:47:28.9178977+00:00"
+          },
+          {
+            "id": "dtmi:com:microsoft:azure:iot:model2;1",
+            "description": {
+              "en": "This is the description of model"
+            },
+            "displayName": {
+              "en": "This is the display name"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:47:28.9179239+00:00"
+          },
+          {
+            "id": "dtmi:com:microsoft:azure:iot:model3;1",
+            "description": {
+              "en": "This is the description of model"
+            },
+            "displayName": {
+              "en": "This is the display name"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:47:28.9179507+00:00"
+          },
+          {
+            "id": "dtmi:com:microsoft:azure:iot:model4;1",
+            "description": {
+              "en": "This is the description of model"
+            },
+            "displayName": {
+              "en": "This is the display name"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:47:28.9179772+00:00"
+          },
+          {
+            "id": "dtmi:com:microsoft:azure:iot:model5;1",
+            "description": {
+              "en": "This is the description of model"
+            },
+            "displayName": {
+              "en": "This is the display name"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:47:28.9180025+00:00"
+          },
+          {
+            "id": "dtmi:com:microsoft:azure:iot:model6;1",
+            "description": {
+              "en": "This is the description of model"
+            },
+            "displayName": {
+              "en": "This is the display name"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:47:28.9180294+00:00"
+          },
+          {
+            "id": "dtmi:com:microsoft:azure:iot:model7;1",
+            "description": {
+              "en": "This is the description of model"
+            },
+            "displayName": {
+              "en": "This is the display name"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:47:28.9180545+00:00"
+          },
+          {
+            "id": "dtmi:com:microsoft:azure:iot:model8;1",
+            "description": {
+              "en": "This is the description of model"
+            },
+            "displayName": {
+              "en": "This is the display name"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:47:28.9180822+00:00"
+          },
+          {
+            "id": "dtmi:com:microsoft:azure:iot:model9;1",
+            "description": {
+              "en": "This is the description of model"
+            },
+            "displayName": {
+              "en": "This is the display name"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:47:28.9181069+00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;110488248",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:48:26.4793296+00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;117562087",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:48:40.3384767+00:00"
+          },
+          {
+            "id": "dtmi:example:room;114406912",
+            "description": {
+              "en": "An enclosure inside a building."
+            },
+            "displayName": {
+              "en": "Room"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:50:42.2411842+00:00"
+          },
+          {
+            "id": "dtmi:example:room;119807591",
+            "description": {
+              "en": "An enclosure inside a building."
+            },
+            "displayName": {
+              "en": "Room"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:50:43.5129491+00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;110689500",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:51:54.7001642+00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;117182668",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:51:57.4115205+00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;188278159",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:53:30.9595462+00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;128971351",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:53:34.2336942+00:00"
+          },
+          {
+            "id": "dtmi:example:room;133283964",
+            "description": {
+              "en": "An enclosure inside a building."
+            },
+            "displayName": {
+              "en": "Room"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:55:24.1517427+00:00"
+          },
+          {
+            "id": "dtmi:example:room;197388588",
+            "description": {
+              "en": "An enclosure inside a building."
+            },
+            "displayName": {
+              "en": "Room"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:55:24.4789272+00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;188540186",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:56:53.0738539+00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;120786730",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:56:55.0820256+00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;114414304",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:58:51.7588304+00:00"
+          },
+          {
+            "id": "dtmi:example:Ward;115407306",
+            "description": {
+              "en": "A separate partition in a building, made of rooms and hallways."
+            },
+            "displayName": {
+              "en": "Ward"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:58:56.5473416+00:00"
+          },
+          {
+            "id": "dtmi:example:room;113684847",
+            "description": {
+              "en": "An enclosure inside a building."
+            },
+            "displayName": {
+              "en": "Room"
+            },
+            "decommissioned": false,
+            "uploadTime": "2025-05-02T14:59:46.6445502+00:00"
+          }
+        ],
+        "nextLink": null
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin985036329?api-version=2023-10-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-c238cf9ea52f08556831ca68cb8dc47c-0a0cde3166b22eb4-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET Framework 4.8.9300.0; Microsoft Windows 10.0.26100 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "271",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 02 May 2025 14:59:46 GMT",
+        "mise-correlation-id": "89fdd003-a597-426b-aa7d-e285f725432b",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-c238cf9ea52f08556831ca68cb8dc47c-9b5bd48927efe047-01",
+        "x-ms-error-code": "DigitalTwinNotFound"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "DigitalTwinNotFound",
+          "message": "There is no digital twin instance that exists with the ID roomTwin985036329. Please verify that the twin id is valid and ensure that the twin is not deleted. See section on querying the twins https://aka.ms/adtv2query."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/roomTwin985036329?api-version=2023-10-31",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "154",
+        "Content-Type": "application/json",
+        "traceparent": "00-1e864f8ba2274c43ef8c151a02f9727d-c206f4e0478cf0c8-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET Framework 4.8.9300.0; Microsoft Windows 10.0.26100 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "$dtId": null,
+        "$etag": null,
+        "Temperature": 80,
+        "Humidity": 25,
+        "IsOccupied": true,
+        "EmployeeId": "Employee1",
+        "$metadata": {
+          "$model": "dtmi:example:room;113684847"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "509",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 02 May 2025 14:59:46 GMT",
+        "ETag": "W/\"a22c3421-21a4-4535-8ab9-1064704004b0\"",
+        "mise-correlation-id": "028ecb08-348e-496b-9895-5bed0c2c1ede",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-1e864f8ba2274c43ef8c151a02f9727d-974c319e4e7b2cdc-01"
+      },
+      "ResponseBody": {
+        "$dtId": "roomTwin985036329",
+        "$etag": "W/\"a22c3421-21a4-4535-8ab9-1064704004b0\"",
+        "Temperature": 80,
+        "Humidity": 25,
+        "IsOccupied": true,
+        "EmployeeId": "Employee1",
+        "$metadata": {
+          "$model": "dtmi:example:room;113684847",
+          "$lastUpdateTime": "2025-05-02T14:59:46.8254956Z",
+          "Temperature": {
+            "lastUpdateTime": "2025-05-02T14:59:46.8254956Z"
+          },
+          "Humidity": {
+            "lastUpdateTime": "2025-05-02T14:59:46.8254956Z"
+          },
+          "IsOccupied": {
+            "lastUpdateTime": "2025-05-02T14:59:46.8254956Z"
+          },
+          "EmployeeId": {
+            "lastUpdateTime": "2025-05-02T14:59:46.8254956Z"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/query?api-version=2023-10-31",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "40",
+        "Content-Type": "application/json",
+        "traceparent": "00-1ba947264162189bb70b22c254118abd-84bda8904c16ed03-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET Framework 4.8.9300.0; Microsoft Windows 10.0.26100 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "query": "SELECT D FROM DIGITALTWINS D"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 02 May 2025 14:59:56 GMT",
+        "mise-correlation-id": "8073bd84-1ce4-437f-9c02-4b5333c49913",
+        "query-charge": "13.68",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-1ba947264162189bb70b22c254118abd-38db9f878fdf7cf0-01",
+        "Transfer-Encoding": "chunked"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "D": {
+              "$dtId": "roomTwin1073937934",
+              "$etag": "W/\"89f47a8f-2670-413d-b4d3-0649eb09e362\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;114026432",
+                "$lastUpdateTime": "2025-05-02T14:44:45.8725918Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:44:45.8725918Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:44:45.8725918Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:44:45.8725918Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:44:45.8725918Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin58997401",
+              "$etag": "W/\"d8229501-84ea-42b2-b6a0-d87315b48685\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;119382704",
+                "$lastUpdateTime": "2025-05-02T14:44:45.7692063Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:44:45.7692063Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:44:45.7692063Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:44:45.7692063Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:44:45.7692063Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin648906427",
+              "$etag": "W/\"b0452b04-b0fb-402c-96f8-6bea4356523e\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;143062150",
+                "$lastUpdateTime": "2025-05-02T14:46:11.1647150Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:46:11.1647150Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:46:11.1647150Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:46:11.1647150Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:46:11.1647150Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1206339783",
+              "$etag": "W/\"0fb93808-000e-497f-a9df-e46f58a84e24\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;182892458",
+                "$lastUpdateTime": "2025-05-02T14:46:11.1963750Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:46:11.1963750Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:46:11.1963750Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:46:11.1963750Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:46:11.1963750Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1173564018",
+              "$etag": "W/\"84a2e8e6-d704-4832-a7fa-16762c3e9c7a\"",
+              "Temperature": 70,
+              "Humidity": 30,
+              "IsOccupied": true,
+              "$metadata": {
+                "$model": "dtmi:example:room;121254366",
+                "$lastUpdateTime": "2025-05-02T14:46:47.9996258Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:46:47.9996258Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:46:47.9996258Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:46:47.8641816Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin926571249",
+              "$etag": "W/\"5709faac-c5f4-4640-ae73-a25a02e22dcd\"",
+              "Temperature": 70,
+              "Humidity": 30,
+              "IsOccupied": true,
+              "$metadata": {
+                "$model": "dtmi:example:room;178022662",
+                "$lastUpdateTime": "2025-05-02T14:46:48.1203370Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:46:48.1203370Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:46:48.1203370Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:46:47.9609479Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "twin2",
+              "$etag": "W/\"2082992f-ea40-415b-a06c-67de4d581359\"",
+              "property2": "propertyValue1",
+              "property21": 10,
+              "property22": {
+                "subProperty1": "subProperty1Value",
+                "subProperty2": "subProperty2Value"
+              },
+              "$metadata": {
+                "$model": "dtmi:com:microsoft:azure:iot:model2;1",
+                "$lastUpdateTime": "2025-05-02T14:59:00.0162847Z",
+                "property2": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0162847Z"
+                },
+                "property21": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0162847Z"
+                },
+                "property22": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0162847Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "twin5",
+              "$etag": "W/\"d50aacb8-ab79-4056-9885-0248134660fc\"",
+              "property5": "propertyValue1",
+              "property51": 10,
+              "property52": {
+                "subProperty1": "subProperty1Value",
+                "subProperty2": "subProperty2Value"
+              },
+              "$metadata": {
+                "$model": "dtmi:com:microsoft:azure:iot:model5;1",
+                "$lastUpdateTime": "2025-05-02T14:59:00.0220163Z",
+                "property5": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0220163Z"
+                },
+                "property51": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0220163Z"
+                },
+                "property52": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0220163Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "twin8",
+              "$etag": "W/\"0c6b8e7a-b4e5-4835-bacf-7ee733cb623c\"",
+              "property8": "propertyValue1",
+              "property81": 10,
+              "property82": {
+                "subProperty1": "subProperty1Value",
+                "subProperty2": "subProperty2Value"
+              },
+              "$metadata": {
+                "$model": "dtmi:com:microsoft:azure:iot:model8;1",
+                "$lastUpdateTime": "2025-05-02T14:59:00.0155688Z",
+                "property8": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0155688Z"
+                },
+                "property81": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0155688Z"
+                },
+                "property82": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0155688Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin873368523",
+              "$etag": "W/\"737eb367-edd0-4d15-839a-224af12226e8\"",
+              "Temperature": 70,
+              "Humidity": 30,
+              "IsOccupied": true,
+              "$metadata": {
+                "$model": "dtmi:example:room;142795151",
+                "$lastUpdateTime": "2025-05-02T14:48:42.2791232Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:48:42.2791232Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:48:42.2791232Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:48:42.1810664Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin209290695",
+              "$etag": "W/\"8d945785-e6af-40ab-8aee-f24942e0b825\"",
+              "Temperature": 70,
+              "Humidity": 30,
+              "IsOccupied": true,
+              "$metadata": {
+                "$model": "dtmi:example:room;111555036",
+                "$lastUpdateTime": "2025-05-02T14:48:46.4613748Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:48:46.4613748Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:48:46.4613748Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:48:46.3608225Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin733326239",
+              "$etag": "W/\"963f6e1c-88ae-458c-a532-fd689de3515e\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;139468905",
+                "$lastUpdateTime": "2025-05-02T14:49:29.6203944Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:49:29.6203944Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:49:29.6203944Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:49:29.6203944Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:49:29.6203944Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin612010579",
+              "$etag": "W/\"d5333c89-f06d-4876-9cfb-def643e1b179\"",
+              "Temperature": 70,
+              "Humidity": 80,
+              "IsOccupied": true,
+              "$metadata": {
+                "$model": "dtmi:example:room;112658933",
+                "$lastUpdateTime": "2025-05-02T14:49:29.7715559Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:49:29.6734738Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:49:29.7715559Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:49:29.6151009Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1628021784",
+              "$etag": "W/\"d5f39a75-3b43-410d-bdd0-691bf5310488\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;117065878",
+                "$lastUpdateTime": "2025-05-02T14:49:49.3051420Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:49:49.3051420Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:49:49.3051420Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:49:49.3051420Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:49:49.3051420Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin149335268",
+              "$etag": "W/\"ff40d076-7e0c-4c6b-8f2e-bcf1b64b620b\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;181672563",
+                "$lastUpdateTime": "2025-05-02T14:50:00.5590548Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:00.5590548Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:00.5590548Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:00.5590548Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:00.5590548Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin117110806",
+              "$etag": "W/\"4dbf5c1b-33b5-4ac7-a9be-04783482dd1b\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;181672563",
+                "$lastUpdateTime": "2025-05-02T14:50:01.0706315Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.0706315Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.0706315Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.0706315Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.0706315Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin420972829",
+              "$etag": "W/\"2b58f452-783d-4aa1-b78f-94f5d944d98a\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;181672563",
+                "$lastUpdateTime": "2025-05-02T14:50:01.2127251Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.2127251Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.2127251Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.2127251Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.2127251Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin305047123",
+              "$etag": "W/\"5edbdfc8-f715-4cca-b5b8-abb33d08de3c\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;181672563",
+                "$lastUpdateTime": "2025-05-02T14:50:01.3597553Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.3597553Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.3597553Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.3597553Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.3597553Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1376194265",
+              "$etag": "W/\"8b2d2504-d256-49db-89fd-054f9c573dc4\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;181672563",
+                "$lastUpdateTime": "2025-05-02T14:50:01.4802616Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.4802616Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.4802616Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.4802616Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.4802616Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1059041100",
+              "$etag": "W/\"75898377-6c4f-46d4-b07c-5069d2efb894\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;181672563",
+                "$lastUpdateTime": "2025-05-02T14:50:01.6369485Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.6369485Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.6369485Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.6369485Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.6369485Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1675714910",
+              "$etag": "W/\"b101ada2-f998-4d82-aa08-e63132e4f337\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;145029012",
+                "$lastUpdateTime": "2025-05-02T14:50:03.8742271Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:03.8742271Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:03.8742271Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:03.8742271Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:03.8742271Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1788663127",
+              "$etag": "W/\"1d8cb56a-c9a8-4630-8b2d-e64b7c8f04a5\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;145029012",
+                "$lastUpdateTime": "2025-05-02T14:50:04.0074327Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.0074327Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.0074327Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.0074327Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.0074327Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin475484418",
+              "$etag": "W/\"73018e9e-d57c-4108-9e73-120b62e9fc47\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;145029012",
+                "$lastUpdateTime": "2025-05-02T14:50:04.2284483Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.2284483Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.2284483Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.2284483Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.2284483Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1990978848",
+              "$etag": "W/\"7f312296-0130-4120-9393-9d422f5f3226\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;145029012",
+                "$lastUpdateTime": "2025-05-02T14:50:04.8574591Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.8574591Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.8574591Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.8574591Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.8574591Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin597047670",
+              "$etag": "W/\"2fbcf1d3-2a8c-4767-976a-b9742ec73407\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;162849988",
+                "$lastUpdateTime": "2025-05-02T14:50:11.4544913Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:11.4544913Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:11.4544913Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:11.4544913Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:11.4544913Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin760642041",
+              "$etag": "W/\"051ec7ed-f62e-40db-8515-81a463c9927f\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;114406912",
+                "$lastUpdateTime": "2025-05-02T14:50:42.4581026Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:42.4581026Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:42.4581026Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:42.4581026Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:42.4581026Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1735879959",
+              "$etag": "W/\"80ce8b4a-fa94-449a-af89-5ca6695e4e08\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;121317015",
+                "$lastUpdateTime": "2025-05-02T14:51:00.2373795Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:51:00.2373795Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:51:00.2373795Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:51:00.2373795Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:51:00.2373795Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin752622404",
+              "$etag": "W/\"d3e6b87c-79b6-4d50-b822-227da5b5c046\"",
+              "Temperature": 70,
+              "Humidity": 30,
+              "IsOccupied": true,
+              "$metadata": {
+                "$model": "dtmi:example:room;110756693",
+                "$lastUpdateTime": "2025-05-02T14:51:31.3752766Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:51:31.3752766Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:51:31.3752766Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:51:31.2398536Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin537445043",
+              "$etag": "W/\"9b75bd35-3c1f-4a34-96f1-7fb68b0a9db0\"",
+              "Temperature": 70,
+              "Humidity": 30,
+              "IsOccupied": true,
+              "$metadata": {
+                "$model": "dtmi:example:room;116878654",
+                "$lastUpdateTime": "2025-05-02T14:52:28.2606804Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:52:28.2606804Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:52:28.2606804Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:52:28.1447269Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1023519843",
+              "$etag": "W/\"019a6ecf-0563-4b00-999f-dc29d3a45b35\"",
+              "Temperature": 70,
+              "Humidity": 30,
+              "IsOccupied": true,
+              "$metadata": {
+                "$model": "dtmi:example:room;113746347",
+                "$lastUpdateTime": "2025-05-02T14:52:28.2984226Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:52:28.2984226Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:52:28.2984226Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:52:28.1955755Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin552493939",
+              "$etag": "W/\"a383bd38-e563-4e29-8037-aa90834d3714\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;119546982",
+                "$lastUpdateTime": "2025-05-02T14:54:35.3348320Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:35.3348320Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:35.3348320Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:35.3348320Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:35.3348320Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin94938404",
+              "$etag": "W/\"d25deddb-d78a-4d8d-b784-2117992fa4f0\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;197629291",
+                "$lastUpdateTime": "2025-05-02T14:54:44.5964395Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:44.5964395Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:44.5964395Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:44.5964395Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:44.5964395Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin245810556",
+              "$etag": "W/\"4bc44ea1-7610-47bd-a549-539208b389a6\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;197629291",
+                "$lastUpdateTime": "2025-05-02T14:54:44.9997819Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:44.9997819Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:44.9997819Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:44.9997819Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:44.9997819Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin155834575",
+              "$etag": "W/\"2b3b5d33-dbcd-4dff-8329-6aa775ba32d8\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;197629291",
+                "$lastUpdateTime": "2025-05-02T14:54:44.7268880Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:44.7268880Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:44.7268880Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:44.7268880Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:44.7268880Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1926207914",
+              "$etag": "W/\"cb17e2fb-1f5f-49b8-83cc-9f1c718b57b6\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;197629291",
+                "$lastUpdateTime": "2025-05-02T14:54:45.1058623Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.1058623Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.1058623Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.1058623Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.1058623Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin719633298",
+              "$etag": "W/\"87a4742b-cf9b-4239-a188-211628b399de\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;197629291",
+                "$lastUpdateTime": "2025-05-02T14:54:45.2173938Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.2173938Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.2173938Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.2173938Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.2173938Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin11491696",
+              "$etag": "W/\"465b171c-8a19-489a-87bf-1c5b4c1961b3\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;197629291",
+                "$lastUpdateTime": "2025-05-02T14:54:45.3355503Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.3355503Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.3355503Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.3355503Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.3355503Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin673838841",
+              "$etag": "W/\"c52f08fe-8c29-4a04-8e64-a1ba78ee4286\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;197629291",
+                "$lastUpdateTime": "2025-05-02T14:54:45.5666932Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.5666932Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.5666932Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.5666932Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.5666932Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin518438899",
+              "$etag": "W/\"6ce0935c-bb70-4176-9d96-0d8d0ed70624\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;199027247",
+                "$lastUpdateTime": "2025-05-02T14:54:49.0718333Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.0718333Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.0718333Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.0718333Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.0718333Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin948478708",
+              "$etag": "W/\"1e8515e8-87ca-4f7e-9b84-a62674d7547a\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;199027247",
+                "$lastUpdateTime": "2025-05-02T14:54:49.1788700Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.1788700Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.1788700Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.1788700Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.1788700Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin853976537",
+              "$etag": "W/\"95cf56aa-00e1-4437-b2e2-9e6728ab2c61\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;199027247",
+                "$lastUpdateTime": "2025-05-02T14:54:49.7588913Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.7588913Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.7588913Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.7588913Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.7588913Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1651387182",
+              "$etag": "W/\"13b0d283-6214-4816-a437-b2f010695fe6\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;199027247",
+                "$lastUpdateTime": "2025-05-02T14:54:49.9009985Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.9009985Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.9009985Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.9009985Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.9009985Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin759141009",
+              "$etag": "W/\"6f326654-34fd-4154-8547-df35000b8dd1\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;199027247",
+                "$lastUpdateTime": "2025-05-02T14:54:50.1570413Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:50.1570413Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:50.1570413Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:50.1570413Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:50.1570413Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin653110676",
+              "$etag": "W/\"9b364b79-f8b2-4a8c-aeb4-10a475710aa5\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;128521641",
+                "$lastUpdateTime": "2025-05-02T14:54:52.7012835Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:52.7012835Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:52.7012835Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:52.7012835Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:52.7012835Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin25165793",
+              "$etag": "W/\"fc551af9-56aa-4ea2-b55a-df55c12b609d\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;119889219",
+                "$lastUpdateTime": "2025-05-02T14:56:15.2417434Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:56:15.2417434Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:56:15.2417434Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:56:15.2417434Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:56:15.2417434Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1036481792",
+              "$etag": "W/\"88a49d6d-d397-4033-ad9f-e5b87665f6af\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;111297701",
+                "$lastUpdateTime": "2025-05-02T14:59:31.3586422Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:59:31.3586422Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:59:31.3586422Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:59:31.3586422Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:59:31.3586422Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin985036329",
+              "$etag": "W/\"a22c3421-21a4-4535-8ab9-1064704004b0\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;113684847",
+                "$lastUpdateTime": "2025-05-02T14:59:46.8254956Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:59:46.8254956Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:59:46.8254956Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:59:46.8254956Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:59:46.8254956Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin307073652",
+              "$etag": "W/\"5bd830c6-e130-4971-a5e3-c18a669772f5\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;110339536",
+                "$lastUpdateTime": "2025-05-02T14:45:17.2932894Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:45:17.2932894Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:45:17.2932894Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:45:17.2932894Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:45:17.2932894Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1274540152",
+              "$etag": "W/\"0f5609b5-beb4-46d9-96dd-79c152adf5bc\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;198934171",
+                "$lastUpdateTime": "2025-05-02T14:45:20.1259414Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:45:20.1259414Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:45:20.1259414Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:45:20.1259414Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:45:20.1259414Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "twin3",
+              "$etag": "W/\"44d6ce8f-232c-434b-9c0b-d61aee0ac7a0\"",
+              "property3": "propertyValue1",
+              "property31": 10,
+              "property32": {
+                "subProperty1": "subProperty1Value",
+                "subProperty2": "subProperty2Value"
+              },
+              "$metadata": {
+                "$model": "dtmi:com:microsoft:azure:iot:model3;1",
+                "$lastUpdateTime": "2025-05-02T14:59:00.0158470Z",
+                "property3": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0158470Z"
+                },
+                "property31": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0158470Z"
+                },
+                "property32": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0158470Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "twin6",
+              "$etag": "W/\"4ff2ceea-7907-4523-92d7-11c549c42215\"",
+              "property6": "propertyValue1",
+              "property61": 10,
+              "property62": {
+                "subProperty1": "subProperty1Value",
+                "subProperty2": "subProperty2Value"
+              },
+              "$metadata": {
+                "$model": "dtmi:com:microsoft:azure:iot:model6;1",
+                "$lastUpdateTime": "2025-05-02T14:59:00.0177276Z",
+                "property6": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0177276Z"
+                },
+                "property61": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0177276Z"
+                },
+                "property62": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0177276Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "twin0",
+              "$etag": "W/\"8b89a7f5-6552-41f2-b3f1-ed041efa9c58\"",
+              "property0": "propertyValue1",
+              "property01": 10,
+              "property02": {
+                "subProperty1": "subProperty1Value",
+                "subProperty2": "subProperty2Value"
+              },
+              "$metadata": {
+                "$model": "dtmi:com:microsoft:azure:iot:model0;1",
+                "$lastUpdateTime": "2025-05-02T14:59:00.0179207Z",
+                "property0": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0179207Z"
+                },
+                "property01": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0179207Z"
+                },
+                "property02": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0179207Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "twin1",
+              "$etag": "W/\"9dbad0b4-5ca4-46b6-b392-5f12e1696128\"",
+              "property1": "propertyValue1",
+              "property11": 10,
+              "property12": {
+                "subProperty1": "subProperty1Value",
+                "subProperty2": "subProperty2Value"
+              },
+              "$metadata": {
+                "$model": "dtmi:com:microsoft:azure:iot:model1;1",
+                "$lastUpdateTime": "2025-05-02T14:59:00.0156097Z",
+                "property1": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0156097Z"
+                },
+                "property11": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0156097Z"
+                },
+                "property12": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0156097Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "twin7",
+              "$etag": "W/\"6fcfdf90-87c9-4a9e-a458-dfcb10a6aa1e\"",
+              "property7": "propertyValue1",
+              "property71": 10,
+              "property72": {
+                "subProperty1": "subProperty1Value",
+                "subProperty2": "subProperty2Value"
+              },
+              "$metadata": {
+                "$model": "dtmi:com:microsoft:azure:iot:model7;1",
+                "$lastUpdateTime": "2025-05-02T14:59:00.0125914Z",
+                "property7": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0125914Z"
+                },
+                "property71": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0125914Z"
+                },
+                "property72": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0125914Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "twin9",
+              "$etag": "W/\"d625e12a-29f5-4e4e-93c7-b2ba0c0bf8eb\"",
+              "property9": "propertyValue1",
+              "property91": 10,
+              "property92": {
+                "subProperty1": "subProperty1Value",
+                "subProperty2": "subProperty2Value"
+              },
+              "$metadata": {
+                "$model": "dtmi:com:microsoft:azure:iot:model9;1",
+                "$lastUpdateTime": "2025-05-02T14:59:00.0139988Z",
+                "property9": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0139988Z"
+                },
+                "property91": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0139988Z"
+                },
+                "property92": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0139988Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "twin4",
+              "$etag": "W/\"f4d0e3b2-379a-48cf-a5e4-7eb4e0cc8e34\"",
+              "property4": "propertyValue1",
+              "property41": 10,
+              "property42": {
+                "subProperty1": "subProperty1Value",
+                "subProperty2": "subProperty2Value"
+              },
+              "$metadata": {
+                "$model": "dtmi:com:microsoft:azure:iot:model4;1",
+                "$lastUpdateTime": "2025-05-02T14:59:00.0157730Z",
+                "property4": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0157730Z"
+                },
+                "property41": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0157730Z"
+                },
+                "property42": {
+                  "lastUpdateTime": "2025-05-02T14:59:00.0157730Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1402053300",
+              "$etag": "W/\"d2994684-78c0-4b86-bb6b-ac464588e779\"",
+              "Temperature": 70,
+              "Humidity": 80,
+              "IsOccupied": true,
+              "$metadata": {
+                "$model": "dtmi:example:room;121176605",
+                "$lastUpdateTime": "2025-05-02T14:49:09.6294685Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:49:09.5329778Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:49:09.6294685Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:49:09.4801011Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin622199404",
+              "$etag": "W/\"bc24c7e2-a0a4-4c12-8ee6-dd4fa452afe4\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;149282975",
+                "$lastUpdateTime": "2025-05-02T14:49:31.8641350Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:49:31.8641350Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:49:31.8641350Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:49:31.8641350Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:49:31.8641350Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1723893250",
+              "$etag": "W/\"e1275f3b-b8f0-448e-8d11-4df1715a57d1\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;118663957",
+                "$lastUpdateTime": "2025-05-02T14:49:51.7830893Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:49:51.7830893Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:49:51.7830893Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:49:51.7830893Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:49:51.7830893Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin457173956",
+              "$etag": "W/\"54c633f7-5e99-434b-9a4c-98cb17a930df\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;181672563",
+                "$lastUpdateTime": "2025-05-02T14:50:00.6808712Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:00.6808712Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:00.6808712Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:00.6808712Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:00.6808712Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1685834432",
+              "$etag": "W/\"6fb3dd2a-e25c-4ae5-b2f6-2ac31cff541b\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;181672563",
+                "$lastUpdateTime": "2025-05-02T14:50:00.7871932Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:00.7871932Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:00.7871932Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:00.7871932Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:00.7871932Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin2087641452",
+              "$etag": "W/\"18e8a210-454d-411e-85ee-8807771df34f\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;181672563",
+                "$lastUpdateTime": "2025-05-02T14:50:00.9326173Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:00.9326173Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:00.9326173Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:00.9326173Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:00.9326173Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1842846226",
+              "$etag": "W/\"a77d9541-08a0-4b87-a87e-6c4797bc9f62\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;181672563",
+                "$lastUpdateTime": "2025-05-02T14:50:01.7537704Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.7537704Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.7537704Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.7537704Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:01.7537704Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin484346807",
+              "$etag": "W/\"db85bb81-ccac-4288-a586-4926e78f7fa7\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;145029012",
+                "$lastUpdateTime": "2025-05-02T14:50:03.7348063Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:03.7348063Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:03.7348063Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:03.7348063Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:03.7348063Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin164308071",
+              "$etag": "W/\"95198a4b-9943-41c5-bea9-cd59d3a721a4\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;145029012",
+                "$lastUpdateTime": "2025-05-02T14:50:04.1274802Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.1274802Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.1274802Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.1274802Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.1274802Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1552460509",
+              "$etag": "W/\"a4110c48-2b3e-4350-9297-de261d0a6583\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;145029012",
+                "$lastUpdateTime": "2025-05-02T14:50:04.3488065Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.3488065Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.3488065Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.3488065Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.3488065Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin66227804",
+              "$etag": "W/\"e7e70b42-4c03-45f7-865a-b57b36a515dc\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;145029012",
+                "$lastUpdateTime": "2025-05-02T14:50:04.4594410Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.4594410Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.4594410Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.4594410Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.4594410Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin687469205",
+              "$etag": "W/\"cedc14a6-4af2-4f08-a829-a73e03f3a213\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;145029012",
+                "$lastUpdateTime": "2025-05-02T14:50:04.5843036Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.5843036Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.5843036Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.5843036Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.5843036Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1365006075",
+              "$etag": "W/\"98232ecb-b7d4-4ee8-a40d-589fd904f889\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;145029012",
+                "$lastUpdateTime": "2025-05-02T14:50:04.7197194Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.7197194Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.7197194Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.7197194Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:04.7197194Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin2145365668",
+              "$etag": "W/\"fbae1697-65d2-49bb-b497-5ff01867e618\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;121091613",
+                "$lastUpdateTime": "2025-05-02T14:50:13.8106273Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:13.8106273Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:13.8106273Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:13.8106273Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:13.8106273Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin187862270",
+              "$etag": "W/\"42001618-1a38-4afb-836f-33af5f8f7455\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;119807591",
+                "$lastUpdateTime": "2025-05-02T14:50:47.7931214Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:50:47.7931214Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:50:47.7931214Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:50:47.7931214Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:50:47.7931214Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin98109668",
+              "$etag": "W/\"e6c7e09a-da8f-48fa-9446-2335c123473f\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;117879858",
+                "$lastUpdateTime": "2025-05-02T14:51:05.9292423Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:51:05.9292423Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:51:05.9292423Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:51:05.9292423Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:51:05.9292423Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin45139982",
+              "$etag": "W/\"c5295030-151b-46e1-99c4-bcd7f8ee8b71\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;188266688",
+                "$lastUpdateTime": "2025-05-02T14:51:16.3746756Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:51:16.3746756Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:51:16.3746756Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:51:16.3746756Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:51:16.3746756Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin166825027",
+              "$etag": "W/\"3c203d55-b973-4264-b140-77ee6e45292f\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;115478776",
+                "$lastUpdateTime": "2025-05-02T14:51:16.6184118Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:51:16.6184118Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:51:16.6184118Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:51:16.6184118Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:51:16.6184118Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1791497012",
+              "$etag": "W/\"66862b57-1ff4-4488-a191-4ed95395d462\"",
+              "Temperature": 70,
+              "Humidity": 30,
+              "IsOccupied": true,
+              "$metadata": {
+                "$model": "dtmi:example:room;156472652",
+                "$lastUpdateTime": "2025-05-02T14:51:32.2951051Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:51:32.2951051Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:51:32.2951051Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:51:32.1631503Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin2017608721",
+              "$etag": "W/\"ebdde42c-cdd1-4ceb-b334-ff2137a927c5\"",
+              "Temperature": 70,
+              "Humidity": 80,
+              "IsOccupied": true,
+              "$metadata": {
+                "$model": "dtmi:example:room;119786283",
+                "$lastUpdateTime": "2025-05-02T14:52:51.9340183Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:52:51.8158071Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:52:51.9340183Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:52:51.7482223Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin767663144",
+              "$etag": "W/\"d4cfb035-e8cf-4ba3-8b1d-8d8183ffef9f\"",
+              "Temperature": 70,
+              "Humidity": 80,
+              "IsOccupied": true,
+              "$metadata": {
+                "$model": "dtmi:example:room;157242782",
+                "$lastUpdateTime": "2025-05-02T14:52:51.9410842Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:52:51.8193191Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:52:51.9410842Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:52:51.7540406Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin289169994",
+              "$etag": "W/\"1c13a360-c582-43e6-ace6-2c6364ac84a0\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;115301095",
+                "$lastUpdateTime": "2025-05-02T14:54:17.4561589Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:17.4561589Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:17.4561589Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:17.4561589Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:17.4561589Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin45362708",
+              "$etag": "W/\"06d74e24-d0b7-442a-b076-13ddf6b8455e\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;110115531",
+                "$lastUpdateTime": "2025-05-02T14:54:17.9939220Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:17.9939220Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:17.9939220Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:17.9939220Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:17.9939220Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1118650702",
+              "$etag": "W/\"2fff1da9-5f59-46c8-a8b1-bb896996f715\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;156164712",
+                "$lastUpdateTime": "2025-05-02T14:54:35.0819394Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:35.0819394Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:35.0819394Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:35.0819394Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:35.0819394Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1792936836",
+              "$etag": "W/\"5af08c73-c8e0-4db7-83fa-58e5c5584474\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;197629291",
+                "$lastUpdateTime": "2025-05-02T14:54:44.8641740Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:44.8641740Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:44.8641740Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:44.8641740Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:44.8641740Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1494934546",
+              "$etag": "W/\"936693ba-55e7-43a0-b7bb-6093525411df\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;197629291",
+                "$lastUpdateTime": "2025-05-02T14:54:45.4502547Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.4502547Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.4502547Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.4502547Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.4502547Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin353735945",
+              "$etag": "W/\"c7ff81fc-24ea-49fe-88a1-22900be01579\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;197629291",
+                "$lastUpdateTime": "2025-05-02T14:54:45.6772440Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.6772440Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.6772440Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.6772440Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:45.6772440Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin470303391",
+              "$etag": "W/\"acd0c44e-2ec0-45ed-982c-3933a0127d84\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;199027247",
+                "$lastUpdateTime": "2025-05-02T14:54:49.3029816Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.3029816Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.3029816Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.3029816Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.3029816Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1468873726",
+              "$etag": "W/\"ec91a636-7bea-4abf-a84b-447504431e7e\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;199027247",
+                "$lastUpdateTime": "2025-05-02T14:54:49.4189059Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.4189059Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.4189059Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.4189059Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.4189059Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin2019282504",
+              "$etag": "W/\"9bcdeb3a-d43d-4390-8034-5beaaca5ece6\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;199027247",
+                "$lastUpdateTime": "2025-05-02T14:54:49.5293303Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.5293303Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.5293303Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.5293303Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.5293303Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin896630255",
+              "$etag": "W/\"bd00ed5f-7ff2-4bfd-a8cf-5265a03d7cd6\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;199027247",
+                "$lastUpdateTime": "2025-05-02T14:54:49.6407428Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.6407428Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.6407428Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.6407428Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:49.6407428Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin191364842",
+              "$etag": "W/\"39a532c2-2ed0-4264-9e8d-5b3a68617e1a\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;199027247",
+                "$lastUpdateTime": "2025-05-02T14:54:50.0190466Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:50.0190466Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:50.0190466Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:50.0190466Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:50.0190466Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1840818852",
+              "$etag": "W/\"d766c754-1bb7-4636-9e91-335fe26fcd54\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;115992063",
+                "$lastUpdateTime": "2025-05-02T14:54:56.3734691Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:54:56.3734691Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:54:56.3734691Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:54:56.3734691Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:54:56.3734691Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1950063862",
+              "$etag": "W/\"614b365e-17b0-4a31-9529-b541dfa33015\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;133283964",
+                "$lastUpdateTime": "2025-05-02T14:55:29.5468038Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:55:29.5468038Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:55:29.5468038Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:55:29.5468038Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:55:29.5468038Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin390125895",
+              "$etag": "W/\"148bc4d2-32c3-4c65-9ccf-379c5d201aca\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;121353737",
+                "$lastUpdateTime": "2025-05-02T14:55:42.0221727Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:55:42.0221727Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:55:42.0221727Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:55:42.0221727Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:55:42.0221727Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin784905653",
+              "$etag": "W/\"3a4af145-1696-43d4-b695-72ac1b6d618d\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;115461382",
+                "$lastUpdateTime": "2025-05-02T14:56:06.1665803Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:56:06.1665803Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:56:06.1665803Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:56:06.1665803Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:56:06.1665803Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1263820489",
+              "$etag": "W/\"e4a1728d-b267-49f5-856a-72657027a90a\"",
+              "Temperature": 80,
+              "Humidity": 25,
+              "IsOccupied": true,
+              "EmployeeId": "Employee1",
+              "$metadata": {
+                "$model": "dtmi:example:room;119795289",
+                "$lastUpdateTime": "2025-05-02T14:56:22.1875403Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:56:22.1875403Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:56:22.1875403Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:56:22.1875403Z"
+                },
+                "EmployeeId": {
+                  "lastUpdateTime": "2025-05-02T14:56:22.1875403Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1227174205",
+              "$etag": "W/\"4399a3c0-8df0-4584-904c-94f92dc7d207\"",
+              "Temperature": 70,
+              "Humidity": 30,
+              "IsOccupied": true,
+              "$metadata": {
+                "$model": "dtmi:example:room;156822210",
+                "$lastUpdateTime": "2025-05-02T14:56:42.1058361Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:56:42.1058361Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:56:42.1058361Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:56:41.9709171Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin296548173",
+              "$etag": "W/\"9b3c9474-8657-49ee-8c6b-762d48a950fe\"",
+              "Temperature": 70,
+              "Humidity": 30,
+              "IsOccupied": true,
+              "$metadata": {
+                "$model": "dtmi:example:room;118261336",
+                "$lastUpdateTime": "2025-05-02T14:56:46.2542571Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:56:46.2542571Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:56:46.2542571Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:56:46.1213638Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin451165073",
+              "$etag": "W/\"e546c7a4-df0b-448b-9e18-a3a1372229cd\"",
+              "Temperature": 70,
+              "Humidity": 30,
+              "IsOccupied": true,
+              "$metadata": {
+                "$model": "dtmi:example:room;117248815",
+                "$lastUpdateTime": "2025-05-02T14:58:42.2622538Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:58:42.2622538Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:58:42.2622538Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:58:42.1386896Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1763510986",
+              "$etag": "W/\"70c008e1-ced3-46c0-9e8b-cea7437aabc8\"",
+              "Temperature": 70,
+              "Humidity": 30,
+              "IsOccupied": true,
+              "$metadata": {
+                "$model": "dtmi:example:room;111363316",
+                "$lastUpdateTime": "2025-05-02T14:58:44.8859356Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:58:44.8859356Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:58:44.8859356Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:58:44.7378234Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1723451388",
+              "$etag": "W/\"cb0c2158-0c73-4586-858e-68f457a3bac2\"",
+              "Temperature": 70,
+              "Humidity": 80,
+              "IsOccupied": true,
+              "$metadata": {
+                "$model": "dtmi:example:room;179901143",
+                "$lastUpdateTime": "2025-05-02T14:58:55.1953929Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:58:55.1043198Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:58:55.1953929Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:58:55.0442048Z"
+                }
+              }
+            }
+          },
+          {
+            "D": {
+              "$dtId": "roomTwin1389220301",
+              "$etag": "W/\"870db984-12a1-489b-b49f-80bd694e6fa3\"",
+              "Temperature": 70,
+              "Humidity": 80,
+              "IsOccupied": true,
+              "$metadata": {
+                "$model": "dtmi:example:room;118884527",
+                "$lastUpdateTime": "2025-05-02T14:58:57.4216642Z",
+                "Temperature": {
+                  "lastUpdateTime": "2025-05-02T14:58:57.2537552Z"
+                },
+                "Humidity": {
+                  "lastUpdateTime": "2025-05-02T14:58:57.4216642Z"
+                },
+                "IsOccupied": {
+                  "lastUpdateTime": "2025-05-02T14:58:57.1876160Z"
+                }
+              }
+            }
+          }
+        ],
+        "continuationToken": null
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Aexample%3Aroom%3B113684847?api-version=2023-10-31",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-1660447e13cc09a0916fe8e92554f36d-f1bd3878b0d8f2be-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET Framework 4.8.9300.0; Microsoft Windows 10.0.26100 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Fri, 02 May 2025 14:59:56 GMT",
+        "mise-correlation-id": "5e62b9f3-35ec-4580-af98-9fa9a55192e8",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-1660447e13cc09a0916fe8e92554f36d-7e8054146f0b9db2-01"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "DIGITALTWINS_URL": "https://fakeHost.api.wus2.digitaltwins.azure.net",
+    "RandomSeed": "385020777"
+  }
+}

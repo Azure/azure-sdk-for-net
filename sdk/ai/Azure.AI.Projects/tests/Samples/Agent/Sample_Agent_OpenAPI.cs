@@ -46,7 +46,8 @@ public partial class Sample_Agent_OpenAPI : SamplesBase<AIProjectsTestEnvironmen
             name: "get_weather",
             description: "Retrieve weather information for a location",
             spec: BinaryData.FromBytes(File.ReadAllBytes(file_path)),
-            auth: oaiAuth
+            auth: oaiAuth,
+            defaultParams: ["format"]
         );
 
         Agent agent = await client.CreateAgentAsync(
@@ -129,7 +130,8 @@ public partial class Sample_Agent_OpenAPI : SamplesBase<AIProjectsTestEnvironmen
             name: "get_weather",
             description: "Retrieve weather information for a location",
             spec: BinaryData.FromBytes(File.ReadAllBytes(file_path)),
-            auth: oaiAuth
+            auth: oaiAuth,
+            defaultParams: ["format"]
         );
 
         Agent agent = client.CreateAgent(

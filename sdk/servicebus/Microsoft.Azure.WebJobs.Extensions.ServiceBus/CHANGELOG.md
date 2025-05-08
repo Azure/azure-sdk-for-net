@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 5.16.6 (2025-04-08)
+
+### Other Changes
+
+- Bump dependency on `Azure.Messaging.ServiceBus` to 7.19.0
+
 ## 5.16.5 (2025-03-14)
 
 Updated GetProcessorCount to not override the processor count for flex consumption. (#45970)

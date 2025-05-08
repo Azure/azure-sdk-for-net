@@ -5,13 +5,14 @@ using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.Collections.Immutable;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
 {
     public class ImmutableStackTests : MrwCollectionTests<ImmutableStack<AvailabilitySetData>, AvailabilitySetData>
     {
         protected override string GetJsonCollectionType() => "List";
+
+        protected override string CollectionTypeName => "ImmutableStack<AvailabilitySetData>";
 
         protected override ModelReaderWriterContext Context => new LocalContext();
 
@@ -64,14 +65,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
                 protected override Type ItemType => typeof(AvailabilitySetData);
 
-                protected override bool IsCollection => true;
-
                 protected override object CreateInstance() => new List<AvailabilitySetData>();
 
                 protected override void AddItem(object collection, object item)
                     => ((List<AvailabilitySetData>)collection).Add((AvailabilitySetData)item);
 
-                protected override object ToCollection(object builder)
+                protected override object ConvertCollectionBuilder(object builder)
                     => ImmutableStack.CreateRange((List<AvailabilitySetData>)builder);
             }
         }

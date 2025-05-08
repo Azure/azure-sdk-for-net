@@ -29,7 +29,8 @@ Use the AI Projects client library to:
     - [Code interpreter attachment](#create-message-with-code-interpreter-attachment)
     - [Create Agent with Bing Grounding](#create-agent-with-bing-grounding)
     - [Azure AI Search](#create-agent-with-azure-ai-search)
-    - [Function call](#function-call)
+    - [Function call Executed Manually](#function-call-executed-manually)
+    - [Function call Executed Automatically](#function-call-executed-automatically)
     - [Azure function Call](#azure-function-call)
     - [OpenAPI](#create-agent-with-openapi)
 - [Troubleshooting](#troubleshooting)
@@ -356,14 +357,16 @@ if (connections?.Value == null || connections.Value.Count == 0)
 
 ConnectionResponse connection = connections.Value[0];
 
-AISearchIndexResource indexList = new(connection.Id, "sample_index");
-indexList.QueryType = AzureAISearchQueryType.VectorSemanticHybrid;
-ToolResources searchResource = new ToolResources
+AzureAISearchResource searchResource = new(
+    connection.Id,
+    "sample_index",
+    5,
+    "category eq 'sleeping bag'",
+    AzureAISearchQueryType.Simple
+);
+ToolResources toolResource = new()
 {
-    AzureAISearch = new AzureAISearchResource
-    {
-        IndexList = { indexList }
-    }
+    AzureAISearch = searchResource
 };
 
 AgentsClient agentClient = projectClient.GetAgentsClient();
@@ -373,7 +376,7 @@ Agent agent = await agentClient.CreateAgentAsync(
    name: "my-assistant",
    instructions: "You are a helpful assistant.",
    tools: [ new AzureAISearchToolDefinition() ],
-   toolResources: searchResource);
+   toolResources: toolResource);
 ```
 
 If the agent has found the relevant information in the index, the reference
@@ -423,7 +426,7 @@ foreach (ThreadMessage threadMessage in messages)
 }
 ```
 
-#### Function call
+#### Function call executed manually
 
 Tools that reference caller-defined capabilities as functions can be provided to an agent to allow it to
 dynamically resolve and disambiguate during a run.
@@ -601,62 +604,106 @@ ToolOutput GetResolvedToolOutput(string functionName, string toolCallId, string 
 }
 ```
 
-We parse streaming updates in two cycles. One iterates over the streaming run outputs and when we are getting update, requiring the action, we are starting the second cycle, which iterates over the outputs of the same run, after submission of the local functions calls results.
+We create a stream and wait for the stream update of the `RequiredActionUpdate` type. This update will mark the point, when we need to submit tool outputs to the stream. We will submit outputs in the inner cycle. Please note that `RequiredActionUpdate` keeps only one required action, while our run may require multiple function calls, this case is handled in the inner cycle, so that we can add tool output to the existing array of outputs. After all required actions were submitted we clean up the array of required actions.
 
 ```C# Snippet:FunctionsWithStreamingUpdateCycle
 List<ToolOutput> toolOutputs = [];
 ThreadRun streamRun = null;
-await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id))
+AsyncCollectionResult<StreamingUpdate> stream = client.CreateRunStreamingAsync(thread.Id, agent.Id);
+do
 {
-    if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+    toolOutputs.Clear();
+    await foreach (StreamingUpdate streamingUpdate in stream)
     {
-        Console.WriteLine("--- Run started! ---");
-    }
-    else if (streamingUpdate is RequiredActionUpdate submitToolOutputsUpdate)
-    {
-        streamRun = submitToolOutputsUpdate.Value;
-        RequiredActionUpdate newActionUpdate = submitToolOutputsUpdate;
-        while (streamRun.Status == RunStatus.RequiresAction) {
+        if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+        {
+            Console.WriteLine("--- Run started! ---");
+        }
+        else if (streamingUpdate is RequiredActionUpdate submitToolOutputsUpdate)
+        {
+            RequiredActionUpdate newActionUpdate = submitToolOutputsUpdate;
             toolOutputs.Add(
                 GetResolvedToolOutput(
                     newActionUpdate.FunctionName,
                     newActionUpdate.ToolCallId,
                     newActionUpdate.FunctionArguments
             ));
-            await foreach (StreamingUpdate actionUpdate in client.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs))
-            {
-                if (actionUpdate is MessageContentUpdate contentUpdate)
-                {
-                    Console.Write(contentUpdate.Text);
-                }
-                else if (actionUpdate is RequiredActionUpdate newAction)
-                {
-                    newActionUpdate = newAction;
-                    toolOutputs.Add(
-                        GetResolvedToolOutput(
-                            newActionUpdate.FunctionName,
-                            newActionUpdate.ToolCallId,
-                            newActionUpdate.FunctionArguments
-                        )
-                    );
-                }
-                else if (actionUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("--- Run completed! ---");
-                }
-            }
-            streamRun = client.GetRun(thread.Id, streamRun.Id);
-            toolOutputs.Clear();
+            streamRun = submitToolOutputsUpdate.Value;
         }
-        break;
+        else if (streamingUpdate is MessageContentUpdate contentUpdate)
+        {
+            Console.Write(contentUpdate.Text);
+        }
+        else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
+        {
+            Console.WriteLine();
+            Console.WriteLine("--- Run completed! ---");
+        }
+    }
+    if (toolOutputs.Count > 0)
+    {
+        stream = client.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs);
+    }
+}
+while (toolOutputs.Count > 0);
+```
+
+#### Function call executed automatically
+
+In addition to the manual function calls, SDK supports automatic function calling.  After creating functions and`FunctionToolDefinition` according to the last section, here is the steps:
+
+When you create an agent, you can specify the function call by tools argument similar to the example of manual function calls:
+```C# Snippet:StreamingWithAutoFunctionCall_CreateAgent
+Agent agent = client.CreateAgent(
+    model: modelDeploymentName,
+    name: "SDK Test Agent - Functions",
+        instructions: "You are a weather bot. Use the provided functions to help answer questions. "
+            + "Customize your responses to the user's preferences as much as possible and use friendly "
+            + "nicknames for cities whenever possible.",
+    tools: [getCityNicknameTool, getCurrentWeatherAtLocationTool, getUserFavoriteCityTool]
+);
+```
+
+We create a thread and message similar to the example of manual function tool calls:
+```C# Snippet:StreamingWithAutoFunctionCall_CreateThreadMessage
+AgentThread thread = client.CreateThread();
+
+ThreadMessage message = client.CreateMessage(
+    thread.Id,
+    MessageRole.User,
+    "What's the weather like in my favorite city?");
+```
+
+Setup `AutoFunctionCallOptions`:
+```C# Snippet:StreamingWithAutoFunctionCall_EnableAutoFunctionCalls
+List<ToolOutput> toolOutputs = new();
+Dictionary<string, Delegate> toolDelegates = new();
+toolDelegates.Add(nameof(GetWeatherAtLocation), GetWeatherAtLocation);
+toolDelegates.Add(nameof(GetCityNickname), GetCityNickname);
+toolDelegates.Add(nameof(GetUserFavoriteCity), GetUserFavoriteCity);
+AutoFunctionCallOptions autoFunctionCallOptions = new(toolDelegates, 10);
+```
+
+With autoFunctionCallOptions as parameter for `CreateRunStreamingAsync`, the agent will then call the function automatically when it is needed:
+```C# Snippet:StreamingWithAutoFunctionCallAsync
+await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id, autoFunctionCallOptions: autoFunctionCallOptions))
+{
+    if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+    {
+        Console.WriteLine("--- Run started! ---");
     }
     else if (streamingUpdate is MessageContentUpdate contentUpdate)
     {
         Console.Write(contentUpdate.Text);
     }
+    else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
+    {
+        Console.WriteLine();
+        Console.WriteLine("--- Run completed! ---");
+    }
 }
 ```
+To allow the agent cast the parameters to the function call, you must use the supported argument types.  They are `string`, `int`, `ushort`, `float`, `uint`, `decimal`, `double`, `long`, and `bool`.   Other tpes such as array, dictionary, or classes are not supported.   
 
 #### Azure function call
 
@@ -857,7 +904,8 @@ OpenApiToolDefinition openapiTool = new(
     name: "get_weather",
     description: "Retrieve weather information for a location",
     spec: BinaryData.FromBytes(File.ReadAllBytes(file_path)),
-    auth: oaiAuth
+    auth: oaiAuth,
+    defaultParams: ["format"]
 );
 
 Agent agent = await client.CreateAgentAsync(
@@ -900,7 +948,7 @@ Any operation that fails will throw a [RequestFailedException][RequestFailedExce
 try
 {
     client.CreateMessage(
-    "1234",
+    "thread1234",
     MessageRole.User,
     "I need to solve the equation `3x + 11 = 14`. Can you help me?");
 }
