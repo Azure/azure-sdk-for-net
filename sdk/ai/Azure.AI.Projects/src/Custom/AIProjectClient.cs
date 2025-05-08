@@ -22,6 +22,19 @@ namespace Azure.AI.Projects
         {
         }
 
+        /// <summary> Initializes a new instance of AzureAIClient. </summary>
+        /// <param name="endpoint">
+        /// Project endpoint. In the form "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/_project"
+        /// if your Foundry Hub has only one Project, or to use the default Project in your Hub. Or in the form
+        /// "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/&lt;your-project-name&gt;" if you want to explicitly
+        /// specify the Foundry Project name.
+        /// </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public AIProjectClient(Uri endpoint, TokenCredential credential = null) : this(endpoint, BuildCredential(credential), new AIProjectClientOptions())
+        {
+        }
+
         /// <summary> Initializes a new instance of AIProjectClient. </summary>
         /// <param name="endpoint">
         /// Project endpoint. In the form "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/_project"
@@ -57,5 +70,19 @@ namespace Azure.AI.Projects
         /// Retrieves all connection options.
         /// </summary>
         public override IEnumerable<ClientConnection> GetAllConnections() => _cacheManager.GetAllConnections();
+
+        private static TokenCredential BuildCredential(TokenCredential credential)
+        {
+            if (credential != null)
+            {
+                return credential;
+            }
+
+            string clientId = Environment.GetEnvironmentVariable("CLOUDMACHINE_MANAGED_IDENTITY_CLIENT_ID");
+
+            return !string.IsNullOrEmpty(clientId)
+                ? new ManagedIdentityCredential(clientId)
+                : new ChainedTokenCredential(new AzureCliCredential(), new AzureDeveloperCliCredential());
+        }
     }
 }
