@@ -133,7 +133,6 @@ function gatherResourceMetadata(
         resourceClient: client,
         resourceType: resourceType,
         isSingleton: isSingleton,
-        parentResourceClient: undefined
       };
       metadataMap.set(client, metadata);
     }
