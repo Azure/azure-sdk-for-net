@@ -28,10 +28,10 @@ public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        PersistentAgentsAdministration agentsClient = projectClient.GetPersistentAgentAdministrationClient();
+        PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
 
         // Step 1: Create an agent
-        PersistentAgent agent = agentsClient.CreateAgent(
+        PersistentAgent agent = agentsClient.Administration.CreateAgent(
             model: modelDeploymentName,
             name: "Math Tutor",
             instructions: "You are a personal math tutor. Write and run code to answer math questions."
@@ -94,7 +94,7 @@ public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
 
         agentsClient.Threads.DeleteThread(threadId: thread.Id);
         */
-        agentsClient.DeleteAgent(agentId: agent.Id);
+        agentsClient.Administration.DeleteAgent(agentId: agent.Id);
         #endregion
 
     }
@@ -112,16 +112,16 @@ public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        PersistentAgentsAdministration agentsClient = projectClient.GetPersistentAgentAdministrationClient();
+        PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
 
-        // Step 1: Create an agent
-        PersistentAgent agent = await agentsClient.CreateAgentAsync(
+        PersistentAgent agent = await agentsClient.Administration.CreateAgentAsync(
             model: modelDeploymentName,
             name: "Math Tutor",
             instructions: "You are a personal math tutor. Write and run code to answer math questions."
         );
 
-        await agentsClient.DeleteAgentAsync(agentId: agent.Id);
+        await agentsClient.Administration.DeleteAgentAsync(agentId: agent.Id);
+
         #endregion
     }
 }
