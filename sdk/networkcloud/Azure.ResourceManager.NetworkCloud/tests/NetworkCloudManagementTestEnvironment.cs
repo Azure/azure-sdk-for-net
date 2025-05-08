@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         public System.DateTimeOffset DayFromNow => System.DateTimeOffset.Parse(GetRecordedVariable("DAY_FROM_NOW"));
         public string LawId => GetRecordedVariable("LAW_ID");
         public string InterfaceName => GetRecordedVariable("INTERFACE_NAME");
-        public string BMMKeySetSSHPublicKey => GetRecordedVariable("BMM_KS_SSH_PUBLIC_KEY", options => options.IsSecret());
+        public string BMMKeySetSSHPublicKey => GetRecordedVariable("BMM_KS_SSH_PUBLIC_KEY");
         public string BMMKeySetGroupId => GetRecordedVariable("BMM_KS_GROUP_ID");
 
         // Support using the Default Credential created by Azure CLI so
