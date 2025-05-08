@@ -15,6 +15,8 @@ namespace Payload.JsonMergePatch
 {
     public partial class Resource : IJsonModel<Resource>
     {
+        internal Resource() => throw null;
+
         void IJsonModel<Resource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

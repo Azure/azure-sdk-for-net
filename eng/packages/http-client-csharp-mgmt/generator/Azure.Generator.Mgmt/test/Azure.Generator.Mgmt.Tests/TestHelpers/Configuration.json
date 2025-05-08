@@ -4,6 +4,7 @@
   "unknown-bool-property": false,
   "package-name": "sample-library",
   "unknown-string-property": "unknownPropertyValue",
+  "disable-xml-docs": true,
   "license": {
     "name": "MIT License",
     "company": "Microsoft Corporation",
