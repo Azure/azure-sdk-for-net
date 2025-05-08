@@ -1014,7 +1014,6 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
             ]);
 
         string output = ((MessageResponseItem)response.OutputItems[0]).Content[0].Text;
-
         Assert.That(output, Is.Not.Null.And.Not.Empty);
     }
     private static string GetSummarizationPromt()
