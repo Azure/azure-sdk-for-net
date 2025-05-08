@@ -7,15 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    /// <summary>
-    /// The base class of a conversation input task result.
-    /// Please note <see cref="AnalyzeConversationActionResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ConversationalAITaskResult"/> and <see cref="ConversationActionResult"/>.
-    /// </summary>
-    public abstract partial class AnalyzeConversationActionResult
+    /// <summary> The input ConversationItem and its optional parameters. </summary>
+    public partial class ConversationalAIAnalysisInput
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,23 +44,33 @@ namespace Azure.AI.Language.Conversations.Models
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationActionResult"/>. </summary>
-        protected AnalyzeConversationActionResult()
+        /// <summary> Initializes a new instance of <see cref="ConversationalAIAnalysisInput"/>. </summary>
+        /// <param name="conversations"> List of multiple conversations. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversations"/> is null. </exception>
+        public ConversationalAIAnalysisInput(IEnumerable<AIConversation> conversations)
         {
+            Argument.AssertNotNull(conversations, nameof(conversations));
+
+            Conversations = conversations.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationActionResult"/>. </summary>
-        /// <param name="kind"> The base class of a conversation input task result. </param>
+        /// <summary> Initializes a new instance of <see cref="ConversationalAIAnalysisInput"/>. </summary>
+        /// <param name="conversations"> List of multiple conversations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationActionResult(AnalyzeConversationResultKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationalAIAnalysisInput(IList<AIConversation> conversations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Kind = kind;
+            Conversations = conversations;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The base class of a conversation input task result. </summary>
-        internal AnalyzeConversationResultKind Kind { get; set; }
+        /// <summary> Initializes a new instance of <see cref="ConversationalAIAnalysisInput"/> for deserialization. </summary>
+        internal ConversationalAIAnalysisInput()
+        {
+        }
+
+        /// <summary> List of multiple conversations. </summary>
+        public IList<AIConversation> Conversations { get; }
     }
 }

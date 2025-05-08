@@ -10,12 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    /// <summary>
-    /// The base class of a conversation input task result.
-    /// Please note <see cref="AnalyzeConversationActionResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ConversationalAITaskResult"/> and <see cref="ConversationActionResult"/>.
-    /// </summary>
-    public abstract partial class AnalyzeConversationActionResult
+    /// <summary> The ranges of conversation items where this intent was identified. </summary>
+    public partial class ConversationItemRange
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,23 +43,36 @@ namespace Azure.AI.Language.Conversations.Models
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationActionResult"/>. </summary>
-        protected AnalyzeConversationActionResult()
+        /// <summary> Initializes a new instance of <see cref="ConversationItemRange"/>. </summary>
+        /// <param name="offset"> The starting index of the intent occurrence within the conversation. </param>
+        /// <param name="count"> The number of continuous conversation items for this intent. </param>
+        internal ConversationItemRange(int offset, int count)
         {
+            Offset = offset;
+            Count = count;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeConversationActionResult"/>. </summary>
-        /// <param name="kind"> The base class of a conversation input task result. </param>
+        /// <summary> Initializes a new instance of <see cref="ConversationItemRange"/>. </summary>
+        /// <param name="offset"> The starting index of the intent occurrence within the conversation. </param>
+        /// <param name="count"> The number of continuous conversation items for this intent. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationActionResult(AnalyzeConversationResultKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationItemRange(int offset, int count, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Kind = kind;
+            Offset = offset;
+            Count = count;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The base class of a conversation input task result. </summary>
-        internal AnalyzeConversationResultKind Kind { get; set; }
+        /// <summary> Initializes a new instance of <see cref="ConversationItemRange"/> for deserialization. </summary>
+        internal ConversationItemRange()
+        {
+        }
+
+        /// <summary> The starting index of the intent occurrence within the conversation. </summary>
+        public int Offset { get; }
+        /// <summary> The number of continuous conversation items for this intent. </summary>
+        public int Count { get; }
     }
 }
