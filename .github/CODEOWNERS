@@ -1098,7 +1098,7 @@
 # ServiceOwners:                                                   @helen-afework
 
 # PRLabel: %Secret Store Extension
-#/sdk/edgeworkloadsecurity/Azure.ResourceManager.*/                @cjoprey @locomotiveviaduct
+/sdk/secretsstoreextension/Azure.ResourceManager.*/                @cjoprey @locomotiveviaduct
 
 # ServiceLabel: %Secret Store Extension %Mgmt
 # ServiceOwners:                                                   @cjoprey @locomotiveviaduct
