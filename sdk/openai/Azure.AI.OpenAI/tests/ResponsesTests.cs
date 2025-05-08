@@ -1000,4 +1000,30 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
 
         Assert.That(output, Is.Not.Null.And.Not.Empty);
     }
+
+    [TestCase(Gpt4oMiniDeployment)]
+    public void ChatbotSummarizeTextTest(string deploymentName)
+    {
+        OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
+
+        OpenAIResponse response = client.CreateResponse(
+           inputItems: [
+                ResponseItem.CreateSystemMessageItem("You are a helpful assistant that summarizes texts"),
+                    ResponseItem.CreateAssistantMessageItem("Please summarize the following text in one sentence"),
+                    ResponseItem.CreateUserMessageItem(GetSummarizationPromt())
+            ]);
+
+        string output = ((MessageResponseItem)response.OutputItems[0]).Content[0].Text;
+
+        Assert.That(output, Is.Not.Null.And.Not.Empty);
+    }
+    private static string GetSummarizationPromt()
+    {
+        String textToSummarize = "On July 20, 1969, Apollo 11 successfully landed the first humans on the Moon. "
+                                + "Astronauts Neil Armstrong and Buzz Aldrin spent over two hours collecting samples and conducting experiments, "
+                                + "while Michael Collins remained in orbit aboard the command module. "
+                                + "The mission marked a significant achievement in space exploration, fulfilling President John F. Kennedy's goal of landing a man on the Moon and returning him safely to Earth. "
+                                + "The lunar samples brought back provided invaluable insights into the Moon's composition and history.";
+        return "Summarize the following text.%n" + "Text:%n" + textToSummarize + "%n Summary:%n";
+    }
 }
