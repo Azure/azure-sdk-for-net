@@ -79,14 +79,6 @@
       AZPROVISION001; <!-- Provisioning -->
     </NoWarn>
 
-    <!--
-      Will be removed after https://github.com/Azure/azure-sdk-for-net/issues/49556
-    -->
-    <NoWarn>
-      $(NoWarn);
-      AZC0150; <!-- ModelReaderWriter overload -->
-    </NoWarn>
-
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <!--
       .NET 8 now produces security warnings for nuget packages in dotnet restore. We want to keep all but critical (NU1904) as warnings and not turn them to errors.
