@@ -29,6 +29,9 @@ namespace MgmtTypeSpec
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="FooCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FooCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _fooClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", FooResource.ResourceType.Namespace, Diagnostics);
@@ -37,6 +40,7 @@ namespace MgmtTypeSpec
             ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
@@ -64,6 +68,7 @@ namespace MgmtTypeSpec
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<FooResource> IAsyncEnumerable<FooResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken).GetAsyncEnumerator(cancellationToken);

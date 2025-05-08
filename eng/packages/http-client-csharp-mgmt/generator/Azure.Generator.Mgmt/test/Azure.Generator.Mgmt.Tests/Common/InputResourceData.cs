@@ -30,7 +30,7 @@ namespace Azure.Generator.Management.Tests.Common
                 { KnownDecorators.ResourceModel, BinaryData.FromString($"\"{ResourceModelName}\"") },
                 { KnownDecorators.ResourceType, BinaryData.FromString("\"a/test\"") }
             };
-            var client = InputFactory.Client(TestClientName, operations: [operation], decorators: [new InputDecoratorInfo(KnownDecorators.ResourceMetadata, resourceMetadataArguments), new InputDecoratorInfo(KnownDecorators.ArmProviderNamespace, null)]);
+            var client = InputFactory.Client(TestClientName, methods: [InputFactory.BasicServiceMethod("Get", operation)], decorators: [new InputDecoratorInfo(KnownDecorators.ResourceMetadata, resourceMetadataArguments), new InputDecoratorInfo(KnownDecorators.ArmProviderNamespace, null)]);
             return (client, [responseModel]);
         }
     }

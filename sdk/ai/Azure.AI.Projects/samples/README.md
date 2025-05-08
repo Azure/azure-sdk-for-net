@@ -25,10 +25,13 @@ description: Samples for the Azure.AI.Projects client library.
 | [Sample14_Agent_Vector_Store_Batch_File_Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample14_Agent_Vector_Store_Batch_File_Search.md) | Sample for  batch file search. |
 | [Sample15_Agents_Code_Interpreter_Enterprise_File_Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample15_Agents_Code_Interpreter_Enterprise_File_Search.md) | Sample enterprise file search on agent with message attachment and code interpreter. |
 | [Sample16_Agents_Code_Interpreter_File_Attachment](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample16_Agents_Code_Interpreter_File_Attachment.md) | Sample file search on agent with message attachment and code interpreter. |
-| [Sample17_Agent_OpenAPI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample17_Agent_OpenAPI.md) | Sample using agents with OpenAPI tool. |
-| [Sample18_Agents_Azure_AI_Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample18_Agents_Azure_AI_Search.md) | Sample using agents with Azure AI Search tool. |
-| [Sample19_Agent_Vector_Store_Batch_Enterprise_File_Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample19_Agent_Vector_Store_Batch_Enterprise_File_Search.md) | Sample for enterprise batch file search. |
-| [Sample20_Agents_Azure_AI_Search_Streaming](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample20_Agents_Azure_AI_Search_Streaming.md) | Sample using agents with Azure AI Search tool with streaming. |
+| [Sample17_Agents_ImageUrlInputs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample17_Agents_ImageUrlInputs.md) | Sample using image url input with agents. |
+| [Sample18_Agents_ImageFileInputs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample18_Agents_ImageFileInputs.md) | Sample using image file input with agents. |
+| [Sample19_Agent_OpenAPI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample19_Agent_OpenAPI.md) | Sample using agents with OpenAPI tool. |
+| [Sample20_Agents_Azure_AI_Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample20_Agents_Azure_AI_Search.md) | Sample using agents with Azure AI Search tool. |
+| [Sample21_Agent_Vector_Store_Batch_Enterprise_File_Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample21_Agent_Vector_Store_Batch_Enterprise_File_Search.md) | Sample for enterprise batch file search. |
+| [Sample22_Agents_Azure_AI_Search_Streaming](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample22_Agents_Azure_AI_Search_Streaming.md) | Sample using agents with Azure AI Search tool with streaming. |
+| [Sample23_Agent_Fabric](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Sample23_Agent_Fabric.md) | Sample using agents with Fabric tool. |
 
 # Azure.AI.Projects Samples for Connections
 

@@ -5684,7 +5684,7 @@
    "$id": "712",
    "kind": "model",
    "name": "CreateConversationRequest1",
-   "namespace": "Azure.Communication.Messages",
+   "namespace": "",
    "crossLanguageDefinitionId": "Azure.Communication.MessagesService.createConversation.Request.anonymous",
    "usage": "Spread,Json",
    "decorators": [],
@@ -6713,7 +6713,7 @@
              "namespace": "Azure.Communication.Messages",
              "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError",
              "usage": "Output,Json,Exception",
-             "doc": "An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.",
+             "doc": "An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#handling-errors.",
              "decorators": [],
              "properties": [
               {
@@ -8354,19 +8354,6 @@
       "uri": "{endpoint}",
       "path": "/messages/channels/{channelId}/templates",
       "bufferResponse": true,
-      "paging": {
-       "$id": "1024",
-       "itemPropertySegments": [
-        "value"
-       ],
-       "nextLink": {
-        "$id": "1025",
-        "responseSegments": [
-         "nextLink"
-        ],
-        "responseLocation": "Body"
-       }
-      },
       "generateProtocolMethod": true,
       "generateConvenienceMethod": true,
       "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateClient.listTemplates",
@@ -8374,17 +8361,17 @@
      },
      "parameters": [
       {
-       "$id": "1026",
+       "$id": "1024",
        "name": "channelId",
        "nameInRequest": "channelId",
        "doc": "The registration ID of the channel.",
        "type": {
-        "$id": "1027",
+        "$id": "1025",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1028",
+         "$id": "1026",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8403,12 +8390,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1029",
+       "$id": "1027",
        "name": "maxPageSize",
        "nameInRequest": "maxPageSize",
        "doc": "Number of objects to return per page.",
        "type": {
-        "$id": "1030",
+        "$id": "1028",
         "kind": "int32",
         "name": "int32",
         "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -8425,17 +8412,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1031",
+       "$id": "1029",
        "name": "clientRequestId",
        "nameInRequest": "x-ms-client-request-id",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1032",
+        "$id": "1030",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1033",
+         "$id": "1031",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8454,7 +8441,7 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1034",
+       "$id": "1032",
        "name": "accept",
        "nameInRequest": "accept",
        "type": {
@@ -8472,9 +8459,9 @@
       }
      ],
      "response": {
-      "$id": "1035",
+      "$id": "1033",
       "type": {
-       "$id": "1036",
+       "$id": "1034",
        "kind": "array",
        "name": "ArrayMessageTemplateItem",
        "valueType": {
@@ -8490,7 +8477,20 @@
      "isOverride": false,
      "generateConvenient": true,
      "generateProtocol": true,
-     "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateClient.listTemplates"
+     "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateClient.listTemplates",
+     "pagingMetadata": {
+      "$id": "1035",
+      "itemPropertySegments": [
+       "value"
+      ],
+      "nextLink": {
+       "$id": "1036",
+       "responseSegments": [
+        "nextLink"
+       ],
+       "responseLocation": "Body"
+      }
+     }
     }
    ],
    "parameters": [
@@ -9952,38 +9952,25 @@
       "uri": "{endpoint}",
       "path": "/messages/conversations",
       "bufferResponse": true,
-      "paging": {
-       "$id": "1179",
-       "itemPropertySegments": [
-        "value"
-       ],
-       "nextLink": {
-        "$id": "1180",
-        "responseSegments": [
-         "nextLink"
-        ],
-        "responseLocation": "Body"
-       }
-      },
       "generateProtocolMethod": true,
       "generateConvenienceMethod": true,
       "crossLanguageDefinitionId": "ClientForAcsMessages.ConversationAdministrationClient.listConversations",
       "decorators": [],
       "examples": [
        {
-        "$id": "1181",
+        "$id": "1179",
         "kind": "http",
         "name": "Retrieves list of conversations",
         "description": "Retrieves list of conversations",
         "filePath": "2025-04-01-preview/ConversationThread_ListConversations.json",
         "parameters": [
          {
-          "$id": "1182",
+          "$id": "1180",
           "parameter": {
            "$ref": "1158"
           },
           "value": {
-           "$id": "1183",
+           "$id": "1181",
            "kind": "string",
            "type": {
             "$ref": "1159"
@@ -9992,12 +9979,12 @@
           }
          },
          {
-          "$id": "1184",
+          "$id": "1182",
           "parameter": {
            "$ref": "1162"
           },
           "value": {
-           "$id": "1185",
+           "$id": "1183",
            "kind": "number",
            "type": {
             "$ref": "1163"
@@ -10006,12 +9993,12 @@
           }
          },
          {
-          "$id": "1186",
+          "$id": "1184",
           "parameter": {
            "$ref": "1166"
           },
           "value": {
-           "$id": "1187",
+           "$id": "1185",
            "kind": "string",
            "type": {
             "$ref": "1167"
@@ -10022,36 +10009,36 @@
         ],
         "responses": [
          {
-          "$id": "1188",
+          "$id": "1186",
           "response": {
            "$ref": "1175"
           },
           "statusCode": 200,
           "bodyValue": {
-           "$id": "1189",
+           "$id": "1187",
            "kind": "model",
            "type": {
             "$ref": "899"
            },
            "value": {
-            "$id": "1190",
+            "$id": "1188",
             "value": {
-             "$id": "1191",
+             "$id": "1189",
              "kind": "array",
              "type": {
               "$ref": "901"
              },
              "value": [
               {
-               "$id": "1192",
+               "$id": "1190",
                "kind": "model",
                "type": {
                 "$ref": "623"
                },
                "value": {
-                "$id": "1193",
+                "$id": "1191",
                 "id": {
-                 "$id": "1194",
+                 "$id": "1192",
                  "kind": "string",
                  "type": {
                   "$ref": "625"
@@ -10059,7 +10046,7 @@
                  "value": "19:34adfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2"
                 },
                 "topic": {
-                 "$id": "1195",
+                 "$id": "1193",
                  "kind": "string",
                  "type": {
                   "$ref": "629"
@@ -10067,14 +10054,14 @@
                  "value": "Test"
                 },
                 "deliveryChannelIds": {
-                 "$id": "1196",
+                 "$id": "1194",
                  "kind": "array",
                  "type": {
                   "$ref": "633"
                  },
                  "value": [
                   {
-                   "$id": "1197",
+                   "$id": "1195",
                    "kind": "string",
                    "type": {
                     "$ref": "634"
@@ -10084,7 +10071,7 @@
                  ]
                 },
                 "outboundDeliveryStrategy": {
-                 "$id": "1198",
+                 "$id": "1196",
                  "kind": "string",
                  "type": {
                   "$ref": "96"
@@ -10092,22 +10079,22 @@
                  "value": "allParticipants"
                 },
                 "participants": {
-                 "$id": "1199",
+                 "$id": "1197",
                  "kind": "array",
                  "type": {
                   "$ref": "641"
                  },
                  "value": [
                   {
-                   "$id": "1200",
+                   "$id": "1198",
                    "kind": "model",
                    "type": {
                     "$ref": "695"
                    },
                    "value": {
-                    "$id": "1201",
+                    "$id": "1199",
                     "id": {
-                     "$id": "1202",
+                     "$id": "1200",
                      "kind": "string",
                      "type": {
                       "$ref": "647"
@@ -10115,7 +10102,7 @@
                      "value": "8:acs:uuid2"
                     },
                     "displayName": {
-                     "$id": "1203",
+                     "$id": "1201",
                      "kind": "string",
                      "type": {
                       "$ref": "651"
@@ -10123,7 +10110,7 @@
                      "value": "Customer"
                     },
                     "kind": {
-                     "$id": "1204",
+                     "$id": "1202",
                      "kind": "string",
                      "type": {
                       "$ref": "697"
@@ -10131,22 +10118,22 @@
                      "value": "external"
                     },
                     "contacts": {
-                     "$id": "1205",
+                     "$id": "1203",
                      "kind": "array",
                      "type": {
                       "$ref": "702"
                      },
                      "value": [
                       {
-                       "$id": "1206",
+                       "$id": "1204",
                        "kind": "model",
                        "type": {
                         "$ref": "687"
                        },
                        "value": {
-                        "$id": "1207",
+                        "$id": "1205",
                         "id": {
-                         "$id": "1208",
+                         "$id": "1206",
                          "kind": "string",
                          "type": {
                           "$ref": "667"
@@ -10154,7 +10141,7 @@
                          "value": "12345678901"
                         },
                         "kind": {
-                         "$id": "1209",
+                         "$id": "1207",
                          "kind": "string",
                          "type": {
                           "$ref": "689"
@@ -10164,15 +10151,15 @@
                        }
                       },
                       {
-                       "$id": "1210",
+                       "$id": "1208",
                        "kind": "model",
                        "type": {
                         "$ref": "671"
                        },
                        "value": {
-                        "$id": "1211",
+                        "$id": "1209",
                         "id": {
-                         "$id": "1212",
+                         "$id": "1210",
                          "kind": "string",
                          "type": {
                           "$ref": "667"
@@ -10180,7 +10167,7 @@
                          "value": "8:acs:uuid2"
                         },
                         "kind": {
-                         "$id": "1213",
+                         "$id": "1211",
                          "kind": "string",
                          "type": {
                           "$ref": "673"
@@ -10194,15 +10181,15 @@
                    }
                   },
                   {
-                   "$id": "1214",
+                   "$id": "1212",
                    "kind": "model",
                    "type": {
                     "$ref": "655"
                    },
                    "value": {
-                    "$id": "1215",
+                    "$id": "1213",
                     "id": {
-                     "$id": "1216",
+                     "$id": "1214",
                      "kind": "string",
                      "type": {
                       "$ref": "647"
@@ -10210,7 +10197,7 @@
                      "value": "8:acs:uuid1"
                     },
                     "displayName": {
-                     "$id": "1217",
+                     "$id": "1215",
                      "kind": "string",
                      "type": {
                       "$ref": "651"
@@ -10218,7 +10205,7 @@
                      "value": "Support"
                     },
                     "kind": {
-                     "$id": "1218",
+                     "$id": "1216",
                      "kind": "string",
                      "type": {
                       "$ref": "657"
@@ -10226,15 +10213,15 @@
                      "value": "internal"
                     },
                     "contact": {
-                     "$id": "1219",
+                     "$id": "1217",
                      "kind": "model",
                      "type": {
                       "$ref": "671"
                      },
                      "value": {
-                      "$id": "1220",
+                      "$id": "1218",
                       "id": {
-                       "$id": "1221",
+                       "$id": "1219",
                        "kind": "string",
                        "type": {
                         "$ref": "667"
@@ -10242,7 +10229,7 @@
                        "value": "8:acs:uuid1"
                       },
                       "kind": {
-                       "$id": "1222",
+                       "$id": "1220",
                        "kind": "string",
                        "type": {
                         "$ref": "673"
@@ -10258,15 +10245,15 @@
                }
               },
               {
-               "$id": "1223",
+               "$id": "1221",
                "kind": "model",
                "type": {
                 "$ref": "623"
                },
                "value": {
-                "$id": "1224",
+                "$id": "1222",
                 "id": {
-                 "$id": "1225",
+                 "$id": "1223",
                  "kind": "string",
                  "type": {
                   "$ref": "625"
@@ -10274,7 +10261,7 @@
                  "value": "19:111dfa4f-cedf-4dc0-ba29-b6d1a69ab345@thread.v2"
                 },
                 "topic": {
-                 "$id": "1226",
+                 "$id": "1224",
                  "kind": "string",
                  "type": {
                   "$ref": "629"
@@ -10282,14 +10269,14 @@
                  "value": "Test"
                 },
                 "deliveryChannelIds": {
-                 "$id": "1227",
+                 "$id": "1225",
                  "kind": "array",
                  "type": {
                   "$ref": "633"
                  },
                  "value": [
                   {
-                   "$id": "1228",
+                   "$id": "1226",
                    "kind": "string",
                    "type": {
                     "$ref": "634"
@@ -10299,7 +10286,7 @@
                  ]
                 },
                 "outboundDeliveryStrategy": {
-                 "$id": "1229",
+                 "$id": "1227",
                  "kind": "string",
                  "type": {
                   "$ref": "96"
@@ -10307,22 +10294,22 @@
                  "value": "allParticipants"
                 },
                 "participants": {
-                 "$id": "1230",
+                 "$id": "1228",
                  "kind": "array",
                  "type": {
                   "$ref": "641"
                  },
                  "value": [
                   {
-                   "$id": "1231",
+                   "$id": "1229",
                    "kind": "model",
                    "type": {
                     "$ref": "695"
                    },
                    "value": {
-                    "$id": "1232",
+                    "$id": "1230",
                     "id": {
-                     "$id": "1233",
+                     "$id": "1231",
                      "kind": "string",
                      "type": {
                       "$ref": "647"
@@ -10330,7 +10317,7 @@
                      "value": "8:acs:uuid3"
                     },
                     "displayName": {
-                     "$id": "1234",
+                     "$id": "1232",
                      "kind": "string",
                      "type": {
                       "$ref": "651"
@@ -10338,7 +10325,7 @@
                      "value": "Customer"
                     },
                     "kind": {
-                     "$id": "1235",
+                     "$id": "1233",
                      "kind": "string",
                      "type": {
                       "$ref": "697"
@@ -10346,22 +10333,22 @@
                      "value": "external"
                     },
                     "contacts": {
-                     "$id": "1236",
+                     "$id": "1234",
                      "kind": "array",
                      "type": {
                       "$ref": "702"
                      },
                      "value": [
                       {
-                       "$id": "1237",
+                       "$id": "1235",
                        "kind": "model",
                        "type": {
                         "$ref": "687"
                        },
                        "value": {
-                        "$id": "1238",
+                        "$id": "1236",
                         "id": {
-                         "$id": "1239",
+                         "$id": "1237",
                          "kind": "string",
                          "type": {
                           "$ref": "667"
@@ -10369,7 +10356,7 @@
                          "value": "12331112222"
                         },
                         "kind": {
-                         "$id": "1240",
+                         "$id": "1238",
                          "kind": "string",
                          "type": {
                           "$ref": "689"
@@ -10379,15 +10366,15 @@
                        }
                       },
                       {
-                       "$id": "1241",
+                       "$id": "1239",
                        "kind": "model",
                        "type": {
                         "$ref": "671"
                        },
                        "value": {
-                        "$id": "1242",
+                        "$id": "1240",
                         "id": {
-                         "$id": "1243",
+                         "$id": "1241",
                          "kind": "string",
                          "type": {
                           "$ref": "667"
@@ -10395,7 +10382,7 @@
                          "value": "8:acs:uuid3"
                         },
                         "kind": {
-                         "$id": "1244",
+                         "$id": "1242",
                          "kind": "string",
                          "type": {
                           "$ref": "673"
@@ -10409,15 +10396,15 @@
                    }
                   },
                   {
-                   "$id": "1245",
+                   "$id": "1243",
                    "kind": "model",
                    "type": {
                     "$ref": "655"
                    },
                    "value": {
-                    "$id": "1246",
+                    "$id": "1244",
                     "id": {
-                     "$id": "1247",
+                     "$id": "1245",
                      "kind": "string",
                      "type": {
                       "$ref": "647"
@@ -10425,7 +10412,7 @@
                      "value": "8:acs:uuid3"
                     },
                     "displayName": {
-                     "$id": "1248",
+                     "$id": "1246",
                      "kind": "string",
                      "type": {
                       "$ref": "651"
@@ -10433,7 +10420,7 @@
                      "value": "Support"
                     },
                     "kind": {
-                     "$id": "1249",
+                     "$id": "1247",
                      "kind": "string",
                      "type": {
                       "$ref": "657"
@@ -10441,15 +10428,15 @@
                      "value": "internal"
                     },
                     "contact": {
-                     "$id": "1250",
+                     "$id": "1248",
                      "kind": "model",
                      "type": {
                       "$ref": "671"
                      },
                      "value": {
-                      "$id": "1251",
+                      "$id": "1249",
                       "id": {
-                       "$id": "1252",
+                       "$id": "1250",
                        "kind": "string",
                        "type": {
                         "$ref": "667"
@@ -10457,7 +10444,7 @@
                        "value": "8:acs:uuid3"
                       },
                       "kind": {
-                       "$id": "1253",
+                       "$id": "1251",
                        "kind": "string",
                        "type": {
                         "$ref": "673"
@@ -10483,12 +10470,12 @@
      },
      "parameters": [
       {
-       "$id": "1254",
+       "$id": "1252",
        "name": "maxPageSize",
        "nameInRequest": "maxPageSize",
        "doc": "Number of objects to return per page.",
        "type": {
-        "$id": "1255",
+        "$id": "1253",
         "kind": "int32",
         "name": "int32",
         "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -10505,12 +10492,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1256",
+       "$id": "1254",
        "name": "participantId",
        "nameInRequest": "participantId",
        "doc": "The participant user ID",
        "type": {
-        "$id": "1257",
+        "$id": "1255",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10527,17 +10514,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1258",
+       "$id": "1256",
        "name": "channelId",
        "nameInRequest": "channelId",
        "doc": "The id of channel",
        "type": {
-        "$id": "1259",
+        "$id": "1257",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1260",
+         "$id": "1258",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10556,17 +10543,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1261",
+       "$id": "1259",
        "name": "clientRequestId",
        "nameInRequest": "x-ms-client-request-id",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1262",
+        "$id": "1260",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1263",
+         "$id": "1261",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10585,7 +10572,7 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1264",
+       "$id": "1262",
        "name": "accept",
        "nameInRequest": "accept",
        "type": {
@@ -10603,9 +10590,9 @@
       }
      ],
      "response": {
-      "$id": "1265",
+      "$id": "1263",
       "type": {
-       "$id": "1266",
+       "$id": "1264",
        "kind": "array",
        "name": "ArrayConversation",
        "valueType": {
@@ -10621,7 +10608,20 @@
      "isOverride": false,
      "generateConvenient": true,
      "generateProtocol": true,
-     "crossLanguageDefinitionId": "ClientForAcsMessages.ConversationAdministrationClient.listConversations"
+     "crossLanguageDefinitionId": "ClientForAcsMessages.ConversationAdministrationClient.listConversations",
+     "pagingMetadata": {
+      "$id": "1265",
+      "itemPropertySegments": [
+       "value"
+      ],
+      "nextLink": {
+       "$id": "1266",
+       "responseSegments": [
+        "nextLink"
+       ],
+       "responseLocation": "Body"
+      }
+     }
     },
     {
      "$id": "1267",
@@ -10835,38 +10835,25 @@
       "uri": "{endpoint}",
       "path": "/messages/conversations/{conversationId}/messages",
       "bufferResponse": true,
-      "paging": {
-       "$id": "1289",
-       "itemPropertySegments": [
-        "value"
-       ],
-       "nextLink": {
-        "$id": "1290",
-        "responseSegments": [
-         "nextLink"
-        ],
-        "responseLocation": "Body"
-       }
-      },
       "generateProtocolMethod": true,
       "generateConvenienceMethod": true,
       "crossLanguageDefinitionId": "ClientForAcsMessages.ConversationAdministrationClient.listMessages",
       "decorators": [],
       "examples": [
        {
-        "$id": "1291",
+        "$id": "1289",
         "kind": "http",
         "name": "Retrieves list of conversation messages",
         "description": "Retrieves list of conversation messages",
         "filePath": "2025-04-01-preview/ConversationThread_ListMessages.json",
         "parameters": [
          {
-          "$id": "1292",
+          "$id": "1290",
           "parameter": {
            "$ref": "1269"
           },
           "value": {
-           "$id": "1293",
+           "$id": "1291",
            "kind": "string",
            "type": {
             "$ref": "1270"
@@ -10875,12 +10862,12 @@
           }
          },
          {
-          "$id": "1294",
+          "$id": "1292",
           "parameter": {
            "$ref": "1273"
           },
           "value": {
-           "$id": "1295",
+           "$id": "1293",
            "kind": "string",
            "type": {
             "$ref": "1274"
@@ -10891,36 +10878,36 @@
         ],
         "responses": [
          {
-          "$id": "1296",
+          "$id": "1294",
           "response": {
            "$ref": "1285"
           },
           "statusCode": 200,
           "bodyValue": {
-           "$id": "1297",
+           "$id": "1295",
            "kind": "model",
            "type": {
             "$ref": "912"
            },
            "value": {
-            "$id": "1298",
+            "$id": "1296",
             "value": {
-             "$id": "1299",
+             "$id": "1297",
              "kind": "array",
              "type": {
               "$ref": "914"
              },
              "value": [
               {
-               "$id": "1300",
+               "$id": "1298",
                "kind": "model",
                "type": {
                 "$ref": "719"
                },
                "value": {
-                "$id": "1301",
+                "$id": "1299",
                 "id": {
-                 "$id": "1302",
+                 "$id": "1300",
                  "kind": "string",
                  "type": {
                   "$ref": "721"
@@ -10928,7 +10915,7 @@
                  "value": "1593108077690"
                 },
                 "sequenceId": {
-                 "$id": "1303",
+                 "$id": "1301",
                  "kind": "number",
                  "type": {
                   "$ref": "725"
@@ -10936,15 +10923,15 @@
                  "value": 6
                 },
                 "message": {
-                 "$id": "1304",
+                 "$id": "1302",
                  "kind": "model",
                  "type": {
                   "$ref": "734"
                  },
                  "value": {
-                  "$id": "1305",
+                  "$id": "1303",
                   "kind": {
-                   "$id": "1306",
+                   "$id": "1304",
                    "kind": "string",
                    "type": {
                     "$ref": "139"
@@ -10952,7 +10939,7 @@
                    "value": "text"
                   },
                   "content": {
-                   "$id": "1307",
+                   "$id": "1305",
                    "kind": "string",
                    "type": {
                     "$ref": "739"
@@ -10962,7 +10949,7 @@
                  }
                 },
                 "senderDisplayName": {
-                 "$id": "1308",
+                 "$id": "1306",
                  "kind": "string",
                  "type": {
                   "$ref": "800"
@@ -10970,7 +10957,7 @@
                  "value": "Jane"
                 },
                 "createdOn": {
-                 "$id": "1309",
+                 "$id": "1307",
                  "kind": "string",
                  "type": {
                   "$ref": "808"
@@ -10978,7 +10965,7 @@
                  "value": "2020-06-25T18:01:17.6900000Z"
                 },
                 "senderCommunicationIdentifier": {
-                 "$id": "1310",
+                 "$id": "1308",
                  "kind": "string",
                  "type": {
                   "$ref": "804"
@@ -10988,15 +10975,15 @@
                }
               },
               {
-               "$id": "1311",
+               "$id": "1309",
                "kind": "model",
                "type": {
                 "$ref": "719"
                },
                "value": {
-                "$id": "1312",
+                "$id": "1310",
                 "id": {
-                 "$id": "1313",
+                 "$id": "1311",
                  "kind": "string",
                  "type": {
                   "$ref": "721"
@@ -11004,7 +10991,7 @@
                  "value": "1593107077690"
                 },
                 "sequenceId": {
-                 "$id": "1314",
+                 "$id": "1312",
                  "kind": "number",
                  "type": {
                   "$ref": "725"
@@ -11012,15 +10999,15 @@
                  "value": 5
                 },
                 "message": {
-                 "$id": "1315",
+                 "$id": "1313",
                  "kind": "model",
                  "type": {
                   "$ref": "734"
                  },
                  "value": {
-                  "$id": "1316",
+                  "$id": "1314",
                   "kind": {
-                   "$id": "1317",
+                   "$id": "1315",
                    "kind": "string",
                    "type": {
                     "$ref": "139"
@@ -11028,7 +11015,7 @@
                    "value": "text"
                   },
                   "content": {
-                   "$id": "1318",
+                   "$id": "1316",
                    "kind": "string",
                    "type": {
                     "$ref": "739"
@@ -11038,7 +11025,7 @@
                  }
                 },
                 "senderDisplayName": {
-                 "$id": "1319",
+                 "$id": "1317",
                  "kind": "string",
                  "type": {
                   "$ref": "800"
@@ -11046,7 +11033,7 @@
                  "value": "Jane"
                 },
                 "createdOn": {
-                 "$id": "1320",
+                 "$id": "1318",
                  "kind": "string",
                  "type": {
                   "$ref": "808"
@@ -11054,7 +11041,7 @@
                  "value": "2020-06-25T17:44:37.6830000Z"
                 },
                 "senderCommunicationIdentifier": {
-                 "$id": "1321",
+                 "$id": "1319",
                  "kind": "string",
                  "type": {
                   "$ref": "804"
@@ -11074,12 +11061,12 @@
      },
      "parameters": [
       {
-       "$id": "1322",
+       "$id": "1320",
        "name": "conversationId",
        "nameInRequest": "conversationId",
        "doc": "The conversation ID.",
        "type": {
-        "$id": "1323",
+        "$id": "1321",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11096,12 +11083,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1324",
+       "$id": "1322",
        "name": "maxPageSize",
        "nameInRequest": "maxPageSize",
        "doc": "Number of objects to return per page.",
        "type": {
-        "$id": "1325",
+        "$id": "1323",
         "kind": "int32",
         "name": "int32",
         "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -11118,12 +11105,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1326",
+       "$id": "1324",
        "name": "participantId",
        "nameInRequest": "participantId",
        "doc": "The participant user ID",
        "type": {
-        "$id": "1327",
+        "$id": "1325",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11140,17 +11127,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1328",
+       "$id": "1326",
        "name": "clientRequestId",
        "nameInRequest": "x-ms-client-request-id",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1329",
+        "$id": "1327",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1330",
+         "$id": "1328",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11169,7 +11156,7 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1331",
+       "$id": "1329",
        "name": "accept",
        "nameInRequest": "accept",
        "type": {
@@ -11187,9 +11174,9 @@
       }
      ],
      "response": {
-      "$id": "1332",
+      "$id": "1330",
       "type": {
-       "$id": "1333",
+       "$id": "1331",
        "kind": "array",
        "name": "ArrayConversationMessageItem",
        "valueType": {
@@ -11205,7 +11192,20 @@
      "isOverride": false,
      "generateConvenient": true,
      "generateProtocol": true,
-     "crossLanguageDefinitionId": "ClientForAcsMessages.ConversationAdministrationClient.listMessages"
+     "crossLanguageDefinitionId": "ClientForAcsMessages.ConversationAdministrationClient.listMessages",
+     "pagingMetadata": {
+      "$id": "1332",
+      "itemPropertySegments": [
+       "value"
+      ],
+      "nextLink": {
+       "$id": "1333",
+       "responseSegments": [
+        "nextLink"
+       ],
+       "responseLocation": "Body"
+      }
+     }
     },
     {
      "$id": "1334",
@@ -14005,19 +14005,6 @@
       "uri": "{endpoint}",
       "path": "/messages/conversations",
       "bufferResponse": true,
-      "paging": {
-       "$id": "1617",
-       "itemPropertySegments": [
-        "value"
-       ],
-       "nextLink": {
-        "$id": "1618",
-        "responseSegments": [
-         "nextLink"
-        ],
-        "responseLocation": "Body"
-       }
-      },
       "generateProtocolMethod": true,
       "generateConvenienceMethod": true,
       "crossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationThreadClient.listConversations",
@@ -14025,12 +14012,12 @@
      },
      "parameters": [
       {
-       "$id": "1619",
+       "$id": "1617",
        "name": "maxPageSize",
        "nameInRequest": "maxPageSize",
        "doc": "Number of objects to return per page.",
        "type": {
-        "$id": "1620",
+        "$id": "1618",
         "kind": "int32",
         "name": "int32",
         "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -14047,12 +14034,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1621",
+       "$id": "1619",
        "name": "participantId",
        "nameInRequest": "participantId",
        "doc": "The participant user ID",
        "type": {
-        "$id": "1622",
+        "$id": "1620",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -14069,17 +14056,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1623",
+       "$id": "1621",
        "name": "channelId",
        "nameInRequest": "channelId",
        "doc": "The id of channel",
        "type": {
-        "$id": "1624",
+        "$id": "1622",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1625",
+         "$id": "1623",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -14098,17 +14085,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1626",
+       "$id": "1624",
        "name": "clientRequestId",
        "nameInRequest": "x-ms-client-request-id",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1627",
+        "$id": "1625",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1628",
+         "$id": "1626",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -14127,7 +14114,7 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1629",
+       "$id": "1627",
        "name": "accept",
        "nameInRequest": "accept",
        "type": {
@@ -14145,9 +14132,9 @@
       }
      ],
      "response": {
-      "$id": "1630",
+      "$id": "1628",
       "type": {
-       "$id": "1631",
+       "$id": "1629",
        "kind": "array",
        "name": "ArrayConversation",
        "valueType": {
@@ -14163,7 +14150,20 @@
      "isOverride": false,
      "generateConvenient": true,
      "generateProtocol": true,
-     "crossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationThreadClient.listConversations"
+     "crossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationThreadClient.listConversations",
+     "pagingMetadata": {
+      "$id": "1630",
+      "itemPropertySegments": [
+       "value"
+      ],
+      "nextLink": {
+       "$id": "1631",
+       "responseSegments": [
+        "nextLink"
+       ],
+       "responseLocation": "Body"
+      }
+     }
     },
     {
      "$id": "1632",
@@ -14377,19 +14377,6 @@
       "uri": "{endpoint}",
       "path": "/messages/conversations/{conversationId}/messages",
       "bufferResponse": true,
-      "paging": {
-       "$id": "1654",
-       "itemPropertySegments": [
-        "value"
-       ],
-       "nextLink": {
-        "$id": "1655",
-        "responseSegments": [
-         "nextLink"
-        ],
-        "responseLocation": "Body"
-       }
-      },
       "generateProtocolMethod": true,
       "generateConvenienceMethod": true,
       "crossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationThreadClient.listMessages",
@@ -14397,12 +14384,12 @@
      },
      "parameters": [
       {
-       "$id": "1656",
+       "$id": "1654",
        "name": "conversationId",
        "nameInRequest": "conversationId",
        "doc": "The conversation ID.",
        "type": {
-        "$id": "1657",
+        "$id": "1655",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -14419,12 +14406,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1658",
+       "$id": "1656",
        "name": "maxPageSize",
        "nameInRequest": "maxPageSize",
        "doc": "Number of objects to return per page.",
        "type": {
-        "$id": "1659",
+        "$id": "1657",
         "kind": "int32",
         "name": "int32",
         "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -14441,12 +14428,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1660",
+       "$id": "1658",
        "name": "participantId",
        "nameInRequest": "participantId",
        "doc": "The participant user ID",
        "type": {
-        "$id": "1661",
+        "$id": "1659",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -14463,17 +14450,17 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1662",
+       "$id": "1660",
        "name": "clientRequestId",
        "nameInRequest": "x-ms-client-request-id",
        "doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "type": {
-        "$id": "1663",
+        "$id": "1661",
         "kind": "string",
         "name": "uuid",
         "crossLanguageDefinitionId": "Azure.Core.uuid",
         "baseType": {
-         "$id": "1664",
+         "$id": "1662",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -14492,7 +14479,7 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "1665",
+       "$id": "1663",
        "name": "accept",
        "nameInRequest": "accept",
        "type": {
@@ -14510,9 +14497,9 @@
       }
      ],
      "response": {
-      "$id": "1666",
+      "$id": "1664",
       "type": {
-       "$id": "1667",
+       "$id": "1665",
        "kind": "array",
        "name": "ArrayConversationMessageItem",
        "valueType": {
@@ -14528,7 +14515,20 @@
      "isOverride": false,
      "generateConvenient": true,
      "generateProtocol": true,
-     "crossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationThreadClient.listMessages"
+     "crossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationThreadClient.listMessages",
+     "pagingMetadata": {
+      "$id": "1666",
+      "itemPropertySegments": [
+       "value"
+      ],
+      "nextLink": {
+       "$id": "1667",
+       "responseSegments": [
+        "nextLink"
+       ],
+       "responseLocation": "Body"
+      }
+     }
     },
     {
      "$id": "1668",

@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class SourceRegistryCredentials : IUtf8JsonSerializable, IJsonModel<SourceRegistryCredentials>
+    internal partial class SourceRegistryCredentials : IUtf8JsonSerializable, IJsonModel<SourceRegistryCredentials>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceRegistryCredentials>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -35,11 +35,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 throw new FormatException($"The model {nameof(SourceRegistryCredentials)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteStringValue(Identity);
-            }
             if (Optional.IsDefined(LoginMode))
             {
                 writer.WritePropertyName("loginMode"u8);
@@ -82,17 +77,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            string identity = default;
             SourceRegistryLoginMode? loginMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
-                {
-                    identity = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("loginMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -108,7 +97,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SourceRegistryCredentials(identity, loginMode, serializedAdditionalRawData);
+            return new SourceRegistryCredentials(loginMode, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -121,29 +110,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             string propertyOverride = null;
 
             builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  identity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Identity))
-                {
-                    builder.Append("  identity: ");
-                    if (Identity.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Identity}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Identity}'");
-                    }
-                }
-            }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LoginMode), out propertyOverride);
             if (hasPropertyOverride)

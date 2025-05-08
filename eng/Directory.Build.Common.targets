@@ -100,7 +100,6 @@
 
   <!-- Remove packages built into the .NET 6+ runtime -->
   <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
-    <PackageReference Remove="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Remove="System.Buffers" />
     <PackageReference Remove="System.Diagnostics.DiagnosticSource" />
     <PackageReference Remove="System.Net.Http" />
@@ -196,6 +195,14 @@
 
     <!-- Add ProjectReferences -->
     <ProjectReference Include="@(ProjectsToConvert -> '%(ProjectPath)')" />
+
+    <!-- Add System.ClientModel.SourceGeneration project reference if System.ClientModel was contained in ProjectsToConvert -->
+    <_DependsOnSystemClientModel Include="@(ProjectsToConvert)" Exclude="System.ClientModel" />
+    <ProjectReference
+      Condition="'@(_DependsOnSystemClientModel)' != '@(ProjectsToConvert)'"
+      Include="$(RepoRoot)\sdk\core\System.ClientModel\gen\System.ClientModel.SourceGeneration.csproj"
+      ReferenceOutputAssembly="false"
+      OutputItemType="Analyzer" />
   </ItemGroup>
 
   <!--TODO: update build targets - ADO 5668-->

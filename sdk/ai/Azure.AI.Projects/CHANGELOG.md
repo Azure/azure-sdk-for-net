@@ -1,17 +1,32 @@
 # Release History
 
-## 1.0.0-beta.7 (Unreleased)
+## 1.0.0-beta.9 (Unreleased)
 
 ### Features Added
-* Added image input support for agents create message
-* Added list threads support for agents
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 1.0.0-beta.8 (2025-04-23)
+
+### Sample Updates
+* New sample added for connected agent tool.
+
+### Bugs Fixed
+* Fix for filtering of messages by run ID [see GitHub issue issue 49513](https://github.com/Azure/azure-sdk-for-net/issues/49513).
+
+## 1.0.0-beta.7 (2025-04-18)
+
+### Features Added
+* Added image input support for agents create message
+* Added list threads support for agents
+
 ### Sample Updates
 * New samples added for image input from url and file.
+* New Fabric tool sample for agents
 
 ## 1.0.0-beta.6 (2025-03-28)
 

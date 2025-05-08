@@ -40,11 +40,11 @@ namespace Azure.Health.Deidentification
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("input"u8);
-            writer.WriteObjectValue(Input, options);
-            if (Optional.IsDefined(Output))
+            writer.WriteObjectValue(InputLocation, options);
+            if (Optional.IsDefined(OutputLocation))
             {
                 writer.WritePropertyName("output"u8);
-                writer.WriteObjectValue(Output, options);
+                writer.WriteObjectValue(OutputLocation, options);
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
@@ -93,7 +93,7 @@ namespace Azure.Health.Deidentification
             string id = default;
             DeidentificationDocumentLocation input = default;
             DeidentificationDocumentLocation output = default;
-            OperationState status = default;
+            OperationStatus status = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -120,7 +120,7 @@ namespace Azure.Health.Deidentification
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new OperationState(property.Value.GetString());
+                    status = new OperationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error"u8))

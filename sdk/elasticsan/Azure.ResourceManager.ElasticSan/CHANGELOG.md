@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,14 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.2 (2025-04-24)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2024-06' to 'package-preview-2024-07'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/3db6867b8e524ea6d1bc7a3bbb989fe50dd2f184/specification/elasticsan/resource-manager/readme.md.
+    - Supported soft delete for ElasticSan.
+    - Supported prebackup and prerestore for ElasticSan.
 
 ## 1.2.0-beta.1 (2024-10-21)
 
@@ -40,7 +48,7 @@ This is the first stable release of ElasticSan client library.
 - Supported snapshot and CMK for ElasticSan
 - Supported private endpoints for ElasticSan
 - Supported ElasticSan basic operations 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Other Changes
 
@@ -50,7 +58,7 @@ This is the first stable release of ElasticSan client library.
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -79,7 +87,7 @@ This is the first stable release of ElasticSan client library.
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 

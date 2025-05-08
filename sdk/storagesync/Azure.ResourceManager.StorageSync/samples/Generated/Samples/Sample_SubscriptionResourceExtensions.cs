@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckStorageSyncNameAvailability_StorageSyncServiceCheckNameAvailabilityAlreadyExists()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/StorageSyncServiceCheckNameAvailability_AlreadyExists.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/StorageSyncServiceCheckNameAvailability_AlreadyExists.json
             // this example is just showing the usage of "StorageSyncServices_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckStorageSyncNameAvailability_StorageSyncServiceCheckNameAvailabilityAvailable()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/StorageSyncServiceCheckNameAvailability_Available.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/StorageSyncServiceCheckNameAvailability_Available.json
             // this example is just showing the usage of "StorageSyncServices_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetStorageSyncServices_StorageSyncServicesListBySubscription()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/StorageSyncServices_ListBySubscription.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/StorageSyncServices_ListBySubscription.json
             // this example is just showing the usage of "StorageSyncServices_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

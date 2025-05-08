@@ -29,6 +29,13 @@ options:
 
 ## Emitter options
 
+### `emitter-output-dir`
+
+**Type:** `absolutePath`
+
+Defines the emitter output directory. Defaults to `{output-dir}/@azure-typespec/http-client-csharp`
+See [Configuring output directory for more info](https://typespec.io/docs/handbook/configuration/configuration/#configuring-output-directory)
+
 ### `api-version`
 
 **Type:** `string`
@@ -39,9 +46,13 @@ For TypeSpec files using the [`@versioned`](https://typespec.io/docs/libraries/v
 
 **Type:** `boolean`
 
+Set to `false` to skip generation of protocol methods. The default value is `true`.
+
 ### `generate-convenience-methods`
 
 **Type:** `boolean`
+
+Set to `false` to skip generation of convenience methods. The default value is `true`.
 
 ### `unreferenced-types-handling`
 
@@ -54,12 +65,6 @@ Defines the strategy on how to handle unreferenced types. The default value is `
 **Type:** `boolean`
 
 Set to `true` to overwrite the csproj if it already exists. The default value is `false`.
-
-### `clear-output-folder`
-
-**Type:** `boolean`
-
-Indicates if you want to clear the output folder before generating. The default value is `true`.
 
 ### `save-inputs`
 
@@ -83,7 +88,7 @@ Set to `true` to automatically attempt to attach to a debugger when executing th
 
 **Type:** `"info" | "debug" | "verbose"`
 
-Set the log level. The default value is `info`.
+Set the log level for which to collect traces. The default value is `info`.
 
 ### `disable-xml-docs`
 
@@ -131,4 +136,4 @@ The C# namespace to use for the generated code. This will override the TypeSpec 
 
 **Type:** `boolean`
 
-Whether to put models under a separate 'Models' sub-namespace. This only applies if the 'namespace' option is set. The default value is 'true' when the 'namespace' option is set. Otherwise, each model will be in the corresponding namespace defined in the TypeSpec.
+Whether to put models under a separate 'Models' sub-namespace. This only applies if the 'namespace' option is set. The default value is 'false'.

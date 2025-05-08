@@ -1,6 +1,17 @@
 {
   "name": "@azure-typespec/http-client-csharp-mgmt",
   "version": "1.0.0",
+  "author": "Microsoft Corporation",
+  "description": "TypeSpec library for emitting Azure management libraries for C#.",
+  "readme": "https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp-mgmt/README.md",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/azure-sdk/azure-sdk-for-net.git"
+  },
+  "bugs": {
+    "url": "https://github.com/azure-sdk/azure-sdk-for-net/issues"
+  },
   "type": "module",
   "main": "dist/emitter/index.js",
   "exports": {
@@ -26,7 +37,7 @@
     "dist/**"
   ],
   "dependencies": {
-    "@azure-typespec/http-client-csharp": "1.0.0-alpha.20250417.2"
+    "@azure-typespec/http-client-csharp": "1.0.0-alpha.20250429.2"
   },
   "devDependencies": {
     "@azure-tools/azure-http-specs": "0.1.0-alpha.13",
@@ -40,7 +51,7 @@
     "@types/prettier": "^2.6.3",
     "@typespec/compiler": "1.0.0-rc.0",
     "@typespec/http": "1.0.0-rc.0",
-    "@typespec/http-client-csharp": "1.0.0-alpha.20250407.1",
+    "@typespec/http-client-csharp": "1.0.0-alpha.20250422.2",
     "@typespec/http-specs": "0.1.0-alpha.17",
     "@typespec/json-schema": "1.0.0-rc.0",
     "@typespec/library-linter": "0.68.0",
@@ -63,6 +74,8 @@
   },
   "azure-sdk/emitter-package-json-pinning": [
     "@azure-tools/typespec-azure-core",
+    "@azure-tools/typespec-azure-resource-manager",
+    "@azure-tools/typespec-azure-rulesets",
     "@azure-tools/typespec-client-generator-core",
     "@typespec/compiler",
     "@typespec/http",
