@@ -18,10 +18,13 @@ namespace MgmtTypeSpec.Models
     /// <summary></summary>
     public partial class TrackedResource : IJsonModel<TrackedResource>
     {
+        /// <summary> Initializes a new instance of <see cref="TrackedResource"/> for deserialization. </summary>
         internal TrackedResource()
         {
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TrackedResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -59,6 +62,8 @@ namespace MgmtTypeSpec.Models
             writer.WriteStringValue(Location);
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         TrackedResource IJsonModel<TrackedResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TrackedResource)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -74,6 +79,8 @@ namespace MgmtTypeSpec.Models
             return DeserializeTrackedResource(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static TrackedResource DeserializeTrackedResource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -158,6 +165,7 @@ namespace MgmtTypeSpec.Models
                 location);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<TrackedResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -167,12 +175,14 @@ namespace MgmtTypeSpec.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TrackedResource)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         TrackedResource IPersistableModel<TrackedResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (TrackedResource)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
@@ -192,6 +202,7 @@ namespace MgmtTypeSpec.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TrackedResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="trackedResource"> The <see cref="TrackedResource"/> to serialize into <see cref="RequestContent"/>. </param>

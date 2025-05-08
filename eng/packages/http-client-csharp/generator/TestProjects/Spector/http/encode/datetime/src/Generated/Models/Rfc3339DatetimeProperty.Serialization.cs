@@ -15,6 +15,8 @@ namespace Encode.Datetime
 {
     public partial class Rfc3339DatetimeProperty : IJsonModel<Rfc3339DatetimeProperty>
     {
+        internal Rfc3339DatetimeProperty() => throw null;
+
         void IJsonModel<Rfc3339DatetimeProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

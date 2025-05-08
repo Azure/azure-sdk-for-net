@@ -16,11 +16,16 @@ namespace BasicTypeSpec
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="FriendModel"/>. </summary>
+        /// <param name="name"> name of the NotFriend. </param>
         internal FriendModel(string name)
         {
             Name = name;
         }
 
+        /// <summary> Initializes a new instance of <see cref="FriendModel"/>. </summary>
+        /// <param name="name"> name of the NotFriend. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal FriendModel(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
