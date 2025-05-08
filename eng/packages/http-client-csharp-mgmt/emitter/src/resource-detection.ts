@@ -11,46 +11,30 @@ import {
   ResourceMetadata
 } from "./resource-metadata.js";
 import { DecoratorInfo } from "@azure-tools/typespec-client-generator-core";
-
-// https://github.com/microsoft/typespec/blob/main/packages/rest/README.md#parentresource
-export const parentResource = "TypeSpec.Rest.@parentResource";
-export const parentResourceRegex = "TypeSpec\\.Rest\\.@parentResource";
-
-// https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armresourceoperations
-export const armResourceOperations =
-  "Azure.ResourceManager.@armResourceOperations";
-export const armResourceOperationsRegex =
-  "Azure\\.ResourceManager\\.@armResourceOperations";
-
-// https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armResourceRead
-export const armResourceRead = "Azure.ResourceManager.@armResourceRead";
-export const armResourceReadRegex =
-  "Azure\\.ResourceManager\\.@armResourceRead";
-
-export const armResourceCreateOrUpdate =
-  "Azure.ResourceManager.@armResourceCreateOrUpdate";
-export const armResourceCreateOrUpdateRegex =
-  "Azure\\.ResourceManager\\.@armResourceCreateOrUpdate";
-// https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#singleton
-export const singleton = "Azure.ResourceManager.@singleton";
-export const singletonRegex = "Azure\\.ResourceManager\\.@singleton";
-
-// TODO: add this decorator to TCGC
-export const resourceMetadata = "Azure.ClientGenerator.Core.@resourceSchema";
-export const resourceMetadataRegex =
-  "Azure\\.ClientGenerator\\.Core\\.@resourceSchema";
+import {
+  armResourceCreateOrUpdate,
+  armResourceOperations,
+  armResourceRead,
+  resourceMetadata,
+  singleton
+} from "./sdk-context-options.js";
 
 export function updateClients(codeModel: CodeModel) {
   // first we flatten all possible clients in the code model
   const clients = getAllClients(codeModel);
 
-  // first pass to update all the clients with their own information
+  // to fully calculation the resource metadata, we have to go with 2 passes
+  // in which the first pass we gather everything we could for each client
+  // the second pass we figure out there cross references between the clients (such as parent resource)
+  // then pass to update all the clients with their own information
   const metadata: Map<InputClient, ResourceMetadata> = new Map();
   for (const client of clients) {
     gatherResourceMetadata(client, metadata);
   }
 
-  // add the decorator to the client
+  // populate the parent resource information
+
+  // the last step, add the decorator to the client
   for (const client of clients) {
     const resourceMetadata = metadata.get(client);
     if (resourceMetadata) {
@@ -132,7 +116,7 @@ function gatherResourceMetadata(
         resourceModel: resourceModel,
         resourceClient: client,
         resourceType: resourceType,
-        isSingleton: isSingleton,
+        isSingleton: isSingleton
       };
       metadataMap.set(client, metadata);
     }
