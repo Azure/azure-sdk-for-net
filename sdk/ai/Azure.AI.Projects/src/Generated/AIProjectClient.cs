@@ -27,19 +27,6 @@ namespace Azure.AI.Projects
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of AIProjectClient. </summary>
-        /// <param name="endpoint">
-        /// Project endpoint. In the form "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/_project"
-        /// if your Foundry Hub has only one Project, or to use the default Project in your Hub. Or in the form
-        /// "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/&lt;your-project-name&gt;" if you want to explicitly
-        /// specify the Foundry Project name.
-        /// </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public AIProjectClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AIProjectClientOptions())
-        {
-        }
-
         private ServicePatterns _cachedServicePatterns;
 
         /// <summary> Initializes a new instance of ServicePatterns. </summary>
