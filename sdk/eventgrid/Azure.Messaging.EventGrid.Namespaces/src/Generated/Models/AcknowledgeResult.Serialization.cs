@@ -17,11 +17,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
     /// <summary></summary>
     public partial class AcknowledgeResult : IJsonModel<AcknowledgeResult>
     {
-        /// <summary> Initializes a new instance of <see cref="AcknowledgeResult"/> for deserialization. </summary>
-        internal AcknowledgeResult()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcknowledgeResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -40,25 +35,31 @@ namespace Azure.Messaging.EventGrid.Namespaces
             {
                 throw new FormatException($"The model {nameof(AcknowledgeResult)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("failedLockTokens"u8);
-            writer.WriteStartArray();
-            foreach (FailedLockToken item in FailedLockTokens)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("succeededLockTokens"u8);
-            writer.WriteStartArray();
-            foreach (string item in SucceededLockTokens)
-            {
-                if (item == null)
+                writer.WritePropertyName("failedLockTokens"u8);
+                writer.WriteStartArray();
+                foreach (FailedLockToken item in FailedLockTokens)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    writer.WriteObjectValue(item, options);
                 }
-                writer.WriteStringValue(item);
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("succeededLockTokens"u8);
+                writer.WriteStartArray();
+                foreach (string item in SucceededLockTokens)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -101,8 +102,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
             {
                 return null;
             }
-            IList<FailedLockToken> failedLockTokens = default;
-            IList<string> succeededLockTokens = default;
+            IReadOnlyList<FailedLockToken> failedLockTokens = default;
+            IReadOnlyList<string> succeededLockTokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

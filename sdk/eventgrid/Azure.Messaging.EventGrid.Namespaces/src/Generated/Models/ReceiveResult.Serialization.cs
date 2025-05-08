@@ -17,11 +17,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
     /// <summary></summary>
     public partial class ReceiveResult : IJsonModel<ReceiveResult>
     {
-        /// <summary> Initializes a new instance of <see cref="ReceiveResult"/> for deserialization. </summary>
-        internal ReceiveResult()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ReceiveResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -40,13 +35,16 @@ namespace Azure.Messaging.EventGrid.Namespaces
             {
                 throw new FormatException($"The model {nameof(ReceiveResult)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("value"u8);
-            writer.WriteStartArray();
-            foreach (ReceiveDetails item in Details)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (ReceiveDetails item in Details)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -89,7 +87,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             {
                 return null;
             }
-            IList<ReceiveDetails> details = default;
+            IReadOnlyList<ReceiveDetails> details = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

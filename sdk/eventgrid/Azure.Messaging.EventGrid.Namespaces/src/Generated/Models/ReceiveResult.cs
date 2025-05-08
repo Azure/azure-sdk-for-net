@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
@@ -18,22 +17,21 @@ namespace Azure.Messaging.EventGrid.Namespaces
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReceiveResult"/>. </summary>
-        /// <param name="details"> Array of receive responses, one per cloud event. </param>
-        internal ReceiveResult(IEnumerable<ReceiveDetails> details)
+        internal ReceiveResult()
         {
-            Details = details.ToList();
+            Details = new ChangeTrackingList<ReceiveDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ReceiveResult"/>. </summary>
         /// <param name="details"> Array of receive responses, one per cloud event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReceiveResult(IList<ReceiveDetails> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReceiveResult(IReadOnlyList<ReceiveDetails> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Details = details;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Array of receive responses, one per cloud event. </summary>
-        public IList<ReceiveDetails> Details { get; }
+        public IReadOnlyList<ReceiveDetails> Details { get; }
     }
 }
