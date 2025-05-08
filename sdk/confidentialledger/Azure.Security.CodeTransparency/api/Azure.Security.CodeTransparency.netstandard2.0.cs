@@ -49,13 +49,14 @@ namespace Azure.Security.CodeTransparency
     }
     public partial class CodeTransparencyClientOptions : Azure.Core.ClientOptions
     {
-        public CodeTransparencyClientOptions(Azure.Security.CodeTransparency.CodeTransparencyClientOptions.ServiceVersion version = Azure.Security.CodeTransparency.CodeTransparencyClientOptions.ServiceVersion.V2025_01_31_Preview) { }
+        public CodeTransparencyClientOptions(Azure.Security.CodeTransparency.CodeTransparencyClientOptions.ServiceVersion version = Azure.Security.CodeTransparency.CodeTransparencyClientOptions.ServiceVersion.V2025_05_31_Preview) { }
         public double CacheTTLSeconds { get { throw null; } set { } }
         public string IdentityClientEndpoint { get { throw null; } set { } }
         public virtual Azure.Security.CodeTransparency.CodeTransparencyCertificateClient CreateCertificateClient() { throw null; }
         public enum ServiceVersion
         {
             V2025_01_31_Preview = 1,
+            V2025_05_31_Preview = 2,
         }
     }
     public enum CodeTransparencyOperationStatus
