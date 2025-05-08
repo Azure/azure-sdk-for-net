@@ -106,7 +106,9 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount.core.windows.net"),
-["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount")
+["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
+["description"] = null,
+["publicAccessLevel"] = null
 },
                     TypeName = "azure_storage_account",
                     CustomAttributes =
@@ -138,7 +140,9 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount.core.windows.net"),
-["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount")
+["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
+["description"] = null,
+["publicAccessLevel"] = null
 },
                     TypeName = "azure_storage_account",
                     CustomAttributes =
@@ -276,7 +280,9 @@ info = "Example Owner Info",
 ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount.core.windows.net"),
-["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount")
+["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
+["description"] = null,
+["publicAccessLevel"] = null
 },
                     TypeName = "azure_storage_account",
                     CreatedBy = "ExampleCreator",
@@ -326,7 +332,9 @@ Info = "Example Owner Info",
 ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount.core.windows.net"),
-["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount")
+["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
+["description"] = null,
+["publicAccessLevel"] = null
 },
                     TypeName = "azure_storage_account",
                     CreatedBy = "ExampleCreator",
@@ -455,7 +463,9 @@ Info = "Example Owner Info",
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount.core.windows.net"),
 ["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
-["userDescription"] = BinaryData.FromObjectAsJson("<div><b>testing</b></div>")
+["description"] = null,
+["userDescription"] = BinaryData.FromObjectAsJson("<div><b>testing</b></div>"),
+["publicAccessLevel"] = null
 },
                     TypeName = "azure_storage_account",
                     CreatedBy = "ExampleCreator",
@@ -491,7 +501,9 @@ Info = "Example Owner Info",
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("https://exampleaccount.core.windows.net"),
 ["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
-["userDescription"] = BinaryData.FromObjectAsJson("<div><b>testing</b></div>")
+["description"] = null,
+["userDescription"] = BinaryData.FromObjectAsJson("<div><b>testing</b></div>"),
+["publicAccessLevel"] = null
 },
                     TypeName = "azure_storage_account",
                     CreatedBy = "ExampleCreator",
@@ -632,7 +644,9 @@ info = "Example Owner Info",
 ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("exampleaccount"),
-["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount")
+["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
+["description"] = null,
+["publicAccessLevel"] = null
 },
                     TypeName = "azure_storage_account",
                     CreatedBy = "ExampleCreator",
@@ -682,7 +696,9 @@ Info = "Example Owner Info",
 ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("exampleaccount"),
-["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount")
+["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount"),
+["description"] = null,
+["publicAccessLevel"] = null
 },
                     TypeName = "azure_storage_account",
                     CreatedBy = "ExampleCreator",
@@ -966,7 +982,9 @@ Attributes =
 ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("exampleaccount1"),
-["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount1")
+["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount1"),
+["description"] = null,
+["publicAccessLevel"] = null
 },
 TypeName = "azure_storage_account",
 CreatedBy = "ExampleCreator",
@@ -1001,7 +1019,8 @@ Attributes =
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("exampleaccount2"),
 ["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount2"),
-["description"] = BinaryData.FromObjectAsJson("Example Description")
+["description"] = BinaryData.FromObjectAsJson("Example Description"),
+["publicAccessLevel"] = null
 },
 TypeName = "azure_storage_account",
 CreatedBy = "ExampleCreator",
@@ -1051,7 +1070,9 @@ Attributes =
 ["modifiedTime"] = BinaryData.FromObjectAsJson(0),
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("exampleaccount1"),
-["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount1")
+["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount1"),
+["description"] = null,
+["publicAccessLevel"] = null
 },
 TypeName = "azure_storage_account",
 CreatedBy = "ExampleCreator",
@@ -1086,7 +1107,8 @@ Attributes =
 ["createTime"] = BinaryData.FromObjectAsJson(0),
 ["qualifiedName"] = BinaryData.FromObjectAsJson("exampleaccount2"),
 ["name"] = BinaryData.FromObjectAsJson("ExampleStorageAccount2"),
-["description"] = BinaryData.FromObjectAsJson("Example Description")
+["description"] = BinaryData.FromObjectAsJson("Example Description"),
+["publicAccessLevel"] = null
 },
 TypeName = "azure_storage_account",
 CreatedBy = "ExampleCreator",
