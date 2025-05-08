@@ -684,10 +684,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
         }
 
-        public static async Task<bool> ValidateProtocolAsync(
+        public static async Task ValidateProtocolAsync(
             ShareClient parentShareClient,
             ShareFileStorageResourceOptions options,
+            string transferId,
             string endpoint,
+            string resourceUri,
             CancellationToken cancellationToken)
         {
             if (!options?.SkipProtocolValidation ?? true)
@@ -707,9 +709,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 {
                     throw Errors.NoShareLevelPermissions(endpoint);
                 }
-                return true;
             }
-            return false;
+            else
+            {
+                DataMovementFileShareEventSource.Singleton.ProtocolValidationSkipped(transferId, endpoint, resourceUri);
+            }
         }
     }
 

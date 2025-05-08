@@ -16,7 +16,6 @@ namespace Azure.Storage.DataMovement
         private const int EnumerationCompleteEvent = 4;
         private const int ResumeTransferEvent = 5;
         private const int ResumeEnumerationCompleteEvent = 6;
-        private const int TransferValidationSkippedEvent = 7;
 
         private DataMovementEventSource() : base(EventSourceName) { }
 
@@ -92,12 +91,6 @@ namespace Azure.Storage.DataMovement
         public void ResumeEnumerationComplete(string transferId, int jobPartCount)
         {
             WriteEvent(ResumeEnumerationCompleteEvent, transferId, jobPartCount);
-        }
-
-        [Event(TransferValidationSkippedEvent, Level = EventLevel.Informational, Message = "Transfer [{0}] Validation skipped for {1}: Resource={2}")]
-        public void TransferValidationSkipped(string transferId, string endpoint, string resourceUri)
-        {
-            WriteEvent(TransferValidationSkippedEvent, transferId, endpoint, resourceUri);
         }
     }
 }

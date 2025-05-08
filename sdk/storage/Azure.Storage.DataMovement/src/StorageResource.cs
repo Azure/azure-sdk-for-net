@@ -53,11 +53,10 @@ namespace Azure.Storage.DataMovement
         protected internal abstract StorageResourceCheckpointDetails GetDestinationCheckpointDetails();
 
         /// <summary>
-        /// Ensures the transfer is valid. Intended to be called on destination resources.
+        /// Ensures the transfer is valid. Intended to be called on destination resource with the source resource passed-in.
         /// </summary>
-        /// <returns>A (bool ValidateSource, bool ValidateDest) indicating whether the source and destination were validated or skipped.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        protected internal virtual Task<(bool ValidateSource, bool ValidateDest)> ValidateTransferAsync(StorageResource sourceResource, CancellationToken cancellationToken = default)
+        protected internal virtual Task ValidateTransferAsync(string transferId, StorageResource sourceResource, CancellationToken cancellationToken = default)
             => Task.FromResult((ValidateSource: true, ValidateDest: true));
     }
 }

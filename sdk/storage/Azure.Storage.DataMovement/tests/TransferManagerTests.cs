@@ -654,7 +654,7 @@ internal static partial class MockExtensions
                 });
             });
 
-        items.Destination.Setup(r => r.ValidateTransferAsync(It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()))
+        items.Destination.Setup(r => r.ValidateTransferAsync(It.IsAny<string>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()))
             .Returns(Task.FromResult((ValidateSource: true, ValidateDest: true)));
 
         items.Source.Setup(r => r.ReadStreamAsync(It.IsAny<long>(), It.IsAny<long?>(), It.IsAny<CancellationToken>()))
@@ -727,7 +727,7 @@ internal static partial class MockExtensions
         containers.Source.SetupGet(r => r.Uri).Returns(srcUri);
         containers.Destination.SetupGet(r => r.Uri).Returns(dstUri);
 
-        containers.Destination.Setup(r => r.ValidateTransferAsync(It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()))
+        containers.Destination.Setup(r => r.ValidateTransferAsync(It.IsAny<string>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()))
             .Returns(Task.FromResult((ValidateSource: true, ValidateDest: true)));
 
         containers.Source.Setup(r => r.GetStorageResourcesAsync(It.IsAny<StorageResourceContainer>(), It.IsAny<CancellationToken>()))
@@ -768,7 +768,7 @@ internal static partial class MockExtensions
     public static void VerifyDestinationResourceOnQueue(this Mock<StorageResourceItem> dstResource)
     {
         dstResource.VerifyGet(r => r.Uri);
-        dstResource.Verify(b => b.ValidateTransferAsync(It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()), Times.Once());
+        dstResource.Verify(b => b.ValidateTransferAsync(It.IsAny<string>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()), Times.Once());
     }
 
     public static void VerifySourceResourceOnQueue(this Mock<StorageResourceContainer> srcResource)
@@ -779,7 +779,7 @@ internal static partial class MockExtensions
     public static void VerifyDestinationResourceOnQueue(this Mock<StorageResourceContainer> dstResource)
     {
         dstResource.VerifyGet(r => r.Uri);
-        dstResource.Verify(b => b.ValidateTransferAsync(It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()), Times.Once());
+        dstResource.Verify(b => b.ValidateTransferAsync(It.IsAny<string>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()), Times.Once());
     }
 
     public static void VerifySourceResourceOnJobProcess(this Mock<StorageResourceItem> srcResource)
