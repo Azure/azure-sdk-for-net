@@ -9,7 +9,7 @@ In addition to adhering to the [General Naming Conventions of .NET](https://lear
 
 **DO** Two-letter acronyms are special and should be all-uppercased if it is not part of longer compound identifiers, but still have some exceptions like `Vm`, `Id` and etc. 
 
-**DO** Use a singular type name for an `enum` type if it does not have the `[Flags]` attribute. Use a plural type name for an `enum` type if it has `[Flags]` attribute. For more details, please check [here](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
+**DO** Use a singular type name for an `enum` type if it does not have the `[Flags]` attribute. Use a plural type name for an `enum` type if it has `[Flags]` attribute. For more details, please check [C# enumeration naming convention](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
 
 **DO** The name of PATCH operation's body parameter should be: `[Model]Patch`.  For the model of a property in the `[Model]Patch`, if you need to rename the suffix, use `Content` instead of `Patch` since properties are not patchable, they will be set as the property model is.
 
