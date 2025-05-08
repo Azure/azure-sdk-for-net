@@ -1156,7 +1156,7 @@ namespace Azure.AI.Agents.Persistent
     }
     public static partial class PersistentAgentsExtensions
     {
-        public static Azure.AI.Agents.Persistent.PersistentAgentsAdministration GetPersistentAgentAdministrationClient(this System.ClientModel.Primitives.ClientConnectionProvider provider) { throw null; }
+        public static Azure.AI.Agents.Persistent.PersistentAgentsClient GetPersistentAgentsClient(this System.ClientModel.Primitives.ClientConnectionProvider provider) { throw null; }
     }
     public partial class PersistentAgentsFiles
     {
