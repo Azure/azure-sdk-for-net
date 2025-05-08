@@ -5,7 +5,14 @@ namespace System.ClientModel.SourceGeneration;
 
 internal sealed class TypeRef : IEquatable<TypeRef>
 {
-    public TypeRef(string name, string nameSpace, string assembly, string fullyQualifiedName, TypeRef? itemType = default, int arrayRank = 0)
+    public TypeRef(
+        string name,
+        string nameSpace,
+        string assembly,
+        string fullyQualifiedName,
+        TypeRef? itemType = default,
+        int arrayRank = 0,
+        ObsoleteLevel obsoleteLevel = ObsoleteLevel.None)
     {
         Name = name;
         Namespace = nameSpace;
@@ -13,6 +20,7 @@ internal sealed class TypeRef : IEquatable<TypeRef>
         Assembly = assembly;
         ArrayRank = arrayRank;
         FullyQualifiedName = fullyQualifiedName;
+        ObsoleteLevel = obsoleteLevel;
     }
 
     public string Name { get; }
@@ -21,6 +29,7 @@ internal sealed class TypeRef : IEquatable<TypeRef>
     public string Assembly { get; }
     public int ArrayRank { get; }
     public string FullyQualifiedName { get; }
+    public ObsoleteLevel ObsoleteLevel { get; init; }
 
     private string? _typeCaseName;
     public string TypeCaseName => _typeCaseName ??= Name.ToIdentifier(false);

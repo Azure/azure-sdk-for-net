@@ -62,7 +62,7 @@ export async function typeSpecCompile(
     ${"@useDependency(Azure.Core.Versions.v1_0_Preview_1)"}
     "2023-01-01-preview"
     }
-    
+
     `;
   const fileContent = `
     import "@typespec/rest";
@@ -71,13 +71,13 @@ export async function typeSpecCompile(
     ${needXml ? 'import  "@typespec/xml";' : ""}
     ${'import "@azure-tools/typespec-azure-core";'}
     ${needTCGC ? 'import "@azure-tools/typespec-client-generator-core";' : ""}
-    using TypeSpec.Rest; 
+    using TypeSpec.Rest;
     using TypeSpec.Http;
     using TypeSpec.Versioning;
     ${needXml ? "using TypeSpec.Xml;" : ""}
     ${"using Azure.Core;\nusing Azure.Core.Traits;"}
     ${needTCGC ? "using Azure.ClientGenerator.Core;" : ""}
-    
+
     ${needNamespaces ? namespace : ""}
     ${content}
     `;
@@ -130,16 +130,11 @@ export async function createCSharpSdkContext(
       clients: new Map(),
       properties: new Map(),
       responses: new Map(),
-      updateSdkClientReferences: (sdkClient, inputClient) => {
-      },
-      updateSdkPropertyReferences: (sdkProperty, inputProperty) => {
-      },
-      updateSdkResponseReferences: (sdkResponse, response) => {
-      },
-      updateSdkTypeReferences: (sdkType, inputType) => {
-      },
-      updateTypeCache: (typeName, type) => {
-      }
+      updateSdkClientReferences: () => {},
+      updateSdkPropertyReferences: () => {},
+      updateSdkResponseReferences: () => {},
+      updateSdkTypeReferences: () => {},
+      updateTypeCache: () => {}
     }
   };
 }

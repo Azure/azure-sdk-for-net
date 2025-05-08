@@ -80,6 +80,7 @@ trigger:
     - sdk/digitaltwins/Azure.ResourceManager.DigitalTwins
     - sdk/dns/Azure.ResourceManager.Dns
     - sdk/dnsresolver/Azure.ResourceManager.DnsResolver
+    - sdk/durabletask/Azure.ResourceManager.DurableTask
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
     - sdk/edgezones/Azure.ResourceManager.EdgeZones
@@ -212,6 +213,7 @@ trigger:
     - sdk/weightsandbiases/Azure.ResourceManager.WeightsAndBiases
     - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
     - sdk/workloads/Azure.ResourceManager.Workloads
+    - sdk/workloadssapvirtualinstance/Azure.ResourceManager.WorkloadsSapVirtualInstance
 
 pr:
   branches:
@@ -294,6 +296,7 @@ pr:
     - sdk/digitaltwins/Azure.ResourceManager.DigitalTwins
     - sdk/dns/Azure.ResourceManager.Dns
     - sdk/dnsresolver/Azure.ResourceManager.DnsResolver
+    - sdk/durabletask/Azure.ResourceManager.DurableTask
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
     - sdk/edgezones/Azure.ResourceManager.EdgeZones
@@ -426,6 +429,7 @@ pr:
     - sdk/weightsandbiases/Azure.ResourceManager.WeightsAndBiases
     - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
     - sdk/workloads/Azure.ResourceManager.Workloads
+    - sdk/workloadssapvirtualinstance/Azure.ResourceManager.WorkloadsSapVirtualInstance
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
