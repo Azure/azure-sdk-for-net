@@ -300,6 +300,101 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ProjectResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProjectResource.CreateResourceIdentifier" /> to create a <see cref="ProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetProjectResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ProjectResource"/> object. </returns>
+        public static ProjectResource GetProjectResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCognitiveServicesArmClient(client).GetProjectResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AccountConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AccountConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AccountConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetAccountConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AccountConnectionResource"/> object. </returns>
+        public static AccountConnectionResource GetAccountConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCognitiveServicesArmClient(client).GetAccountConnectionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AccountProjectConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AccountProjectConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AccountProjectConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetAccountProjectConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AccountProjectConnectionResource"/> object. </returns>
+        public static AccountProjectConnectionResource GetAccountProjectConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCognitiveServicesArmClient(client).GetAccountProjectConnectionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AccountCapabilityHostResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AccountCapabilityHostResource.CreateResourceIdentifier" /> to create an <see cref="AccountCapabilityHostResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetAccountCapabilityHostResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AccountCapabilityHostResource"/> object. </returns>
+        public static AccountCapabilityHostResource GetAccountCapabilityHostResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCognitiveServicesArmClient(client).GetAccountCapabilityHostResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AccountProjectCapabilityHostResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AccountProjectCapabilityHostResource.CreateResourceIdentifier" /> to create an <see cref="AccountProjectCapabilityHostResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetAccountProjectCapabilityHostResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AccountProjectCapabilityHostResource"/> object. </returns>
+        public static AccountProjectCapabilityHostResource GetAccountProjectCapabilityHostResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCognitiveServicesArmClient(client).GetAccountProjectCapabilityHostResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of CognitiveServicesAccountResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
@@ -329,7 +424,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -367,7 +462,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -422,7 +517,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -460,7 +555,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -515,7 +610,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -555,7 +650,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -613,7 +708,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -652,7 +747,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -691,7 +786,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -727,7 +822,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -763,7 +858,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -799,7 +894,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -835,7 +930,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -867,7 +962,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -899,7 +994,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -933,7 +1028,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -967,7 +1062,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1001,7 +1096,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1035,7 +1130,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1067,7 +1162,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1099,7 +1194,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1131,7 +1226,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1163,7 +1258,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1196,7 +1291,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1229,7 +1324,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1262,7 +1357,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1295,7 +1390,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1331,7 +1426,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1367,7 +1462,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1402,7 +1497,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1437,7 +1532,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1473,7 +1568,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
