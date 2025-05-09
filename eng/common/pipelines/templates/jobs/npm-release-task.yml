@@ -61,6 +61,8 @@ jobs:
                 $tag = ($packageVersion -match "-(alpha|beta|rc|pre)") ? "beta" : "latest"
                 echo "##vso[task.setvariable variable=Tag;isOutput=true]$tag"
                 Write-Host "Tag set to $tag for version $packageVersion"
+              } else {
+                echo "##vso[task.setvariable variable=Tag;isOutput=true]$(Tag)"
               }
               
               echo "##vso[task.setvariable variable=PackageName;isOutput=true]$packageName"
