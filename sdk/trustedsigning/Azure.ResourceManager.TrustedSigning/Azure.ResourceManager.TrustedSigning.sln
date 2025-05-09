@@ -7,8 +7,6 @@ Project("{8263E172-CB04-4BDC-B98A-771ACC2C8CAA}") = "Azure.ResourceManager.Trust
 EndProject
 Project("{8263E172-CB04-4BDC-B98A-771ACC2C8CAA}") = "Azure.ResourceManager.TrustedSigning.Tests", "tests\Azure.ResourceManager.TrustedSigning.Tests.csproj", "{CA97DD50-D003-4629-BCEB-185A56CA5CD1}"
 EndProject
-Project("{8263E172-CB04-4BDC-B98A-771ACC2C8CAA}") = "Azure.ResourceManager.TrustedSigning.Samples", "samples\Azure.ResourceManager.TrustedSigning.Samples.csproj", "{A5AF7B73-74A0-4635-8478-8B5CBA90EEFE}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,17 +47,5 @@ Global
 		{CA97DD50-D003-4629-BCEB-185A56CA5CD1}.Release|x64.Build.0 = Release|Any CPU
 		{CA97DD50-D003-4629-BCEB-185A56CA5CD1}.Release|x86.ActiveCfg = Release|Any CPU
 		{CA97DD50-D003-4629-BCEB-185A56CA5CD1}.Release|x86.Build.0 = Release|Any CPU
-		{A5AF7B73-74A0-4635-8478-8B5CBA90EEFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A5AF7B73-74A0-4635-8478-8B5CBA90EEFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A5AF7B73-74A0-4635-8478-8B5CBA90EEFE}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{A5AF7B73-74A0-4635-8478-8B5CBA90EEFE}.Debug|x64.Build.0 = Debug|Any CPU
-		{A5AF7B73-74A0-4635-8478-8B5CBA90EEFE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A5AF7B73-74A0-4635-8478-8B5CBA90EEFE}.Debug|x86.Build.0 = Debug|Any CPU
-		{A5AF7B73-74A0-4635-8478-8B5CBA90EEFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A5AF7B73-74A0-4635-8478-8B5CBA90EEFE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A5AF7B73-74A0-4635-8478-8B5CBA90EEFE}.Release|x64.ActiveCfg = Release|Any CPU
-		{A5AF7B73-74A0-4635-8478-8B5CBA90EEFE}.Release|x64.Build.0 = Release|Any CPU
-		{A5AF7B73-74A0-4635-8478-8B5CBA90EEFE}.Release|x86.ActiveCfg = Release|Any CPU
-		{A5AF7B73-74A0-4635-8478-8B5CBA90EEFE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

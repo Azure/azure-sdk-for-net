@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Compute
 
         CloudServiceOSVersionData IJsonModel<CloudServiceOSVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudServiceOSVersionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CloudServiceOSVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CloudServiceOSVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CloudServiceOSVersionData>(Data, options, AzureResourceManagerComputeContext.Default);
 
-        CloudServiceOSVersionData IPersistableModel<CloudServiceOSVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudServiceOSVersionData>(data, options);
+        CloudServiceOSVersionData IPersistableModel<CloudServiceOSVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudServiceOSVersionData>(data, options, AzureResourceManagerComputeContext.Default);
 
         string IPersistableModel<CloudServiceOSVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudServiceOSVersionData>)Data).GetFormatFromOptions(options);
     }

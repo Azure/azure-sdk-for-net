@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HybridNetwork
 
         ConfigurationGroupValueData IJsonModel<ConfigurationGroupValueData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConfigurationGroupValueData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ConfigurationGroupValueData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ConfigurationGroupValueData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConfigurationGroupValueData>(Data, options, AzureResourceManagerHybridNetworkContext.Default);
 
-        ConfigurationGroupValueData IPersistableModel<ConfigurationGroupValueData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConfigurationGroupValueData>(data, options);
+        ConfigurationGroupValueData IPersistableModel<ConfigurationGroupValueData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConfigurationGroupValueData>(data, options, AzureResourceManagerHybridNetworkContext.Default);
 
         string IPersistableModel<ConfigurationGroupValueData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConfigurationGroupValueData>)Data).GetFormatFromOptions(options);
     }

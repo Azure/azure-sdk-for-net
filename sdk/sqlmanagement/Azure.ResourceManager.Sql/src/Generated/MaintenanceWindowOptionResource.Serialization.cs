@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         MaintenanceWindowOptionData IJsonModel<MaintenanceWindowOptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MaintenanceWindowOptionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MaintenanceWindowOptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MaintenanceWindowOptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MaintenanceWindowOptionData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        MaintenanceWindowOptionData IPersistableModel<MaintenanceWindowOptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MaintenanceWindowOptionData>(data, options);
+        MaintenanceWindowOptionData IPersistableModel<MaintenanceWindowOptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MaintenanceWindowOptionData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<MaintenanceWindowOptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MaintenanceWindowOptionData>)Data).GetFormatFromOptions(options);
     }

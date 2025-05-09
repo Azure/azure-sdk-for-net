@@ -15,6 +15,8 @@ namespace SpecialWords._ModelProperties
 {
     public partial class SameAsModel : IJsonModel<SameAsModel>
     {
+        internal SameAsModel() => throw null;
+
         void IJsonModel<SameAsModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

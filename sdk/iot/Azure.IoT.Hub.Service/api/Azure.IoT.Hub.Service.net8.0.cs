@@ -1,5 +1,11 @@
 namespace Azure.IoT.Hub.Service
 {
+    public partial class AzureIoTHubServiceContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureIoTHubServiceContext() { }
+        public static Azure.IoT.Hub.Service.AzureIoTHubServiceContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public enum BulkIfMatchPrecondition
     {
         Unconditional = 0,

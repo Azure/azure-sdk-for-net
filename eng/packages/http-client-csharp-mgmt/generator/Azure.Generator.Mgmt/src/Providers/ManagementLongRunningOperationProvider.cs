@@ -144,7 +144,7 @@ namespace Azure.Generator.Management.Providers
 
         private ConstructorProvider BuildInitializationConstructor()
         {
-            var sourceParameter = new ParameterProvider("source", $"The instance of <see cref=\"IOperationSource\"/>", new CSharpType(typeof(IOperationSource<>), _t));
+            var sourceParameter = new ParameterProvider("source", $"The instance of <see cref=\"IOperationSource{{T}}\"/>", new CSharpType(typeof(IOperationSource<>), _t));
             var clientDiagnosticsParameter = new ParameterProvider("clientDiagnostics", $"The instance of <see cref=\"ClientDiagnostics\"/>", typeof(ClientDiagnostics));
             var pipelineParameter = new ParameterProvider("pipeline", $"The instance of <see cref=\"HttpPipeline\"/>", typeof(HttpPipeline));
             var requestParameter = new ParameterProvider("request", $"The operation request", typeof(Request));

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         DeviceUpdateAccountResource IOperationSource<DeviceUpdateAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DeviceUpdateAccountData>(response.Content);
+            var data = ModelReaderWriter.Read<DeviceUpdateAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDeviceUpdateContext.Default);
             return new DeviceUpdateAccountResource(_client, data);
         }
 
         async ValueTask<DeviceUpdateAccountResource> IOperationSource<DeviceUpdateAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DeviceUpdateAccountData>(response.Content);
+            var data = ModelReaderWriter.Read<DeviceUpdateAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDeviceUpdateContext.Default);
             return await Task.FromResult(new DeviceUpdateAccountResource(_client, data)).ConfigureAwait(false);
         }
     }

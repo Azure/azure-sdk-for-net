@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         ContainerRegistryCacheRuleData IJsonModel<ContainerRegistryCacheRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerRegistryCacheRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContainerRegistryCacheRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ContainerRegistryCacheRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerRegistryCacheRuleData>(Data, options, AzureResourceManagerContainerRegistryContext.Default);
 
-        ContainerRegistryCacheRuleData IPersistableModel<ContainerRegistryCacheRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerRegistryCacheRuleData>(data, options);
+        ContainerRegistryCacheRuleData IPersistableModel<ContainerRegistryCacheRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerRegistryCacheRuleData>(data, options, AzureResourceManagerContainerRegistryContext.Default);
 
         string IPersistableModel<ContainerRegistryCacheRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerRegistryCacheRuleData>)Data).GetFormatFromOptions(options);
     }
