@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Primitives;
@@ -26,7 +25,7 @@ internal class ReflectionReadOnlyMemoryBuilder<T> : ModelReaderWriterTypeBuilder
     protected override void AddItem(object collection, object? item)
         => BuilderType.GetMethod("Add", [ItemType!])!.Invoke(collection, [ item ]);
 
-    protected override object ToCollection(object builder)
+    protected override object ConvertCollectionBuilder(object builder)
     {
         return Activator.CreateInstance(_memoryType, BuilderType.GetMethod("ToArray")!.Invoke(builder, null)!)!;
     }
