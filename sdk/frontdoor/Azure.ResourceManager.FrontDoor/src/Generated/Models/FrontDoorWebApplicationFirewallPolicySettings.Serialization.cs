@@ -69,6 +69,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("javascriptChallengeExpirationInMinutes"u8);
                 writer.WriteNumberValue(JavascriptChallengeExpirationInMinutes.Value);
             }
+            if (Optional.IsDefined(CaptchaExpirationInMinutes))
+            {
+                writer.WritePropertyName("captchaExpirationInMinutes"u8);
+                writer.WriteNumberValue(CaptchaExpirationInMinutes.Value);
+            }
             writer.WritePropertyName("logScrubbing"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
@@ -131,6 +136,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             string customBlockResponseBody = default;
             PolicyRequestBodyCheck? requestBodyCheck = default;
             int? javascriptChallengeExpirationInMinutes = default;
+            int? captchaExpirationInMinutes = default;
             WebApplicationFirewallScrubbingState? state = default;
             IList<WebApplicationFirewallScrubbingRules> scrubbingRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -196,6 +202,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     javascriptChallengeExpirationInMinutes = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("captchaExpirationInMinutes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    captchaExpirationInMinutes = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("logScrubbing"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -245,6 +260,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 customBlockResponseBody,
                 requestBodyCheck,
                 javascriptChallengeExpirationInMinutes,
+                captchaExpirationInMinutes,
                 state,
                 scrubbingRules ?? new ChangeTrackingList<WebApplicationFirewallScrubbingRules>(),
                 serializedAdditionalRawData);
