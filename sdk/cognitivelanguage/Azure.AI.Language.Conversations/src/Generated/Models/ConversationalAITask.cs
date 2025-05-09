@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="analysisInput"> The input ConversationItem and its optional parameters. </param>
         /// <param name="parameters"> Input parameters necessary for a Conversation language understanding task. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisInput"/> or <paramref name="parameters"/> is null. </exception>
-        public ConversationalAITask(ConversationalAIAnalysisInput analysisInput, ConversationalAIInputParameters parameters)
+        public ConversationalAITask(ConversationalAIAnalysisInput analysisInput, AIConversationLanguageUnderstandingActionContent parameters)
         {
             Argument.AssertNotNull(analysisInput, nameof(analysisInput));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -32,7 +32,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="analysisInput"> The input ConversationItem and its optional parameters. </param>
         /// <param name="parameters"> Input parameters necessary for a Conversation language understanding task. </param>
-        internal ConversationalAITask(AnalyzeConversationInputKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ConversationalAIAnalysisInput analysisInput, ConversationalAIInputParameters parameters) : base(kind, serializedAdditionalRawData)
+        internal ConversationalAITask(AnalyzeConversationInputKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ConversationalAIAnalysisInput analysisInput, AIConversationLanguageUnderstandingActionContent parameters) : base(kind, serializedAdditionalRawData)
         {
             AnalysisInput = analysisInput;
             Parameters = parameters;
@@ -46,6 +46,6 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> The input ConversationItem and its optional parameters. </summary>
         public ConversationalAIAnalysisInput AnalysisInput { get; }
         /// <summary> Input parameters necessary for a Conversation language understanding task. </summary>
-        public ConversationalAIInputParameters Parameters { get; }
+        public AIConversationLanguageUnderstandingActionContent Parameters { get; }
     }
 }

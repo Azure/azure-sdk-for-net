@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Input parameters base for a Conversation task. </summary>
-    public partial class ConversationalAIInputParameters
+    public partial class AIConversationLanguageUnderstandingActionContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.AI.Language.Conversations.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationalAIInputParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AIConversationLanguageUnderstandingActionContent"/>. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the deployment to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        public ConversationalAIInputParameters(string projectName, string deploymentName)
+        public AIConversationLanguageUnderstandingActionContent(string projectName, string deploymentName)
         {
             Argument.AssertNotNull(projectName, nameof(projectName));
             Argument.AssertNotNull(deploymentName, nameof(deploymentName));
@@ -58,12 +58,12 @@ namespace Azure.AI.Language.Conversations.Models
             DeploymentName = deploymentName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationalAIInputParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AIConversationLanguageUnderstandingActionContent"/>. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the deployment to use. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationalAIInputParameters(string projectName, string deploymentName, StringIndexType? stringIndexType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AIConversationLanguageUnderstandingActionContent(string projectName, string deploymentName, StringIndexType? stringIndexType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProjectName = projectName;
             DeploymentName = deploymentName;
@@ -71,8 +71,8 @@ namespace Azure.AI.Language.Conversations.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationalAIInputParameters"/> for deserialization. </summary>
-        internal ConversationalAIInputParameters()
+        /// <summary> Initializes a new instance of <see cref="AIConversationLanguageUnderstandingActionContent"/> for deserialization. </summary>
+        internal AIConversationLanguageUnderstandingActionContent()
         {
         }
 

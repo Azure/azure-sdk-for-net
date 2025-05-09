@@ -19,19 +19,19 @@ namespace Azure.AI.Language.Conversations
         /// <param name="analysisInput"> The input ConversationItem and its optional parameters. </param>
         /// <param name="parameters"> Input parameters necessary for a Conversation language understanding task. </param>
         /// <returns> A new <see cref="Models.ConversationalAITask"/> instance for mocking. </returns>
-        public static ConversationalAITask ConversationalAITask(ConversationalAIAnalysisInput analysisInput = null, ConversationalAIInputParameters parameters = null)
+        public static ConversationalAITask ConversationalAITask(ConversationalAIAnalysisInput analysisInput = null, AIConversationLanguageUnderstandingActionContent parameters = null)
         {
             return new ConversationalAITask(AnalyzeConversationInputKind.ConversationalAI, serializedAdditionalRawData: null, analysisInput, parameters);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationalAIInputParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AIConversationLanguageUnderstandingActionContent"/>. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the deployment to use. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
-        /// <returns> A new <see cref="Models.ConversationalAIInputParameters"/> instance for mocking. </returns>
-        public static ConversationalAIInputParameters ConversationalAIInputParameters(string projectName = null, string deploymentName = null, StringIndexType? stringIndexType = null)
+        /// <returns> A new <see cref="Models.AIConversationLanguageUnderstandingActionContent"/> instance for mocking. </returns>
+        public static AIConversationLanguageUnderstandingActionContent AIConversationLanguageUnderstandingActionContent(string projectName = null, string deploymentName = null, StringIndexType? stringIndexType = null)
         {
-            return new ConversationalAIInputParameters(projectName, deploymentName, stringIndexType, serializedAdditionalRawData: null);
+            return new AIConversationLanguageUnderstandingActionContent(projectName, deploymentName, stringIndexType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConversationLanguageUnderstandingInput"/>. </summary>

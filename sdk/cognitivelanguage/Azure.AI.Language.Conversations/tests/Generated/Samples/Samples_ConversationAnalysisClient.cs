@@ -225,7 +225,7 @@ new ConversationalAIItem("7", "user", "Actualy, change the destination to New Yo
 new ConversationalAIItem("8", "user", "Wait, I do not like the food in New York."),
 new ConversationalAIItem("9", "user", "Ok, change the destination back to Berlin.")
 })
-            }), new ConversationalAIInputParameters("project1", "deployment1")
+            }), new AIConversationLanguageUnderstandingActionContent("project1", "deployment1")
             {
                 StringIndexType = StringIndexType.Utf16CodeUnit,
             });
@@ -254,7 +254,7 @@ new ConversationalAIItem("7", "user", "Actualy, change the destination to New Yo
 new ConversationalAIItem("8", "user", "Wait, I do not like the food in New York."),
 new ConversationalAIItem("9", "user", "Ok, change the destination back to Berlin.")
 })
-            }), new ConversationalAIInputParameters("project1", "deployment1")
+            }), new AIConversationLanguageUnderstandingActionContent("project1", "deployment1")
             {
                 StringIndexType = StringIndexType.Utf16CodeUnit,
             });
