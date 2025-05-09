@@ -286,7 +286,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         internal virtual Response<ReleaseResult> Release(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, ReleaseDelay? releaseDelayInSeconds = default, CancellationToken cancellationToken = default)
         {
             ReleaseRequest spreadModel = new ReleaseRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), null);
-            Response result = Release(topicName, eventSubscriptionName, spreadModel, releaseDelayInSeconds.ToString(), cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = Release(topicName, eventSubscriptionName, spreadModel, releaseDelayInSeconds?.ToString(), cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((ReleaseResult)result, result);
         }
 
@@ -300,7 +300,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         internal virtual async Task<Response<ReleaseResult>> ReleaseAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, ReleaseDelay? releaseDelayInSeconds = default, CancellationToken cancellationToken = default)
         {
             ReleaseRequest spreadModel = new ReleaseRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), null);
-            Response result = await ReleaseAsync(topicName, eventSubscriptionName, spreadModel, releaseDelayInSeconds.ToString(), cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await ReleaseAsync(topicName, eventSubscriptionName, spreadModel, releaseDelayInSeconds?.ToString(), cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((ReleaseResult)result, result);
         }
 
