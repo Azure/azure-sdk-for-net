@@ -206,9 +206,9 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsGeneratorLibrary)' == 'true'">
-    <PackageReference Update="Microsoft.TypeSpec.Generator.ClientModel" Version="1.0.0-alpha.20250508.3" />
-    <PackageReference Update="Microsoft.TypeSpec.Generator.Input" Version="1.0.0-alpha.20250508.3" />
-    <PackageReference Update="Azure.Generator" Version="1.0.0-alpha.20250508.1" />
+    <PackageReference Update="Microsoft.TypeSpec.Generator.ClientModel" Version="[$(UnbrandedGeneratorVersion)]" />
+    <PackageReference Update="Microsoft.TypeSpec.Generator.Input" Version="[$(UnbrandedGeneratorVersion)]" />
+    <PackageReference Update="Azure.Generator" Version="[$(AzureGeneratorVersion)]" />
     <PackageReference Update="System.ClientModel" Version="1.4.0" />
   </ItemGroup>
 
@@ -439,5 +439,7 @@
 
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20250501.1</TestProxyVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20250509.1</UnbrandedGeneratorVersion>
+    <AzureGeneratorVersion>1.0.0-alpha.20250508.1</AzureGeneratorVersion>
   </PropertyGroup>
 </Project>
