@@ -55,12 +55,14 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="isCredentialEnabled"> Indicates whether or not the gateway settings based authorization is enabled. </param>
         /// <param name="userName"> The gateway settings user name. </param>
         /// <param name="password"> The gateway settings user password. </param>
+        /// <param name="restAuthEntraUsers"> List of Entra users for gateway access. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightClusterGatewaySettings(bool? isCredentialEnabled, string userName, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HDInsightClusterGatewaySettings(bool? isCredentialEnabled, string userName, string password, IList<EntraUserInfo> restAuthEntraUsers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsCredentialEnabled = isCredentialEnabled;
             UserName = userName;
             Password = password;
+            RestAuthEntraUsers = restAuthEntraUsers;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -70,5 +72,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string UserName { get; }
         /// <summary> The gateway settings user password. </summary>
         public string Password { get; }
+        /// <summary> List of Entra users for gateway access. </summary>
+        public IList<EntraUserInfo> RestAuthEntraUsers { get; }
     }
 }
