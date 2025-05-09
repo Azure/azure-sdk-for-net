@@ -17,6 +17,7 @@ namespace Azure.Storage.Files.Shares
             string fileClient,
             string shareClient) =>
             new InvalidOperationException($"{leaseClient} requires either a {fileClient} or {shareClient}");
+
         public static void AssertAlgorithmSupport(StorageChecksumAlgorithm? algorithm)
         {
             StorageChecksumAlgorithm resolved = (algorithm ?? StorageChecksumAlgorithm.None).ResolveAuto();

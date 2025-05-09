@@ -909,7 +909,6 @@ namespace Azure.Storage.Files.Shares.Models
     {
         internal ShareFileDownloadInfo() { }
         public System.IO.Stream Content { get { throw null; } }
-        public byte[] ContentCrc { get { throw null; } }
         public byte[] ContentHash { get { throw null; } }
         public long ContentLength { get { throw null; } }
         public string ContentType { get { throw null; } }
