@@ -57,6 +57,6 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal virtual Task ValidateTransferAsync(string transferId, StorageResource sourceResource, CancellationToken cancellationToken = default)
-            => Task.FromResult((ValidateSource: true, ValidateDest: true));
+            => Task.CompletedTask;
     }
 }

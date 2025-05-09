@@ -655,7 +655,7 @@ internal static partial class MockExtensions
             });
 
         items.Destination.Setup(r => r.ValidateTransferAsync(It.IsAny<string>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()))
-            .Returns(Task.FromResult((ValidateSource: true, ValidateDest: true)));
+            .Returns(Task.CompletedTask);
 
         items.Source.Setup(r => r.ReadStreamAsync(It.IsAny<long>(), It.IsAny<long?>(), It.IsAny<CancellationToken>()))
             .Returns<long, long?, CancellationToken>((position, length, cancellationToken) =>
@@ -728,7 +728,7 @@ internal static partial class MockExtensions
         containers.Destination.SetupGet(r => r.Uri).Returns(dstUri);
 
         containers.Destination.Setup(r => r.ValidateTransferAsync(It.IsAny<string>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()))
-            .Returns(Task.FromResult((ValidateSource: true, ValidateDest: true)));
+            .Returns(Task.CompletedTask);
 
         containers.Source.Setup(r => r.GetStorageResourcesAsync(It.IsAny<StorageResourceContainer>(), It.IsAny<CancellationToken>()))
             .Returns(SubResourcesAsAsyncEnumerable);
