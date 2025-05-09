@@ -33,7 +33,7 @@ public static class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        return WritePersistableOrEnumerable(model, options, ReflectionContext.Default);
+        return WritePersistableOrEnumerable(model, options, ModelReaderWriterReflectionContext.Default);
     }
 
     /// <summary>
@@ -56,7 +56,7 @@ public static class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        return WritePersistableOrEnumerable(model, options, ReflectionContext.Default);
+        return WritePersistableOrEnumerable(model, options, ModelReaderWriterReflectionContext.Default);
     }
 
     /// <summary>
@@ -164,7 +164,7 @@ public static class ModelReaderWriter
     [RequiresUnreferencedCode("This method uses reflection use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
     public static T? Read<T>(BinaryData data, ModelReaderWriterOptions? options = default)
     {
-        return ReadInternal<T>(data, options ??= ModelReaderWriterOptions.Json, ReflectionContext.Default);
+        return ReadInternal<T>(data, options ??= ModelReaderWriterOptions.Json, ModelReaderWriterReflectionContext.Default);
     }
 
     /// <summary>
@@ -209,7 +209,7 @@ public static class ModelReaderWriter
     [RequiresUnreferencedCode("This method uses reflection use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
     public static object? Read(BinaryData data, Type returnType, ModelReaderWriterOptions? options = default)
     {
-        return ReadInternal(data, returnType, options ??= ModelReaderWriterOptions.Json, ReflectionContext.Default);
+        return ReadInternal(data, returnType, options ??= ModelReaderWriterOptions.Json, ModelReaderWriterReflectionContext.Default);
     }
 
     /// <summary>

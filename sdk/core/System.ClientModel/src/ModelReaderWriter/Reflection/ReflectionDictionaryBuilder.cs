@@ -21,7 +21,7 @@ internal class ReflectionDictionaryBuilder : ModelReaderWriterTypeBuilder
 
     protected override Type? ItemType => _dictionaryType.GetGenericArguments()[1];
 
-    protected override void AddKeyValuePair(object dictionary, string key,  object? item)
+    protected override void AddItemWithKey(object dictionary, string key,  object? item)
     {
         var addMethod = _dictionaryType.GetMethod("Add")!.Invoke(dictionary, [ key, item ]);
     }

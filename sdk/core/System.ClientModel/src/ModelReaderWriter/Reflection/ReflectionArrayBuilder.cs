@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace System.ClientModel.Primitives;
 
@@ -40,7 +38,7 @@ internal class ReflectionArrayBuilder : ModelReaderWriterTypeBuilder
         BuilderType.GetMethod("Add")!.Invoke(collection, [ item ]);
     }
 
-    protected override object ToCollection(object builder)
+    protected override object ConvertCollectionBuilder(object builder)
     {
         if (_arrayType.GetArrayRank() == 1)
         {

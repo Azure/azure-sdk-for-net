@@ -3,7 +3,6 @@
 
 using System.ClientModel.Internal;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 
@@ -11,18 +10,18 @@ namespace System.ClientModel.Primitives;
 
 [RequiresDynamicCode("This method uses reflection use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
 [RequiresUnreferencedCode("This method uses reflection use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
-internal class ReflectionContext : ModelReaderWriterContext
+internal class ModelReaderWriterReflectionContext : ModelReaderWriterContext
 {
     private ConcurrentDictionary<Type, ModelReaderWriterTypeBuilder>? _typeBuilders;
     private ConcurrentDictionary<Type, ModelReaderWriterTypeBuilder> TypeBuilders => _typeBuilders ??= [];
 
-    private static ReflectionContext? _instance;
-    public static ReflectionContext Default => _instance ??= new ReflectionContext();
+    private static ModelReaderWriterReflectionContext? _instance;
+    public static ModelReaderWriterReflectionContext Default => _instance ??= new ModelReaderWriterReflectionContext();
 
     private Dictionary<Type, Func<Type, ModelReaderWriterTypeBuilder>>? _typeBuilderFactories;
     private Dictionary<Type, Func<Type, ModelReaderWriterTypeBuilder>> TypeBuilderFactories => _typeBuilderFactories ??= [];
 
-    private ReflectionContext()
+    private ModelReaderWriterReflectionContext()
     {
         TypeBuilderFactories.Add(typeof(Collection<>), (type) => new ReflectionCollectionBuilder(type));
         TypeBuilderFactories.Add(typeof(List<>), (type) => new ReflectionCollectionBuilder(type));
