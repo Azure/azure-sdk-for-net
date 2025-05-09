@@ -80,7 +80,6 @@ $failingSpecs = @(
     Join-Path 'http' 'azure' 'core' 'lro' 'rpc'
     Join-Path 'http' 'azure' 'core' 'lro' 'standard'
     Join-Path 'http' 'azure' 'core' 'model'
-    Join-Path 'http' 'azure' 'core' 'page'
     Join-Path 'http' 'azure' 'core' 'scalar'
     Join-Path 'http' 'azure' 'core' 'traits'
     Join-Path 'http' 'azure' 'encode' 'duration'
