@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Net;
 using Azure.Core;
 
 namespace Azure.Identity
@@ -307,9 +306,7 @@ namespace Azure.Identity
                 dacClone._sharedTokenCacheTenantId = _sharedTokenCacheTenantId;
                 dacClone._visualStudioTenantId = _visualStudioTenantId;
                 dacClone._visualStudioCodeTenantId = _visualStudioCodeTenantId;
-#pragma warning disable CS0618 // Type or member is obsolete
                 dacClone.SharedTokenCacheUsername = SharedTokenCacheUsername;
-#pragma warning restore CS0618 // Type or member is obsolete
                 dacClone.InteractiveBrowserCredentialClientId = InteractiveBrowserCredentialClientId;
                 dacClone.WorkloadIdentityClientId = WorkloadIdentityClientId;
                 dacClone.ManagedIdentityClientId = ManagedIdentityClientId;
