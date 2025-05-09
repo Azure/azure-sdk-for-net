@@ -7,7 +7,7 @@ azure-arm: true
 library-name: Cdn
 namespace: Azure.ResourceManager.Cdn
 title: CdnManagementClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/2d973fccf9f28681a481e9760fa12b2334216e21/specification/cdn/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/0cdef1ef00cf9020967dc099a67366d5a2c51d29/specification/cdn/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -19,6 +19,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 use-model-reader-writer: true
 deserialize-null-collection-as-null-value: true
 
@@ -94,6 +95,9 @@ override-operation-name:
   FrontDoorEndpoints_ListResourceUsage: GetResourceUsages
   FrontDoorOriginGroups_ListResourceUsage: GetResourceUsages
   FrontDoorRuleSets_ListResourceUsage: GetResourceUsages
+  Profiles_CdnCanMigrateToAfd: CheckCdnMigrationCompatibility
+  Profiles_CdnMigrateToAfd: MigrateCdnToAfd
+  Profiles_MigrationAbort: AbortMigration
 
 rename-mapping:
   CacheType: CdnCacheLevel
@@ -347,6 +351,8 @@ rename-mapping:
   AFDDomainUpdateParameters.properties.preValidatedCustomDomainResourceId: PreValidatedCustomDomainResource
   UsageUnit: FrontDoorUsageUnit
   Status: ValidationStatus
+  DeliveryRuleActionParametersType: DeliveryRuleActionProperties
+  DeliveryRuleConditionParametersType: DeliveryRuleConditionProperties
 
 directive:
   - from: swagger-document

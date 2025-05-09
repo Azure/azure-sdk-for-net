@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="defaultSku"> Recommended sku for the migration. </param>
         /// <param name="errors"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CanMigrateResult(string id, string canMigrateResultType, bool? canMigrate, CanMigrateDefaultSku? defaultSku, IReadOnlyList<MigrationErrorType> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CanMigrateResult(ResourceIdentifier id, string canMigrateResultType, bool? canMigrate, CanMigrateDefaultSku? defaultSku, IReadOnlyList<MigrationErrorType> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             CanMigrateResultType = canMigrateResultType;
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource ID. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> Resource type. </summary>
         public string CanMigrateResultType { get; }
         /// <summary> Flag that says if the profile can be migrated. </summary>

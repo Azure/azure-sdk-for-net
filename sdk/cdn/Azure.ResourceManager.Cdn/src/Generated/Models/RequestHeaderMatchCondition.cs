@@ -11,68 +11,34 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for RequestHeader match conditions. </summary>
-    public partial class RequestHeaderMatchCondition
+    public partial class RequestHeaderMatchCondition : DeliveryRuleConditionParameters
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="RequestHeaderMatchCondition"/>. </summary>
-        /// <param name="conditionType"></param>
         /// <param name="requestHeaderOperator"> Describes operator to be matched. </param>
-        public RequestHeaderMatchCondition(RequestHeaderMatchConditionType conditionType, RequestHeaderOperator requestHeaderOperator)
+        public RequestHeaderMatchCondition(RequestHeaderOperator requestHeaderOperator)
         {
-            ConditionType = conditionType;
             RequestHeaderOperator = requestHeaderOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
+            TypeName = DeliveryRuleConditionProperty.DeliveryRuleRequestHeaderConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestHeaderMatchCondition"/>. </summary>
-        /// <param name="conditionType"></param>
+        /// <param name="typeName"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="selector"> Name of Header to be matched. </param>
         /// <param name="requestHeaderOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RequestHeaderMatchCondition(RequestHeaderMatchConditionType conditionType, string selector, RequestHeaderOperator requestHeaderOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RequestHeaderMatchCondition(DeliveryRuleConditionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, string selector, RequestHeaderOperator requestHeaderOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
         {
-            ConditionType = conditionType;
             Selector = selector;
             RequestHeaderOperator = requestHeaderOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            TypeName = typeName;
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestHeaderMatchCondition"/> for deserialization. </summary>
@@ -80,8 +46,6 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Gets or sets the condition type. </summary>
-        public RequestHeaderMatchConditionType ConditionType { get; set; }
         /// <summary> Name of Header to be matched. </summary>
         public string Selector { get; set; }
         /// <summary> Describes operator to be matched. </summary>

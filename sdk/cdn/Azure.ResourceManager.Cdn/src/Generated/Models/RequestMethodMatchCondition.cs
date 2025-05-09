@@ -11,66 +11,32 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for RequestMethod match conditions. </summary>
-    public partial class RequestMethodMatchCondition
+    public partial class RequestMethodMatchCondition : DeliveryRuleConditionParameters
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="RequestMethodMatchCondition"/>. </summary>
-        /// <param name="conditionType"></param>
         /// <param name="requestMethodOperator"> Describes operator to be matched. </param>
-        public RequestMethodMatchCondition(RequestMethodMatchConditionType conditionType, RequestMethodOperator requestMethodOperator)
+        public RequestMethodMatchCondition(RequestMethodOperator requestMethodOperator)
         {
-            ConditionType = conditionType;
             RequestMethodOperator = requestMethodOperator;
             Transforms = new ChangeTrackingList<PreTransformCategory>();
-            MatchValues = new ChangeTrackingList<RequestMethodMatchConditionMatchValue>();
+            MatchValues = new ChangeTrackingList<RequestMethodMatchValue>();
+            TypeName = DeliveryRuleConditionProperty.DeliveryRuleRequestMethodConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestMethodMatchCondition"/>. </summary>
-        /// <param name="conditionType"></param>
+        /// <param name="typeName"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="requestMethodOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="transforms"> List of transforms. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RequestMethodMatchCondition(RequestMethodMatchConditionType conditionType, RequestMethodOperator requestMethodOperator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestMethodMatchConditionMatchValue> matchValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RequestMethodMatchCondition(DeliveryRuleConditionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, RequestMethodOperator requestMethodOperator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestMethodMatchValue> matchValues) : base(typeName, serializedAdditionalRawData)
         {
-            ConditionType = conditionType;
             RequestMethodOperator = requestMethodOperator;
             NegateCondition = negateCondition;
             Transforms = transforms;
             MatchValues = matchValues;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            TypeName = typeName;
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestMethodMatchCondition"/> for deserialization. </summary>
@@ -78,8 +44,6 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Gets or sets the condition type. </summary>
-        public RequestMethodMatchConditionType ConditionType { get; set; }
         /// <summary> Describes operator to be matched. </summary>
         public RequestMethodOperator RequestMethodOperator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>
@@ -87,6 +51,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> List of transforms. </summary>
         public IList<PreTransformCategory> Transforms { get; }
         /// <summary> The match value for the condition of the delivery rule. </summary>
-        public IList<RequestMethodMatchConditionMatchValue> MatchValues { get; }
+        public IList<RequestMethodMatchValue> MatchValues { get; }
     }
 }

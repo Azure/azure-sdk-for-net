@@ -18,14 +18,17 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="UriSigningKeyProperties"/>. </summary>
         /// <param name="keyId"> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </param>
         /// <param name="secretSource"> Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{secretName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyId"/> or <paramref name="secretSource"/> is null. </exception>
-        public UriSigningKeyProperties(string keyId, WritableSubResource secretSource)
+        /// <param name="secretVersion"> Version of the secret to be used. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyId"/>, <paramref name="secretSource"/> or <paramref name="secretVersion"/> is null. </exception>
+        public UriSigningKeyProperties(string keyId, WritableSubResource secretSource, string secretVersion)
         {
             Argument.AssertNotNull(keyId, nameof(keyId));
             Argument.AssertNotNull(secretSource, nameof(secretSource));
+            Argument.AssertNotNull(secretVersion, nameof(secretVersion));
 
             KeyId = keyId;
             SecretSource = secretSource;
+            SecretVersion = secretVersion;
             SecretType = SecretType.UriSigningKey;
         }
 

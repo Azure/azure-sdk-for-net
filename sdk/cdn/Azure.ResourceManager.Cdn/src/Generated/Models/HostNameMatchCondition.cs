@@ -11,66 +11,32 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for HostName match conditions. </summary>
-    public partial class HostNameMatchCondition
+    public partial class HostNameMatchCondition : DeliveryRuleConditionParameters
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="HostNameMatchCondition"/>. </summary>
-        /// <param name="conditionType"></param>
         /// <param name="hostNameOperator"> Describes operator to be matched. </param>
-        public HostNameMatchCondition(HostNameMatchConditionType conditionType, HostNameOperator hostNameOperator)
+        public HostNameMatchCondition(HostNameOperator hostNameOperator)
         {
-            ConditionType = conditionType;
             HostNameOperator = hostNameOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
+            TypeName = DeliveryRuleConditionProperty.DeliveryRuleHostNameConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="HostNameMatchCondition"/>. </summary>
-        /// <param name="conditionType"></param>
+        /// <param name="typeName"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="hostNameOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HostNameMatchCondition(HostNameMatchConditionType conditionType, HostNameOperator hostNameOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HostNameMatchCondition(DeliveryRuleConditionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, HostNameOperator hostNameOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
         {
-            ConditionType = conditionType;
             HostNameOperator = hostNameOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            TypeName = typeName;
         }
 
         /// <summary> Initializes a new instance of <see cref="HostNameMatchCondition"/> for deserialization. </summary>
@@ -78,8 +44,6 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Gets or sets the condition type. </summary>
-        public HostNameMatchConditionType ConditionType { get; set; }
         /// <summary> Describes operator to be matched. </summary>
         public HostNameOperator HostNameOperator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>

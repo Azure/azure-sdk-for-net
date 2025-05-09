@@ -866,7 +866,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="defaultSku"> Recommended sku for the migration. </param>
         /// <param name="errors"></param>
         /// <returns> A new <see cref="Models.CanMigrateResult"/> instance for mocking. </returns>
-        public static CanMigrateResult CanMigrateResult(string id = null, string canMigrateResultType = null, bool? canMigrate = null, CanMigrateDefaultSku? defaultSku = null, IEnumerable<MigrationErrorType> errors = null)
+        public static CanMigrateResult CanMigrateResult(ResourceIdentifier id = null, string canMigrateResultType = null, bool? canMigrate = null, CanMigrateDefaultSku? defaultSku = null, IEnumerable<MigrationErrorType> errors = null)
         {
             errors ??= new List<MigrationErrorType>();
 
@@ -908,7 +908,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="migrateResultType"> Resource type. </param>
         /// <param name="migratedProfileResourceIdId"> Arm resource id of the migrated profile. </param>
         /// <returns> A new <see cref="Models.MigrateResult"/> instance for mocking. </returns>
-        public static MigrateResult MigrateResult(string id = null, string migrateResultType = null, ResourceIdentifier migratedProfileResourceIdId = null)
+        public static MigrateResult MigrateResult(ResourceIdentifier id = null, string migrateResultType = null, ResourceIdentifier migratedProfileResourceIdId = null)
         {
             return new MigrateResult(id, migrateResultType, migratedProfileResourceIdId != null ? ResourceManagerModelFactory.WritableSubResource(migratedProfileResourceIdId) : null, serializedAdditionalRawData: null);
         }
@@ -1190,6 +1190,17 @@ namespace Azure.ResourceManager.Cdn.Models
                 systemData,
                 ipAddressGroups?.ToList(),
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CdnMigrationToAfdContent"/>. </summary>
+        /// <param name="skuName"> Sku for the migration. </param>
+        /// <param name="migrationEndpointMappings"> A name map between classic CDN endpoints and AFD Premium/Standard endpoints. </param>
+        /// <returns> A new <see cref="Models.CdnMigrationToAfdContent"/> instance for mocking. </returns>
+        public static CdnMigrationToAfdContent CdnMigrationToAfdContent(CdnSkuName? skuName = null, IEnumerable<MigrationEndpointMapping> migrationEndpointMappings = null)
+        {
+            migrationEndpointMappings ??= new List<MigrationEndpointMapping>();
+
+            return new CdnMigrationToAfdContent(skuName != null ? new CdnSku(skuName, serializedAdditionalRawData: null) : null, migrationEndpointMappings?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.CdnWebApplicationFirewallPolicyData"/>. </summary>
