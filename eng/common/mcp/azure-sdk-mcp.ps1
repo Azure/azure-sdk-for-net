@@ -1,8 +1,8 @@
 #!/bin/env pwsh
 
 param(
-    [string]$FileName = 'azsdk',
-    [string]$Package = 'azsdk',
+    [string]$FileName = 'azsdk-cli',
+    [string]$Package = 'azsdk-cli',
     [string]$Version, # Default to latest
     [string]$InstallDirectory = (Join-Path $HOME ".azure-sdk-mcp" "azsdk"),
     [string]$Repository = 'Azure/azure-sdk-tools',
