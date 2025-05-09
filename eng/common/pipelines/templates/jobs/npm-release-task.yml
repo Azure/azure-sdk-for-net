@@ -57,7 +57,7 @@ jobs:
                 $originalTags = $packageProps.'dist-tags' | ConvertTo-Json -Compress
               }
 
-              $tag = '$(Tag)'
+              $tag = "$(Tag)"
               write-host "tag is now $tag"
               if (!$tag) {
                 $tag = ($packageVersion -match "-(alpha|beta|rc|pre)") ? "beta" : "latest"
@@ -117,6 +117,7 @@ jobs:
     - pwsh: |
         Write-Host "PackageName: $(PackageName)"
         Write-Host "OriginalTags: $(OriginalTags)"
+        Write-Host "IntendedTag: $(Tag)"
         Write-Host "IntendedTagVersion: $(IntendedTagVersion)"
       displayName: 'Display package variables'
     - task: Powershell@2
