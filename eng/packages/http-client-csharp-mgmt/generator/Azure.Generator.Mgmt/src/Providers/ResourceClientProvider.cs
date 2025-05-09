@@ -32,8 +32,6 @@ namespace Azure.Generator.Management.Providers
     internal class ResourceClientProvider : TypeProvider
     {
         private IReadOnlyCollection<InputServiceMethod> _resourceServiceMethods;
-        private readonly IReadOnlyList<string> _contextualParameters;
-        private bool _isSingleton;
 
         private FieldProvider _dataField;
         private FieldProvider _resourcetypeField;
