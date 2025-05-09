@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         MySqlFlexibleServerFirewallRuleData IJsonModel<MySqlFlexibleServerFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MySqlFlexibleServerFirewallRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MySqlFlexibleServerFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MySqlFlexibleServerFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MySqlFlexibleServerFirewallRuleData>(Data, options, AzureResourceManagerMySqlContext.Default);
 
-        MySqlFlexibleServerFirewallRuleData IPersistableModel<MySqlFlexibleServerFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MySqlFlexibleServerFirewallRuleData>(data, options);
+        MySqlFlexibleServerFirewallRuleData IPersistableModel<MySqlFlexibleServerFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MySqlFlexibleServerFirewallRuleData>(data, options, AzureResourceManagerMySqlContext.Default);
 
         string IPersistableModel<MySqlFlexibleServerFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MySqlFlexibleServerFirewallRuleData>)Data).GetFormatFromOptions(options);
     }

@@ -16,10 +16,15 @@ namespace MgmtTypeSpec.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="UserAssignedIdentity"/>. </summary>
         internal UserAssignedIdentity()
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="UserAssignedIdentity"/>. </summary>
+        /// <param name="clientId"> The client ID of the assigned identity. </param>
+        /// <param name="principalId"> The principal ID of the assigned identity. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal UserAssignedIdentity(Guid? clientId, Guid? principalId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClientId = clientId;

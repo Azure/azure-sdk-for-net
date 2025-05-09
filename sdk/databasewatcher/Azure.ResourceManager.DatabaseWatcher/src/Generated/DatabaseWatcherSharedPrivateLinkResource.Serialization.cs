@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DatabaseWatcher
 
         DatabaseWatcherSharedPrivateLinkResourceData IJsonModel<DatabaseWatcherSharedPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseWatcherSharedPrivateLinkResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DatabaseWatcherSharedPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DatabaseWatcherSharedPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DatabaseWatcherSharedPrivateLinkResourceData>(Data, options, AzureResourceManagerDatabaseWatcherContext.Default);
 
-        DatabaseWatcherSharedPrivateLinkResourceData IPersistableModel<DatabaseWatcherSharedPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseWatcherSharedPrivateLinkResourceData>(data, options);
+        DatabaseWatcherSharedPrivateLinkResourceData IPersistableModel<DatabaseWatcherSharedPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseWatcherSharedPrivateLinkResourceData>(data, options, AzureResourceManagerDatabaseWatcherContext.Default);
 
         string IPersistableModel<DatabaseWatcherSharedPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DatabaseWatcherSharedPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
     }

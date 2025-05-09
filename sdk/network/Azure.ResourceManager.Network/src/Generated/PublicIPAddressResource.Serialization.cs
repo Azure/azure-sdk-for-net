@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         PublicIPAddressData IJsonModel<PublicIPAddressData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PublicIPAddressData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PublicIPAddressData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PublicIPAddressData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PublicIPAddressData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        PublicIPAddressData IPersistableModel<PublicIPAddressData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PublicIPAddressData>(data, options);
+        PublicIPAddressData IPersistableModel<PublicIPAddressData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PublicIPAddressData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<PublicIPAddressData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PublicIPAddressData>)Data).GetFormatFromOptions(options);
     }

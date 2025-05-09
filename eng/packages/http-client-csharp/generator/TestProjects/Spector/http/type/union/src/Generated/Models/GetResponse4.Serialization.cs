@@ -15,6 +15,8 @@ namespace _Type.Union
 {
     public partial class GetResponse4 : IJsonModel<GetResponse4>
     {
+        internal GetResponse4() => throw null;
+
         void IJsonModel<GetResponse4>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

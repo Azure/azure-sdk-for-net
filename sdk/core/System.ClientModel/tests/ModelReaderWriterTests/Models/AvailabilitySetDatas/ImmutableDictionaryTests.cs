@@ -56,10 +56,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
                 protected override object CreateInstance() => ImmutableDictionary<string, AvailabilitySetData>.Empty.ToBuilder();
 
-                protected override void AddKeyValuePair(object collection, string key, object item)
+                protected override void AddItemWithKey(object collection, string key, object item)
                     => ((ImmutableDictionary<string, AvailabilitySetData>.Builder)collection).Add(key, (AvailabilitySetData)item);
 
-                protected override object ToCollection(object builder)
+                protected override object ConvertCollectionBuilder(object builder)
                     => ((ImmutableDictionary<string, AvailabilitySetData>.Builder)builder).ToImmutable();
             }
         }

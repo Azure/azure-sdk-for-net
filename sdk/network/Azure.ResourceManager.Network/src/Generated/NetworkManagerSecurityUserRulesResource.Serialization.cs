@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         NetworkManagerSecurityUserRulesData IJsonModel<NetworkManagerSecurityUserRulesData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkManagerSecurityUserRulesData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkManagerSecurityUserRulesData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkManagerSecurityUserRulesData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkManagerSecurityUserRulesData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        NetworkManagerSecurityUserRulesData IPersistableModel<NetworkManagerSecurityUserRulesData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkManagerSecurityUserRulesData>(data, options);
+        NetworkManagerSecurityUserRulesData IPersistableModel<NetworkManagerSecurityUserRulesData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkManagerSecurityUserRulesData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<NetworkManagerSecurityUserRulesData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkManagerSecurityUserRulesData>)Data).GetFormatFromOptions(options);
     }
