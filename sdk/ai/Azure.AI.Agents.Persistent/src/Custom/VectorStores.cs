@@ -6,6 +6,7 @@ using System.Threading;
 using System;
 using Azure.Core;
 using System.ClientModel;
+using System.Threading.Tasks;
 
 namespace Azure.AI.Agents.Persistent
 {
@@ -17,13 +18,13 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<VectorStore> GetVectorStoresAsync(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PersistentAgentsVectorStore> GetVectorStoresAsync(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetVectorStoresRequest(limit, order?.ToString(), continuationToken, before, context);
-            return new ContinuationTokenPageableAsync<VectorStore>(
+            return new ContinuationTokenPageableAsync<PersistentAgentsVectorStore>(
                 createPageRequest: PageRequest,
-                valueFactory: e => VectorStore.DeserializeVectorStore(e),
+                valueFactory: e => PersistentAgentsVectorStore.DeserializePersistentAgentsVectorStore(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
@@ -37,13 +38,13 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<VectorStore> GetVectorStores(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PersistentAgentsVectorStore> GetVectorStores(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetVectorStoresRequest(limit, order?.ToString(), continuationToken, before, context);
-            return new ContinuationTokenPageable<VectorStore>(
+            return new ContinuationTokenPageable<PersistentAgentsVectorStore>(
                 createPageRequest: PageRequest,
-                valueFactory: e => VectorStore.DeserializeVectorStore(e),
+                valueFactory: e => PersistentAgentsVectorStore.DeserializePersistentAgentsVectorStore(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
@@ -109,6 +110,40 @@ namespace Azure.AI.Agents.Persistent
             // which is currently do not support next token.
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVectorStoresRequest(limit, order, after, before, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "VectorStoresClient.GetVectorStores", "data", null, context);
+        }
+
+        /// <summary> Deletes the vector store object matching the specified ID. </summary>
+        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> DeleteVectorStoreAsync(string vectorStoreId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+
+            Response<InternalVectorStoreDeletionStatus> response = await InternalDeleteVectorStoreAsync(vectorStoreId, cancellationToken).ConfigureAwait(false);
+            bool isDeleted = response.GetRawResponse() != null
+                && !response.GetRawResponse().IsError
+                && response.Value != null
+                && response.Value.Deleted;
+            return Response.FromValue(isDeleted, response.GetRawResponse());
+        }
+
+        /// <summary> Deletes the vector store object matching the specified ID. </summary>
+        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> DeleteVectorStore(string vectorStoreId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+
+            Response<InternalVectorStoreDeletionStatus> response = InternalDeleteVectorStore(vectorStoreId, cancellationToken);
+            bool isDeleted = response.GetRawResponse() !=null
+                && !response.GetRawResponse().IsError
+                && response.Value != null
+                && response.Value.Deleted;
+            return Response.FromValue(isDeleted, response.GetRawResponse());
         }
     }
 }

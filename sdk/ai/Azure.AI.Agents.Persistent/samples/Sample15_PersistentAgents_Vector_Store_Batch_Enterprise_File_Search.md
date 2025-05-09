@@ -16,7 +16,7 @@ var ds = new VectorStoreDataSource(
     assetIdentifier: blobURI,
     assetType: VectorStoreDataSourceAssetType.UriAsset
 );
-VectorStore vectorStore = client.VectorStores.CreateVectorStore(
+PersistentAgentsVectorStore vectorStore = client.VectorStores.CreateVectorStore(
     name: "sample_vector_store"
 );
 
@@ -35,7 +35,7 @@ var ds = new VectorStoreDataSource(
     assetIdentifier: blobURI,
     assetType: VectorStoreDataSourceAssetType.UriAsset
 );
-VectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
+PersistentAgentsVectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
     name: "sample_vector_store"
 );
 
@@ -63,7 +63,7 @@ PersistentAgent agent = client.Administration.CreateAgent(
 
 PersistentAgentThread thread = client.Threads.CreateThread();
 
-ThreadMessage message = client.Messages.CreateMessage(
+PersistentThreadMessage message = client.Messages.CreateMessage(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "What feature does Smart Eyewear offer?"
@@ -83,7 +83,7 @@ PersistentAgent agent = await client.Administration.CreateAgentAsync(
 
 PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
-ThreadMessage message = await client.Messages.CreateMessageAsync(
+PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "What feature does Smart Eyewear offer?"
@@ -92,9 +92,9 @@ ThreadMessage message = await client.Messages.CreateMessageAsync(
 
 4. We need to create two methods to print out messages with the references: `WriteMessages` and `replaceReferences`. The last one replaces the placeholder in the message by the file name.
 ```C# Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_Print
-private static void WriteMessages(IEnumerable<ThreadMessage> messages, Dictionary<string, string> fileIds)
+private static void WriteMessages(IEnumerable<PersistentThreadMessage> messages, Dictionary<string, string> fileIds)
 {
-    foreach (ThreadMessage threadMessage in messages)
+    foreach (PersistentThreadMessage threadMessage in messages)
     {
         Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
         foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -160,7 +160,7 @@ Assert.AreEqual(
     RunStatus.Completed,
     run.Status,
     run.LastError?.Message);
-Pageable<ThreadMessage> messages = client.Messages.GetMessages(
+Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
@@ -196,7 +196,7 @@ Assert.AreEqual(
     RunStatus.Completed,
     run.Status,
     run.LastError?.Message);
-List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
+List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 ).ToListAsync();
@@ -218,8 +218,8 @@ WriteMessages(messages, dtFiles);
 
 Synchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_Cleanup
-VectorStoreDeletionStatus delStatus = client.VectorStores.DeleteVectorStore(vectorStore.Id);
-if (delStatus.Deleted)
+bool delStatus = client.VectorStores.DeleteVectorStore(vectorStore.Id);
+if (delStatus)
 {
     Console.WriteLine($"Deleted vector store {vectorStore.Id}");
 }
@@ -233,8 +233,8 @@ client.Administration.DeleteAgent(agent.Id);
 
 Asynchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_Cleanup_Async
-VectorStoreDeletionStatus delStatus = await client.VectorStores.DeleteVectorStoreAsync(vectorStore.Id);
-if (delStatus.Deleted)
+bool delStatus = await client.VectorStores.DeleteVectorStoreAsync(vectorStore.Id);
+if (delStatus)
 {
     Console.WriteLine($"Deleted vector store {vectorStore.Id}");
 }
