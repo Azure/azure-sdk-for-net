@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         ResourceHealthMetadataData IJsonModel<ResourceHealthMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceHealthMetadataData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ResourceHealthMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceHealthMetadataData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        BinaryData IPersistableModel<ResourceHealthMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ResourceHealthMetadataData IPersistableModel<ResourceHealthMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceHealthMetadataData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        ResourceHealthMetadataData IPersistableModel<ResourceHealthMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceHealthMetadataData>(data, options);
 
         string IPersistableModel<ResourceHealthMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceHealthMetadataData>)Data).GetFormatFromOptions(options);
     }

@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(SapVirtualInstanceData)} does not support writing '{options.Format}' format.");
             }

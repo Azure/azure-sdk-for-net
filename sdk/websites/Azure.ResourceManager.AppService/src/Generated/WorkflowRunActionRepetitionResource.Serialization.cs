@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         WorkflowRunActionRepetitionDefinitionData IJsonModel<WorkflowRunActionRepetitionDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowRunActionRepetitionDefinitionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WorkflowRunActionRepetitionDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkflowRunActionRepetitionDefinitionData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        BinaryData IPersistableModel<WorkflowRunActionRepetitionDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        WorkflowRunActionRepetitionDefinitionData IPersistableModel<WorkflowRunActionRepetitionDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowRunActionRepetitionDefinitionData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        WorkflowRunActionRepetitionDefinitionData IPersistableModel<WorkflowRunActionRepetitionDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowRunActionRepetitionDefinitionData>(data, options);
 
         string IPersistableModel<WorkflowRunActionRepetitionDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkflowRunActionRepetitionDefinitionData>)Data).GetFormatFromOptions(options);
     }

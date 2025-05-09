@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.WeightsAndBiases
 
         WeightsAndBiasesInstanceResource IOperationSource<WeightsAndBiasesInstanceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WeightsAndBiasesInstanceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWeightsAndBiasesContext.Default);
+            var data = ModelReaderWriter.Read<WeightsAndBiasesInstanceData>(response.Content);
             return new WeightsAndBiasesInstanceResource(_client, data);
         }
 
         async ValueTask<WeightsAndBiasesInstanceResource> IOperationSource<WeightsAndBiasesInstanceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WeightsAndBiasesInstanceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWeightsAndBiasesContext.Default);
+            var data = ModelReaderWriter.Read<WeightsAndBiasesInstanceData>(response.Content);
             return await Task.FromResult(new WeightsAndBiasesInstanceResource(_client, data)).ConfigureAwait(false);
         }
     }

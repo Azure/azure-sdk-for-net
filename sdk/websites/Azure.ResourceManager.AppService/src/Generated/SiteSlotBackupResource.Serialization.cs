@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         WebAppBackupData IJsonModel<WebAppBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebAppBackupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WebAppBackupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WebAppBackupData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        BinaryData IPersistableModel<WebAppBackupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        WebAppBackupData IPersistableModel<WebAppBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebAppBackupData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        WebAppBackupData IPersistableModel<WebAppBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebAppBackupData>(data, options);
 
         string IPersistableModel<WebAppBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebAppBackupData>)Data).GetFormatFromOptions(options);
     }

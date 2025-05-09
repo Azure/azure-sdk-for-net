@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseExtendedServerBlobAuditingPolicyData IJsonModel<SynapseExtendedServerBlobAuditingPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseExtendedServerBlobAuditingPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseExtendedServerBlobAuditingPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseExtendedServerBlobAuditingPolicyData>(Data, options, AzureResourceManagerSynapseContext.Default);
+        BinaryData IPersistableModel<SynapseExtendedServerBlobAuditingPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SynapseExtendedServerBlobAuditingPolicyData IPersistableModel<SynapseExtendedServerBlobAuditingPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseExtendedServerBlobAuditingPolicyData>(data, options, AzureResourceManagerSynapseContext.Default);
+        SynapseExtendedServerBlobAuditingPolicyData IPersistableModel<SynapseExtendedServerBlobAuditingPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseExtendedServerBlobAuditingPolicyData>(data, options);
 
         string IPersistableModel<SynapseExtendedServerBlobAuditingPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseExtendedServerBlobAuditingPolicyData>)Data).GetFormatFromOptions(options);
     }

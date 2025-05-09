@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         WorkflowRunData IJsonModel<WorkflowRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowRunData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WorkflowRunData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkflowRunData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        BinaryData IPersistableModel<WorkflowRunData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        WorkflowRunData IPersistableModel<WorkflowRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowRunData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        WorkflowRunData IPersistableModel<WorkflowRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowRunData>(data, options);
 
         string IPersistableModel<WorkflowRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkflowRunData>)Data).GetFormatFromOptions(options);
     }

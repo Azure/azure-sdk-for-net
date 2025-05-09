@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppService
 
         HostingEnvironmentMultiRolePoolResource IOperationSource<HostingEnvironmentMultiRolePoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AppServiceWorkerPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
+            var data = ModelReaderWriter.Read<AppServiceWorkerPoolData>(response.Content);
             return new HostingEnvironmentMultiRolePoolResource(_client, data);
         }
 
         async ValueTask<HostingEnvironmentMultiRolePoolResource> IOperationSource<HostingEnvironmentMultiRolePoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AppServiceWorkerPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
+            var data = ModelReaderWriter.Read<AppServiceWorkerPoolData>(response.Content);
             return await Task.FromResult(new HostingEnvironmentMultiRolePoolResource(_client, data)).ConfigureAwait(false);
         }
     }

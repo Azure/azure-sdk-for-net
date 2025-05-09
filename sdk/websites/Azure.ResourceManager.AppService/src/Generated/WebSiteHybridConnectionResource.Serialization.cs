@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         RelayServiceConnectionEntityData IJsonModel<RelayServiceConnectionEntityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RelayServiceConnectionEntityData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RelayServiceConnectionEntityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RelayServiceConnectionEntityData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        BinaryData IPersistableModel<RelayServiceConnectionEntityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        RelayServiceConnectionEntityData IPersistableModel<RelayServiceConnectionEntityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelayServiceConnectionEntityData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        RelayServiceConnectionEntityData IPersistableModel<RelayServiceConnectionEntityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelayServiceConnectionEntityData>(data, options);
 
         string IPersistableModel<RelayServiceConnectionEntityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RelayServiceConnectionEntityData>)Data).GetFormatFromOptions(options);
     }

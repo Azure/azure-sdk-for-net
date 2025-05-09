@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseAadOnlyAuthenticationData IJsonModel<SynapseAadOnlyAuthenticationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseAadOnlyAuthenticationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseAadOnlyAuthenticationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseAadOnlyAuthenticationData>(Data, options, AzureResourceManagerSynapseContext.Default);
+        BinaryData IPersistableModel<SynapseAadOnlyAuthenticationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SynapseAadOnlyAuthenticationData IPersistableModel<SynapseAadOnlyAuthenticationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseAadOnlyAuthenticationData>(data, options, AzureResourceManagerSynapseContext.Default);
+        SynapseAadOnlyAuthenticationData IPersistableModel<SynapseAadOnlyAuthenticationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseAadOnlyAuthenticationData>(data, options);
 
         string IPersistableModel<SynapseAadOnlyAuthenticationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseAadOnlyAuthenticationData>)Data).GetFormatFromOptions(options);
     }

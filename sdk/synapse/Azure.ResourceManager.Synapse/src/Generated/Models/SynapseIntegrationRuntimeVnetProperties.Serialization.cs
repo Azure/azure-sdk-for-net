@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Synapse.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSynapseContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeVnetProperties)} does not support writing '{options.Format}' format.");
             }

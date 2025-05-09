@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseServerBlobAuditingPolicyResource IOperationSource<SynapseServerBlobAuditingPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SynapseServerBlobAuditingPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
+            var data = ModelReaderWriter.Read<SynapseServerBlobAuditingPolicyData>(response.Content);
             return new SynapseServerBlobAuditingPolicyResource(_client, data);
         }
 
         async ValueTask<SynapseServerBlobAuditingPolicyResource> IOperationSource<SynapseServerBlobAuditingPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SynapseServerBlobAuditingPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
+            var data = ModelReaderWriter.Read<SynapseServerBlobAuditingPolicyData>(response.Content);
             return await Task.FromResult(new SynapseServerBlobAuditingPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }

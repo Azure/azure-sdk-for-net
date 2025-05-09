@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Support
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSupportContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(SupportTicketData)} does not support writing '{options.Format}' format.");
             }

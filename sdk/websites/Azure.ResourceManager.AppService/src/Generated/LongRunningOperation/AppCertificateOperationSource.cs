@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppService
 
         AppCertificateResource IOperationSource<AppCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AppCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
+            var data = ModelReaderWriter.Read<AppCertificateData>(response.Content);
             return new AppCertificateResource(_client, data);
         }
 
         async ValueTask<AppCertificateResource> IOperationSource<AppCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AppCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
+            var data = ModelReaderWriter.Read<AppCertificateData>(response.Content);
             return await Task.FromResult(new AppCertificateResource(_client, data)).ConfigureAwait(false);
         }
     }

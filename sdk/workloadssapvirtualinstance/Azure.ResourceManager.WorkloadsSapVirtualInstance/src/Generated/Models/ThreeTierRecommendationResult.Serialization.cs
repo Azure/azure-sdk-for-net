@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ThreeTierRecommendationResult)} does not support writing '{options.Format}' format.");
             }

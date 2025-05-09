@@ -155,7 +155,7 @@ namespace Azure.AI.Translation.Document
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAITranslationDocumentContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(TranslationStatusSummary)} does not support writing '{options.Format}' format.");
             }

@@ -109,7 +109,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVisionImageAnalysisContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DenseCaptionsResult)} does not support writing '{options.Format}' format.");
             }

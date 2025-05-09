@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseIPFirewallRuleInfoData IJsonModel<SynapseIPFirewallRuleInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseIPFirewallRuleInfoData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseIPFirewallRuleInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseIPFirewallRuleInfoData>(Data, options, AzureResourceManagerSynapseContext.Default);
+        BinaryData IPersistableModel<SynapseIPFirewallRuleInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SynapseIPFirewallRuleInfoData IPersistableModel<SynapseIPFirewallRuleInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseIPFirewallRuleInfoData>(data, options, AzureResourceManagerSynapseContext.Default);
+        SynapseIPFirewallRuleInfoData IPersistableModel<SynapseIPFirewallRuleInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseIPFirewallRuleInfoData>(data, options);
 
         string IPersistableModel<SynapseIPFirewallRuleInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseIPFirewallRuleInfoData>)Data).GetFormatFromOptions(options);
     }

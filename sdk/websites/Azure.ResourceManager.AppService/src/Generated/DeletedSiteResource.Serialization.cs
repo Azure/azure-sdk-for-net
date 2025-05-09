@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         DeletedSiteData IJsonModel<DeletedSiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeletedSiteData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeletedSiteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeletedSiteData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        BinaryData IPersistableModel<DeletedSiteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DeletedSiteData IPersistableModel<DeletedSiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedSiteData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        DeletedSiteData IPersistableModel<DeletedSiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedSiteData>(data, options);
 
         string IPersistableModel<DeletedSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeletedSiteData>)Data).GetFormatFromOptions(options);
     }

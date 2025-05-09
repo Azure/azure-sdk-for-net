@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.StoragePool
 
         DiskPoolIscsiTargetData IJsonModel<DiskPoolIscsiTargetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiskPoolIscsiTargetData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DiskPoolIscsiTargetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiskPoolIscsiTargetData>(Data, options, AzureResourceManagerStoragePoolContext.Default);
+        BinaryData IPersistableModel<DiskPoolIscsiTargetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DiskPoolIscsiTargetData IPersistableModel<DiskPoolIscsiTargetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiskPoolIscsiTargetData>(data, options, AzureResourceManagerStoragePoolContext.Default);
+        DiskPoolIscsiTargetData IPersistableModel<DiskPoolIscsiTargetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiskPoolIscsiTargetData>(data, options);
 
         string IPersistableModel<DiskPoolIscsiTargetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiskPoolIscsiTargetData>)Data).GetFormatFromOptions(options);
     }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppService
 
         HostingEnvironmentWorkerPoolResource IOperationSource<HostingEnvironmentWorkerPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AppServiceWorkerPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
+            var data = ModelReaderWriter.Read<AppServiceWorkerPoolData>(response.Content);
             return new HostingEnvironmentWorkerPoolResource(_client, data);
         }
 
         async ValueTask<HostingEnvironmentWorkerPoolResource> IOperationSource<HostingEnvironmentWorkerPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AppServiceWorkerPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
+            var data = ModelReaderWriter.Read<AppServiceWorkerPoolData>(response.Content);
             return await Task.FromResult(new HostingEnvironmentWorkerPoolResource(_client, data)).ConfigureAwait(false);
         }
     }

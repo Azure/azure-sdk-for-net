@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         MSDeployStatusData IJsonModel<MSDeployStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MSDeployStatusData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MSDeployStatusData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MSDeployStatusData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        BinaryData IPersistableModel<MSDeployStatusData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        MSDeployStatusData IPersistableModel<MSDeployStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MSDeployStatusData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        MSDeployStatusData IPersistableModel<MSDeployStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MSDeployStatusData>(data, options);
 
         string IPersistableModel<MSDeployStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MSDeployStatusData>)Data).GetFormatFromOptions(options);
     }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseAadOnlyAuthenticationResource IOperationSource<SynapseAadOnlyAuthenticationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SynapseAadOnlyAuthenticationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
+            var data = ModelReaderWriter.Read<SynapseAadOnlyAuthenticationData>(response.Content);
             return new SynapseAadOnlyAuthenticationResource(_client, data);
         }
 
         async ValueTask<SynapseAadOnlyAuthenticationResource> IOperationSource<SynapseAadOnlyAuthenticationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SynapseAadOnlyAuthenticationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
+            var data = ModelReaderWriter.Read<SynapseAadOnlyAuthenticationData>(response.Content);
             return await Task.FromResult(new SynapseAadOnlyAuthenticationResource(_client, data)).ConfigureAwait(false);
         }
     }

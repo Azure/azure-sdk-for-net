@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseDedicatedSqlMinimalTlsSettingData IJsonModel<SynapseDedicatedSqlMinimalTlsSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseDedicatedSqlMinimalTlsSettingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseDedicatedSqlMinimalTlsSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseDedicatedSqlMinimalTlsSettingData>(Data, options, AzureResourceManagerSynapseContext.Default);
+        BinaryData IPersistableModel<SynapseDedicatedSqlMinimalTlsSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SynapseDedicatedSqlMinimalTlsSettingData IPersistableModel<SynapseDedicatedSqlMinimalTlsSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseDedicatedSqlMinimalTlsSettingData>(data, options, AzureResourceManagerSynapseContext.Default);
+        SynapseDedicatedSqlMinimalTlsSettingData IPersistableModel<SynapseDedicatedSqlMinimalTlsSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseDedicatedSqlMinimalTlsSettingData>(data, options);
 
         string IPersistableModel<SynapseDedicatedSqlMinimalTlsSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseDedicatedSqlMinimalTlsSettingData>)Data).GetFormatFromOptions(options);
     }

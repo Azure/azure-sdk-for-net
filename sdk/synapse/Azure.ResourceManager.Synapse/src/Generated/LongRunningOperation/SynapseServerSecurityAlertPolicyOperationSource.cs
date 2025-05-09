@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseServerSecurityAlertPolicyResource IOperationSource<SynapseServerSecurityAlertPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SynapseServerSecurityAlertPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
+            var data = ModelReaderWriter.Read<SynapseServerSecurityAlertPolicyData>(response.Content);
             return new SynapseServerSecurityAlertPolicyResource(_client, data);
         }
 
         async ValueTask<SynapseServerSecurityAlertPolicyResource> IOperationSource<SynapseServerSecurityAlertPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SynapseServerSecurityAlertPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
+            var data = ModelReaderWriter.Read<SynapseServerSecurityAlertPolicyData>(response.Content);
             return await Task.FromResult(new SynapseServerSecurityAlertPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }

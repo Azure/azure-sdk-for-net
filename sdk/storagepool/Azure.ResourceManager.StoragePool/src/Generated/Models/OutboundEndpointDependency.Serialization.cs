@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStoragePoolContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(OutboundEndpointDependency)} does not support writing '{options.Format}' format.");
             }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         FunctionEnvelopeData IJsonModel<FunctionEnvelopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FunctionEnvelopeData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FunctionEnvelopeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FunctionEnvelopeData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        BinaryData IPersistableModel<FunctionEnvelopeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        FunctionEnvelopeData IPersistableModel<FunctionEnvelopeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FunctionEnvelopeData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        FunctionEnvelopeData IPersistableModel<FunctionEnvelopeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FunctionEnvelopeData>(data, options);
 
         string IPersistableModel<FunctionEnvelopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FunctionEnvelopeData>)Data).GetFormatFromOptions(options);
     }

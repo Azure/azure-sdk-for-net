@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Workloads
 
         SapDatabaseInstanceResource IOperationSource<SapDatabaseInstanceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SapDatabaseInstanceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadsContext.Default);
+            var data = ModelReaderWriter.Read<SapDatabaseInstanceData>(response.Content);
             return new SapDatabaseInstanceResource(_client, data);
         }
 
         async ValueTask<SapDatabaseInstanceResource> IOperationSource<SapDatabaseInstanceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SapDatabaseInstanceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadsContext.Default);
+            var data = ModelReaderWriter.Read<SapDatabaseInstanceData>(response.Content);
             return await Task.FromResult(new SapDatabaseInstanceResource(_client, data)).ConfigureAwait(false);
         }
     }

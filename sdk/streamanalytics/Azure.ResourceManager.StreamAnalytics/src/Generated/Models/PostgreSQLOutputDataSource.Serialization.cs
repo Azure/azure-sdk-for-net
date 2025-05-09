@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStreamAnalyticsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(PostgreSQLOutputDataSource)} does not support writing '{options.Format}' format.");
             }

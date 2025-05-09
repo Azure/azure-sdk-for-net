@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWebPubSubContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(WebPubSubRegenerateKeyContent)} does not support writing '{options.Format}' format.");
             }
