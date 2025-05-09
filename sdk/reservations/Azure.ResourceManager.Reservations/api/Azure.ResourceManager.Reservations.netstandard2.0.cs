@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Reservations
 {
+    public partial class AzureResourceManagerReservationsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerReservationsContext() { }
+        public static Azure.ResourceManager.Reservations.AzureResourceManagerReservationsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class QuotaRequestDetailCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Reservations.QuotaRequestDetailResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Reservations.QuotaRequestDetailResource>, System.Collections.IEnumerable
     {
         protected QuotaRequestDetailCollection() { }

@@ -17,7 +17,7 @@ namespace _Type._Enum.Fixed
     {
         protected String() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetKnownValue(RequestContext context) => throw null;
 

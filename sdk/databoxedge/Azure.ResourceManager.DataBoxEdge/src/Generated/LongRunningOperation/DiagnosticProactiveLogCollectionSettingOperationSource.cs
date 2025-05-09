@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         DiagnosticProactiveLogCollectionSettingResource IOperationSource<DiagnosticProactiveLogCollectionSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DiagnosticProactiveLogCollectionSettingData>(response.Content);
+            var data = ModelReaderWriter.Read<DiagnosticProactiveLogCollectionSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
             return new DiagnosticProactiveLogCollectionSettingResource(_client, data);
         }
 
         async ValueTask<DiagnosticProactiveLogCollectionSettingResource> IOperationSource<DiagnosticProactiveLogCollectionSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DiagnosticProactiveLogCollectionSettingData>(response.Content);
+            var data = ModelReaderWriter.Read<DiagnosticProactiveLogCollectionSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
             return await Task.FromResult(new DiagnosticProactiveLogCollectionSettingResource(_client, data)).ConfigureAwait(false);
         }
     }

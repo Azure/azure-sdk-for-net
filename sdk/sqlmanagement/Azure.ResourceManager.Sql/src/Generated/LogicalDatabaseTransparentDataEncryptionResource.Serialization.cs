@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         LogicalDatabaseTransparentDataEncryptionData IJsonModel<LogicalDatabaseTransparentDataEncryptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LogicalDatabaseTransparentDataEncryptionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LogicalDatabaseTransparentDataEncryptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<LogicalDatabaseTransparentDataEncryptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LogicalDatabaseTransparentDataEncryptionData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        LogicalDatabaseTransparentDataEncryptionData IPersistableModel<LogicalDatabaseTransparentDataEncryptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogicalDatabaseTransparentDataEncryptionData>(data, options);
+        LogicalDatabaseTransparentDataEncryptionData IPersistableModel<LogicalDatabaseTransparentDataEncryptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogicalDatabaseTransparentDataEncryptionData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<LogicalDatabaseTransparentDataEncryptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LogicalDatabaseTransparentDataEncryptionData>)Data).GetFormatFromOptions(options);
     }

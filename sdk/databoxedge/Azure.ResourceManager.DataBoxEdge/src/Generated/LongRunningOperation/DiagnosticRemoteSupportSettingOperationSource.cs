@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         DiagnosticRemoteSupportSettingResource IOperationSource<DiagnosticRemoteSupportSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DiagnosticRemoteSupportSettingData>(response.Content);
+            var data = ModelReaderWriter.Read<DiagnosticRemoteSupportSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
             return new DiagnosticRemoteSupportSettingResource(_client, data);
         }
 
         async ValueTask<DiagnosticRemoteSupportSettingResource> IOperationSource<DiagnosticRemoteSupportSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DiagnosticRemoteSupportSettingData>(response.Content);
+            var data = ModelReaderWriter.Read<DiagnosticRemoteSupportSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
             return await Task.FromResult(new DiagnosticRemoteSupportSettingResource(_client, data)).ConfigureAwait(false);
         }
     }
