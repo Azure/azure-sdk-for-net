@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Azure.Compute.Batch
 {
@@ -49,7 +50,7 @@ namespace Azure.Compute.Batch
         /// <param name="remoteLoginIpAddress"> The IP address used for remote login to the Compute Node. </param>
         /// <param name="remoteLoginPort"> The port used for remote login to the Compute Node. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="remoteLoginIpAddress"/> is null. </exception>
-        internal BatchNodeRemoteLoginSettings(string remoteLoginIpAddress, int remoteLoginPort)
+        internal BatchNodeRemoteLoginSettings(IPAddress remoteLoginIpAddress, int remoteLoginPort)
         {
             Argument.AssertNotNull(remoteLoginIpAddress, nameof(remoteLoginIpAddress));
 
@@ -61,7 +62,7 @@ namespace Azure.Compute.Batch
         /// <param name="remoteLoginIpAddress"> The IP address used for remote login to the Compute Node. </param>
         /// <param name="remoteLoginPort"> The port used for remote login to the Compute Node. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeRemoteLoginSettings(string remoteLoginIpAddress, int remoteLoginPort, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchNodeRemoteLoginSettings(IPAddress remoteLoginIpAddress, int remoteLoginPort, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RemoteLoginIpAddress = remoteLoginIpAddress;
             RemoteLoginPort = remoteLoginPort;
@@ -74,7 +75,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> The IP address used for remote login to the Compute Node. </summary>
-        public string RemoteLoginIpAddress { get; }
+        public IPAddress RemoteLoginIpAddress { get; }
         /// <summary> The port used for remote login to the Compute Node. </summary>
         public int RemoteLoginPort { get; }
     }
