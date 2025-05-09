@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.EventGrid
 
         CaCertificateResource IOperationSource<CaCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CaCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
+            var data = ModelReaderWriter.Read<CaCertificateData>(response.Content);
             return new CaCertificateResource(_client, data);
         }
 
         async ValueTask<CaCertificateResource> IOperationSource<CaCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CaCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
+            var data = ModelReaderWriter.Read<CaCertificateData>(response.Content);
             return await Task.FromResult(new CaCertificateResource(_client, data)).ConfigureAwait(false);
         }
     }

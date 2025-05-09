@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.EdgeOrder
 
         EdgeOrderAddressData IJsonModel<EdgeOrderAddressData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EdgeOrderAddressData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EdgeOrderAddressData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EdgeOrderAddressData>(Data, options, AzureResourceManagerEdgeOrderContext.Default);
+        BinaryData IPersistableModel<EdgeOrderAddressData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        EdgeOrderAddressData IPersistableModel<EdgeOrderAddressData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EdgeOrderAddressData>(data, options, AzureResourceManagerEdgeOrderContext.Default);
+        EdgeOrderAddressData IPersistableModel<EdgeOrderAddressData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EdgeOrderAddressData>(data, options);
 
         string IPersistableModel<EdgeOrderAddressData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EdgeOrderAddressData>)Data).GetFormatFromOptions(options);
     }

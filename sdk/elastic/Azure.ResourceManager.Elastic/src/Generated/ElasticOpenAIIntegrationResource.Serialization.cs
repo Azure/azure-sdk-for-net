@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Elastic
 
         ElasticOpenAIIntegrationData IJsonModel<ElasticOpenAIIntegrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticOpenAIIntegrationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ElasticOpenAIIntegrationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ElasticOpenAIIntegrationData>(Data, options, AzureResourceManagerElasticContext.Default);
+        BinaryData IPersistableModel<ElasticOpenAIIntegrationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ElasticOpenAIIntegrationData IPersistableModel<ElasticOpenAIIntegrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticOpenAIIntegrationData>(data, options, AzureResourceManagerElasticContext.Default);
+        ElasticOpenAIIntegrationData IPersistableModel<ElasticOpenAIIntegrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticOpenAIIntegrationData>(data, options);
 
         string IPersistableModel<ElasticOpenAIIntegrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticOpenAIIntegrationData>)Data).GetFormatFromOptions(options);
     }

@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDynatraceContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(LinkableEnvironmentContent)} does not support writing '{options.Format}' format.");
             }

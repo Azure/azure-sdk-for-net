@@ -107,7 +107,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridNamespacesContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(FailedLockToken)} does not support writing '{options.Format}' format.");
             }

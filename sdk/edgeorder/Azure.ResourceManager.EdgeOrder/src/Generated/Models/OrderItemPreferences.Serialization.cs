@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeOrderContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(OrderItemPreferences)} does not support writing '{options.Format}' format.");
             }

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataShare
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataShareContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ShareDataSetData)} does not support writing '{options.Format}' format.");
             }

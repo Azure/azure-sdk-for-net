@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.EventGrid
 
         TopicTypeData IJsonModel<TopicTypeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TopicTypeData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TopicTypeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TopicTypeData>(Data, options, AzureResourceManagerEventGridContext.Default);
+        BinaryData IPersistableModel<TopicTypeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        TopicTypeData IPersistableModel<TopicTypeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TopicTypeData>(data, options, AzureResourceManagerEventGridContext.Default);
+        TopicTypeData IPersistableModel<TopicTypeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TopicTypeData>(data, options);
 
         string IPersistableModel<TopicTypeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TopicTypeData>)Data).GetFormatFromOptions(options);
     }

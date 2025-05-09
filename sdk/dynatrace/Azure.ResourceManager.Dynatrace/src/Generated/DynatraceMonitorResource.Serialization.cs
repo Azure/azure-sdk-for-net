@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Dynatrace
 
         DynatraceMonitorData IJsonModel<DynatraceMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DynatraceMonitorData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DynatraceMonitorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DynatraceMonitorData>(Data, options, AzureResourceManagerDynatraceContext.Default);
+        BinaryData IPersistableModel<DynatraceMonitorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DynatraceMonitorData IPersistableModel<DynatraceMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DynatraceMonitorData>(data, options, AzureResourceManagerDynatraceContext.Default);
+        DynatraceMonitorData IPersistableModel<DynatraceMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DynatraceMonitorData>(data, options);
 
         string IPersistableModel<DynatraceMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DynatraceMonitorData>)Data).GetFormatFromOptions(options);
     }

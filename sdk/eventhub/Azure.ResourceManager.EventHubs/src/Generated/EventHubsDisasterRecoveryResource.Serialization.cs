@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.EventHubs
 
         EventHubsDisasterRecoveryData IJsonModel<EventHubsDisasterRecoveryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsDisasterRecoveryData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EventHubsDisasterRecoveryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventHubsDisasterRecoveryData>(Data, options, AzureResourceManagerEventHubsContext.Default);
+        BinaryData IPersistableModel<EventHubsDisasterRecoveryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        EventHubsDisasterRecoveryData IPersistableModel<EventHubsDisasterRecoveryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventHubsDisasterRecoveryData>(data, options, AzureResourceManagerEventHubsContext.Default);
+        EventHubsDisasterRecoveryData IPersistableModel<EventHubsDisasterRecoveryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventHubsDisasterRecoveryData>(data, options);
 
         string IPersistableModel<EventHubsDisasterRecoveryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventHubsDisasterRecoveryData>)Data).GetFormatFromOptions(options);
     }

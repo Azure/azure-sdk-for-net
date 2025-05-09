@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.EventHubs
 
         EventHubsNetworkRuleSetData IJsonModel<EventHubsNetworkRuleSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsNetworkRuleSetData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EventHubsNetworkRuleSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventHubsNetworkRuleSetData>(Data, options, AzureResourceManagerEventHubsContext.Default);
+        BinaryData IPersistableModel<EventHubsNetworkRuleSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        EventHubsNetworkRuleSetData IPersistableModel<EventHubsNetworkRuleSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventHubsNetworkRuleSetData>(data, options, AzureResourceManagerEventHubsContext.Default);
+        EventHubsNetworkRuleSetData IPersistableModel<EventHubsNetworkRuleSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventHubsNetworkRuleSetData>(data, options);
 
         string IPersistableModel<EventHubsNetworkRuleSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventHubsNetworkRuleSetData>)Data).GetFormatFromOptions(options);
     }

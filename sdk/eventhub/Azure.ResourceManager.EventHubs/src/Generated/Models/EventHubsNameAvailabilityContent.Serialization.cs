@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventHubsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(EventHubsNameAvailabilityContent)} does not support writing '{options.Format}' format.");
             }

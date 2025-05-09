@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DataShare
 
         DataShareTriggerResource IOperationSource<DataShareTriggerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataShareTriggerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataShareContext.Default);
+            var data = ModelReaderWriter.Read<DataShareTriggerData>(response.Content);
             return new DataShareTriggerResource(_client, data);
         }
 
         async ValueTask<DataShareTriggerResource> IOperationSource<DataShareTriggerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataShareTriggerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataShareContext.Default);
+            var data = ModelReaderWriter.Read<DataShareTriggerData>(response.Content);
             return await Task.FromResult(new DataShareTriggerResource(_client, data)).ConfigureAwait(false);
         }
     }

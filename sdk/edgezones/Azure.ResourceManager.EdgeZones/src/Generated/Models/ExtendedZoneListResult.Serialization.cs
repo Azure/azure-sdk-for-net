@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EdgeZones.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeZonesContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ExtendedZoneListResult)} does not support writing '{options.Format}' format.");
             }

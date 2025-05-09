@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         ScalingPlanPooledScheduleData IJsonModel<ScalingPlanPooledScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScalingPlanPooledScheduleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ScalingPlanPooledScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScalingPlanPooledScheduleData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
+        BinaryData IPersistableModel<ScalingPlanPooledScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ScalingPlanPooledScheduleData IPersistableModel<ScalingPlanPooledScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScalingPlanPooledScheduleData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
+        ScalingPlanPooledScheduleData IPersistableModel<ScalingPlanPooledScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScalingPlanPooledScheduleData>(data, options);
 
         string IPersistableModel<ScalingPlanPooledScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScalingPlanPooledScheduleData>)Data).GetFormatFromOptions(options);
     }

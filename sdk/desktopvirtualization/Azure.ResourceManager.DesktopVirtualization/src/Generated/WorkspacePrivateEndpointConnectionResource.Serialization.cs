@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         DesktopVirtualizationPrivateEndpointConnectionDataData IJsonModel<DesktopVirtualizationPrivateEndpointConnectionDataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DesktopVirtualizationPrivateEndpointConnectionDataData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionDataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DesktopVirtualizationPrivateEndpointConnectionDataData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
+        BinaryData IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionDataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DesktopVirtualizationPrivateEndpointConnectionDataData IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionDataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DesktopVirtualizationPrivateEndpointConnectionDataData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
+        DesktopVirtualizationPrivateEndpointConnectionDataData IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionDataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DesktopVirtualizationPrivateEndpointConnectionDataData>(data, options);
 
         string IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionDataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionDataData>)Data).GetFormatFromOptions(options);
     }

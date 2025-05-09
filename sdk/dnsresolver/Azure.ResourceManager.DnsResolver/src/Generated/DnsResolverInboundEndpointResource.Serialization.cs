@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DnsResolver
 
         DnsResolverInboundEndpointData IJsonModel<DnsResolverInboundEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnsResolverInboundEndpointData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DnsResolverInboundEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DnsResolverInboundEndpointData>(Data, options, AzureResourceManagerDnsResolverContext.Default);
+        BinaryData IPersistableModel<DnsResolverInboundEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DnsResolverInboundEndpointData IPersistableModel<DnsResolverInboundEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsResolverInboundEndpointData>(data, options, AzureResourceManagerDnsResolverContext.Default);
+        DnsResolverInboundEndpointData IPersistableModel<DnsResolverInboundEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsResolverInboundEndpointData>(data, options);
 
         string IPersistableModel<DnsResolverInboundEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnsResolverInboundEndpointData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ElasticSan
 
         ElasticSanData IJsonModel<ElasticSanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticSanData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ElasticSanData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ElasticSanData>(Data, options, AzureResourceManagerElasticSanContext.Default);
+        BinaryData IPersistableModel<ElasticSanData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ElasticSanData IPersistableModel<ElasticSanData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticSanData>(data, options, AzureResourceManagerElasticSanContext.Default);
+        ElasticSanData IPersistableModel<ElasticSanData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticSanData>(data, options);
 
         string IPersistableModel<ElasticSanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticSanData>)Data).GetFormatFromOptions(options);
     }

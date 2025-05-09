@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DevCenter
 
         DevCenterNetworkConnectionResource IOperationSource<DevCenterNetworkConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevCenterNetworkConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevCenterContext.Default);
+            var data = ModelReaderWriter.Read<DevCenterNetworkConnectionData>(response.Content);
             return new DevCenterNetworkConnectionResource(_client, data);
         }
 
         async ValueTask<DevCenterNetworkConnectionResource> IOperationSource<DevCenterNetworkConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevCenterNetworkConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevCenterContext.Default);
+            var data = ModelReaderWriter.Read<DevCenterNetworkConnectionData>(response.Content);
             return await Task.FromResult(new DevCenterNetworkConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

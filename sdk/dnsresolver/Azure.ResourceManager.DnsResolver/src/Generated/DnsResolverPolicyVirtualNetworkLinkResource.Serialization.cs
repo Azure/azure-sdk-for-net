@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DnsResolver
 
         DnsResolverPolicyVirtualNetworkLinkData IJsonModel<DnsResolverPolicyVirtualNetworkLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnsResolverPolicyVirtualNetworkLinkData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DnsResolverPolicyVirtualNetworkLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DnsResolverPolicyVirtualNetworkLinkData>(Data, options, AzureResourceManagerDnsResolverContext.Default);
+        BinaryData IPersistableModel<DnsResolverPolicyVirtualNetworkLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DnsResolverPolicyVirtualNetworkLinkData IPersistableModel<DnsResolverPolicyVirtualNetworkLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsResolverPolicyVirtualNetworkLinkData>(data, options, AzureResourceManagerDnsResolverContext.Default);
+        DnsResolverPolicyVirtualNetworkLinkData IPersistableModel<DnsResolverPolicyVirtualNetworkLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsResolverPolicyVirtualNetworkLinkData>(data, options);
 
         string IPersistableModel<DnsResolverPolicyVirtualNetworkLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnsResolverPolicyVirtualNetworkLinkData>)Data).GetFormatFromOptions(options);
     }

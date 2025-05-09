@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.EventHubs
 
         EventHubsClusterData IJsonModel<EventHubsClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsClusterData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EventHubsClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventHubsClusterData>(Data, options, AzureResourceManagerEventHubsContext.Default);
+        BinaryData IPersistableModel<EventHubsClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        EventHubsClusterData IPersistableModel<EventHubsClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventHubsClusterData>(data, options, AzureResourceManagerEventHubsContext.Default);
+        EventHubsClusterData IPersistableModel<EventHubsClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventHubsClusterData>(data, options);
 
         string IPersistableModel<EventHubsClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventHubsClusterData>)Data).GetFormatFromOptions(options);
     }

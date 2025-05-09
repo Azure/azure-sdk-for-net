@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Dynatrace
 
         DynatraceTagRuleResource IOperationSource<DynatraceTagRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DynatraceTagRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDynatraceContext.Default);
+            var data = ModelReaderWriter.Read<DynatraceTagRuleData>(response.Content);
             return new DynatraceTagRuleResource(_client, data);
         }
 
         async ValueTask<DynatraceTagRuleResource> IOperationSource<DynatraceTagRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DynatraceTagRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDynatraceContext.Default);
+            var data = ModelReaderWriter.Read<DynatraceTagRuleData>(response.Content);
             return await Task.FromResult(new DynatraceTagRuleResource(_client, data)).ConfigureAwait(false);
         }
     }
