@@ -1170,3 +1170,9 @@
 
 #PRLabel: %CodeGen %Client
 /eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @live1206 @ArcturusZhang
+
+# PRLabel: %PureStorage
+/sdk/purestorageblock/Azure.ResourceManager.*/                     @deepakmauryams
+
+# ServiceLabel: %PureStorage %Mgmt
+# ServiceOwners:                                                   @deepakmauryams
