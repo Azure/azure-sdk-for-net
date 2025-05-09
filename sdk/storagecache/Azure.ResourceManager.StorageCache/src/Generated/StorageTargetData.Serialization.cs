@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.StorageCache
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageCacheContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(StorageTargetData)} does not support writing '{options.Format}' format.");
             }

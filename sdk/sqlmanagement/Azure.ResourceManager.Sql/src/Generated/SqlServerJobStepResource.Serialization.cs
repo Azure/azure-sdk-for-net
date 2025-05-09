@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerJobStepData IJsonModel<SqlServerJobStepData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobStepData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlServerJobStepData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerJobStepData>(Data, options, AzureResourceManagerSqlContext.Default);
+        BinaryData IPersistableModel<SqlServerJobStepData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SqlServerJobStepData IPersistableModel<SqlServerJobStepData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerJobStepData>(data, options, AzureResourceManagerSqlContext.Default);
+        SqlServerJobStepData IPersistableModel<SqlServerJobStepData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerJobStepData>(data, options);
 
         string IPersistableModel<SqlServerJobStepData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerJobStepData>)Data).GetFormatFromOptions(options);
     }

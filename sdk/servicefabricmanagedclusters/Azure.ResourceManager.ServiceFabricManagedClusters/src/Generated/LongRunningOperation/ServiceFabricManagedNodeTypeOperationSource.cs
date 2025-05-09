@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         ServiceFabricManagedNodeTypeResource IOperationSource<ServiceFabricManagedNodeTypeResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServiceFabricManagedNodeTypeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+            var data = ModelReaderWriter.Read<ServiceFabricManagedNodeTypeData>(response.Content);
             return new ServiceFabricManagedNodeTypeResource(_client, data);
         }
 
         async ValueTask<ServiceFabricManagedNodeTypeResource> IOperationSource<ServiceFabricManagedNodeTypeResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServiceFabricManagedNodeTypeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+            var data = ModelReaderWriter.Read<ServiceFabricManagedNodeTypeData>(response.Content);
             return await Task.FromResult(new ServiceFabricManagedNodeTypeResource(_client, data)).ConfigureAwait(false);
         }
     }

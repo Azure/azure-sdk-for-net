@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ServiceFabricServicePatch)} does not support writing '{options.Format}' format.");
             }

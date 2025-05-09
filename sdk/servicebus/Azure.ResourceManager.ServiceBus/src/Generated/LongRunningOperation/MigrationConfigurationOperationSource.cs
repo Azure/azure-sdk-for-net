@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ServiceBus
 
         MigrationConfigurationResource IOperationSource<MigrationConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MigrationConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceBusContext.Default);
+            var data = ModelReaderWriter.Read<MigrationConfigurationData>(response.Content);
             return new MigrationConfigurationResource(_client, data);
         }
 
         async ValueTask<MigrationConfigurationResource> IOperationSource<MigrationConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MigrationConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceBusContext.Default);
+            var data = ModelReaderWriter.Read<MigrationConfigurationData>(response.Content);
             return await Task.FromResult(new MigrationConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }

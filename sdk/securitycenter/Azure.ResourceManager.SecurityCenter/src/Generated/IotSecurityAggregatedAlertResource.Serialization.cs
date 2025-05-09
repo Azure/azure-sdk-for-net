@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         IotSecurityAggregatedAlertData IJsonModel<IotSecurityAggregatedAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotSecurityAggregatedAlertData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IotSecurityAggregatedAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotSecurityAggregatedAlertData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
+        BinaryData IPersistableModel<IotSecurityAggregatedAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        IotSecurityAggregatedAlertData IPersistableModel<IotSecurityAggregatedAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotSecurityAggregatedAlertData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
+        IotSecurityAggregatedAlertData IPersistableModel<IotSecurityAggregatedAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotSecurityAggregatedAlertData>(data, options);
 
         string IPersistableModel<IotSecurityAggregatedAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotSecurityAggregatedAlertData>)Data).GetFormatFromOptions(options);
     }

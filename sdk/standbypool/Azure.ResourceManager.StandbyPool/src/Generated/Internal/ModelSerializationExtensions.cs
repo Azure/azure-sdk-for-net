@@ -20,7 +20,6 @@ namespace Azure.ResourceManager.StandbyPool
     {
         internal static readonly JsonDocumentOptions JsonDocumentOptions = new JsonDocumentOptions { MaxDepth = 256 };
         internal static readonly ModelReaderWriterOptions WireOptions = new ModelReaderWriterOptions("W");
-        internal static readonly BinaryData SentinelValue = BinaryData.FromBytes("\"__EMPTY__\""u8.ToArray());
 
         public static object GetObject(this JsonElement element)
         {
@@ -256,13 +255,6 @@ namespace Azure.ResourceManager.StandbyPool
         public static void WriteObjectValue(this Utf8JsonWriter writer, object value, ModelReaderWriterOptions options = null)
         {
             writer.WriteObjectValue<object>(value, options);
-        }
-
-        internal static bool IsSentinelValue(BinaryData value)
-        {
-            ReadOnlySpan<byte> sentinelSpan = SentinelValue.ToMemory().Span;
-            ReadOnlySpan<byte> valueSpan = value.ToMemory().Span;
-            return sentinelSpan.SequenceEqual(valueSpan);
         }
 
         internal static class TypeFormatters

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceBusContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(FailoverProperties)} does not support writing '{options.Format}' format.");
             }

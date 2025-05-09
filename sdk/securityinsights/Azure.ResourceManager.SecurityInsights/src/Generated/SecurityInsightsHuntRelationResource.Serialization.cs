@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityInsights
 
         SecurityInsightsHuntRelationData IJsonModel<SecurityInsightsHuntRelationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsHuntRelationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityInsightsHuntRelationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsHuntRelationData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
+        BinaryData IPersistableModel<SecurityInsightsHuntRelationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SecurityInsightsHuntRelationData IPersistableModel<SecurityInsightsHuntRelationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsHuntRelationData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
+        SecurityInsightsHuntRelationData IPersistableModel<SecurityInsightsHuntRelationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsHuntRelationData>(data, options);
 
         string IPersistableModel<SecurityInsightsHuntRelationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsHuntRelationData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         SecurityAlertData IJsonModel<SecurityAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityAlertData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityAlertData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
+        BinaryData IPersistableModel<SecurityAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SecurityAlertData IPersistableModel<SecurityAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityAlertData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
+        SecurityAlertData IPersistableModel<SecurityAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityAlertData>(data, options);
 
         string IPersistableModel<SecurityAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityAlertData>)Data).GetFormatFromOptions(options);
     }

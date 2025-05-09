@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         ServiceFabricManagedServiceData IJsonModel<ServiceFabricManagedServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceFabricManagedServiceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ServiceFabricManagedServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceFabricManagedServiceData>(Data, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+        BinaryData IPersistableModel<ServiceFabricManagedServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ServiceFabricManagedServiceData IPersistableModel<ServiceFabricManagedServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceFabricManagedServiceData>(data, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+        ServiceFabricManagedServiceData IPersistableModel<ServiceFabricManagedServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceFabricManagedServiceData>(data, options);
 
         string IPersistableModel<ServiceFabricManagedServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceFabricManagedServiceData>)Data).GetFormatFromOptions(options);
     }

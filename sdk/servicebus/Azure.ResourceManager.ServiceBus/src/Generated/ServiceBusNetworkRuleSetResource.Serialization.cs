@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ServiceBus
 
         ServiceBusNetworkRuleSetData IJsonModel<ServiceBusNetworkRuleSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusNetworkRuleSetData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ServiceBusNetworkRuleSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceBusNetworkRuleSetData>(Data, options, AzureResourceManagerServiceBusContext.Default);
+        BinaryData IPersistableModel<ServiceBusNetworkRuleSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ServiceBusNetworkRuleSetData IPersistableModel<ServiceBusNetworkRuleSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceBusNetworkRuleSetData>(data, options, AzureResourceManagerServiceBusContext.Default);
+        ServiceBusNetworkRuleSetData IPersistableModel<ServiceBusNetworkRuleSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceBusNetworkRuleSetData>(data, options);
 
         string IPersistableModel<ServiceBusNetworkRuleSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceBusNetworkRuleSetData>)Data).GetFormatFromOptions(options);
     }

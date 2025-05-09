@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerVirtualNetworkRuleResource IOperationSource<SqlServerVirtualNetworkRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerVirtualNetworkRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            var data = ModelReaderWriter.Read<SqlServerVirtualNetworkRuleData>(response.Content);
             return new SqlServerVirtualNetworkRuleResource(_client, data);
         }
 
         async ValueTask<SqlServerVirtualNetworkRuleResource> IOperationSource<SqlServerVirtualNetworkRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerVirtualNetworkRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            var data = ModelReaderWriter.Read<SqlServerVirtualNetworkRuleData>(response.Content);
             return await Task.FromResult(new SqlServerVirtualNetworkRuleResource(_client, data)).ConfigureAwait(false);
         }
     }

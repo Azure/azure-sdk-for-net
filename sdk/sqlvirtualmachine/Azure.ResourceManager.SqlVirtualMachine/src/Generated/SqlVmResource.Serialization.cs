@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         SqlVmData IJsonModel<SqlVmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlVmData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlVmData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlVmData>(Data, options, AzureResourceManagerSqlVirtualMachineContext.Default);
+        BinaryData IPersistableModel<SqlVmData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SqlVmData IPersistableModel<SqlVmData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlVmData>(data, options, AzureResourceManagerSqlVirtualMachineContext.Default);
+        SqlVmData IPersistableModel<SqlVmData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlVmData>(data, options);
 
         string IPersistableModel<SqlVmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlVmData>)Data).GetFormatFromOptions(options);
     }

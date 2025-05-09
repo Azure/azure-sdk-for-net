@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.StandbyPool
 
         StandbyContainerGroupPoolResource IOperationSource<StandbyContainerGroupPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StandbyContainerGroupPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStandbyPoolContext.Default);
+            var data = ModelReaderWriter.Read<StandbyContainerGroupPoolData>(response.Content);
             return new StandbyContainerGroupPoolResource(_client, data);
         }
 
         async ValueTask<StandbyContainerGroupPoolResource> IOperationSource<StandbyContainerGroupPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StandbyContainerGroupPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStandbyPoolContext.Default);
+            var data = ModelReaderWriter.Read<StandbyContainerGroupPoolData>(response.Content);
             return await Task.FromResult(new StandbyContainerGroupPoolResource(_client, data)).ConfigureAwait(false);
         }
     }

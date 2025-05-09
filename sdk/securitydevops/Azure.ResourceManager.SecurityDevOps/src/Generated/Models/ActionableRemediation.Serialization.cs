@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityDevOpsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ActionableRemediation)} does not support writing '{options.Format}' format.");
             }

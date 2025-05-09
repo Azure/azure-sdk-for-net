@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         SecurityConnectorGitHubRepositoryData IJsonModel<SecurityConnectorGitHubRepositoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityConnectorGitHubRepositoryData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityConnectorGitHubRepositoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityConnectorGitHubRepositoryData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
+        BinaryData IPersistableModel<SecurityConnectorGitHubRepositoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SecurityConnectorGitHubRepositoryData IPersistableModel<SecurityConnectorGitHubRepositoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityConnectorGitHubRepositoryData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
+        SecurityConnectorGitHubRepositoryData IPersistableModel<SecurityConnectorGitHubRepositoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityConnectorGitHubRepositoryData>(data, options);
 
         string IPersistableModel<SecurityConnectorGitHubRepositoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityConnectorGitHubRepositoryData>)Data).GetFormatFromOptions(options);
     }

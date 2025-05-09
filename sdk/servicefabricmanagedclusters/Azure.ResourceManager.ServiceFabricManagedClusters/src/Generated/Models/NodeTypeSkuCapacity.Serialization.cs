@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(NodeTypeSkuCapacity)} does not support writing '{options.Format}' format.");
             }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ServiceNetworking
 
         TrafficControllerFrontendResource IOperationSource<TrafficControllerFrontendResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<TrafficControllerFrontendData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceNetworkingContext.Default);
+            var data = ModelReaderWriter.Read<TrafficControllerFrontendData>(response.Content);
             return new TrafficControllerFrontendResource(_client, data);
         }
 
         async ValueTask<TrafficControllerFrontendResource> IOperationSource<TrafficControllerFrontendResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<TrafficControllerFrontendData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceNetworkingContext.Default);
+            var data = ModelReaderWriter.Read<TrafficControllerFrontendData>(response.Content);
             return await Task.FromResult(new TrafficControllerFrontendResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ServiceBus
 
         ServiceBusDisasterRecoveryData IJsonModel<ServiceBusDisasterRecoveryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusDisasterRecoveryData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ServiceBusDisasterRecoveryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceBusDisasterRecoveryData>(Data, options, AzureResourceManagerServiceBusContext.Default);
+        BinaryData IPersistableModel<ServiceBusDisasterRecoveryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ServiceBusDisasterRecoveryData IPersistableModel<ServiceBusDisasterRecoveryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceBusDisasterRecoveryData>(data, options, AzureResourceManagerServiceBusContext.Default);
+        ServiceBusDisasterRecoveryData IPersistableModel<ServiceBusDisasterRecoveryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceBusDisasterRecoveryData>(data, options);
 
         string IPersistableModel<ServiceBusDisasterRecoveryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceBusDisasterRecoveryData>)Data).GetFormatFromOptions(options);
     }

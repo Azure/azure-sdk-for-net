@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceNetworkingContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ApplicationGatewayForContainersSecurityPolicyPatch)} does not support writing '{options.Format}' format.");
             }

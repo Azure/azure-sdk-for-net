@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.SecurityCenter
 
         SecurityCenterApiCollectionResource IOperationSource<SecurityCenterApiCollectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SecurityCenterApiCollectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSecurityCenterContext.Default);
+            var data = ModelReaderWriter.Read<SecurityCenterApiCollectionData>(response.Content);
             return new SecurityCenterApiCollectionResource(_client, data);
         }
 
         async ValueTask<SecurityCenterApiCollectionResource> IOperationSource<SecurityCenterApiCollectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SecurityCenterApiCollectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSecurityCenterContext.Default);
+            var data = ModelReaderWriter.Read<SecurityCenterApiCollectionData>(response.Content);
             return await Task.FromResult(new SecurityCenterApiCollectionResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerDnsAliasResource IOperationSource<SqlServerDnsAliasResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerDnsAliasData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            var data = ModelReaderWriter.Read<SqlServerDnsAliasData>(response.Content);
             return new SqlServerDnsAliasResource(_client, data);
         }
 
         async ValueTask<SqlServerDnsAliasResource> IOperationSource<SqlServerDnsAliasResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerDnsAliasData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            var data = ModelReaderWriter.Read<SqlServerDnsAliasData>(response.Content);
             return await Task.FromResult(new SqlServerDnsAliasResource(_client, data)).ConfigureAwait(false);
         }
     }

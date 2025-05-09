@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.StorageMover
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(JobDefinitionData)} does not support writing '{options.Format}' format.");
             }

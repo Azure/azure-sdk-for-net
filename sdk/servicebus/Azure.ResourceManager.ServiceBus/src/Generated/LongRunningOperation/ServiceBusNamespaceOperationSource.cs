@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ServiceBus
 
         ServiceBusNamespaceResource IOperationSource<ServiceBusNamespaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServiceBusNamespaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceBusContext.Default);
+            var data = ModelReaderWriter.Read<ServiceBusNamespaceData>(response.Content);
             return new ServiceBusNamespaceResource(_client, data);
         }
 
         async ValueTask<ServiceBusNamespaceResource> IOperationSource<ServiceBusNamespaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServiceBusNamespaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceBusContext.Default);
+            var data = ModelReaderWriter.Read<ServiceBusNamespaceData>(response.Content);
             return await Task.FromResult(new ServiceBusNamespaceResource(_client, data)).ConfigureAwait(false);
         }
     }

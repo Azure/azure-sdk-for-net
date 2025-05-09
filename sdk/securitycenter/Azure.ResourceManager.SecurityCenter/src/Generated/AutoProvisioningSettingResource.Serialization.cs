@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         AutoProvisioningSettingData IJsonModel<AutoProvisioningSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutoProvisioningSettingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutoProvisioningSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutoProvisioningSettingData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
+        BinaryData IPersistableModel<AutoProvisioningSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        AutoProvisioningSettingData IPersistableModel<AutoProvisioningSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutoProvisioningSettingData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
+        AutoProvisioningSettingData IPersistableModel<AutoProvisioningSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutoProvisioningSettingData>(data, options);
 
         string IPersistableModel<AutoProvisioningSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutoProvisioningSettingData>)Data).GetFormatFromOptions(options);
     }

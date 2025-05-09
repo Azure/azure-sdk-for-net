@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ServiceBus
 
         ServiceBusNamespaceData IJsonModel<ServiceBusNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusNamespaceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ServiceBusNamespaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceBusNamespaceData>(Data, options, AzureResourceManagerServiceBusContext.Default);
+        BinaryData IPersistableModel<ServiceBusNamespaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ServiceBusNamespaceData IPersistableModel<ServiceBusNamespaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceBusNamespaceData>(data, options, AzureResourceManagerServiceBusContext.Default);
+        ServiceBusNamespaceData IPersistableModel<ServiceBusNamespaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceBusNamespaceData>(data, options);
 
         string IPersistableModel<ServiceBusNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceBusNamespaceData>)Data).GetFormatFromOptions(options);
     }

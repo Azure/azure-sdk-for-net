@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerDatabaseRestorePointResource IOperationSource<SqlServerDatabaseRestorePointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerDatabaseRestorePointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            var data = ModelReaderWriter.Read<SqlServerDatabaseRestorePointData>(response.Content);
             return new SqlServerDatabaseRestorePointResource(_client, data);
         }
 
         async ValueTask<SqlServerDatabaseRestorePointResource> IOperationSource<SqlServerDatabaseRestorePointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerDatabaseRestorePointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            var data = ModelReaderWriter.Read<SqlServerDatabaseRestorePointData>(response.Content);
             return await Task.FromResult(new SqlServerDatabaseRestorePointResource(_client, data)).ConfigureAwait(false);
         }
     }

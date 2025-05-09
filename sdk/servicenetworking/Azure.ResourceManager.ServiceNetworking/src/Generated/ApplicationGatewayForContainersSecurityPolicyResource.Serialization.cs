@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ServiceNetworking
 
         ApplicationGatewayForContainersSecurityPolicyData IJsonModel<ApplicationGatewayForContainersSecurityPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationGatewayForContainersSecurityPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApplicationGatewayForContainersSecurityPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApplicationGatewayForContainersSecurityPolicyData>(Data, options, AzureResourceManagerServiceNetworkingContext.Default);
+        BinaryData IPersistableModel<ApplicationGatewayForContainersSecurityPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ApplicationGatewayForContainersSecurityPolicyData IPersistableModel<ApplicationGatewayForContainersSecurityPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApplicationGatewayForContainersSecurityPolicyData>(data, options, AzureResourceManagerServiceNetworkingContext.Default);
+        ApplicationGatewayForContainersSecurityPolicyData IPersistableModel<ApplicationGatewayForContainersSecurityPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApplicationGatewayForContainersSecurityPolicyData>(data, options);
 
         string IPersistableModel<ApplicationGatewayForContainersSecurityPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApplicationGatewayForContainersSecurityPolicyData>)Data).GetFormatFromOptions(options);
     }

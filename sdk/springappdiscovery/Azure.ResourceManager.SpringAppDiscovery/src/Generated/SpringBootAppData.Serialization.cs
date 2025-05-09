@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSpringAppDiscoveryContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(SpringBootAppData)} does not support writing '{options.Format}' format.");
             }

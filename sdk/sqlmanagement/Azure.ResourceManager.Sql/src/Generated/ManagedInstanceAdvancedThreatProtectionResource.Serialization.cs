@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         ManagedInstanceAdvancedThreatProtectionData IJsonModel<ManagedInstanceAdvancedThreatProtectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceAdvancedThreatProtectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedInstanceAdvancedThreatProtectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedInstanceAdvancedThreatProtectionData>(Data, options, AzureResourceManagerSqlContext.Default);
+        BinaryData IPersistableModel<ManagedInstanceAdvancedThreatProtectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ManagedInstanceAdvancedThreatProtectionData IPersistableModel<ManagedInstanceAdvancedThreatProtectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceAdvancedThreatProtectionData>(data, options, AzureResourceManagerSqlContext.Default);
+        ManagedInstanceAdvancedThreatProtectionData IPersistableModel<ManagedInstanceAdvancedThreatProtectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceAdvancedThreatProtectionData>(data, options);
 
         string IPersistableModel<ManagedInstanceAdvancedThreatProtectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedInstanceAdvancedThreatProtectionData>)Data).GetFormatFromOptions(options);
     }

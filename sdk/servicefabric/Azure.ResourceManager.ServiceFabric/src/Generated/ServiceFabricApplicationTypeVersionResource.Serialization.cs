@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ServiceFabric
 
         ServiceFabricApplicationTypeVersionData IJsonModel<ServiceFabricApplicationTypeVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceFabricApplicationTypeVersionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ServiceFabricApplicationTypeVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceFabricApplicationTypeVersionData>(Data, options, AzureResourceManagerServiceFabricContext.Default);
+        BinaryData IPersistableModel<ServiceFabricApplicationTypeVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ServiceFabricApplicationTypeVersionData IPersistableModel<ServiceFabricApplicationTypeVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceFabricApplicationTypeVersionData>(data, options, AzureResourceManagerServiceFabricContext.Default);
+        ServiceFabricApplicationTypeVersionData IPersistableModel<ServiceFabricApplicationTypeVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceFabricApplicationTypeVersionData>(data, options);
 
         string IPersistableModel<ServiceFabricApplicationTypeVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceFabricApplicationTypeVersionData>)Data).GetFormatFromOptions(options);
     }

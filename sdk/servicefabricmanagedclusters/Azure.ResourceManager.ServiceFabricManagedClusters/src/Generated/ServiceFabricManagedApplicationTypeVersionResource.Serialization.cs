@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         ServiceFabricManagedApplicationTypeVersionData IJsonModel<ServiceFabricManagedApplicationTypeVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceFabricManagedApplicationTypeVersionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ServiceFabricManagedApplicationTypeVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceFabricManagedApplicationTypeVersionData>(Data, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+        BinaryData IPersistableModel<ServiceFabricManagedApplicationTypeVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ServiceFabricManagedApplicationTypeVersionData IPersistableModel<ServiceFabricManagedApplicationTypeVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceFabricManagedApplicationTypeVersionData>(data, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+        ServiceFabricManagedApplicationTypeVersionData IPersistableModel<ServiceFabricManagedApplicationTypeVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceFabricManagedApplicationTypeVersionData>(data, options);
 
         string IPersistableModel<ServiceFabricManagedApplicationTypeVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceFabricManagedApplicationTypeVersionData>)Data).GetFormatFromOptions(options);
     }

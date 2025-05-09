@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Storage
 
         StorageAccountMigrationData IJsonModel<StorageAccountMigrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageAccountMigrationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StorageAccountMigrationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageAccountMigrationData>(Data, options, AzureResourceManagerStorageContext.Default);
+        BinaryData IPersistableModel<StorageAccountMigrationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        StorageAccountMigrationData IPersistableModel<StorageAccountMigrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageAccountMigrationData>(data, options, AzureResourceManagerStorageContext.Default);
+        StorageAccountMigrationData IPersistableModel<StorageAccountMigrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageAccountMigrationData>(data, options);
 
         string IPersistableModel<StorageAccountMigrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageAccountMigrationData>)Data).GetFormatFromOptions(options);
     }

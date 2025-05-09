@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerTrustGroupResource IOperationSource<SqlServerTrustGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerTrustGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            var data = ModelReaderWriter.Read<SqlServerTrustGroupData>(response.Content);
             return new SqlServerTrustGroupResource(_client, data);
         }
 
         async ValueTask<SqlServerTrustGroupResource> IOperationSource<SqlServerTrustGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerTrustGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            var data = ModelReaderWriter.Read<SqlServerTrustGroupData>(response.Content);
             return await Task.FromResult(new SqlServerTrustGroupResource(_client, data)).ConfigureAwait(false);
         }
     }

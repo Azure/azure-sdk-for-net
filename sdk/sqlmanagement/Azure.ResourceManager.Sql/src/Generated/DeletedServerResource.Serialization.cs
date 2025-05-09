@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         DeletedServerData IJsonModel<DeletedServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeletedServerData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeletedServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeletedServerData>(Data, options, AzureResourceManagerSqlContext.Default);
+        BinaryData IPersistableModel<DeletedServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DeletedServerData IPersistableModel<DeletedServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedServerData>(data, options, AzureResourceManagerSqlContext.Default);
+        DeletedServerData IPersistableModel<DeletedServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedServerData>(data, options);
 
         string IPersistableModel<DeletedServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeletedServerData>)Data).GetFormatFromOptions(options);
     }

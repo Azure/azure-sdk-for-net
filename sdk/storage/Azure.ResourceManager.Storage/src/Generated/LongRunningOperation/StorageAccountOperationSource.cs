@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Storage
 
         StorageAccountResource IOperationSource<StorageAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StorageAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageContext.Default);
+            var data = ModelReaderWriter.Read<StorageAccountData>(response.Content);
             return new StorageAccountResource(_client, data);
         }
 
         async ValueTask<StorageAccountResource> IOperationSource<StorageAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StorageAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageContext.Default);
+            var data = ModelReaderWriter.Read<StorageAccountData>(response.Content);
             return await Task.FromResult(new StorageAccountResource(_client, data)).ConfigureAwait(false);
         }
     }

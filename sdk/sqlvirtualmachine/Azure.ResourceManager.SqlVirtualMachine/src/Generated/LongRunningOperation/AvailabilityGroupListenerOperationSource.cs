@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         AvailabilityGroupListenerResource IOperationSource<AvailabilityGroupListenerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AvailabilityGroupListenerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlVirtualMachineContext.Default);
+            var data = ModelReaderWriter.Read<AvailabilityGroupListenerData>(response.Content);
             return new AvailabilityGroupListenerResource(_client, data);
         }
 
         async ValueTask<AvailabilityGroupListenerResource> IOperationSource<AvailabilityGroupListenerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AvailabilityGroupListenerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlVirtualMachineContext.Default);
+            var data = ModelReaderWriter.Read<AvailabilityGroupListenerData>(response.Content);
             return await Task.FromResult(new AvailabilityGroupListenerResource(_client, data)).ConfigureAwait(false);
         }
     }
