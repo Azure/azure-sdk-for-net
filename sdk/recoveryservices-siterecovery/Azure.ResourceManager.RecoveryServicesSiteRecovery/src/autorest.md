@@ -13,7 +13,7 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/84eef1839d5db0edaf79
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
     # The discriminator value is incorrect

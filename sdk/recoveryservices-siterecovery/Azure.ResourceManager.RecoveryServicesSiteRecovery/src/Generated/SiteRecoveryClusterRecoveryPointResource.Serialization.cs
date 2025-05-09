@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         SiteRecoveryClusterRecoveryPointData IJsonModel<SiteRecoveryClusterRecoveryPointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryClusterRecoveryPointData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SiteRecoveryClusterRecoveryPointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SiteRecoveryClusterRecoveryPointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SiteRecoveryClusterRecoveryPointData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        SiteRecoveryClusterRecoveryPointData IPersistableModel<SiteRecoveryClusterRecoveryPointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteRecoveryClusterRecoveryPointData>(data, options);
+        SiteRecoveryClusterRecoveryPointData IPersistableModel<SiteRecoveryClusterRecoveryPointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteRecoveryClusterRecoveryPointData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
         string IPersistableModel<SiteRecoveryClusterRecoveryPointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteRecoveryClusterRecoveryPointData>)Data).GetFormatFromOptions(options);
     }

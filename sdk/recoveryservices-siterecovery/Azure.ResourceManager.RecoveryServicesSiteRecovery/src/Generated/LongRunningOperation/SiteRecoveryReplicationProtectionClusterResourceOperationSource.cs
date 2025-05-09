@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         SiteRecoveryReplicationProtectionClusterResource IOperationSource<SiteRecoveryReplicationProtectionClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SiteRecoveryReplicationProtectionClusterData>(response.Content);
+            var data = ModelReaderWriter.Read<SiteRecoveryReplicationProtectionClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
             return new SiteRecoveryReplicationProtectionClusterResource(_client, data);
         }
 
         async ValueTask<SiteRecoveryReplicationProtectionClusterResource> IOperationSource<SiteRecoveryReplicationProtectionClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SiteRecoveryReplicationProtectionClusterData>(response.Content);
+            var data = ModelReaderWriter.Read<SiteRecoveryReplicationProtectionClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
             return await Task.FromResult(new SiteRecoveryReplicationProtectionClusterResource(_client, data)).ConfigureAwait(false);
         }
     }
