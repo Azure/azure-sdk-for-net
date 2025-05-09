@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for UrlFileExtension match conditions. </summary>
-    public partial class UriFileExtensionMatchCondition : DeliveryRuleConditionProperties
+    public partial class UriFileExtensionMatchCondition : DeliveryRuleConditionParameters
     {
         /// <summary> Initializes a new instance of <see cref="UriFileExtensionMatchCondition"/>. </summary>
         /// <param name="uriFileExtensionOperator"> Describes operator to be matched. </param>
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
             UriFileExtensionOperator = uriFileExtensionOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
-            TypeName = DeliveryRuleConditionParametersType.DeliveryRuleUriFileExtensionMatchConditionParameters;
+            TypeName = DeliveryRuleConditionProperty.DeliveryRuleUriFileExtensionMatchConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="UriFileExtensionMatchCondition"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal UriFileExtensionMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, UriFileExtensionOperator uriFileExtensionOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
+        internal UriFileExtensionMatchCondition(DeliveryRuleConditionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, UriFileExtensionOperator uriFileExtensionOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
         {
             UriFileExtensionOperator = uriFileExtensionOperator;
             NegateCondition = negateCondition;

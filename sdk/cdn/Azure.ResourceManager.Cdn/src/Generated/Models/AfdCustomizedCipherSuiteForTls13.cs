@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Cdn.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string TLS_Aes128_Gcm_Sha256Value = "TLS_AES_128_GCM_SHA256";
-        private const string TLS_Aes256_Gcm_Sha384Value = "TLS_AES_256_GCM_SHA384";
+        private const string Tls_Aes_128_Gcm_Sha256Value = "TLS_AES_128_GCM_SHA256";
+        private const string Tls_Aes_256_Gcm_Sha384Value = "TLS_AES_256_GCM_SHA384";
         /// <summary> Determines if two <see cref="AfdCustomizedCipherSuiteForTls13"/> values are the same. </summary>
         public static bool operator ==(AfdCustomizedCipherSuiteForTls13 left, AfdCustomizedCipherSuiteForTls13 right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AfdCustomizedCipherSuiteForTls13"/> values are not the same. </summary>

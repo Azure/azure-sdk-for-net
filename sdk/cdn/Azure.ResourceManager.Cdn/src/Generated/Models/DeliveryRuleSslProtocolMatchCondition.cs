@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for SslProtocol match conditions. </summary>
-    public partial class DeliveryRuleSslProtocolMatchCondition : DeliveryRuleConditionProperties
+    public partial class DeliveryRuleSslProtocolMatchCondition : DeliveryRuleConditionParameters
     {
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleSslProtocolMatchCondition"/>. </summary>
         /// <param name="sslProtocolOperator"> Describes operator to be matched. </param>
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
             SslProtocolOperator = sslProtocolOperator;
             MatchValues = new ChangeTrackingList<DeliveryRuleSslProtocol>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
-            TypeName = DeliveryRuleConditionParametersType.DeliveryRuleSslProtocolConditionParameters;
+            TypeName = DeliveryRuleConditionProperty.DeliveryRuleSslProtocolConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleSslProtocolMatchCondition"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal DeliveryRuleSslProtocolMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, SslProtocolOperator sslProtocolOperator, bool? negateCondition, IList<DeliveryRuleSslProtocol> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
+        internal DeliveryRuleSslProtocolMatchCondition(DeliveryRuleConditionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, SslProtocolOperator sslProtocolOperator, bool? negateCondition, IList<DeliveryRuleSslProtocol> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
         {
             SslProtocolOperator = sslProtocolOperator;
             NegateCondition = negateCondition;

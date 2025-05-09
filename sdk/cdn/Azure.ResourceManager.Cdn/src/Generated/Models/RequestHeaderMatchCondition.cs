@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for RequestHeader match conditions. </summary>
-    public partial class RequestHeaderMatchCondition : DeliveryRuleConditionProperties
+    public partial class RequestHeaderMatchCondition : DeliveryRuleConditionParameters
     {
         /// <summary> Initializes a new instance of <see cref="RequestHeaderMatchCondition"/>. </summary>
         /// <param name="requestHeaderOperator"> Describes operator to be matched. </param>
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
             RequestHeaderOperator = requestHeaderOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
-            TypeName = DeliveryRuleConditionParametersType.DeliveryRuleRequestHeaderConditionParameters;
+            TypeName = DeliveryRuleConditionProperty.DeliveryRuleRequestHeaderConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestHeaderMatchCondition"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal RequestHeaderMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, string selector, RequestHeaderOperator requestHeaderOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
+        internal RequestHeaderMatchCondition(DeliveryRuleConditionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, string selector, RequestHeaderOperator requestHeaderOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
         {
             Selector = selector;
             RequestHeaderOperator = requestHeaderOperator;

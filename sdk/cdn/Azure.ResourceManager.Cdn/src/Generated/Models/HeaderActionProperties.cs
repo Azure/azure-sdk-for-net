@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for the request header action. </summary>
-    public partial class HeaderActionProperties : DeliveryRuleActionProperties
+    public partial class HeaderActionProperties : DeliveryRuleActionParameters
     {
         /// <summary> Initializes a new instance of <see cref="HeaderActionProperties"/>. </summary>
         /// <param name="headerAction"> Action to perform. </param>
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
             HeaderAction = headerAction;
             HeaderName = headerName;
-            TypeName = DeliveryRuleActionParametersType.DeliveryRuleHeaderActionParameters;
+            TypeName = DeliveryRuleActionProperty.DeliveryRuleHeaderActionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="HeaderActionProperties"/>. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="headerAction"> Action to perform. </param>
         /// <param name="headerName"> Name of the header to modify. </param>
         /// <param name="value"> Value for the specified action. </param>
-        internal HeaderActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, HeaderAction headerAction, string headerName, string value) : base(typeName, serializedAdditionalRawData)
+        internal HeaderActionProperties(DeliveryRuleActionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, HeaderAction headerAction, string headerName, string value) : base(typeName, serializedAdditionalRawData)
         {
             HeaderAction = headerAction;
             HeaderName = headerName;

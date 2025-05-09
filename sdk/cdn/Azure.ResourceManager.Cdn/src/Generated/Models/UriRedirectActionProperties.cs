@@ -11,14 +11,14 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for the url redirect action. </summary>
-    public partial class UriRedirectActionProperties : DeliveryRuleActionProperties
+    public partial class UriRedirectActionProperties : DeliveryRuleActionParameters
     {
         /// <summary> Initializes a new instance of <see cref="UriRedirectActionProperties"/>. </summary>
         /// <param name="redirectType"> The redirect type the rule will use when redirecting traffic. </param>
         public UriRedirectActionProperties(RedirectType redirectType)
         {
             RedirectType = redirectType;
-            TypeName = DeliveryRuleActionParametersType.DeliveryRuleUriRedirectActionParameters;
+            TypeName = DeliveryRuleActionProperty.DeliveryRuleUriRedirectActionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="UriRedirectActionProperties"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="customHostname"> Host to redirect. Leave empty to use the incoming host as the destination host. </param>
         /// <param name="customQueryString"> The set of query strings to be placed in the redirect URL. Setting this value would replace any existing query string; leave empty to preserve the incoming query string. Query string must be in &lt;key&gt;=&lt;value&gt; format. ? and &amp; will be added automatically so do not include them. </param>
         /// <param name="customFragment"> Fragment to add to the redirect URL. Fragment is the part of the URL that comes after #. Do not include the #. </param>
-        internal UriRedirectActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, RedirectType redirectType, DestinationProtocol? destinationProtocol, string customPath, string customHostname, string customQueryString, string customFragment) : base(typeName, serializedAdditionalRawData)
+        internal UriRedirectActionProperties(DeliveryRuleActionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, RedirectType redirectType, DestinationProtocol? destinationProtocol, string customPath, string customHostname, string customQueryString, string customFragment) : base(typeName, serializedAdditionalRawData)
         {
             RedirectType = redirectType;
             DestinationProtocol = destinationProtocol;

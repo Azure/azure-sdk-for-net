@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for RemoteAddress match conditions. </summary>
-    public partial class RemoteAddressMatchCondition : DeliveryRuleConditionProperties
+    public partial class RemoteAddressMatchCondition : DeliveryRuleConditionParameters
     {
         /// <summary> Initializes a new instance of <see cref="RemoteAddressMatchCondition"/>. </summary>
         /// <param name="remoteAddressOperator"> Describes operator to be matched. </param>
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
             RemoteAddressOperator = remoteAddressOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
-            TypeName = DeliveryRuleConditionParametersType.DeliveryRuleRemoteAddressConditionParameters;
+            TypeName = DeliveryRuleConditionProperty.DeliveryRuleRemoteAddressConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="RemoteAddressMatchCondition"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> Match values to match against. The operator will apply to each value in here with OR semantics. If any of them match the variable with the given operator this match condition is considered a match. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal RemoteAddressMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, RemoteAddressOperator remoteAddressOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
+        internal RemoteAddressMatchCondition(DeliveryRuleConditionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, RemoteAddressOperator remoteAddressOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
         {
             RemoteAddressOperator = remoteAddressOperator;
             NegateCondition = negateCondition;

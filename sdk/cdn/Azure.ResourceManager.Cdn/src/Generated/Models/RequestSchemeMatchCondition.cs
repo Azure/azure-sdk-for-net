@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for RequestScheme match conditions. </summary>
-    public partial class RequestSchemeMatchCondition : DeliveryRuleConditionProperties
+    public partial class RequestSchemeMatchCondition : DeliveryRuleConditionParameters
     {
         /// <summary> Initializes a new instance of <see cref="RequestSchemeMatchCondition"/>. </summary>
         /// <param name="requestSchemeOperator"> Describes operator to be matched. </param>
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
             RequestSchemeOperator = requestSchemeOperator;
             Transforms = new ChangeTrackingList<PreTransformCategory>();
             MatchValues = new ChangeTrackingList<RequestSchemeMatchValue>();
-            TypeName = DeliveryRuleConditionParametersType.DeliveryRuleRequestSchemeConditionParameters;
+            TypeName = DeliveryRuleConditionProperty.DeliveryRuleRequestSchemeConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestSchemeMatchCondition"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="transforms"> List of transforms. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
-        internal RequestSchemeMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, RequestSchemeOperator requestSchemeOperator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestSchemeMatchValue> matchValues) : base(typeName, serializedAdditionalRawData)
+        internal RequestSchemeMatchCondition(DeliveryRuleConditionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, RequestSchemeOperator requestSchemeOperator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestSchemeMatchValue> matchValues) : base(typeName, serializedAdditionalRawData)
         {
             RequestSchemeOperator = requestSchemeOperator;
             NegateCondition = negateCondition;

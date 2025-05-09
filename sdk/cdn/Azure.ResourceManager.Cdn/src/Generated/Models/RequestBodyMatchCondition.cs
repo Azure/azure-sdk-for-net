@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for RequestBody match conditions. </summary>
-    public partial class RequestBodyMatchCondition : DeliveryRuleConditionProperties
+    public partial class RequestBodyMatchCondition : DeliveryRuleConditionParameters
     {
         /// <summary> Initializes a new instance of <see cref="RequestBodyMatchCondition"/>. </summary>
         /// <param name="requestBodyOperator"> Describes operator to be matched. </param>
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
             RequestBodyOperator = requestBodyOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
-            TypeName = DeliveryRuleConditionParametersType.DeliveryRuleRequestBodyConditionParameters;
+            TypeName = DeliveryRuleConditionProperty.DeliveryRuleRequestBodyConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestBodyMatchCondition"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal RequestBodyMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, RequestBodyOperator requestBodyOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
+        internal RequestBodyMatchCondition(DeliveryRuleConditionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, RequestBodyOperator requestBodyOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
         {
             RequestBodyOperator = requestBodyOperator;
             NegateCondition = negateCondition;

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for SocketAddress match conditions. </summary>
-    public partial class SocketAddressMatchCondition : DeliveryRuleConditionProperties
+    public partial class SocketAddressMatchCondition : DeliveryRuleConditionParameters
     {
         /// <summary> Initializes a new instance of <see cref="SocketAddressMatchCondition"/>. </summary>
         /// <param name="socketAddressOperator"> Describes operator to be matched. </param>
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
             SocketAddressOperator = socketAddressOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
-            TypeName = DeliveryRuleConditionParametersType.DeliveryRuleSocketAddrConditionParameters;
+            TypeName = DeliveryRuleConditionProperty.DeliveryRuleSocketAddrConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="SocketAddressMatchCondition"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal SocketAddressMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, SocketAddressOperator socketAddressOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
+        internal SocketAddressMatchCondition(DeliveryRuleConditionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, SocketAddressOperator socketAddressOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
         {
             SocketAddressOperator = socketAddressOperator;
             NegateCondition = negateCondition;

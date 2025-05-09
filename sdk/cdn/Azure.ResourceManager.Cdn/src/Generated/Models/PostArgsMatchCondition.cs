@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for PostArgs match conditions. </summary>
-    public partial class PostArgsMatchCondition : DeliveryRuleConditionProperties
+    public partial class PostArgsMatchCondition : DeliveryRuleConditionParameters
     {
         /// <summary> Initializes a new instance of <see cref="PostArgsMatchCondition"/>. </summary>
         /// <param name="postArgsOperator"> Describes operator to be matched. </param>
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
             PostArgsOperator = postArgsOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
-            TypeName = DeliveryRuleConditionParametersType.DeliveryRulePostArgsConditionParameters;
+            TypeName = DeliveryRuleConditionProperty.DeliveryRulePostArgsConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="PostArgsMatchCondition"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal PostArgsMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, string selector, PostArgsOperator postArgsOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
+        internal PostArgsMatchCondition(DeliveryRuleConditionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, string selector, PostArgsOperator postArgsOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
         {
             Selector = selector;
             PostArgsOperator = postArgsOperator;

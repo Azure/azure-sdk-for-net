@@ -11,14 +11,14 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for the cache-key query string action. </summary>
-    public partial class CacheKeyQueryStringActionProperties : DeliveryRuleActionProperties
+    public partial class CacheKeyQueryStringActionProperties : DeliveryRuleActionParameters
     {
         /// <summary> Initializes a new instance of <see cref="CacheKeyQueryStringActionProperties"/>. </summary>
         /// <param name="queryStringBehavior"> Caching behavior for the requests. </param>
         public CacheKeyQueryStringActionProperties(QueryStringBehavior queryStringBehavior)
         {
             QueryStringBehavior = queryStringBehavior;
-            TypeName = DeliveryRuleActionParametersType.DeliveryRuleCacheKeyQueryStringBehaviorActionParameters;
+            TypeName = DeliveryRuleActionProperty.DeliveryRuleCacheKeyQueryStringBehaviorActionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="CacheKeyQueryStringActionProperties"/>. </summary>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="queryStringBehavior"> Caching behavior for the requests. </param>
         /// <param name="queryParameters"> query parameters to include or exclude (comma separated). </param>
-        internal CacheKeyQueryStringActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, QueryStringBehavior queryStringBehavior, string queryParameters) : base(typeName, serializedAdditionalRawData)
+        internal CacheKeyQueryStringActionProperties(DeliveryRuleActionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, QueryStringBehavior queryStringBehavior, string queryParameters) : base(typeName, serializedAdditionalRawData)
         {
             QueryStringBehavior = queryStringBehavior;
             QueryParameters = queryParameters;

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for Cookies match conditions. </summary>
-    public partial class CookiesMatchCondition : DeliveryRuleConditionProperties
+    public partial class CookiesMatchCondition : DeliveryRuleConditionParameters
     {
         /// <summary> Initializes a new instance of <see cref="CookiesMatchCondition"/>. </summary>
         /// <param name="cookiesOperator"> Describes operator to be matched. </param>
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
             CookiesOperator = cookiesOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
-            TypeName = DeliveryRuleConditionParametersType.DeliveryRuleCookiesConditionParameters;
+            TypeName = DeliveryRuleConditionProperty.DeliveryRuleCookiesConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="CookiesMatchCondition"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal CookiesMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, string selector, CookiesOperator cookiesOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
+        internal CookiesMatchCondition(DeliveryRuleConditionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, string selector, CookiesOperator cookiesOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
         {
             Selector = selector;
             CookiesOperator = cookiesOperator;

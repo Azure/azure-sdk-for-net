@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for HttpVersion match conditions. </summary>
-    public partial class HttpVersionMatchCondition : DeliveryRuleConditionProperties
+    public partial class HttpVersionMatchCondition : DeliveryRuleConditionParameters
     {
         /// <summary> Initializes a new instance of <see cref="HttpVersionMatchCondition"/>. </summary>
         /// <param name="httpVersionOperator"> Describes operator to be matched. </param>
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
             HttpVersionOperator = httpVersionOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
-            TypeName = DeliveryRuleConditionParametersType.DeliveryRuleHttpVersionConditionParameters;
+            TypeName = DeliveryRuleConditionProperty.DeliveryRuleHttpVersionConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="HttpVersionMatchCondition"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal HttpVersionMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, HttpVersionOperator httpVersionOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
+        internal HttpVersionMatchCondition(DeliveryRuleConditionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, HttpVersionOperator httpVersionOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
         {
             HttpVersionOperator = httpVersionOperator;
             NegateCondition = negateCondition;

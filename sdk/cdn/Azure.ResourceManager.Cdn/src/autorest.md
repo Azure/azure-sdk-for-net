@@ -351,8 +351,8 @@ rename-mapping:
   AFDDomainUpdateParameters.properties.preValidatedCustomDomainResourceId: PreValidatedCustomDomainResource
   UsageUnit: FrontDoorUsageUnit
   Status: ValidationStatus
-  DeliveryRuleActionParameters: DeliveryRuleActionProperties
-  DeliveryRuleConditionParameters: DeliveryRuleConditionProperties
+  DeliveryRuleActionParametersType: DeliveryRuleActionProperties
+  DeliveryRuleConditionParametersType: DeliveryRuleConditionProperties
 
 directive:
   - from: swagger-document

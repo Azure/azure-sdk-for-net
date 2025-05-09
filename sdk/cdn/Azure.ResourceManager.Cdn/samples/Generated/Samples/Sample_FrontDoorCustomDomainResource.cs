@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Cdn.Samples
                     CustomizedCipherSuiteSet = new FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet
                     {
                         CipherSuiteSetForTls12 = { AfdCustomizedCipherSuiteForTls12.Ecdhe_Rsa_Aes128_Gcm_Sha256 },
-                        CipherSuiteSetForTls13 = { AfdCustomizedCipherSuiteForTls13.TLS_Aes128_Gcm_Sha256, AfdCustomizedCipherSuiteForTls13.TLS_Aes256_Gcm_Sha384 },
+                        CipherSuiteSetForTls13 = { AfdCustomizedCipherSuiteForTls13.Tls_Aes_128_Gcm_Sha256, AfdCustomizedCipherSuiteForTls13.Tls_Aes_256_Gcm_Sha384 },
                     },
                 },
                 DnsZoneId = new ResourceIdentifier(""),

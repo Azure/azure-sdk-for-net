@@ -1075,9 +1075,9 @@ namespace Azure.ResourceManager.Cdn.Models
         private readonly int _dummyPrimitive;
         public AfdCipherSuiteSetType(string value) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.AfdCipherSuiteSetType Customized { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdCipherSuiteSetType TLS102019 { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdCipherSuiteSetType TLS122022 { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdCipherSuiteSetType TLS122023 { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.AfdCipherSuiteSetType Tls1_0_2019 { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.AfdCipherSuiteSetType Tls1_2_2022 { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.AfdCipherSuiteSetType Tls1_2_2023 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Cdn.Models.AfdCipherSuiteSetType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -1094,12 +1094,12 @@ namespace Azure.ResourceManager.Cdn.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public AfdCustomizedCipherSuiteForTls12(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 DHERSAAES128GCMSHA256 { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 DHERSAAES256GCMSHA384 { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 EcdheRSAAES128GCMSHA256 { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 EcdheRSAAES128Sha256 { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 EcdheRSAAES256GCMSHA384 { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 EcdheRSAAES256SHA384 { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 Dhe_Rsa_Aes128_Gcm_Sha256 { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 Dhe_Rsa_Aes256_Gcm_Sha384 { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 Ecdhe_Rsa_Aes128_Gcm_Sha256 { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 Ecdhe_Rsa_Aes128_Sha256 { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 Ecdhe_Rsa_Aes256_Gcm_Sha384 { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 Ecdhe_Rsa_Aes256_Sha384 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12 other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -1116,8 +1116,8 @@ namespace Azure.ResourceManager.Cdn.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public AfdCustomizedCipherSuiteForTls13(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls13 TLSAES128GCMSHA256 { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls13 TLSAES256GCMSHA384 { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls13 Tls_Aes_128_Gcm_Sha256 { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls13 Tls_Aes_256_Gcm_Sha384 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls13 other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -2689,7 +2689,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         Tls1_0 = 0,
         Tls1_2 = 1,
-        TLS13 = 2,
+        Tls1_3 = 2,
     }
     public partial class FrontDoorOriginGroupPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorOriginGroupPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorOriginGroupPatch>
     {
