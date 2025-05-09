@@ -95,6 +95,9 @@ override-operation-name:
   FrontDoorEndpoints_ListResourceUsage: GetResourceUsages
   FrontDoorOriginGroups_ListResourceUsage: GetResourceUsages
   FrontDoorRuleSets_ListResourceUsage: GetResourceUsages
+  Profiles_CdnCanMigrateToAfd: CheckCdnMigrationCompatibility
+  Profiles_CdnMigrateToAfd: MigrateCdnToAfd
+  Profiles_MigrationAbort: AbortMigration
 
 rename-mapping:
   CacheType: CdnCacheLevel

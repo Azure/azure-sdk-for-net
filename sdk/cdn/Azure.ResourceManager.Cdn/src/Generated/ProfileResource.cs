@@ -1961,9 +1961,9 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<CanMigrateResult>> CdnCanMigrateToAfdAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CanMigrateResult>> CheckCdnMigrationCompatibilityAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.CdnCanMigrateToAfd");
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.CheckCdnMigrationCompatibility");
             scope.Start();
             try
             {
@@ -2003,9 +2003,9 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<CanMigrateResult> CdnCanMigrateToAfd(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CanMigrateResult> CheckCdnMigrationCompatibility(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.CdnCanMigrateToAfd");
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.CheckCdnMigrationCompatibility");
             scope.Start();
             try
             {
@@ -2047,11 +2047,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Properties needed to migrate the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<MigrateResult>> CdnMigrateToAfdAsync(WaitUntil waitUntil, CdnMigrationToAfdContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MigrateResult>> MigrateCdnToAfdAsync(WaitUntil waitUntil, CdnMigrationToAfdContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.CdnMigrateToAfd");
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.MigrateCdnToAfd");
             scope.Start();
             try
             {
@@ -2093,11 +2093,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Properties needed to migrate the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<MigrateResult> CdnMigrateToAfd(WaitUntil waitUntil, CdnMigrationToAfdContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MigrateResult> MigrateCdnToAfd(WaitUntil waitUntil, CdnMigrationToAfdContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.CdnMigrateToAfd");
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.MigrateCdnToAfd");
             scope.Start();
             try
             {
@@ -2137,9 +2137,9 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> MigrationAbortAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> AbortMigrationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.MigrationAbort");
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.AbortMigration");
             scope.Start();
             try
             {
@@ -2179,9 +2179,9 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation MigrationAbort(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation AbortMigration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.MigrationAbort");
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.AbortMigration");
             scope.Start();
             try
             {

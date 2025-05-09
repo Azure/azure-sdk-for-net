@@ -491,7 +491,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/RG/providers/Mi
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CdnCanMigrateToAfd_ProfilesCdnCanMigrate()
+        public async Task CheckCdnMigrationCompatibility_ProfilesCdnCanMigrate()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/CdnProfiles_CanMigrate.json
             // this example is just showing the usage of "Profiles_CdnCanMigrateToAfd" operation, for the dependent resources, they will have to be created separately.
@@ -510,7 +510,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/RG/providers/Mi
             ProfileResource profile = client.GetProfileResource(profileResourceId);
 
             // invoke the operation
-            ArmOperation<CanMigrateResult> lro = await profile.CdnCanMigrateToAfdAsync(WaitUntil.Completed);
+            ArmOperation<CanMigrateResult> lro = await profile.CheckCdnMigrationCompatibilityAsync(WaitUntil.Completed);
             CanMigrateResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -518,7 +518,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/RG/providers/Mi
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CdnMigrateToAfd_ProfilesCdnMigrate()
+        public async Task MigrateCdnToAfd_ProfilesCdnMigrate()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/CdnProfiles_Migrate.json
             // this example is just showing the usage of "Profiles_CdnMigrateToAfd" operation, for the dependent resources, they will have to be created separately.
@@ -541,7 +541,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/RG/providers/Mi
             {
                 Name = CdnSkuName.StandardAzureFrontDoor,
             });
-            ArmOperation<MigrateResult> lro = await profile.CdnMigrateToAfdAsync(WaitUntil.Completed, content);
+            ArmOperation<MigrateResult> lro = await profile.MigrateCdnToAfdAsync(WaitUntil.Completed, content);
             MigrateResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -549,7 +549,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/RG/providers/Mi
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task MigrationAbort_ProfilesCdnMigrationCommit()
+        public async Task AbortMigration_ProfilesCdnMigrationCommit()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/Profiles_MigrationAbort.json
             // this example is just showing the usage of "Profiles_MigrationAbort" operation, for the dependent resources, they will have to be created separately.
@@ -568,7 +568,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/RG/providers/Mi
             ProfileResource profile = client.GetProfileResource(profileResourceId);
 
             // invoke the operation
-            await profile.MigrationAbortAsync(WaitUntil.Completed);
+            await profile.AbortMigrationAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
