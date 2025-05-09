@@ -88,7 +88,7 @@ namespace Azure.AI.Agents.Persistent
             }
             string fileId = default;
             VectorStoreDataSource dataSource = default;
-            VectorStoreChunkingStrategyRequest chunkingStrategy = default;
+            VectorStoreChunkingStrategy chunkingStrategy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    chunkingStrategy = VectorStoreChunkingStrategyRequest.DeserializeVectorStoreChunkingStrategyRequest(property.Value, options);
+                    chunkingStrategy = VectorStoreChunkingStrategy.DeserializeVectorStoreChunkingStrategy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

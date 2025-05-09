@@ -81,7 +81,7 @@ namespace Azure.AI.Agents.Persistent
                 {
                     case "file_citation": return MessageTextFileCitationAnnotation.DeserializeMessageTextFileCitationAnnotation(element, options);
                     case "file_path": return MessageTextFilePathAnnotation.DeserializeMessageTextFilePathAnnotation(element, options);
-                    case "url_citation": return MessageTextUrlCitationAnnotation.DeserializeMessageTextUrlCitationAnnotation(element, options);
+                    case "url_citation": return MessageTextUriCitationAnnotation.DeserializeMessageTextUriCitationAnnotation(element, options);
                 }
             }
             return UnknownMessageTextAnnotation.DeserializeUnknownMessageTextAnnotation(element, options);

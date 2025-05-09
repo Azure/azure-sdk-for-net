@@ -84,7 +84,7 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
         #region Snippet:AgentsAzureFunctionsHandlePollingWithRequiredAction
         PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
-        ThreadMessage message = await client.Messages.CreateMessageAsync(
+        PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
             "What is the most prevalent element in the universe? What would foo say?");
@@ -106,12 +106,12 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
         #endregion
 
         #region Snippet:AgentsAzureFunctionsPrint
-        AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(
+        AsyncPageable<PersistentThreadMessage> messages = client.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
 
-        await foreach (ThreadMessage threadMessage in messages)
+        await foreach (PersistentThreadMessage threadMessage in messages)
         {
             Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
             foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -202,7 +202,7 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
         #region Snippet:AgentsAzureFunctionsHandlePollingWithRequiredActionSync
         PersistentAgentThread thread = client.Threads.CreateThread();
 
-        ThreadMessage message = client.Messages.CreateMessage(
+        PersistentThreadMessage message = client.Messages.CreateMessage(
             thread.Id,
             MessageRole.User,
             "What is the most prevalent element in the universe? What would foo say?");
@@ -224,12 +224,12 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
         #endregion
 
         #region Snippet:AgentsAzureFunctionsPrintSync
-        Pageable<ThreadMessage> messages = client.Messages.GetMessages(
+        Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
 
-        foreach (ThreadMessage threadMessage in messages)
+        foreach (PersistentThreadMessage threadMessage in messages)
         {
             Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
             foreach (MessageContent contentItem in threadMessage.ContentItems)
