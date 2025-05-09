@@ -21,7 +21,7 @@ var promptSentMetric = new ExperimentMetric(
 );
 
 // Create the metric with ID "PromptSentCount"
-var response = await client.CreateOrUpdateMetricAsync("prompt_sent_count", promptSentMetric);
+var response = await client.CreateMetricAsync("prompt_sent_count", promptSentMetric);
 
 Console.WriteLine($"Created metric: {response.Value.Id}");
 Console.WriteLine($"Display name: {response.Value.DisplayName}");
@@ -49,7 +49,7 @@ var usersPromptSentMetric = new ExperimentMetric(
 );
 
 // Create the metric with ID "UsersPromptSent"
-var response = await client.CreateOrUpdateMetricAsync("users_prompt_sent", usersPromptSentMetric);
+var response = await client.CreateMetricAsync("users_prompt_sent", usersPromptSentMetric);
 
 Console.WriteLine($"Created metric: {response.Value.Id}");
 ```
@@ -73,7 +73,7 @@ var relevanceMetric = new ExperimentMetric(
 );
 
 // Create the metric
-var response = await client.CreateOrUpdateMetricAsync("momo_pct_relevance_good", relevanceMetric);
+var response = await client.CreateMetricAsync("momo_pct_relevance_good", relevanceMetric);
 
 Console.WriteLine($"Created metric: {response.Value.Id}");
 ```
@@ -100,7 +100,7 @@ var conversionMetric = new ExperimentMetric(
 );
 
 // Create the metric
-var response = await client.CreateOrUpdateMetricAsync("pct_chat_to_high_value_purchase_conversion", conversionMetric);
+var response = await client.CreateMetricAsync("pct_chat_to_high_value_purchase_conversion", conversionMetric);
 
 Console.WriteLine($"Created metric: {response.Value.Id}");
 ```
@@ -127,7 +127,7 @@ var revenueMetric = new ExperimentMetric(
 );
 
 // Create the metric
-var response = await client.CreateOrUpdateMetricAsync("total_revenue", revenueMetric);
+var response = await client.CreateMetricAsync("total_revenue", revenueMetric);
 
 Console.WriteLine($"Created metric: {response.Value.Id}");
 ```
@@ -151,7 +151,7 @@ var avgRevenueMetric = new ExperimentMetric(
 );
 
 // Create the metric
-var response = await client.CreateOrUpdateMetricAsync("avg_revenue_per_purchase", avgRevenueMetric);
+var response = await client.CreateMetricAsync("avg_revenue_per_purchase", avgRevenueMetric);
 
 Console.WriteLine($"Created metric: {response.Value.Id}");
 Console.WriteLine($"Display name: {response.Value.DisplayName}");
@@ -176,7 +176,7 @@ var p95ResponseTimeMetric = new ExperimentMetric(
 );
 
 // Create the metric
-var response = await client.CreateOrUpdateMetricAsync("p95_response_time_seconds", p95ResponseTimeMetric);
+var response = await client.CreateMetricAsync("p95_response_time_seconds", p95ResponseTimeMetric);
 
 Console.WriteLine($"Created metric: {response.Value.Id}");
 ```

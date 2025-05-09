@@ -8,7 +8,7 @@ var client = new OnlineExperimentationClient(endpoint, new DefaultAzureCredentia
 
 // Update a Description and Definition of an existing metric,
 // other fields (DisplayName, Categories, DesiredDirection, Lifecycle) remain unchanged.
-var response = await client.CreateOrUpdateMetricAsync(
+var response = await client.UpdateMetricAsync(
     experimentMetricId: "avg_revenue_per_purchase",
     new ExperimentMetricUpdate
     {

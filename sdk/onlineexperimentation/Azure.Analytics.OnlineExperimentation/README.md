@@ -1,4 +1,4 @@
-# Azure.Analytics.OnlineExperimentation client library for .NET
+# Azure Online Experimentation client library for .NET
 
 Azure Online Experimentation is a managed service that enables developers to create and manage experiment metrics for evaluating online A/B tests.
 
@@ -16,9 +16,9 @@ dotnet add package Azure.Analytics.OnlineExperimentation
 
 ### Prerequisites
 
-You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and access to Azure Online Experimentation resources.
+You need an [Azure subscription](https://azure.microsoft.com/free/dotnet/) with an Azure Online Experimentation workspace resource.
 
-### Initialize the client
+### Authenticate the client
 
 The Azure Online Experimentation client library initialization requires two parameters:
 

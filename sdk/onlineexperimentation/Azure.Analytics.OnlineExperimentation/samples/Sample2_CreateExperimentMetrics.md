@@ -22,7 +22,7 @@ var promptSentMetric = new ExperimentMetric(
 );
 
 // Create the metric with ID "PromptSentCount"
-var response = client.CreateOrUpdateMetric("prompt_sent_count", promptSentMetric);
+var response = client.CreateMetric("prompt_sent_count", promptSentMetric);
 
 Console.WriteLine($"Created metric: {response.Value.Id}");
 Console.WriteLine($"Display name: {response.Value.DisplayName}");
@@ -50,7 +50,7 @@ var usersPromptSentMetric = new ExperimentMetric(
 );
 
 // Create the metric with ID "UsersPromptSent"
-var response = client.CreateOrUpdateMetric("users_prompt_sent", usersPromptSentMetric);
+var response = client.CreateMetric("users_prompt_sent", usersPromptSentMetric);
 
 Console.WriteLine($"Created metric: {response.Value.Id}");
 ```
@@ -74,7 +74,7 @@ var relevanceMetric = new ExperimentMetric(
 );
 
 // Create the metric
-var response = client.CreateOrUpdateMetric("momo_pct_relevance_good", relevanceMetric);
+var response = client.CreateMetric("momo_pct_relevance_good", relevanceMetric);
 
 Console.WriteLine($"Created metric: {response.Value.Id}");
 ```
@@ -101,7 +101,7 @@ var conversionMetric = new ExperimentMetric(
 );
 
 // Create the metric
-var response = client.CreateOrUpdateMetric("pct_chat_to_high_value_purchase_conversion", conversionMetric);
+var response = client.CreateMetric("pct_chat_to_high_value_purchase_conversion", conversionMetric);
 
 Console.WriteLine($"Created metric: {response.Value.Id}");
 ```
@@ -128,7 +128,7 @@ var revenueMetric = new ExperimentMetric(
 );
 
 // Create the metric
-var response = client.CreateOrUpdateMetric("total_revenue", revenueMetric);
+var response = client.CreateMetric("total_revenue", revenueMetric);
 
 Console.WriteLine($"Created metric: {response.Value.Id}");
 ```
@@ -152,7 +152,7 @@ var avgRevenueMetric = new ExperimentMetric(
 );
 
 // Create the metric
-var response = client.CreateOrUpdateMetric("avg_revenue_per_purchase", avgRevenueMetric);
+var response = client.CreateMetric("avg_revenue_per_purchase", avgRevenueMetric);
 
 Console.WriteLine($"Created metric: {response.Value.Id}");
 ```
@@ -176,7 +176,7 @@ var p95ResponseTimeMetric = new ExperimentMetric(
 );
 
 // Create the metric
-var response = client.CreateOrUpdateMetric("p95_response_time_seconds", p95ResponseTimeMetric);
+var response = client.CreateMetric("p95_response_time_seconds", p95ResponseTimeMetric);
 
 Console.WriteLine($"Created metric: {response.Value.Id}");
 ```

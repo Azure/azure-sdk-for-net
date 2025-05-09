@@ -21,7 +21,7 @@ var metricToValidate = new ExperimentMetric(
 );
 
 // Validate the metric - checks for errors in the definition
-var validationResult = await client.ValidateMetricAsync("test_metric_id", metricToValidate);
+var validationResult = await client.ValidateMetricAsync(metricToValidate);
 
 // Check if the metric definition is valid
 if (validationResult.Value.IsValid)
