@@ -33,16 +33,17 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             NetworkCloudBmcKeySetCollection collection = cluster.GetNetworkCloudBmcKeySets();
 
             // Create
+            // Note: The UUIDs in this test are fake and was randomly generated for the test
             NetworkCloudBmcKeySetData data = new NetworkCloudBmcKeySetData
             (
                 cluster.Data.Location,
                 cluster.Data.ClusterExtendedLocation,
-                "fake-ag-id",
+                "6f935d96-417e-4cf3-b099-30995848e8fd",
                 TestEnvironment.DayFromNow,
                 BmcKeySetPrivilegeLevel.ReadOnly,
                 new KeySetUser[]
                 {
-                new KeySetUser("username",new NetworkCloudSshPublicKey("ssh-rsa REDACTED")){}
+                new KeySetUser("test-user", "test-user-description", new NetworkCloudSshPublicKey(TestEnvironment.BMCSSHPubicKey), "6f935d96-417e-4cf3-b099-30995848e8fb", null){}
                 }
             )
             {

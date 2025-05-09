@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         public string TrunkedNetworkVlans => GetRecordedVariable("TRUNKED_VLANS");
         public string SubnetId => GetRecordedVariable("SUBNET_ID");
 
+        // BMC KeySet
+
+        public string BMCSSHPubicKey => GetRecordedVariable("BMC_SSH_PUBLIC_KEY", options => options.IsSecret());
+
         // Misc.
 
         public System.DateTimeOffset DayFromNow => System.DateTimeOffset.Parse(GetRecordedVariable("DAY_FROM_NOW"));
