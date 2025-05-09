@@ -62,31 +62,6 @@ namespace Azure.Communication.CallAutomation
                 Argument.CheckNotNull(credential, nameof(credential)),
                 options ?? new CallAutomationClientOptions())
         { }
-
-        /// <summary> Initializes a new instance of <see cref="CallAutomationClient"/> with custom PMA endpoint.</summary>
-        /// <param name="pmaEndpoint">Endpoint for PMA</param>
-        /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
-        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public CallAutomationClient(Uri pmaEndpoint, string connectionString, CallAutomationClientOptions options = default)
-        : this(
-              pmaEndpoint,
-              options ?? new CallAutomationClientOptions(),
-              ConnectionString.Parse(connectionString))
-        { }
-
-        /// <summary> Initializes a new instance of <see cref="CallAutomationClient"/>.</summary>
-        /// <param name="pmaEndpoint">Endpoint for PMA</param>
-        /// <param name="acsEndpoint">The URI of the Azure Communication Services resource.</param>
-        /// <param name="credential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
-        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public CallAutomationClient(Uri pmaEndpoint, Uri acsEndpoint, TokenCredential credential, CallAutomationClientOptions options = default)
-        : this(
-              pmaEndpoint,
-              acsEndpoint,
-              options ?? new CallAutomationClientOptions(),
-              credential
-              )
-        { }
         #endregion
 
         #region private constructors
@@ -96,13 +71,6 @@ namespace Azure.Communication.CallAutomation
 
         private CallAutomationClient(string endpoint, TokenCredential tokenCredential, CallAutomationClientOptions options)
             : this(new Uri(endpoint), options.BuildHttpPipeline(tokenCredential), options)
-        { }
-
-        private CallAutomationClient(Uri endpoint, CallAutomationClientOptions options, ConnectionString connectionString)
-        : this(
-        endpoint: endpoint,
-        httpPipeline: options.CustomBuildHttpPipeline(connectionString),
-        options: options)
         { }
 
         private CallAutomationClient(Uri endpoint, HttpPipeline httpPipeline, CallAutomationClientOptions options)
@@ -117,14 +85,6 @@ namespace Azure.Communication.CallAutomation
             EventProcessor = new CallAutomationEventProcessor();
             Source = options.Source;
         }
-
-        private CallAutomationClient(
-            Uri pmaEndpoint,
-            Uri acsEndpoint,
-            CallAutomationClientOptions options,
-            TokenCredential tokenCredential)
-            : this(pmaEndpoint, options.CustomBuildHttpPipeline(acsEndpoint, tokenCredential), options)
-        { }
         #endregion
 
         /// <summary>Initializes a new instance of <see cref="CallAutomationClient"/> for mocking.</summary>
