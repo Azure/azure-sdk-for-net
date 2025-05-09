@@ -37,7 +37,7 @@ interface Foos {
     createOrUpdate is ArmResourceCreateOrUpdateAsync<Foo>;
 
     get is ArmResourceRead<Foo>;
-    
+
     delete is ArmResourceDeleteWithoutOkAsync<Foo>;
 
     list is ArmResourceListByParent<Foo>;

@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+import { InputClient, InputModelType } from "@typespec/http-client-csharp";
+
 const ResourceGroupScopePrefix =
   "/subscriptions/{subscriptionId}/resourceGroups";
 const SubscriptionScopePrefix = "/subscriptions";
@@ -28,4 +30,11 @@ export function calculateResourceTypeFromPath(path: string): string {
         return result === "" ? current : `${result}/${current}`;
       else return result;
     }, "");
+}
+
+export interface ResourceMetadata {
+  resourceType: string;
+  resourceModel: InputModelType;
+  resourceClient: InputClient;
+  isSingleton: boolean;
 }
