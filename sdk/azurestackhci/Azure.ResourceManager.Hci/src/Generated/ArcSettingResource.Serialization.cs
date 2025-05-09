@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Hci
 
         ArcSettingData IJsonModel<ArcSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ArcSettingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ArcSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ArcSettingData>(Data, options, AzureResourceManagerHciContext.Default);
+        BinaryData IPersistableModel<ArcSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ArcSettingData IPersistableModel<ArcSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArcSettingData>(data, options, AzureResourceManagerHciContext.Default);
+        ArcSettingData IPersistableModel<ArcSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArcSettingData>(data, options);
 
         string IPersistableModel<ArcSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ArcSettingData>)Data).GetFormatFromOptions(options);
     }

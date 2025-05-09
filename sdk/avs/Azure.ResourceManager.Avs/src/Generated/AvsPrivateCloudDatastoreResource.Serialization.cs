@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Avs
 
         AvsPrivateCloudDatastoreData IJsonModel<AvsPrivateCloudDatastoreData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AvsPrivateCloudDatastoreData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AvsPrivateCloudDatastoreData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AvsPrivateCloudDatastoreData>(Data, options, AzureResourceManagerAvsContext.Default);
+        BinaryData IPersistableModel<AvsPrivateCloudDatastoreData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        AvsPrivateCloudDatastoreData IPersistableModel<AvsPrivateCloudDatastoreData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvsPrivateCloudDatastoreData>(data, options, AzureResourceManagerAvsContext.Default);
+        AvsPrivateCloudDatastoreData IPersistableModel<AvsPrivateCloudDatastoreData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvsPrivateCloudDatastoreData>(data, options);
 
         string IPersistableModel<AvsPrivateCloudDatastoreData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AvsPrivateCloudDatastoreData>)Data).GetFormatFromOptions(options);
     }

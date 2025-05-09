@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Automation
 
         AutomationPrivateEndpointConnectionData IJsonModel<AutomationPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutomationPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomationPrivateEndpointConnectionData>(Data, options, AzureResourceManagerAutomationContext.Default);
+        BinaryData IPersistableModel<AutomationPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        AutomationPrivateEndpointConnectionData IPersistableModel<AutomationPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationPrivateEndpointConnectionData>(data, options, AzureResourceManagerAutomationContext.Default);
+        AutomationPrivateEndpointConnectionData IPersistableModel<AutomationPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationPrivateEndpointConnectionData>(data, options);
 
         string IPersistableModel<AutomationPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

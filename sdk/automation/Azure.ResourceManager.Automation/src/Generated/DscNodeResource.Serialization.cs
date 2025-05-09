@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Automation
 
         DscNodeData IJsonModel<DscNodeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DscNodeData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DscNodeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DscNodeData>(Data, options, AzureResourceManagerAutomationContext.Default);
+        BinaryData IPersistableModel<DscNodeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DscNodeData IPersistableModel<DscNodeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DscNodeData>(data, options, AzureResourceManagerAutomationContext.Default);
+        DscNodeData IPersistableModel<DscNodeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DscNodeData>(data, options);
 
         string IPersistableModel<DscNodeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DscNodeData>)Data).GetFormatFromOptions(options);
     }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AgriculturePlatform
 
         AgricultureServiceResource IOperationSource<AgricultureServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AgricultureServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAgriculturePlatformContext.Default);
+            var data = ModelReaderWriter.Read<AgricultureServiceData>(response.Content);
             return new AgricultureServiceResource(_client, data);
         }
 
         async ValueTask<AgricultureServiceResource> IOperationSource<AgricultureServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AgricultureServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAgriculturePlatformContext.Default);
+            var data = ModelReaderWriter.Read<AgricultureServiceData>(response.Content);
             return await Task.FromResult(new AgricultureServiceResource(_client, data)).ConfigureAwait(false);
         }
     }

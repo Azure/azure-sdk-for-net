@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.BillingBenefits
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingBenefitsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(BillingBenefitsReservationOrderAliasData)} does not support writing '{options.Format}' format.");
             }

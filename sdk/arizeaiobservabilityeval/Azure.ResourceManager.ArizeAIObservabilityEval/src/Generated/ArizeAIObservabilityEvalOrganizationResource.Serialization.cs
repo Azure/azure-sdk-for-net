@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
 
         ArizeAIObservabilityEvalOrganizationData IJsonModel<ArizeAIObservabilityEvalOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ArizeAIObservabilityEvalOrganizationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ArizeAIObservabilityEvalOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ArizeAIObservabilityEvalOrganizationData>(Data, options, AzureResourceManagerArizeAIObservabilityEvalContext.Default);
+        BinaryData IPersistableModel<ArizeAIObservabilityEvalOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ArizeAIObservabilityEvalOrganizationData IPersistableModel<ArizeAIObservabilityEvalOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArizeAIObservabilityEvalOrganizationData>(data, options, AzureResourceManagerArizeAIObservabilityEvalContext.Default);
+        ArizeAIObservabilityEvalOrganizationData IPersistableModel<ArizeAIObservabilityEvalOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArizeAIObservabilityEvalOrganizationData>(data, options);
 
         string IPersistableModel<ArizeAIObservabilityEvalOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ArizeAIObservabilityEvalOrganizationData>)Data).GetFormatFromOptions(options);
     }

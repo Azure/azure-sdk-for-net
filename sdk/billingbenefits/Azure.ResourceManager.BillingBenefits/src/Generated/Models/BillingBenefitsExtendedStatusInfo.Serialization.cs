@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingBenefitsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(BillingBenefitsExtendedStatusInfo)} does not support writing '{options.Format}' format.");
             }

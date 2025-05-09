@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Attestation.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAttestationContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AttestationServicePatchSpecificParams)} does not support writing '{options.Format}' format.");
             }

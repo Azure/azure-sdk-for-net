@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Avs
 
         HcxEnterpriseSiteData IJsonModel<HcxEnterpriseSiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HcxEnterpriseSiteData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HcxEnterpriseSiteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HcxEnterpriseSiteData>(Data, options, AzureResourceManagerAvsContext.Default);
+        BinaryData IPersistableModel<HcxEnterpriseSiteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        HcxEnterpriseSiteData IPersistableModel<HcxEnterpriseSiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HcxEnterpriseSiteData>(data, options, AzureResourceManagerAvsContext.Default);
+        HcxEnterpriseSiteData IPersistableModel<HcxEnterpriseSiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HcxEnterpriseSiteData>(data, options);
 
         string IPersistableModel<HcxEnterpriseSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HcxEnterpriseSiteData>)Data).GetFormatFromOptions(options);
     }

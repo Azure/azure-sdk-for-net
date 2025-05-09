@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Billing
 
         BillingAssociatedTenantData IJsonModel<BillingAssociatedTenantData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingAssociatedTenantData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BillingAssociatedTenantData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BillingAssociatedTenantData>(Data, options, AzureResourceManagerBillingContext.Default);
+        BinaryData IPersistableModel<BillingAssociatedTenantData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        BillingAssociatedTenantData IPersistableModel<BillingAssociatedTenantData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingAssociatedTenantData>(data, options, AzureResourceManagerBillingContext.Default);
+        BillingAssociatedTenantData IPersistableModel<BillingAssociatedTenantData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingAssociatedTenantData>(data, options);
 
         string IPersistableModel<BillingAssociatedTenantData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingAssociatedTenantData>)Data).GetFormatFromOptions(options);
     }

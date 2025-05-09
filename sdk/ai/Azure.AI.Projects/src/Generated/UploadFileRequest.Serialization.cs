@@ -134,7 +134,7 @@ namespace Azure.AI.Projects
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "MFD":
                     return SerializeMultipart(options);
                 default:

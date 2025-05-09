@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppPlatformContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AppPlatformCustomDomainProperties)} does not support writing '{options.Format}' format.");
             }

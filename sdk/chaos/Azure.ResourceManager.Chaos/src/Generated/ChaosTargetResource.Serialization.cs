@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Chaos
 
         ChaosTargetData IJsonModel<ChaosTargetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ChaosTargetData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ChaosTargetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ChaosTargetData>(Data, options, AzureResourceManagerChaosContext.Default);
+        BinaryData IPersistableModel<ChaosTargetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ChaosTargetData IPersistableModel<ChaosTargetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ChaosTargetData>(data, options, AzureResourceManagerChaosContext.Default);
+        ChaosTargetData IPersistableModel<ChaosTargetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ChaosTargetData>(data, options);
 
         string IPersistableModel<ChaosTargetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ChaosTargetData>)Data).GetFormatFromOptions(options);
     }

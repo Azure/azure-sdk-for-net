@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Avs
 
         AvsPrivateCloudClusterResource IOperationSource<AvsPrivateCloudClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AvsPrivateCloudClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            var data = ModelReaderWriter.Read<AvsPrivateCloudClusterData>(response.Content);
             return new AvsPrivateCloudClusterResource(_client, data);
         }
 
         async ValueTask<AvsPrivateCloudClusterResource> IOperationSource<AvsPrivateCloudClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AvsPrivateCloudClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            var data = ModelReaderWriter.Read<AvsPrivateCloudClusterData>(response.Content);
             return await Task.FromResult(new AvsPrivateCloudClusterResource(_client, data)).ConfigureAwait(false);
         }
     }

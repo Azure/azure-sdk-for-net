@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Avs
 
         WorkloadNetworkPublicIPResource IOperationSource<WorkloadNetworkPublicIPResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WorkloadNetworkPublicIPData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            var data = ModelReaderWriter.Read<WorkloadNetworkPublicIPData>(response.Content);
             return new WorkloadNetworkPublicIPResource(_client, data);
         }
 
         async ValueTask<WorkloadNetworkPublicIPResource> IOperationSource<WorkloadNetworkPublicIPResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WorkloadNetworkPublicIPData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            var data = ModelReaderWriter.Read<WorkloadNetworkPublicIPData>(response.Content);
             return await Task.FromResult(new WorkloadNetworkPublicIPResource(_client, data)).ConfigureAwait(false);
         }
     }

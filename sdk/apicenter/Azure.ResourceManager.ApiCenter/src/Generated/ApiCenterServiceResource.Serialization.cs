@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ApiCenter
 
         ApiCenterServiceData IJsonModel<ApiCenterServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiCenterServiceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiCenterServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiCenterServiceData>(Data, options, AzureResourceManagerApiCenterContext.Default);
+        BinaryData IPersistableModel<ApiCenterServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ApiCenterServiceData IPersistableModel<ApiCenterServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiCenterServiceData>(data, options, AzureResourceManagerApiCenterContext.Default);
+        ApiCenterServiceData IPersistableModel<ApiCenterServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiCenterServiceData>(data, options);
 
         string IPersistableModel<ApiCenterServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiCenterServiceData>)Data).GetFormatFromOptions(options);
     }

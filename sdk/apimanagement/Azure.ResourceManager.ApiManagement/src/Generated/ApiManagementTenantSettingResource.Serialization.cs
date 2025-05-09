@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ApiManagement
 
         ApiManagementTenantSettingData IJsonModel<ApiManagementTenantSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementTenantSettingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiManagementTenantSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementTenantSettingData>(Data, options, AzureResourceManagerApiManagementContext.Default);
+        BinaryData IPersistableModel<ApiManagementTenantSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ApiManagementTenantSettingData IPersistableModel<ApiManagementTenantSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementTenantSettingData>(data, options, AzureResourceManagerApiManagementContext.Default);
+        ApiManagementTenantSettingData IPersistableModel<ApiManagementTenantSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementTenantSettingData>(data, options);
 
         string IPersistableModel<ApiManagementTenantSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementTenantSettingData>)Data).GetFormatFromOptions(options);
     }

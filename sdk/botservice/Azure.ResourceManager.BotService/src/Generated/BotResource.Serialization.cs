@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.BotService
 
         BotData IJsonModel<BotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BotData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BotData>(Data, options, AzureResourceManagerBotServiceContext.Default);
+        BinaryData IPersistableModel<BotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        BotData IPersistableModel<BotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BotData>(data, options, AzureResourceManagerBotServiceContext.Default);
+        BotData IPersistableModel<BotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BotData>(data, options);
 
         string IPersistableModel<BotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BotData>)Data).GetFormatFromOptions(options);
     }

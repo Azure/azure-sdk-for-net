@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ApiManagement
 
         ApiReleaseData IJsonModel<ApiReleaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiReleaseData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiReleaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiReleaseData>(Data, options, AzureResourceManagerApiManagementContext.Default);
+        BinaryData IPersistableModel<ApiReleaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ApiReleaseData IPersistableModel<ApiReleaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiReleaseData>(data, options, AzureResourceManagerApiManagementContext.Default);
+        ApiReleaseData IPersistableModel<ApiReleaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiReleaseData>(data, options);
 
         string IPersistableModel<ApiReleaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiReleaseData>)Data).GetFormatFromOptions(options);
     }

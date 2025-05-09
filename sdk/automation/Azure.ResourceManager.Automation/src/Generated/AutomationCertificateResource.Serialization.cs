@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Automation
 
         AutomationCertificateData IJsonModel<AutomationCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationCertificateData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutomationCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomationCertificateData>(Data, options, AzureResourceManagerAutomationContext.Default);
+        BinaryData IPersistableModel<AutomationCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        AutomationCertificateData IPersistableModel<AutomationCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationCertificateData>(data, options, AzureResourceManagerAutomationContext.Default);
+        AutomationCertificateData IPersistableModel<AutomationCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationCertificateData>(data, options);
 
         string IPersistableModel<AutomationCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationCertificateData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Automation
 
         AutomationJobScheduleData IJsonModel<AutomationJobScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationJobScheduleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutomationJobScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomationJobScheduleData>(Data, options, AzureResourceManagerAutomationContext.Default);
+        BinaryData IPersistableModel<AutomationJobScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        AutomationJobScheduleData IPersistableModel<AutomationJobScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationJobScheduleData>(data, options, AzureResourceManagerAutomationContext.Default);
+        AutomationJobScheduleData IPersistableModel<AutomationJobScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationJobScheduleData>(data, options);
 
         string IPersistableModel<AutomationJobScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationJobScheduleData>)Data).GetFormatFromOptions(options);
     }

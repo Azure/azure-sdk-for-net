@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Automation
 
         DscCompilationJobResource IOperationSource<DscCompilationJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DscCompilationJobData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAutomationContext.Default);
+            var data = ModelReaderWriter.Read<DscCompilationJobData>(response.Content);
             return new DscCompilationJobResource(_client, data);
         }
 
         async ValueTask<DscCompilationJobResource> IOperationSource<DscCompilationJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DscCompilationJobData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAutomationContext.Default);
+            var data = ModelReaderWriter.Read<DscCompilationJobData>(response.Content);
             return await Task.FromResult(new DscCompilationJobResource(_client, data)).ConfigureAwait(false);
         }
     }

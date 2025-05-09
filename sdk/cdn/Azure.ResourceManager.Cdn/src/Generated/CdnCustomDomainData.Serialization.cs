@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Cdn
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(CdnCustomDomainData)} does not support writing '{options.Format}' format.");
             }

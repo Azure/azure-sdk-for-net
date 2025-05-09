@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ApiCenter
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiCenterContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ApiCenterServiceData)} does not support writing '{options.Format}' format.");
             }

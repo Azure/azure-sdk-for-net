@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Cdn
 
         FrontDoorSecurityPolicyResource IOperationSource<FrontDoorSecurityPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FrontDoorSecurityPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
+            var data = ModelReaderWriter.Read<FrontDoorSecurityPolicyData>(response.Content);
             return new FrontDoorSecurityPolicyResource(_client, data);
         }
 
         async ValueTask<FrontDoorSecurityPolicyResource> IOperationSource<FrontDoorSecurityPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FrontDoorSecurityPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
+            var data = ModelReaderWriter.Read<FrontDoorSecurityPolicyData>(response.Content);
             return await Task.FromResult(new FrontDoorSecurityPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }

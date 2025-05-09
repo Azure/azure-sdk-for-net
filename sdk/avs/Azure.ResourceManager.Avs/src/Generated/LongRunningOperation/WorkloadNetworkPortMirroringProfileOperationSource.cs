@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Avs
 
         WorkloadNetworkPortMirroringProfileResource IOperationSource<WorkloadNetworkPortMirroringProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WorkloadNetworkPortMirroringProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            var data = ModelReaderWriter.Read<WorkloadNetworkPortMirroringProfileData>(response.Content);
             return new WorkloadNetworkPortMirroringProfileResource(_client, data);
         }
 
         async ValueTask<WorkloadNetworkPortMirroringProfileResource> IOperationSource<WorkloadNetworkPortMirroringProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WorkloadNetworkPortMirroringProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            var data = ModelReaderWriter.Read<WorkloadNetworkPortMirroringProfileData>(response.Content);
             return await Task.FromResult(new WorkloadNetworkPortMirroringProfileResource(_client, data)).ConfigureAwait(false);
         }
     }

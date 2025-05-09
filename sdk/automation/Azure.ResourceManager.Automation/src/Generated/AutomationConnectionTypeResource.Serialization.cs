@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Automation
 
         AutomationConnectionTypeData IJsonModel<AutomationConnectionTypeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationConnectionTypeData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutomationConnectionTypeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomationConnectionTypeData>(Data, options, AzureResourceManagerAutomationContext.Default);
+        BinaryData IPersistableModel<AutomationConnectionTypeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        AutomationConnectionTypeData IPersistableModel<AutomationConnectionTypeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationConnectionTypeData>(data, options, AzureResourceManagerAutomationContext.Default);
+        AutomationConnectionTypeData IPersistableModel<AutomationConnectionTypeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationConnectionTypeData>(data, options);
 
         string IPersistableModel<AutomationConnectionTypeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationConnectionTypeData>)Data).GetFormatFromOptions(options);
     }

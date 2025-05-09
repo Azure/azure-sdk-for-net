@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLargeInstanceContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(LargeInstanceStorageBillingProperties)} does not support writing '{options.Format}' format.");
             }

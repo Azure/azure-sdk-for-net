@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Billing
 
         BillingCustomerData IJsonModel<BillingCustomerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingCustomerData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BillingCustomerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BillingCustomerData>(Data, options, AzureResourceManagerBillingContext.Default);
+        BinaryData IPersistableModel<BillingCustomerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        BillingCustomerData IPersistableModel<BillingCustomerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingCustomerData>(data, options, AzureResourceManagerBillingContext.Default);
+        BillingCustomerData IPersistableModel<BillingCustomerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingCustomerData>(data, options);
 
         string IPersistableModel<BillingCustomerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingCustomerData>)Data).GetFormatFromOptions(options);
     }

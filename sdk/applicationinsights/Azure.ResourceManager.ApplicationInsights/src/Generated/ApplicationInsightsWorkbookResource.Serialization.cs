@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ApplicationInsights
 
         ApplicationInsightsWorkbookData IJsonModel<ApplicationInsightsWorkbookData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationInsightsWorkbookData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApplicationInsightsWorkbookData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApplicationInsightsWorkbookData>(Data, options, AzureResourceManagerApplicationInsightsContext.Default);
+        BinaryData IPersistableModel<ApplicationInsightsWorkbookData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ApplicationInsightsWorkbookData IPersistableModel<ApplicationInsightsWorkbookData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApplicationInsightsWorkbookData>(data, options, AzureResourceManagerApplicationInsightsContext.Default);
+        ApplicationInsightsWorkbookData IPersistableModel<ApplicationInsightsWorkbookData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApplicationInsightsWorkbookData>(data, options);
 
         string IPersistableModel<ApplicationInsightsWorkbookData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApplicationInsightsWorkbookData>)Data).GetFormatFromOptions(options);
     }

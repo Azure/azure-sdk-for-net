@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Batch
 
         BatchApplicationPackageData IJsonModel<BatchApplicationPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BatchApplicationPackageData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BatchApplicationPackageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BatchApplicationPackageData>(Data, options, AzureResourceManagerBatchContext.Default);
+        BinaryData IPersistableModel<BatchApplicationPackageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        BatchApplicationPackageData IPersistableModel<BatchApplicationPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BatchApplicationPackageData>(data, options, AzureResourceManagerBatchContext.Default);
+        BatchApplicationPackageData IPersistableModel<BatchApplicationPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BatchApplicationPackageData>(data, options);
 
         string IPersistableModel<BatchApplicationPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BatchApplicationPackageData>)Data).GetFormatFromOptions(options);
     }

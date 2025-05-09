@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.Cdn
 
         CdnEndpointResource IOperationSource<CdnEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ScrubId(ModelReaderWriter.Read<CdnEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default));
+            var data = ScrubId(ModelReaderWriter.Read<CdnEndpointData>(response.Content));
             return new CdnEndpointResource(_client, data);
         }
 
         async ValueTask<CdnEndpointResource> IOperationSource<CdnEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ScrubId(ModelReaderWriter.Read<CdnEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default));
+            var data = ScrubId(ModelReaderWriter.Read<CdnEndpointData>(response.Content));
             return await Task.FromResult(new CdnEndpointResource(_client, data)).ConfigureAwait(false);
         }
 

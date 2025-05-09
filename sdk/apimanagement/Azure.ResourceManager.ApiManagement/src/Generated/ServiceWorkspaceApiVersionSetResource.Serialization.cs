@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ApiManagement
 
         ApiVersionSetData IJsonModel<ApiVersionSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiVersionSetData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiVersionSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiVersionSetData>(Data, options, AzureResourceManagerApiManagementContext.Default);
+        BinaryData IPersistableModel<ApiVersionSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ApiVersionSetData IPersistableModel<ApiVersionSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiVersionSetData>(data, options, AzureResourceManagerApiManagementContext.Default);
+        ApiVersionSetData IPersistableModel<ApiVersionSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiVersionSetData>(data, options);
 
         string IPersistableModel<ApiVersionSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiVersionSetData>)Data).GetFormatFromOptions(options);
     }

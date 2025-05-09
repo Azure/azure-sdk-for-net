@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Billing
 
         SavingsPlanOrderModelData IJsonModel<SavingsPlanOrderModelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SavingsPlanOrderModelData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SavingsPlanOrderModelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SavingsPlanOrderModelData>(Data, options, AzureResourceManagerBillingContext.Default);
+        BinaryData IPersistableModel<SavingsPlanOrderModelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SavingsPlanOrderModelData IPersistableModel<SavingsPlanOrderModelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SavingsPlanOrderModelData>(data, options, AzureResourceManagerBillingContext.Default);
+        SavingsPlanOrderModelData IPersistableModel<SavingsPlanOrderModelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SavingsPlanOrderModelData>(data, options);
 
         string IPersistableModel<SavingsPlanOrderModelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SavingsPlanOrderModelData>)Data).GetFormatFromOptions(options);
     }

@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppConfigurationContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AppConfigurationNameAvailabilityContent)} does not support writing '{options.Format}' format.");
             }

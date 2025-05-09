@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Astro.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAstroContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AstroSingleSignOnProperties)} does not support writing '{options.Format}' format.");
             }

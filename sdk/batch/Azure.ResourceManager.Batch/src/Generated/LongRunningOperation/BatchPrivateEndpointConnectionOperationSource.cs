@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Batch
 
         BatchPrivateEndpointConnectionResource IOperationSource<BatchPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BatchPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBatchContext.Default);
+            var data = ModelReaderWriter.Read<BatchPrivateEndpointConnectionData>(response.Content);
             return new BatchPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<BatchPrivateEndpointConnectionResource> IOperationSource<BatchPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BatchPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBatchContext.Default);
+            var data = ModelReaderWriter.Read<BatchPrivateEndpointConnectionData>(response.Content);
             return await Task.FromResult(new BatchPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

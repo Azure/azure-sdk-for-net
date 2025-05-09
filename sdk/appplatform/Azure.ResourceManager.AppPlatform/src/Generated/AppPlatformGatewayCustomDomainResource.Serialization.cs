@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppPlatform
 
         AppPlatformGatewayCustomDomainData IJsonModel<AppPlatformGatewayCustomDomainData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformGatewayCustomDomainData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppPlatformGatewayCustomDomainData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppPlatformGatewayCustomDomainData>(Data, options, AzureResourceManagerAppPlatformContext.Default);
+        BinaryData IPersistableModel<AppPlatformGatewayCustomDomainData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        AppPlatformGatewayCustomDomainData IPersistableModel<AppPlatformGatewayCustomDomainData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppPlatformGatewayCustomDomainData>(data, options, AzureResourceManagerAppPlatformContext.Default);
+        AppPlatformGatewayCustomDomainData IPersistableModel<AppPlatformGatewayCustomDomainData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppPlatformGatewayCustomDomainData>(data, options);
 
         string IPersistableModel<AppPlatformGatewayCustomDomainData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformGatewayCustomDomainData>)Data).GetFormatFromOptions(options);
     }

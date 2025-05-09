@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Billing
 
         PartnerTransferDetailData IJsonModel<PartnerTransferDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PartnerTransferDetailData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PartnerTransferDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PartnerTransferDetailData>(Data, options, AzureResourceManagerBillingContext.Default);
+        BinaryData IPersistableModel<PartnerTransferDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        PartnerTransferDetailData IPersistableModel<PartnerTransferDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PartnerTransferDetailData>(data, options, AzureResourceManagerBillingContext.Default);
+        PartnerTransferDetailData IPersistableModel<PartnerTransferDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PartnerTransferDetailData>(data, options);
 
         string IPersistableModel<PartnerTransferDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PartnerTransferDetailData>)Data).GetFormatFromOptions(options);
     }

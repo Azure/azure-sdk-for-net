@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBlueprintContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(SecretValueReference)} does not support writing '{options.Format}' format.");
             }

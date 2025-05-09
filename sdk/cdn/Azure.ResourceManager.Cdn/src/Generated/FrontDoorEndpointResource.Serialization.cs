@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Cdn
 
         FrontDoorEndpointData IJsonModel<FrontDoorEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorEndpointData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FrontDoorEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FrontDoorEndpointData>(Data, options, AzureResourceManagerCdnContext.Default);
+        BinaryData IPersistableModel<FrontDoorEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        FrontDoorEndpointData IPersistableModel<FrontDoorEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontDoorEndpointData>(data, options, AzureResourceManagerCdnContext.Default);
+        FrontDoorEndpointData IPersistableModel<FrontDoorEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontDoorEndpointData>(data, options);
 
         string IPersistableModel<FrontDoorEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontDoorEndpointData>)Data).GetFormatFromOptions(options);
     }

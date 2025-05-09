@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ApiManagement
 
         ApiManagementPrivateEndpointConnectionData IJsonModel<ApiManagementPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiManagementPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementPrivateEndpointConnectionData>(Data, options, AzureResourceManagerApiManagementContext.Default);
+        BinaryData IPersistableModel<ApiManagementPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ApiManagementPrivateEndpointConnectionData IPersistableModel<ApiManagementPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementPrivateEndpointConnectionData>(data, options, AzureResourceManagerApiManagementContext.Default);
+        ApiManagementPrivateEndpointConnectionData IPersistableModel<ApiManagementPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementPrivateEndpointConnectionData>(data, options);
 
         string IPersistableModel<ApiManagementPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

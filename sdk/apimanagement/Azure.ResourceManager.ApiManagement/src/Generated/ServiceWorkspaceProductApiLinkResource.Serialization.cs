@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ApiManagement
 
         ProductApiLinkContractData IJsonModel<ProductApiLinkContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProductApiLinkContractData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ProductApiLinkContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProductApiLinkContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
+        BinaryData IPersistableModel<ProductApiLinkContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ProductApiLinkContractData IPersistableModel<ProductApiLinkContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProductApiLinkContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
+        ProductApiLinkContractData IPersistableModel<ProductApiLinkContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProductApiLinkContractData>(data, options);
 
         string IPersistableModel<ProductApiLinkContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProductApiLinkContractData>)Data).GetFormatFromOptions(options);
     }
