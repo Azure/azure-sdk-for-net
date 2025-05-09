@@ -98,7 +98,7 @@ public partial class CassandraCluster : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the CassandraCluster.</param>
     public CassandraCluster(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.DocumentDB/cassandraClusters", resourceVersion ?? "2024-08-15")
+        : base(bicepIdentifier, "Microsoft.DocumentDB/cassandraClusters", resourceVersion ?? "2024-11-15")
     {
     }
 
@@ -121,6 +121,11 @@ public partial class CassandraCluster : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-11-15.
+        /// </summary>
+        public static readonly string V2024_11_15 = "2024-11-15";
+
         /// <summary>
         /// 2024-08-15.
         /// </summary>
