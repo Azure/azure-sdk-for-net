@@ -146,8 +146,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             TestEventsRaised testEventsRaised = new(transferOptions);
 
             TransferOperation transfer = await transferManager.StartTransferAsync(
-                await blobProvider.FromContainerAsync(sourceContainer.Container.Uri),
-                await blobProvider.FromContainerAsync(destinationContainer.Container.Uri),
+                GetSourceStorageResourceContainer(sourceContainer.Container, default),
+                GetSourceStorageResourceContainer(destinationContainer.Container, default),
                 transferOptions);
 
             CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(30));
