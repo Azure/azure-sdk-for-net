@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Dell.Storage.Samples
                 "10.0.0.1/24",
                 new DellFileSystemUserDetails("jwogfgznmjabdbcjcljjlkxdpc"),
                 "fhewkj",
-                new DellFileSystemEncryptionPropertiess(DellFileSystemEncryptionType.CustomerManagedKeysCmk)
+                new DellFileSystemEncryptionProperties(DellFileSystemEncryptionType.CustomerManagedKeysCmk)
                 {
                     KeyUri = "https://contoso.com/keyurl/keyVersion",
                     EncryptionIdentityProperties = new DellFileSystemEncryptionIdentityProperties
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Dell.Storage.Samples
                 "10.0.0.1/24",
                 new DellFileSystemUserDetails("hoznewwtzmyjzctzosfuh"),
                 "fhewkj",
-                new DellFileSystemEncryptionPropertiess(DellFileSystemEncryptionType.MicrosoftManagedKeysMmk)),
+                new DellFileSystemEncryptionProperties(DellFileSystemEncryptionType.MicrosoftManagedKeysMmk)),
             };
             ArmOperation<DellFileSystemResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, filesystemName, data);
             DellFileSystemResource result = lro.Value;

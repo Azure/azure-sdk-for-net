@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             }
             string delegatedSubnetId = default;
             DellFileSystemCapacity capacity = default;
-            DellFileSystemEncryptionPatchPropertiess encryption = default;
+            DellFileSystemEncryptionPatchProperties encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
                     {
                         continue;
                     }
-                    encryption = DellFileSystemEncryptionPatchPropertiess.DeserializeDellFileSystemEncryptionPatchPropertiess(property.Value, options);
+                    encryption = DellFileSystemEncryptionPatchProperties.DeserializeDellFileSystemEncryptionPatchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

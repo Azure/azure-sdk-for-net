@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
     /// <summary> EncryptionUpdateProperties of Dell FileSystem resource. </summary>
-    public partial class DellFileSystemEncryptionPatchPropertiess
+    public partial class DellFileSystemEncryptionPatchProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DellFileSystemEncryptionPatchPropertiess"/>. </summary>
-        public DellFileSystemEncryptionPatchPropertiess()
+        /// <summary> Initializes a new instance of <see cref="DellFileSystemEncryptionPatchProperties"/>. </summary>
+        public DellFileSystemEncryptionPatchProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DellFileSystemEncryptionPatchPropertiess"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DellFileSystemEncryptionPatchProperties"/>. </summary>
         /// <param name="encryptionType"> Encryption Type - MMK/CMK. </param>
         /// <param name="keyUri"> Versioned Encryption Key Url - Only when user opts for CMK and hence optional. </param>
         /// <param name="encryptionIdentityProperties"> Identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault - Only when user opts for CMK and hence optional. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DellFileSystemEncryptionPatchPropertiess(DellFileSystemEncryptionType? encryptionType, string keyUri, DellFileSystemEncryptionIdentityPatchProperties encryptionIdentityProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DellFileSystemEncryptionPatchProperties(DellFileSystemEncryptionType? encryptionType, string keyUri, DellFileSystemEncryptionIdentityPatchProperties encryptionIdentityProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EncryptionType = encryptionType;
             KeyUri = keyUri;

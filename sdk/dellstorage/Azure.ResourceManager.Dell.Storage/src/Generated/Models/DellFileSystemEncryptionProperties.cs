@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
     /// <summary> EncryptionProperties of Dell FileSystem resource. </summary>
-    public partial class DellFileSystemEncryptionPropertiess
+    public partial class DellFileSystemEncryptionProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DellFileSystemEncryptionPropertiess"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DellFileSystemEncryptionProperties"/>. </summary>
         /// <param name="encryptionType"> Encryption Type - MMK/CMK. </param>
-        public DellFileSystemEncryptionPropertiess(DellFileSystemEncryptionType encryptionType)
+        public DellFileSystemEncryptionProperties(DellFileSystemEncryptionType encryptionType)
         {
             EncryptionType = encryptionType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DellFileSystemEncryptionPropertiess"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DellFileSystemEncryptionProperties"/>. </summary>
         /// <param name="encryptionType"> Encryption Type - MMK/CMK. </param>
         /// <param name="keyUri"> Versioned Encryption Key Url - Only when user opts for CMK and hence optional. </param>
         /// <param name="encryptionIdentityProperties"> Identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault - Only when user opts for CMK and hence optional. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DellFileSystemEncryptionPropertiess(DellFileSystemEncryptionType encryptionType, string keyUri, DellFileSystemEncryptionIdentityProperties encryptionIdentityProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DellFileSystemEncryptionProperties(DellFileSystemEncryptionType encryptionType, string keyUri, DellFileSystemEncryptionIdentityProperties encryptionIdentityProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EncryptionType = encryptionType;
             KeyUri = keyUri;
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DellFileSystemEncryptionPropertiess"/> for deserialization. </summary>
-        internal DellFileSystemEncryptionPropertiess()
+        /// <summary> Initializes a new instance of <see cref="DellFileSystemEncryptionProperties"/> for deserialization. </summary>
+        internal DellFileSystemEncryptionProperties()
         {
         }
 

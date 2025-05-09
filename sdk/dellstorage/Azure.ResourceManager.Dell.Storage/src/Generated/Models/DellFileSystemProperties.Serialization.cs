@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             string smartConnectFqdn = default;
             string oneFsUrl = default;
             string dellReferenceNumber = default;
-            DellFileSystemEncryptionPropertiess encryption = default;
+            DellFileSystemEncryptionProperties encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
                 }
                 if (property.NameEquals("encryption"u8))
                 {
-                    encryption = DellFileSystemEncryptionPropertiess.DeserializeDellFileSystemEncryptionPropertiess(property.Value, options);
+                    encryption = DellFileSystemEncryptionProperties.DeserializeDellFileSystemEncryptionProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

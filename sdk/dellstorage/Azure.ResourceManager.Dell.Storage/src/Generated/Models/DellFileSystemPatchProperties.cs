@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="capacity"> Capacity for Dell Filesystem. </param>
         /// <param name="encryption"> Encryption Details of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DellFileSystemPatchProperties(string delegatedSubnetId, DellFileSystemCapacity capacity, DellFileSystemEncryptionPatchPropertiess encryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DellFileSystemPatchProperties(string delegatedSubnetId, DellFileSystemCapacity capacity, DellFileSystemEncryptionPatchProperties encryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DelegatedSubnetId = delegatedSubnetId;
             Capacity = capacity;
@@ -68,6 +68,6 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <summary> Capacity for Dell Filesystem. </summary>
         public DellFileSystemCapacity Capacity { get; set; }
         /// <summary> Encryption Details of the resource. </summary>
-        public DellFileSystemEncryptionPatchPropertiess Encryption { get; set; }
+        public DellFileSystemEncryptionPatchProperties Encryption { get; set; }
     }
 }

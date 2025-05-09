@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Dell.Storage.Samples
                     {
                         Current = "5",
                     },
-                    Encryption = new DellFileSystemEncryptionPatchPropertiess
+                    Encryption = new DellFileSystemEncryptionPatchProperties
                     {
                         EncryptionType = DellFileSystemEncryptionType.CustomerManagedKeysCmk,
                         KeyUri = "https://contoso.com/keyurl/keyVersion",

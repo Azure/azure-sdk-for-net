@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="dellReferenceNumber"> DellReferenceNumber of the resource. </param>
         /// <param name="encryption"> EncryptionProperties of the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/>, <paramref name="delegatedSubnetId"/>, <paramref name="delegatedSubnetCidr"/>, <paramref name="user"/>, <paramref name="dellReferenceNumber"/> or <paramref name="encryption"/> is null. </exception>
-        public DellFileSystemProperties(DellFileSystemMarketplaceDetails marketplace, string delegatedSubnetId, string delegatedSubnetCidr, DellFileSystemUserDetails user, string dellReferenceNumber, DellFileSystemEncryptionPropertiess encryption)
+        public DellFileSystemProperties(DellFileSystemMarketplaceDetails marketplace, string delegatedSubnetId, string delegatedSubnetCidr, DellFileSystemUserDetails user, string dellReferenceNumber, DellFileSystemEncryptionProperties encryption)
         {
             Argument.AssertNotNull(marketplace, nameof(marketplace));
             Argument.AssertNotNull(delegatedSubnetId, nameof(delegatedSubnetId));
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="dellReferenceNumber"> DellReferenceNumber of the resource. </param>
         /// <param name="encryption"> EncryptionProperties of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DellFileSystemProperties(DellFileSystemCapacity capacity, DellFileSystemMarketplaceDetails marketplace, DellFileSystemProvisioningState? provisioningState, string delegatedSubnetId, string delegatedSubnetCidr, DellFileSystemUserDetails user, string fileSystemId, string smartConnectFqdn, string oneFsUri, string dellReferenceNumber, DellFileSystemEncryptionPropertiess encryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DellFileSystemProperties(DellFileSystemCapacity capacity, DellFileSystemMarketplaceDetails marketplace, DellFileSystemProvisioningState? provisioningState, string delegatedSubnetId, string delegatedSubnetCidr, DellFileSystemUserDetails user, string fileSystemId, string smartConnectFqdn, string oneFsUri, string dellReferenceNumber, DellFileSystemEncryptionProperties encryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Capacity = capacity;
             Marketplace = marketplace;
@@ -132,6 +132,6 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <summary> DellReferenceNumber of the resource. </summary>
         public string DellReferenceNumber { get; set; }
         /// <summary> EncryptionProperties of the resource. </summary>
-        public DellFileSystemEncryptionPropertiess Encryption { get; set; }
+        public DellFileSystemEncryptionProperties Encryption { get; set; }
     }
 }
