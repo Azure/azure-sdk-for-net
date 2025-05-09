@@ -57,9 +57,9 @@ jobs:
                 $originalTags = $packageProps.'dist-tags' | ConvertTo-Json -Compress
               }
 
-              $tag = "$(Tag)"
+              $tag = '$(Tag)'
               write-host "tag is now $tag"
-              if (!$tag) {
+              if ($tag.contains("`$(")) {
                 $tag = ($packageVersion -match "-(alpha|beta|rc|pre)") ? "beta" : "latest"
               }
               echo "##vso[task.setvariable variable=Tag;isOutput=true]$tag"
