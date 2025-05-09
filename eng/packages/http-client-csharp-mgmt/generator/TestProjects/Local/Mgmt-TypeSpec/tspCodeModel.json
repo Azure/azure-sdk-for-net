@@ -4100,36 +4100,22 @@
         "generateProtocolMethod": true,
         "generateConvenienceMethod": true,
         "crossLanguageDefinitionId": "MgmtTypeSpec.Foos.createOrUpdate",
-        "decorators": []
+        "decorators": [
+         {
+          "$id": "501",
+          "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
+          "arguments": {
+           "$id": "502"
+          }
+         }
+        ]
        },
        "parameters": [
         {
-         "$id": "501",
+         "$id": "503",
          "name": "resourceGroupName",
          "nameInRequest": "resourceGroupName",
          "doc": "The name of the resource group. The name is case insensitive.",
-         "type": {
-          "$id": "502",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "location": "Path",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Method",
-         "decorators": [],
-         "skipUrlEncoding": false
-        },
-        {
-         "$id": "503",
-         "name": "fooName",
-         "nameInRequest": "fooName",
-         "doc": "The name of the Foo",
          "type": {
           "$id": "504",
           "kind": "string",
@@ -4149,6 +4135,28 @@
         },
         {
          "$id": "505",
+         "name": "fooName",
+         "nameInRequest": "fooName",
+         "doc": "The name of the Foo",
+         "type": {
+          "$id": "506",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "location": "Path",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "507",
          "name": "resource",
          "nameInRequest": "resource",
          "doc": "Resource create parameters.",
@@ -4166,15 +4174,15 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "506",
+         "$id": "508",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$id": "507",
+          "$id": "509",
           "kind": "constant",
           "valueType": {
-           "$id": "508",
+           "$id": "510",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4194,14 +4202,14 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "509",
+         "$id": "511",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
-          "$id": "510",
+          "$id": "512",
           "kind": "constant",
           "valueType": {
-           "$id": "511",
+           "$id": "513",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4222,7 +4230,7 @@
         }
        ],
        "response": {
-        "$id": "512",
+        "$id": "514",
         "type": {
          "$ref": "315"
         }
@@ -4232,10 +4240,10 @@
        "generateProtocol": true,
        "crossLanguageDefinitionId": "MgmtTypeSpec.Foos.createOrUpdate",
        "lroMetadata": {
-        "$id": "513",
+        "$id": "515",
         "finalStateVia": 0,
         "finalResponse": {
-         "$id": "514",
+         "$id": "516",
          "statusCodes": [
           200
          ],
@@ -4246,7 +4254,7 @@
        }
       },
       {
-       "$id": "515",
+       "$id": "517",
        "kind": "basic",
        "name": "get",
        "accessibility": "public",
@@ -4255,19 +4263,19 @@
        ],
        "doc": "Get a Foo",
        "operation": {
-        "$id": "516",
+        "$id": "518",
         "name": "get",
         "resourceName": "Foo",
         "doc": "Get a Foo",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "517",
+          "$id": "519",
           "name": "apiVersion",
           "nameInRequest": "api-version",
           "doc": "The API version to use for this operation.",
           "type": {
-           "$id": "518",
+           "$id": "520",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4281,9 +4289,9 @@
           "isRequired": true,
           "kind": "Client",
           "defaultValue": {
-           "$id": "519",
+           "$id": "521",
            "type": {
-            "$id": "520",
+            "$id": "522",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string"
@@ -4294,17 +4302,17 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "521",
+          "$id": "523",
           "name": "subscriptionId",
           "nameInRequest": "subscriptionId",
           "doc": "The ID of the target subscription. The value must be an UUID.",
           "type": {
-           "$id": "522",
+           "$id": "524",
            "kind": "string",
            "name": "uuid",
            "crossLanguageDefinitionId": "Azure.Core.uuid",
            "baseType": {
-            "$id": "523",
+            "$id": "525",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4323,32 +4331,10 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "524",
+          "$id": "526",
           "name": "resourceGroupName",
           "nameInRequest": "resourceGroupName",
           "doc": "The name of the resource group. The name is case insensitive.",
-          "type": {
-           "$id": "525",
-           "kind": "string",
-           "name": "string",
-           "crossLanguageDefinitionId": "TypeSpec.string",
-           "decorators": []
-          },
-          "location": "Path",
-          "isApiVersion": false,
-          "isContentType": false,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Method",
-          "decorators": [],
-          "skipUrlEncoding": false
-         },
-         {
-          "$id": "526",
-          "name": "fooName",
-          "nameInRequest": "fooName",
-          "doc": "The name of the Foo",
           "type": {
            "$id": "527",
            "kind": "string",
@@ -4368,13 +4354,35 @@
          },
          {
           "$id": "528",
+          "name": "fooName",
+          "nameInRequest": "fooName",
+          "doc": "The name of the Foo",
+          "type": {
+           "$id": "529",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          },
+          "location": "Path",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "530",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
-           "$id": "529",
+           "$id": "531",
            "kind": "constant",
            "valueType": {
-            "$id": "530",
+            "$id": "532",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4396,7 +4404,7 @@
         ],
         "responses": [
          {
-          "$id": "531",
+          "$id": "533",
           "statusCodes": [
            200
           ],
@@ -4419,42 +4427,20 @@
         "crossLanguageDefinitionId": "MgmtTypeSpec.Foos.get",
         "decorators": [
          {
-          "$id": "532",
+          "$id": "534",
           "name": "Azure.ResourceManager.@armResourceRead",
           "arguments": {
-           "$id": "533"
+           "$id": "535"
           }
          }
         ]
        },
        "parameters": [
         {
-         "$id": "534",
+         "$id": "536",
          "name": "resourceGroupName",
          "nameInRequest": "resourceGroupName",
          "doc": "The name of the resource group. The name is case insensitive.",
-         "type": {
-          "$id": "535",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "location": "Path",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Method",
-         "decorators": [],
-         "skipUrlEncoding": false
-        },
-        {
-         "$id": "536",
-         "name": "fooName",
-         "nameInRequest": "fooName",
-         "doc": "The name of the Foo",
          "type": {
           "$id": "537",
           "kind": "string",
@@ -4474,10 +4460,32 @@
         },
         {
          "$id": "538",
+         "name": "fooName",
+         "nameInRequest": "fooName",
+         "doc": "The name of the Foo",
+         "type": {
+          "$id": "539",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "location": "Path",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "540",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
-          "$ref": "529"
+          "$ref": "531"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -4491,7 +4499,7 @@
         }
        ],
        "response": {
-        "$id": "539",
+        "$id": "541",
         "type": {
          "$ref": "315"
         }
@@ -4502,7 +4510,7 @@
        "crossLanguageDefinitionId": "MgmtTypeSpec.Foos.get"
       },
       {
-       "$id": "540",
+       "$id": "542",
        "kind": "lro",
        "name": "delete",
        "accessibility": "public",
@@ -4511,19 +4519,19 @@
        ],
        "doc": "Delete a Foo",
        "operation": {
-        "$id": "541",
+        "$id": "543",
         "name": "delete",
         "resourceName": "Foo",
         "doc": "Delete a Foo",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "542",
+          "$id": "544",
           "name": "apiVersion",
           "nameInRequest": "api-version",
           "doc": "The API version to use for this operation.",
           "type": {
-           "$id": "543",
+           "$id": "545",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4537,9 +4545,9 @@
           "isRequired": true,
           "kind": "Client",
           "defaultValue": {
-           "$id": "544",
+           "$id": "546",
            "type": {
-            "$id": "545",
+            "$id": "547",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string"
@@ -4550,17 +4558,17 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "546",
+          "$id": "548",
           "name": "subscriptionId",
           "nameInRequest": "subscriptionId",
           "doc": "The ID of the target subscription. The value must be an UUID.",
           "type": {
-           "$id": "547",
+           "$id": "549",
            "kind": "string",
            "name": "uuid",
            "crossLanguageDefinitionId": "Azure.Core.uuid",
            "baseType": {
-            "$id": "548",
+            "$id": "550",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4579,32 +4587,10 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "549",
+          "$id": "551",
           "name": "resourceGroupName",
           "nameInRequest": "resourceGroupName",
           "doc": "The name of the resource group. The name is case insensitive.",
-          "type": {
-           "$id": "550",
-           "kind": "string",
-           "name": "string",
-           "crossLanguageDefinitionId": "TypeSpec.string",
-           "decorators": []
-          },
-          "location": "Path",
-          "isApiVersion": false,
-          "isContentType": false,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Method",
-          "decorators": [],
-          "skipUrlEncoding": false
-         },
-         {
-          "$id": "551",
-          "name": "fooName",
-          "nameInRequest": "fooName",
-          "doc": "The name of the Foo",
           "type": {
            "$id": "552",
            "kind": "string",
@@ -4624,13 +4610,35 @@
          },
          {
           "$id": "553",
+          "name": "fooName",
+          "nameInRequest": "fooName",
+          "doc": "The name of the Foo",
+          "type": {
+           "$id": "554",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          },
+          "location": "Path",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "555",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
-           "$id": "554",
+           "$id": "556",
            "kind": "constant",
            "valueType": {
-            "$id": "555",
+            "$id": "557",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4652,18 +4660,18 @@
         ],
         "responses": [
          {
-          "$id": "556",
+          "$id": "558",
           "statusCodes": [
            202
           ],
           "headers": [
            {
-            "$id": "557",
+            "$id": "559",
             "name": "location",
             "nameInResponse": "Location",
             "doc": "The Location header contains the URL where the status of the long running operation can be checked.",
             "type": {
-             "$id": "558",
+             "$id": "560",
              "kind": "string",
              "name": "string",
              "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4671,12 +4679,12 @@
             }
            },
            {
-            "$id": "559",
+            "$id": "561",
             "name": "retryAfter",
             "nameInResponse": "Retry-After",
             "doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
             "type": {
-             "$id": "560",
+             "$id": "562",
              "kind": "int32",
              "name": "int32",
              "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -4687,7 +4695,7 @@
           "isErrorResponse": false
          },
          {
-          "$id": "561",
+          "$id": "563",
           "statusCodes": [
            204
           ],
@@ -4706,32 +4714,10 @@
        },
        "parameters": [
         {
-         "$id": "562",
+         "$id": "564",
          "name": "resourceGroupName",
          "nameInRequest": "resourceGroupName",
          "doc": "The name of the resource group. The name is case insensitive.",
-         "type": {
-          "$id": "563",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "location": "Path",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Method",
-         "decorators": [],
-         "skipUrlEncoding": false
-        },
-        {
-         "$id": "564",
-         "name": "fooName",
-         "nameInRequest": "fooName",
-         "doc": "The name of the Foo",
          "type": {
           "$id": "565",
           "kind": "string",
@@ -4751,13 +4737,35 @@
         },
         {
          "$id": "566",
+         "name": "fooName",
+         "nameInRequest": "fooName",
+         "doc": "The name of the Foo",
+         "type": {
+          "$id": "567",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "location": "Path",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "568",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
-          "$id": "567",
+          "$id": "569",
           "kind": "constant",
           "valueType": {
-           "$id": "568",
+           "$id": "570",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4778,17 +4786,17 @@
         }
        ],
        "response": {
-        "$id": "569"
+        "$id": "571"
        },
        "isOverride": false,
        "generateConvenient": true,
        "generateProtocol": true,
        "crossLanguageDefinitionId": "MgmtTypeSpec.Foos.delete",
        "lroMetadata": {
-        "$id": "570",
+        "$id": "572",
         "finalStateVia": 1,
         "finalResponse": {
-         "$id": "571",
+         "$id": "573",
          "statusCodes": [
           204
          ]
@@ -4796,7 +4804,7 @@
        }
       },
       {
-       "$id": "572",
+       "$id": "574",
        "kind": "paging",
        "name": "list",
        "accessibility": "public",
@@ -4805,19 +4813,19 @@
        ],
        "doc": "List Foo resources by resource group",
        "operation": {
-        "$id": "573",
+        "$id": "575",
         "name": "list",
         "resourceName": "Foo",
         "doc": "List Foo resources by resource group",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "574",
+          "$id": "576",
           "name": "apiVersion",
           "nameInRequest": "api-version",
           "doc": "The API version to use for this operation.",
           "type": {
-           "$id": "575",
+           "$id": "577",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4831,9 +4839,9 @@
           "isRequired": true,
           "kind": "Client",
           "defaultValue": {
-           "$id": "576",
+           "$id": "578",
            "type": {
-            "$id": "577",
+            "$id": "579",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string"
@@ -4844,17 +4852,17 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "578",
+          "$id": "580",
           "name": "subscriptionId",
           "nameInRequest": "subscriptionId",
           "doc": "The ID of the target subscription. The value must be an UUID.",
           "type": {
-           "$id": "579",
+           "$id": "581",
            "kind": "string",
            "name": "uuid",
            "crossLanguageDefinitionId": "Azure.Core.uuid",
            "baseType": {
-            "$id": "580",
+            "$id": "582",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4873,12 +4881,12 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "581",
+          "$id": "583",
           "name": "resourceGroupName",
           "nameInRequest": "resourceGroupName",
           "doc": "The name of the resource group. The name is case insensitive.",
           "type": {
-           "$id": "582",
+           "$id": "584",
            "kind": "string",
            "name": "string",
            "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4895,14 +4903,14 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "583",
+          "$id": "585",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
-           "$id": "584",
+           "$id": "586",
            "kind": "constant",
            "valueType": {
-            "$id": "585",
+            "$id": "587",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4924,7 +4932,7 @@
         ],
         "responses": [
          {
-          "$id": "586",
+          "$id": "588",
           "statusCodes": [
            200
           ],
@@ -4949,12 +4957,12 @@
        },
        "parameters": [
         {
-         "$id": "587",
+         "$id": "589",
          "name": "resourceGroupName",
          "nameInRequest": "resourceGroupName",
          "doc": "The name of the resource group. The name is case insensitive.",
          "type": {
-          "$id": "588",
+          "$id": "590",
           "kind": "string",
           "name": "string",
           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -4971,11 +4979,11 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "589",
+         "$id": "591",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
-          "$ref": "584"
+          "$ref": "586"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -4989,9 +4997,9 @@
         }
        ],
        "response": {
-        "$id": "590",
+        "$id": "592",
         "type": {
-         "$id": "591",
+         "$id": "593",
          "kind": "array",
          "name": "ArrayFoo",
          "valueType": {
@@ -5009,12 +5017,12 @@
        "generateProtocol": true,
        "crossLanguageDefinitionId": "MgmtTypeSpec.Foos.list",
        "pagingMetadata": {
-        "$id": "592",
+        "$id": "594",
         "itemPropertySegments": [
          "value"
         ],
         "nextLink": {
-         "$id": "593",
+         "$id": "595",
          "responseSegments": [
           "nextLink"
          ],
@@ -5025,12 +5033,12 @@
      ],
      "parameters": [
       {
-       "$id": "594",
+       "$id": "596",
        "name": "endpoint",
        "nameInRequest": "endpoint",
        "doc": "Service host",
        "type": {
-        "$id": "595",
+        "$id": "597",
         "kind": "url",
         "name": "url",
         "crossLanguageDefinitionId": "TypeSpec.url"
@@ -5044,9 +5052,9 @@
        "explode": false,
        "kind": "Client",
        "defaultValue": {
-        "$id": "596",
+        "$id": "598",
         "type": {
-         "$id": "597",
+         "$id": "599",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -5057,19 +5065,19 @@
      ],
      "decorators": [
       {
-       "$id": "598",
+       "$id": "600",
        "name": "Azure.ResourceManager.@armResourceOperations",
        "arguments": {
-        "$id": "599"
+        "$id": "601"
        }
       },
       {
-       "$id": "600",
+       "$id": "602",
        "name": "Azure.ClientGenerator.Core.@resourceSchema",
        "arguments": {
-        "$id": "601",
+        "$id": "603",
         "resourceModel": "MgmtTypeSpec.Foo",
-        "isSingleton": "false",
+        "isSingleton": false,
         "resourceType": "MgmtTypeSpec/foos"
        }
       }
@@ -5086,9 +5094,9 @@
   }
  ],
  "auth": {
-  "$id": "602",
+  "$id": "604",
   "oAuth2": {
-   "$id": "603",
+   "$id": "605",
    "scopes": [
     "user_impersonation"
    ]

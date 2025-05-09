@@ -36,7 +36,7 @@ var attachment = new MessageAttachment(
 
 PersistentAgentThread thread = client.Threads.CreateThread();
 
-ThreadMessage message = client.Messages.CreateMessage(
+PersistentThreadMessage message = client.Messages.CreateMessage(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "Can you give me the documented codes for 'banana' and 'orange'?",
@@ -69,7 +69,7 @@ var attachment = new MessageAttachment(
 
 PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
-ThreadMessage message = await client.Messages.CreateMessageAsync(
+PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "Can you give me the documented codes for 'banana' and 'orange'?",
@@ -121,9 +121,9 @@ Assert.AreEqual(
 
 4. In this example we will use the utility function `WriteMessages`, to print messages to the console.
 ```C# Snippet:AgentsCodeInterpreterFileAttachment_Print
-private static void WriteMessages(IEnumerable<ThreadMessage> messages)
+private static void WriteMessages(IEnumerable<PersistentThreadMessage> messages)
 {
-    foreach (ThreadMessage threadMessage in messages)
+    foreach (PersistentThreadMessage threadMessage in messages)
     {
         Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
         foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -146,7 +146,7 @@ private static void WriteMessages(IEnumerable<ThreadMessage> messages)
 
 Synchronous sample:
 ```C# Snippet:AgentsCodeInterpreterFileAttachmentSync_PrintMessages
-Pageable<ThreadMessage> messages = client.Messages.GetMessages(
+Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
@@ -155,7 +155,7 @@ WriteMessages(messages);
 
 Asynchronous sample:
 ```C# Snippet:AgentsCodeInterpreterFileAttachment_PrintMessages
-List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
+List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 ).ToListAsync();

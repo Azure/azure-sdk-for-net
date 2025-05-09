@@ -55,7 +55,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search_Streaming : Samples
         PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
         // Create message to thread
-        ThreadMessage message = await client.Messages.CreateMessageAsync(
+        PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
             "What is the temperature rating of the cozynights sleeping bag?");
@@ -133,7 +133,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search_Streaming : Samples
         PersistentAgentThread thread = client.Threads.CreateThread();
 
         // Create message to thread
-        ThreadMessage message = client.Messages.CreateMessage(
+        PersistentThreadMessage message = client.Messages.CreateMessage(
             thread.Id,
             MessageRole.User,
             "What is the temperature rating of the cozynights sleeping bag?");
