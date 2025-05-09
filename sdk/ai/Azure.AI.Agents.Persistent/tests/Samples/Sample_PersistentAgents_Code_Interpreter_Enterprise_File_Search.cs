@@ -55,7 +55,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
         #region Snippet:AgentsCodeInterpreterEnterpriseSearchAsync_CreateThreadRun
         PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
-        ThreadMessage message = await client.Messages.CreateMessageAsync(
+        PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
             threadId: thread.Id,
             role: MessageRole.User,
             content: "What does the attachment say?",
@@ -79,7 +79,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
             run.LastError?.Message);
         #endregion
         #region Snippet:AgentsCodeInterpreterEnterpriseSearchAsync_PrintMessages
-        List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
+        List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         ).ToListAsync();
@@ -129,7 +129,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
         #region Snippet:AgentsCodeInterpreterEnterpriseSearch_CreateThreadRun
         PersistentAgentThread thread = client.Threads.CreateThread();
 
-        ThreadMessage message = client.Messages.CreateMessage(
+        PersistentThreadMessage message = client.Messages.CreateMessage(
             threadId: thread.Id,
             role: MessageRole.User,
             content: "What does the attachment say?",
@@ -153,7 +153,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
             run.LastError?.Message);
         #endregion
         #region Snippet:AgentsCodeInterpreterEnterpriseSearch_PrintMessages
-        Pageable<ThreadMessage> messages = client.Messages.GetMessages(
+        Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
@@ -166,9 +166,9 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
     }
 
     #region Snippet:AgentsCodeInterpreterEnterpriseSearch_Print
-    private static void WriteMessages(IEnumerable<ThreadMessage> messages)
+    private static void WriteMessages(IEnumerable<PersistentThreadMessage> messages)
     {
-        foreach (ThreadMessage threadMessage in messages)
+        foreach (PersistentThreadMessage threadMessage in messages)
         {
             Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
             foreach (MessageContent contentItem in threadMessage.ContentItems)

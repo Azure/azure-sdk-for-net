@@ -1,4 +1,4 @@
-# Sample for basic use of an agent in Azure.AI.Agents.
+# Sample for basic use of an agent in Azure.AI.Agents.Persistent.
 
 In this example we will demonstrate creation and basic use of an agent step by step.
 
@@ -29,7 +29,7 @@ PersistentAgent agent = await client.Administration.CreateAgentAsync(
 );
 ```
 
-3. We will create thread as a separate resource.
+3. Create thread as a separate resource.
 
 Synchronous sample:
 ```C# Snippet:AgentsOverviewCreateThreadSync
@@ -41,11 +41,11 @@ Asynchronous sample:
 PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 ```
 
-4. We will add the message to the thread, containing a question for agent. This message must have `User` role.
+4. Add the message to the thread, containing a question for agent. This message must have `User` role.
 
 Synchronous sample:
 ```C# Snippet:AgentsOverviewCreateMessageSync
-ThreadMessage message = client.Messages.CreateMessage(
+PersistentThreadMessage message = client.Messages.CreateMessage(
     thread.Id,
     MessageRole.User,
     "I need to solve the equation `3x + 11 = 14`. Can you help me?");
@@ -53,7 +53,7 @@ ThreadMessage message = client.Messages.CreateMessage(
 
 Asynchronous sample:
 ```C# Snippet:AgentsOverviewCreateMessage
-ThreadMessage message = await client.Messages.CreateMessageAsync(
+PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     "I need to solve the equation `3x + 11 = 14`. Can you help me?");
@@ -113,11 +113,11 @@ Assert.AreEqual(
 
 Synchronous sample:
 ```C# Snippet:AgentsOverviewListUpdatedMessagesSync
-Pageable<ThreadMessage> messages
+Pageable<PersistentThreadMessage> messages
     = client.Messages.GetMessages(
         threadId: thread.Id, order: ListSortOrder.Ascending);
 
-foreach (ThreadMessage threadMessage in messages)
+foreach (PersistentThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -137,11 +137,11 @@ foreach (ThreadMessage threadMessage in messages)
 
 Asynchronous sample:
 ```C# Snippet:AgentsOverviewListUpdatedMessages
-AsyncPageable<ThreadMessage> messages
+AsyncPageable<PersistentThreadMessage> messages
     = client.Messages.GetMessagesAsync(
         threadId: thread.Id, order: ListSortOrder.Ascending);
 
-await foreach (ThreadMessage threadMessage in messages)
+await foreach (PersistentThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)

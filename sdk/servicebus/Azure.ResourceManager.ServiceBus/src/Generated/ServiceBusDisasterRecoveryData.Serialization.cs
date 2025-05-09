@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.ServiceBus
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceBusContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

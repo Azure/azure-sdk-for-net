@@ -312,7 +312,7 @@ namespace Azure.AI.Agents.Persistent
             float? topP = default;
             int? maxPromptTokens = default;
             int? maxCompletionTokens = default;
-            TruncationObject truncationStrategy = default;
+            Truncation truncationStrategy = default;
             BinaryData toolChoice = default;
             BinaryData responseFormat = default;
             IReadOnlyDictionary<string, string> metadata = default;
@@ -484,7 +484,7 @@ namespace Azure.AI.Agents.Persistent
                         truncationStrategy = null;
                         continue;
                     }
-                    truncationStrategy = TruncationObject.DeserializeTruncationObject(property.Value, options);
+                    truncationStrategy = Truncation.DeserializeTruncation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tool_choice"u8))
@@ -582,7 +582,7 @@ namespace Azure.AI.Agents.Persistent
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ThreadRun)} does not support writing '{options.Format}' format.");
             }

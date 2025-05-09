@@ -10,9 +10,9 @@ namespace Azure.AI.Agents.Persistent;
 /// <summary>
 /// The update type presented when the status of a message changes.
 /// </summary>
-public class MessageStatusUpdate : StreamingUpdate<ThreadMessage>
+public class MessageStatusUpdate : StreamingUpdate<PersistentThreadMessage>
 {
-    internal MessageStatusUpdate(ThreadMessage message, StreamingUpdateReason updateKind)
+    internal MessageStatusUpdate(PersistentThreadMessage message, StreamingUpdateReason updateKind)
         : base(message, updateKind)
     { }
 
@@ -21,7 +21,7 @@ public class MessageStatusUpdate : StreamingUpdate<ThreadMessage>
         StreamingUpdateReason updateKind,
         ModelReaderWriterOptions options = null)
     {
-        ThreadMessage message = ThreadMessage.DeserializeThreadMessage(element, options);
+        PersistentThreadMessage message = PersistentThreadMessage.DeserializePersistentThreadMessage(element, options);
         return updateKind switch
         {
             _ => [new MessageStatusUpdate(message, updateKind)],

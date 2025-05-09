@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 
         DataReplicationExtensionResource IOperationSource<DataReplicationExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataReplicationExtensionData>(response.Content);
+            var data = ModelReaderWriter.Read<DataReplicationExtensionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
             return new DataReplicationExtensionResource(_client, data);
         }
 
         async ValueTask<DataReplicationExtensionResource> IOperationSource<DataReplicationExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataReplicationExtensionData>(response.Content);
+            var data = ModelReaderWriter.Read<DataReplicationExtensionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
             return await Task.FromResult(new DataReplicationExtensionResource(_client, data)).ConfigureAwait(false);
         }
     }

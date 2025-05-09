@@ -1,4 +1,4 @@
-# Sample for Azure.AI.Agents and batch file search.
+# Sample for Azure.AI.Agents.Persistent and batch file search.
 
 1. To perform batch file search by an agent, we first need to upload a file, create a vector store, and associate the file to the vector store. Here is an example:
 
@@ -9,7 +9,7 @@ var modelName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME
 var filePath = GetFile();
 PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
-VectorStore vectorStore = client.VectorStores.CreateVectorStore(
+PersistentAgentsVectorStore vectorStore = client.VectorStores.CreateVectorStore(
     name: "sample_vector_store"
 );
 
@@ -44,7 +44,7 @@ var modelName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME
 var filePath = GetFile();
 PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
-VectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
+PersistentAgentsVectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
     name: "sample_vector_store"
 );
 
@@ -78,7 +78,7 @@ Synchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchFileSearchThreadAndResponse
 PersistentAgentThread thread = client.Threads.CreateThread();
 
-ThreadMessage message = client.Messages.CreateMessage(
+PersistentThreadMessage message = client.Messages.CreateMessage(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "What feature does Smart Eyewear offer?"
@@ -101,7 +101,7 @@ Assert.AreEqual(
     RunStatus.Completed,
     run.Status,
     run.LastError?.Message);
-Pageable<ThreadMessage> messages = client.Messages.GetMessages(
+Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
@@ -112,7 +112,7 @@ Asynchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchFileSearchAsyncThreadAndResponse
 PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
-ThreadMessage message = await client.Messages.CreateMessageAsync(
+PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "What feature does Smart Eyewear offer?"
@@ -134,18 +134,18 @@ Assert.AreEqual(
     RunStatus.Completed,
     run.Status,
     run.LastError?.Message);
-List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
+List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 ).ToListAsync();
 WriteMessages(messages, dtReferences);
 ```
 
-3. After the run complete, we will use `WriteMessages` method to swap reference placeholders by the actual file names.
+3. After the run complete, we will use `WriteMessages` method to swap reference placeholders by the actual file names or IDs.
 ```C# Snippet:AgentsVectorStoreBatchFileSearchParseResults
-private static void WriteMessages(IEnumerable<ThreadMessage> messages, Dictionary<string, string> fileIds)
+private static void WriteMessages(IEnumerable<PersistentThreadMessage> messages, Dictionary<string, string> fileIds)
 {
-    foreach (ThreadMessage threadMessage in messages)
+    foreach (PersistentThreadMessage threadMessage in messages)
     {
         Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
         foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -191,12 +191,12 @@ private static string replaceReferences(Dictionary<string, string> fileIds, stri
 }
 ```
 
-4. When the experiment is complete, we will clean up the resources.
+4. Finally we will clean up the resources.
 
 Synchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchFileSearchCleanup
-VectorStoreDeletionStatus delTask = client.VectorStores.DeleteVectorStore(vectorStore.Id);
-if (delTask.Deleted)
+bool delTask = client.VectorStores.DeleteVectorStore(vectorStore.Id);
+if (delTask)
 {
     Console.WriteLine($"Deleted vector store {vectorStore.Id}");
 }
@@ -209,8 +209,8 @@ client.Administration.DeleteAgent(agent.Id);
 
 Asynchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchFileSearchAsyncCleanup
-VectorStoreDeletionStatus delTask = await client.VectorStores.DeleteVectorStoreAsync(vectorStore.Id);
-if (delTask.Deleted)
+bool delTask = await client.VectorStores.DeleteVectorStoreAsync(vectorStore.Id);
+if (delTask)
 {
     Console.WriteLine($"Deleted vector store {vectorStore.Id}");
 }

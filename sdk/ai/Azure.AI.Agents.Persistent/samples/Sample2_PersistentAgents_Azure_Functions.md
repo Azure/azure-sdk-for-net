@@ -1,7 +1,7 @@
-# Sample for using Azure Functions with agents in Azure.AI.Agents.
+# Sample for using Azure Functions with agents in Azure.AI.Agents.Persistent.
 
 # Prerequisites
-To make a function call we need to create and deploy the Azure function. In the code snippet below, we have an example of function on C# which can be used by the code above.
+To make a function call we need to create and deploy the Azure function. In the code snippet below, we have an example of function on C# which can be used by the agent.
 
 ```C#
 namespace FunctionProj
@@ -55,7 +55,7 @@ namespace FunctionProj
 
 In this code we define function input and output class: `Arguments` and `Response` respectively. These two data classes will be serialized in JSON. It is important that these both contain field `CorrelationId`, which is the same between input and output.
 
-In our example the function will be stored in the storage account, created with the AI hub. For that we need to allow key access to that storage. In Azure portal go to Storage account > Settings > Configuration and set "Allow storage account key access" to Enabled. If it is not done, the error will be displayed "The remote server returned an error: (403) Forbidden." To create the function resource that will host our function, install azure-cli python package and run the next command:
+In our example the function will be stored in the storage account, created with the AI hub. For that we need to allow key access to that storage. In Azure portal go to Storage account > Settings > Configuration and set "Allow storage account key access" to Enabled. If it is not done, the error will be displayed "The remote server returned an error: (403) Forbidden." To create the function resource that will host our function, install [azure-cli](https://pypi.org/project/azure-cli/) python package and run the next command:
 
 ```shell
 pip install -U azure-cli
@@ -90,7 +90,7 @@ In the `storage_account_already_present_in_resource_group` select the `Queue ser
 }
 ```
 
-Next, we will monitor the output queue or the message. You should receive the next message.
+After the processing, the output queue should contain the message with the following contents:
 ```json
 {
   "Value": "Bar",
@@ -98,11 +98,11 @@ Next, we will monitor the output queue or the message. You should receive the ne
 }
 ```
 Please note that the input `CorrelationId` is the same as output.
-*Hint:* Place multiple messages to input queue and keep second internet browser window with the output queue open and hit the refresh button on the portal user interface, so that you will not miss the message. If the message instead went to `azure-function-foo-input-poison` queue, the function completed with error, please check your setup.
+*Hint:* Place multiple messages to input queue and keep second internet browser window with the output queue open, hit the refresh button on the portal user interface, so that you will not miss the message. If the function completed with error the message instead gets into the `azure-function-foo-input-poison` queue. If that happened, please check your setup.
 After we have tested the function and made sure it works, please make sure that the Azure AI Project have the next roles for the storage account: `Storage Account Contributor`, `Storage Blob Data Contributor`, `Storage File Data Privileged Contributor`, `Storage Queue Data Contributor` and `Storage Table Data Contributor`. Now the function is ready to be used by the agent.
 
 In the example below we are calling function "foo", which responds "Bar". 
-1. We create `AzureFunctionToolDefinition` object, with the function name, description, input and output queues, followed by function parameters. Plus we need to read in environment variables to get necessary parameters.
+1. We create `AzureFunctionToolDefinition` object, with the function name, description, input and output queues, followed by function parameters. We need to read in environment variables to get necessary parameters.
 ```C# Snippet:AgentsAzureFunctionsDefineFunctionTools
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -148,7 +148,7 @@ AzureFunctionToolDefinition azureFnTool = new(
 );
 ```
 
-2. Next we need to create an agent. In this scenario we are asking it to supply storage queue URI to the azure function whenever it is called.
+2. Create an agent. In this scenario we are asking it to supply storage queue URI to the azure function whenever it is called.
 
 Synchronous sample:
 ```C# Snippet:AgentsAzureFunctionsCreateAgentWithFunctionToolsSync
@@ -184,7 +184,7 @@ Synchronous sample:
 ```C# Snippet:AgentsAzureFunctionsHandlePollingWithRequiredActionSync
 PersistentAgentThread thread = client.Threads.CreateThread();
 
-ThreadMessage message = client.Messages.CreateMessage(
+PersistentThreadMessage message = client.Messages.CreateMessage(
     thread.Id,
     MessageRole.User,
     "What is the most prevalent element in the universe? What would foo say?");
@@ -209,7 +209,7 @@ Asynchronous sample:
 ```C# Snippet:AgentsAzureFunctionsHandlePollingWithRequiredAction
 PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
-ThreadMessage message = await client.Messages.CreateMessageAsync(
+PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     "What is the most prevalent element in the universe? What would foo say?");
@@ -230,16 +230,16 @@ Assert.AreEqual(
     run.LastError?.Message);
 ```
 
-4. Finally, we will print out the messages to the console in chronological order.
+4. Print out the messages to the console in chronological order.
 
 Synchronous sample:
 ```C# Snippet:AgentsAzureFunctionsPrintSync
-Pageable<ThreadMessage> messages = client.Messages.GetMessages(
+Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
 
-foreach (ThreadMessage threadMessage in messages)
+foreach (PersistentThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -259,12 +259,12 @@ foreach (ThreadMessage threadMessage in messages)
 
 Asynchronous sample:
 ```C# Snippet:AgentsAzureFunctionsPrint
-AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(
+AsyncPageable<PersistentThreadMessage> messages = client.Messages.GetMessagesAsync(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
 
-await foreach (ThreadMessage threadMessage in messages)
+await foreach (PersistentThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)

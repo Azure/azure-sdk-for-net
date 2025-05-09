@@ -15,6 +15,8 @@ namespace _Type.Property.AdditionalProperties
 {
     public partial class DifferentSpreadModelArrayRecord : IJsonModel<DifferentSpreadModelArrayRecord>
     {
+        internal DifferentSpreadModelArrayRecord() => throw null;
+
         void IJsonModel<DifferentSpreadModelArrayRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

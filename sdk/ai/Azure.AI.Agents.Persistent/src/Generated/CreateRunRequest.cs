@@ -103,7 +103,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="parallelToolCalls"> If `true` functions will run in parallel during tool use. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateRunRequest(string assistantId, string overrideModelName, string overrideInstructions, string additionalInstructions, IReadOnlyList<ThreadMessageOptions> additionalMessages, IReadOnlyList<ToolDefinition> overrideTools, bool? stream, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, TruncationObject truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, bool? parallelToolCalls, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateRunRequest(string assistantId, string overrideModelName, string overrideInstructions, string additionalInstructions, IReadOnlyList<ThreadMessageOptions> additionalMessages, IReadOnlyList<ToolDefinition> overrideTools, bool? stream, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, Truncation truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, bool? parallelToolCalls, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AssistantId = assistantId;
             OverrideModelName = overrideModelName;
@@ -179,7 +179,7 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         public int? MaxCompletionTokens { get; }
         /// <summary> The strategy to use for dropping messages as the context windows moves forward. </summary>
-        public TruncationObject TruncationStrategy { get; }
+        public Truncation TruncationStrategy { get; }
         /// <summary>
         /// Controls whether or not and which tool is called by the model.
         /// <para>

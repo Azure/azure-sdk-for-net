@@ -1,4 +1,4 @@
-# Sample file search on agent with message attachment and code interpreter in Azure.AI.Agents.
+# Sample file search on agent with message attachment and code interpreter in Azure.AI.Agents.Persistent.
 
 In this example we demonstrate, how to use file search with `MessageAttachment`.
 
@@ -9,7 +9,7 @@ var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLO
 PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 ```
 
-2. We need to create an agent, create and upload file and `ThreadMessage` with the uploaded file ID in the `MessageAttachment`.
+2. We need to create an agent, create and upload file and message with the uploaded file ID in the `MessageAttachment`.
 
 Synchronous sample:
 ```C# Snippet:AgentsCreateAgentWithInterpreterToolSync
@@ -36,7 +36,7 @@ var attachment = new MessageAttachment(
 
 PersistentAgentThread thread = client.Threads.CreateThread();
 
-ThreadMessage message = client.Messages.CreateMessage(
+PersistentThreadMessage message = client.Messages.CreateMessage(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "Can you give me the documented codes for 'banana' and 'orange'?",
@@ -69,7 +69,7 @@ var attachment = new MessageAttachment(
 
 PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
-ThreadMessage message = await client.Messages.CreateMessageAsync(
+PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "Can you give me the documented codes for 'banana' and 'orange'?",
@@ -77,7 +77,7 @@ ThreadMessage message = await client.Messages.CreateMessageAsync(
 );
 ```
 
-3. Next we will create a `ThreadRun` and wait until the run is completed. If the run was not successful we will print the last error message.
+3. Next we will create a run and wait until the run is completed. If the run was not successful we will print the last error message.
 
 Synchronous sample:
 ```C# Snippet:AgentsCodeInterpreterFileAttachmentSync_CreateRun
@@ -121,9 +121,9 @@ Assert.AreEqual(
 
 4. In this example we will use the utility function `WriteMessages`, to print messages to the console.
 ```C# Snippet:AgentsCodeInterpreterFileAttachment_Print
-private static void WriteMessages(IEnumerable<ThreadMessage> messages)
+private static void WriteMessages(IEnumerable<PersistentThreadMessage> messages)
 {
-    foreach (ThreadMessage threadMessage in messages)
+    foreach (PersistentThreadMessage threadMessage in messages)
     {
         Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
         foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -146,7 +146,7 @@ private static void WriteMessages(IEnumerable<ThreadMessage> messages)
 
 Synchronous sample:
 ```C# Snippet:AgentsCodeInterpreterFileAttachmentSync_PrintMessages
-Pageable<ThreadMessage> messages = client.Messages.GetMessages(
+Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
@@ -155,14 +155,14 @@ WriteMessages(messages);
 
 Asynchronous sample:
 ```C# Snippet:AgentsCodeInterpreterFileAttachment_PrintMessages
-List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
+List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 ).ToListAsync();
 WriteMessages(messages);
 ```
 
-6. Finally, we delete all the resources, we have created in this sample.
+6. Finally, delete all the resources, we have created in this sample.
 
 Synchronous sample:
 ```C# Snippet:AgentsCodeInterpreterFileAttachmentSync_Cleanup

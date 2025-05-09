@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppPlatformContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RegenerateAppPlatformServiceTestKeyContent)} does not support writing '{options.Format}' format.");
             }

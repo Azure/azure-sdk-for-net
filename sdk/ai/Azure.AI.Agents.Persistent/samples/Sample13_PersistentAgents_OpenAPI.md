@@ -1,6 +1,6 @@
-# Sample using agents with OpenAPI tool in Azure.AI.Agents.
+# Sample using agents with OpenAPI tool in Azure.AI.Agents.Persistent.
 
-In this example we will demonstrate the possibility to use services with [OpenAPI Specification](https://en.wikipedia.org/wiki/OpenAPI_Specification) with the agent. We will use [wttr.in](https://wttr.in) service to get weather and its specification file [weather_openapi.json](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/tests/Samples/Agent/weather_openapi.json). To get this file we will use the utility function `GetFile`, which takes file located in the `C#` source directory.
+In this example we will demonstrate the possibility to use services with [OpenAPI Specification](https://en.wikipedia.org/wiki/OpenAPI_Specification) with the agent. We will use [wttr.in](https://wttr.in) service to get weather and its specification file [weather_openapi.json](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Agents.Persistent/tests/Samples/weather_openapi.json). To get this file we will use the utility function `GetFile`, which takes file located in the `C#` source directory.
 ```C# Snippet:AgentsOpenAPICallingExample_GetFile
 private static string GetFile([CallerFilePath] string pth = "")
 {
@@ -57,12 +57,12 @@ PersistentAgent agent = await client.Administration.CreateAgentAsync(
 );
 ```
 
-3. Now we will create a `ThreadRun` and wait until it is complete. If the run will not be successful, we will print the last error.
+3. Now we will create a run and wait until it is complete. If the run will not be successful, we will print the last error.
 
 Synchronous sample:
 ```C# Snippet:AgentsOpenAPISyncHandlePollingWithRequiredAction
 PersistentAgentThread thread = client.Threads.CreateThread();
-ThreadMessage message = client.Messages.CreateMessage(
+PersistentThreadMessage message = client.Messages.CreateMessage(
     thread.Id,
     MessageRole.User,
     "What's the weather in Seattle?");
@@ -86,7 +86,7 @@ Assert.AreEqual(
 Asynchronous sample:
 ```C# Snippet:AgentsOpenAPIHandlePollingWithRequiredAction
 PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
-ThreadMessage message = await client.Messages.CreateMessageAsync(
+PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     "What's the weather in Seattle?");
@@ -111,12 +111,12 @@ Assert.AreEqual(
 
 Synchronous sample:
 ```C# Snippet:AgentsOpenAPISync_Print
-Pageable<ThreadMessage> messages = client.Messages.GetMessages(
+Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
 
-foreach (ThreadMessage threadMessage in messages)
+foreach (PersistentThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -136,12 +136,12 @@ foreach (ThreadMessage threadMessage in messages)
 
 Asynchronous sample:
 ```C# Snippet:AgentsOpenAPI_Print
-AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(
+AsyncPageable<PersistentThreadMessage> messages = client.Messages.GetMessagesAsync(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
 
-await foreach (ThreadMessage threadMessage in messages)
+await foreach (PersistentThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -159,7 +159,7 @@ await foreach (ThreadMessage threadMessage in messages)
 }
 ```
 
-5. Finally, we delete all the resources, we have created in this sample.
+5. Finally, delete all the resources, we have created in this sample.
 
 Synchronous sample:
 ```C# Snippet:AgentsOpenAPISync_Cleanup

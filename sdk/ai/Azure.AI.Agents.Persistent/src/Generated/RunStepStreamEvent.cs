@@ -22,22 +22,22 @@ namespace Azure.AI.Agents.Persistent
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ThreadRunStepCreatedValue = "thread.run.step.created";
-        private const string ThreadRunStepInProgressValue = "thread.run.step.in_progress";
-        private const string ThreadRunStepDeltaValue = "thread.run.step.delta";
-        private const string ThreadRunStepCompletedValue = "thread.run.step.completed";
+        private const string CreatedValue = "thread.run.step.created";
+        private const string InProgressValue = "thread.run.step.in_progress";
+        private const string DeltaValue = "thread.run.step.delta";
+        private const string CompletedValue = "thread.run.step.completed";
         private const string ThreadRunStepFailedValue = "thread.run.step.failed";
         private const string ThreadRunStepCancelledValue = "thread.run.step.cancelled";
         private const string ThreadRunStepExpiredValue = "thread.run.step.expired";
 
         /// <summary> Event sent when a new thread run step is created. The data of this event is of type RunStep. </summary>
-        public static RunStepStreamEvent ThreadRunStepCreated { get; } = new RunStepStreamEvent(ThreadRunStepCreatedValue);
+        public static RunStepStreamEvent Created { get; } = new RunStepStreamEvent(CreatedValue);
         /// <summary> Event sent when a run step moves to `in_progress` status. The data of this event is of type RunStep. </summary>
-        public static RunStepStreamEvent ThreadRunStepInProgress { get; } = new RunStepStreamEvent(ThreadRunStepInProgressValue);
+        public static RunStepStreamEvent InProgress { get; } = new RunStepStreamEvent(InProgressValue);
         /// <summary> Event sent when a run step is being streamed. The data of this event is of type RunStepDeltaChunk. </summary>
-        public static RunStepStreamEvent ThreadRunStepDelta { get; } = new RunStepStreamEvent(ThreadRunStepDeltaValue);
+        public static RunStepStreamEvent Delta { get; } = new RunStepStreamEvent(DeltaValue);
         /// <summary> Event sent when a run step is completed. The data of this event is of type RunStep. </summary>
-        public static RunStepStreamEvent ThreadRunStepCompleted { get; } = new RunStepStreamEvent(ThreadRunStepCompletedValue);
+        public static RunStepStreamEvent Completed { get; } = new RunStepStreamEvent(CompletedValue);
         /// <summary> Event sent when a run step fails. The data of this event is of type RunStep. </summary>
         public static RunStepStreamEvent ThreadRunStepFailed { get; } = new RunStepStreamEvent(ThreadRunStepFailedValue);
         /// <summary> Event sent when a run step is cancelled. The data of this event is of type RunStep. </summary>

@@ -1,4 +1,4 @@
-# Sample using agents with Azure AI Search tool in Azure.AI.Agents.
+# Sample using agents with Azure AI Search tool in Azure.AI.Agents.Persistent.
 
 Azure AI Search is an enterprise search system for high-performance applications.
 It integrates with Azure OpenAI Service and Azure Machine Learning, offering advanced
@@ -8,14 +8,14 @@ Search requires an existing Azure AI Search Index. For more information and setu
 guides, see [Azure AI Search Tool Guide](https://learn.microsoft.com/azure/ai-services/agents/how-to/tools/azure-ai-search).
 In this example we will use the existing Azure AI Search Index as a tool for an agent.
 
-1. First we need to create an agent and read the environment variables, which will be used in the next steps.
+1. First we need to read the environment variables, which will be used in the next steps.
 ```C# Snippet:AgentsAzureAISearchExample_CreateProjectClient
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var connectionID = System.Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_ID");
 ```
 
-2. Create an agent with `AzureAISearchToolDefinition` and `ToolResources` with the only member `AzureAISearchResource` to be able to perform search. We will use `connectionID` to get the Azure AI Search resource.
+2. Create an agent with `AzureAISearchToolDefinition` and `ToolResources` with the only member `AzureAISearchResource` to be able to perform search. We will use `connectionID` to get the Azure AI Search resource. These tools and tool resources will be supplied to `CreateAgent` method.
 
 Synchronous sample:
 ```C# Snippet:AgentsCreateAgentWithAzureAISearchTool_Sync
@@ -65,7 +65,7 @@ PersistentAgent agent = await client.Administration.CreateAgentAsync(
    toolResources: toolResource);
 ```
 
-3. Now we will create a `ThreadRun` and wait until it is complete. If the run will not be successful, we will print the last error.
+3. Now we will create a run and wait until it is complete. If the run will not be successful, we will print the last error.
 
 Synchronous sample:
 ```C# Snippet:AgentsAzureAISearchExample_CreateRun_Sync
@@ -73,7 +73,7 @@ Synchronous sample:
 PersistentAgentThread thread = client.Threads.CreateThread();
 
 // Create message to thread
-ThreadMessage message = client.Messages.CreateMessage(
+PersistentThreadMessage message = client.Messages.CreateMessage(
     thread.Id,
     MessageRole.User,
     "What is the temperature rating of the cozynights sleeping bag?");
@@ -101,7 +101,7 @@ Asynchronous sample:
 PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
 // Create message to thread
-ThreadMessage message = await client.Messages.CreateMessageAsync(
+PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     "What is the temperature rating of the cozynights sleeping bag?");
@@ -127,12 +127,12 @@ Assert.AreEqual(
 
 Synchronous sample:
 ```C# Snippet:AgentsPopulateReferencesAgentWithAzureAISearchTool_Sync
-Pageable<ThreadMessage> messages = client.Messages.GetMessages(
+Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
 
-foreach (ThreadMessage threadMessage in messages)
+foreach (PersistentThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -145,11 +145,11 @@ foreach (ThreadMessage threadMessage in messages)
                 string annotatedText = textItem.Text;
                 foreach (MessageTextAnnotation annotation in textItem.Annotations)
                 {
-                    if (annotation is MessageTextUrlCitationAnnotation urlAnnotation)
+                    if (annotation is MessageTextUriCitationAnnotation uriAnnotation)
                     {
                         annotatedText = annotatedText.Replace(
-                            urlAnnotation.Text,
-                            $" [see {urlAnnotation.UrlCitation.Title}] ({urlAnnotation.UrlCitation.Url})");
+                            uriAnnotation.Text,
+                            $" [see {uriAnnotation.UriCitation.Title}] ({uriAnnotation.UriCitation.Uri})");
                     }
                 }
                 Console.Write(annotatedText);
@@ -170,12 +170,12 @@ foreach (ThreadMessage threadMessage in messages)
 
 Asynchronous sample:
 ```C# Snippet:AgentsPopulateReferencesAgentWithAzureAISearchTool
-AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(
+AsyncPageable<PersistentThreadMessage> messages = client.Messages.GetMessagesAsync(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
 
-await foreach (ThreadMessage threadMessage in messages)
+await foreach (PersistentThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -188,11 +188,11 @@ await foreach (ThreadMessage threadMessage in messages)
                 string annotatedText = textItem.Text;
                 foreach (MessageTextAnnotation annotation in textItem.Annotations)
                 {
-                    if (annotation is MessageTextUrlCitationAnnotation urlAnnotation)
+                    if (annotation is MessageTextUriCitationAnnotation uriAnnotation)
                     {
                         annotatedText = annotatedText.Replace(
-                            urlAnnotation.Text,
-                            $" [see {urlAnnotation.UrlCitation.Title}] ({urlAnnotation.UrlCitation.Url})");
+                            uriAnnotation.Text,
+                            $" [see {uriAnnotation.UriCitation.Title}] ({uriAnnotation.UriCitation.Uri})");
                     }
                 }
                 Console.Write(annotatedText);
@@ -211,7 +211,7 @@ await foreach (ThreadMessage threadMessage in messages)
 }
 ```
 
-5. Finally, we delete all the resources, we have created in this sample.
+5. Finally, delete all the resources, we have created in this sample.
 
 Synchronous sample:
 ```C# Snippet:AgentsAzureAISearchExample_Cleanup_Sync

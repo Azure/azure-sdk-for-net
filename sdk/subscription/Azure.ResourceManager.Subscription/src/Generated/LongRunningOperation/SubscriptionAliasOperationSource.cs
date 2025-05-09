@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Subscription
 
         SubscriptionAliasResource IOperationSource<SubscriptionAliasResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SubscriptionAliasData>(response.Content);
+            var data = ModelReaderWriter.Read<SubscriptionAliasData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSubscriptionContext.Default);
             return new SubscriptionAliasResource(_client, data);
         }
 
         async ValueTask<SubscriptionAliasResource> IOperationSource<SubscriptionAliasResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SubscriptionAliasData>(response.Content);
+            var data = ModelReaderWriter.Read<SubscriptionAliasData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSubscriptionContext.Default);
             return await Task.FromResult(new SubscriptionAliasResource(_client, data)).ConfigureAwait(false);
         }
     }
