@@ -165,7 +165,7 @@ namespace Azure.Communication.Identity.Samples
             client = CreateClient();
             #region Snippet:CreateCommunicationUserAndTokenWithCustomExpiration
             TimeSpan tokenExpiresIn = TimeSpan.FromHours(1);
-            Response<CommunicationUserIdentifierAndToken> response = client.CreateUserAndToken(scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn);
+            Response<CommunicationUserIdentifierAndToken> response = client.CreateUserAndToken(customId: "alice@contoso.com", scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn);
             var (user, token) = response.Value;
             Console.WriteLine($"User id: {user.Id}");
             Console.WriteLine($"Token: {token.Token}");
@@ -184,6 +184,68 @@ namespace Azure.Communication.Identity.Samples
             Console.WriteLine($"User id: {user.Id}");
             Console.WriteLine($"Token: {token.Token}");
             #endregion Snippet:CreateCommunicationToken
+        }
+
+        [Test]
+        [SyncOnly]
+        public void CreateCommunicationUserWithCustomId()
+        {
+            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
+            var client = new CommunicationIdentityClient(connectionString);
+            client = CreateClient();
+            #region  Snippet:CreateCommunicationUserWithCustomId
+            Response<CommunicationUserIdentifier> userResponse = client.CreateUser(customId: "alice@contoso.com");
+            CommunicationUserIdentifier user = userResponse.Value;
+            Console.WriteLine($"User id: {user.Id}");
+            #endregion Snippet:CreateCommunicationUserWithCustomId
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task CreateCommunicationUserWithCustomlIdAsync()
+        {
+            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
+            var client = new CommunicationIdentityClient(connectionString);
+            client = CreateClient();
+            #region  Snippet:CreateCommunicationUserWithCustomIdAsync
+            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(customId: "alice@contoso.com");
+            CommunicationUserIdentifier user = userResponse.Value;
+            Console.WriteLine($"User id: {user.Id}");
+            #endregion Snippet:CreateCommunicationUserWithCustomIdAsync
+        }
+
+        [Test]
+        [SyncOnly]
+        public async Task GetUserDetail()
+        {
+            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
+            var client = new CommunicationIdentityClient(connectionString);
+            client = CreateClient();
+            #region  Snippet:GetUserDetail
+            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(customId: "alice@contoso.com");
+            CommunicationUserIdentifier user = userResponse.Value;
+            var userDetails = client.GetUserDetail(user);
+            Console.WriteLine($"User id: {userDetails.Value.User.Id}");
+            Console.WriteLine($"Custom id: {userDetails.Value.CustomId}");
+            Console.WriteLine($"Last token issued at: {userDetails.Value.LastTokenIssuedAt}");
+            #endregion Snippet:GetUserDetail
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task GetUserDetailAsync()
+        {
+            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
+            var client = new CommunicationIdentityClient(connectionString);
+            client = CreateClient();
+            #region  Snippet:GetUserDetailAsync
+            Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync(customId: "alice@contoso.com");
+            CommunicationUserIdentifier user = userResponse.Value;
+            var userDetails = await client.GetUserDetailAsync(user);
+            Console.WriteLine($"User id: {userDetails.Value.User.Id}");
+            Console.WriteLine($"Custom id: {userDetails.Value.CustomId}");
+            Console.WriteLine($"Last token issued at: {userDetails.Value.LastTokenIssuedAt}");
+            #endregion Snippet:GetUserDetailAsync
         }
 
         [Test]

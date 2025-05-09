@@ -15,6 +15,8 @@ namespace SpecialWords._Models
 {
     public partial class Yield : IJsonModel<Yield>
     {
+        internal Yield() => throw null;
+
         void IJsonModel<Yield>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

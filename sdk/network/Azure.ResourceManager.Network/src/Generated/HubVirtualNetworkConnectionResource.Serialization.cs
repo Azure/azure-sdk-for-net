@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         HubVirtualNetworkConnectionData IJsonModel<HubVirtualNetworkConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HubVirtualNetworkConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HubVirtualNetworkConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HubVirtualNetworkConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HubVirtualNetworkConnectionData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        HubVirtualNetworkConnectionData IPersistableModel<HubVirtualNetworkConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HubVirtualNetworkConnectionData>(data, options);
+        HubVirtualNetworkConnectionData IPersistableModel<HubVirtualNetworkConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HubVirtualNetworkConnectionData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<HubVirtualNetworkConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HubVirtualNetworkConnectionData>)Data).GetFormatFromOptions(options);
     }

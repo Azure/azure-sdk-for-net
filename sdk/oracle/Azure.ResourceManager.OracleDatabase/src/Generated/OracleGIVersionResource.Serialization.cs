@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.OracleDatabase
 
         OracleGIVersionData IJsonModel<OracleGIVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OracleGIVersionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<OracleGIVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<OracleGIVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OracleGIVersionData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        OracleGIVersionData IPersistableModel<OracleGIVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OracleGIVersionData>(data, options);
+        OracleGIVersionData IPersistableModel<OracleGIVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OracleGIVersionData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
         string IPersistableModel<OracleGIVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OracleGIVersionData>)Data).GetFormatFromOptions(options);
     }

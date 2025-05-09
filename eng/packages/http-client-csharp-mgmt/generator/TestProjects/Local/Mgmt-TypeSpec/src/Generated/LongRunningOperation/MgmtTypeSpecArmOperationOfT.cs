@@ -24,10 +24,14 @@ namespace MgmtTypeSpec
         private readonly NextLinkOperationImplementation _nextLinkOperation;
         private readonly string _operationId;
 
+        /// <summary> Initializes a new instance of MgmtTypeSpecArmOperation for mocking. </summary>
         protected MgmtTypeSpecArmOperation()
         {
         }
 
+        /// <summary></summary>
+        /// <param name="response"> The operation response. </param>
+        /// <param name="rehydrationToken"> The token to rehydrate the operation. </param>
         internal MgmtTypeSpecArmOperation(Response<T> response, RehydrationToken? rehydrationToken = null)
         {
             _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
@@ -35,6 +39,15 @@ namespace MgmtTypeSpec
             _operationId = GetOperationId(rehydrationToken);
         }
 
+        /// <summary></summary>
+        /// <param name="source"> The instance of <see cref="IOperationSource{T}"/>. </param>
+        /// <param name="clientDiagnostics"> The instance of <see cref="ClientDiagnostics"/>. </param>
+        /// <param name="pipeline"> The instance of <see cref="HttpPipeline"/>. </param>
+        /// <param name="request"> The operation request. </param>
+        /// <param name="response"> The opertion response. </param>
+        /// <param name="finalStateVia"> The finalStateVia of the operation. </param>
+        /// <param name="skipApiVersionOverride"> If should skip Api version override. </param>
+        /// <param name="apiVersionOverrideValue"> The Api version override value. </param>
         internal MgmtTypeSpecArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
             IOperation nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
@@ -69,6 +82,7 @@ namespace MgmtTypeSpec
         /// <summary> Gets the HasCompleted. </summary>
         public override bool HasCompleted => _operation.HasCompleted;
 
+        /// <param name="rehydrationToken"> The token to rehydrate a long-running operation. </param>
         private string GetOperationId(RehydrationToken? rehydrationToken)
         {
             if (rehydrationToken is null)

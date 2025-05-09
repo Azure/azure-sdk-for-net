@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ResourceMover
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceMoverContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MoverResourceData)} does not support writing '{options.Format}' format.");
             }

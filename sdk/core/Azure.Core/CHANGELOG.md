@@ -1,6 +1,6 @@
 # Release History
 
-## 1.46.0-beta.1 (Unreleased)
+## 1.47.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.46.0 (2025-05-06)
+
+### Features Added
+
+- Adding AzureCoreContext to support AOT compatible reading and writing of types owned by Azure.Core through ModelReaderWriter
 
 ## 1.45.0 (2025-02-11)
 

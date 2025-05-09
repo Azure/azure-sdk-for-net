@@ -211,7 +211,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(request.Uri.Path, "/metadata/identity/oauth2/token");
             Assert.IsTrue(query.Contains("api-version=2018-02-01"));
             Assert.IsTrue(query.Contains($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
-            Assert.That(Uri.UnescapeDataString(query), Does.Contain($"{Constants.ManagedIdentityResourceId}={_expectedResourceId}"));
+            Assert.That(Uri.UnescapeDataString(query), Does.Contain($"_res_id={_expectedResourceId}"));
         }
 
         [NonParallelizable]
@@ -584,7 +584,7 @@ namespace Azure.Identity.Tests
 
             Assert.That(query, Does.Contain("api-version=2018-02-01"));
             Assert.That(query, Does.Contain($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
-            Assert.That(Uri.UnescapeDataString(query), Does.Contain($"{Constants.ManagedIdentityResourceId}={_expectedResourceId}"));
+            Assert.That(Uri.UnescapeDataString(query), Does.Contain($"_res_id={_expectedResourceId}"));
         }
 
         [NonParallelizable]
@@ -708,7 +708,7 @@ namespace Azure.Identity.Tests
 
             Assert.IsTrue(query.Contains("api-version=2019-08-01"));
             Assert.IsTrue(query.Contains($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
-            Assert.That(query, Does.Contain($"{Constants.ManagedIdentityResourceId}={resourceId}"));
+            Assert.That(query, Does.Contain($"_res_id={resourceId}"));
             Assert.IsTrue(request.Headers.TryGetValue("X-IDENTITY-HEADER", out string identityHeader));
             Assert.AreEqual(EnvironmentVariables.IdentityHeader, identityHeader);
         }
