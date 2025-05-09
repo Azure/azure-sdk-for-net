@@ -1,6 +1,6 @@
 # Release History
 
-## 1.6.0-beta.1 (2025-05-12)
+## 1.5.0-beta.1 (2025-05-09)
 
 ### Features Added
 
@@ -11,16 +11,6 @@
   - Cognitive Services Project Connections
   - Cognitive Services Project Capability Hosts
 
-
-## 1.5.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.4.0 (2024-11-19)
 
