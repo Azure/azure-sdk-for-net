@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The OpenAIPageableListOfVectorStoreFile_object. </summary>
+    /// <summary> The OpenAIPageableListOfVectorStoreFileObject. </summary>
     public readonly partial struct AgentPageableListOfVectorStoreFileObject : IEquatable<AgentPageableListOfVectorStoreFileObject>
     {
         private readonly string _value;
