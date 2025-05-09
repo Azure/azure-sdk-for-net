@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Cdn
 
         CdnOriginGroupData IJsonModel<CdnOriginGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CdnOriginGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CdnOriginGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CdnOriginGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CdnOriginGroupData>(Data, options, AzureResourceManagerCdnContext.Default);
 
-        CdnOriginGroupData IPersistableModel<CdnOriginGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CdnOriginGroupData>(data, options);
+        CdnOriginGroupData IPersistableModel<CdnOriginGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CdnOriginGroupData>(data, options, AzureResourceManagerCdnContext.Default);
 
         string IPersistableModel<CdnOriginGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CdnOriginGroupData>)Data).GetFormatFromOptions(options);
     }

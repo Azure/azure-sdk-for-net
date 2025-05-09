@@ -52,7 +52,7 @@ Synchronous sample:
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearch_CreateThreadRun
 PersistentAgentThread thread = client.Threads.CreateThread();
 
-ThreadMessage message = client.Messages.CreateMessage(
+PersistentThreadMessage message = client.Messages.CreateMessage(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "What does the attachment say?",
@@ -80,7 +80,7 @@ Asynchronous sample:
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearchAsync_CreateThreadRun
 PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
-ThreadMessage message = await client.Messages.CreateMessageAsync(
+PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "What does the attachment say?",
@@ -106,9 +106,9 @@ Assert.AreEqual(
 
 5. Create the utility function, to print messages to the console.
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearch_Print
-private static void WriteMessages(IEnumerable<ThreadMessage> messages)
+private static void WriteMessages(IEnumerable<PersistentThreadMessage> messages)
 {
-    foreach (ThreadMessage threadMessage in messages)
+    foreach (PersistentThreadMessage threadMessage in messages)
     {
         Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
         foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -133,7 +133,7 @@ Synchronous sample:
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearch_CreateThreadRun
 PersistentAgentThread thread = client.Threads.CreateThread();
 
-ThreadMessage message = client.Messages.CreateMessage(
+PersistentThreadMessage message = client.Messages.CreateMessage(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "What does the attachment say?",
@@ -161,7 +161,7 @@ Asynchronous sample:
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearchAsync_CreateThreadRun
 PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
-ThreadMessage message = await client.Messages.CreateMessageAsync(
+PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "What does the attachment say?",
@@ -189,7 +189,7 @@ Assert.AreEqual(
 
 Synchronous sample:
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearch_PrintMessages
-Pageable<ThreadMessage> messages = client.Messages.GetMessages(
+Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
@@ -198,7 +198,7 @@ WriteMessages(messages);
 
 Asynchronous sample:
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearchAsync_PrintMessages
-List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
+List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 ).ToListAsync();

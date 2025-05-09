@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MongoCluster
 
         MongoClusterFirewallRuleData IJsonModel<MongoClusterFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MongoClusterFirewallRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MongoClusterFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MongoClusterFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MongoClusterFirewallRuleData>(Data, options, AzureResourceManagerMongoClusterContext.Default);
 
-        MongoClusterFirewallRuleData IPersistableModel<MongoClusterFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MongoClusterFirewallRuleData>(data, options);
+        MongoClusterFirewallRuleData IPersistableModel<MongoClusterFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MongoClusterFirewallRuleData>(data, options, AzureResourceManagerMongoClusterContext.Default);
 
         string IPersistableModel<MongoClusterFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MongoClusterFirewallRuleData>)Data).GetFormatFromOptions(options);
     }

@@ -45,7 +45,7 @@ PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
 Synchronous sample:
 ```C# Snippet:AgentsOverviewCreateMessageSync
-ThreadMessage message = client.Messages.CreateMessage(
+PersistentThreadMessage message = client.Messages.CreateMessage(
     thread.Id,
     MessageRole.User,
     "I need to solve the equation `3x + 11 = 14`. Can you help me?");
@@ -53,7 +53,7 @@ ThreadMessage message = client.Messages.CreateMessage(
 
 Asynchronous sample:
 ```C# Snippet:AgentsOverviewCreateMessage
-ThreadMessage message = await client.Messages.CreateMessageAsync(
+PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     "I need to solve the equation `3x + 11 = 14`. Can you help me?");
@@ -113,11 +113,11 @@ Assert.AreEqual(
 
 Synchronous sample:
 ```C# Snippet:AgentsOverviewListUpdatedMessagesSync
-Pageable<ThreadMessage> messages
+Pageable<PersistentThreadMessage> messages
     = client.Messages.GetMessages(
         threadId: thread.Id, order: ListSortOrder.Ascending);
 
-foreach (ThreadMessage threadMessage in messages)
+foreach (PersistentThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -137,11 +137,11 @@ foreach (ThreadMessage threadMessage in messages)
 
 Asynchronous sample:
 ```C# Snippet:AgentsOverviewListUpdatedMessages
-AsyncPageable<ThreadMessage> messages
+AsyncPageable<PersistentThreadMessage> messages
     = client.Messages.GetMessagesAsync(
         threadId: thread.Id, order: ListSortOrder.Ascending);
 
-await foreach (ThreadMessage threadMessage in messages)
+await foreach (PersistentThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)

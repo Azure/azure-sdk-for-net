@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.IotFirmwareDefense
 {
+    public partial class AzureResourceManagerIotFirmwareDefenseContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerIotFirmwareDefenseContext() { }
+        public static Azure.ResourceManager.IotFirmwareDefense.AzureResourceManagerIotFirmwareDefenseContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class FirmwareAnalysisSummaryCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.FirmwareAnalysisSummaryResource>, System.Collections.IEnumerable
     {
         protected FirmwareAnalysisSummaryCollection() { }

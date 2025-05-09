@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Communication
 
         EmailServiceResourceData IJsonModel<EmailServiceResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EmailServiceResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EmailServiceResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<EmailServiceResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EmailServiceResourceData>(Data, options, AzureResourceManagerCommunicationContext.Default);
 
-        EmailServiceResourceData IPersistableModel<EmailServiceResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EmailServiceResourceData>(data, options);
+        EmailServiceResourceData IPersistableModel<EmailServiceResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EmailServiceResourceData>(data, options, AzureResourceManagerCommunicationContext.Default);
 
         string IPersistableModel<EmailServiceResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EmailServiceResourceData>)Data).GetFormatFromOptions(options);
     }

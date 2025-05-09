@@ -134,7 +134,7 @@ namespace Azure.AI.Agents.Persistent
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
                 case "MFD":
                     return SerializeMultipart(options);
                 default:

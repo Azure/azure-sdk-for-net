@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 
         DeviceProvisioningServiceResource IOperationSource<DeviceProvisioningServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DeviceProvisioningServiceData>(response.Content);
+            var data = ModelReaderWriter.Read<DeviceProvisioningServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDeviceProvisioningServicesContext.Default);
             return new DeviceProvisioningServiceResource(_client, data);
         }
 
         async ValueTask<DeviceProvisioningServiceResource> IOperationSource<DeviceProvisioningServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DeviceProvisioningServiceData>(response.Content);
+            var data = ModelReaderWriter.Read<DeviceProvisioningServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDeviceProvisioningServicesContext.Default);
             return await Task.FromResult(new DeviceProvisioningServiceResource(_client, data)).ConfigureAwait(false);
         }
     }

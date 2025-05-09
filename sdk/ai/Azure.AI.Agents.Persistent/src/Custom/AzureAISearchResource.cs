@@ -10,8 +10,8 @@ namespace Azure.AI.Agents.Persistent
         public AzureAISearchResource(
             string indexConnectionId,
             string indexName,
-            int topK = 5,
-            string filter = "",
+            int topK,
+            string filter,
             AzureAISearchQueryType? queryType = null) // Removed default value
         {
             // Assign default value explicitly if queryType is null
