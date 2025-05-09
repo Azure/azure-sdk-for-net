@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Purview
 
         PurviewAccountData IJsonModel<PurviewAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PurviewAccountData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PurviewAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PurviewAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PurviewAccountData>(Data, options, AzureResourceManagerPurviewContext.Default);
 
-        PurviewAccountData IPersistableModel<PurviewAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PurviewAccountData>(data, options);
+        PurviewAccountData IPersistableModel<PurviewAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PurviewAccountData>(data, options, AzureResourceManagerPurviewContext.Default);
 
         string IPersistableModel<PurviewAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PurviewAccountData>)Data).GetFormatFromOptions(options);
     }

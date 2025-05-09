@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Cdn
 
         CdnWebApplicationFirewallPolicyData IJsonModel<CdnWebApplicationFirewallPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CdnWebApplicationFirewallPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CdnWebApplicationFirewallPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CdnWebApplicationFirewallPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CdnWebApplicationFirewallPolicyData>(Data, options, AzureResourceManagerCdnContext.Default);
 
-        CdnWebApplicationFirewallPolicyData IPersistableModel<CdnWebApplicationFirewallPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CdnWebApplicationFirewallPolicyData>(data, options);
+        CdnWebApplicationFirewallPolicyData IPersistableModel<CdnWebApplicationFirewallPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CdnWebApplicationFirewallPolicyData>(data, options, AzureResourceManagerCdnContext.Default);
 
         string IPersistableModel<CdnWebApplicationFirewallPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CdnWebApplicationFirewallPolicyData>)Data).GetFormatFromOptions(options);
     }

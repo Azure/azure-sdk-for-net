@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Workloads
 
         SapApplicationServerInstanceData IJsonModel<SapApplicationServerInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SapApplicationServerInstanceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SapApplicationServerInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SapApplicationServerInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SapApplicationServerInstanceData>(Data, options, AzureResourceManagerWorkloadsContext.Default);
 
-        SapApplicationServerInstanceData IPersistableModel<SapApplicationServerInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SapApplicationServerInstanceData>(data, options);
+        SapApplicationServerInstanceData IPersistableModel<SapApplicationServerInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SapApplicationServerInstanceData>(data, options, AzureResourceManagerWorkloadsContext.Default);
 
         string IPersistableModel<SapApplicationServerInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SapApplicationServerInstanceData>)Data).GetFormatFromOptions(options);
     }

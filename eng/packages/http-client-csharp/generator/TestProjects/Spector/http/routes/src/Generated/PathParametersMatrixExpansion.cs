@@ -13,7 +13,7 @@ namespace Routes
     {
         protected PathParametersMatrixExpansion() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual PathParametersMatrixExpansionStandard GetPathParametersMatrixExpansionStandardClient() => throw null;
 

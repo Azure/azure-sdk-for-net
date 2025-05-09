@@ -16,7 +16,7 @@ namespace _Type.Scalar
 
         public ScalarClient(Uri endpoint, ScalarClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual String GetStringClient() => throw null;
 

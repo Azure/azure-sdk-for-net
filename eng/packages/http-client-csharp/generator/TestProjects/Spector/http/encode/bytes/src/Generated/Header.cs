@@ -18,7 +18,7 @@ namespace Encode.Bytes
     {
         protected Header() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Default(BinaryData value, RequestContext context) => throw null;
 

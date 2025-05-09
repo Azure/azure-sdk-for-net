@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.CosmosDB
 
         MongoDBDatabaseThroughputSettingResource IOperationSource<MongoDBDatabaseThroughputSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ScrubId(ModelReaderWriter.Read<ThroughputSettingData>(response.Content));
+            var data = ScrubId(ModelReaderWriter.Read<ThroughputSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default));
             return new MongoDBDatabaseThroughputSettingResource(_client, data);
         }
 
         async ValueTask<MongoDBDatabaseThroughputSettingResource> IOperationSource<MongoDBDatabaseThroughputSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ScrubId(ModelReaderWriter.Read<ThroughputSettingData>(response.Content));
+            var data = ScrubId(ModelReaderWriter.Read<ThroughputSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default));
             return await Task.FromResult(new MongoDBDatabaseThroughputSettingResource(_client, data)).ConfigureAwait(false);
         }
 

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         AccessPolicyAssignmentData IJsonModel<AccessPolicyAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AccessPolicyAssignmentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AccessPolicyAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AccessPolicyAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AccessPolicyAssignmentData>(Data, options, AzureResourceManagerRedisEnterpriseContext.Default);
 
-        AccessPolicyAssignmentData IPersistableModel<AccessPolicyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AccessPolicyAssignmentData>(data, options);
+        AccessPolicyAssignmentData IPersistableModel<AccessPolicyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AccessPolicyAssignmentData>(data, options, AzureResourceManagerRedisEnterpriseContext.Default);
 
         string IPersistableModel<AccessPolicyAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AccessPolicyAssignmentData>)Data).GetFormatFromOptions(options);
     }
