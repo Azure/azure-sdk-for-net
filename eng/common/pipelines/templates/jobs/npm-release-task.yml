@@ -58,7 +58,7 @@ jobs:
               }
 
               $tag = '$(Tag)'
-              write-host "tag is now $tag"
+              write-host "Tag provided: $tag"
               if ($tag.contains("`$(")) {
                 $tag = ($packageVersion -match "-(alpha|beta|rc|pre)") ? "beta" : "latest"
               }
