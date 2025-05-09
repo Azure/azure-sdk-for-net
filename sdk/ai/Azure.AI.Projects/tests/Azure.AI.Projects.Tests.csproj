@@ -18,12 +18,14 @@
   </ItemGroup>
   
   <ItemGroup>
+    <PackageReference Include="Azure.AI.Agents.Persistent" VersionOverride="1.0.0-beta.1" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
     <PackageReference Include="Azure.ResourceManager" />
     <PackageReference Include="Azure.ResourceManager.CognitiveServices" />
+    <PackageReference Include="System.Linq.Async" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
