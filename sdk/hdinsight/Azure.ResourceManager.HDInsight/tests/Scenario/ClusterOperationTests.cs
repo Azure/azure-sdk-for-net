@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             properties.StorageAccounts.FirstOrDefault().ResourceId = StorageAccountResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, _storageAccountName);
             properties.NetworkProperties = new HDInsightClusterNetworkProperties()
             {
-                PublicIPTag = new HDInsightClusterIPTag("FirstPartyUsage", "/HDInsight")
+                PublicIPTag = new HDInsightClusterIPTag("FirstPartyUsage","/HDInsight")
             };
             properties.ClusterVersion = "5.1";
             var data = new HDInsightClusterCreateOrUpdateContent()
@@ -618,7 +618,6 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 IsDefault = true,
                 Container = _containerName,
                 Key = null,
-                FileSystem = "default",
                 EnableSecureChannel = true,
                 MsiResourceId = new ResourceIdentifier(msiId.ToString())
             };
