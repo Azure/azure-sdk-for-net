@@ -1,12 +1,12 @@
 # Release History
 
-## 1.2.0-beta.5 (2025-05-07)
+## 1.2.0-beta.5 (2025-05-12)
 
 ### Features Added
 
 - Upgraded api-version tag from 'package-2024-08-preview' to 'package-2025-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/4c0f7731c93696af01bd2bb9927bf28d2afcbc98/specification/hdinsight/resource-manager/readme.md.
-    - Support for setting Entra User during HDInsight cluster creation.
-    - Support to add or update Entra UserInfo for an Entra-enabled HDInsight cluster
+    - Support to use Entra User as cluster administrator credential instead of using username/password during HDInsight cluster creation.
+    - Support to update Entra User Information in an existing Entra User enabled HDInsight cluster.
 
 ### Other Changes
 

@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.HDInsight.Tests
         protected ArmClient Client { get; private set; }
         protected const string DefaultResourceGroupPrefix = "HDInsightRG-";
         protected AzureLocation DefaultLocation = AzureLocation.EastAsia;
-        protected const string Common_User = "sshuser5951";
-        protected const string Common_Password = "Password!5951";
-        protected const string Common_VNet_Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/yukundemo1/providers/Microsoft.Network/virtualNetworks/yk01networkeastasia";
-        protected const string Common_SubNet = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/yukundemo1/providers/Microsoft.Network/virtualNetworks/yk01networkeastasia/subnets/default";
+        protected const string Common_User = "sshusername";
+        protected const string Common_Password = "ValidPassword";
+        protected const string Common_VNet_Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hdi-ps-test/providers/Microsoft.Network/virtualNetworks/hditestvnet";
+        protected const string Common_SubNet = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hdi-ps-test/providers/Microsoft.Network/virtualNetworks/hditestvnet/subnets/default";
         protected HDInsightManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
 
         protected HDInsightClusterCreateOrUpdateProperties PrepareClusterCreateParams(string storageAccountName, string containerName, string accessKey)
         {
-            string clusterDeifnitionConfigurations = "{         \"gateway\": {             \"restAuthCredential.isEnabled\": \"true\",             \"restAuthCredential.username\": \"admin4468\",             \"restAuthCredential.password\": \"Password1!9688\"         }     } ";
+            string clusterDeifnitionConfigurations = "{         \"gateway\": {             \"restAuthCredential.isEnabled\": \"true\",             \"restAuthCredential.username\": \"admin\",             \"restAuthCredential.password\": \"Password\"         }     } ";
             var properties = new HDInsightClusterCreateOrUpdateProperties()
             {
                 ClusterVersion = "4.0",

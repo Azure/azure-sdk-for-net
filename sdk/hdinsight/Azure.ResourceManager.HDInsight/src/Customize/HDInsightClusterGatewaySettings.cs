@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <summary> Initializes a new instance of <see cref="HDInsightClusterGatewaySettings"/>. </summary>
         internal HDInsightClusterGatewaySettings()
-        {   
+        {
         }
 
         /// <summary> Initializes a new instance of <see cref="HDInsightClusterGatewaySettings"/>. </summary>
         /// <param name="isCredentialEnabled"> Indicates whether or not the gateway settings based authorization is enabled. </param>
         /// <param name="userName"> The gateway settings user name. </param>
         /// <param name="password"> The gateway settings user password. </param>
-        /// /// <param name="restAuthEntraUsers"> List of Entra users for gateway access. </param>
+        /// <param name="restAuthEntraUsers"> List of Entra users for gateway access. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HDInsightClusterGatewaySettings(bool? isCredentialEnabled, string userName, string password, IList<EntraUserInfo> restAuthEntraUsers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
