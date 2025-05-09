@@ -32,7 +32,8 @@ namespace Azure.Search.Documents.Models
         /// The available derived classes include <see cref="SearchScoreThreshold"/> and <see cref="VectorSimilarityThreshold"/>.
         /// </param>
         /// <param name="filterOverride"> The OData filter expression to apply to this specific vector query. If no filter expression is defined at the vector level, the expression defined in the top level filter parameter is used instead. </param>
-        internal VectorQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride)
+        /// <param name="perDocumentVectorLimit"> Controls how many vectors can be matched from each document in a vector search query. Setting it to 1 ensures at most one vector per document is matched, guaranteeing results come from distinct documents. Setting it to 0 (unlimited) allows multiple relevant vectors from the same document to be matched. Default is 0. </param>
+        internal VectorQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit)
         {
             Kind = kind;
             KNearestNeighborsCount = kNearestNeighborsCount;
@@ -42,6 +43,7 @@ namespace Azure.Search.Documents.Models
             Weight = weight;
             Threshold = threshold;
             FilterOverride = filterOverride;
+            PerDocumentVectorLimit = perDocumentVectorLimit;
         }
 
         /// <summary> The kind of vector query being performed. </summary>
@@ -62,5 +64,7 @@ namespace Azure.Search.Documents.Models
         public VectorThreshold Threshold { get; set; }
         /// <summary> The OData filter expression to apply to this specific vector query. If no filter expression is defined at the vector level, the expression defined in the top level filter parameter is used instead. </summary>
         public string FilterOverride { get; set; }
+        /// <summary> Controls how many vectors can be matched from each document in a vector search query. Setting it to 1 ensures at most one vector per document is matched, guaranteeing results come from distinct documents. Setting it to 0 (unlimited) allows multiple relevant vectors from the same document to be matched. Default is 0. </summary>
+        public int? PerDocumentVectorLimit { get; set; }
     }
 }

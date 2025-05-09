@@ -23,9 +23,12 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         private const string ResetDocsValue = "resetDocs";
+        private const string ResyncValue = "resync";
 
         /// <summary> Indicates that the reset that occurred was for a call to ResetDocs. </summary>
         public static IndexerExecutionStatusDetail ResetDocs { get; } = new IndexerExecutionStatusDetail(ResetDocsValue);
+        /// <summary> Indicates to selectively resync based on option(s) from data source. </summary>
+        public static IndexerExecutionStatusDetail Resync { get; } = new IndexerExecutionStatusDetail(ResyncValue);
         /// <summary> Determines if two <see cref="IndexerExecutionStatusDetail"/> values are the same. </summary>
         public static bool operator ==(IndexerExecutionStatusDetail left, IndexerExecutionStatusDetail right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IndexerExecutionStatusDetail"/> values are not the same. </summary>

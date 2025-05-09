@@ -24,6 +24,9 @@ namespace Azure.Search.Documents.Indexes.Models
 
         private const string AllDocumentsValue = "indexingAllDocs";
         private const string ResetDocumentsValue = "indexingResetDocs";
+        private const string IndexingResyncValue = "indexingResync";
+        /// <summary> The indexer is resyncing and indexing selective option(s) from the datasource. </summary>
+        public static IndexingMode IndexingResync { get; } = new IndexingMode(IndexingResyncValue);
         /// <summary> Determines if two <see cref="IndexingMode"/> values are the same. </summary>
         public static bool operator ==(IndexingMode left, IndexingMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IndexingMode"/> values are not the same. </summary>

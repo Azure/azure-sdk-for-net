@@ -28,11 +28,13 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="SemanticConfiguration"/>. </summary>
         /// <param name="name"> The name of the semantic configuration. </param>
         /// <param name="prioritizedFields"> Describes the title, content, and keyword fields to be used for semantic ranking, captions, highlights, and answers. At least one of the three sub properties (titleField, prioritizedKeywordsFields and prioritizedContentFields) need to be set. </param>
-        /// <param name="flightingOptIn"> Determines how which semantic or query rewrite models to use during model flighting/upgrades. </param>
-        internal SemanticConfiguration(string name, SemanticPrioritizedFields prioritizedFields, bool? flightingOptIn)
+        /// <param name="rankingOrder"> Specifies the score type to be used for the sort order of the search results. </param>
+        /// <param name="flightingOptIn"> Determines which semantic or query rewrite models to use during model flighting/upgrades. </param>
+        internal SemanticConfiguration(string name, SemanticPrioritizedFields prioritizedFields, RankingOrder? rankingOrder, bool? flightingOptIn)
         {
             Name = name;
             PrioritizedFields = prioritizedFields;
+            RankingOrder = rankingOrder;
             FlightingOptIn = flightingOptIn;
         }
 
@@ -40,7 +42,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Name { get; set; }
         /// <summary> Describes the title, content, and keyword fields to be used for semantic ranking, captions, highlights, and answers. At least one of the three sub properties (titleField, prioritizedKeywordsFields and prioritizedContentFields) need to be set. </summary>
         public SemanticPrioritizedFields PrioritizedFields { get; set; }
-        /// <summary> Determines how which semantic or query rewrite models to use during model flighting/upgrades. </summary>
+        /// <summary> Specifies the score type to be used for the sort order of the search results. </summary>
+        public RankingOrder? RankingOrder { get; set; }
+        /// <summary> Determines which semantic or query rewrite models to use during model flighting/upgrades. </summary>
         public bool? FlightingOptIn { get; set; }
     }
 }

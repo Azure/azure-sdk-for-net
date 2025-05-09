@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -23,6 +24,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
         /// </param>
+        /// <param name="indexerPermissionOptions"> Ingestion options with various types of permission data. </param>
         /// <param name="dataChangeDetectionPolicy">
         /// The data change detection policy for the datasource.
         /// Please note <see cref="Models.DataChangeDetectionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -35,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </param>
         /// <param name="etag"> The ETag of the data source. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your datasource definition when you want full assurance that no one, not even Microsoft, can decrypt your data source definition. Once you have encrypted your data source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your datasource definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
-        internal SearchIndexerDataSourceConnection(string name, string description, SearchIndexerDataSourceType type, DataSourceCredentials credentialsInternal, SearchIndexerDataContainer container, SearchIndexerDataIdentity identity, DataChangeDetectionPolicy dataChangeDetectionPolicy, DataDeletionDetectionPolicy dataDeletionDetectionPolicy, string etag, SearchResourceEncryptionKey encryptionKey)
+        internal SearchIndexerDataSourceConnection(string name, string description, SearchIndexerDataSourceType type, DataSourceCredentials credentialsInternal, SearchIndexerDataContainer container, SearchIndexerDataIdentity identity, IList<IndexerPermissionOption> indexerPermissionOptions, DataChangeDetectionPolicy dataChangeDetectionPolicy, DataDeletionDetectionPolicy dataDeletionDetectionPolicy, string etag, SearchResourceEncryptionKey encryptionKey)
         {
             Name = name;
             Description = description;
@@ -43,6 +45,7 @@ namespace Azure.Search.Documents.Indexes.Models
             CredentialsInternal = credentialsInternal;
             Container = container;
             Identity = identity;
+            IndexerPermissionOptions = indexerPermissionOptions;
             DataChangeDetectionPolicy = dataChangeDetectionPolicy;
             DataDeletionDetectionPolicy = dataDeletionDetectionPolicy;
             _etag = etag;
@@ -63,6 +66,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
         /// </summary>
         public SearchIndexerDataIdentity Identity { get; set; }
+        /// <summary> Ingestion options with various types of permission data. </summary>
+        public IList<IndexerPermissionOption> IndexerPermissionOptions { get; set; }
         /// <summary>
         /// The data change detection policy for the datasource.
         /// Please note <see cref="Models.DataChangeDetectionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

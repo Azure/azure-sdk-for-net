@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static VectorSearchVectorizerKind CustomWebApi { get; } = new VectorSearchVectorizerKind(CustomWebApiValue);
         /// <summary> Generate embeddings for an image or text input at query time using the Azure AI Services Vision Vectorize API. </summary>
         public static VectorSearchVectorizerKind AIServicesVision { get; } = new VectorSearchVectorizerKind(AIServicesVisionValue);
-        /// <summary> Generate embeddings using an Azure Machine Learning endpoint deployed via the Azure AI Studio Model Catalog at query time. </summary>
+        /// <summary> Generate embeddings using an Azure Machine Learning endpoint deployed via the Azure AI Foundry Model Catalog at query time. </summary>
         public static VectorSearchVectorizerKind AML { get; } = new VectorSearchVectorizerKind(AMLValue);
         /// <summary> Determines if two <see cref="VectorSearchVectorizerKind"/> values are the same. </summary>
         public static bool operator ==(VectorSearchVectorizerKind left, VectorSearchVectorizerKind right) => left.Equals(right);

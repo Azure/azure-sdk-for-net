@@ -52,6 +52,11 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("filterOverride"u8);
                 writer.WriteStringValue(FilterOverride);
             }
+            if (Optional.IsDefined(PerDocumentVectorLimit))
+            {
+                writer.WritePropertyName("perDocumentVectorLimit"u8);
+                writer.WriteNumberValue(PerDocumentVectorLimit.Value);
+            }
             writer.WriteEndObject();
         }
 
