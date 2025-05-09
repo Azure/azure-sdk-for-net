@@ -227,27 +227,22 @@ namespace Azure.Generator.Management.Providers
             return ContextualParameters.Take(ContextualParameters.Count - 1).Any(p => p == parameter.Name);
         }
 
-        protected override MethodBodyStatement BuildReturnStatements(ValueExpression responseVariable, MethodSignature? signature)
+        protected override MethodBodyStatement BuildReturnStatements(ValueExpression responseVariable, MethodSignature signature)
         {
-            if (signature is null)
-            {
-                return base.BuildReturnStatements(responseVariable, signature);
-            }
-
             if (signature.Name == "GetIfExists" || signature.Name == "GetIfExistsAsync")
             {
-                return BuildReturnStatementsForGetIfExists(responseVariable);
+                return BuildReturnStatementsForGetIfExists(responseVariable, signature);
             }
             if (signature.Name == "Exists" || signature.Name == "ExistsAsync")
             {
                 return BuildReturnStatementsForExists(responseVariable);
             }
 
-            return base.BuildReturnStatements(responseVariable);
+            return base.BuildReturnStatements(responseVariable, signature);
         }
 
         // TODO: make the commented implementation work - find a way to access the NoValueResponse<T> type
-        private MethodBodyStatement BuildReturnStatementsForGetIfExists(ValueExpression responseVariable)
+        private MethodBodyStatement BuildReturnStatementsForGetIfExists(ValueExpression responseVariable, MethodSignature signature)
         {
             // List<MethodBodyStatement> statements =
             // [
@@ -260,7 +255,7 @@ namespace Azure.Generator.Management.Providers
             // statements.Add(Return(Static(typeof(Response)).Invoke(nameof(Response.FromValue), returnValueExpression, responseVariable.Invoke("GetRawResponse"))));
 
             // return statements;
-            return base.BuildReturnStatements(responseVariable);
+            return base.BuildReturnStatements(responseVariable, signature);
         }
 
         private MethodBodyStatement BuildReturnStatementsForExists(ValueExpression responseVariable)
