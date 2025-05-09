@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_AutonomousDatabaseBackupsCreateOrUpdate()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_create.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2025-03-01/examples/autonomousDatabaseBackup_create.json
             // this example is just showing the usage of "AutonomousDatabaseBackups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAutonomousDatabaseBackup()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_create.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2025-03-01/examples/autonomousDatabaseBackup_create.json
             // this example is just showing the usage of "AutonomousDatabaseBackups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_AutonomousDatabaseBackupsGet()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_get.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2025-03-01/examples/autonomousDatabaseBackup_get.json
             // this example is just showing the usage of "AutonomousDatabaseBackups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAutonomousDatabaseBackup()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_get.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2025-03-01/examples/autonomousDatabaseBackup_get.json
             // this example is just showing the usage of "AutonomousDatabaseBackups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -172,46 +172,10 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_AutonomousDatabaseBackupsListByAutonomousDatabase()
-        {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_listByParent.json
-            // this example is just showing the usage of "AutonomousDatabaseBackups_ListByAutonomousDatabase" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutonomousDatabaseResource created on azure
-            // for more information of creating AutonomousDatabaseResource, please refer to the document of AutonomousDatabaseResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg000";
-            string autonomousdatabasename = "databasedb1";
-            ResourceIdentifier autonomousDatabaseResourceId = AutonomousDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, autonomousdatabasename);
-            AutonomousDatabaseResource autonomousDatabase = client.GetAutonomousDatabaseResource(autonomousDatabaseResourceId);
-
-            // get the collection of this AutonomousDatabaseBackupResource
-            AutonomousDatabaseBackupCollection collection = autonomousDatabase.GetAutonomousDatabaseBackups();
-
-            // invoke the operation and iterate over the result
-            await foreach (AutonomousDatabaseBackupResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AutonomousDatabaseBackupData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAutonomousDatabaseBackupsByAutonomousDatabase()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_listByParent.json
-            // this example is just showing the usage of "AutonomousDatabaseBackups_ListByAutonomousDatabase" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2025-03-01/examples/autonomousDatabaseBackup_listByParent.json
+            // this example is just showing the usage of "AutonomousDatabaseBackups_ListByParent" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -246,7 +210,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_AutonomousDatabaseBackupsGet()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_get.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2025-03-01/examples/autonomousDatabaseBackup_get.json
             // this example is just showing the usage of "AutonomousDatabaseBackups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -276,7 +240,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAutonomousDatabaseBackup()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_get.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2025-03-01/examples/autonomousDatabaseBackup_get.json
             // this example is just showing the usage of "AutonomousDatabaseBackups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -306,7 +270,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_AutonomousDatabaseBackupsGet()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_get.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2025-03-01/examples/autonomousDatabaseBackup_get.json
             // this example is just showing the usage of "AutonomousDatabaseBackups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -348,7 +312,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAutonomousDatabaseBackup()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseBackup_get.json
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2025-03-01/examples/autonomousDatabaseBackup_get.json
             // this example is just showing the usage of "AutonomousDatabaseBackups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
