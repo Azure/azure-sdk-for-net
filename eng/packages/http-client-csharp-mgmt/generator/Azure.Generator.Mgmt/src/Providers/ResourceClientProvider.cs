@@ -119,9 +119,9 @@ namespace Azure.Generator.Management.Providers
         }
 
         protected override ConstructorProvider[] BuildConstructors()
-            => [ConstructorProviderHelper.BuildMockingConstructor(this), BuildPrimaryConstructor(), BuildInitializationConstructor(),];
+            => [ConstructorProviderHelper.BuildMockingConstructor(this), BuildResourceDataConstructor(), BuildResourceIdentifierConstructor()];
 
-        private ConstructorProvider BuildPrimaryConstructor()
+        private ConstructorProvider BuildResourceDataConstructor()
         {
             var clientParameter = new ParameterProvider("client", $"The client parameters to use in these operations.", typeof(ArmClient));
             var dataParameter = new ParameterProvider("data", $"The resource that is the target of operations.", ResourceData.Type);
@@ -144,7 +144,7 @@ namespace Azure.Generator.Management.Providers
             return new ConstructorProvider(signature, bodyStatements, this);
         }
 
-        protected ConstructorProvider BuildInitializationConstructor()
+        protected ConstructorProvider BuildResourceIdentifierConstructor()
         {
             var idParameter = new ParameterProvider("id", $"The identifier of the resource that is the target of operations.", typeof(ResourceIdentifier));
             var parameters = new List<ParameterProvider>
@@ -166,7 +166,7 @@ namespace Azure.Generator.Management.Providers
             {
                 _clientDiagonosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), ResourceTypeExpression.Property(nameof(ResourceType.Namespace)), This.Property("Diagnostics"))).Terminate(),
                 TryGetApiVersion(out var apiVersion).Terminate(),
-                _restClientField.Assign(New.Instance(_clientProvider.Type, This.Property("Pipeline"), This.Property("Endpoint"), apiVersion)).Terminate(),
+                _restClientField.Assign(New.Instance(_clientProvider.Type, _clientDiagonosticsField, This.Property("Pipeline"), This.Property("Endpoint"), apiVersion)).Terminate(),
                 Static(Type).Invoke(ValidateResourceIdMethodName, idParameter).Terminate()
             };
 
