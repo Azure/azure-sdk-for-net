@@ -43,7 +43,7 @@ namespace Azure.Identity.Broker
 
         private void AddBroker(PublicClientApplicationBuilder builder)
         {
-            var options = new BrokerOptions(BrokerOptions.OperatingSystems.Windows);
+            var options = new BrokerOptions(BrokerOptions.OperatingSystems.Windows | BrokerOptions.OperatingSystems.Linux);
             if (IsLegacyMsaPassthroughEnabled.HasValue)
             {
                 options.MsaPassthrough = IsLegacyMsaPassthroughEnabled.Value;
