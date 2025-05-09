@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPureStorageBlockContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BandwidthUsage)} does not support writing '{options.Format}' format.");
             }

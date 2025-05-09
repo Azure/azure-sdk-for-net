@@ -184,6 +184,12 @@ namespace Azure.ResourceManager.PureStorageBlock
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PureStorageBlock.AvsVmVolumeResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.PureStorageBlock.Models.AvsVmVolumePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PureStorageBlock.AvsVmVolumeResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.PureStorageBlock.Models.AvsVmVolumePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class AzureResourceManagerPureStorageBlockContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerPureStorageBlockContext() { }
+        public static Azure.ResourceManager.PureStorageBlock.AzureResourceManagerPureStorageBlockContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class PureStorageBlockExtensions
     {
         public static Azure.ResourceManager.PureStorageBlock.AvsStorageContainerResource GetAvsStorageContainerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.PureStorageBlock
 
         StoragePoolResource IOperationSource<StoragePoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StoragePoolData>(response.Content);
+            var data = ModelReaderWriter.Read<StoragePoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPureStorageBlockContext.Default);
             return new StoragePoolResource(_client, data);
         }
 
         async ValueTask<StoragePoolResource> IOperationSource<StoragePoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StoragePoolData>(response.Content);
+            var data = ModelReaderWriter.Read<StoragePoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPureStorageBlockContext.Default);
             return await Task.FromResult(new StoragePoolResource(_client, data)).ConfigureAwait(false);
         }
     }

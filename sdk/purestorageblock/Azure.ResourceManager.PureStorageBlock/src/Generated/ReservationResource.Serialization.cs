@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.PureStorageBlock
 
         ReservationData IJsonModel<ReservationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ReservationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ReservationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ReservationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ReservationData>(Data, options, AzureResourceManagerPureStorageBlockContext.Default);
 
-        ReservationData IPersistableModel<ReservationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ReservationData>(data, options);
+        ReservationData IPersistableModel<ReservationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ReservationData>(data, options, AzureResourceManagerPureStorageBlockContext.Default);
 
         string IPersistableModel<ReservationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ReservationData>)Data).GetFormatFromOptions(options);
     }

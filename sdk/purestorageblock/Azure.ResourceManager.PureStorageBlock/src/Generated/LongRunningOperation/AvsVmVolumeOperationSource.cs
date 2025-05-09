@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.PureStorageBlock
 
         AvsVmVolumeResource IOperationSource<AvsVmVolumeResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AvsVmVolumeData>(response.Content);
+            var data = ModelReaderWriter.Read<AvsVmVolumeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPureStorageBlockContext.Default);
             return new AvsVmVolumeResource(_client, data);
         }
 
         async ValueTask<AvsVmVolumeResource> IOperationSource<AvsVmVolumeResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AvsVmVolumeData>(response.Content);
+            var data = ModelReaderWriter.Read<AvsVmVolumeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPureStorageBlockContext.Default);
             return await Task.FromResult(new AvsVmVolumeResource(_client, data)).ConfigureAwait(false);
         }
     }

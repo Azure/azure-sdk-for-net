@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.PureStorageBlock
 
         AvsVmVolumeData IJsonModel<AvsVmVolumeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AvsVmVolumeData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AvsVmVolumeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AvsVmVolumeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AvsVmVolumeData>(Data, options, AzureResourceManagerPureStorageBlockContext.Default);
 
-        AvsVmVolumeData IPersistableModel<AvsVmVolumeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvsVmVolumeData>(data, options);
+        AvsVmVolumeData IPersistableModel<AvsVmVolumeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvsVmVolumeData>(data, options, AzureResourceManagerPureStorageBlockContext.Default);
 
         string IPersistableModel<AvsVmVolumeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AvsVmVolumeData>)Data).GetFormatFromOptions(options);
     }
