@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.HDInsight
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(HDInsightPrivateLinkResourceData)} does not support writing '{options.Format}' format.");
             }

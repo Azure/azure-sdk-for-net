@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HybridContainerService
 
         HybridContainerServiceAgentPoolResource IOperationSource<HybridContainerServiceAgentPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HybridContainerServiceAgentPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridContainerServiceContext.Default);
+            var data = ModelReaderWriter.Read<HybridContainerServiceAgentPoolData>(response.Content);
             return new HybridContainerServiceAgentPoolResource(_client, data);
         }
 
         async ValueTask<HybridContainerServiceAgentPoolResource> IOperationSource<HybridContainerServiceAgentPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HybridContainerServiceAgentPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridContainerServiceContext.Default);
+            var data = ModelReaderWriter.Read<HybridContainerServiceAgentPoolData>(response.Content);
             return await Task.FromResult(new HybridContainerServiceAgentPoolResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.IotHub.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(IotHubProperties)} does not support writing '{options.Format}' format.");
             }

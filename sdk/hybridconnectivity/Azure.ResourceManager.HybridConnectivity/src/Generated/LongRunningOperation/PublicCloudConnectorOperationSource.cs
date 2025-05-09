@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HybridConnectivity
 
         PublicCloudConnectorResource IOperationSource<PublicCloudConnectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PublicCloudConnectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridConnectivityContext.Default);
+            var data = ModelReaderWriter.Read<PublicCloudConnectorData>(response.Content);
             return new PublicCloudConnectorResource(_client, data);
         }
 
         async ValueTask<PublicCloudConnectorResource> IOperationSource<PublicCloudConnectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PublicCloudConnectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridConnectivityContext.Default);
+            var data = ModelReaderWriter.Read<PublicCloudConnectorData>(response.Content);
             return await Task.FromResult(new PublicCloudConnectorResource(_client, data)).ConfigureAwait(false);
         }
     }

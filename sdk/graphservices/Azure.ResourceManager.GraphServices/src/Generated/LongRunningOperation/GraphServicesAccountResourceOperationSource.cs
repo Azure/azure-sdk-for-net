@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.GraphServices
 
         GraphServicesAccountResource IOperationSource<GraphServicesAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GraphServicesAccountResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGraphServicesContext.Default);
+            var data = ModelReaderWriter.Read<GraphServicesAccountResourceData>(response.Content);
             return new GraphServicesAccountResource(_client, data);
         }
 
         async ValueTask<GraphServicesAccountResource> IOperationSource<GraphServicesAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GraphServicesAccountResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGraphServicesContext.Default);
+            var data = ModelReaderWriter.Read<GraphServicesAccountResourceData>(response.Content);
             return await Task.FromResult(new GraphServicesAccountResource(_client, data)).ConfigureAwait(false);
         }
     }

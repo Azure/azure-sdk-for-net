@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Kubernetes
 
         ConnectedClusterData IJsonModel<ConnectedClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectedClusterData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ConnectedClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConnectedClusterData>(Data, options, AzureResourceManagerKubernetesContext.Default);
+        BinaryData IPersistableModel<ConnectedClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ConnectedClusterData IPersistableModel<ConnectedClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectedClusterData>(data, options, AzureResourceManagerKubernetesContext.Default);
+        ConnectedClusterData IPersistableModel<ConnectedClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectedClusterData>(data, options);
 
         string IPersistableModel<ConnectedClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectedClusterData>)Data).GetFormatFromOptions(options);
     }

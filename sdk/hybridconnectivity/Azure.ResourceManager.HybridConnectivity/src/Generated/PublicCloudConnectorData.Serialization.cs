@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridConnectivityContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(PublicCloudConnectorData)} does not support writing '{options.Format}' format.");
             }

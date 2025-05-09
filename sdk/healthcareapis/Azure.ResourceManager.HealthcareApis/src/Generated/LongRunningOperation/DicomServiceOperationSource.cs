@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HealthcareApis
 
         DicomServiceResource IOperationSource<DicomServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DicomServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthcareApisContext.Default);
+            var data = ModelReaderWriter.Read<DicomServiceData>(response.Content);
             return new DicomServiceResource(_client, data);
         }
 
         async ValueTask<DicomServiceResource> IOperationSource<DicomServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DicomServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthcareApisContext.Default);
+            var data = ModelReaderWriter.Read<DicomServiceData>(response.Content);
             return await Task.FromResult(new DicomServiceResource(_client, data)).ConfigureAwait(false);
         }
     }

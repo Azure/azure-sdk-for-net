@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.FrontDoor
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(FrontendEndpointData)} does not support writing '{options.Format}' format.");
             }

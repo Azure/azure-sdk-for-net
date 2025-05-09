@@ -149,7 +149,7 @@ namespace Azure.AI.Vision.Face
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVisionFaceContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(FaceGroupingResult)} does not support writing '{options.Format}' format.");
             }

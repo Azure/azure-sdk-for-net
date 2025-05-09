@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFluidRelayContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support writing '{options.Format}' format.");
             }

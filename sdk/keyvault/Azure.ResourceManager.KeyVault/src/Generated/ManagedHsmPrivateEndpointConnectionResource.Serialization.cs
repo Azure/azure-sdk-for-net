@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.KeyVault
 
         ManagedHsmPrivateEndpointConnectionData IJsonModel<ManagedHsmPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedHsmPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedHsmPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedHsmPrivateEndpointConnectionData>(Data, options, AzureResourceManagerKeyVaultContext.Default);
+        BinaryData IPersistableModel<ManagedHsmPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ManagedHsmPrivateEndpointConnectionData IPersistableModel<ManagedHsmPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedHsmPrivateEndpointConnectionData>(data, options, AzureResourceManagerKeyVaultContext.Default);
+        ManagedHsmPrivateEndpointConnectionData IPersistableModel<ManagedHsmPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedHsmPrivateEndpointConnectionData>(data, options);
 
         string IPersistableModel<ManagedHsmPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedHsmPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

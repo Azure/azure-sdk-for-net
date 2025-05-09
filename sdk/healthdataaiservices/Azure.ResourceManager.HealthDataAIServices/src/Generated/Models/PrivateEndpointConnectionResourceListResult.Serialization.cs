@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHealthDataAIServicesContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(PrivateEndpointConnectionResourceListResult)} does not support writing '{options.Format}' format.");
             }

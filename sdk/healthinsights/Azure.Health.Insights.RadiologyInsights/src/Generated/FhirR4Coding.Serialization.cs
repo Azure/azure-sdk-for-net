@@ -149,7 +149,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureHealthInsightsRadiologyInsightsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(FhirR4Coding)} does not support writing '{options.Format}' format.");
             }

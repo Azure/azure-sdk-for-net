@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.IotOperations
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(IotOperationsBrokerData)} does not support writing '{options.Format}' format.");
             }

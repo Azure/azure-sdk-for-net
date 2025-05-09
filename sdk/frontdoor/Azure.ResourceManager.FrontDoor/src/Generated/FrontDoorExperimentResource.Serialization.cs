@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.FrontDoor
 
         FrontDoorExperimentData IJsonModel<FrontDoorExperimentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorExperimentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FrontDoorExperimentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FrontDoorExperimentData>(Data, options, AzureResourceManagerFrontDoorContext.Default);
+        BinaryData IPersistableModel<FrontDoorExperimentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        FrontDoorExperimentData IPersistableModel<FrontDoorExperimentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontDoorExperimentData>(data, options, AzureResourceManagerFrontDoorContext.Default);
+        FrontDoorExperimentData IPersistableModel<FrontDoorExperimentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontDoorExperimentData>(data, options);
 
         string IPersistableModel<FrontDoorExperimentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontDoorExperimentData>)Data).GetFormatFromOptions(options);
     }

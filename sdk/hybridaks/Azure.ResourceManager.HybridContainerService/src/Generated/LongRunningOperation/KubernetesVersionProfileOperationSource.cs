@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HybridContainerService
 
         KubernetesVersionProfileResource IOperationSource<KubernetesVersionProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KubernetesVersionProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridContainerServiceContext.Default);
+            var data = ModelReaderWriter.Read<KubernetesVersionProfileData>(response.Content);
             return new KubernetesVersionProfileResource(_client, data);
         }
 
         async ValueTask<KubernetesVersionProfileResource> IOperationSource<KubernetesVersionProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KubernetesVersionProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridContainerServiceContext.Default);
+            var data = ModelReaderWriter.Read<KubernetesVersionProfileData>(response.Content);
             return await Task.FromResult(new KubernetesVersionProfileResource(_client, data)).ConfigureAwait(false);
         }
     }

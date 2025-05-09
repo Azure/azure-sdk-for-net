@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.InformaticaDataManagement
 
         InformaticaServerlessRuntimeResource IOperationSource<InformaticaServerlessRuntimeResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<InformaticaServerlessRuntimeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerInformaticaDataManagementContext.Default);
+            var data = ModelReaderWriter.Read<InformaticaServerlessRuntimeData>(response.Content);
             return new InformaticaServerlessRuntimeResource(_client, data);
         }
 
         async ValueTask<InformaticaServerlessRuntimeResource> IOperationSource<InformaticaServerlessRuntimeResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<InformaticaServerlessRuntimeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerInformaticaDataManagementContext.Default);
+            var data = ModelReaderWriter.Read<InformaticaServerlessRuntimeData>(response.Content);
             return await Task.FromResult(new InformaticaServerlessRuntimeResource(_client, data)).ConfigureAwait(false);
         }
     }

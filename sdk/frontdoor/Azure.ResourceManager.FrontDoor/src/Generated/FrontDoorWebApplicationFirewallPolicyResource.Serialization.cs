@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.FrontDoor
 
         FrontDoorWebApplicationFirewallPolicyData IJsonModel<FrontDoorWebApplicationFirewallPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorWebApplicationFirewallPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FrontDoorWebApplicationFirewallPolicyData>(Data, options, AzureResourceManagerFrontDoorContext.Default);
+        BinaryData IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        FrontDoorWebApplicationFirewallPolicyData IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontDoorWebApplicationFirewallPolicyData>(data, options, AzureResourceManagerFrontDoorContext.Default);
+        FrontDoorWebApplicationFirewallPolicyData IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontDoorWebApplicationFirewallPolicyData>(data, options);
 
         string IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>)Data).GetFormatFromOptions(options);
     }

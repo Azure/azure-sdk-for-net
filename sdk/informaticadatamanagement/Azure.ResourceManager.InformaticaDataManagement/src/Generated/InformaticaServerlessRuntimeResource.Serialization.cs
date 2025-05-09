@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.InformaticaDataManagement
 
         InformaticaServerlessRuntimeData IJsonModel<InformaticaServerlessRuntimeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InformaticaServerlessRuntimeData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<InformaticaServerlessRuntimeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<InformaticaServerlessRuntimeData>(Data, options, AzureResourceManagerInformaticaDataManagementContext.Default);
+        BinaryData IPersistableModel<InformaticaServerlessRuntimeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        InformaticaServerlessRuntimeData IPersistableModel<InformaticaServerlessRuntimeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InformaticaServerlessRuntimeData>(data, options, AzureResourceManagerInformaticaDataManagementContext.Default);
+        InformaticaServerlessRuntimeData IPersistableModel<InformaticaServerlessRuntimeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InformaticaServerlessRuntimeData>(data, options);
 
         string IPersistableModel<InformaticaServerlessRuntimeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InformaticaServerlessRuntimeData>)Data).GetFormatFromOptions(options);
     }

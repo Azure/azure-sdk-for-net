@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.KeyVault
 
         ManagedHsmPrivateEndpointConnectionResource IOperationSource<ManagedHsmPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedHsmPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKeyVaultContext.Default);
+            var data = ModelReaderWriter.Read<ManagedHsmPrivateEndpointConnectionData>(response.Content);
             return new ManagedHsmPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<ManagedHsmPrivateEndpointConnectionResource> IOperationSource<ManagedHsmPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedHsmPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKeyVaultContext.Default);
+            var data = ModelReaderWriter.Read<ManagedHsmPrivateEndpointConnectionData>(response.Content);
             return await Task.FromResult(new ManagedHsmPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

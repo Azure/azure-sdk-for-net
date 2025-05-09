@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.FrontDoor
 
         FrontDoorWebApplicationFirewallPolicyResource IOperationSource<FrontDoorWebApplicationFirewallPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FrontDoorWebApplicationFirewallPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerFrontDoorContext.Default);
+            var data = ModelReaderWriter.Read<FrontDoorWebApplicationFirewallPolicyData>(response.Content);
             return new FrontDoorWebApplicationFirewallPolicyResource(_client, data);
         }
 
         async ValueTask<FrontDoorWebApplicationFirewallPolicyResource> IOperationSource<FrontDoorWebApplicationFirewallPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FrontDoorWebApplicationFirewallPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerFrontDoorContext.Default);
+            var data = ModelReaderWriter.Read<FrontDoorWebApplicationFirewallPolicyData>(response.Content);
             return await Task.FromResult(new FrontDoorWebApplicationFirewallPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContainersContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ClusterPoolAKSPatchVersionUpgradeProperties)} does not support writing '{options.Format}' format.");
             }

@@ -129,7 +129,7 @@ namespace Azure.Health.Deidentification
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureHealthDeidentificationContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DeidentificationContent)} does not support writing '{options.Format}' format.");
             }

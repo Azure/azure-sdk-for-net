@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HealthDataAIServices
 
         DeidServiceData IJsonModel<DeidServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeidServiceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeidServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeidServiceData>(Data, options, AzureResourceManagerHealthDataAIServicesContext.Default);
+        BinaryData IPersistableModel<DeidServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DeidServiceData IPersistableModel<DeidServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeidServiceData>(data, options, AzureResourceManagerHealthDataAIServicesContext.Default);
+        DeidServiceData IPersistableModel<DeidServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeidServiceData>(data, options);
 
         string IPersistableModel<DeidServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeidServiceData>)Data).GetFormatFromOptions(options);
     }

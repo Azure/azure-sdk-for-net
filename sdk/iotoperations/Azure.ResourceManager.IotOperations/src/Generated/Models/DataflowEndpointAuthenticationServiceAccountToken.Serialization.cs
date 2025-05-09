@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DataflowEndpointAuthenticationServiceAccountToken)} does not support writing '{options.Format}' format.");
             }

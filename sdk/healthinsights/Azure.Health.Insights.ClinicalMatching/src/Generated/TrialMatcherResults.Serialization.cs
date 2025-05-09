@@ -132,7 +132,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureHealthInsightsClinicalMatchingContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(TrialMatcherResults)} does not support writing '{options.Format}' format.");
             }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HybridContainerService
 
         KubernetesVersionProfileData IJsonModel<KubernetesVersionProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KubernetesVersionProfileData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<KubernetesVersionProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KubernetesVersionProfileData>(Data, options, AzureResourceManagerHybridContainerServiceContext.Default);
+        BinaryData IPersistableModel<KubernetesVersionProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        KubernetesVersionProfileData IPersistableModel<KubernetesVersionProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KubernetesVersionProfileData>(data, options, AzureResourceManagerHybridContainerServiceContext.Default);
+        KubernetesVersionProfileData IPersistableModel<KubernetesVersionProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KubernetesVersionProfileData>(data, options);
 
         string IPersistableModel<KubernetesVersionProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KubernetesVersionProfileData>)Data).GetFormatFromOptions(options);
     }

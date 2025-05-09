@@ -867,7 +867,7 @@ namespace Azure.ResourceManager.HybridCompute
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

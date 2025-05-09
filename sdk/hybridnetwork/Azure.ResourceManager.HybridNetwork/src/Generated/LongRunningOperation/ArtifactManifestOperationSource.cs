@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HybridNetwork
 
         ArtifactManifestResource IOperationSource<ArtifactManifestResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ArtifactManifestData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
+            var data = ModelReaderWriter.Read<ArtifactManifestData>(response.Content);
             return new ArtifactManifestResource(_client, data);
         }
 
         async ValueTask<ArtifactManifestResource> IOperationSource<ArtifactManifestResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ArtifactManifestData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
+            var data = ModelReaderWriter.Read<ArtifactManifestData>(response.Content);
             return await Task.FromResult(new ArtifactManifestResource(_client, data)).ConfigureAwait(false);
         }
     }

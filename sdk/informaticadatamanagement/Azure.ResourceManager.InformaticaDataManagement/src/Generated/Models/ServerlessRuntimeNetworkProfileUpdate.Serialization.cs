@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerInformaticaDataManagementContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ServerlessRuntimeNetworkProfileUpdate)} does not support writing '{options.Format}' format.");
             }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 
         FleetUpdateStrategyResource IOperationSource<FleetUpdateStrategyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FleetUpdateStrategyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceFleetContext.Default);
+            var data = ModelReaderWriter.Read<FleetUpdateStrategyData>(response.Content);
             return new FleetUpdateStrategyResource(_client, data);
         }
 
         async ValueTask<FleetUpdateStrategyResource> IOperationSource<FleetUpdateStrategyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FleetUpdateStrategyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceFleetContext.Default);
+            var data = ModelReaderWriter.Read<FleetUpdateStrategyData>(response.Content);
             return await Task.FromResult(new FleetUpdateStrategyResource(_client, data)).ConfigureAwait(false);
         }
     }

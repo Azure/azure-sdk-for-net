@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HealthcareApis
 
         HealthcareApisServiceResource IOperationSource<HealthcareApisServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HealthcareApisServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthcareApisContext.Default);
+            var data = ModelReaderWriter.Read<HealthcareApisServiceData>(response.Content);
             return new HealthcareApisServiceResource(_client, data);
         }
 
         async ValueTask<HealthcareApisServiceResource> IOperationSource<HealthcareApisServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HealthcareApisServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthcareApisContext.Default);
+            var data = ModelReaderWriter.Read<HealthcareApisServiceData>(response.Content);
             return await Task.FromResult(new HealthcareApisServiceResource(_client, data)).ConfigureAwait(false);
         }
     }
