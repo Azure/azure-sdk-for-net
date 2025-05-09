@@ -1,14 +1,10 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.4.1 (2025-05-09)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed an issue when a model builder was both IEnumerable and IPersistable.
 
 ## 1.4.0 (2025-05-02)
 

@@ -38,8 +38,7 @@ namespace Azure.Generator.Management
                 var resource = new ResourceClientProvider(client);
                 ManagementClientGenerator.Instance.AddTypeToKeep(resource.Name);
                 resources.Add(resource);
-                var isSingleton = resourceMetadata.Arguments?.TryGetValue("isSingleton", out var result) == true ? result.ToObjectFromJson<string>() == "true" : false;
-                if (!isSingleton)
+                if (!resource.IsSingleton)
                 {
                     var collection = new ResourceCollectionClientProvider(client, resource);
                     ManagementClientGenerator.Instance.AddTypeToKeep(collection.Name);
@@ -57,7 +56,7 @@ namespace Azure.Generator.Management
         protected override TypeProvider[] BuildTypeProviders()
         {
             var (resources, collections) = BuildResources();
-            return [.. base.BuildTypeProviders(), ArmOperation, GenericArmOperation, .. resources, .. collections, .. resources.Select(r => r.Source)];
+            return [.. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider), ArmOperation, GenericArmOperation, .. resources, .. collections, .. resources.Select(r => r.Source)];
         }
     }
 }

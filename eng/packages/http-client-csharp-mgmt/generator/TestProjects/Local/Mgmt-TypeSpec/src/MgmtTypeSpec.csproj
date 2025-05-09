@@ -12,12 +12,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/TypeFormatters.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/RequestHeaderExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/AppContextSwitchHelper.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/AsyncLockWithValue.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/FixedDelayWithNoJitterStrategy.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/ClientDiagnostics.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/DiagnosticScopeFactory.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/DiagnosticScope.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/HttpMessageSanitizer.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/TrimmingAttribute.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/AsyncLockWithValue.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/FixedDelayWithNoJitterStrategy.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/IOperationSource.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/NextLinkOperationImplementation.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/OperationFinalStateVia.cs" LinkBase="Shared/Core" />
@@ -27,7 +28,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/OperationPoller.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/SequentialDelayStrategy.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/TaskExtensions.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/TrimmingAttribute.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/VoidValue.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 

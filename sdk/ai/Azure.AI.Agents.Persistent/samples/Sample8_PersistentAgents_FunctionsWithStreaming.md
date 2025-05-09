@@ -129,7 +129,7 @@ Synchronous sample:
 ```C# Snippet:AgentsFunctionsWithStreamingSync_CreateThread
 PersistentAgentThread thread = client.Threads.CreateThread();
 
-ThreadMessage message = client.Messages.CreateMessage(
+PersistentThreadMessage message = client.Messages.CreateMessage(
     thread.Id,
     MessageRole.User,
     "What's the weather like in my favorite city?");
@@ -139,7 +139,7 @@ Asynchronous sample:
 ```C# Snippet:AgentsFunctionsWithStreaming_CreateThread
 PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
-ThreadMessage message = await client.Messages.CreateMessageAsync(
+PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     "What's the weather like in my favorite city?");

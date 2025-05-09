@@ -33,7 +33,6 @@ namespace Azure.Generator.Management.Providers
     {
         private IReadOnlyCollection<InputServiceMethod> _resourceServiceMethods;
         private readonly IReadOnlyList<string> _contextualParameters;
-        private bool _isSingleton;
 
         private FieldProvider _dataField;
         private FieldProvider _resourcetypeField;
@@ -45,7 +44,7 @@ namespace Azure.Generator.Management.Providers
         {
             var resourceMetadata = inputClient.Decorators.Single(d => d.Name.Equals(KnownDecorators.ResourceMetadata));
             var codeModelId = resourceMetadata.Arguments?[KnownDecorators.ResourceModel].ToObjectFromJson<string>()!;
-            _isSingleton = resourceMetadata.Arguments?.TryGetValue("isSingleton", out var isSingleton) == true ? isSingleton.ToObjectFromJson<string>() == "true" : false;
+            IsSingleton = resourceMetadata.Arguments?.TryGetValue("isSingleton", out var isSingleton) == true ? isSingleton.ToObjectFromJson<bool>() : false;
             var resourceType = resourceMetadata.Arguments?[KnownDecorators.ResourceType].ToObjectFromJson<string>()!;
             _resourcetypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resourceType));
             var resourceModel = ManagementClientGenerator.Instance.InputLibrary.GetModelByCrossLanguageDefinitionId(codeModelId)!;
@@ -86,6 +85,8 @@ namespace Azure.Generator.Management.Providers
         internal ModelProvider ResourceData { get; }
         internal string SpecName { get; }
 
+        public bool IsSingleton { get; }
+
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
         protected override FieldProvider[] BuildFields() => [_dataField, _clientDiagonosticsField, _restClientField, _resourcetypeField];
@@ -119,9 +120,9 @@ namespace Azure.Generator.Management.Providers
         }
 
         protected override ConstructorProvider[] BuildConstructors()
-            => [ConstructorProviderHelper.BuildMockingConstructor(this), BuildPrimaryConstructor(), BuildInitializationConstructor(),];
+            => [ConstructorProviderHelper.BuildMockingConstructor(this), BuildResourceDataConstructor(), BuildResourceIdentifierConstructor()];
 
-        private ConstructorProvider BuildPrimaryConstructor()
+        private ConstructorProvider BuildResourceDataConstructor()
         {
             var clientParameter = new ParameterProvider("client", $"The client parameters to use in these operations.", typeof(ArmClient));
             var dataParameter = new ParameterProvider("data", $"The resource that is the target of operations.", ResourceData.Type);
@@ -144,7 +145,7 @@ namespace Azure.Generator.Management.Providers
             return new ConstructorProvider(signature, bodyStatements, this);
         }
 
-        protected ConstructorProvider BuildInitializationConstructor()
+        protected ConstructorProvider BuildResourceIdentifierConstructor()
         {
             var idParameter = new ParameterProvider("id", $"The identifier of the resource that is the target of operations.", typeof(ResourceIdentifier));
             var parameters = new List<ParameterProvider>
@@ -166,7 +167,7 @@ namespace Azure.Generator.Management.Providers
             {
                 _clientDiagonosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), ResourceTypeExpression.Property(nameof(ResourceType.Namespace)), This.Property("Diagnostics"))).Terminate(),
                 TryGetApiVersion(out var apiVersion).Terminate(),
-                _restClientField.Assign(New.Instance(_clientProvider.Type, This.Property("Pipeline"), This.Property("Endpoint"), apiVersion)).Terminate(),
+                _restClientField.Assign(New.Instance(_clientProvider.Type, _clientDiagonosticsField, This.Property("Pipeline"), This.Property("Endpoint"), apiVersion)).Terminate(),
                 Static(Type).Invoke(ValidateResourceIdMethodName, idParameter).Terminate()
             };
 
@@ -214,7 +215,7 @@ namespace Azure.Generator.Management.Providers
                 }
 
                 // only update for non-singleton resource
-                var isUpdateOnly = method.Operation.HttpMethod == HttpMethod.Put.ToString() && !_isSingleton;
+                var isUpdateOnly = method.Operation.HttpMethod == HttpMethod.Put.ToString() && !IsSingleton;
                 operationMethods.Add(BuildOperationMethod(method, convenienceMethod, false, isUpdateOnly));
                 var asyncConvenienceMethod = GetCorrespondingConvenienceMethod(method.Operation, true);
                 operationMethods.Add(BuildOperationMethod(method, asyncConvenienceMethod, true, isUpdateOnly));

@@ -79,7 +79,7 @@ namespace Azure.AI.Agents.Persistent
                 return null;
             }
             PersistentAgentsNamedToolChoiceType type = default;
-            FunctionName function = default;
+            PersistentAgentsFunctionName function = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    function = FunctionName.DeserializeFunctionName(property.Value, options);
+                    function = PersistentAgentsFunctionName.DeserializePersistentAgentsFunctionName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -56,7 +56,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="type"> the type of tool. If type is `function`, the function name must be set. </param>
         /// <param name="function"> The name of the function to call. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PersistentAgentsNamedToolChoice(PersistentAgentsNamedToolChoiceType type, FunctionName function, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PersistentAgentsNamedToolChoice(PersistentAgentsNamedToolChoiceType type, PersistentAgentsFunctionName function, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Function = function;
@@ -71,6 +71,6 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> the type of tool. If type is `function`, the function name must be set. </summary>
         public PersistentAgentsNamedToolChoiceType Type { get; set; }
         /// <summary> The name of the function to call. </summary>
-        public FunctionName Function { get; set; }
+        public PersistentAgentsFunctionName Function { get; set; }
     }
 }
