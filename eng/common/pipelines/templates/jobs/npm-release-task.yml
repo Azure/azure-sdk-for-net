@@ -59,7 +59,7 @@ jobs:
 
               if (!'$(Tag)') {
                 $tag = ($packageVersion -match "-(alpha|beta|rc|pre)") ? "beta" : "latest"
-                echo "##vso[task.setvariable variable=Tag;]$tag"
+                echo "##vso[task.setvariable variable=Tag;isOutput=true]$tag"
                 Write-Host "Tag set to $tag for version $packageVersion"
               }
               
@@ -99,6 +99,8 @@ jobs:
         value: $[dependencies.PublishPackage_${{ parameters.Artifact.name }}.outputs['PublishPackage_${{ parameters.Artifact.name }}.SetPackageVar.OriginalTags']]
       - name: IntendedTagVersion
         value: $[dependencies.PublishPackage_${{ parameters.Artifact.name }}.outputs['PublishPackage_${{ parameters.Artifact.name }}.SetPackageVar.IntendedTagVersion']]
+      - name: Tag
+        value: $[dependencies.PublishPackage_${{ parameters.Artifact.name }}.outputs['PublishPackage_${{ parameters.Artifact.name }}.SetPackageVar.Tag']]
       - ${{ each var in parameters.VarDependencies }}:
         - name: ${{ var.key }}
           value: ${{ var.value }}
