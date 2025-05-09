@@ -3,16 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Azure.Communication.PhoneNumbers.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Azure.Communication.PhoneNumbers
 {
