@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.Dell.Storage.Tests
 {
-    public class dellManagementTestEnvironment : TestEnvironment
+    public class DellStorageManagementTestEnvironment : TestEnvironment
     {
     }
 }

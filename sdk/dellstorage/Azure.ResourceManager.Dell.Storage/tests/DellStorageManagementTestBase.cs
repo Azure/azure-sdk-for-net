@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Dell.Storage.Tests
 {
-    public class dellManagementTestBase : ManagementRecordedTestBase<dellManagementTestEnvironment>
+    public class DellStorageManagementTestBase : ManagementRecordedTestBase<DellStorageManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
-        protected dellManagementTestBase(bool isAsync, RecordedTestMode mode)
+        protected DellStorageManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
         }
 
-        protected dellManagementTestBase(bool isAsync)
+        protected DellStorageManagementTestBase(bool isAsync)
             : base(isAsync)
         {
         }
