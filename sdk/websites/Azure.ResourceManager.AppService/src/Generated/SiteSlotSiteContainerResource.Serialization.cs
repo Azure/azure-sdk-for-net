@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         SiteContainerData IJsonModel<SiteContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteContainerData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SiteContainerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SiteContainerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SiteContainerData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        SiteContainerData IPersistableModel<SiteContainerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteContainerData>(data, options);
+        SiteContainerData IPersistableModel<SiteContainerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteContainerData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<SiteContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteContainerData>)Data).GetFormatFromOptions(options);
     }

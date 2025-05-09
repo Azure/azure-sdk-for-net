@@ -15,6 +15,8 @@ namespace _Type.Property.AdditionalProperties
 {
     public partial class SpreadRecordForNonDiscriminatedUnion3 : IJsonModel<SpreadRecordForNonDiscriminatedUnion3>
     {
+        internal SpreadRecordForNonDiscriminatedUnion3() => throw null;
+
         void IJsonModel<SpreadRecordForNonDiscriminatedUnion3>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

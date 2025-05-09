@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         StreamAnalyticsPrivateEndpointData IJsonModel<StreamAnalyticsPrivateEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StreamAnalyticsPrivateEndpointData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StreamAnalyticsPrivateEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StreamAnalyticsPrivateEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StreamAnalyticsPrivateEndpointData>(Data, options, AzureResourceManagerStreamAnalyticsContext.Default);
 
-        StreamAnalyticsPrivateEndpointData IPersistableModel<StreamAnalyticsPrivateEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StreamAnalyticsPrivateEndpointData>(data, options);
+        StreamAnalyticsPrivateEndpointData IPersistableModel<StreamAnalyticsPrivateEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StreamAnalyticsPrivateEndpointData>(data, options, AzureResourceManagerStreamAnalyticsContext.Default);
 
         string IPersistableModel<StreamAnalyticsPrivateEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StreamAnalyticsPrivateEndpointData>)Data).GetFormatFromOptions(options);
     }

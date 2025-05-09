@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Media
 
         ContentKeyPolicyData IJsonModel<ContentKeyPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContentKeyPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContentKeyPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ContentKeyPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContentKeyPolicyData>(Data, options, AzureResourceManagerMediaContext.Default);
 
-        ContentKeyPolicyData IPersistableModel<ContentKeyPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContentKeyPolicyData>(data, options);
+        ContentKeyPolicyData IPersistableModel<ContentKeyPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContentKeyPolicyData>(data, options, AzureResourceManagerMediaContext.Default);
 
         string IPersistableModel<ContentKeyPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContentKeyPolicyData>)Data).GetFormatFromOptions(options);
     }

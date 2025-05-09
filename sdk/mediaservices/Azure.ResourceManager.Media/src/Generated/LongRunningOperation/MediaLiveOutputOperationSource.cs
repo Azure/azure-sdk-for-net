@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Media
 
         MediaLiveOutputResource IOperationSource<MediaLiveOutputResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MediaLiveOutputData>(response.Content);
+            var data = ModelReaderWriter.Read<MediaLiveOutputData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMediaContext.Default);
             return new MediaLiveOutputResource(_client, data);
         }
 
         async ValueTask<MediaLiveOutputResource> IOperationSource<MediaLiveOutputResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MediaLiveOutputData>(response.Content);
+            var data = ModelReaderWriter.Read<MediaLiveOutputData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMediaContext.Default);
             return await Task.FromResult(new MediaLiveOutputResource(_client, data)).ConfigureAwait(false);
         }
     }

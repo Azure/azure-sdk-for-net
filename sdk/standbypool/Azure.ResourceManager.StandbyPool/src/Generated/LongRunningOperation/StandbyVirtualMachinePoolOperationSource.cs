@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.StandbyPool
 
         StandbyVirtualMachinePoolResource IOperationSource<StandbyVirtualMachinePoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StandbyVirtualMachinePoolData>(response.Content);
+            var data = ModelReaderWriter.Read<StandbyVirtualMachinePoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStandbyPoolContext.Default);
             return new StandbyVirtualMachinePoolResource(_client, data);
         }
 
         async ValueTask<StandbyVirtualMachinePoolResource> IOperationSource<StandbyVirtualMachinePoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StandbyVirtualMachinePoolData>(response.Content);
+            var data = ModelReaderWriter.Read<StandbyVirtualMachinePoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStandbyPoolContext.Default);
             return await Task.FromResult(new StandbyVirtualMachinePoolResource(_client, data)).ConfigureAwait(false);
         }
     }

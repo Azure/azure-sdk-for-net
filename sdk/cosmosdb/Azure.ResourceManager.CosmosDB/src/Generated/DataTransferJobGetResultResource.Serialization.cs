@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CosmosDB
 
         DataTransferJobGetResultData IJsonModel<DataTransferJobGetResultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataTransferJobGetResultData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataTransferJobGetResultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataTransferJobGetResultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataTransferJobGetResultData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        DataTransferJobGetResultData IPersistableModel<DataTransferJobGetResultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataTransferJobGetResultData>(data, options);
+        DataTransferJobGetResultData IPersistableModel<DataTransferJobGetResultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataTransferJobGetResultData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
         string IPersistableModel<DataTransferJobGetResultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataTransferJobGetResultData>)Data).GetFormatFromOptions(options);
     }

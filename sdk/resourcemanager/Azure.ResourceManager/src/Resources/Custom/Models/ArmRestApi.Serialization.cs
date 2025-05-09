@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ArmRestApi)} does not support '{options.Format}' format.");
             }
