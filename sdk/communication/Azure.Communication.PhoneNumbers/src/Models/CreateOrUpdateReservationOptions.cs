@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Azure.Communication.PhoneNumbers.Models
 {
     /// <summary>
-    /// The request to update a reservation.
+    /// The request to create or update a reservation.
     /// </summary>
     public class CreateOrUpdateReservationOptions
     {

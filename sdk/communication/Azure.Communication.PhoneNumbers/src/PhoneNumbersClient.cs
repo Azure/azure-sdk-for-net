@@ -3,13 +3,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
+using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Azure.Communication.PhoneNumbers.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Azure.Communication.PhoneNumbers
 {
@@ -272,6 +275,11 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Purchases phone numbers. </summary>
+        /// <remarks>
+        /// The agreement to not resell is a legal requirement in some countries in order to purchase phone numbers.
+        /// For more information on which countries require this agreement, please refer to this documentation:
+        /// https://learn.microsoft.com/azure/communication-services/concepts/numbers/sub-eligibility-number-capability
+        /// </remarks>
         /// <param name="searchId"> The search id. </param>
         /// <param name="agreeToNotResell"> The user-provided agreement to not resell the numbers purchased by this operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -292,6 +300,11 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Purchases phone numbers. </summary>
+        /// <remarks>
+        /// The agreement to not resell is a legal requirement in some countries in order to purchase phone numbers.
+        /// For more information on which countries require this agreement, please refer to this documentation:
+        /// https://learn.microsoft.com/azure/communication-services/concepts/numbers/sub-eligibility-number-capability
+        /// </remarks>
         /// <param name="searchId"> The search id. </param>
         /// <param name="agreeToNotResell"> The user-provided agreement to not resell the numbers purchased by this operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -800,11 +813,12 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary>
-        /// Browse available phone numbers.
+        /// Browses for available phone numbers to purchase. The response will be a randomized list of
+        /// phone numbers available to purchase matching the browsing criteria.
+        /// Since the results are randomized, repeating the same request will not guarantee the same results.
         /// </summary>
-        /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="options">An object including the parameters to browse phone numbers by.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<PhoneNumbersBrowseResult>> BrowseAvailableNumbersAsync(PhoneNumbersBrowseOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(BrowseAvailableNumbers)}");
@@ -822,11 +836,12 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary>
-        /// Browse available phone numbers.
+        /// Browses for available phone numbers to purchase. The response will be a randomized list of
+        /// phone numbers available to purchase matching the browsing criteria.
+        /// Since the results are randomized, repeating the same request will not guarantee the same results.
         /// </summary>
-        /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="options">An object including the parameters to browse phone numbers by.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual Response<PhoneNumbersBrowseResult> BrowseAvailableNumbers(PhoneNumbersBrowseOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(BrowseAvailableNumbers)}");
@@ -844,11 +859,10 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary>
-        /// Get phone numbers reservation.
+        /// Retrieves the reservation with the given ID, including all of the phone numbers associated with it.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="id">The id of the reservation to retrieve.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<PhoneNumbersReservation>> GetReservationAsync(Guid id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetReservation)}");
@@ -865,11 +879,10 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary>
-        /// Get phone numbers reservation.
+        /// Retrieves the reservation with the given ID, including all of the phone numbers associated with it.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="id">The id of the reservation to retrieve.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual Response<PhoneNumbersReservation> GetReservation(Guid id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetReservation)}");
@@ -886,10 +899,12 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary>
-        /// Retrieves the list of all phone numbers reservations.
+        /// Lists all phone numbers reservations.
         /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Note that the reservations will not be populated with the phone numbers associated with them.
+        /// </remarks>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual AsyncPageable<PhoneNumbersReservation> GetReservationsAsync(CancellationToken cancellationToken= default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint)
@@ -924,10 +939,12 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary>
-        /// Retrieves the list of all phone numbers reservations.
+        /// Lists all phone numbers reservations.
         /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Note that the reservations will not be populated with the phone numbers associated with them.
+        /// </remarks>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual Pageable<PhoneNumbersReservation> GetReservations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint)
@@ -962,11 +979,16 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary>
-        /// Update a phone numbers reservation.
+        /// Updates the reservation with the given ID if it exists; or creates a new one otherwise.
+        /// The response will be the updated state of the reservation.
+        /// Updating a reservation will extend the expiration time of the reservation to 15 minutes
+        /// after the last change, up to a maximum of 2 hours from creation time.
         /// </summary>
-        /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Partial success is possible, in which case the result will contain phone numbers with error status.
+        /// </remarks>
+        /// <param name="options">An object describing the parameters for the operation.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<PhoneNumbersReservation>> CreateOrUpdateReservationAsync(CreateOrUpdateReservationOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(CreateOrUpdateReservation)}");
@@ -999,11 +1021,16 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary>
-        /// Update a phone numbers reservation.
+        /// Updates the reservation with the given ID if it exists; or creates a new one otherwise.
+        /// The response will be the updated state of the reservation.
+        /// Updating a reservation will extend the expiration time of the reservation to 15 minutes
+        /// after the last change, up to a maximum of 2 hours from creation time.
         /// </summary>
-        /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// Partial success is possible, in which case the result will contain phone numbers with error status.
+        /// </remarks>
+        /// <param name="options">An object describing the parameters for the operation.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual Response<PhoneNumbersReservation> CreateOrUpdateReservation(CreateOrUpdateReservationOptions options, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(CreateOrUpdateReservation)}");
@@ -1036,11 +1063,11 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary>
-        /// Delete a phone numbers reservation.
+        /// Deletes the reservation with the given ID. Any phone number in the reservation will be released
+        /// and made available for others to purchase. Only active reservations can be deleted.
         /// </summary>
         /// <param name="reservationId">The ID of an existing reservation to delete.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response> DeleteReservationAsync(Guid reservationId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(DeleteReservation)}");
@@ -1057,11 +1084,11 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary>
-        /// Delete a phone numbers reservation.
+        /// Deletes the reservation with the given ID. Any phone number in the reservation will be released
+        /// and made available for others to purchase. Only active reservations can be deleted.
         /// </summary>
         /// <param name="reservationId">The ID of an existing reservation to delete.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual Response DeleteReservation(Guid reservationId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(DeleteReservation)}");
@@ -1078,12 +1105,19 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary>
-        /// Start a phone numbers reservation purchase.
+        /// Starts a long running operation to purchase all of the phone numbers in the reservation.
+        /// Purchase can only be started for active reservations that at least one phone number. If any of
+        /// the phone numbers in the reservation is from a country where reselling is not permitted, do not
+        /// resell agreement is required.
         /// </summary>
-        /// <param name="reservationId"></param>
-        /// <param name="agreeToNotResell"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// The agreement to not resell is a legal requirement in some countries in order to purchase phone numbers.
+        /// For more information on which countries require this agreement, please refer to this documentation:
+        /// https://learn.microsoft.com/azure/communication-services/concepts/numbers/sub-eligibility-number-capability
+        /// </remarks>
+        /// <param name="reservationId">The ID of the reservation to purchase.</param>
+        /// <param name="agreeToNotResell">The agreement to not resell the phone numbers. Defaults to false if not provided.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<PurchaseReservationOperation> StartPurchaseReservationAsync(Guid reservationId, bool agreeToNotResell = false, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartPurchaseReservation)}");
@@ -1101,12 +1135,19 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary>
-        /// Start a phone numbers reservation purchase.
+        /// Starts a long running operation to purchase all of the phone numbers in the reservation.
+        /// Purchase can only be started for active reservations that at least one phone number. If any of
+        /// the phone numbers in the reservation is from a country where reselling is not permitted, do not
+        /// resell agreement is required.
         /// </summary>
-        /// <param name="reservationId"></param>
-        /// <param name="agreeToNotResell"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// The agreement to not resell is a legal requirement in some countries in order to purchase phone numbers.
+        /// For more information on which countries require this agreement, please refer to this documentation:
+        /// https://learn.microsoft.com/azure/communication-services/concepts/numbers/sub-eligibility-number-capability
+        /// </remarks>
+        /// <param name="reservationId">The ID of the reservation to purchase.</param>
+        /// <param name="agreeToNotResell">The agreement to not resell the phone numbers. Defaults to false if not provided.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual PurchaseReservationOperation StartPurchaseReservation(Guid reservationId, bool agreeToNotResell = false, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartPurchaseReservation)}");
