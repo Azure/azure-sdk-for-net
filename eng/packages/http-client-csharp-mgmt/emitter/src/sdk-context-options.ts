@@ -5,7 +5,7 @@ import { CreateSdkContextOptions } from "@azure-tools/typespec-client-generator-
 
 export const azureSDKContextOptions: CreateSdkContextOptions = {
   versioning: {
-    previewStringRegex: /-preview$/,
+    previewStringRegex: /-preview$/
   },
   additionalDecorators: [
     // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-client-generator-core/README.md#usesystemtextjsonconverter

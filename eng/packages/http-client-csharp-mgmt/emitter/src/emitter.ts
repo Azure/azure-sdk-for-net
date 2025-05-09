@@ -7,7 +7,7 @@ import { DecoratorInfo } from "@azure-tools/typespec-client-generator-core";
 import {
   CodeModel,
   InputClient,
-  InputModelType,
+  InputModelType
 } from "@typespec/http-client-csharp";
 
 import {
@@ -29,7 +29,7 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
   context.options["update-code-model"] = updateCodeModel;
   context.options["emitter-extension-path"] ??= import.meta.url;
   context.options["sdk-context-options"] ??= azureSDKContextOptions;
-  context.options["model-namespace"] ??= true; 
+  context.options["model-namespace"] ??= true;
   await $onAzureEmit(context);
 }
 
@@ -61,7 +61,10 @@ function updateCodeModel(codeModel: CodeModel): CodeModel {
       let resourceType: string | undefined = undefined;
       // We will try to get resource metadata from put operation firstly, if not found, we will try to get it from get operation
       const putOperation = client.methods.find(
-        (m) => m.operation.decorators?.some((d) => d.name == armResourceCreateOrUpdate)
+        (m) =>
+          m.operation.decorators?.some(
+            (d) => d.name == armResourceCreateOrUpdate
+          )
       )?.operation;
       if (putOperation) {
         const path = putOperation.path;
