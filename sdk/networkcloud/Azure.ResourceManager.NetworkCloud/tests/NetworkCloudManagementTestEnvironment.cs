@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
 
         // BMC KeySet
 
-        public string BMCSSHPubicKey => GetRecordedVariable("BMC_SSH_PUBLIC_KEY", options => options.IsSecret());
+        public string BMCSSHPubicKey => GetRecordedVariable("BMC_SSH_PUBLIC_KEY");
 
         // Misc.
 
