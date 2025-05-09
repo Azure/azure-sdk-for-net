@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.SiteManager
 {
+    public partial class AzureResourceManagerSiteManagerContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerSiteManagerContext() { }
+        public static Azure.ResourceManager.SiteManager.AzureResourceManagerSiteManagerContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class SiteCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SiteManager.SiteResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SiteManager.SiteResource>, System.Collections.IEnumerable
     {
         protected SiteCollection() { }
