@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Purview
 
         PurviewPrivateEndpointConnectionData IJsonModel<PurviewPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PurviewPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PurviewPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PurviewPrivateEndpointConnectionData>(Data, options, AzureResourceManagerPurviewContext.Default);
+        BinaryData IPersistableModel<PurviewPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        PurviewPrivateEndpointConnectionData IPersistableModel<PurviewPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PurviewPrivateEndpointConnectionData>(data, options, AzureResourceManagerPurviewContext.Default);
+        PurviewPrivateEndpointConnectionData IPersistableModel<PurviewPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PurviewPrivateEndpointConnectionData>(data, options);
 
         string IPersistableModel<PurviewPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PurviewPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

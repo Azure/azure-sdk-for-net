@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Reservations
 
         ReservationQuotaData IJsonModel<ReservationQuotaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ReservationQuotaData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ReservationQuotaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ReservationQuotaData>(Data, options, AzureResourceManagerReservationsContext.Default);
+        BinaryData IPersistableModel<ReservationQuotaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ReservationQuotaData IPersistableModel<ReservationQuotaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ReservationQuotaData>(data, options, AzureResourceManagerReservationsContext.Default);
+        ReservationQuotaData IPersistableModel<ReservationQuotaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ReservationQuotaData>(data, options);
 
         string IPersistableModel<ReservationQuotaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ReservationQuotaData>)Data).GetFormatFromOptions(options);
     }

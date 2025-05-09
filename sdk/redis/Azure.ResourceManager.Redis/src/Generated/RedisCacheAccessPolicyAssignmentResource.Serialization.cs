@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Redis
 
         RedisCacheAccessPolicyAssignmentData IJsonModel<RedisCacheAccessPolicyAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisCacheAccessPolicyAssignmentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RedisCacheAccessPolicyAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RedisCacheAccessPolicyAssignmentData>(Data, options, AzureResourceManagerRedisContext.Default);
+        BinaryData IPersistableModel<RedisCacheAccessPolicyAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        RedisCacheAccessPolicyAssignmentData IPersistableModel<RedisCacheAccessPolicyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisCacheAccessPolicyAssignmentData>(data, options, AzureResourceManagerRedisContext.Default);
+        RedisCacheAccessPolicyAssignmentData IPersistableModel<RedisCacheAccessPolicyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisCacheAccessPolicyAssignmentData>(data, options);
 
         string IPersistableModel<RedisCacheAccessPolicyAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisCacheAccessPolicyAssignmentData>)Data).GetFormatFromOptions(options);
     }

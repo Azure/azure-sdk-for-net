@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Redis.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(RedisPatch)} does not support writing '{options.Format}' format.");
             }

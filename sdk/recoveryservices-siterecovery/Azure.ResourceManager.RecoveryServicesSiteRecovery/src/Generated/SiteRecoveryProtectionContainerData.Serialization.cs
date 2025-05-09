@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryProtectionContainerData)} does not support writing '{options.Format}' format.");
             }

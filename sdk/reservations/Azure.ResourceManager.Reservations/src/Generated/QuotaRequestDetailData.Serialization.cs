@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Reservations
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerReservationsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(QuotaRequestDetailData)} does not support writing '{options.Format}' format.");
             }

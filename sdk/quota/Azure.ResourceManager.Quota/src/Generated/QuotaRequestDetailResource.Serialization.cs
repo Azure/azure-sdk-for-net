@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Quota
 
         QuotaRequestDetailData IJsonModel<QuotaRequestDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<QuotaRequestDetailData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<QuotaRequestDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<QuotaRequestDetailData>(Data, options, AzureResourceManagerQuotaContext.Default);
+        BinaryData IPersistableModel<QuotaRequestDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        QuotaRequestDetailData IPersistableModel<QuotaRequestDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<QuotaRequestDetailData>(data, options, AzureResourceManagerQuotaContext.Default);
+        QuotaRequestDetailData IPersistableModel<QuotaRequestDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<QuotaRequestDetailData>(data, options);
 
         string IPersistableModel<QuotaRequestDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<QuotaRequestDetailData>)Data).GetFormatFromOptions(options);
     }

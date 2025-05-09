@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ResourceHealth
 
         ServiceEmergingIssueData IJsonModel<ServiceEmergingIssueData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceEmergingIssueData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ServiceEmergingIssueData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceEmergingIssueData>(Data, options, AzureResourceManagerResourceHealthContext.Default);
+        BinaryData IPersistableModel<ServiceEmergingIssueData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ServiceEmergingIssueData IPersistableModel<ServiceEmergingIssueData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceEmergingIssueData>(data, options, AzureResourceManagerResourceHealthContext.Default);
+        ServiceEmergingIssueData IPersistableModel<ServiceEmergingIssueData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceEmergingIssueData>(data, options);
 
         string IPersistableModel<ServiceEmergingIssueData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceEmergingIssueData>)Data).GetFormatFromOptions(options);
     }

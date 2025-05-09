@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Resources
 
         TemplateSpecData IJsonModel<TemplateSpecData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TemplateSpecData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TemplateSpecData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TemplateSpecData>(Data, options, AzureResourceManagerResourcesContext.Default);
+        BinaryData IPersistableModel<TemplateSpecData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        TemplateSpecData IPersistableModel<TemplateSpecData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TemplateSpecData>(data, options, AzureResourceManagerResourcesContext.Default);
+        TemplateSpecData IPersistableModel<TemplateSpecData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TemplateSpecData>(data, options);
 
         string IPersistableModel<TemplateSpecData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TemplateSpecData>)Data).GetFormatFromOptions(options);
     }

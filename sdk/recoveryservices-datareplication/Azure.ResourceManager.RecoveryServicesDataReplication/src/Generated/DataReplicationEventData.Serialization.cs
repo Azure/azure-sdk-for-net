@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DataReplicationEventData)} does not support writing '{options.Format}' format.");
             }

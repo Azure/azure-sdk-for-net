@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 
         DataReplicationFabricAgentData IJsonModel<DataReplicationFabricAgentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationFabricAgentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataReplicationFabricAgentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataReplicationFabricAgentData>(Data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+        BinaryData IPersistableModel<DataReplicationFabricAgentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DataReplicationFabricAgentData IPersistableModel<DataReplicationFabricAgentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataReplicationFabricAgentData>(data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+        DataReplicationFabricAgentData IPersistableModel<DataReplicationFabricAgentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataReplicationFabricAgentData>(data, options);
 
         string IPersistableModel<DataReplicationFabricAgentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataReplicationFabricAgentData>)Data).GetFormatFromOptions(options);
     }

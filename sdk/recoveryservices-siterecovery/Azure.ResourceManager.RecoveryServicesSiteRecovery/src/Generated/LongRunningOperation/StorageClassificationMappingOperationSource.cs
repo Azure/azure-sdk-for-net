@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         StorageClassificationMappingResource IOperationSource<StorageClassificationMappingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StorageClassificationMappingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+            var data = ModelReaderWriter.Read<StorageClassificationMappingData>(response.Content);
             return new StorageClassificationMappingResource(_client, data);
         }
 
         async ValueTask<StorageClassificationMappingResource> IOperationSource<StorageClassificationMappingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StorageClassificationMappingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+            var data = ModelReaderWriter.Read<StorageClassificationMappingData>(response.Content);
             return await Task.FromResult(new StorageClassificationMappingResource(_client, data)).ConfigureAwait(false);
         }
     }

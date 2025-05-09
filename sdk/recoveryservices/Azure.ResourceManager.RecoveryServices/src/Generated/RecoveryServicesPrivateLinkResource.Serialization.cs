@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.RecoveryServices
 
         RecoveryServicesPrivateLinkResourceData IJsonModel<RecoveryServicesPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RecoveryServicesPrivateLinkResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RecoveryServicesPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RecoveryServicesPrivateLinkResourceData>(Data, options, AzureResourceManagerRecoveryServicesContext.Default);
+        BinaryData IPersistableModel<RecoveryServicesPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        RecoveryServicesPrivateLinkResourceData IPersistableModel<RecoveryServicesPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RecoveryServicesPrivateLinkResourceData>(data, options, AzureResourceManagerRecoveryServicesContext.Default);
+        RecoveryServicesPrivateLinkResourceData IPersistableModel<RecoveryServicesPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RecoveryServicesPrivateLinkResourceData>(data, options);
 
         string IPersistableModel<RecoveryServicesPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RecoveryServicesPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
     }

@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisEnterpriseContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(RedisEnterpriseDatabasePatch)} does not support writing '{options.Format}' format.");
             }

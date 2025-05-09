@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ManagementGroups
 
         ManagementGroupSubscriptionData IJsonModel<ManagementGroupSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagementGroupSubscriptionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagementGroupSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagementGroupSubscriptionData>(Data, options, AzureResourceManagerContext.Default);
+        BinaryData IPersistableModel<ManagementGroupSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ManagementGroupSubscriptionData IPersistableModel<ManagementGroupSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagementGroupSubscriptionData>(data, options, AzureResourceManagerContext.Default);
+        ManagementGroupSubscriptionData IPersistableModel<ManagementGroupSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagementGroupSubscriptionData>(data, options);
 
         string IPersistableModel<ManagementGroupSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagementGroupSubscriptionData>)Data).GetFormatFromOptions(options);
     }
