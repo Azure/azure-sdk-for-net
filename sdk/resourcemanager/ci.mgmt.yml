@@ -189,6 +189,7 @@ trigger:
     - sdk/servicelinker/Azure.ResourceManager.ServiceLinker
     - sdk/servicenetworking/Azure.ResourceManager.ServiceNetworking
     - sdk/signalr/Azure.ResourceManager.SignalR
+    - sdk/sitemanager/Azure.ResourceManager.SiteManager
     - sdk/sphere/Azure.ResourceManager.Sphere
     - sdk/springappdiscovery/Azure.ResourceManager.SpringAppDiscovery
     - sdk/sqlmanagement/Azure.ResourceManager.Sql
@@ -405,6 +406,7 @@ pr:
     - sdk/servicelinker/Azure.ResourceManager.ServiceLinker
     - sdk/servicenetworking/Azure.ResourceManager.ServiceNetworking
     - sdk/signalr/Azure.ResourceManager.SignalR
+    - sdk/sitemanager/Azure.ResourceManager.SiteManager
     - sdk/sphere/Azure.ResourceManager.Sphere
     - sdk/springappdiscovery/Azure.ResourceManager.SpringAppDiscovery
     - sdk/sqlmanagement/Azure.ResourceManager.Sql
