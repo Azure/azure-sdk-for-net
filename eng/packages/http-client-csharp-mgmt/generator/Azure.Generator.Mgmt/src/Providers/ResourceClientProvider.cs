@@ -33,6 +33,7 @@ namespace Azure.Generator.Management.Providers
     {
         private IReadOnlyCollection<InputServiceMethod> _resourceServiceMethods;
         private readonly IReadOnlyList<string> _contextualParameters;
+        private bool _isSingleton;
 
         private FieldProvider _dataField;
         private FieldProvider _resourcetypeField;
@@ -56,7 +57,7 @@ namespace Azure.Generator.Management.Providers
             ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(resourceModel)!;
             _clientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
 
-            _contextualParameters = GetContextualParameters(requestPath);
+            ContextualParameters = GetContextualParameters(requestPath);
 
             _dataField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, ResourceData.Type, "_data", this);
             _clientDiagonosticsField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(ClientDiagnostics), $"_{SpecName.ToLower()}ClientDiagnostics", this);
@@ -77,7 +78,7 @@ namespace Azure.Generator.Management.Providers
             return contextualParameters;
         }
 
-        protected IReadOnlyList<string> ContextualParameters => _contextualParameters;
+        protected IReadOnlyList<string> ContextualParameters { get; }
 
         protected override string BuildName() => $"{SpecName}Resource";
 
@@ -228,6 +229,7 @@ namespace Azure.Generator.Management.Providers
             return [BuildValidateResourceIdMethod(), .. operationMethods];
         }
 
+        // TODO: the BuildOperationMethod related code is kind of messy now need to be refactored in a following up PR
         protected MethodProvider BuildOperationMethod(InputServiceMethod method, MethodProvider convenienceMethod, bool isAsync, bool isUpdateOnly = false)
         {
             var signature = new MethodSignature(
@@ -317,12 +319,6 @@ namespace Azure.Generator.Management.Providers
             return isAsync ? new CSharpType(typeof(Task<>), new CSharpType(typeof(Response<>), ResourceClientCharpType)) : new CSharpType(typeof(Response<>), ResourceClientCharpType);
         }
 
-        // TODO: should we fix the generated context declaration statement format? there semicolon after a new line is weird
-        //         RequestContext context = new RequestContext
-        //         {
-        //             CancellationToken = cancellationToken
-        //         }
-        //         ;
         private TryStatement BuildOperationMethodTryStatement(InputServiceMethod method, MethodProvider convenienceMethod, MethodSignature signature, bool isAsync, bool isGeneric)
         {
             var operation = method.Operation;
@@ -382,7 +378,7 @@ namespace Azure.Generator.Management.Providers
             return tryStatement;
         }
 
-        protected virtual MethodBodyStatement BuildReturnStatements(ValueExpression responseVariable, MethodSignature? _ = null)
+        protected virtual MethodBodyStatement BuildReturnStatements(ValueExpression responseVariable, MethodSignature signature)
         {
             List<MethodBodyStatement> statements =
             [
@@ -413,7 +409,7 @@ namespace Azure.Generator.Management.Providers
                     arguments.Add(This.Property(nameof(ArmResource.Id)).Property(nameof(ResourceIdentifier.ResourceGroupName)));
                 }
                 // TODO: handle parents
-                else if (parameter.Name.Equals(_contextualParameters.Last(), StringComparison.InvariantCultureIgnoreCase))
+                else if (parameter.Name.Equals(ContextualParameters.Last(), StringComparison.InvariantCultureIgnoreCase))
                 {
                     arguments.Add(This.Property(nameof(ArmResource.Id)).Property(nameof(ResourceIdentifier.Name)));
                 }
