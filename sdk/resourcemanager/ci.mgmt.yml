@@ -161,6 +161,7 @@ trigger:
     - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
     - sdk/privatedns/Azure.ResourceManager.PrivateDns
     - sdk/providerhub/Azure.ResourceManager.ProviderHub
+    - sdk/purestorageblock/Azure.ResourceManager.PureStorageBlock
     - sdk/purview/Azure.ResourceManager.Purview
     - sdk/quantum/Azure.ResourceManager.Quantum
     - sdk/qumulo/Azure.ResourceManager.Qumulo
@@ -377,6 +378,7 @@ pr:
     - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
     - sdk/privatedns/Azure.ResourceManager.PrivateDns
     - sdk/providerhub/Azure.ResourceManager.ProviderHub
+    - sdk/purestorageblock/Azure.ResourceManager.PureStorageBlock
     - sdk/purview/Azure.ResourceManager.Purview
     - sdk/quantum/Azure.ResourceManager.Quantum
     - sdk/qumulo/Azure.ResourceManager.Qumulo
