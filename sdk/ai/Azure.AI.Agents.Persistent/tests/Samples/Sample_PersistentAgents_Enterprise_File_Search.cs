@@ -54,7 +54,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
             toolResources: new ToolResources() { FileSearch = fileSearchResource }
         );
         #endregion
-        #region Snippet:AgentsEnterpriseFileSearchAsync_CreatePersistentThreadMessage
+        #region Snippet:AgentsEnterpriseFileSearchAsync_CreateThreadMessage
         PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
         PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
@@ -152,7 +152,7 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
             toolResources: new ToolResources() { FileSearch = fileSearchResource }
         );
         #endregion
-        #region Snippet:AgentsEnterpriseFileSearch_CreatePersistentThreadMessage
+        #region Snippet:AgentsEnterpriseFileSearch_CreateThreadMessage
         PersistentAgentThread thread = client.Threads.CreateThread();
 
         PersistentThreadMessage message = client.Messages.CreateMessage(

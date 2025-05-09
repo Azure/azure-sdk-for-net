@@ -43,7 +43,7 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
            tools: [ bingGroundingTool ]);
         #endregion
         // Create thread for communication
-        #region Snippet:AgentsBingGroundingAsync_CreatePersistentThreadMessage
+        #region Snippet:AgentsBingGroundingAsync_CreateThreadMessage
         PersistentAgentThread thread = await agentClient.Threads.CreateThreadAsync();
 
         // Create message to thread
@@ -134,7 +134,7 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
            tools: [bingGroundingTool]);
         #endregion
         // Create thread for communication
-        #region Snippet:AgentsBingGrounding_CreatePersistentThreadMessage
+        #region Snippet:AgentsBingGrounding_CreateThreadMessage
         PersistentAgentThread thread = agentClient.Threads.CreateThread();
 
         // Create message to thread
