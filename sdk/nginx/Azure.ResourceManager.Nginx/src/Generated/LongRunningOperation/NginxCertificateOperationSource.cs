@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Nginx
 
         NginxCertificateResource IOperationSource<NginxCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NginxCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNginxContext.Default);
+            var data = ModelReaderWriter.Read<NginxCertificateData>(response.Content);
             return new NginxCertificateResource(_client, data);
         }
 
         async ValueTask<NginxCertificateResource> IOperationSource<NginxCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NginxCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNginxContext.Default);
+            var data = ModelReaderWriter.Read<NginxCertificateData>(response.Content);
             return await Task.FromResult(new NginxCertificateResource(_client, data)).ConfigureAwait(false);
         }
     }

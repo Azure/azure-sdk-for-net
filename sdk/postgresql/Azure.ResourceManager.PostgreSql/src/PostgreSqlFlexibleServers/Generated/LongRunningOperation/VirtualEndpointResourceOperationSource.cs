@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         VirtualEndpointResource IOperationSource<VirtualEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualEndpointResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
+            var data = ModelReaderWriter.Read<VirtualEndpointResourceData>(response.Content);
             return new VirtualEndpointResource(_client, data);
         }
 
         async ValueTask<VirtualEndpointResource> IOperationSource<VirtualEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualEndpointResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
+            var data = ModelReaderWriter.Read<VirtualEndpointResourceData>(response.Content);
             return await Task.FromResult(new VirtualEndpointResource(_client, data)).ConfigureAwait(false);
         }
     }

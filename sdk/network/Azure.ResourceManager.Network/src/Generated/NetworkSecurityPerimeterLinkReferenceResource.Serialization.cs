@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         NetworkSecurityPerimeterLinkReferenceData IJsonModel<NetworkSecurityPerimeterLinkReferenceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkSecurityPerimeterLinkReferenceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkSecurityPerimeterLinkReferenceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkSecurityPerimeterLinkReferenceData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<NetworkSecurityPerimeterLinkReferenceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NetworkSecurityPerimeterLinkReferenceData IPersistableModel<NetworkSecurityPerimeterLinkReferenceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkSecurityPerimeterLinkReferenceData>(data, options, AzureResourceManagerNetworkContext.Default);
+        NetworkSecurityPerimeterLinkReferenceData IPersistableModel<NetworkSecurityPerimeterLinkReferenceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkSecurityPerimeterLinkReferenceData>(data, options);
 
         string IPersistableModel<NetworkSecurityPerimeterLinkReferenceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkSecurityPerimeterLinkReferenceData>)Data).GetFormatFromOptions(options);
     }

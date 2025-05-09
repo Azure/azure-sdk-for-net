@@ -153,7 +153,7 @@ namespace Azure.AI.OpenAI.Assistants
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIAssistantsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "MFD":
                     return SerializeMultipart(options);
                 default:

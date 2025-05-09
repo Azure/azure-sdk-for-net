@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NetApp
 
         NetAppVolumeQuotaRuleData IJsonModel<NetAppVolumeQuotaRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppVolumeQuotaRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetAppVolumeQuotaRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppVolumeQuotaRuleData>(Data, options, AzureResourceManagerNetAppContext.Default);
+        BinaryData IPersistableModel<NetAppVolumeQuotaRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NetAppVolumeQuotaRuleData IPersistableModel<NetAppVolumeQuotaRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppVolumeQuotaRuleData>(data, options, AzureResourceManagerNetAppContext.Default);
+        NetAppVolumeQuotaRuleData IPersistableModel<NetAppVolumeQuotaRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppVolumeQuotaRuleData>(data, options);
 
         string IPersistableModel<NetAppVolumeQuotaRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppVolumeQuotaRuleData>)Data).GetFormatFromOptions(options);
     }

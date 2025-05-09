@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         DscpConfigurationResource IOperationSource<DscpConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DscpConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<DscpConfigurationData>(response.Content);
             return new DscpConfigurationResource(_client, data);
         }
 
         async ValueTask<DscpConfigurationResource> IOperationSource<DscpConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DscpConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<DscpConfigurationData>(response.Content);
             return await Task.FromResult(new DscpConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }

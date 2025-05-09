@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         ProbeData IJsonModel<ProbeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProbeData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ProbeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProbeData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<ProbeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ProbeData IPersistableModel<ProbeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProbeData>(data, options, AzureResourceManagerNetworkContext.Default);
+        ProbeData IPersistableModel<ProbeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProbeData>(data, options);
 
         string IPersistableModel<ProbeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProbeData>)Data).GetFormatFromOptions(options);
     }

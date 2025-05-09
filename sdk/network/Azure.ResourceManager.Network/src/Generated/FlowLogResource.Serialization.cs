@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         FlowLogData IJsonModel<FlowLogData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FlowLogData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FlowLogData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FlowLogData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<FlowLogData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        FlowLogData IPersistableModel<FlowLogData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FlowLogData>(data, options, AzureResourceManagerNetworkContext.Default);
+        FlowLogData IPersistableModel<FlowLogData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FlowLogData>(data, options);
 
         string IPersistableModel<FlowLogData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FlowLogData>)Data).GetFormatFromOptions(options);
     }

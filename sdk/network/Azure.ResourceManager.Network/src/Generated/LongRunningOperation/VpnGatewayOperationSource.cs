@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         VpnGatewayResource IOperationSource<VpnGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VpnGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<VpnGatewayData>(response.Content);
             return new VpnGatewayResource(_client, data);
         }
 
         async ValueTask<VpnGatewayResource> IOperationSource<VpnGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VpnGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<VpnGatewayData>(response.Content);
             return await Task.FromResult(new VpnGatewayResource(_client, data)).ConfigureAwait(false);
         }
     }

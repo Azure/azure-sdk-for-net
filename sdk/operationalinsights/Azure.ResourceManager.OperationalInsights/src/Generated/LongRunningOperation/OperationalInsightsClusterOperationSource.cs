@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.OperationalInsights
 
         OperationalInsightsClusterResource IOperationSource<OperationalInsightsClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OperationalInsightsClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOperationalInsightsContext.Default);
+            var data = ModelReaderWriter.Read<OperationalInsightsClusterData>(response.Content);
             return new OperationalInsightsClusterResource(_client, data);
         }
 
         async ValueTask<OperationalInsightsClusterResource> IOperationSource<OperationalInsightsClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OperationalInsightsClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOperationalInsightsContext.Default);
+            var data = ModelReaderWriter.Read<OperationalInsightsClusterData>(response.Content);
             return await Task.FromResult(new OperationalInsightsClusterResource(_client, data)).ConfigureAwait(false);
         }
     }

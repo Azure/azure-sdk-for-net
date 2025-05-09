@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNewRelicObservabilityContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(NewRelicHostsGetContent)} does not support writing '{options.Format}' format.");
             }

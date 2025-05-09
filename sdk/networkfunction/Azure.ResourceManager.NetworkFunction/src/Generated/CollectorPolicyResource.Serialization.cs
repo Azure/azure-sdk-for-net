@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NetworkFunction
 
         CollectorPolicyData IJsonModel<CollectorPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CollectorPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CollectorPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CollectorPolicyData>(Data, options, AzureResourceManagerNetworkFunctionContext.Default);
+        BinaryData IPersistableModel<CollectorPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        CollectorPolicyData IPersistableModel<CollectorPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CollectorPolicyData>(data, options, AzureResourceManagerNetworkFunctionContext.Default);
+        CollectorPolicyData IPersistableModel<CollectorPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CollectorPolicyData>(data, options);
 
         string IPersistableModel<CollectorPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CollectorPolicyData>)Data).GetFormatFromOptions(options);
     }

@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.OperationalInsights
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationalInsightsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         ExpressRoutePortResource IOperationSource<ExpressRoutePortResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExpressRoutePortData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<ExpressRoutePortData>(response.Content);
             return new ExpressRoutePortResource(_client, data);
         }
 
         async ValueTask<ExpressRoutePortResource> IOperationSource<ExpressRoutePortResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExpressRoutePortData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<ExpressRoutePortData>(response.Content);
             return await Task.FromResult(new ExpressRoutePortResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NetworkCloud
 
         NetworkCloudKubernetesClusterData IJsonModel<NetworkCloudKubernetesClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudKubernetesClusterData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkCloudKubernetesClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkCloudKubernetesClusterData>(Data, options, AzureResourceManagerNetworkCloudContext.Default);
+        BinaryData IPersistableModel<NetworkCloudKubernetesClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NetworkCloudKubernetesClusterData IPersistableModel<NetworkCloudKubernetesClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudKubernetesClusterData>(data, options, AzureResourceManagerNetworkCloudContext.Default);
+        NetworkCloudKubernetesClusterData IPersistableModel<NetworkCloudKubernetesClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudKubernetesClusterData>(data, options);
 
         string IPersistableModel<NetworkCloudKubernetesClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudKubernetesClusterData>)Data).GetFormatFromOptions(options);
     }

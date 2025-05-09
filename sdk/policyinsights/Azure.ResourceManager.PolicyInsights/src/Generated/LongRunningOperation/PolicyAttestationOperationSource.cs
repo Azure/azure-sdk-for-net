@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.PolicyInsights
 
         PolicyAttestationResource IOperationSource<PolicyAttestationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PolicyAttestationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPolicyInsightsContext.Default);
+            var data = ModelReaderWriter.Read<PolicyAttestationData>(response.Content);
             return new PolicyAttestationResource(_client, data);
         }
 
         async ValueTask<PolicyAttestationResource> IOperationSource<PolicyAttestationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PolicyAttestationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPolicyInsightsContext.Default);
+            var data = ModelReaderWriter.Read<PolicyAttestationData>(response.Content);
             return await Task.FromResult(new PolicyAttestationResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ProviderHub
 
         ResourceTypeRegistrationResource IOperationSource<ResourceTypeRegistrationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ResourceTypeRegistrationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerProviderHubContext.Default);
+            var data = ModelReaderWriter.Read<ResourceTypeRegistrationData>(response.Content);
             return new ResourceTypeRegistrationResource(_client, data);
         }
 
         async ValueTask<ResourceTypeRegistrationResource> IOperationSource<ResourceTypeRegistrationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ResourceTypeRegistrationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerProviderHubContext.Default);
+            var data = ModelReaderWriter.Read<ResourceTypeRegistrationData>(response.Content);
             return await Task.FromResult(new ResourceTypeRegistrationResource(_client, data)).ConfigureAwait(false);
         }
     }

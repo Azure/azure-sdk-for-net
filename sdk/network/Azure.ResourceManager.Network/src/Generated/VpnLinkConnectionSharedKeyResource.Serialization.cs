@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         VpnLinkConnectionSharedKeyData IJsonModel<VpnLinkConnectionSharedKeyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VpnLinkConnectionSharedKeyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VpnLinkConnectionSharedKeyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VpnLinkConnectionSharedKeyData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<VpnLinkConnectionSharedKeyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        VpnLinkConnectionSharedKeyData IPersistableModel<VpnLinkConnectionSharedKeyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VpnLinkConnectionSharedKeyData>(data, options, AzureResourceManagerNetworkContext.Default);
+        VpnLinkConnectionSharedKeyData IPersistableModel<VpnLinkConnectionSharedKeyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VpnLinkConnectionSharedKeyData>(data, options);
 
         string IPersistableModel<VpnLinkConnectionSharedKeyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VpnLinkConnectionSharedKeyData>)Data).GetFormatFromOptions(options);
     }

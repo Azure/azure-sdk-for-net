@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Peering.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPeeringContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DirectPeeringLocationProperties)} does not support writing '{options.Format}' format.");
             }

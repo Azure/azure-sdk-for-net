@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         AzureFirewallResource IOperationSource<AzureFirewallResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AzureFirewallData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<AzureFirewallData>(response.Content);
             return new AzureFirewallResource(_client, data);
         }
 
         async ValueTask<AzureFirewallResource> IOperationSource<AzureFirewallResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AzureFirewallData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<AzureFirewallData>(response.Content);
             return await Task.FromResult(new AzureFirewallResource(_client, data)).ConfigureAwait(false);
         }
     }

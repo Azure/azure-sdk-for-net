@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNeonPostgresContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(NeonEndpointProperties)} does not support writing '{options.Format}' format.");
             }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Nginx
 
         NginxDeploymentData IJsonModel<NginxDeploymentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NginxDeploymentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NginxDeploymentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NginxDeploymentData>(Data, options, AzureResourceManagerNginxContext.Default);
+        BinaryData IPersistableModel<NginxDeploymentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NginxDeploymentData IPersistableModel<NginxDeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NginxDeploymentData>(data, options, AzureResourceManagerNginxContext.Default);
+        NginxDeploymentData IPersistableModel<NginxDeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NginxDeploymentData>(data, options);
 
         string IPersistableModel<NginxDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NginxDeploymentData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NetApp
 
         NetAppSubvolumeInfoData IJsonModel<NetAppSubvolumeInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppSubvolumeInfoData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetAppSubvolumeInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppSubvolumeInfoData>(Data, options, AzureResourceManagerNetAppContext.Default);
+        BinaryData IPersistableModel<NetAppSubvolumeInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NetAppSubvolumeInfoData IPersistableModel<NetAppSubvolumeInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppSubvolumeInfoData>(data, options, AzureResourceManagerNetAppContext.Default);
+        NetAppSubvolumeInfoData IPersistableModel<NetAppSubvolumeInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppSubvolumeInfoData>(data, options);
 
         string IPersistableModel<NetAppSubvolumeInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppSubvolumeInfoData>)Data).GetFormatFromOptions(options);
     }

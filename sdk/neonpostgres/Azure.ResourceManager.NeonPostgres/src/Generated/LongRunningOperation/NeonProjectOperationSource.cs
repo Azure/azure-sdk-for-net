@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.NeonPostgres
 
         NeonProjectResource IOperationSource<NeonProjectResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NeonProjectData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNeonPostgresContext.Default);
+            var data = ModelReaderWriter.Read<NeonProjectData>(response.Content);
             return new NeonProjectResource(_client, data);
         }
 
         async ValueTask<NeonProjectResource> IOperationSource<NeonProjectResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NeonProjectData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNeonPostgresContext.Default);
+            var data = ModelReaderWriter.Read<NeonProjectData>(response.Content);
             return await Task.FromResult(new NeonProjectResource(_client, data)).ConfigureAwait(false);
         }
     }

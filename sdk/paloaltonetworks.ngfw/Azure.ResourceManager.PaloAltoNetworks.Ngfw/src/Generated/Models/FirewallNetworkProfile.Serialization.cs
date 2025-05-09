@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(FirewallNetworkProfile)} does not support writing '{options.Format}' format.");
             }

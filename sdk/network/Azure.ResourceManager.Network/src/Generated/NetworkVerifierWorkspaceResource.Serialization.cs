@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         NetworkVerifierWorkspaceData IJsonModel<NetworkVerifierWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkVerifierWorkspaceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkVerifierWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkVerifierWorkspaceData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<NetworkVerifierWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NetworkVerifierWorkspaceData IPersistableModel<NetworkVerifierWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkVerifierWorkspaceData>(data, options, AzureResourceManagerNetworkContext.Default);
+        NetworkVerifierWorkspaceData IPersistableModel<NetworkVerifierWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkVerifierWorkspaceData>(data, options);
 
         string IPersistableModel<NetworkVerifierWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkVerifierWorkspaceData>)Data).GetFormatFromOptions(options);
     }

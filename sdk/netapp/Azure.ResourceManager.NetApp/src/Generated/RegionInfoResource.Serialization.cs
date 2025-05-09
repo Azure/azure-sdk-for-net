@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NetApp
 
         RegionInfoResourceData IJsonModel<RegionInfoResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RegionInfoResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RegionInfoResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RegionInfoResourceData>(Data, options, AzureResourceManagerNetAppContext.Default);
+        BinaryData IPersistableModel<RegionInfoResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        RegionInfoResourceData IPersistableModel<RegionInfoResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RegionInfoResourceData>(data, options, AzureResourceManagerNetAppContext.Default);
+        RegionInfoResourceData IPersistableModel<RegionInfoResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RegionInfoResourceData>(data, options);
 
         string IPersistableModel<RegionInfoResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RegionInfoResourceData>)Data).GetFormatFromOptions(options);
     }

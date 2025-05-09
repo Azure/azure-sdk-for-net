@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Orbital
 
         OrbitalContactData IJsonModel<OrbitalContactData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OrbitalContactData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<OrbitalContactData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OrbitalContactData>(Data, options, AzureResourceManagerOrbitalContext.Default);
+        BinaryData IPersistableModel<OrbitalContactData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        OrbitalContactData IPersistableModel<OrbitalContactData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OrbitalContactData>(data, options, AzureResourceManagerOrbitalContext.Default);
+        OrbitalContactData IPersistableModel<OrbitalContactData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OrbitalContactData>(data, options);
 
         string IPersistableModel<OrbitalContactData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OrbitalContactData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         NatGatewayData IJsonModel<NatGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NatGatewayData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NatGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NatGatewayData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<NatGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NatGatewayData IPersistableModel<NatGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NatGatewayData>(data, options, AzureResourceManagerNetworkContext.Default);
+        NatGatewayData IPersistableModel<NatGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NatGatewayData>(data, options);
 
         string IPersistableModel<NatGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NatGatewayData>)Data).GetFormatFromOptions(options);
     }

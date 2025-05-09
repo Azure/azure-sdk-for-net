@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         IPGroupResource IOperationSource<IPGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IPGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<IPGroupData>(response.Content);
             return new IPGroupResource(_client, data);
         }
 
         async ValueTask<IPGroupResource> IOperationSource<IPGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IPGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<IPGroupData>(response.Content);
             return await Task.FromResult(new IPGroupResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NetworkCloud
 
         NetworkCloudTrunkedNetworkData IJsonModel<NetworkCloudTrunkedNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudTrunkedNetworkData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkCloudTrunkedNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkCloudTrunkedNetworkData>(Data, options, AzureResourceManagerNetworkCloudContext.Default);
+        BinaryData IPersistableModel<NetworkCloudTrunkedNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NetworkCloudTrunkedNetworkData IPersistableModel<NetworkCloudTrunkedNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudTrunkedNetworkData>(data, options, AzureResourceManagerNetworkCloudContext.Default);
+        NetworkCloudTrunkedNetworkData IPersistableModel<NetworkCloudTrunkedNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudTrunkedNetworkData>(data, options);
 
         string IPersistableModel<NetworkCloudTrunkedNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudTrunkedNetworkData>)Data).GetFormatFromOptions(options);
     }

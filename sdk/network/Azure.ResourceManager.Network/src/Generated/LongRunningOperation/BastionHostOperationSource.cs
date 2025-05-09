@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         BastionHostResource IOperationSource<BastionHostResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BastionHostData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<BastionHostData>(response.Content);
             return new BastionHostResource(_client, data);
         }
 
         async ValueTask<BastionHostResource> IOperationSource<BastionHostResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BastionHostData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<BastionHostData>(response.Content);
             return await Task.FromResult(new BastionHostResource(_client, data)).ConfigureAwait(false);
         }
     }

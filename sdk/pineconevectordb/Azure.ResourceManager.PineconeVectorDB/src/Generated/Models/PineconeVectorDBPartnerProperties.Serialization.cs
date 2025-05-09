@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPineconeVectorDBContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(PineconeVectorDBPartnerProperties)} does not support writing '{options.Format}' format.");
             }

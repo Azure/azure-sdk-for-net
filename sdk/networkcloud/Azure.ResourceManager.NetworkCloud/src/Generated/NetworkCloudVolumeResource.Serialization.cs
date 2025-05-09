@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NetworkCloud
 
         NetworkCloudVolumeData IJsonModel<NetworkCloudVolumeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudVolumeData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkCloudVolumeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkCloudVolumeData>(Data, options, AzureResourceManagerNetworkCloudContext.Default);
+        BinaryData IPersistableModel<NetworkCloudVolumeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NetworkCloudVolumeData IPersistableModel<NetworkCloudVolumeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudVolumeData>(data, options, AzureResourceManagerNetworkCloudContext.Default);
+        NetworkCloudVolumeData IPersistableModel<NetworkCloudVolumeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudVolumeData>(data, options);
 
         string IPersistableModel<NetworkCloudVolumeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudVolumeData>)Data).GetFormatFromOptions(options);
     }

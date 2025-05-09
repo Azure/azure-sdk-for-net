@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         VirtualRouterPeeringResource IOperationSource<VirtualRouterPeeringResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualRouterPeeringData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<VirtualRouterPeeringData>(response.Content);
             return new VirtualRouterPeeringResource(_client, data);
         }
 
         async ValueTask<VirtualRouterPeeringResource> IOperationSource<VirtualRouterPeeringResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualRouterPeeringData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<VirtualRouterPeeringData>(response.Content);
             return await Task.FromResult(new VirtualRouterPeeringResource(_client, data)).ConfigureAwait(false);
         }
     }

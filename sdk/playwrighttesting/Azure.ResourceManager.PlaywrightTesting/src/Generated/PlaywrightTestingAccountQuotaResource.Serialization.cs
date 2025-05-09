@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.PlaywrightTesting
 
         PlaywrightTestingAccountQuotaData IJsonModel<PlaywrightTestingAccountQuotaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PlaywrightTestingAccountQuotaData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PlaywrightTestingAccountQuotaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PlaywrightTestingAccountQuotaData>(Data, options, AzureResourceManagerPlaywrightTestingContext.Default);
+        BinaryData IPersistableModel<PlaywrightTestingAccountQuotaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        PlaywrightTestingAccountQuotaData IPersistableModel<PlaywrightTestingAccountQuotaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PlaywrightTestingAccountQuotaData>(data, options, AzureResourceManagerPlaywrightTestingContext.Default);
+        PlaywrightTestingAccountQuotaData IPersistableModel<PlaywrightTestingAccountQuotaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PlaywrightTestingAccountQuotaData>(data, options);
 
         string IPersistableModel<PlaywrightTestingAccountQuotaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PlaywrightTestingAccountQuotaData>)Data).GetFormatFromOptions(options);
     }

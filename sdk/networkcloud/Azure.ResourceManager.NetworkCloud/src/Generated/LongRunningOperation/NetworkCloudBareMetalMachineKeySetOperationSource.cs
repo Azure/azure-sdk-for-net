@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.NetworkCloud
 
         NetworkCloudBareMetalMachineKeySetResource IOperationSource<NetworkCloudBareMetalMachineKeySetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudBareMetalMachineKeySetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
+            var data = ModelReaderWriter.Read<NetworkCloudBareMetalMachineKeySetData>(response.Content);
             return new NetworkCloudBareMetalMachineKeySetResource(_client, data);
         }
 
         async ValueTask<NetworkCloudBareMetalMachineKeySetResource> IOperationSource<NetworkCloudBareMetalMachineKeySetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudBareMetalMachineKeySetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
+            var data = ModelReaderWriter.Read<NetworkCloudBareMetalMachineKeySetData>(response.Content);
             return await Task.FromResult(new NetworkCloudBareMetalMachineKeySetResource(_client, data)).ConfigureAwait(false);
         }
     }

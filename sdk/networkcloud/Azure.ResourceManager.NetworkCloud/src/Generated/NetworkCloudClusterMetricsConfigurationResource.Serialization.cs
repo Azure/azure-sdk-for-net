@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NetworkCloud
 
         NetworkCloudClusterMetricsConfigurationData IJsonModel<NetworkCloudClusterMetricsConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudClusterMetricsConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkCloudClusterMetricsConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkCloudClusterMetricsConfigurationData>(Data, options, AzureResourceManagerNetworkCloudContext.Default);
+        BinaryData IPersistableModel<NetworkCloudClusterMetricsConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NetworkCloudClusterMetricsConfigurationData IPersistableModel<NetworkCloudClusterMetricsConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudClusterMetricsConfigurationData>(data, options, AzureResourceManagerNetworkCloudContext.Default);
+        NetworkCloudClusterMetricsConfigurationData IPersistableModel<NetworkCloudClusterMetricsConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudClusterMetricsConfigurationData>(data, options);
 
         string IPersistableModel<NetworkCloudClusterMetricsConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudClusterMetricsConfigurationData>)Data).GetFormatFromOptions(options);
     }

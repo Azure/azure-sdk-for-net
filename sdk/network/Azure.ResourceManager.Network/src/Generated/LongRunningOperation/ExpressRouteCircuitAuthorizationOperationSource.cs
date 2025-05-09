@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         ExpressRouteCircuitAuthorizationResource IOperationSource<ExpressRouteCircuitAuthorizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExpressRouteCircuitAuthorizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<ExpressRouteCircuitAuthorizationData>(response.Content);
             return new ExpressRouteCircuitAuthorizationResource(_client, data);
         }
 
         async ValueTask<ExpressRouteCircuitAuthorizationResource> IOperationSource<ExpressRouteCircuitAuthorizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExpressRouteCircuitAuthorizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<ExpressRouteCircuitAuthorizationData>(response.Content);
             return await Task.FromResult(new ExpressRouteCircuitAuthorizationResource(_client, data)).ConfigureAwait(false);
         }
     }

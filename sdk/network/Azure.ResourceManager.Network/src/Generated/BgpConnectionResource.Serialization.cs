@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         BgpConnectionData IJsonModel<BgpConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BgpConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BgpConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BgpConnectionData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<BgpConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        BgpConnectionData IPersistableModel<BgpConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BgpConnectionData>(data, options, AzureResourceManagerNetworkContext.Default);
+        BgpConnectionData IPersistableModel<BgpConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BgpConnectionData>(data, options);
 
         string IPersistableModel<BgpConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BgpConnectionData>)Data).GetFormatFromOptions(options);
     }

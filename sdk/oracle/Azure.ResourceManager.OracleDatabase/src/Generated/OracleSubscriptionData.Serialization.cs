@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.OracleDatabase
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(OracleSubscriptionData)} does not support writing '{options.Format}' format.");
             }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         AutoScaleVCoreData IJsonModel<AutoScaleVCoreData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutoScaleVCoreData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutoScaleVCoreData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutoScaleVCoreData>(Data, options, AzureResourceManagerPowerBIDedicatedContext.Default);
+        BinaryData IPersistableModel<AutoScaleVCoreData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        AutoScaleVCoreData IPersistableModel<AutoScaleVCoreData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutoScaleVCoreData>(data, options, AzureResourceManagerPowerBIDedicatedContext.Default);
+        AutoScaleVCoreData IPersistableModel<AutoScaleVCoreData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutoScaleVCoreData>(data, options);
 
         string IPersistableModel<AutoScaleVCoreData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutoScaleVCoreData>)Data).GetFormatFromOptions(options);
     }

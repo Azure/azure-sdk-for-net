@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NetworkCloud
 
         NetworkCloudAgentPoolData IJsonModel<NetworkCloudAgentPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudAgentPoolData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkCloudAgentPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkCloudAgentPoolData>(Data, options, AzureResourceManagerNetworkCloudContext.Default);
+        BinaryData IPersistableModel<NetworkCloudAgentPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NetworkCloudAgentPoolData IPersistableModel<NetworkCloudAgentPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudAgentPoolData>(data, options, AzureResourceManagerNetworkCloudContext.Default);
+        NetworkCloudAgentPoolData IPersistableModel<NetworkCloudAgentPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudAgentPoolData>(data, options);
 
         string IPersistableModel<NetworkCloudAgentPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudAgentPoolData>)Data).GetFormatFromOptions(options);
     }

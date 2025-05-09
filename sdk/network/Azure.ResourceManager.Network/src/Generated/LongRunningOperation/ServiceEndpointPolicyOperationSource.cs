@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         ServiceEndpointPolicyResource IOperationSource<ServiceEndpointPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServiceEndpointPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<ServiceEndpointPolicyData>(response.Content);
             return new ServiceEndpointPolicyResource(_client, data);
         }
 
         async ValueTask<ServiceEndpointPolicyResource> IOperationSource<ServiceEndpointPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServiceEndpointPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<ServiceEndpointPolicyData>(response.Content);
             return await Task.FromResult(new ServiceEndpointPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }
